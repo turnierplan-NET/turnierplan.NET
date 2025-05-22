@@ -1,0 +1,157 @@
+@import "bootstrap/scss/bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.min.css";
+@import "ngx-toastr/toastr";
+
+* {
+  font-family: system-ui, "Segoe UI", sans-serif !important;
+}
+
+.font-monospace {
+  font-family: monospace !important;
+}
+
+body {
+  background-color: #fff;
+  font-optical-sizing: auto;
+  font-variation-settings: "wdth" 100;
+  overflow-y: scroll;
+}
+
+.tp-text-pre-wrap {
+  white-space: pre-wrap;
+}
+
+.tp-cursor-default {
+  cursor: default;
+}
+
+.tp-cursor-pointer {
+  cursor: pointer;
+}
+
+.tp-cursor-not-allowed {
+  cursor: not-allowed;
+}
+
+.tp-cursor-move {
+  cursor: all-scroll;
+}
+
+.tp-text-shadow {
+  // Creates a "slightly bold" effect without changing text width
+  text-shadow: 0 0 1px #444;
+}
+
+.tp-border-card {
+  // Set the border color to the same color used by bootstrap for card/modal borders
+  border-color: rgb(222 226 230);
+}
+
+.tp-no-spin-buttons {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  &[type="number"] {
+    appearance: textfield;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .tp-ultra-slim-container {
+    // Use the same padding as the default Bootstrap container
+    padding-left: calc($container-padding-x * 0.5) !important;
+    padding-right: calc($container-padding-x * 0.5) !important;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .tp-ultra-slim-container {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: map-get($container-max-widths, md);
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .container {
+    max-width: map-get($container-max-widths, xl);
+  }
+}
+
+.tp-popover-slim {
+  .popover-body {
+    padding: 0;
+  }
+}
+
+.form-check {
+  .form-check-input,
+  .form-check-label {
+    cursor: pointer;
+  }
+}
+
+.border-transparent {
+  border-color: transparent !important;
+}
+
+@include media-breakpoint-up(lg) {
+  .border-lg-bottom-0 {
+    border-bottom: 0 !important;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .border-lg-end {
+    border-right: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+  }
+}
+
+.tp-header {
+  background: linear-gradient(30deg, #001a25, #222);
+  height: 3em;
+  width: 100%;
+  z-index: 1000;
+
+  a {
+    text-decoration: none;
+  }
+
+  .tp-header-logo {
+    height: 2em;
+  }
+}
+
+.tp-footer {
+  background: #f7f7f7;
+  box-shadow: 0 -5px 5px -5px #ccc;
+  color: #888 !important;
+  font-size: 0.9em;
+  width: 100%;
+
+  // Modal background is ~1000
+  z-index: 500;
+}
+
+.tp-footer-layout {
+  a {
+    color: unset;
+    text-decoration: none;
+  }
+
+  .footer-item:not(:last-child)::after {
+    color: #888 !important;
+    content: "|";
+    font-weight: normal !important;
+    padding: 0 0.35em;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .w-lg-50 {
+    width: 50%;
+  }
+}

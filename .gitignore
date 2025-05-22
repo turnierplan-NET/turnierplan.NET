@@ -1,0 +1,6 @@
+.idea
+.vscode
+.ipynb_checkpoints
+bin
+obj
+*.user

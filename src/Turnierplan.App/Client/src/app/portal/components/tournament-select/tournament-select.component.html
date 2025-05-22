@@ -1,0 +1,28 @@
+<ng-container *tpLoadingState="loadingState">
+  <div class="modal-header">
+    <h4 class="modal-title" translate="Portal.SelectTournamentDialog.Title"></h4>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body p-0">
+    <div class="m-3" translate="Portal.SelectTournamentDialog.Info"></div>
+    <hr class="my-0" />
+    <div class="m-3 d-flex flex-column flex-lg-row">
+      <div class="w-lg-50">
+        <tp-folder-tree [treeData]="folderTree" (selectedFolderChange)="selectTreeEntry($event)" />
+      </div>
+      <hr class="d-lg-none my-3" />
+      <div class="w-lg-50 pe-2 d-flex flex-column">
+        @if (selectedNode) {
+          @for (entry of selectedNode.tournaments; track entry.id) {
+            <div class="invisible-button overflow-hidden text-nowrap tp-cursor-pointer d-flex flex-row align-items-center gap-2 px-2 py-1" (click)="modal.close(entry.id)">
+              <i class="bi bi-trophy"></i>
+              <span>{{ entry.name }}</span>
+            </div>
+          } @empty {
+            <div class="small text-secondary" translate="Portal.SelectTournamentDialog.SelectFolder"></div>
+          }
+        }
+      </div>
+    </div>
+  </div>
+</ng-container>

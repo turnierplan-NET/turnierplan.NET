@@ -1,0 +1,101 @@
+<table class="table table-hover" [attr.aria-label]="'Portal.ViewTournament.Teams.TableLabelTableLabel' | translate">
+  <thead>
+  <tr>
+    <th style="width: 0;"></th>
+    <th style="width: 38%;" translate="Portal.ViewTournament.Teams.Name"></th>
+    <th style="width: 13%;">
+      <span translate="Portal.ViewTournament.Teams.Priority.Header"></span>
+      <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.Priority.Tooltip'" />
+    </th>
+    <th style="width: 20%;">
+      <span translate="Portal.ViewTournament.Teams.OutOfCompetition.Header"></span>
+      <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.OutOfCompetition.Tooltip'" />
+    </th>
+    <th style="width: 30%;">
+      <span translate="Portal.ViewTournament.Teams.EntryFeePaid.Header"></span>
+      <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.EntryFeePaid.Tooltip'" />
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  @for (team of teams; track team.id) {
+    <tr>
+      <td class="align-middle">
+        <tp-rename-button translationKey="Portal.ViewTournament.Teams.Rename"
+                          [displayLabel]="false"
+                          [allowReset]="false"
+                          [maxLength]="60"
+                          [current]="team.name"
+                          (renamed)="renameTeam(team.id, $event)" />
+      </td>
+      <td class="align-middle">
+        @if (team.showLoadingIndicator.name) {
+          <tp-small-spinner />
+        } @else {
+          {{ team.name }}
+        }
+      </td>
+      <td class="align-middle">
+        @if (team.groupId !== undefined && team.priority !== undefined) {
+          <div class="d-flex flex-row gap-2 justify-content-between align-items-center" style="width: 4em;">
+            <i class="bi bi-dash-circle tp-cursor-pointer" (click)="setTeamPriority(team.id, -1)"></i>
+            @if (team.showLoadingIndicator.priority) {
+              <tp-small-spinner />
+            } @else {
+              <span>{{ team.priority }}</span>
+            }
+            <i class="bi bi-plus-circle tp-cursor-pointer" (click)="setTeamPriority(team.id, 1)"></i>
+          </div>
+        }
+      </td>
+      <td class="align-middle">
+        @if (team.showLoadingIndicator.outOfCompetition) {
+          <tp-small-spinner class="ms-2" />
+        } @else {
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" [checked]="team.outOfCompetition" [ngClass]="{ 'pe-none': isUpdatingAnyTeam }" (change)="toggleTeamOutOfCompetition(team.id)" />
+          </div>
+        }
+      </td>
+      <td class="align-middle">
+        <div class="d-flex flex-row gap-2 align-items-center">
+          @if (team.showLoadingIndicator.entryFee) {
+            <tp-small-spinner />
+          } @else if (team.entryFeePaidAt) {
+            <i class="bi bi-check-circle-fill text-success"></i>
+            <span class="small text-secondary">
+              <span translate="Portal.ViewTournament.Teams.EntryFeePaid.PaidAt"></span>
+              <span class="ms-1">{{ team.entryFeePaidAt | translateDate : 'medium'}}</span>
+            </span>
+            <i class="bi bi-arrow-counterclockwise tp-cursor-pointer"
+               [ngbPopover]="resetEntryFeeConfirmationPopup"
+               [popoverContext]="{ 'teamId': team.id }"
+               [autoClose]="'outside'"
+               [container]="'body'"
+               [popoverClass]="'tp-popover-slim'" ></i>
+          } @else {
+            <i class="bi bi-x-circle text-danger"></i>
+            <span class="small text-secondary" translate="Portal.ViewTournament.Teams.EntryFeePaid.NotPaid"></span>
+            <tp-action-button icon="cash-coin"
+                              type="outline-secondary"
+                              [ngClass]="{ 'pe-none': isUpdatingAnyTeam }"
+                              [title]="'Portal.ViewTournament.Teams.EntryFeePaid.Pay'"
+                              (click)="setTeamEntryFeePaid(team.id, true)" />
+          }
+        </div>
+      </td>
+    </tr>
+  } @empty {
+    <tr>
+      <td colspan="5" translate="Portal.ViewTournament.Teams.NoTeams"></td>
+    </tr>
+  }
+  </tbody>
+</table>
+
+<ng-template #resetEntryFeeConfirmationPopup let-teamId="teamId">
+  <div class="px-3 py-2 d-flex flex-row align-items-center gap-3">
+    <span class="tp-text-pre-wrap" translate="Portal.ViewTournament.Teams.EntryFeePaid.ResetConfirm"></span>
+    <i class="tp-cursor-pointer bi bi-arrow-counterclockwise fs-5" (click)="setTeamEntryFeePaid(teamId, false)"></i>
+  </div>
+</ng-template>

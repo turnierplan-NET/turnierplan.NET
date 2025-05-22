@@ -1,0 +1,87 @@
+@using Turnierplan.Core.Tournament
+@using Groups_Groups = Turnierplan.App.Pages.Shared.Components.Groups.Groups
+@model Groups_Groups.DataModel
+
+@{
+    var showGroupResults = Model.Tournament.PresentationConfiguration.ShowResults is PresentationConfiguration.ResultsMode.Default;
+}
+
+@foreach (var group in Model.Tournament.Groups)
+{
+    @if (!Model.InlineGroupNames)
+    {
+        <div class="fs-5 mb-3">
+            <div>@(Model.Localization.LocalizeGroupName(group))</div>
+        </div>
+    }
+    <table class="table border shadow-sm">
+        <thead>
+        <tr>
+            @if (Model.InlineGroupNames)
+            {
+                <th class="ps-3" colspan="@(showGroupResults ? 2 : 1)">@(Model.Localization.LocalizeGroupName(group))</th>
+            }
+            else
+            {
+                if (showGroupResults)
+                {
+                    <th>Pos.</th>
+                }
+                <th>Mannschaft</th>
+            }
+            @if (showGroupResults)
+            {
+                <th class="text-center" style="width: 10%;">Spiele</th>
+                <th class="text-center" style="width: 10%;">Tore</th>
+                <th class="text-center" style="width: 10%;">TD</th>
+                <th class="text-center" style="width: 10%;">Pkt.</th>
+            }
+            else
+            {
+                <th style="width: 30%;">Spiele</th>
+            }
+        </tr>
+        </thead>
+        <tbody>
+        @if (group.Participants.Count == 0)
+        {
+            <tr>
+                <td colspan="6">In dieser Gruppe gibt es keine Mannschaften.</td>
+            </tr>
+        }
+        @{
+            IEnumerable<GroupParticipant> participants = group.Participants;
+
+            if (showGroupResults)
+            {
+                participants = participants.OrderBy(x => x.Statistics.Position);
+            }
+        }
+        @foreach (var participant in participants)
+        {
+            <tr>
+                @if (showGroupResults)
+                {
+                    <td style="width: 5%;" class="ps-3 align-middle">@(participant.Statistics.Position).</td>
+                    <td style="word-break: break-word;">@(participant.Team.Name)</td>
+                }
+                else
+                {
+                    <td class="ps-3" style="word-break: break-word;">@(participant.Team.Name)</td>
+                }
+                @if (showGroupResults)
+                {
+                    <td class="text-center align-middle">@(participant.Statistics.MatchesPlayed)</td>
+                    <td class="text-center align-middle text-nowrap">@(participant.Statistics.ScoreFor) : @(participant.Statistics.ScoreAgainst)</td>
+                    <td class="text-center align-middle">@(participant.Statistics.ScoreDifference)</td>
+                    <td class="text-center align-middle">@(participant.Statistics.Points)</td>
+                }
+                else
+                {
+                    <td>@(participant.Statistics.MatchesPlayed)</td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+}

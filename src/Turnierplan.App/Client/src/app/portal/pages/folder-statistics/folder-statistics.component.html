@@ -1,0 +1,76 @@
+<tp-page-frame *tpLoadingState="loadingState" [title]="'Portal.FolderStatistics.Title' | translate : { folder: folderName }" [backLink]="'../../organization/' + organizationId">
+  @if (statistics && statistics.numberOfTournaments > 0 && statistics.numberOfMatches > 0) {
+    <div class="mt-5 d-flex flex-column">
+      <div class="text-center text-decoration-underline" translate="Portal.FolderStatistics.ImportantFacts"></div>
+      <ng-container *ngTemplateOutlet="statistic; context: { value: statistics.numberOfTournaments, name: 'Tournaments' }" />
+      <ng-container *ngTemplateOutlet="statistic; context: { value: statistics.numberOfTeams, name: 'Teams' }" />
+      <ng-container *ngTemplateOutlet="statistic; context: { value: statistics.numberOfMatches, name: 'Matches' }" />
+      <ng-container *ngTemplateOutlet="statistic; context: { value: statistics.numberOfGroups, name: 'Groups' }" />
+      <ng-container *ngTemplateOutlet="statistic; context: { value: statistics.numberOfGoals, name: 'Goals' }" />
+      <ng-container *ngTemplateOutlet="statistic; context: { value: statistics.averageGoalsPerMatch | number : '1.2-2' : locale, name: 'GoalsPerMatch', average: true, goalDistributionNotice: true }" />
+      <ng-container *ngTemplateOutlet="statistic; context: { value: statistics.totalPublicPageViews, name: 'TotalPublicPageViews' }" />
+
+      @if (statistics.mostSignificantOutcome.scoreA !== 0 || statistics.mostSignificantOutcome.scoreB !== 0) {
+        <ng-container *ngTemplateOutlet="statistic; context: { value: statistics.mostSignificantOutcome.scoreA + ':' + statistics.mostSignificantOutcome.scoreB, name: 'MostSignificantOutcome' }" />
+      }
+
+      <ng-container *ngTemplateOutlet="statistic; context: { value: statistics.mostGoalsPerMatch, name: 'MostGoalsPerMatch', hideIfZero: true }" />
+      <ng-container *ngTemplateOutlet="statistic; context: { value: statistics.numberOfDecidingMatches, name: 'NumberOfDecidingMatches', hideIfZero: true }" />
+      <ng-container *ngTemplateOutlet="statistic; context: { value: statistics.numberOfPenaltyShootouts, name: 'NumberOfPenaltyShootouts', hideIfZero: true }" />
+      <ng-container *ngTemplateOutlet="statistic; context: { value: statistics.numberOfOverTimes, name: 'NumberOfOverTimes', hideIfZero: true }" />
+
+      <div class="text-center mt-4 mb-2" translate="Portal.FolderStatistics.FinishedMatches" [translateParams]="{ 'done': statistics.numberOfFinishedMatches, 'total': statistics.numberOfMatches, 'percent': statistics.percentageOfFinishedMatches / 100 | percent }"></div>
+      <div class="progress mb-3">
+        <div class="progress-bar progress-bar-striped bg-success" [ngStyle]="{ 'width': statistics.percentageOfFinishedMatches + '%' }"></div>
+      </div>
+
+      @if (statistics.outcomeDistribution.length > 0) {
+        <hr class="my-4" />
+
+        <div class="text-center">
+          <span class="text-decoration-underline" translate="Portal.FolderStatistics.MostFrequentOutcomes"></span>
+          <ng-container [ngTemplateOutlet]="excludedTournamentsNotice" />
+        </div>
+        <div class="mt-3 d-flex flex-row justify-content-center">
+          <canvas style="max-width: 600px; max-height: 300px;" baseChart type="bar" [data]="outcomesBarChart" [options]="barChartOptions"></canvas>
+        </div>
+      }
+
+      @if (statistics.totalPublicPageViews > 0 && statistics.tournamentPageViews.length > 1) {
+        <hr class="my-4" />
+
+        <div class="text-center text-decoration-underline" translate="Portal.FolderStatistics.PageViewsPerTournament"></div>
+        <div class="mt-3 d-flex flex-row justify-content-center">
+          <canvas style="max-width: 600px; max-height: 300px;" baseChart type="bar" [data]="pageViewsBarChart" [options]="barChartOptions"></canvas>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="fst-italic" translate="Portal.FolderStatistics.NoStatistics"></div>
+  }
+</tp-page-frame>
+
+<ng-template #statistic let-value="value" let-name="name" let-average="average" let-hideIfZero="hideIfZero" let-goalDistributionNotice="goalDistributionNotice">
+  @if (hideIfZero !== true || value !== 0) {
+    <div class="d-flex flex-row align-items-baseline gap-2">
+      <div class="w-50 fs-1 fw-bold text-end">
+        @if (average === true) {
+          <span class="me-2" style="font-size: 0.7em;">&empty;</span>
+        }
+        <span>{{ value }}</span>
+      </div>
+      <div class="w-50">
+        <span [translate]="'Portal.FolderStatistics.StatisticNames.' + name"></span>
+        @if (goalDistributionNotice === true) {
+          <ng-container [ngTemplateOutlet]="excludedTournamentsNotice" />
+        }
+      </div>
+    </div>
+  }
+</ng-template>
+
+<ng-template #excludedTournamentsNotice>
+  @if (goalDistributionExcludedTournaments) {
+    <tp-tooltip-icon [tooltipText]="'Portal.FolderStatistics.ExcludedTournamentsNotice'" [tooltipTextParams]="{ 'tournamentNames': goalDistributionExcludedTournaments }" />
+  }
+</ng-template>

@@ -1,0 +1,38 @@
+using Microsoft.AspNetCore.Mvc;
+using Turnierplan.App.Mapping;
+using Turnierplan.App.Models;
+using Turnierplan.App.Security;
+using Turnierplan.Core.PublicId;
+using Turnierplan.Core.Venue;
+
+namespace Turnierplan.App.Endpoints.Venues;
+
+internal sealed class GetVenueEndpoint : EndpointBase<VenueDto>
+{
+    protected override HttpMethod Method => HttpMethod.Get;
+
+    protected override string Route => "/api/venues/{id}";
+
+    protected override Delegate Handler => Handle;
+
+    private static async Task<IResult> Handle(
+        [FromRoute] PublicId id,
+        IVenueRepository repository,
+        IAccessValidator accessValidator,
+        IMapper mapper)
+    {
+        var venue = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+
+        if (venue is null)
+        {
+            return Results.NotFound();
+        }
+
+        if (!accessValidator.CanSessionUserAccess(venue.Organization))
+        {
+            return Results.Forbid();
+        }
+
+        return Results.Ok(mapper.Map<VenueDto>(venue));
+    }
+}

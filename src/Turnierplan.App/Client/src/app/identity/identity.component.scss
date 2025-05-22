@@ -1,0 +1,31 @@
+.background {
+  background-color: #001a25;
+  height: 100vh;
+  margin: 0;
+}
+
+.identity-header {
+  background: url("/assets/identity-background.jpg") center;
+  background-size: cover;
+  height: 8em;
+}
+
+@media (width >= 500px) {
+  .identity-container {
+    width: 500px;
+  }
+
+  .footer-links {
+    font-size: 0.8em;
+  }
+}
+
+@media (width <= 500px) {
+  .identity-container {
+    width: 100%;
+  }
+
+  .footer-links {
+    font-size: 0.65em;
+  }
+}

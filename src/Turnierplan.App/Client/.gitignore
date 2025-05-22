@@ -1,0 +1,13 @@
+.angular
+node_modules
+dist
+
+esLintResult.json
+styleLintResult.json
+coverage
+
+# Remove generated API client
+src/app/api/*
+
+# Local chrome installation
+chrome

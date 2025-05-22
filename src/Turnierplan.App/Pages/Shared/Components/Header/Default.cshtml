@@ -1,0 +1,75 @@
+@using Turnierplan.App.Extensions
+@using Turnierplan.Core.Tournament
+@using Header_Header = Turnierplan.App.Pages.Shared.Components.Header.Header
+@model Header_Header.DataModel
+
+<div class="d-flex flex-column align-items-center align-items-lg-start">
+    <div class="m-0 fw-bold fs-2">
+        @switch (Model.Header1.Content)
+        {
+            case PresentationConfiguration.HeaderLineContent.CustomValue:
+                <span>@(Model.Header1.CustomContent ?? string.Empty)</span>
+                break;
+            case PresentationConfiguration.HeaderLineContent.OrganizerName:
+                <span>@(Model.Tournament.Organization.Name)</span>
+                break;
+            case PresentationConfiguration.HeaderLineContent.TournamentName:
+                <span>@(Model.Tournament.Name)</span>
+                break;
+            default:
+                <span>-</span>
+                break;
+        }
+    </div>
+
+    <div class="m-0 fs-3">
+        @switch (Model.Header2.Content)
+        {
+            case PresentationConfiguration.HeaderLineContent.CustomValue:
+                <span>@(Model.Header2.CustomContent ?? string.Empty)</span>
+                break;
+            case PresentationConfiguration.HeaderLineContent.OrganizerName:
+                <span>@(Model.Tournament.Organization.Name)</span>
+                break;
+            case PresentationConfiguration.HeaderLineContent.TournamentName:
+                <span>@(Model.Tournament.Name)</span>
+                break;
+            default:
+                <span>-</span>
+                break;
+        }
+    </div>
+
+    @{
+        if (Model.ShowKickoffAndVenue)
+        {
+            var startTimestamp = Model.Tournament.StartTimestamp;
+
+            if (startTimestamp.HasValue)
+            {
+                <div class="mt-2">
+                    <span id="tournament-kickoff"></span>
+                </div>
+                <script>
+                    const date = new Date(@(startTimestamp.Value.GetMillisecondsSinceUtc()));
+                    document.getElementById('tournament-kickoff').innerHTML = `${twoDigit(date.getDate())}.${twoDigit(date.getMonth() + 1)}.${date.getFullYear()} um ${twoDigit(date.getHours())}:${twoDigit(date.getMinutes())}`;
+                </script>
+            }
+
+            @if (Model.Tournament.Venue is not null)
+            {
+                <div class="mt-2">
+                    <span>@Model.Tournament.Venue.Name</span>
+
+                    @if (Model.AllowVenueExpand)
+                    {
+                        <span class="ms-1 text-decoration-underline text-primary cursor-pointer" onclick="toggleVenueInformation()">
+                            <span id="venue-toggle-verb">mehr</span>
+                            <span>&#8230;</span>
+                        </span>
+                    }
+                </div>
+            }
+        }
+    }
+</div>

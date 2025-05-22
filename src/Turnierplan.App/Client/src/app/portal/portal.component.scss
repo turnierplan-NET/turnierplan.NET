@@ -1,0 +1,22 @@
+.tp-header {
+  .tp-user-info:hover {
+    background: rgb(255 255 255 / 20%);
+  }
+
+  .tp-user-claims {
+    font-size: 0.9em;
+
+    span:first-child {
+      transform: translateY(0.2em);
+    }
+
+    span:last-child {
+      transform: translateY(-0.2em);
+    }
+  }
+
+  .tp-profile-picture {
+    border-radius: 1em;
+    height: 2em;
+  }
+}

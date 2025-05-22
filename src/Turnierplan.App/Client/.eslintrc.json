@@ -1,0 +1,212 @@
+{
+  "root": true,
+  "ignorePatterns": ["node_modules/"],
+  "plugins": ["html", "import", "prefer-arrow"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.json", "tsconfig.spec.json", "e2e/tsconfig.json"],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "prettier",
+        "plugin:import/recommended"
+      ],
+      "settings": {
+        "import/parsers": {
+          "@typescript-eslint/parser": [".ts", ".tsx"]
+        },
+        "import/resolver": {
+          "typescript": {
+            "alwaysTryTypes": true
+          }
+        }
+      },
+      "rules": {
+        "no-useless-constructor": "off",
+        "@typescript-eslint/no-useless-constructor": ["error"],
+        "no-empty-function": "off",
+        "@typescript-eslint/no-empty-function": ["error"],
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": ["error"],
+        "@typescript-eslint/no-explicit-any": ["error"],
+        "@typescript-eslint/explicit-function-return-type": [
+          "error",
+          {
+            "allowExpressions": true
+          }
+        ],
+        "@typescript-eslint/explicit-member-accessibility": [
+          "error",
+          {
+            "accessibility": "explicit",
+            "overrides": {
+              "constructors": "off"
+            }
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "tp",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "tp",
+            "style": "kebab-case"
+          }
+        ],
+        "@typescript-eslint/member-ordering": [
+          "error",
+          {
+            "default": [
+              "signature",
+              "public-static-field",
+              "protected-static-field",
+              "private-static-field",
+              "public-decorated-field",
+              "protected-decorated-field",
+              "private-decorated-field",
+              "public-instance-field",
+              "protected-instance-field",
+              "private-instance-field",
+              "public-abstract-field",
+              "protected-abstract-field",
+              "public-field",
+              "protected-field",
+              "private-field",
+              "static-field",
+              "instance-field",
+              "abstract-field",
+              "decorated-field",
+              "field",
+              "static-initialization",
+              "public-constructor",
+              "protected-constructor",
+              "private-constructor",
+              "constructor",
+              "public-static-get",
+              "protected-static-get",
+              "private-static-get",
+              "public-decorated-get",
+              "protected-decorated-get",
+              "private-decorated-get",
+              "public-instance-get",
+              "protected-instance-get",
+              "private-instance-get",
+              "public-abstract-get",
+              "protected-abstract-get",
+              "public-get",
+              "protected-get",
+              "private-get",
+              "static-get",
+              "instance-get",
+              "abstract-get",
+              "decorated-get",
+              "get",
+              "public-static-set",
+              "protected-static-set",
+              "private-static-set",
+              "public-decorated-set",
+              "protected-decorated-set",
+              "private-decorated-set",
+              "public-instance-set",
+              "protected-instance-set",
+              "private-instance-set",
+              "public-abstract-set",
+              "protected-abstract-set",
+              "public-set",
+              "protected-set",
+              "private-set",
+              "static-set",
+              "instance-set",
+              "abstract-set",
+              "decorated-set",
+              "set",
+              "public-static-method",
+              "protected-static-method",
+              "private-static-method",
+              "public-decorated-method",
+              "protected-decorated-method",
+              "private-decorated-method",
+              "public-instance-method",
+              "protected-instance-method",
+              "private-instance-method",
+              "public-abstract-method",
+              "protected-abstract-method",
+              "public-method",
+              "protected-method",
+              "private-method",
+              "static-method",
+              "instance-method",
+              "abstract-method",
+              "decorated-method",
+              "method"
+            ]
+          }
+        ],
+        "prefer-arrow/prefer-arrow-functions": [
+          "warn",
+          {
+            "disallowPrototype": true,
+            "singleReturnOnly": false,
+            "classPropertiesAllowed": false
+          }
+        ],
+        "import/no-absolute-path": ["error"],
+        "import/no-useless-path-segments": ["error"],
+        "import/first": ["error"],
+        "import/no-namespace": ["error"],
+        "import/order": [
+          "error",
+          {
+            "alphabetize": {
+              "order": "asc"
+            },
+            "newlines-between": "always"
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*spec.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.json", "tsconfig.spec.json", "e2e/tsconfig.json"],
+        "createDefaultProgram": true
+      },
+      "rules": {
+        "@typescript-eslint/no-unused-vars": ["off"],
+        "@typescript-eslint/no-explicit-any": ["off"],
+        "@typescript-eslint/no-unsafe-assignment": ["off"],
+        "@typescript-eslint/no-unsafe-member-access": ["off"],
+        "@typescript-eslint/no-unsafe-call": ["off"],
+        "@typescript-eslint/explicit-function-return-type": ["off"],
+        "@typescript-eslint/explicit-member-accessibility": ["off"],
+        "@typescript-eslint/no-floating-promises": ["off"],
+        "@typescript-eslint/unbound-method": ["off"]
+      }
+    },
+    {
+      "files": ["*.html"],
+      "parser": "@angular-eslint/template-parser",
+      "parserOptions": {
+        "project": ["tsconfig.json", "tsconfig.spec.json"],
+        "createDefaultProgram": true
+      },
+      "extends": ["prettier"],
+      "plugins": ["@angular-eslint/template"],
+      "rules": {}
+    }
+  ]
+}

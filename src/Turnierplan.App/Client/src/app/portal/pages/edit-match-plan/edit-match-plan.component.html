@@ -1,0 +1,121 @@
+<tp-page-frame *tpLoadingState="loadingState" [ultraSlim]="true" [title]="'Portal.EditMatchPlan.Title' | translate : { tournament: tournamentName }" [backLink]="'..'">
+  <div translate="Portal.EditMatchPlan.Subtitle"></div>
+  @if (displayEditWarning) {
+    <tp-tournament-edit-warning [translationKey]="'Portal.EditMatchPlan.DestructiveWarning'" [(accepted)]="editWarningAccepted" />
+  }
+
+  <hr />
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th class="text-center" translate="Portal.EditMatchPlan.Table.Index"></th>
+        <th class="text-center" translate="Portal.EditMatchPlan.Table.Type"></th>
+        <th class="text-center" translate="Portal.EditMatchPlan.Table.Court"></th>
+        <th class="text-center" translate="Portal.EditMatchPlan.Table.Kickoff"></th>
+        <th class="text-center" colspan="2" translate="Portal.EditMatchPlan.Table.Teams"></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody [dndDropzone]="" (dndDrop)="moveMatch($event)">
+      @for (match of currentState; track match.id) {
+        <tr [dndDraggable]="true" [dndEffectAllowed]="'move'" (dndStart)="currentlyMovingMatchId = match.id" (dndEnd)="currentlyMovingMatchId = undefined">
+          <td dndHandle class="align-middle tp-cursor-move">
+            <i class="bi bi-grip-horizontal"></i>
+          </td>
+          <td class="align-middle text-center">
+            {{ match.index }}
+          </td>
+          <td class="align-middle text-center">
+            {{ match.formattedType }}
+          </td>
+          <td class="align-middle text-center">
+            {{ match.court + 1 }}
+          </td>
+          <td class="align-middle text-center">
+            @if (match.kickoff) {
+              {{ match.kickoff | translateDate : (showKickoffWithSeconds ? 'mediumTime' : 'shortTime') }}
+            }
+          </td>
+          <td class="align-middle">
+            {{ localizedTeamSelectors[match.teamSelectorA] }}
+          </td>
+          <td class="align-middle">
+            {{ localizedTeamSelectors[match.teamSelectorB] }}
+          </td>
+          <td>
+            <tp-action-button icon="pencil"
+                              type="outline-secondary"
+                              [attr.aria-label]="'Portal.EditMatchPlan.EditButtonTooltip.Button' | translate"
+                              [mode]="'IconOnly'"
+                              (click)="currentlyEditingMatchId = (currentlyEditingMatchId === match.id ? undefined : match.id)" />
+          </td>
+        </tr>
+        @if (match.id === currentlyEditingMatchId) {
+          <tr>
+            <td colspan="3"></td>
+            <td colspan="4">
+              <div class="d-flex flex-column align-items-start gap-2">
+                <div translate="Portal.EditMatchPlan.EditMatch.Court"></div>
+                <input class="form-control form-control-sm" type="number" min="1" [ngModel]="match.court + 1" (ngModelChange)="setMatchCourt(match.id, $event - 1)">
+
+                <div translate="Portal.EditMatchPlan.EditMatch.Kickoff"></div>
+                <input class="form-control form-control-sm" type="datetime-local" [ngModel]="match.kickoff | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="setMatchKickoff(match.id, $event)" />
+                
+                <div translate="Portal.EditMatchPlan.EditMatch.TeamSelectorA"></div>
+                <select class="form-select form-select-sm" [ngModel]="match.teamSelectorA" (ngModelChange)="setMatchTeam(match.id,'A', $event)">
+                  @for (teamSelector of match.possibleTeamSelectors; track teamSelector) {
+                    <option [value]="teamSelector">{{ localizedTeamSelectors[teamSelector] }}</option>
+                  }
+                </select>
+
+                <div translate="Portal.EditMatchPlan.EditMatch.TeamSelectorB"></div>
+                <select class="form-select form-select-sm" [ngModel]="match.teamSelectorB" (ngModelChange)="setMatchTeam(match.id,'B', $event)">
+                  @for (teamSelector of match.possibleTeamSelectors; track teamSelector) {
+                    <option [value]="teamSelector">{{ localizedTeamSelectors[teamSelector] }}</option>
+                  }
+                </select>
+
+                @if (match.isGroupMatch) {
+                  <div class="small text-secondary d-flex flex-row align-items-center gap-2" style="width: 0; min-width: 100%;">
+                    <!-- The element style prevents the text from resizing its parent and disrupting the table layout. -->
+                    <i class="bi bi-info-circle"></i>
+                    <span translate="Portal.EditMatchPlan.EditMatch.GroupMatchRestriction"></span>
+                  </div>
+                }
+              </div>
+            </td>
+            <td></td>
+          </tr>
+        }
+      }
+
+      <tr dndPlaceholderRef>
+        <td colspan="8" class="p-0 border border-horizontal border-2 border-primary-subtle"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr />
+
+  <div class="form-text">
+    <i class="bi bi-info-circle"></i>
+    <span class="ms-2" translate="Portal.EditMatchPlan.SaveNotice"></span>
+  </div>
+
+  <hr />
+
+  <div class="d-flex flex-row align-items-center gap-2">
+    @if (!canSave) {
+      <div class="text-danger fw-bold small d-flex flex-row gap-2">
+        <span translate="Portal.EditMatchPlan.AcceptWarningNotice"></span>
+      </div>
+    }
+
+    <div class="flex-grow-1"></div>
+    <div [ngClass]="{ 'tp-cursor-not-allowed': !canSave }">
+      <tp-action-button [type]="'success'" [title]="'Portal.EditMatchPlan.Submit'" [disabled]="!canSave" (click)="saveButtonClicked()" />
+    </div>
+  </div>
+</tp-page-frame>

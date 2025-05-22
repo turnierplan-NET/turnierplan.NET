@@ -1,0 +1,134 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using FluentValidation;
+using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
+using Turnierplan.App.Converters;
+using Turnierplan.App.Extensions;
+using Turnierplan.App.Helpers;
+using Turnierplan.App.Mapping;
+using Turnierplan.App.OpenApi;
+using Turnierplan.Core.User;
+using Turnierplan.Dal;
+using Turnierplan.Dal.Extensions;
+using Turnierplan.ImageStorage.Extensions;
+using Turnierplan.Localization.Extensions;
+using Turnierplan.PdfRendering.Extensions;
+
+ValidatorOptions.Global.LanguageManager.Enabled = false;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddApplicationInsightsTelemetry();
+
+builder.Services.AddTurnierplanDataAccessLayer(builder.Configuration);
+builder.Services.AddTurnierplanDocumentRendering(builder.Configuration.GetValue<string>("ApplicationUrl")!);
+builder.Services.AddTurnierplanImageStorage(builder.Configuration.GetSection("ImageStorage"));
+builder.Services.AddTurnierplanLocalization();
+builder.Services.AddTurnierplanSecurity(builder.Configuration.GetSection("Identity"));
+
+builder.Services.AddSingleton<IMapper, Mapper>();
+builder.Services.AddScoped<IDeletionHelper, DeletionHelper>();
+
+builder.Services.AddHealthChecks();
+builder.Services.AddRazorPages();
+
+builder.Services.AddOpenApi("turnierplan", options =>
+{
+    options.AddOperationTransformer<PdfResponseOperationTransformer>();
+    options.AddSchemaTransformer<EnumSchemaTransformer>();
+});
+
+builder.Services.Configure<JsonOptions>(configure =>
+{
+    configure.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    configure.SerializerOptions.PropertyNameCaseInsensitive = true;
+    configure.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    configure.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    configure.SerializerOptions.Converters.Add(new JsonPublicIdConverter());
+});
+
+builder.Services.Configure<RouteHandlerOptions>(options => options.ThrowOnBadRequest = false);
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+
+    app.MapScalarApiReference(configure =>
+    {
+        configure.Title = "turnierplan.NET";
+        configure.Favicon = "/favicon.ico";
+        configure.OpenApiRoutePattern = "/openapi/turnierplan.json";
+    });
+}
+
+app.MapHealthChecks("/health");
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.Map(string.Empty, (HttpContext context) =>
+{
+    context.Response.StatusCode = StatusCodes.Status303SeeOther;
+    context.Response.Headers.Location = "/portal/login";
+});
+
+app.MapTurnierplanEndpoints();
+app.MapImageStorageEndpoint();
+app.MapRazorPages();
+
+app.Use((httpContext, next) =>
+{
+    if (httpContext.Request.Path.HasValue && (httpContext.Request.Path.Value.Equals("/portal") || httpContext.Request.Path.Value.StartsWith("/portal/")))
+    {
+        httpContext.Request.Path = "/portal.html";
+        httpContext.Response.Headers.Append("Cache-Control", "no-store");
+
+        // Set endpoint to null so the static files middleware will handle the request.
+        httpContext.SetEndpoint(null);
+    }
+
+    return next(httpContext);
+});
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
+if (!string.IsNullOrWhiteSpace(app.Configuration.GetDatabaseConnectionString()))
+{
+    using var scope = app.Services.CreateScope();
+
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    var context = scope.ServiceProvider.GetRequiredService<TurnierplanContext>();
+
+    await context.Database.MigrateAsync().ConfigureAwait(false);
+
+    var userCount = await context.Users.CountAsync().ConfigureAwait(false);
+
+    if (userCount == 0)
+    {
+        const string initialEmail = "admin@example.com";
+        var initialPassword = Guid.NewGuid().ToString();
+
+        // The available roles are inserted by the EFCore migration
+        var administratorRole = await context.Roles.Where(role => role.Id == UserRoles.Administrator.Id).SingleAsync().ConfigureAwait(false);
+
+        var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
+        var initialUser = new User("Administrator", initialEmail);
+
+        initialUser.AddRole(administratorRole);
+        initialUser.UpdatePassword(passwordHasher.HashPassword(initialUser, initialPassword));
+
+        await context.Users.AddAsync(initialUser).ConfigureAwait(false);
+        await context.SaveChangesAsync().ConfigureAwait(false);
+
+        logger.LogWarning("An initial user was created. You can log in using \"{email}\" and the password \"{password}\".", initialEmail, initialPassword);
+        logger.LogWarning("IMMEDIATELY change this password when running in a production environment!");
+    }
+}
+
+app.Run();

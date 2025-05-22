@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate="Portal.ViewTournament.AssignVenueDialog.Title"></h4>
+  <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body d-flex flex-column gap-2">
+  <div class="mb-2" translate="Portal.ViewTournament.AssignVenueDialog.Info"></div>
+  @if (isLoading) {
+    <tp-small-spinner />
+  } @else {
+    <div class="me-4 d-flex flex-row align-items-center gap-4">
+      @if (venues.length === 0) {
+        <span class="fst-italic flex-grow-1" translate="Portal.ViewTournament.AssignVenueDialog.NoVenues"></span>
+      } @else {
+        <select id="venueDropdown" class="form-select flex-grow-1" [(ngModel)]="currentVenueId">
+          <option value="" class="text-secondary" translate="Portal.ViewTournament.AssignVenueDialog.NoVenueOption"></option>
+          @for (venue of venues; track venue.id) {
+            <option [value]="venue.id">{{ venue.name }}</option>
+          }
+        </select>
+      }
+    </div>
+  }
+</div>
+<div class="modal-footer">
+  @if (isSaving) {
+    <tp-small-spinner class="me-2" />
+  }
+  <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" [disabled]="isSaving" [ngClass]="{ 'pe-none': isLoading || isSaving }" (click)="saveVenue()" />
+</div>

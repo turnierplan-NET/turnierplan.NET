@@ -1,0 +1,21 @@
+@model Ranking.DataModel
+
+<table class="table border shadow-sm" style="max-width: 800px;">
+    <thead>
+    <tr>
+        <th>Pos.</th>
+        <th>Mannschaft</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for (var ranking = 1; ranking <= Model.Tournament.Teams.Count; ranking++)
+    {
+        var team = Model.Tournament.Teams.FirstOrDefault(x => x.Ranking == ranking);
+
+        <tr>
+            <td class="ps-3">@(ranking).</td>
+            <td style="word-break: break-word;">@(team?.Name ?? string.Empty)</td>
+        </tr>
+    }
+    </tbody>
+</table>

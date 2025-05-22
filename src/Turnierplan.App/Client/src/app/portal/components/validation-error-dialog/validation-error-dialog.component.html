@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate="Portal.ConfigureTournament.ValidationErrors.Title"></h4>
+  <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body d-flex flex-column gap-2">
+  <div class="mb-4" translate="Portal.ConfigureTournament.ValidationErrors.Info"></div>
+  <ul>
+    @for (error of _errors; track error) {
+      <li>{{ error }}</li>
+    }
+  </ul>
+</div>
+<div class="modal-footer">
+  <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Done'" (click)="modal.dismiss()" />
+</div>

@@ -1,0 +1,161 @@
+@using Turnierplan.App.Extensions
+@using Turnierplan.Core.Tournament
+@model MatchPlan.DataModel
+
+@{
+    var orderedMatches = Model.Tournament.Matches.OrderBy(x => x.Index).ToList();
+    var showCourtColumn = orderedMatches.Select(x => x.Court).Distinct().Count() > 1;
+    var showKickoffWithSeconds = orderedMatches.Any(x => x.Kickoff is not null && x.Kickoff.Value.Second != 0);
+}
+
+<table class="table border shadow-sm w-100">
+    <thead>
+    <tr>
+        <th class="d-none d-md-table-cell text-center">Nr.</th>
+        <th class="text-center">
+            <span class="d-block d-md-none">Grp.</span>
+            <span class="d-none d-md-block">Gruppe</span>
+        </th>
+        @if (showCourtColumn)
+        {
+            <th class="text-center">Platz</th>
+        }
+        <th class="text-center">Anstoß</th>
+        <th colspan="2">Spielpaarung</th>
+        <th class="text-center">Ergebnis</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (!orderedMatches.Any())
+    {
+        <tr>
+            <td colspan="@(showCourtColumn ? 7 : 6)">Es gibt keine Spiele.</td>
+        </tr>
+    }
+
+    @for (var index = 0; index < orderedMatches.Count; index++)
+    {
+        var match = orderedMatches[index];
+
+        if (index > 0)
+        {
+            var previousMatch = orderedMatches[index - 1];
+            var displayMatchType = false;
+
+            if (match.IsGroupMatch)
+            {
+                displayMatchType = !previousMatch.IsGroupMatch;
+            }
+            else if (match.IsDecidingMatch)
+            {
+                displayMatchType = match.PlayoffPosition != previousMatch.PlayoffPosition || match.FinalsRound != previousMatch.FinalsRound;
+            }
+
+            if (displayMatchType)
+            {
+                <tr>
+                    <th class="text-center" colspan="@(showCourtColumn ? 7 : 6)">@(Model.Localization.LocalizeMatchDisplayName(match))</th>
+                </tr>
+            }
+        }
+
+        <tr>
+            <td class="d-none d-md-table-cell text-center align-middle">@(match.Index)</td>
+            <td class="text-center align-middle">@(match.Group?.AlphabeticalId.ToString() ?? string.Empty)</td>
+            @if (showCourtColumn)
+            {
+                <td class="text-center align-middle">@(match.Court + 1)</td>
+            }
+            <td class="text-center align-middle" id="match_kickoff_@(match.Id)"></td>
+            <td class="align-middle">
+                <div class="d-flex flex-column">
+                    <span style="word-break: break-word;">@(match.TeamA?.Name ?? string.Empty)</span>
+                    @if (!match.IsGroupMatch)
+                    {
+                        <span class="small">@(Model.Localization.LocalizeTeamSelector(match.TeamSelectorA, Model.Tournament))</span>
+                    }
+                </div>
+            </td>
+            <td class="align-middle">
+                <div class="d-flex flex-column">
+                    <span style="word-break: break-word;">@(match.TeamB?.Name ?? string.Empty)</span>
+                    @if (!match.IsGroupMatch)
+                    {
+                        <span class="small">@(Model.Localization.LocalizeTeamSelector(match.TeamSelectorB, Model.Tournament))</span>
+                    }
+                </div>
+            </td>
+            @if (match.IsFinished || match.IsCurrentlyPlaying == true)
+            {
+                if (Model.Tournament.PresentationConfiguration.ShowResults is PresentationConfiguration.ResultsMode.NoResults)
+                {
+                    <td class="text-center align-middle">
+                        @if (match.IsCurrentlyPlaying == true)
+                        {
+                            <span class="text-danger fw-bold" style="font-size: 0.75em;">
+                                <span class="text-nowrap">&#x1F534; LIVE</span>
+                            </span>
+                        }
+                        else
+                        {
+                            <img src="./assets/check-circle.svg" alt="Dieses Spiel ist beendet" />
+                        }
+                    </td>
+                }
+                else
+                {
+                    <td class="align-middle">
+                        <div class="d-flex flex-column flex-lg-row gap-1 gap-lg-2 justify-content-center align-items-center">
+                            <div class="text-nowrap">
+                                <span>@(match.ScoreA?.ToString() ?? string.Empty)</span>
+                                <span class="ms-1">:</span>
+                                <span class="ms-1">@(match.ScoreB?.ToString() ?? string.Empty)</span>
+
+                                @switch (match.OutcomeType)
+                                {
+                                    case MatchOutcomeType.AfterOvertime:
+                                        <span class="ms-1">n.V.</span>
+                                        break;
+                                    case MatchOutcomeType.AfterPenalties:
+                                        <span class="ms-1">n.E.</span>
+                                        break;
+                                    case MatchOutcomeType.SpecialScoring:
+                                        <span class="ms-1">(§)</span>
+                                        break;
+                                }
+                            </div>
+                            @if (match.IsCurrentlyPlaying == true)
+                            {
+                                <span class="text-danger fw-bold" style="font-size: 0.75em;">
+                                    <span class="text-nowrap">&#x1F534; LIVE</span>
+                                </span>
+                            }
+                        </div>
+                    </td>
+                }
+            }
+            else
+            {
+                <td></td>
+            }
+        </tr>
+    }
+    </tbody>
+</table>
+
+@{
+    var applyKickoffScript = string.Join(string.Empty, orderedMatches
+        .Where(x => x.Kickoff.HasValue)
+        .Select(match => $"mpak({match.Id}, {match.Kickoff!.Value.GetMillisecondsSinceUtc()});"));
+}
+
+<script>
+    function mpak(id, time) {
+        const date = new Date(time);
+        const element = document.getElementById('match_kickoff_' + id)
+        element.innerHTML = @(showKickoffWithSeconds ? "true" : "false")
+            ? `${twoDigit(date.getHours())}:${twoDigit(date.getMinutes())}:${twoDigit(date.getSeconds())}`
+            : `${twoDigit(date.getHours())}:${twoDigit(date.getMinutes())}`;
+    }
+    @(applyKickoffScript)
+</script>

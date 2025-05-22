@@ -1,0 +1,44 @@
+<ng-container *tpLoadingState="loadingState">
+  <tp-page-frame [title]="'Portal.LandingPage.Title' | translate" [navigationTabs]="pages">
+    <ng-template #buttons>
+      <tp-action-button [title]="'Portal.LandingPage.NewOrganization'"
+                        [type]="'outline-success'"
+                        [icon]="'plus-circle'"
+                        [routerLink]="'create/organization'" />
+    </ng-template>
+    <ng-template #content>
+      <div class="card">
+        @if (organizations.length === 0) {
+          <div class="card-body py-5 d-flex flex-column align-items-center gap-5">
+            <tp-illustration [name]="'select'"></tp-illustration>
+            <span translate="Portal.LandingPage.NoOrganizations" class="tp-text-pre-wrap text-center"></span>
+          </div>
+        } @else {
+          <div class="card-header d-flex flex-row align-items-center">
+            <tp-badge context="LandingPage" label="OrganizationCount" [value]="organizations.length" />
+          </div>
+          <div class="card-body pb-0" *tpHasRole="administratorRoleId">
+            <tp-alert [type]="'warning'" [icon]="'exclamation-triangle'" [text]="'Portal.LandingPage.AdministratorWarning'" />
+          </div>
+          <div class="card-body d-flex flex-row flex-wrap gap-3">
+            <div *ngFor="let organization of organizations" class="card shadow-sm">
+              <div class="card-body">
+                <div class="fs-5 fw-bold card-title">
+                  <i class="bi bi-boxes"></i>
+                  <span class="ms-2">{{ organization.name }}</span>
+                </div>
+                <div class="card-text small">ID: {{ organization.id }}</div>
+              </div>
+              <div class="card-footer text-end">
+                <a class="card-link" [routerLink]="'organization/' + organization.id">
+                  <span translate="Portal.LandingPage.OrganizationTile.Open"></span>
+                  <i class="ms-2 bi bi-arrow-right-circle" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </ng-template>
+  </tp-page-frame>
+</ng-container>

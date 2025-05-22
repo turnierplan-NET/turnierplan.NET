@@ -1,0 +1,157 @@
+@page
+@using Turnierplan.App.Pages.Shared.Components.Groups
+@using Turnierplan.App.Pages.Shared.Components.Header
+@using Turnierplan.App.Pages.Shared.Components.MatchPlan
+@using Turnierplan.App.Pages.Shared.Components.Ranking
+@using Turnierplan.Core.Tournament
+@using Turnierplan.ImageStorage
+@using Turnierplan.Localization
+@model Turnierplan.App.Pages.Tournament
+@inject ILocalizationProvider LocalizationProvider
+@inject IImageStorage ImageStorage
+
+@{
+    Layout = "_Layout";
+
+    if (!LocalizationProvider.TryGetLocalization("de", out var localization))
+    {
+        throw new InvalidOperationException();
+    }
+
+    var tournament = Model.Data;
+    ViewData["Title"] = tournament is null ? "Turnier nicht gefunden" : tournament.Name;
+}
+
+<div class="container px-2 px-lg-5">
+    @if (tournament is null)
+    {
+        <div class="text-danger">
+            Der Link ist ungültig oder das gesuchte Turnier existiert nicht.
+        </div>
+    }
+
+    @if (tournament is not null)
+    {
+        var displayVenueTile = tournament.Venue is not null && (!string.IsNullOrWhiteSpace(tournament.Venue.Description) || tournament.Venue.AddressDetails.Count > 0 || tournament.Venue.ExternalLinks.Count > 0);
+
+        <script>
+            let tournamentPageShowVenueInformation = false;
+
+            function toggleVenueInformation() {
+                tournamentPageShowVenueInformation = !tournamentPageShowVenueInformation;
+
+                const venueInformationDiv = document.getElementById('venue-information');
+                const venueToggleVerbSpan = document.getElementById('venue-toggle-verb');
+
+                if (!venueInformationDiv || !venueToggleVerbSpan) {
+                    return;
+                }
+
+                if (tournamentPageShowVenueInformation) {
+                    venueInformationDiv.classList.add('d-flex');
+                    venueInformationDiv.classList.remove('d-none');
+                    venueToggleVerbSpan.innerHTML = 'weniger';
+                } else {
+                    venueInformationDiv.classList.remove('d-flex');
+                    venueInformationDiv.classList.add('d-none');
+                    venueToggleVerbSpan.innerHTML = 'mehr';
+                }
+            }
+        </script>
+
+        <div class="mb-3 bg-white border p-3 pe-4 shadow-sm d-flex flex-column flex-lg-row gap-3 align-items-stretch align-items-lg-center">
+            <div class="align-self-stretch d-flex d-lg-none flex-row justify-content-evenly">
+                @{ /* This displays the organizer and/or sponsor logo on the top side when viewing on a small screen */ }
+                @if (tournament.PresentationConfiguration.ShowOrganizerLogo && tournament.OrganizerLogo is not null)
+                {
+                    <img style="width: 9em;" src="@ImageStorage.GetFullImageUrl(tournament.OrganizerLogo)" alt="@tournament.OrganizerLogo.Name"/>
+                }
+                @if (tournament.PresentationConfiguration.ShowSponsorLogo && tournament.SponsorLogo is not null)
+                {
+                    <img style="width: 9em;" src="@ImageStorage.GetFullImageUrl(tournament.SponsorLogo)" alt="@tournament.SponsorLogo.Name"/>
+                }
+            </div>
+
+            <div class="flex-lg-grow-1">
+                @await Component.InvokeAsync(typeof(Header), new { tournament, showKickoffAndVenue = true, allowVenueExpand = displayVenueTile })
+            </div>
+
+            @if (tournament.PresentationConfiguration.ShowOrganizerLogo && tournament.OrganizerLogo is not null)
+            {
+                // This displays the organizer logo on the right side when viewing on a large screen
+                <img style="width: 9em;" class="d-none d-lg-block" src="@ImageStorage.GetFullImageUrl(tournament.OrganizerLogo)" alt="@tournament.OrganizerLogo.Name"/>
+            }
+
+            @if (tournament.PresentationConfiguration.ShowSponsorLogo && tournament.SponsorLogo is not null)
+            {
+                // This displays the sponsor logo on the right side when viewing on a large screen
+                <img style="width: 9em;" class="d-none d-lg-block" src="@ImageStorage.GetFullImageUrl(tournament.SponsorLogo)" alt="@tournament.SponsorLogo.Name"/>
+            }
+        </div>
+
+        if (displayVenueTile && tournament.Venue is not null)
+        {
+            // The 'd-none class is replaced with 'd-flex' when the user requests the data to be shown
+            <div class="mb-3 d-none flex-column bg-white border p-3 shadow-sm" id="venue-information">
+                <div class="fw-bold mb-2">@tournament.Venue.Name</div>
+
+                @if (!string.IsNullOrWhiteSpace(tournament.Venue.Description))
+                {
+                    <div class="mb-2">@tournament.Venue.Description</div>
+                }
+
+                @if (tournament.Venue.AddressDetails.Count > 0)
+                {
+                    <div class="mb-2">
+                        @foreach (var line in tournament.Venue.AddressDetails)
+                        {
+                            <div>@line</div>
+                        }
+                    </div>
+                }
+
+                @if (tournament.Venue.ExternalLinks.Count > 0)
+                {
+                    @foreach (var link in tournament.Venue.ExternalLinks)
+                    {
+                        <div>
+                            <a href="@link" target="_blank">@link</a>
+                        </div>
+                    }
+
+                    <div class="mt-3 mb-0 small text-danger-emphasis">
+                        <span class="fw-bold">Achtung:</span>
+                        <span>Externe Links können vom Veranstalter frei festgelegt werden</span>
+                    </div>
+                }
+            </div>
+        }
+
+        <div class="mt-5">
+            @{ /* Ensures the correct margin regardless whether the venue information is expanded or not */ }
+        </div>
+
+        if (!tournament.Groups.Any())
+        {
+            <div>Es gibt keine Gruppen.</div>
+        }
+
+        @await Component.InvokeAsync(typeof(Groups), new { tournament, localization, inlineGroupNames = false })
+
+        @if (tournament.SponsorBanner is not null)
+        {
+            <div class="mt-5 d-flex flex-column align-items-center">
+                <img style="max-width: 900px;" src="@ImageStorage.GetFullImageUrl(tournament.SponsorBanner)" alt="@tournament.SponsorBanner.Name"/>
+            </div>
+        }
+
+        <h5 class="mt-5 mb-3">Spielplan</h5>
+        @await Component.InvokeAsync(typeof(MatchPlan), new { tournament, localization })
+
+        @if (tournament.PresentationConfiguration.ShowResults is PresentationConfiguration.ResultsMode.Default)
+        {
+            <h5 class="mt-5 mb-3">Platzierungen</h5>
+            @await Component.InvokeAsync(typeof(Ranking), new { tournament })
+        }
+    }
+</div>

@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../version.xml" />
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.23.0" />
+    <PackageReference Include="QuestPDF" Version="2024.7.3" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="2.88.9" />
+    <PackageReference Include="SkiaSharp.QrCode" Version="0.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Turnierplan.Dal\Turnierplan.Dal.csproj" />
+    <ProjectReference Include="..\Turnierplan.ImageStorage\Turnierplan.ImageStorage.csproj" />
+    <ProjectReference Include="..\Turnierplan.Localization\Turnierplan.Localization.csproj" />
+  </ItemGroup>
+
+</Project>

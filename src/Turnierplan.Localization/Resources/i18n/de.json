@@ -1,0 +1,122 @@
+﻿{
+  "Documents": {
+    "Types": {
+      "MatchPlan": "Spielplan",
+      "RefereeCards": "Schiri-Karten"
+    },
+    "Metadata": {
+      "Creator": "turnierplan.NET",
+      "Producer": "turnierplan.NET"
+    },
+    "Common": {
+      "DefaultGroupName": "Gruppe {0}",
+      "MatchTypes": {
+        "GroupMatch": "Gruppenspiel",
+        "Final": "Finale",
+        "RankingMatch": "Spiel um Platz {0}",
+        "SemiFinal": "Halbfinale",
+        "QuarterFinal": "Viertelfinale",
+        "EighthFinal": "Achtelfinale",
+        "XFinal": "{0}telfinale"
+      },
+      "TeamSelectors": {
+        "GroupDefinition": "Mannschaft {0}, {1}",
+        "GroupResults": "{0}. {1}",
+        "MatchWinner": "Gewinner Spiel {0}",
+        "MatchLoser": "Verlierer Spiel {0}",
+        "NthRanked": {
+          "Ordinals": {
+            "1": "Bester",
+            "2": "Zweitbester",
+            "3": "Drittbester",
+            "4": "Viertbester",
+            "X": "{0}.-bester"
+          },
+          "Rankings": {
+            "1": "erster",
+            "2": "zweiter",
+            "3": "dritter",
+            "4": "vierter",
+            "5": "fünfter",
+            "X": "{0}ter"
+          },
+          "Combined": "{0} Gruppen{1}"
+        }
+      },
+      "RomanNumerals": {
+        "1": "I",
+        "2": "II",
+        "3": "III",
+        "4": "IV",
+        "5": "V",
+        "6": "VI",
+        "7": "VII",
+        "8": "VIII",
+        "9": "IX",
+        "10": "X"
+      }
+    },
+    "MatchPlan": {
+      "TournamentKickoff": {
+        "DateOnly": "am {0:dd.MM.yyyy}",
+        "DateAndDayOfWeek": "am {0:dddd}, den {0:dd.MM.yyyy}",
+        "DateAndDayOfWeekForenoon": "am {0:dddd}vormittag, den {0:dd.MM.yyyy}",
+        "DateAndDayOfWeekAfternoon": "am {0:dddd}nachmittag, den {0:dd.MM.yyyy}",
+        "DateAndDayOfWeekEvening": "am {0:dddd}abend, den {0:dd.MM.yyyy}"
+      },
+      "Sections": {
+        "Participants": "Teilnehmende Mannschaften",
+        "GroupPhase": "Spielplan Vorrunde",
+        "GroupPhaseResults": "Abschlusstabellen Vorrunde",
+        "FinalsPhase": "Endrunde",
+        "Ranking": "Platzierungen"
+      },
+      "MatchTimes": {
+        "KickoffPre": "Beginn: ",
+        "Kickoff": "{0:HH:mm}",
+        "KickoffPost": " Uhr",
+        "PlayTimePre": "Spielzeit: ",
+        "PlayTime": "{0:D1}:{1:D2}",
+        "PlayTimePost": {
+          "One": " Minute",
+          "Many": " Minuten"
+        },
+        "PauseTimePre": "Pause: ",
+        "PauseTime": "{0:D1}:{1:D2}",
+        "PauseTimePost": {
+          "One": " Minute",
+          "Many": " Minuten"
+        }
+      },
+      "Headers": {
+        "Index": "Nr.",
+        "Group": "Grp.",
+        "Court": "Platz",
+        "Kickoff": "Beginn",
+        "Teams": "Spielpaarung",
+        "Outcome": "Ergebnis",
+        "Points": "Pkt.",
+        "Score": "Tore",
+        "ScoreDiff": "Diff."
+      },
+      "MatchKickoffTime": "{0:HH:mm}",
+      "QrCodeInfo1": "Live-Spielplan mit Ergebnissen und Tabellen ist online verfügbar.",
+      "QrCodeInfo2": "Einfach den QR-Code scannen!"
+    },
+    "Receipts": {
+      "CombinedTeams": "Startgebühr für {0} Mannschaften",
+      "Line1": "Die Startgebühr in Höhe von ",
+      "Amount": "{0:F2} {1}",
+      "Line2": "haben wir dankend erhalten.",
+      "SignatureDate": "Datum: {0:dd.MM.yyyy}",
+      "SignatureDateLocation": "{0}, den {1:dd.MM.yyyy}",
+      "Signature": "Unterschrift:",
+      "SignatureInfo": "(Turnierleitung)"
+    },
+    "RefereeCards": {
+      "MatchInfo": "Spiel {0}",
+      "MatchInfoWithKickoff": "Spiel {0} | Anstoß: {1:HH:mm}",
+      "RefereeTeam": "SR-Team: {0}"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate="Portal.ViewTournament.Documents.ConfigureModal.Title"></h4>
+  <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  @if (initError) {
+    <!-- This error should never happen so don't bother translating it. See comment in ngAfterViewInit() -->
+    <div class="fw-bold text-danger">Initialization error occurred.</div>
+  }
+
+  <ng-container #configContainer></ng-container>
+</div>
+<div class="modal-footer">
+  <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
+  <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" [disabled]="isSaving" (click)="saveChanges()" />
+</div>

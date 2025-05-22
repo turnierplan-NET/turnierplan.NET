@@ -1,0 +1,87 @@
+﻿[
+  {
+    "MatchDefinitions": [
+      [ "A1", "A2" ]
+    ],
+    "GroupCount": 1
+  },
+  {
+    "MatchDefinitions": [
+      [ "A1", "B1" ]
+    ],
+    "GroupCount": 2
+  },
+  {
+    "MatchDefinitions": [
+      [ "A1", "A4" ],
+      [ "A2", "A3" ]
+    ],
+    "GroupCount": 1
+  },
+  {
+    "MatchDefinitions": [
+      [ "A1", "B2" ],
+      [ "B1", "A2" ]
+    ],
+    "GroupCount": 2
+  },
+  {
+    "MatchDefinitions": [
+      [ "A1", "B1" ],
+      [ "C1", "1B2" ]
+    ],
+    "GroupCount": 3
+  },
+  {
+    "MatchDefinitions": [
+      [ "A1", "B1" ],
+      [ "C1", "D1" ]
+    ],
+    "GroupCount": 4
+  },
+  {
+    "MatchDefinitions": [
+      [ "A1", "B4" ],
+      [ "A2", "B3" ],
+      [ "A3", "B2" ],
+      [ "A4", "B1" ]
+    ],
+    "GroupCount": 2
+  },
+  {
+    "MatchDefinitions": [
+      [ "A1", "1B3" ],
+      [ "B1", "2B3" ],
+      [ "A2", "C2" ],
+      [ "B2", "C1" ]
+    ],
+    "GroupCount": 3
+  },
+  {
+    "MatchDefinitions": [
+      [ "A1", "C2" ],
+      [ "B1", "D2" ],
+      [ "C1", "A2" ],
+      [ "D1", "B2" ]
+    ],
+    "GroupCount": 4
+  },
+  {
+    "MatchDefinitions": [
+      [ "A1", "B1" ],
+      [ "C1", "1B2" ],
+      [ "D1", "2B2" ],
+      [ "E1", "3B2" ]
+    ],
+    "GroupCount": 5
+  },
+  {
+    "MatchDefinitions": [
+      [ "A1", "B1" ],
+      [ "C1", "D1" ],
+      [ "E1", "1B2" ],
+      [ "F1", "2B2" ]
+    ],
+    "GroupCount": 6
+  }
+]

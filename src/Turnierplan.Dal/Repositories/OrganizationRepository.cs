@@ -1,0 +1,47 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Turnierplan.Core.Organization;
+using Turnierplan.Core.PublicId;
+
+namespace Turnierplan.Dal.Repositories;
+
+internal sealed class OrganizationRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Organization>(context, context.Organizations), IOrganizationRepository
+{
+    public Task<Organization?> GetByPublicIdAsync(PublicId id, IOrganizationRepository.Include include)
+    {
+        var query = DbSet.Where(o => o.PublicId == id);
+
+        if (include.HasFlag(IOrganizationRepository.Include.Tournaments))
+        {
+            query = query.Include(x => x.Tournaments).ThenInclude(x => x.Folder);
+        }
+
+        if (include.HasFlag(IOrganizationRepository.Include.Venues))
+        {
+            query = query.Include(x => x.Venues);
+        }
+
+        if (include.HasFlag(IOrganizationRepository.Include.Folders))
+        {
+            query = query.Include(x => x.Folders);
+        }
+
+        if (include.HasFlag(IOrganizationRepository.Include.Images))
+        {
+            query = query.Include(x => x.Images);
+        }
+
+        if (include.HasFlag(IOrganizationRepository.Include.ApiKeys))
+        {
+            query = query.Include(x => x.ApiKeys);
+        }
+
+        query = query.AsSplitQuery();
+
+        return query.FirstOrDefaultAsync();
+    }
+
+    public Task<List<Organization>> GetByOwnerUserIdAsync(Guid ownerUserId)
+    {
+        return DbSet.Where(o => o.OwnerId == ownerUserId).ToListAsync();
+    }
+}

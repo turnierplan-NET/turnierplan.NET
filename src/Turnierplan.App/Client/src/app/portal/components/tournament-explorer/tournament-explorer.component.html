@@ -1,0 +1,65 @@
+<div class="m-0 row">
+  <div class="p-0 col-12 col-lg-4 border-bottom border-lg-bottom-0 border-lg-end">
+    <div class="p-3 d-flex flex-column">
+      <tp-folder-tree [treeData]="treeData" [selectedFolder]="currentId" (selectedFolderChange)="toggleTreeNode($event)" />
+    </div>
+  </div>
+  <div class="p-0 col-12 col-lg-8">
+    @if (currentEntry) {
+      <div class="p-3 d-flex flex-column">
+        @if (currentEntry.folderId) {
+          <div class="mb-4 d-flex flex-row align-items-center gap-2">
+            <div class="fs-5 fw-bold">{{ currentEntry.label }}</div>
+            @if (isUpdatingFolderName) {
+              <tp-small-spinner class="ms-2" />
+            } @else {
+              <tp-rename-button translationKey="Portal.ViewOrganization.TournamentExplorer.RenameFolder"
+                                [displayLabel]="false"
+                                [allowReset]="false"
+                                [maxLength]="60"
+                                [current]="currentEntry.label"
+                                (renamed)="renameFolder(currentEntry.folderId, $event)" />
+            }
+
+            <span class="flex-grow-1"></span>
+            <tp-action-button icon="calendar-range"
+                              type="outline-dark"
+                              [title]="'Portal.ViewOrganization.TournamentExplorer.Timetable'"
+                              [routerLink]="'../../timetable/' + currentEntry.folderId"/>
+            <tp-action-button icon="calculator"
+                              type="outline-dark"
+                              [title]="'Portal.ViewOrganization.TournamentExplorer.Statistics'"
+                              [routerLink]="'../../statistics/' + currentEntry.folderId"/>
+          </div>
+        }
+
+        <div class="d-flex flex-row flex-wrap gap-3">
+          @for (tournament of currentEntry.tournaments; track tournament.id) {
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <div class="fs-5 fw-bold card-title">{{ tournament.name }}</div>
+              </div>
+              <div class="card-footer d-flex">
+                @switch (tournament.visibility) {
+                  @case ('Private') {
+                    <tp-tooltip-icon [icon]="'lock'" [iconClass]="'text-danger'" [margin]="false" [tooltipText]="'Portal.ViewOrganization.TournamentExplorer.Tile.Visibility.Private'" />
+                  }
+                  @case ('Public') {
+                    <tp-tooltip-icon [icon]="'globe-europe-africa'" [iconClass]="'text-success'" [margin]="false" [tooltipText]="'Portal.ViewOrganization.TournamentExplorer.Tile.Visibility.Public'" />
+                  }
+                }
+                <div class="flex-grow-1"></div>
+                <a class="ms-3 card-link" [routerLink]="'/portal/tournament/' + tournament.id">
+                  <span translate="Portal.ViewOrganization.TournamentExplorer.Tile.Open"></span>
+                  <i class="ms-2 bi bi-arrow-right-circle" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          } @empty {
+            <div class="fst-italic" translate="Portal.ViewOrganization.TournamentExplorer.EmptyFolder"></div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

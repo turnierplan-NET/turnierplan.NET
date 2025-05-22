@@ -1,0 +1,30 @@
+html, body, .overlay-background {
+  background-color: #eee;
+}
+
+.header-logo {
+  img {
+    height: 2em;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+@media (width < 900px) {
+  .footer-section {
+    width: 100%;
+    margin-bottom: 1em;
+  }
+}
+
+@media (width >= 900px) {
+  .footer-section {
+    width: 50%;
+  }
+
+  .footer-section-right a {
+    justify-content: end;
+  }
+}

@@ -1,0 +1,97 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnierplan.Core", "Turnierplan.Core\Turnierplan.Core.csproj", "{9749FC1D-7A8C-4810-981E-43E6FC4568C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnierplan.Core.Test.Unit", "Turnierplan.Core.Test.Unit\Turnierplan.Core.Test.Unit.csproj", "{E470B250-3682-4462-ADF6-52310773524E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnierplan.Dal", "Turnierplan.Dal\Turnierplan.Dal.csproj", "{F6E522F6-FF28-4877-9C6C-BD3C9DA5D1B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnierplan.Dal.Test.Unit", "Turnierplan.Dal.Test.Unit\Turnierplan.Dal.Test.Unit.csproj", "{2E974732-60EC-4AA3-9DB0-3AF56ED34BE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnierplan.Localization.Test.Unit", "Turnierplan.Localization.Test.Unit\Turnierplan.Localization.Test.Unit.csproj", "{8591D065-267C-4100-80F2-0BBC038D04B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnierplan.App", "Turnierplan.App\Turnierplan.App.csproj", "{9600E11A-88CC-4152-A849-CE19531C300C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnierplan.PdfRendering", "Turnierplan.PdfRendering\Turnierplan.PdfRendering.csproj", "{9AC278A7-7E4B-435C-8A28-0128FFF7B89A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnierplan.Localization", "Turnierplan.Localization\Turnierplan.Localization.csproj", "{B74DE86D-5639-49E6-85C3-1C72A139CB4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnierplan.PdfRendering.Test.Unit", "Turnierplan.PdfRendering.Test.Unit\Turnierplan.PdfRendering.Test.Unit.csproj", "{82CD2098-2466-43C5-9F6A-9FA0E3D641A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnierplan.Adapter", "Turnierplan.Adapter\Turnierplan.Adapter.csproj", "{8DC23BA4-812A-44CF-9079-6BD3142F2E90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnierplan.App.Test.Unit", "Turnierplan.App.Test.Unit\Turnierplan.App.Test.Unit.csproj", "{53A03C1E-3671-4C09-B2A4-DBFB1F4A2604}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnierplan.ImageStorage", "Turnierplan.ImageStorage\Turnierplan.ImageStorage.csproj", "{A59A3A12-63CE-4BEC-B411-C15709391D2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{C2985A45-3D0B-4D1E-A867-67EB4474BB36}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		version.xml = version.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{56957FEA-CDDB-4D12-B25E-0836A4E62A95}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9749FC1D-7A8C-4810-981E-43E6FC4568C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9749FC1D-7A8C-4810-981E-43E6FC4568C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9749FC1D-7A8C-4810-981E-43E6FC4568C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9749FC1D-7A8C-4810-981E-43E6FC4568C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E470B250-3682-4462-ADF6-52310773524E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E470B250-3682-4462-ADF6-52310773524E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E470B250-3682-4462-ADF6-52310773524E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E470B250-3682-4462-ADF6-52310773524E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6E522F6-FF28-4877-9C6C-BD3C9DA5D1B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6E522F6-FF28-4877-9C6C-BD3C9DA5D1B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6E522F6-FF28-4877-9C6C-BD3C9DA5D1B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6E522F6-FF28-4877-9C6C-BD3C9DA5D1B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E974732-60EC-4AA3-9DB0-3AF56ED34BE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E974732-60EC-4AA3-9DB0-3AF56ED34BE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E974732-60EC-4AA3-9DB0-3AF56ED34BE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E974732-60EC-4AA3-9DB0-3AF56ED34BE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8591D065-267C-4100-80F2-0BBC038D04B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8591D065-267C-4100-80F2-0BBC038D04B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8591D065-267C-4100-80F2-0BBC038D04B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8591D065-267C-4100-80F2-0BBC038D04B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9600E11A-88CC-4152-A849-CE19531C300C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9600E11A-88CC-4152-A849-CE19531C300C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9600E11A-88CC-4152-A849-CE19531C300C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9600E11A-88CC-4152-A849-CE19531C300C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AC278A7-7E4B-435C-8A28-0128FFF7B89A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AC278A7-7E4B-435C-8A28-0128FFF7B89A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AC278A7-7E4B-435C-8A28-0128FFF7B89A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AC278A7-7E4B-435C-8A28-0128FFF7B89A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B74DE86D-5639-49E6-85C3-1C72A139CB4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B74DE86D-5639-49E6-85C3-1C72A139CB4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B74DE86D-5639-49E6-85C3-1C72A139CB4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B74DE86D-5639-49E6-85C3-1C72A139CB4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82CD2098-2466-43C5-9F6A-9FA0E3D641A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82CD2098-2466-43C5-9F6A-9FA0E3D641A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82CD2098-2466-43C5-9F6A-9FA0E3D641A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82CD2098-2466-43C5-9F6A-9FA0E3D641A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DC23BA4-812A-44CF-9079-6BD3142F2E90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DC23BA4-812A-44CF-9079-6BD3142F2E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DC23BA4-812A-44CF-9079-6BD3142F2E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DC23BA4-812A-44CF-9079-6BD3142F2E90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53A03C1E-3671-4C09-B2A4-DBFB1F4A2604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53A03C1E-3671-4C09-B2A4-DBFB1F4A2604}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53A03C1E-3671-4C09-B2A4-DBFB1F4A2604}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53A03C1E-3671-4C09-B2A4-DBFB1F4A2604}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A59A3A12-63CE-4BEC-B411-C15709391D2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A59A3A12-63CE-4BEC-B411-C15709391D2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A59A3A12-63CE-4BEC-B411-C15709391D2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A59A3A12-63CE-4BEC-B411-C15709391D2E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{82CD2098-2466-43C5-9F6A-9FA0E3D641A0} = {56957FEA-CDDB-4D12-B25E-0836A4E62A95}
+		{8591D065-267C-4100-80F2-0BBC038D04B8} = {56957FEA-CDDB-4D12-B25E-0836A4E62A95}
+		{2E974732-60EC-4AA3-9DB0-3AF56ED34BE8} = {56957FEA-CDDB-4D12-B25E-0836A4E62A95}
+		{E470B250-3682-4462-ADF6-52310773524E} = {56957FEA-CDDB-4D12-B25E-0836A4E62A95}
+		{53A03C1E-3671-4C09-B2A4-DBFB1F4A2604} = {56957FEA-CDDB-4D12-B25E-0836A4E62A95}
+	EndGlobalSection
+EndGlobal

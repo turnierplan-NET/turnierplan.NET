@@ -1,0 +1,15 @@
+services:
+  turnierplan.database:
+    image: postgres:17.0
+    environment:
+      - POSTGRES_PASSWORD=P@ssw0rd
+      - POSTGRES_DB=turnierplan
+    volumes:
+      - turnierplan-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+volumes:
+  turnierplan-data:
+

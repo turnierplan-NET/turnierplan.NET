@@ -1,0 +1,77 @@
+@if (isInitialized) {
+  <div class="modal-header">
+    <h4 class="modal-title" [translate]="'Portal.ViewTournament.Settings.EditImages.Chooser.Title'"></h4>
+    <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
+  </div>
+  <div class="modal-body d-flex flex-column">
+    @if (isLoadingImages) {
+      <div class="my-4">
+        <tp-loading-indicator [marginY]="false" />
+      </div>
+    } @else if (isInImageDetailView) {
+      <div class="px-3 small text-secondary d-flex flex-row align-items-start gap-2">
+        <i class="bi bi-info-circle align-self-start"></i>
+        <span class="flex-grow-1" [translate]="'Portal.ViewTournament.Settings.EditImages.Chooser.DetailView.Title'"></span>
+      </div>
+      
+      <div class="px-3 mt-4 d-flex flex-row align-items-center justify-content-evenly">
+        <img style="max-width: 9em;" [src]="imageForDetailView!.url" [alt]="imageForDetailView!.name" [title]="imageForDetailView!.name" />
+        <div>
+          <div translate="Portal.ViewTournament.Settings.EditImages.Chooser.DetailView.Name" [translateParams]="{ value: imageForDetailView!.name }"></div>
+          <div translate="Portal.ViewTournament.Settings.EditImages.Chooser.DetailView.CreatedAt" [translateParams]="{ value: imageForDetailView!.createdAt | translateDate : 'medium' }"></div>
+          <div translate="Portal.ViewTournament.Settings.EditImages.Chooser.DetailView.FileSize" [translateParams]="{ value: getRoundedFileSize(imageForDetailView!.fileSize) }"></div>
+          <div translate="Portal.ViewTournament.Settings.EditImages.Chooser.DetailView.Resolution" [translateParams]="{ width: imageForDetailView!.width, height: imageForDetailView!.height }"></div>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+          <tp-delete-button (confirmed)="deleteCurrentViewedImage()" />
+        </div>
+      </div>
+    } @else {
+      <div class="px-3 d-flex flex-row align-items-center gap-3">
+        <div class="flex-grow-1 small text-secondary d-flex flex-row align-items-start gap-2">
+          <i class="bi bi-info-circle align-self-start"></i>
+          <span class="flex-grow-1" [translate]="'Portal.ViewTournament.Settings.EditImages.Chooser.Constraints.' + imageType"></span>
+        </div>
+        @if (isUploadingImage) {
+          <tp-small-spinner />
+        } @else {
+          <tp-action-button [type]="'outline-primary'" [icon]="'cloud-upload-fill'" [title]="'Portal.ViewTournament.Settings.EditImages.Chooser.Upload'" (click)="openFileSelectionDialog()" />
+        }
+      </div>
+
+      @if (hasUploadError) {
+        <tp-alert class="px-3 my-3" [type]="'danger'" [icon]="'exclamation-octagon'" [text]="'Portal.ViewTournament.Settings.EditImages.Chooser.UploadFailed'" />
+      }
+
+      <div class="p-3 d-flex flex-row flex-wrap gap-2 overflow-y-scroll justify-content-start image-container">
+        @for (image of existingImages; track image.id) {
+          <div class="border shadow-sm image-tile position-relative" [ngClass]="{ 'border-success current': image.id === currentImageId, 'hover-override': image.id === hoverOverrideImageId }">
+            <div class="hover-buttons d-none position-absolute flex-row align-items-center justify-content-center gap-2" style="top: 0; left: 0;">
+              <tp-action-button [type]="'primary'" [mode]="'IconOnly'" [icon]="'info-circle'" (click)="imageForDetailView = image" />
+              @if (image.id !== currentImageId) {
+                <tp-action-button [type]="'success'" [mode]="'IconOnly'" [icon]="'check-lg'" (click)="image.id !== currentImageId && modal.close(image.id)" />
+              }
+            </div>
+            <div class="image-wrapper d-flex flex-column align-items-center justify-content-center">
+              <img style="max-width: 9em;" [src]="image.url" [alt]="image.name" [title]="image.name" (click)="hoverOverrideImageId = image.id" />
+            </div>
+          </div>
+        } @empty {
+          <div class="flex-grow-1 text-center mt-4 fst-italic" translate="Portal.ViewTournament.Settings.EditImages.Chooser.NoImages"></div>
+        }
+      </div>
+    }
+  </div>
+  @if (!isLoadingImages) {
+    <div class="modal-footer">
+      @if (isInImageDetailView) {
+        <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Back'" (click)="imageForDetailView = undefined" />
+      } @else {
+        @if (currentImageId !== undefined && !isInImageDetailView) {
+          <tp-action-button [type]="'outline-secondary'" [title]="'Portal.ViewTournament.Settings.EditImages.Chooser.Remove'" (click)="modal.close(undefined)" />
+        }
+        <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
+      }
+    </div>
+  }
+}

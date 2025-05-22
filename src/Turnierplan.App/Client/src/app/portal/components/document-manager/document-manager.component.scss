@@ -1,0 +1,24 @@
+.document-preview {
+  height: 800px;
+}
+
+@keyframes recent-document-highlight {
+  0% {
+    background: rgb(255 165 0 / 10%);
+  }
+
+  15% {
+    background: rgb(255 165 0 / 15%);
+  }
+
+  100% {
+    background: transparent;
+  }
+}
+
+.recent-document {
+  td {
+    animation-duration: 4s;
+    animation-name: recent-document-highlight;
+  }
+}

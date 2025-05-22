@@ -1,0 +1,83 @@
+@page
+@using Turnierplan.App.Pages.Shared.Components.Groups
+@using Turnierplan.App.Pages.Shared.Components.Header
+@using Turnierplan.App.Pages.Shared.Components.MatchPlan
+@using Turnierplan.App.Pages.Shared.Components.Ranking
+@using Turnierplan.Core.Tournament
+@using Turnierplan.ImageStorage
+@using Turnierplan.Localization
+@model Turnierplan.App.Pages.TournamentFullscreen
+@inject ILocalizationProvider LocalizationProvider
+@inject IImageStorage ImageStorage
+
+@{
+    Layout = "_LayoutFullscreen";
+
+    if (!LocalizationProvider.TryGetLocalization("de", out var localization))
+    {
+        throw new InvalidOperationException();
+    }
+
+    var tournament = Model.Data;
+    ViewData["Title"] = tournament is null ? "Turnier nicht gefunden" : tournament.Name;
+}
+
+@if (tournament is null)
+{
+    <div class="text-danger ms-5 mt-5">
+        Der Link ist ungültig oder das gesuchte Turnier existiert nicht.
+    </div>
+}
+
+@if (tournament is not null)
+{
+    <div class="position-fixed px-4 overlay-background d-flex flex-row align-items-center gap-3"
+         style="width: 100vw; height: 9em; z-index: 10;" id="header-information">
+        <!-- Fixed height is necessary because of the way the layout is done -->
+        @if (tournament.PresentationConfiguration.ShowOrganizerLogo && tournament.OrganizerLogo is not null)
+        {
+            <img style="width: 7em;" src="@ImageStorage.GetFullImageUrl(tournament.OrganizerLogo)" alt="@tournament.OrganizerLogo.Name"/>
+        }
+        @if (tournament.PresentationConfiguration.ShowSponsorLogo && tournament.SponsorLogo is not null)
+        {
+            <img style="width: 7em;" src="@ImageStorage.GetFullImageUrl(tournament.SponsorLogo)" alt="@tournament.SponsorLogo.Name"/>
+        }
+        <div class="mx-4 d-flex flex-column gap-1">
+            @await Component.InvokeAsync(typeof(Header), new { tournament, showKickoffAndVenue = false, allowVenueExpand = false })
+        </div>
+        <div class="flex-grow-1"></div>
+        <div class="me-3 fs-3 fw-bold" id="clock"></div>
+    </div>
+
+    <div class="d-flex" style="margin-top: 10em;">
+        <div style="margin-left: 1%; width: 48%;">
+            @await Component.InvokeAsync(typeof(MatchPlan), new { tournament, localization })
+        </div>
+        <div class="position-fixed" style="left: 50%; width: 31%;">
+            @await Component.InvokeAsync(typeof(Groups), new { tournament, localization, inlineGroupNames = true })
+        </div>
+        <div class="position-fixed" style="left: 82%; width: 17%;">
+            @if (tournament.PresentationConfiguration.ShowResults is PresentationConfiguration.ResultsMode.Default)
+            {
+                @await Component.InvokeAsync(typeof(Ranking), new { tournament })
+            }
+        </div>
+    </div>
+
+    <script>
+        const updateClock = () => {
+            const now = new Date();
+            document.getElementById("clock").innerHTML = `${twoDigit(now.getHours())}:${twoDigit(now.getMinutes())}:${twoDigit(now.getSeconds())}`;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+        document.onscroll = () => {
+            const shadowStrength = window.scrollY > 100 ? 1 : (window.scrollY < 10 ? 0 : ((window.scrollY - 10) / 90));
+            document.getElementById("header-information").style['box-shadow'] = `0 0 8px rgba(0, 0, 0, ${shadowStrength})`;
+        };
+        const now = new Date();
+        setTimeout(() => {
+            window.location.reload();
+        }, Math.max(60000 - now.getSeconds() * 1000 - now.getMilliseconds(), 5000));
+    </script>
+}

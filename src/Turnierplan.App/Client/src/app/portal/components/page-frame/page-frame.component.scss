@@ -1,0 +1,7 @@
+﻿.tp-navigation-tab {
+  border-bottom: 3px solid transparent;
+
+  &.tp-navigation-tab-selected {
+    border-bottom: 3px solid #16811a;
+  }
+}

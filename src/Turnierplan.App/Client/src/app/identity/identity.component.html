@@ -1,0 +1,15 @@
+<div class="background d-flex flex-column align-items-center justify-content-center">
+  <div class="shadow identity-container d-flex flex-column">
+    <div class="rounded-top-3 identity-header d-flex flex-column justify-content-end pb-2 ps-4">
+      <div>
+        <a [routerLink]="'/portal'" class="fw-bold text-white text-decoration-none" translate="Application.Name"></a>
+      </div>
+    </div>
+    <div class="bg-white p-4">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="bg-white rounded-bottom-3 py-2 text-body-tertiary footer-links d-flex flex-row justify-content-center">
+      <tp-footer [contentOnly]="true"></tp-footer>
+    </div>
+  </div>
+</div>

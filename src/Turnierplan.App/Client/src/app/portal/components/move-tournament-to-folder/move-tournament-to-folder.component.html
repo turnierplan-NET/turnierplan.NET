@@ -1,0 +1,77 @@
+<div class="modal-header" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+  <h4 class="modal-title" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.Title"></h4>
+  <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body d-flex flex-column gap-2">
+  @if (currentFolderName && currentFolderId) {
+    <div>
+      <span>Aktueller Ordner:</span>
+      <span class="ms-2">{{ currentFolderName }}</span>
+    </div>
+  }
+
+  <div translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.Info"></div>
+
+  @if (currentFolderId) {
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="moveTournament_folderMode" id="moveTournament_folderMode_noFolder" [value]="'NoFolder'" [(ngModel)]="folderMode">
+      <label class="form-check-label" for="moveTournament_folderMode_noFolder" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.UseNoFolder"></label>
+    </div>
+  }
+
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="moveTournament_folderMode" id="moveTournament_folderMode_existingFolder" [value]="'ExistingFolder'" [(ngModel)]="folderMode" [disabled]="disableExistingFolders">
+    <label class="form-check-label" for="moveTournament_folderMode_existingFolder">
+      <span translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.UseExistingFolder"></span>
+      @if (folderMode === 'ExistingFolder') {
+        <span>:</span>
+      }
+    </label>
+    @if (disableExistingFolders && !isLoading) {
+      <tp-tooltip-icon [icon]="'question-circle'" [tooltipText]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.ExistingFolderDisabledTooltip'" />
+    }
+  </div>
+
+  @if (folderMode === 'ExistingFolder') {
+    @if (availableFolders && availableFolders.length > 0) {
+      <select id="moveTournament_existingFolderId" class="form-select flex-grow-1" [(ngModel)]="moveToFolderId">
+        @for (folder of availableFolders; track folder.id) {
+          <option [value]="folder.id">{{ folder.name }}</option>
+        }
+      </select>
+    } @else {
+      <tp-small-spinner class="ms-5 mb-1" />
+    }
+  }
+
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="moveTournament_folderMode" id="moveTournament_folderMode_newFolder" [value]="'NewFolder'" [(ngModel)]="folderMode">
+    <label class="form-check-label" for="moveTournament_folderMode_newFolder">
+      <span translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.CreateNewFolder"></span>
+      @if (folderMode === 'NewFolder') {
+        <span>:</span>
+      }
+    </label>
+  </div>
+
+  @if (folderMode === 'NewFolder') {
+    <input type="text"
+           class="form-control"
+           [required]="true"
+           [formControl]="moveToNewFolder"
+           [minlength]="1"
+           [maxlength]="60"
+           [placeholder]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.NamePlaceholder' | translate"
+           [ngClass]="moveToNewFolder.dirty || moveToNewFolder.touched ? (moveToNewFolder.invalid ? 'is-invalid' : 'is-valid') : ''"/>
+    <div class="invalid-feedback" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.FolderNameInvalid"></div>
+    <div class="valid-feedback" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.FolderNameValid"></div>
+  }
+</div>
+<div class="modal-footer">
+  @if (isSaving) {
+    <tp-small-spinner />
+  } @else {
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
+    <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" (click)="saveClicked()" />
+  }
+</div>

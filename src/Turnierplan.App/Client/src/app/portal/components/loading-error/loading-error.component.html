@@ -1,0 +1,15 @@
+@if (statusCode === 404) {
+  <tp-error-page [illustrationName]="'taken'" [actionButton]="{
+      label: 'Portal.General.BackToLandingPage',
+      icon: 'house',
+      routerLink: '/portal'
+    }">
+    <div id="resourceNotFoundError" class="mb-2 tp-text-pre-wrap" translate>Portal.ErrorPage.ResourceNotFound</div>
+  </tp-error-page>
+} @else {
+  <tp-error-page [illustrationName]="'server_down'">
+    <div id="unexpectedError" class="mb-4 tp-text-pre-wrap" translate>Portal.ErrorPage.UnexpectedError</div>
+    <div class="mb-2" translate>Portal.ErrorPage.ErrorDescription</div>
+    <textarea class="form-control font-monospace" readonly>{{ errorDescription }}</textarea>
+  </tp-error-page>
+}

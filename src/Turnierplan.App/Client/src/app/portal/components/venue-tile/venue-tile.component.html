@@ -1,0 +1,17 @@
+<div *ngIf="venue" class="card shadow-sm">
+  <div class="card-body d-flex flex-column gap-2">
+    <div class="fs-5 fw-bold card-title mb-0">{{ venue.name }}</div>
+    
+    @if (venue.description.length > 0) {
+      <div>{{ venue.description }}</div>
+    } @else {
+      <div class="fst-italic text-secondary" translate="Portal.ViewOrganization.VenueTile.NoDescription"></div>
+    }
+  </div>
+  <div class="card-footer text-end pe-2">
+    <a class="card-link" [routerLink]="'/portal/venue/' + venue.id">
+      <span translate="Portal.ViewOrganization.VenueTile.Open"></span>
+      <i class="ms-2 bi bi-arrow-right-circle" aria-hidden="true"></i>
+    </a>
+  </div>
+</div>

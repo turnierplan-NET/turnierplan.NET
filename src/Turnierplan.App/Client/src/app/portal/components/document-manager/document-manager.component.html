@@ -1,0 +1,89 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th></th>
+    <th translate="Portal.ViewTournament.Documents.Name"></th>
+    <th translate="Portal.ViewTournament.Documents.LastModifiedAt"></th>
+    <th translate="Portal.ViewTournament.Documents.Generations"></th>
+    <th>
+      <span class="d-none d-md-block" translate="Portal.ViewTournament.Documents.Configure"></span>
+    </th>
+    <th colspan="2">
+      <span class="d-none d-md-block" translate="Portal.ViewTournament.Documents.Download"></span>
+    </th>
+    <th>
+      <span class="d-none d-md-block" translate="Portal.ViewTournament.Documents.Delete"></span>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  @for (doc of documents; track doc.id) {
+    <tr [ngClass]="{ 'recent-document': recentDocumentId === doc.id }">
+      <td style="width: 1px;" class="align-middle" [ngClass]="{ 'pe-0': currentlyUpdatingName !== doc.id }">
+        <!-- 'pe-0' of the table cell is removed while the spinner is shown to prevent "jumping" of the right hand columns -->
+        @if (currentlyUpdatingName === doc.id) {
+          <tp-small-spinner class="mx-2" />
+        } @else {
+          <tp-rename-button [translationKey]="'Portal.ViewTournament.Documents.Rename'" [displayLabel]="false" [current]="doc.name" [maxLength]="30" [disabled]="currentlyUpdatingName !== undefined" (renamed)="renameDocument(doc.id, $event)" />
+        }
+      </td>
+      <td class="align-middle">{{ doc.name }}</td>
+      <td class="align-middle">{{ doc.lastModifiedAt | translateDate : 'short' }}</td>
+      <td class="align-middle">
+        <!-- If this is removed at any point, the manual incrementation of the generationCount property on download/preview can be removed, too. -->
+        {{ doc.generationCount }}
+      </td>
+      <td class="align-middle">
+        @if (canConfigure(doc.type)) {
+          @if (currentlyLoadingConfiguration === doc.id) {
+            <tp-small-spinner class="ms-2" />
+          } @else {
+            <tp-action-button [type]="'outline-secondary'"
+                              [icon]="'gear'"
+                              [mode]="'IconOnly'"
+                              [attr.aria-label]="'Portal.ViewTournament.Documents.Configure' | translate"
+                              (click)="configureDocument(doc.id)" />
+          }
+        }
+      </td>
+      <td class="align-middle text-center pe-0" style="width: 1px;">
+        @if (currentlyDownloading === doc.id) {
+          <tp-small-spinner />
+        } @else {
+          <tp-action-button [type]="'outline-primary'"
+                            [icon]="'download'"
+                            [mode]="'IconOnly'"
+                            [disabled]="downloadOrPreviewDisabled"
+                            [attr.aria-label]="'Portal.ViewTournament.Documents.Download' | translate"
+                            (click)="downloadDocument(doc.id)" />
+        }
+      </td>
+      <td class="align-middle">
+        @if (currentlyLoadingPreview === doc.id) {
+          <tp-small-spinner class="ms-2" />
+        } @else {
+          <tp-action-button class="d-none d-md-block"
+                            [type]="currentlyViewedDocumentId === doc.id ? 'success' : 'outline-success'"
+                            [icon]="'file-earmark-pdf'"
+                            [title]="'Portal.ViewTournament.Documents.OpenPreview'"
+                            [disabled]="downloadOrPreviewDisabled"
+                            (click)="previewDocument(doc.id)" />
+        }
+      </td>
+      <td class="align-middle">
+        <tp-delete-button (confirmed)="deleteDocument(doc.id)" />
+      </td>
+    </tr>
+  } @empty {
+    <tr>
+      <td translate="Portal.ViewTournament.Documents.NoDocuments" colspan="8"></td>
+    </tr>
+  }
+  </tbody>
+</table>
+
+@if (displayPdfViewer) {
+  <div class="document-preview">
+    <ng2-pdfjs-viewer [openFile]="false" #previewPdfViewer />
+  </div>
+}

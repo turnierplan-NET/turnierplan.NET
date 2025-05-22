@@ -1,0 +1,12 @@
+<div class="error-page-container w-100 d-flex flex-column align-items-center">
+  <tp-illustration *ngIf="illustrationName" [name]="illustrationName!"></tp-illustration>
+  <div class="mt-5 text-center">
+    <ng-content></ng-content>
+  </div>
+  <tp-action-button *ngIf="actionButton"
+                    class="mt-4"
+                    [title]="actionButton.label"
+                    [type]="'outline-success'"
+                    [icon]="actionButton.icon"
+                    [routerLink]="actionButton.routerLink" />
+</div>

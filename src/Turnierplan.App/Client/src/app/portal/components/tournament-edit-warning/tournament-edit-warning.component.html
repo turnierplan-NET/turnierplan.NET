@@ -1,0 +1,12 @@
+<tp-alert [type]="'warning'" [icon]="'exclamation-triangle'" [margin]="'mt-3 mb-0'">
+  <div class="d-flex flex-column gap-2">
+    <div>
+      <strong class="me-1" [translate]="translationKey + '.Alert'"></strong>
+      <span [translate]="translationKey + '.Text'"></span>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" id="editWarningAccepted" type="checkbox" [ngModel]="accepted" (ngModelChange)="acceptedChange.emit($event)" />
+      <label class="form-check-label" for="editWarningAccepted" [translate]="translationKey + '.CheckboxLabel'"></label>
+    </div>
+  </div>
+</tp-alert>

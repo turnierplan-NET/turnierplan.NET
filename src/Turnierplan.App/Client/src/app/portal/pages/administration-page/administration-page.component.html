@@ -1,0 +1,67 @@
+<ng-container *tpLoadingState="loadingState">
+  <tp-page-frame [title]="'Portal.Administration.Title' | translate" [backLink]="'..'" [navigationTabs]="pages">
+    <ng-template #buttons>
+      <tp-action-button [title]="'Portal.Administration.NewUser'"
+                        [type]="'outline-success'"
+                        [icon]="'plus-circle'"
+                        [routerLink]="'create/user'" />
+    </ng-template>
+    <ng-template #content>
+      <div class="card">
+        <div class="card-header d-flex flex-row align-items-center">
+          <tp-badge context="Administration" label="UserCount" [value]="users.length" />
+        </div>
+        <div class="card-body p-0">
+          <table class="table" [attr.aria-label]="'Portal.Administration.Users.TableLabel' | translate">
+            <thead>
+              <tr>
+                <th translate="Portal.Administration.Users.Id"></th>
+                <th translate="Portal.Administration.Users.Name"></th>
+                <th translate="Portal.Administration.Users.EMail"></th>
+                <th translate="Portal.Administration.Users.CreatedAt"></th>
+                <th translate="Portal.Administration.Users.LastPasswordChange"></th>
+                <th translate="Portal.Administration.Users.Roles"></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (user of users; track user) {
+                <tr>
+                  <td class="align-middle small text-secondary">{{ user.id }}</td>
+                  <td class="align-middle">{{ user.name }}</td>
+                  <td class="align-middle">{{ user.eMail }}</td>
+                  <td class="align-middle small">{{ user.createdAt | translateDate : 'medium' }}</td>
+                  <td class="align-middle small">{{ user.lastPasswordChange | translateDate : 'medium' }}</td>
+                  <td class="align-middle">
+                    @if (user.roles.length === 0) {
+                      <span class="ms-1 small text-secondary" translate="Portal.Administration.Users.NoRoles"></span>
+                    } @else {
+                      @for (role of user.roles; track role) {
+                        <i class="ms-1 bi" [ngClass]="getRoleIcon(role.id)" [ngbTooltip]="role.name"></i>
+                      }
+                    }
+                  </td>
+                  <td>
+                    <tp-action-button [icon]="'trash'" [type]="'outline-danger'" [mode]="'IconOnly'" [disabled]="user.id === currentUserId" (click)="deleteButtonClicked(user.id, deleteConfirmationCanvas)" />
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </ng-template>
+  </tp-page-frame>
+</ng-container>
+
+<ng-template #deleteConfirmationCanvas>
+  <div class="p-3">
+    @if (userSelectedForDeletion) {
+      <tp-delete-widget [translationKey]="'Portal.Administration.DeleteUser'" [thinLayout]="true" [targetObjectName]="userSelectedForDeletion.name" (deleteClick)="deleteConfirmed(userSelectedForDeletion.id)" />
+      <div class="mt-3 small text-secondary">
+        <span translate="Portal.Administration.DeleteUser.IdConfirmation"></span><br />
+        <span>{{ userSelectedForDeletion.id }}</span>
+      </div>
+    }
+  </div>
+</ng-template>

@@ -1,0 +1,71 @@
+﻿<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>turnierplan.NET</title>
+    <base href="/">
+    <meta name="viewport" content="width=550">
+
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="turnierplan.NET" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <link rel="stylesheet" type="text/css" href="/assets/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/turnierplan.css" />
+
+    <script>
+        document.title = `@ViewData["Title"] \u00b7 turnierplan.NET`;
+        const twoDigit = (x) => { return x < 10 ? `0${x}` : `${x}`; }
+    </script>
+</head>
+<body>
+
+<div class="d-flex flex-column" style="min-height: 100vh;">
+    <div class="position-fixed w-100 bg-white shadow">
+        <div class="container px-4 py-4 d-flex flex-row justify-content-center">
+            <div class="header-logo d-flex flex-row align-items-center" href="/">
+                <img class="me-3" src="/favicon-96x96.png" alt="turnierplan.NET Logo"/>
+                <span class="text-dark fw-bold fs-5">turnierplan.NET</span>
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 8em;"></div>
+
+    @RenderBody()
+
+    <div style="min-height: 6em;" class="flex-grow-1"></div>
+
+    <div class="bg-dark text-white">
+        <div class="container px-5 py-4 d-flex flex-wrap flex-row">
+            <div class="footer-section">
+                <span>turnierplan.NET</span><br/>
+            </div>
+            <div class="footer-section footer-section-right">
+                <a class="text-white text-decoration-none d-flex flex-row align-items-center gap-2" target="_blank" href="https://github.com/turnierplan-NET/turnierplan.NET" rel="noopener">
+                    <img src="./assets/github.svg" alt="GitHub-Logo" />
+                    <span>GitHub</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+<!--
+ __                                                     ___                                        __
+/\ \__                        __                       /\_ \                                      /\ \__
+\ \ ,_\  __  __  _ __    ___ /\_\     __   _ __   _____\//\ \      __      ___         ___      __\ \ ,_\
+ \ \ \/ /\ \/\ \/\`'__\/' _ `\/\ \  /'__`\/\`'__\/\ '__`\\ \ \   /'__`\  /' _ `\     /' _ `\  /'__`\ \ \/
+  \ \ \_\ \ \_\ \ \ \/ /\ \/\ \ \ \/\  __/\ \ \/ \ \ \L\ \\_\ \_/\ \L\.\_/\ \/\ \  __/\ \/\ \/\  __/\ \ \_
+   \ \__\\ \____/\ \_\ \ \_\ \_\ \_\ \____\\ \_\  \ \ ,__//\____\ \__/.\_\ \_\ \_\/\_\ \_\ \_\ \____\\ \__\
+    \/__/ \/___/  \/_/  \/_/\/_/\/_/\/____/ \/_/   \ \ \/ \/____/\/__/\/_/\/_/\/_/\/_/\/_/\/_/\/____/ \/__/
+                                                    \ \_\
+                                                     \/_/
+
+    https://github.com/turnierplan-NET/turnierplan.NET -->

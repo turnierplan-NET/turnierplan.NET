@@ -1,0 +1,22 @@
+@if (contentOnly) {
+  <div class="tp-footer-layout">
+    <ng-container [ngTemplateOutlet]="footerContent"></ng-container>
+  </div>
+} @else {
+  <div class="tp-footer tp-footer-layout position-fixed bottom-0" [style]="footerStyle">
+    <div class="container d-flex flex-row justify-content-center py-1">
+      <ng-container [ngTemplateOutlet]="footerContent"></ng-container>
+    </div>
+  </div>
+}
+
+<ng-template #footerContent>
+  <span class="footer-item"><a translate="Footer.LandingPage" href="/"></a></span>
+  <span class="footer-item">
+    <a target="_blank" href="https://github.com/turnierplan-NET/turnierplan.NET" rel="noopener">
+      <i class="bi bi-github"></i>
+      <span class="ms-1" translate="Footer.GitHub"></span>
+    </a>
+  </span>
+  <span class="footer-item" [ngClass]="{ 'fw-bold text-warning': isDevelopment }">{{ version }}</span>
+</ng-template>

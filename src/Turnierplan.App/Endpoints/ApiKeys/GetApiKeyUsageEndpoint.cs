@@ -1,0 +1,79 @@
+using Microsoft.AspNetCore.Mvc;
+using Turnierplan.App.Models;
+using Turnierplan.App.Security;
+using Turnierplan.Core.ApiKey;
+using Turnierplan.Core.PublicId;
+
+namespace Turnierplan.App.Endpoints.ApiKeys;
+
+internal sealed class GetApiKeyUsageEndpoint : EndpointBase<ApiKeyUsageDto>
+{
+    protected override HttpMethod Method => HttpMethod.Get;
+
+    protected override string Route => "/api/api-keys/{id}/usage";
+
+    protected override Delegate Handler => Handle;
+
+    private static async Task<IResult> Handle(
+        [FromRoute] PublicId id,
+        [FromQuery] int rangeDays,
+        IApiKeyRepository repository,
+        IAccessValidator accessValidator)
+    {
+        if (rangeDays is < 1 or > 30)
+        {
+            return Results.BadRequest("Range in days must be between 1 and 30.");
+        }
+
+        var apiKey = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+
+        if (apiKey is null)
+        {
+            return Results.NotFound();
+        }
+
+        if (!accessValidator.CanSessionUserAccess(apiKey.Organization))
+        {
+            return Results.Forbid();
+        }
+
+        (TimeSpan bucketWidth, var bucketCount) = GetBucketProperties(rangeDays);
+        var timeRange = bucketWidth * bucketCount;
+
+        var endTime = new DateTime((long)(Math.Ceiling((double)DateTime.UtcNow.Ticks / bucketWidth.Ticks) * bucketWidth.Ticks), DateTimeKind.Utc);
+        var startTime = endTime - timeRange;
+
+        var requests = await repository.GetRequestsInTimeRange(apiKey, startTime, endTime).ConfigureAwait(false);
+
+        var requestsGroupedIntoBuckets = requests.GroupBy(x =>
+        {
+            var offset = x.Timestamp - startTime;
+            return (int)(offset.Ticks / bucketWidth.Ticks);
+        });
+
+        return Results.Ok(new ApiKeyUsageDto
+        {
+            TimeFrameStart = startTime,
+            TimeFrameEnd = endTime,
+            BucketWidthSeconds = (int)bucketWidth.TotalSeconds,
+            BucketCount = bucketCount,
+            Entries = requestsGroupedIntoBuckets
+                .Select(bucket => new ApiKeyUsageDto.Entry(bucket.Key, bucket.Count()))
+                .ToList()
+        });
+    }
+
+    private static (TimeSpan BucketWidth, int BucketCount) GetBucketProperties(int rangeDays)
+    {
+        return rangeDays switch
+        {
+            < 1 => throw new ArgumentOutOfRangeException(nameof(rangeDays)),
+            <= 1 => (TimeSpan.FromMinutes(30), 24 * 2),
+            <= 3 => (TimeSpan.FromHours(1), rangeDays * 24),
+            <= 7 => (TimeSpan.FromHours(2), rangeDays * 24 / 2),
+            <= 14 => (TimeSpan.FromHours(4), rangeDays * 24 / 4),
+            <= 30 => (TimeSpan.FromHours(8), rangeDays * 24 / 8),
+            > 30 => throw new ArgumentOutOfRangeException(nameof(rangeDays))
+        };
+    }
+}

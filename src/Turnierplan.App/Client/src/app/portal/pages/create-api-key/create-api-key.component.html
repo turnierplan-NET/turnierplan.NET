@@ -1,0 +1,88 @@
+@if (createdApiKey) {
+  <tp-page-frame [ultraSlim]="true" [title]="'Portal.CreateApiKey.SuccessInformation.Title' | translate" [backLink]="'../..'">
+    <tp-alert [icon]="'check-circle'" [text]="'Portal.CreateApiKey.SuccessInformation.SecretWarning'" />
+
+    <div class="mt-4 mb-3">
+      <label for="success_apiKey_id" class="form-label" translate="Portal.CreateApiKey.SuccessInformation.Id"></label>
+      <div class="input-group">
+        <input id="success_apiKey_id" type="text" class="form-control" readonly [value]="createdApiKey.id" />
+        <span class="input-group-text">
+          <tp-copy-to-clipboard [value]="createdApiKey.id" />
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="success_apiKey_secret" class="form-label" translate="Portal.CreateApiKey.SuccessInformation.Secret"></label>
+      <div class="input-group">
+        <input id="success_apiKey_secret" type="text" class="form-control" readonly [value]="createdApiKey.secret ?? ''" />
+        <span class="input-group-text">
+          <tp-copy-to-clipboard [value]="createdApiKey.secret ?? ''" />
+        </span>
+      </div>
+    </div>
+    
+    <hr />
+
+    <div class="d-flex flex-row justify-content-end">
+      <tp-action-button [type]="'success'" [title]="'Portal.General.Done'" [routerLink]="'../..'" />
+    </div>
+  </tp-page-frame>
+} @else {
+  <tp-page-frame *tpLoadingState="loadingState" [ultraSlim]="true" [title]="'Portal.CreateApiKey.Title' | translate" [backLink]="'../..'">
+    <div [formGroup]="form">
+      <div class="mb-3">
+        <label for="create_apiKey_name" class="form-label" translate="Portal.CreateApiKey.Form.Name"></label>
+        <input id="create_apiKey_name"
+               type="text"
+               class="form-control"
+               formControlName="name"
+               [ngClass]="nameControl.dirty || nameControl.touched ? (nameControl.invalid ? 'is-invalid' : 'is-valid') : ''"/>
+        <div class="invalid-feedback" translate="Portal.CreateApiKey.Form.NameInvalid"></div>
+        <div class="valid-feedback" translate="Portal.CreateApiKey.Form.NameValid"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="create_apiKey_description" class="form-label" translate="Portal.CreateApiKey.Form.Description"></label>
+        <input id="create_apiKey_description"
+               type="text"
+               class="form-control"
+               formControlName="description"
+               [ngClass]="descriptionControl.dirty || descriptionControl.touched ? (descriptionControl.invalid ? 'is-invalid' : 'is-valid') : ''"/>
+        <div class="invalid-feedback" translate="Portal.CreateApiKey.Form.DescriptionInvalid"></div>
+        <div class="valid-feedback" translate="Portal.CreateApiKey.Form.DescriptionValid"></div>
+      </div>
+
+      <div class="mb-3">
+        <label for="create_apiKey_validity" class="form-label" translate="Portal.CreateApiKey.Form.Validity"></label>
+        <select id="create_apiKey_validity" class="form-select" formControlName="validity">
+          <option value="1" [translate]="'Portal.CreateApiKey.Form.Validity1'"></option>
+          <option value="7" [translate]="'Portal.CreateApiKey.Form.Validity7'"></option>
+          <option value="30" [translate]="'Portal.CreateApiKey.Form.Validity30'"></option>
+          <option value="90" [translate]="'Portal.CreateApiKey.Form.Validity90'"></option>
+          <option value="180" [translate]="'Portal.CreateApiKey.Form.Validity180'"></option>
+        </select>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="form-text">
+      <i class="bi bi-info-circle"></i>
+      <span class="ms-2" [innerHTML]="'Portal.CreateApiKey.OrganizationNotice' | translate : { 'organizationName': organization?.name } "></span>
+    </div>
+
+    <hr />
+
+    <div class="form-text text-warning-emphasis">
+      <i class="bi bi-exclamation-triangle"></i>
+      <span class="ms-2" [innerHTML]="'Portal.CreateApiKey.AccessNotice' | translate"></span>
+    </div>
+
+    <hr />
+
+    <div class="d-flex flex-row justify-content-end">
+      <tp-action-button [type]="'success'" [title]="'Portal.CreateApiKey.Submit'" [disabled]="form.invalid" (click)="confirmButtonClicked()" />
+    </div>
+  </tp-page-frame>
+}

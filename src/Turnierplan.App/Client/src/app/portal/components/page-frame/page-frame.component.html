@@ -1,0 +1,36 @@
+<div *ngIf="navigationTabs" class="border-bottom shadow-sm pt-5">
+  <div [ngClass]="ultraSlim ? 'tp-ultra-slim-container' : 'container'" class="d-flex flex-row flex-wrap align-items-end justify-content-start">
+    @for (tab of navigationTabs; track tab.id) {
+      <div class="tp-navigation-tab px-3 py-1 d-flex flex-row gap-2"
+           [ngClass]="tab.id === currentTabId ? 'tp-text-shadow tp-navigation-tab-selected tp-cursor-default' : 'tp-cursor-pointer'"
+           (click)="toggleNavigationTab(tab.id)">
+        <i class="bi" [ngClass]="tab.icon"></i>
+        <span>{{ tab.title | translate }}</span>
+      </div>
+    }
+  </div>
+</div>
+
+<div class="my-5" [ngClass]="{ 'tp-ultra-slim-container': ultraSlim, 'container': !ultraSlim }">
+  <div class="d-flex flex-row flex-wrap align-items-center gap-2">
+    @if (backLink) {
+      <i class="fs-5 bi bi-arrow-left-circle me-2 tp-cursor-pointer" [attr.aria-label]="'Portal.General.Back' | translate" [routerLink]="backLink"></i>
+    }
+    <span class="fs-4 fw-bold">{{ title ?? '' }}</span>
+    <div class="flex-grow-1"></div>
+    <ng-container *ngIf="buttons" [ngTemplateOutlet]="buttons"></ng-container>
+  </div>
+
+  <div class="mt-4">
+    @if (content) {
+      <ng-container [ngTemplateOutlet]="content"></ng-container>
+    } @else {
+      <ng-content></ng-content>
+    }
+  </div>
+</div>
+
+@if (enableBottomPadding) {
+  <!-- Add some "padding" so that the user can scroll further down than originally. -->
+  <div style="height: 5em;"></div>
+}

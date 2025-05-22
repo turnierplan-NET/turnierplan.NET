@@ -1,0 +1,12 @@
+# Ignore artifacts:
+dist
+coverage
+
+# Angular Cache
+.angular
+
+# Don't format HTML
+*.html
+
+# Auto-generated TS client
+src/app/api

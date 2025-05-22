@@ -1,0 +1,66 @@
+<form [formGroup]="form" class="form d-flex flex-column gap-3" (keyup.enter)="submit.next()">
+  <div class="form-group">
+    <div>
+      <label class="form-label" for="organizerNameOverride" translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.OrganizerNameOverride"></label>
+      <tp-tooltip-icon [icon]="'question-circle'" [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.OrganizerNameOverrideTooltip'" />
+    </div>
+    <input class="form-control" id="organizerNameOverride" formControlName="organizerNameOverride" [ngClass]="{ 'is-invalid': organizerNameOverride.touched && !organizerNameOverride.valid }" />
+    <div class="invalid-feedback" *ngIf="organizerNameOverride.touched && !organizerNameOverride.valid" translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.OrganizerNameOverrideInvalid"></div>
+  </div>
+
+  <div class="form-group">
+    <div>
+      <label class="form-label" for="tournamentNameOverride" translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.TournamentNameOverride"></label>
+      <tp-tooltip-icon [icon]="'question-circle'" [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.TournamentNameOverrideTooltip'" />
+    </div>
+    <input class="form-control" id="tournamentNameOverride" formControlName="tournamentNameOverride" [ngClass]="{ 'is-invalid': tournamentNameOverride.touched && !tournamentNameOverride.valid }" />
+    <div class="invalid-feedback" *ngIf="tournamentNameOverride.touched && !tournamentNameOverride.valid" translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.TournamentNameOverrideInvalid"></div>
+  </div>
+
+  <div class="form-group">
+    <div>
+      <label class="form-label" for="venueOverride" translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.VenueOverride"></label>
+      <tp-tooltip-icon [icon]="'question-circle'" [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.VenueOverrideTooltip'" />
+    </div>
+    <input class="form-control" id="venueOverride" formControlName="venueOverride" [ngClass]="{ 'is-invalid': venueOverride.touched && !venueOverride.valid }" />
+    <div class="invalid-feedback" *ngIf="venueOverride.touched && !venueOverride.valid" translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.VenueOverrideInvalid"></div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="dateFormat" translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.DateFormat"></label>
+    <select class="form-select" id="dateFormat" formControlName="dateFormat">
+      @for (format of matchPlanDateFormats; track format) {
+        <option [value]="format" [translate]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.DateFormats.' + format"></option>
+      }
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="outcomes" translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.OutcomesType"></label>
+    <select class="form-select" id="outcomes" formControlName="outcomes">
+      @for (type of matchPlanOutcomeTypes; track type) {
+        <option [value]="type" [translate]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.OutcomesTypes.' + type"></option>
+      }
+    </select>
+  </div>
+
+  <hr class="my-2" />
+
+  <div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" role="switch" id="includeRankingTable" formControlName="includeRankingTable" />
+    <label class="form-check-label" for="includeRankingTable" translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.IncludeRankingTable"></label>
+    @if (includeRankingTable.disabled) {
+      <tp-tooltip-icon [icon]="'question-circle'" [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.IncludeRankingTableTooltip'" />
+    }
+  </div>
+
+  <div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" role="switch" id="includeQrCode" formControlName="includeQrCode" />
+    <label class="form-check-label" for="includeQrCode" translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.IncludeQrCode"></label>
+    <tp-tooltip-icon [icon]="'question-circle'" [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.IncludeQrCodeTooltip'" />
+  </div>
+
+  <tp-alert [type]="'info'" [icon]="'exclamation-triangle'" >
+    <div [innerHTML]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.IncludeQrCodeNotice' | translate"></div>
+  </tp-alert>
+</form>

@@ -1,0 +1,44 @@
+<div class="fw-bold mb-3" [translate]="translationKey + '.Title'"></div>
+
+<div class="mb-3" [translate]="translationKey + '.Link'"></div>
+
+<div class="d-flex flex-row gap-3 align-items-center" [ngClass]="{ 'mb-3': (showQrCode || viewsCounter !== undefined) }">
+  <input class="form-control" style="max-width: 500px;" type="text" [value]="resourceUrl" readonly />
+  <tp-copy-to-clipboard [value]="resourceUrl"/>
+  <a class="bi bi-box-arrow-up-right tp-cursor-pointer" [title]="'Portal.General.OpenInNewTab' | translate" [href]="resourceUrl" target="_blank"></a>
+</div>
+
+@if (showQrCode || viewsCounter !== undefined) {
+  <div class="row">
+    @if (showQrCode) {
+      <div class="col-12 col-md-6">
+        <div class="mb-1" [translate]="translationKey + '.QrCode'"></div>
+
+        <div class="d-flex flex-row">
+          <div class="d-flex flex-column align-items-center">
+            <qrcode [qrdata]="resourceUrl"
+                    [elementType]="'canvas'"
+                    [errorCorrectionLevel]="'M'"
+                    [margin]="1"
+                    [scale]="1"
+                    [width]="250"
+                    (qrCodeURL)="qrCodeUrl = $event"/>
+
+            @if (downloadName) {
+              <a [href]="qrCodeUrl" [download]="downloadName" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-download"></i>
+                <span class="ms-2" [translate]="translationKey + '.QrCodeSave'"></span>
+              </a>
+            }
+          </div>
+        </div>
+      </div>
+    }
+    @if (viewsCounter !== undefined) {
+      <div class="col-12 col-md-6">
+        <div class="mb-1" [translate]="translationKey + '.ViewsCounter'"></div>
+        <input readonly disabled class="form-control" style="max-width: 6em;" value="{{ viewsCounter }}" />
+      </div>
+    }
+  </div>
+}
