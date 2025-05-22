@@ -23,6 +23,18 @@ jobs:
           files: '["**/environment.prod.ts"]'
         env:
           TOKEN_APPLICATION_VERSION: "${{ env.TURNIERPLAN_APPLICATION_VERSION }}"
+      - name: Login to Docker Hub
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: 'Build and push container image'
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: ./src
+          file: ./src/Turnierplan.App/Dockerfile
+          push: true
+          tags: 'turnierplan-net:latest,turnierplan-net:${{ env.TURNIERPLAN_APPLICATION_VERSION }}'
     
 #  nuget-package:
 #    name: 'Build NuGet package'
