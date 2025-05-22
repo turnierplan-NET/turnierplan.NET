@@ -1,7 +1,9 @@
 on:
   push:
     branches:
-      - topic/workflows
+      - topic/workflows # TODO: SWITCH TO MAIN!!!
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   validate:
@@ -9,6 +11,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: 'Setup .NET SDK 9.x'
         uses: actions/setup-dotnet@v3
         with:
@@ -22,14 +26,36 @@ jobs:
         id: 'setup-chrome'
       - name: 'Set CHROME_BIN environment variable'
         run: 'echo "CHROME_BIN=${{ steps.setup-chrome.outputs.chrome-path }}" >> $env:GITHUB_ENV'
+      - name: Install SonarQube Cloud scanner
+        shell: powershell
+        run: |
+          New-Item -Path .\.sonar\scanner -ItemType Directory
+          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+        working-directory: './src'
+      - name: Start SonarQube Cloud analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        shell: powershell
+        run: |
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"turnierplan-NET_turnierplan.NET" /o:"turnierplan-net" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+        working-directory: './src'
       - name: 'Restore .NET solution'
         run: 'dotnet restore'
         working-directory: './src'
       - name: 'Build .NET solution'
         run: 'dotnet build --no-restore -c Release'
         working-directory: './src'
+      - name: 'Install dotnet-coverage'
+        run: 'dotnet tool install --global dotnet-coverage'
       - name: 'Test .NET solution'
-        run: 'dotnet test --no-build --logger trx -c Release'
+        run: 'dotnet-coverage collect "dotnet test --no-build -c Release" -f xml -o "coverage.xml"'
+        working-directory: './src'
+      - name: End SonarQube Cloud analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        shell: powershell
+        run: |
+          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
         working-directory: './src'
       - name: 'Install npm packages'
         run: 'npm ci'
