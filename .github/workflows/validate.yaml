@@ -61,6 +61,3 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: 'dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"'
         working-directory: './src'
-      - name: 'Publish .NET solution'
-        run: 'dotnet publish --no-build -c Release /p:UseAppHost=false'
-        working-directory: './src'
