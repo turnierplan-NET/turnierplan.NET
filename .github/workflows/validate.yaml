@@ -31,7 +31,7 @@ jobs:
       - name: Start SonarQube Cloud analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: 'dotnet-sonarscanner begin /k:"turnierplan-NET_turnierplan.NET" /o:"turnierplan-net" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml" /d:sonar.exclusions="Turnierplan.Dal/Migrations/**/*"'
+        run: 'dotnet-sonarscanner begin /k:"turnierplan-NET_turnierplan.NET" /o:"turnierplan-net" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml" /d:sonar.exclusions="Turnierplan.Dal/Migrations/*"'
         working-directory: './src'
       - name: 'Restore .NET solution'
         run: 'dotnet restore'
