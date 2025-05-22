@@ -31,7 +31,7 @@ jobs:
       - name: Start SonarQube Cloud analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: 'dotnet-sonarscanner begin /k:"turnierplan-NET_turnierplan.NET" /o:"turnierplan-net" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml'
+        run: 'dotnet-sonarscanner begin /k:"turnierplan-NET_turnierplan.NET" /o:"turnierplan-net" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml" /d:sonar.exclusions="src/Turnierplan.Dal/Migrations/**/*"'
         working-directory: './src'
       - name: 'Restore .NET solution'
         run: 'dotnet restore'
@@ -43,11 +43,6 @@ jobs:
         run: 'dotnet tool install --global dotnet-coverage'
       - name: 'Test .NET solution'
         run: 'dotnet-coverage collect "dotnet test --no-build -c Release" -f xml -o "coverage.xml"'
-        working-directory: './src'
-      - name: End SonarQube Cloud analysis
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: 'dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"'
         working-directory: './src'
       - name: 'Install npm packages'
         run: 'npm ci'
@@ -61,6 +56,11 @@ jobs:
       - name: 'Test client application'
         run: 'npm run test:ci'
         working-directory: './src/Turnierplan.App/Client/'
+      - name: End SonarQube Cloud analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: 'dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"'
+        working-directory: './src'
       - name: 'Publish .NET solution'
         run: 'dotnet publish --no-build -c Release /p:UseAppHost=false'
         working-directory: './src'
