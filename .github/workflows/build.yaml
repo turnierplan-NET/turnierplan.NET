@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - topic/build-workflow # TODO!!! - release/*
+      - release/**
 
 jobs:
   container-image:
@@ -54,5 +54,5 @@ jobs:
       - name: 'Push to NuGet'
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: 'dotnet nuget push ./*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json'
+        run: 'dotnet nuget push ./*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate'
         working-directory: './src'
