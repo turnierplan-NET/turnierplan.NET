@@ -3,11 +3,6 @@ on:
     branches:
       - topic/workflows
 
-permissions:
-  contents: read
-  actions: read
-  checks: write
-
 jobs:
   validate:
     name: 'Validate'
@@ -38,16 +33,16 @@ jobs:
         working-directory: './src'
       - name: 'Install npm packages'
         run: 'npm ci'
-        working-directory: './src/Turnierplan.Web/ClientApp/'
+        working-directory: './src/Turnierplan.App/Client/'
       - name: 'Lint client application'
         run: 'npm run lint:ci'
-        working-directory: './src/Turnierplan.Web/ClientApp/'
+        working-directory: './src/Turnierplan.App/Client/'
       - name: 'Test client application'
         run: 'npm run test:ci'
-        working-directory: './src/Turnierplan.Web/ClientApp/'
+        working-directory: './src/Turnierplan.App/Client/'
       - name: 'Build client application'
         run: 'npm run build:prod'
-        working-directory: './src/Turnierplan.Web/ClientApp/'
+        working-directory: './src/Turnierplan.App/Client/'
       - name: 'Publish .NET solution'
         run: 'dotnet publish --no-build -c Release /p:UseAppHost=false'
         working-directory: './src'
