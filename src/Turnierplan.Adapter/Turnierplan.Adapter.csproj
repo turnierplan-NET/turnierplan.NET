@@ -9,7 +9,6 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageDescription>Client library for fetching data from a turnierplan.NET server</PackageDescription>
     <PackageIcon>TurnierplanIcon.png</PackageIcon>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/turnierplan-NET/turnierplan.NET</RepositoryUrl>
@@ -23,7 +22,6 @@
 
   <ItemGroup>
     <None Include="TurnierplanIcon.png" Pack="true" PackagePath=""/>
-    <None Include="../../LICENSE" Pack="true" PackagePath=""/>
     <None Include="../../README.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
