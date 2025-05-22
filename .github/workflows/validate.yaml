@@ -27,17 +27,11 @@ jobs:
       - name: 'Set CHROME_BIN environment variable'
         run: 'echo "CHROME_BIN=${{ steps.setup-chrome.outputs.chrome-path }}" >> $env:GITHUB_ENV'
       - name: Install SonarQube Cloud scanner
-        shell: powershell
-        run: |
-          New-Item -Path .\.sonar\scanner -ItemType Directory
-          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-        working-directory: './src'
+        run: 'dotnet tool install --global dotnet-sonarscanner'
       - name: Start SonarQube Cloud analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"turnierplan-NET_turnierplan.NET" /o:"turnierplan-net" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+        run: 'dotnet-sonarscanner begin /k:"turnierplan-NET_turnierplan.NET" /o:"turnierplan-net" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"'
         working-directory: './src'
       - name: 'Restore .NET solution'
         run: 'dotnet restore'
@@ -53,9 +47,7 @@ jobs:
       - name: End SonarQube Cloud analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+        run: 'dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"'
         working-directory: './src'
       - name: 'Install npm packages'
         run: 'npm ci'
