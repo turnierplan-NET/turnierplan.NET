@@ -10,10 +10,18 @@ This readme describes how to deploy the application using the pre-built containe
 
 ## Deployment
 
-**turnierplan.NET** comes as a pre-built container image which can be deployed with minimal configuration.
+**turnierplan.NET** comes as a pre-built container image which can be deployed with minimal configuration. The image is available on [Docker Hub](https://hub.docker.com/r/eliaspr/turnierplan-net).
 
-> [!NOTE]
-> This section will come later once container image tags are known
+In the simplest case, run the container directly using the following command. Make sure to substitute the correct PostgreSQL database connection string:
+
+```shell
+docker run -p 80:8080 -e ApplicationUrl="http://localhost" -e Database__ConnectionString="" eliaspr/turnierplan-net:latest
+```
+
+The credentials of the initial admin user are displayed in the container logs.
+
+> [!CAUTION]
+> In a production environment, you should immediately change the administrator password to a secure one!
 
 ### Persisting Data
 
@@ -31,6 +39,47 @@ The application can be configured by setting the following environment variables
 | `ApplicationUrl`                        | The URL which can be used to access your instance in the format `https://hostname-or-IP:port/`. The port can be omitted.                                                        | Yes      | -       |
 | `Database__ConnectionString`            | The PostgreSQL connection string with read/write permission                                                                                                                     | Yes      | -       |
 | `ApplicationInsights__ConnectionString` | Can be set if you wish that your instance sends telemetry data to [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview) | No       | -       |
+
+### Docker Compose Example
+
+You can use the following docker compose file to get a complete instance running on your machine:
+
+```yaml
+services:
+  turnierplan.database:
+    image: postgres:17.0
+    environment:
+      - POSTGRES_PASSWORD=P@ssw0rd
+      - POSTGRES_DB=turnierplan
+    volumes:
+      - turnierplan-database-data:/var/lib/postgresql/data
+    networks:
+      - turnierplan
+    restart: unless-stopped
+
+  turnierplan.app:
+    image: eliaspr/turnierplan-net:latest
+    environment:
+      - ApplicationUrl=http://localhost
+      - Database__ConnectionString=Host=turnierplan.database;Database=turnierplan;Username=postgres;Password=P@ssw0rd
+    volumes:
+      - turnierplan-app-data:/var/turnierplan
+    networks:
+      - turnierplan
+    restart: unless-stopped
+    ports:
+      - '80:8080'
+
+volumes:
+  turnierplan-database-data:
+  turnierplan-app-data:
+
+networks:
+  turnierplan:
+```
+
+> [!TIP]
+> Choose a secure password for the database user.
 
 ## Documentation
 
