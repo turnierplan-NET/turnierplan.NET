@@ -1,0 +1,32 @@
+on:
+  push:
+    branches:
+      - topic/build-workflow # TODO!!! - release/*
+
+jobs:
+  container-image:
+    name: 'Build container image'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v2
+    
+  nuget-package:
+    name: 'Build NuGet package'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'Setup .NET SDK 9.x'
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.x'
+      - name: 'Restore .NET solution'
+        run: 'dotnet restore'
+        working-directory: './src'
+      - name: 'Pack Turnierplan.Adapter'
+        run: 'dotnet pack Turnierplan.Adapter/Turnierplan.Adapter.csproj -c Release -o .'
+        working-directory: './src'
+      - name: 'Push to NuGet'
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: 'dotnet nuget push ./*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json'
+        working-directory: './src'
