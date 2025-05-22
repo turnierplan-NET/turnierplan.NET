@@ -1,0 +1,53 @@
+on:
+  push:
+    branches:
+      - topic/workflows
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
+jobs:
+  validate:
+    name: 'Validate'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'Setup .NET SDK 9.x'
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.x'
+      - name: 'Setup Node.js 22.x'
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.x'
+      - name: 'Setup Chrome'
+        uses: browser-actions/setup-chrome@v1
+        id: 'setup-chrome'
+      - name: 'Set CHROME_BIN environment variable'
+        run: 'echo "CHROME_BIN=${{ steps.setup-chrome.outputs.chrome-path }}" >> $env:GITHUB_ENV'
+      - name: 'Restore .NET solution'
+        run: 'dotnet restore'
+        working-directory: './src'
+      - name: 'Build .NET solution'
+        run: 'dotnet build --no-restore -c Release'
+        working-directory: './src'
+      - name: 'Test .NET solution'
+        run: 'dotnet test --no-build --logger trx -c Release'
+        working-directory: './src'
+      - name: 'Install npm packages'
+        run: 'npm ci'
+        working-directory: './src/Turnierplan.Web/ClientApp/'
+      - name: 'Lint client application'
+        run: 'npm run lint:ci'
+        working-directory: './src/Turnierplan.Web/ClientApp/'
+      - name: 'Test client application'
+        run: 'npm run test:ci'
+        working-directory: './src/Turnierplan.Web/ClientApp/'
+      - name: 'Build client application'
+        run: 'npm run build:prod'
+        working-directory: './src/Turnierplan.Web/ClientApp/'
+      - name: 'Publish .NET solution'
+        run: 'dotnet publish --no-build -c Release /p:UseAppHost=false'
+        working-directory: './src'
