@@ -7,10 +7,22 @@
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageDescription>Client library for fetching data from a turnierplan.NET server</PackageDescription>
+    <PackageIcon>TurnierplanIcon.png</PackageIcon>
+    <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/turnierplan-NET/turnierplan.NET</RepositoryUrl>
+    <PackageProjectUrl>https://www.turnierplan.net</PackageProjectUrl>
+    <Copyright>Copyright (c) Elias Hörner 2025</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App"/>
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <None Include="TurnierplanIcon.png" Pack="true" PackagePath=""/>
+    <None Include="../../README.md" Pack="true" PackagePath=""/>
+  </ItemGroup>
+
 </Project>
