@@ -1,6 +1,11 @@
 <ng-container *tpLoadingState="loadingState">
   <tp-page-frame [title]="'Portal.LandingPage.Title' | translate" [navigationTabs]="pages">
     <ng-template #buttons>
+      <tp-action-button *tpHasRole="administratorRoleId"
+                        [title]="'Portal.Administration.Title'"
+                        [type]="'outline-primary'"
+                        [icon]="'gear'"
+                        [routerLink]="'administration'"/>
       <tp-action-button [title]="'Portal.LandingPage.NewOrganization'"
                         [type]="'outline-success'"
                         [icon]="'plus-circle'"
