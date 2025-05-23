@@ -9,9 +9,12 @@
     <ng-template #content>
       <div class="card">
         @if (organizations.length === 0) {
-          <div class="card-body py-5 d-flex flex-column align-items-center gap-5">
-            <tp-illustration [name]="'select'"></tp-illustration>
-            <span translate="Portal.LandingPage.NoOrganizations" class="tp-text-pre-wrap text-center"></span>
+          <div class="card-body">
+            <tp-alert *tpHasRole="administratorRoleId" [type]="'warning'" [icon]="'exclamation-triangle'" [text]="'Portal.LandingPage.AdministratorWarning'" />
+            <div class="py-5 d-flex flex-column align-items-center gap-5">
+              <tp-illustration [name]="'select'"></tp-illustration>
+              <span translate="Portal.LandingPage.NoOrganizations" class="tp-text-pre-wrap text-center"></span>
+            </div>
           </div>
         } @else {
           <div class="card-header d-flex flex-row align-items-center">

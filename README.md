@@ -61,6 +61,8 @@ services:
 
   turnierplan.app:
     image: eliaspr/turnierplan-net:latest
+    depends_on:
+      - turnierplan.database
     environment:
       - ApplicationUrl=http://localhost
       - Database__ConnectionString=Host=turnierplan.database;Database=turnierplan;Username=postgres;Password=P@ssw0rd
