@@ -1,6 +1,6 @@
 ﻿const PROXY_CONFIG = [
   {
-    context: ['/api', '/identity', '/images'],
+    context: ['/api', '/images'],
     target: 'http://127.0.0.1:45000',
     secure: false,
     headers: {
