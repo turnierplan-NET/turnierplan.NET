@@ -16,13 +16,11 @@ export class CreateApiKeyComponent {
   protected organization?: OrganizationDto;
   protected createdApiKey?: ApiKeyDto;
 
-  /* eslint-disable @typescript-eslint/unbound-method */
   protected form = new FormGroup({
     name: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(25)] }),
     description: new FormControl('', { nonNullable: true, validators: [Validators.maxLength(250)] }),
     validity: new FormControl(30, { nonNullable: true, validators: [Validators.min(1), Validators.max(180)] })
   });
-  /* eslint-enable @typescript-eslint/unbound-method */
 
   constructor(
     private readonly organizationService: OrganizationsService,

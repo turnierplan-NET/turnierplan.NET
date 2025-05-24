@@ -13,13 +13,11 @@ import { TitleService } from '../../services/title.service';
 export class CreateUserComponent implements OnInit {
   protected loadingState: LoadingState = { isLoading: false };
 
-  /* eslint-disable @typescript-eslint/unbound-method */
   protected form = new FormGroup({
     userName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(100)] }),
     eMail: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email, Validators.maxLength(100)] }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(64)] })
   });
-  /* eslint-enable @typescript-eslint/unbound-method */
 
   constructor(
     private readonly userService: UsersService,

@@ -23,7 +23,6 @@ export class DocumentConfigReceiptsComponent extends DocumentConfigComponent<Rec
       throw new Error('Config amounts may not be undefined.');
     }
 
-    /* eslint-disable @typescript-eslint/unbound-method */
     const amountGroups: { [key: string]: unknown } = {};
     this.amountKeys = Object.keys(config.amounts);
     for (const key of this.amountKeys) {
@@ -41,7 +40,6 @@ export class DocumentConfigReceiptsComponent extends DocumentConfigComponent<Rec
       showSponsorLogo: [config.showSponsorLogo],
       combineSimilarTeams: [config.combineSimilarTeams]
     });
-    /* eslint-enable @typescript-eslint/unbound-method */
   }
 
   protected get amounts(): FormGroup {
@@ -105,14 +103,12 @@ export class DocumentConfigReceiptsComponent extends DocumentConfigComponent<Rec
       newEntry++;
     }
 
-    /* eslint-disable @typescript-eslint/unbound-method */
     this.amounts.addControl(
       `${newEntry}`,
       this.formBuilder.group({
         amount: [10, [Validators.required, Validators.min(0.01)]]
       })
     );
-    /* eslint-enable @typescript-eslint/unbound-method */
 
     this.amountKeys.push(`${newEntry}`);
     this.amountKeys.sort();
