@@ -2,7 +2,8 @@
 
 *An open-source tournament planning application for football clubs*
 
-[![.github/workflows/validate.yaml](https://github.com/turnierplan-NET/turnierplan.NET/actions/workflows/validate.yaml/badge.svg)](https://github.com/turnierplan-NET/turnierplan.NET/actions/workflows/validate.yaml) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=turnierplan-NET_turnierplan.NET&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=turnierplan-NET_turnierplan.NET) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=turnierplan-NET_turnierplan.NET&metric=bugs)](https://sonarcloud.io/summary/new_code?id=turnierplan-NET_turnierplan.NET) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=turnierplan-NET_turnierplan.NET&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=turnierplan-NET_turnierplan.NET) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=turnierplan-NET_turnierplan.NET&metric=coverage)](https://sonarcloud.io/summary/new_code?id=turnierplan-NET_turnierplan.NET)
+[![.github/workflows/validate.yaml](https://github.com/turnierplan-NET/turnierplan.NET/actions/workflows/validate.yaml/badge.svg)](https://github.com/turnierplan-NET/turnierplan.NET/actions/workflows/validate.yaml) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=turnierplan-NET_turnierplan.NET&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=turnierplan-NET_turnierplan.NET) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=turnierplan-NET_turnierplan.NET&metric=bugs)](https://sonarcloud.io/summary/new_code?id=turnierplan-NET_turnierplan.NET) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=turnierplan-NET_turnierplan.NET&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=turnierplan-NET_turnierplan.NET) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=turnierplan-NET_turnierplan.NET&metric=coverage)](https://sonarcloud.io/summary/new_code?id=turnierplan-NET_turnierplan.NET)    // TODO: Add link to github tag when clicking on version
+
 
 ## Introduction
 
@@ -121,7 +122,7 @@ Add the package reference to your project:
 In your program, instantiate the `TurnierplanClient` class providing your API key. Finally, you can query the API!
 
 ```cs
-var config = new TurnierplanClientOptions("<ApiKey>", "<ApiKeySecret>")
+var config = new TurnierplanClientOptions("http://localhost:45000", "<ApiKey>", "<ApiKeySecret>")
 {
   UserAgent = "<YourApplicationName>"
 };
@@ -130,3 +131,4 @@ using var client = new TurnierplanClient(config);
 
 var x = await client.GetTournaments("<FolderId>");
 var y = await client.GetTournament("<TournamentId>");
+```
