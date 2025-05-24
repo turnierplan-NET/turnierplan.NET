@@ -18,7 +18,7 @@
     "lint": "npm run prettier -- --write && npm run eslint -- --fix && npm run stylelint -- --fix",
     "lint:ci": "npm run prettier -- --check && npm run eslint && npm run stylelint",
     "test": "ng test",
-    "test:ci": "ng test --watch=false --browsers ChromeHeadless"
+    "test:ci": "ng test --watch=false --source-map=true --code-coverage --browsers ChromeHeadless"
   },
   "dependencies": {
     "@angular/animations": "~17.3.12",
