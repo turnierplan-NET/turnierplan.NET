@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, ElementRef, Input, TemplateRef, OnInit, ViewContainerRef } from '@angular/core';
 
 import { LoadingErrorComponent } from '../../components/loading-error/loading-error.component';
 import { LoadingIndicatorComponent } from '../../components/loading-indicator/loading-indicator.component';
