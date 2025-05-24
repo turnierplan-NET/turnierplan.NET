@@ -11,12 +11,20 @@
 }
 
 <ng-template #footerContent>
-  <span class="footer-item"><a translate="Footer.LandingPage" href="/"></a></span>
+  <span class="footer-item" translate="Application.Name">
+  </span>
+  <span class="footer-item">
+    <a translate="Footer.LandingPage" [routerLink]="'/portal'"></a>
+  </span>
   <span class="footer-item">
     <a target="_blank" href="https://github.com/turnierplan-NET/turnierplan.NET" rel="noopener">
       <i class="bi bi-github"></i>
       <span class="ms-1" translate="Footer.GitHub"></span>
     </a>
   </span>
-  <span class="footer-item" [ngClass]="{ 'fw-bold text-warning': isDevelopment }">{{ version }}</span>
+  <span class="footer-item">
+    <a target="_blank" href="https://github.com/turnierplan-NET/turnierplan.NET/releases/tag/{{ version }}" rel="noopener">
+      <span [ngClass]="{ 'fw-bold text-warning': isDevelopment }">v{{ version }}</span>
+    </a>
+  </span>
 </ng-template>
