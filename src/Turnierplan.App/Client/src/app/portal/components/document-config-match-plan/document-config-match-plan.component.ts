@@ -20,7 +20,6 @@ export class DocumentConfigMatchPlanComponent extends DocumentConfigComponent<Ma
   constructor(formBuilder: FormBuilder, @Inject(CURRENT_CONFIGURATION) config: MatchPlanDocumentConfiguration) {
     super();
 
-    /* eslint-disable @typescript-eslint/unbound-method */
     this.form = formBuilder.group({
       organizerNameOverride: [config.organizerNameOverride ?? '', Validators.maxLength(100)],
       tournamentNameOverride: [config.tournamentNameOverride ?? '', Validators.maxLength(100)],
@@ -30,7 +29,6 @@ export class DocumentConfigMatchPlanComponent extends DocumentConfigComponent<Ma
       includeQrCode: [config.includeQrCode],
       includeRankingTable: [config.includeRankingTable]
     });
-    /* eslint-enable @typescript-eslint/unbound-method */
 
     if (config.outcomes === MatchPlanOutcomes.HideOutcomeStructures) {
       this.includeRankingTable.disable();

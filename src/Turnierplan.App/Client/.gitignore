@@ -2,8 +2,7 @@
 node_modules
 dist
 
-esLintResult.json
-styleLintResult.json
+# Code coverage reports
 coverage
 
 # Remove generated API client

@@ -1,6 +1,0 @@
-# Ignore artifacts:
-dist
-coverage
-
-# Local chrome installation
-chrome

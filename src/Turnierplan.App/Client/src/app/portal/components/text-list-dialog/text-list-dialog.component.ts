@@ -57,7 +57,6 @@ export class TextListDialogComponent {
   }
 
   protected createControl(value: string): FormControl {
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     const validators = [Validators.required, Validators.maxLength(this.maxItemLength)];
 
     return this.formBuilder.control(value, Validators.compose(validators));

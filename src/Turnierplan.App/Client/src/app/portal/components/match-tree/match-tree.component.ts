@@ -92,7 +92,6 @@ export class MatchTreeComponent implements OnChanges, AfterViewInit {
       // Prevent infinite loop in case the matches have a mutual dependency
       const includedMatchIds = [finalMatch.id];
 
-      // eslint-disable-next-line no-constant-condition
       while (true) {
         const currentColumnMatches = this.columns.at(-1)!.matches;
 
