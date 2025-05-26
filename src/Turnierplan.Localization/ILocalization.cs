@@ -7,11 +7,11 @@ public interface ILocalization
 {
     string Get(string key);
 
-    string Get(string key, object arg1);
+    string Get(string key, object arg0);
 
-    string Get(string key, object arg1, object arg2);
+    string Get(string key, object arg0, object arg1);
 
-    string Get(string key, object arg1, object arg2, object arg3);
+    string Get(string key, object arg0, object arg1, object arg2);
 
     string Get(string key, params object[] args);
 

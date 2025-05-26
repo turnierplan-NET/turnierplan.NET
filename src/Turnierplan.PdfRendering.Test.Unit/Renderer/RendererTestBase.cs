@@ -89,11 +89,11 @@ public abstract partial class RendererTestBase<TRenderer>
     {
         public override string Get(string key) => GetSafe(key, () => inner.Get(key));
 
-        public override string Get(string key, object arg1) => GetSafe(key, () => inner.Get(key, arg1));
+        public override string Get(string key, object arg0) => GetSafe(key, () => inner.Get(key, arg0));
 
-        public override string Get(string key, object arg1, object arg2) => GetSafe(key, () => inner.Get(key, arg1, arg2));
+        public override string Get(string key, object arg0, object arg1) => GetSafe(key, () => inner.Get(key, arg0, arg1));
 
-        public override string Get(string key, object arg1, object arg2, object arg3) => GetSafe(key, () => inner.Get(key, arg1, arg2, arg3));
+        public override string Get(string key, object arg0, object arg1, object arg2) => GetSafe(key, () => inner.Get(key, arg0, arg1, arg2));
 
         public override string Get(string key, params object[] args) => GetSafe(key, () => inner.Get(key, args));
 
