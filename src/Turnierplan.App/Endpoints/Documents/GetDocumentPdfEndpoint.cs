@@ -59,7 +59,7 @@ internal sealed class GetDocumentPdfEndpoint : EndpointBase
 
         if (!documentTypeRegistry.TryParseDocumentConfiguration(document.Type, document.Configuration, out var configuration))
         {
-            logger.LogError("Failed to parse the document configuration of document with type '{documentType}'.", document.Type);
+            logger.LogError("Failed to parse the document configuration of document with type '{DocumentType}'.", document.Type);
 
             return Results.InternalServerError();
         }
@@ -68,7 +68,7 @@ internal sealed class GetDocumentPdfEndpoint : EndpointBase
 
         if (renderer is null)
         {
-            logger.LogCritical("No document renderer available for document type '{documentType}'.", document.Type);
+            logger.LogCritical("No document renderer available for document type '{DocumentType}'.", document.Type);
 
             return Results.InternalServerError();
         }
