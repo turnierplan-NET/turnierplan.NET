@@ -22,12 +22,9 @@ public sealed class ImageConstraints
         }
         else
         {
-            ArgumentNullException.ThrowIfNull(minimumAspectRatio);
-            ArgumentNullException.ThrowIfNull(maximumAspectRatio);
-
             _mustBeSquare = false;
-            _minimumAspectRatio = minimumAspectRatio;
-            _maximumAspectRatio = maximumAspectRatio;
+            _minimumAspectRatio = minimumAspectRatio ?? throw new ArgumentNullException(nameof(minimumAspectRatio));
+            _maximumAspectRatio = maximumAspectRatio ?? throw new ArgumentNullException(nameof(maximumAspectRatio));
         }
     }
 

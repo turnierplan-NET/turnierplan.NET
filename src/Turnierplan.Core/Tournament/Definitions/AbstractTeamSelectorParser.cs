@@ -8,7 +8,7 @@ namespace Turnierplan.Core.Tournament.Definitions;
 /// The FinalsMatchDefinitions.json uses a modified string representation for the abstract team selectors because the
 /// definitions file should be easily readable and the "standard" string representation format is not particularly intuitive.
 /// </remarks>
-public sealed partial class AbstractTeamSelectorParser
+public static partial class AbstractTeamSelectorParser
 {
     public static AbstractTeamSelector ParseAbstractTeamSelector(string? source)
     {
