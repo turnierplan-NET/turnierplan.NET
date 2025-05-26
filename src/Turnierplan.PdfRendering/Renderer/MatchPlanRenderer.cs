@@ -296,8 +296,10 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
     }
 }
 
-static file class MatchPlanQuestPdfExtensions
+file static class MatchPlanQuestPdfExtensions
 {
+    private const string TableHeaderBackgroundColor = "aaaaaa";
+
     public static void MatchTimeSection(this IContainer container, DateTime? kickoff, TimeSpan? playTime, TimeSpan? pauseTime, ILocalization localization)
     {
         container.Row(row =>
@@ -394,18 +396,18 @@ static file class MatchPlanQuestPdfExtensions
 
             table.Header(header =>
             {
-                header.Cell().Background("aaaaaa").Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Index")).Bold();
-                header.Cell().Background("aaaaaa").BorderHorizontal(2).BorderLeft(2).BorderRight(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Group")).Bold();
-                header.Cell().Background("aaaaaa").BorderHorizontal(2).BorderVertical(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Court")).Bold();
-                header.Cell().Background("aaaaaa").BorderHorizontal(2).BorderRight(2).BorderLeft(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Kickoff")).Bold();
-                header.Cell().ColumnSpan(3).Background("aaaaaa").Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Teams")).Bold();
+                header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Index")).Bold();
+                header.Cell().Background(TableHeaderBackgroundColor).BorderHorizontal(2).BorderLeft(2).BorderRight(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Group")).Bold();
+                header.Cell().Background(TableHeaderBackgroundColor).BorderHorizontal(2).BorderVertical(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Court")).Bold();
+                header.Cell().Background(TableHeaderBackgroundColor).BorderHorizontal(2).BorderRight(2).BorderLeft(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Kickoff")).Bold();
+                header.Cell().ColumnSpan(3).Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Teams")).Bold();
 
                 if (showResultColumn)
                 {
-                    header.Cell().Background("aaaaaa").Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Outcome")).Bold();
+                    header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Outcome")).Bold();
                 }
 
-                header.Cell().Background("aaaaaa").Border(2).BorderColor(Colors.Black);
+                header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black);
             });
 
             var matches = tournament.Matches.Where(x => x.IsGroupMatch).OrderBy(x => x.Index).ToArray();
@@ -531,13 +533,13 @@ static file class MatchPlanQuestPdfExtensions
 
             table.Header(header =>
             {
-                header.Cell().ColumnSpan(2).Background("aaaaaa").Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.LocalizeGroupName(group)).Bold();
+                header.Cell().ColumnSpan(2).Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.LocalizeGroupName(group)).Bold();
 
                 if (showResultColumns)
                 {
-                    header.Cell().Background("aaaaaa").Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Points")).Bold();
-                    header.Cell().Background("aaaaaa").Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Score")).Bold();
-                    header.Cell().Background("aaaaaa").Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.ScoreDiff")).Bold();
+                    header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Points")).Bold();
+                    header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Score")).Bold();
+                    header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.ScoreDiff")).Bold();
                 }
             });
 
