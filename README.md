@@ -27,7 +27,7 @@ The credentials of the initial admin user are displayed in the container logs.
 
 ### Persisting Data
 
-To persist the **turnierplan.NET** application data, create a Docker volume mapping to the `/var/turnierplan` folder inside the container.
+To persist the **turnierplan.NET** application data (including any uploaded images), create a Docker volume mapping to the `/var/turnierplan` folder inside the container.
 
 > [!CAUTION]
 > Treat the data as highly confidential as it contains the signing key used for issued JWT tokens!
