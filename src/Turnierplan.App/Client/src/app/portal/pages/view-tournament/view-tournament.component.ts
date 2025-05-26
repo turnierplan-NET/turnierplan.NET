@@ -115,7 +115,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
   protected isUpdatingVisibility = false;
   protected isUpdatingName = false;
 
-  private destroyed$ = new Subject<void>();
+  private readonly destroyed$ = new Subject<void>();
 
   constructor(
     private readonly injector: Injector,
@@ -521,7 +521,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     }
 
     this.groupService
-      .setGroupName({ groupId: groupId, tournamentId: this.tournament.id, body: { name: name ? name : null } })
+      .setGroupName({ groupId: groupId, tournamentId: this.tournament.id, body: { name: name ?? null } })
       .pipe(switchMap(() => this.tournamentService.getTournament({ id: tournamentId })))
       .subscribe({
         next: (tournament) => {
@@ -582,11 +582,8 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       centered: true
     });
     const component = ref.componentInstance as MoveTournamentToFolderComponent;
-    component.initialize(
-      this.tournament.organizationId,
-      this.tournament.folderId,
-      this.tournament.folderName ? this.tournament.folderName : undefined
-    );
+
+    component.initialize(this.tournament.organizationId, this.tournament.folderId, this.tournament.folderName ?? undefined);
 
     component.save$
       .pipe(

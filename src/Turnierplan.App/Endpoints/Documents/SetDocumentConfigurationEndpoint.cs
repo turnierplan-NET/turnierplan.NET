@@ -108,7 +108,7 @@ internal sealed class SetMatchPlanDocumentConfigurationEndpoint : SetDocumentCon
                 .IsInEnum();
 
             RuleFor(x => x.IncludeRankingTable)
-                .Must(x => x == false)
+                .Must(x => !x)
                 .WithMessage($"{nameof(MatchPlanDocumentConfiguration.IncludeRankingTable)} must be false if {nameof(MatchPlanDocumentConfiguration.Outcomes)} is {nameof(MatchPlanOutcomes.HideOutcomeStructures)}.")
                 .When(x => x.Outcomes is MatchPlanOutcomes.HideOutcomeStructures);
         }

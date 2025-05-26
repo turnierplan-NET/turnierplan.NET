@@ -48,8 +48,8 @@ export class FolderTimetableComponent implements OnInit, OnDestroy {
   protected organizationId?: string;
   protected missingTournaments: FolderTimetableTournamentEntry[] = [];
 
-  private refresh$ = new BehaviorSubject<boolean>(false);
-  private destroyed$ = new Subject<void>();
+  private readonly refresh$ = new BehaviorSubject<boolean>(false);
+  private readonly destroyed$ = new Subject<void>();
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -83,11 +83,9 @@ export class FolderTimetableComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (timetable) => {
           if (timetable) {
-            if (timetable) {
-              this.organizationId = timetable.organizationId;
-              this.titleService.setCompoundTitle(timetable.folderName);
-              this.generateTimetableView(timetable);
-            }
+            this.organizationId = timetable.organizationId;
+            this.titleService.setCompoundTitle(timetable.folderName);
+            this.generateTimetableView(timetable);
 
             this.loadingState = { isLoading: false };
             this.showRefreshButton = false;
@@ -249,8 +247,7 @@ export class FolderTimetableComponent implements OnInit, OnDestroy {
       for (const row of day.rows) {
         let previousEnd = 0;
 
-        for (let i = 0; i < row.entries.length; i++) {
-          const entry = row.entries[i];
+        for (const entry of row.entries) {
           entry.columnsSpacing = entry.columnsOffset - previousEnd;
           previousEnd = entry.columnsOffset + entry.columnsCount;
         }

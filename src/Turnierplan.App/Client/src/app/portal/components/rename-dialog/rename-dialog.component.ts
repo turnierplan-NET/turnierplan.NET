@@ -55,7 +55,7 @@ export class RenameDialogComponent {
       }
     } else if (sanitized.length === 0 && this.allowReset) {
       if (sanitizedInitial.length > 0) {
-        this.modal.close(undefined);
+        this.modal.close();
       } else {
         this.modal.dismiss();
       }

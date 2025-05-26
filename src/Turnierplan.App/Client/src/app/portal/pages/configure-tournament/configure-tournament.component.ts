@@ -90,7 +90,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
   protected additionalPlayoffs: { [position: number]: TemporaryAdditionalPlayoff } = {};
 
   // Private variables
-  private destroyed$ = new Subject<void>();
+  private readonly destroyed$ = new Subject<void>();
   private finalsMatchDefinitions?: FinalsMatchDefinitionDto[];
   private originalTournament?: TournamentDto;
 
@@ -237,26 +237,35 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
         next: () => {
           this.loadingState = { isLoading: false };
         },
-        error: (error: { response?: string }) => {
-          if (error.response) {
-            try {
-              const validationErrors = (JSON.parse(error.response) as { errors?: { validations?: string[] } })?.errors?.validations;
-              if (validationErrors) {
-                const ref = this.modalService.open(ValidationErrorDialogComponent, {
-                  size: 'md',
-                  fullscreen: 'md',
-                  centered: true
-                });
-                (ref.componentInstance as ValidationErrorDialogComponent).errors = validationErrors;
-                this.loadingState = { isLoading: false };
-                return;
-              }
-            } catch (e) {
-              // ignored
-            }
-          }
+        error: (error: { error?: string }) => {
+          if (error.error) {
+            let parsedError: unknown;
 
-          this.loadingState = { isLoading: false, error: error };
+            try {
+              parsedError = JSON.parse(error.error);
+            } catch (e) {
+              this.loadingState = { isLoading: false, error: error.error };
+              return;
+            }
+
+            const validationErrors = (parsedError as { errors?: { [key: string]: string[] } })?.errors;
+
+            if (validationErrors) {
+              const ref = this.modalService.open(ValidationErrorDialogComponent, {
+                size: 'md',
+                fullscreen: 'md',
+                centered: true
+              });
+
+              (ref.componentInstance as ValidationErrorDialogComponent).errors = validationErrors;
+
+              this.loadingState = { isLoading: false };
+            } else {
+              this.loadingState = { isLoading: false, error: error.error };
+            }
+          } else {
+            this.loadingState = { isLoading: false, error: error };
+          }
         }
       });
   }
@@ -377,13 +386,11 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
 
       this.additionalPlayoffPositions.push(playoffPosition);
 
-      if (this.additionalPlayoffs[playoffPosition] === undefined) {
-        this.additionalPlayoffs[playoffPosition] = {
-          isEnabled: false,
-          teamSelectorA: '',
-          teamSelectorB: ''
-        };
-      }
+      this.additionalPlayoffs[playoffPosition] ??= {
+        isEnabled: false,
+        teamSelectorA: '',
+        teamSelectorB: ''
+      };
     }
   }
 

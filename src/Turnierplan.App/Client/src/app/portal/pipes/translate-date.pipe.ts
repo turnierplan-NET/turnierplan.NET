@@ -25,13 +25,11 @@ export class TranslateDatePipe implements PipeTransform, OnDestroy {
 
     this.updateValue(this.translateService.currentLang ?? this.translateService.defaultLang);
 
-    if (!this.onLangChange) {
-      this.onLangChange = this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
-        if (this.lastDate && this.lastFormat) {
-          this.updateValue(event.lang);
-        }
-      });
-    }
+    this.onLangChange ??= this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+      if (this.lastDate && this.lastFormat) {
+        this.updateValue(event.lang);
+      }
+    });
 
     return this.currentValue;
   }

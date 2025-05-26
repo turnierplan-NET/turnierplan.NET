@@ -111,7 +111,7 @@ export class ImageChooserComponent {
       next: () => {
         if (deleteImageId === this.currentImageId) {
           // Close modal with undefined to trigger re-load of tournament page
-          this.modal.close(undefined);
+          this.modal.close();
         } else {
           this.loadImages();
         }

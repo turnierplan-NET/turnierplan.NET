@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
-using Turnierplan.App.Security;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.User;
 using Turnierplan.Dal;
@@ -23,7 +22,6 @@ internal sealed class CreateOrganizationEndpoint : EndpointBase<OrganizationDto>
         HttpContext httpContext,
         IUserRepository userRepository,
         IOrganizationRepository organizationRepository,
-        IAccessValidator accessValidator,
         IMapper mapper,
         CancellationToken cancellationToken)
     {
