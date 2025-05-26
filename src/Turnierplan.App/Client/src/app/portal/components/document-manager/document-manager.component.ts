@@ -41,7 +41,7 @@ export class DocumentManagerComponent {
   protected currentlyLoadingPreview?: string;
   protected currentlyUpdatingName?: string;
 
-  private configComponents = new Map<DocumentType, Type<DocumentConfigComponent<DocumentConfiguration>>>();
+  private readonly configComponents = new Map<DocumentType, Type<DocumentConfigComponent<DocumentConfiguration>>>();
 
   constructor(
     private readonly injector: Injector,
@@ -67,7 +67,7 @@ export class DocumentManagerComponent {
       return;
     }
 
-    const configComponent = this.configComponents.get(document.type as DocumentType);
+    const configComponent = this.configComponents.get(document.type);
     if (configComponent === undefined) {
       return;
     }
@@ -204,7 +204,7 @@ export class DocumentManagerComponent {
   }
 
   private getDocumentConfig(document: DocumentDto): Observable<DocumentConfiguration> {
-    switch (document.type as DocumentType) {
+    switch (document.type) {
       case DocumentType.MatchPlan:
         return this.documentService.getMatchPlanDocumentConfiguration({ id: document.id });
       case DocumentType.Receipts:
@@ -215,7 +215,7 @@ export class DocumentManagerComponent {
   }
 
   private getDocumentConfigSaveFunction(document: DocumentDto): (config: DocumentConfiguration) => Observable<void> {
-    switch (document.type as DocumentType) {
+    switch (document.type) {
       case DocumentType.MatchPlan:
         return (config) =>
           this.documentService.setMatchPlanDocumentConfiguration({ id: document.id, body: config as MatchPlanDocumentConfiguration });

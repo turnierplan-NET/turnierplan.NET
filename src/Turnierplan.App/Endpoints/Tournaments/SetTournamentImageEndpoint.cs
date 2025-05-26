@@ -75,7 +75,8 @@ internal sealed class SetTournamentImageEndpoint : EndpointBase
                 tournament.SetSponsorBanner(image);
                 break;
             default:
-                throw new ArgumentOutOfRangeException(nameof(request.Target), request.Target, "Invalid target provided.");
+                // This cannot happen because its prevented by the validator
+                throw new InvalidOperationException();
         }
 
         await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);

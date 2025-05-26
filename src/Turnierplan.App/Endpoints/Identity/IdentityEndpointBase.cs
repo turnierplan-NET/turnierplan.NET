@@ -66,6 +66,7 @@ internal abstract class IdentityEndpointBase<TResponse> : EndpointBase<TResponse
             {
                 HttpOnly = true,
                 SameSite = SameSiteMode.Strict,
+                Secure = true,
                 Path = path,
                 Expires = cookieExpires
             };

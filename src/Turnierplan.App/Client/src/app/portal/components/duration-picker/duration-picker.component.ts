@@ -17,7 +17,7 @@ export class DurationPickerComponent {
   public set duration(value: string) {
     // The regex matches duration strings from the .NET TimeSpan class. This allows for the 'days' value
     // to be set, however the resulting minutes/seconds is clamped to be at most 23h:59m:59s
-    const match = value.match(/^(?:(?<d>\d+)\.)?(?<h>\d{2}):(?<m>\d{2}):(?<s>\d{2})(?:\.\d{7})?$/);
+    const match = /^(?:(?<d>\d+)\.)?(?<h>\d{2}):(?<m>\d{2}):(?<s>\d{2})(?:\.\d{7})?$/.exec(value);
 
     if (match?.groups) {
       let hours = +match.groups['h'];

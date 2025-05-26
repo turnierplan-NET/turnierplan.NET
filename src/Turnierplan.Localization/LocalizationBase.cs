@@ -7,11 +7,11 @@ public abstract class LocalizationBase : ILocalization
 {
     public abstract string Get(string key);
 
-    public abstract string Get(string key, object arg1);
+    public abstract string Get(string key, object arg0);
 
-    public abstract string Get(string key, object arg1, object arg2);
+    public abstract string Get(string key, object arg0, object arg1);
 
-    public abstract string Get(string key, object arg1, object arg2, object arg3);
+    public abstract string Get(string key, object arg0, object arg1, object arg2);
 
     public abstract string Get(string key, params object[] args);
 

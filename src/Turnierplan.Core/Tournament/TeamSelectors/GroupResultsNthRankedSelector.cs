@@ -6,7 +6,7 @@ public sealed record GroupResultsNthRankedSelector(int[] TargetGroupIds, int Ord
     {
         if (OrdinalNumber < 0 || PlacementRank < 1)
         {
-            return default;
+            return null;
         }
 
         var eligibleTeams = new List<GroupParticipant>();
@@ -22,12 +22,12 @@ public sealed record GroupResultsNthRankedSelector(int[] TargetGroupIds, int Ord
 
             if (tournament._matches.Where(x => x.Group?.Id == groupId).Any(x => !x.IsFinished))
             {
-                return default;
+                return null;
             }
 
             var results = group._participants.SingleOrDefault(x => x.Statistics.Position == PlacementRank);
 
-            if (results == default)
+            if (results == null)
             {
                 continue;
             }
@@ -35,9 +35,9 @@ public sealed record GroupResultsNthRankedSelector(int[] TargetGroupIds, int Ord
             eligibleTeams.Add(results);
         }
 
-        if (OrdinalNumber < 0 || OrdinalNumber >= eligibleTeams.Count)
+        if (OrdinalNumber >= eligibleTeams.Count)
         {
-            return default;
+            return null;
         }
 
         eligibleTeams.Sort(tournament._groupParticipantComparer);

@@ -20,19 +20,19 @@ internal sealed class InMemoryLocalization : LocalizationBase
         return _values.GetValueOrDefault(key, key);
     }
 
-    public override string Get(string key, object arg1)
+    public override string Get(string key, object arg0)
     {
-        return _values.TryGetValue(key, out var value) ? string.Format(Culture, value, arg1) : key;
+        return _values.TryGetValue(key, out var value) ? string.Format(Culture, value, arg0) : key;
     }
 
-    public override string Get(string key, object arg1, object arg2)
+    public override string Get(string key, object arg0, object arg1)
     {
-        return _values.TryGetValue(key, out var value) ? string.Format(Culture, value, arg1, arg2) : key;
+        return _values.TryGetValue(key, out var value) ? string.Format(Culture, value, arg0, arg1) : key;
     }
 
-    public override string Get(string key, object arg1, object arg2, object arg3)
+    public override string Get(string key, object arg0, object arg1, object arg2)
     {
-        return _values.TryGetValue(key, out var value) ? string.Format(Culture, value, arg1, arg2, arg3) : key;
+        return _values.TryGetValue(key, out var value) ? string.Format(Culture, value, arg0, arg1, arg2) : key;
     }
 
     public override string Get(string key, params object[] args)

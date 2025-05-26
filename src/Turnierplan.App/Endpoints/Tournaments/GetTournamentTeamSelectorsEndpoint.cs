@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
 using Turnierplan.Core.PublicId;
@@ -22,8 +21,7 @@ internal sealed class GetTournamentTeamSelectorsEndpoint : EndpointBase<IEnumera
         [FromQuery] string languageCode,
         ITournamentRepository repository,
         IAccessValidator accessValidator,
-        ILocalizationProvider localizationProvider,
-        IMapper mapper)
+        ILocalizationProvider localizationProvider)
     {
         var tournament = await repository.GetByPublicIdAsync(id, ITournamentRepository.Include.GameRelevant).ConfigureAwait(false);
 

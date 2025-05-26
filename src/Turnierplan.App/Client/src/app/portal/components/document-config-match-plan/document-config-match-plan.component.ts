@@ -15,7 +15,7 @@ export class DocumentConfigMatchPlanComponent extends DocumentConfigComponent<Ma
   protected matchPlanDateFormats = Object.keys(MatchPlanDateFormat);
   protected matchPlanOutcomeTypes = Object.keys(MatchPlanOutcomes);
 
-  private destroyed$ = new Subject<void>();
+  private readonly destroyed$ = new Subject<void>();
 
   constructor(formBuilder: FormBuilder, @Inject(CURRENT_CONFIGURATION) config: MatchPlanDocumentConfiguration) {
     super();

@@ -111,7 +111,7 @@ export class DocumentConfigReceiptsComponent extends DocumentConfigComponent<Rec
     );
 
     this.amountKeys.push(`${newEntry}`);
-    this.amountKeys.sort();
+    this.amountKeys.sort((a, b) => +a - +b);
   }
 
   protected removeReducedAmountEntry(amountKey: string): void {

@@ -4,7 +4,7 @@ namespace Turnierplan.Dal.Extensions;
 
 public static class UnitOfWorkExtensions
 {
-    public sealed class TransactionWrapper : IDisposable, IAsyncDisposable
+    public sealed class TransactionWrapper : IAsyncDisposable
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -15,11 +15,6 @@ public static class UnitOfWorkExtensions
 
 
         public bool ShouldCommit { private get; set; }
-
-        public void Dispose()
-        {
-            throw new NotSupportedException($"Only use '{nameof(UnitOfWorkExtensions)}.{nameof(WrapTransactionAsync)}()' with 'await using ...;'");
-        }
 
         public async ValueTask DisposeAsync()
         {

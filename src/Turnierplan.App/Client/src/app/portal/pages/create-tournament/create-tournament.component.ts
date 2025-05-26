@@ -24,7 +24,7 @@ export class CreateTournamentComponent implements OnDestroy {
   protected newFolderName = new FormControl<string | undefined>('');
   protected visibility: Visibility = Visibility.Public;
 
-  private destroyed$ = new Subject<void>();
+  private readonly destroyed$ = new Subject<void>();
 
   constructor(
     private readonly organizationService: OrganizationsService,

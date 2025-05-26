@@ -16,18 +16,15 @@ public sealed partial class TurnierplanClient : IDisposable
 {
     private const string TurnierplanVersionHeaderName = "x-turnierplan-version";
 
-    private static readonly string __turnierplanAdapterVersion;
+    private static readonly string __turnierplanAdapterVersion =
+        typeof(TurnierplanClient).Assembly.GetName().Version?.ToString()
+            ?? throw new InvalidOperationException("Could not determine Turnierplan.Adapter version from assembly name.");
+
     private static readonly JsonSerializerOptions __serializerOptions = new()
     {
         PropertyNameCaseInsensitive = true,
         Converters = { new JsonStringEnumConverter() }
     };
-
-    static TurnierplanClient()
-    {
-        __turnierplanAdapterVersion = typeof(TurnierplanClient).Assembly.GetName().Version?.ToString()
-                               ?? throw new InvalidOperationException("Could not determine Turnierplan.Adapter version from assembly name.");
-    }
 
     private readonly HttpClient _httpClient;
     private readonly bool _disposeHttpClient;

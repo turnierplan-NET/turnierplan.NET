@@ -1,6 +1,6 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 ARG DATA_DIRECTORY=/var/turnierplan
-RUN mkdir $DATA_DIRECTORY && chown $APP_UID $DATA_DIRECTORY
+RUN mkdir "$DATA_DIRECTORY" && chown "$APP_UID" "$DATA_DIRECTORY"
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
@@ -11,14 +11,14 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY . .
 WORKDIR "/src/Turnierplan.App"
-RUN dotnet build "./Turnierplan.App.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./Turnierplan.App.csproj" -c "$BUILD_CONFIGURATION" -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y nodejs
 
-RUN dotnet publish "./Turnierplan.App.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Turnierplan.App.csproj" -c "$BUILD_CONFIGURATION" -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

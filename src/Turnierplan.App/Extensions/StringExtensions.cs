@@ -8,9 +8,9 @@ internal static class StringExtensions
     {
         var result = new StringBuilder();
 
-        for (var index = 0; index < input.ToCharArray().Length; index++)
+        for (var index = 0; index < input.Length; index++)
         {
-            var c = input.ToCharArray()[index];
+            var c = input[index];
 
             if (char.IsLower(c))
             {

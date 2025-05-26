@@ -9,7 +9,6 @@ namespace Turnierplan.App.Security;
 
 internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityOptions>
 {
-    private readonly IOptionsMonitor<IdentityOptions> _options;
     private readonly ISigningKeyProvider _signingKeyProvider;
 
     public JwtAuthenticationHandler(
@@ -19,7 +18,6 @@ internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityO
         UrlEncoder encoder)
         : base(options, logger, encoder)
     {
-        _options = options;
         _signingKeyProvider = signingKeyProvider;
     }
 

@@ -53,10 +53,10 @@ public abstract partial class RendererTestBase<TRenderer>
     {
         foreach(var languageCode in __languageCodes)
         {
-            __serviceProvider.GetRequiredService<ILocalizationProvider>().TryGetLocalization(languageCode, out var translator).Should().BeTrue();
+            __serviceProvider.GetRequiredService<ILocalizationProvider>().TryGetLocalization(languageCode, out var localization).Should().BeTrue();
 
             using var stream = new MemoryStream();
-            GetRenderer().Render(tournament, configuration, new TranslatorWrapper(translator!), stream);
+            GetRenderer().Render(tournament, configuration, new LocalizationWrapper(localization!), stream);
 
             var pdfData = stream.ToArray();
 
@@ -85,15 +85,15 @@ public abstract partial class RendererTestBase<TRenderer>
     [GeneratedRegex(@"^%PDF-\d\.\d")]
     private static partial Regex PdfHeaderRegex();
 
-    private sealed class TranslatorWrapper(ILocalization inner) : LocalizationBase
+    private sealed class LocalizationWrapper(ILocalization inner) : LocalizationBase
     {
         public override string Get(string key) => GetSafe(key, () => inner.Get(key));
 
-        public override string Get(string key, object arg1) => GetSafe(key, () => inner.Get(key, arg1));
+        public override string Get(string key, object arg0) => GetSafe(key, () => inner.Get(key, arg0));
 
-        public override string Get(string key, object arg1, object arg2) => GetSafe(key, () => inner.Get(key, arg1, arg2));
+        public override string Get(string key, object arg0, object arg1) => GetSafe(key, () => inner.Get(key, arg0, arg1));
 
-        public override string Get(string key, object arg1, object arg2, object arg3) => GetSafe(key, () => inner.Get(key, arg1, arg2, arg3));
+        public override string Get(string key, object arg0, object arg1, object arg2) => GetSafe(key, () => inner.Get(key, arg0, arg1, arg2));
 
         public override string Get(string key, params object[] args) => GetSafe(key, () => inner.Get(key, args));
 

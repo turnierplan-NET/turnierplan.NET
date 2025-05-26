@@ -5,8 +5,15 @@
 <div class="modal-body d-flex flex-column gap-2">
   <div class="mb-4" translate="Portal.ConfigureTournament.ValidationErrors.Info"></div>
   <ul>
-    @for (error of _errors; track error) {
-      <li>{{ error }}</li>
+    @for (key of _errorKeys; track key) {
+      <li>
+        {{ key }}
+        <ul>
+          @for (error of _errors[key]; track error) {
+            <li>{{ error }}</li>
+          }
+        </ul>
+      </li>
     }
   </ul>
 </div>

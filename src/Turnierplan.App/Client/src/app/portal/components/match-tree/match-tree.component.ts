@@ -97,7 +97,7 @@ export class MatchTreeComponent implements OnChanges, AfterViewInit {
 
         for (const match of currentColumnMatches) {
           for (const teamSelector of [match.teamSelectorKeyA, match.teamSelectorKeyB]) {
-            if (!(teamSelector.charAt(0) === 'W' || teamSelector.charAt(0) === 'L')) {
+            if (!(teamSelector.startsWith('W') || teamSelector.startsWith('L'))) {
               dependentMatchIds.push(undefined);
               continue;
             }

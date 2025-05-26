@@ -47,7 +47,7 @@ internal sealed partial class LocalizationProvider : ILocalizationProvider
 
                 if (stream is null)
                 {
-                    _logger.LogError("Stream for translations file '{}' is null.", resourceName);
+                    _logger.LogError("Stream for translations file '{LocalizationResourceName}' is null.", resourceName);
                     continue;
                 }
 
@@ -55,7 +55,7 @@ internal sealed partial class LocalizationProvider : ILocalizationProvider
 
                 if (culture is null)
                 {
-                    _logger.LogWarning("Could not find '{}' for language code '{}'. Falling back to '{}'.", nameof(CultureInfo), languageCode, nameof(CultureInfo.InvariantCulture));
+                    _logger.LogWarning("Could not find CultureInfo for language code '{LanguageCode}'. Falling back to 'InvariantCulture'.", languageCode);
                     culture = CultureInfo.InvariantCulture;
                 }
 
@@ -64,7 +64,7 @@ internal sealed partial class LocalizationProvider : ILocalizationProvider
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to load translations for language with code '{}'.", languageCode);
+                _logger.LogError(ex, "Failed to load translations for language with code '{LanguageCode}'.", languageCode);
             }
         }
     }

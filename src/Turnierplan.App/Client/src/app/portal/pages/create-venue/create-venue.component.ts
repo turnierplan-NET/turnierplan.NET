@@ -16,7 +16,7 @@ export class CreateVenueComponent implements OnDestroy {
   protected organization?: OrganizationDto;
   protected venueName = new FormControl('', { nonNullable: true });
 
-  private destroyed$ = new Subject<void>();
+  private readonly destroyed$ = new Subject<void>();
 
   constructor(
     private readonly organizationService: OrganizationsService,

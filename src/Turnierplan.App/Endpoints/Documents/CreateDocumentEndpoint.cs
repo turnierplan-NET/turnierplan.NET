@@ -55,7 +55,7 @@ internal sealed class CreateDocumentEndpoint : EndpointBase<DocumentDto>
 
         if (!documentTypeRegistry.TryGetDocumentDefaultConfiguration(request.Type, out var configuration))
         {
-            logger.LogCritical("Could not get the default document configuration for document type {documentType}.", request.Type);
+            logger.LogCritical("Could not get the default document configuration for document type {DocumentType}.", request.Type);
 
             return Results.InternalServerError();
         }

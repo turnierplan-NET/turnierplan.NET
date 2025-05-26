@@ -18,7 +18,7 @@ internal sealed class LocalImageStorage : ILocalImageStorage
         ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.StoragePath);
         _storagePath = Path.GetFullPath(options.Value.StoragePath);
 
-        _logger.LogInformation("Using the following directory for local image storage: '{}'", _storagePath);
+        _logger.LogInformation("Using the following directory for local image storage: '{LocalImageStoragePath}'", _storagePath);
 
         Directory.CreateDirectory(_storagePath);
 
@@ -49,13 +49,13 @@ internal sealed class LocalImageStorage : ILocalImageStorage
 
                 if (!Directory.Exists(imageDirectoryPath))
                 {
-                    _logger.LogCritical("The directory for the image could not be created: '{imageDirectory}'.", imageDirectoryPath);
+                    _logger.LogCritical("The directory for the image could not be created: '{ImageDirectory}'.", imageDirectoryPath);
 
                     return Task.FromResult(false);
                 }
             }
 
-            _logger.LogDebug("Writing image to: {filePath}", filePath);
+            _logger.LogDebug("Writing image to: {FilePath}", filePath);
 
             using var destination = new FileStream(filePath, FileMode.Create);
             imageData.CopyTo(destination);
@@ -64,7 +64,7 @@ internal sealed class LocalImageStorage : ILocalImageStorage
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to save image to file to '{filePath}'.", filePath);
+            _logger.LogError(ex, "Failed to save image to file to '{FilePath}'.", filePath);
 
             return Task.FromResult(false);
         }
@@ -85,7 +85,7 @@ internal sealed class LocalImageStorage : ILocalImageStorage
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to delete image file '{filePath}'.", filePath);
+            _logger.LogError(ex, "Failed to delete image file '{FilePath}'.", filePath);
 
             return Task.FromResult(false);
         }

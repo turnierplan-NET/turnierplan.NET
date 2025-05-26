@@ -59,7 +59,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     }
   ];
 
-  private destroyed$ = new Subject<void>();
+  private readonly destroyed$ = new Subject<void>();
 
   constructor(
     private readonly route: ActivatedRoute,

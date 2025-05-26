@@ -49,7 +49,7 @@ export class EditMatchPlanComponent implements OnInit, OnDestroy, DiscardChanges
   protected localizedTeamSelectors: { [key: string]: string } = {};
 
   // Private variables
-  private destroyed$ = new Subject<void>();
+  private readonly destroyed$ = new Subject<void>();
   private tournamentId?: string;
 
   constructor(

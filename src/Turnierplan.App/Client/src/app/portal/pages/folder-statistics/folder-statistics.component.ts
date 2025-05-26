@@ -31,7 +31,7 @@ export class FolderStatisticsComponent implements OnInit, OnDestroy {
     datasets: []
   };
 
-  private destroyed$ = new Subject<void>();
+  private readonly destroyed$ = new Subject<void>();
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -65,18 +65,16 @@ export class FolderStatisticsComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (statistics) => {
           if (statistics) {
-            if (statistics) {
-              this.folderName = statistics.folderName;
-              this.organizationId = statistics.organizationId;
-              this.titleService.setCompoundTitle(statistics.folderName);
+            this.folderName = statistics.folderName;
+            this.organizationId = statistics.organizationId;
+            this.titleService.setCompoundTitle(statistics.folderName);
 
-              if (statistics.goalDistributionExcludedTournaments.length > 0) {
-                const names = [...statistics.goalDistributionExcludedTournaments.map((x) => x.tournamentName)];
-                names.sort((a, b) => a.localeCompare(b));
-                this.goalDistributionExcludedTournaments = names.join(', ');
-              } else {
-                this.goalDistributionExcludedTournaments = undefined;
-              }
+            if (statistics.goalDistributionExcludedTournaments.length > 0) {
+              const names = [...statistics.goalDistributionExcludedTournaments.map((x) => x.tournamentName)];
+              names.sort((a, b) => a.localeCompare(b));
+              this.goalDistributionExcludedTournaments = names.join(', ');
+            } else {
+              this.goalDistributionExcludedTournaments = undefined;
             }
 
             this.loadingState = { isLoading: false };

@@ -101,11 +101,11 @@ public sealed class Tournament : Entity<long>, IEntityWithPublicId, IEntityWithO
         {
             DateTime? start = null;
 
-            foreach (var match in _matches)
+            foreach (var kickoff in _matches.Select(x => x.Kickoff))
             {
-                if (match.Kickoff.HasValue && (!start.HasValue || match.Kickoff.Value < start))
+                if (kickoff.HasValue && (!start.HasValue || kickoff.Value < start))
                 {
-                    start = match.Kickoff;
+                    start = kickoff;
                 }
             }
 
@@ -411,10 +411,10 @@ public sealed class Tournament : Entity<long>, IEntityWithPublicId, IEntityWithO
             }
         }
 
-        foreach (var match in _matches.Where(match => !match.IsGroupMatch))
+        foreach (var index in _matches.Where(match => !match.IsGroupMatch).Select(match => match.Index))
         {
-            yield return new MatchSelector(match.Index, MatchSelector.Mode.Winner);
-            yield return new MatchSelector(match.Index, MatchSelector.Mode.Loser);
+            yield return new MatchSelector(index, MatchSelector.Mode.Winner);
+            yield return new MatchSelector(index, MatchSelector.Mode.Loser);
         }
     }
 
@@ -841,7 +841,7 @@ public sealed class Tournament : Entity<long>, IEntityWithPublicId, IEntityWithO
         _matches.Add(new Match(GetNextId(), globalMatchIndex, finalTeamA, finalTeamB, 0, 1));
     }
 
-    private void GenerateAdditionalRankingMatches(IList<AdditionalPlayoffConfig>? config, ref int globalMatchIndex)
+    private void GenerateAdditionalRankingMatches(List<AdditionalPlayoffConfig>? config, ref int globalMatchIndex)
     {
         if (config is null || config.Count == 0)
         {
@@ -929,7 +929,7 @@ public sealed class Tournament : Entity<long>, IEntityWithPublicId, IEntityWithO
         {
             nextKickoffTime += config.PauseBetweenGroupAndFinalsPhase;
 
-            var firstFinalsMatch = finalsMatches.First();
+            var firstFinalsMatch = finalsMatches[0];
             var previousFinalsMatchRound = firstFinalsMatch.FinalsRound;
 
             firstFinalsMatch.Kickoff = nextKickoffTime;

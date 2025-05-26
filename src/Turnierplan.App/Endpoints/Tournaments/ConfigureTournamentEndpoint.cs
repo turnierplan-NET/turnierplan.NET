@@ -345,7 +345,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
                         .WithMessage($"First finals round must be one of the following: {string.Join(", ", Enum.GetValues<FinalsRoundOrder>().Select(x => (int)x))}");
 
                     finalsPhase.RuleFor(x => x.ThirdPlacePlayoff)
-                        .Must(x => x == false)
+                        .Must(x => !x)
                         .When(x => x.FirstFinalsRound == (int)FinalsRoundOrder.FinalOnly)
                         .WithMessage("Third place playoff must be disabled if first finals round is 'final only'.");
 
