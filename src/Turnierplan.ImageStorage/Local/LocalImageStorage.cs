@@ -18,7 +18,7 @@ internal sealed class LocalImageStorage : ILocalImageStorage
         ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.StoragePath);
         _storagePath = Path.GetFullPath(options.Value.StoragePath);
 
-        _logger.LogInformation("Using the following directory for local image storage: '{}'", _storagePath);
+        _logger.LogInformation("Using the following directory for local image storage: '{LocalImageStoragePath}'", _storagePath);
 
         Directory.CreateDirectory(_storagePath);
 

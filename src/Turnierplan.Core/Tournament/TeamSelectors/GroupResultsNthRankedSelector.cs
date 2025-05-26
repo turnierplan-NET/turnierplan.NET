@@ -35,7 +35,7 @@ public sealed record GroupResultsNthRankedSelector(int[] TargetGroupIds, int Ord
             eligibleTeams.Add(results);
         }
 
-        if (OrdinalNumber < 0 || OrdinalNumber >= eligibleTeams.Count)
+        if (OrdinalNumber >= eligibleTeams.Count)
         {
             return null;
         }

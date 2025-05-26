@@ -22,8 +22,6 @@ public sealed class RoleEntityTypeConfiguration : IEntityTypeConfiguration<Role>
             .IsRequired()
             .HasMaxLength(ValidationConstants.Role.MaxNameLength);
 
-        builder.HasData([
-            UserRoles.Administrator
-        ]);
+        builder.HasData(UserRoles.Administrator);
     }
 }

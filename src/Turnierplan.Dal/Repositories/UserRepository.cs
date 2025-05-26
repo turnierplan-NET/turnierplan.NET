@@ -12,7 +12,7 @@ internal sealed class UserRepository(TurnierplanContext context) : RepositoryBas
             .ToListAsync();
     }
 
-    public Task<User?> GetByIdAsync(Guid id, bool includeOrganizationsDeep)
+    public Task<User?> GetByIdAsync(Guid id, bool includeOrganizationsDeep = false)
     {
         var query = DbSet.Where(x => x.Id.Equals(id));
 
