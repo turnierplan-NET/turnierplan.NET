@@ -1,4 +1,3 @@
-using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.Tournament;
@@ -23,7 +22,6 @@ internal sealed class DeletionHelper : IDeletionHelper
     private readonly IVenueRepository _venueRepository;
     private readonly IImageRepository _imageRepository;
     private readonly IImageStorage _imageStorage;
-    private readonly IFolderRepository _folderRepository;
     private readonly ILogger<DeletionHelper> _logger;
 
     public DeletionHelper(
@@ -33,7 +31,6 @@ internal sealed class DeletionHelper : IDeletionHelper
         IVenueRepository venueRepository,
         IImageRepository imageRepository,
         IImageStorage imageStorage,
-        IFolderRepository folderRepository,
         ILogger<DeletionHelper> logger)
     {
         _userRepository = userRepository;
@@ -42,7 +39,6 @@ internal sealed class DeletionHelper : IDeletionHelper
         _venueRepository = venueRepository;
         _imageRepository = imageRepository;
         _imageStorage = imageStorage;
-        _folderRepository = folderRepository;
         _logger = logger;
     }
 
@@ -91,7 +87,7 @@ internal sealed class DeletionHelper : IDeletionHelper
                 {
                     _logger.LogError(ex, "Image with id '{ImageId}' was successfully deleted from image storage but the deletion from the database failed.", image.Id);
 
-                    throw;
+                    return false;
                 }
             }
             else

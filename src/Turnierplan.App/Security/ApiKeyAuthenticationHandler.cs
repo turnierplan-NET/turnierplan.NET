@@ -15,13 +15,10 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
     private const string ApiKeySecretHeaderName = "x-api-key-secret";
     private const string TurnierplanVersionHeaderName = "x-turnierplan-version";
 
-    private static readonly string __turnierplanVersion;
-
-    static ApiKeyAuthenticationHandler()
-    {
-        __turnierplanVersion = typeof(ApiKeyAuthenticationHandler).Assembly.GetName().Version?.ToString()
+    private static readonly string __turnierplanVersion =
+        typeof(ApiKeyAuthenticationHandler).Assembly.GetName().Version?.ToString()
             ?? throw new InvalidOperationException("Could not determine turnierplan.NET version from assembly name.");
-    }
+
 
     private readonly IApiKeyRepository _apiKeyRepository;
     private readonly IPasswordHasher<ApiKey> _secretHasher;
@@ -44,8 +41,8 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
 
         try
         {
-            apiKeyId = Request.Headers[ApiKeyIdHeaderName].First()!;
-            apiKeySecret = Request.Headers[ApiKeySecretHeaderName].First()!;
+            apiKeyId = Request.Headers[ApiKeyIdHeaderName][0]!;
+            apiKeySecret = Request.Headers[ApiKeySecretHeaderName][0]!;
         }
         catch
         {

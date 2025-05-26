@@ -4,7 +4,7 @@ namespace Turnierplan.App.Mapping;
 
 internal interface IMapper
 {
-    private const string DefaultLanguageCode = "de";
+    internal const string DefaultLanguageCode = "de";
 
     TDestination Map<TDestination>(object source, string languageCode = DefaultLanguageCode)
         where TDestination : class;
@@ -39,7 +39,7 @@ internal sealed class Mapper : IMapper
         }
     }
 
-    public TDestination Map<TDestination>(object source, string langaugeCode)
+    public TDestination Map<TDestination>(object source, string languageCode = IMapper.DefaultLanguageCode)
         where TDestination : class
     {
         var key = new Key(source.GetType(), typeof(TDestination));
@@ -49,18 +49,18 @@ internal sealed class Mapper : IMapper
             throw new InvalidOperationException($"There exists no mapping rule from '{key.SourceType.FullName}' to '{key.DestinationType.FullName}'.");
         }
 
-        var context = CreateContext(langaugeCode);
+        var context = CreateContext(languageCode);
 
         return (TDestination)rule.Map(this, context, source);
     }
 
-    public TDestination? MapNullable<TDestination>(object? source, string langaugeCode)
+    public TDestination? MapNullable<TDestination>(object? source, string languageCode)
         where TDestination : class
     {
-        return source is null ? null : Map<TDestination>(source, langaugeCode);
+        return source is null ? null : Map<TDestination>(source, languageCode);
     }
 
-    public IEnumerable<TDestination> MapCollection<TDestination>(IReadOnlyCollection<object> source, string langaugeCode)
+    public IEnumerable<TDestination> MapCollection<TDestination>(IReadOnlyCollection<object> source, string languageCode = IMapper.DefaultLanguageCode)
         where TDestination : class
     {
         if (source.Count == 0)
@@ -75,16 +75,16 @@ internal sealed class Mapper : IMapper
             throw new InvalidOperationException($"There exists no mapping rule from '{key.SourceType.FullName}' to '{key.DestinationType.FullName}'.");
         }
 
-        var context = CreateContext(langaugeCode);
+        var context = CreateContext(languageCode);
 
         return source.Select(x => rule.Map(this, context, x)).Cast<TDestination>();
     }
 
-    private MappingContext CreateContext(string langaugeCode)
+    private MappingContext CreateContext(string languageCode = IMapper.DefaultLanguageCode)
     {
-        if (!_localizationProvider.TryGetLocalization(langaugeCode, out var localization))
+        if (!_localizationProvider.TryGetLocalization(languageCode, out var localization))
         {
-            throw new ArgumentException($"There exists no localization with language code '{langaugeCode}'.");
+            throw new ArgumentException($"There exists no localization with language code '{languageCode}'.");
         }
 
         return new MappingContext(localization);
