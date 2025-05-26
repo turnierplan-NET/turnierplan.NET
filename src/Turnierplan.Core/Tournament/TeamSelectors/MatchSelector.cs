@@ -8,7 +8,7 @@ public sealed record MatchSelector(int TargetMatchIndex, MatchSelector.Mode Sele
 
         if (match is null || !match.IsFinished || match.ScoreA is null || match.ScoreB is null)
         {
-            return default;
+            return null;
         }
 
         if (match.ScoreA > match.ScoreB)
@@ -21,7 +21,7 @@ public sealed record MatchSelector(int TargetMatchIndex, MatchSelector.Mode Sele
             return SelectionMode == Mode.Winner ? match.TeamB : match.TeamA;
         }
 
-        return default;
+        return null;
     }
 
     public enum Mode

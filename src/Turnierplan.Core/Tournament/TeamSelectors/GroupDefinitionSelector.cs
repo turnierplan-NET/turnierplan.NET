@@ -8,12 +8,12 @@ public sealed record GroupDefinitionSelector(int TargetGroupId, int TargetTeamIn
 
         if (group is null)
         {
-            return default;
+            return null;
         }
 
         if (TargetTeamIndex < 0 || TargetTeamIndex >= group._participants.Count)
         {
-            return default;
+            return null;
         }
 
         return group._participants[TargetTeamIndex].Team;

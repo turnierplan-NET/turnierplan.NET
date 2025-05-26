@@ -111,13 +111,13 @@ public sealed class TournamentTest
             ScheduleConfig = new ScheduleConfig
             {
                 FirstMatchKickoff = default,
-                GroupPhaseNumberOfCourts = default,
+                GroupPhaseNumberOfCourts = 0,
                 GroupPhasePlayTime = 7.Minutes(),
-                GroupPhasePauseTime = default,
-                PauseBetweenGroupAndFinalsPhase = default,
-                FinalsPhaseNumberOfCourts = default,
+                GroupPhasePauseTime = TimeSpan.Zero,
+                PauseBetweenGroupAndFinalsPhase = TimeSpan.Zero,
+                FinalsPhaseNumberOfCourts = 0,
                 FinalsPhasePlayTime = 9.Minutes(),
-                FinalsPhasePauseTime = default
+                FinalsPhasePauseTime = TimeSpan.Zero
             }
         };
 

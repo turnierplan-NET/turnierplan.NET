@@ -8,12 +8,12 @@ public sealed record GroupResultsSelector(int TargetGroupId, int TargetGroupPosi
 
         if (group is null)
         {
-            return default;
+            return null;
         }
 
         if (tournament._matches.Where(x => x.Group?.Id == TargetGroupId).Any(x => !x.IsFinished))
         {
-            return default;
+            return null;
         }
 
         var result = group._participants.SingleOrDefault(x => x.Statistics.Position == TargetGroupPosition);
