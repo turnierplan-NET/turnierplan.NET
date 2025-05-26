@@ -19,7 +19,6 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
         typeof(ApiKeyAuthenticationHandler).Assembly.GetName().Version?.ToString()
             ?? throw new InvalidOperationException("Could not determine turnierplan.NET version from assembly name.");
 
-
     private readonly IApiKeyRepository _apiKeyRepository;
     private readonly IPasswordHasher<ApiKey> _secretHasher;
 
