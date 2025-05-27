@@ -1,13 +1,20 @@
-<tp-page-frame *tpLoadingState="loadingState" [ultraSlim]="true" [title]="'Portal.CreateOrganization.LongTitle' | translate" [backLink]="'../..'">
+<tp-page-frame
+  *tpLoadingState="loadingState"
+  [ultraSlim]="true"
+  [title]="'Portal.CreateOrganization.LongTitle' | translate"
+  [backLink]="'../..'"
+>
   <label for="create_organization_name" class="form-label" translate="Portal.CreateOrganization.Form.Name"></label>
-  <input id="create_organization_name"
-         type="text"
-         class="form-control"
-         [formControl]="organizationName"
-         [required]="true"
-         [minlength]="1"
-         [maxlength]="40"
-         [ngClass]="organizationName.dirty || organizationName.touched ? (organizationName.invalid ? 'is-invalid' : 'is-valid') : ''"/>
+  <input
+    id="create_organization_name"
+    type="text"
+    class="form-control"
+    [formControl]="organizationName"
+    [required]="true"
+    [minlength]="1"
+    [maxlength]="40"
+    [ngClass]="organizationName.dirty || organizationName.touched ? (organizationName.invalid ? 'is-invalid' : 'is-valid') : ''"
+  />
   <div class="invalid-feedback" translate="Portal.CreateOrganization.Form.NameInvalid"></div>
   <div class="valid-feedback" translate="Portal.CreateOrganization.Form.NameValid"></div>
 
@@ -21,6 +28,11 @@
   <hr />
 
   <div class="d-flex flex-row justify-content-end">
-    <tp-action-button [type]="'success'" [title]="'Portal.CreateOrganization.Submit'" [disabled]="organizationName.invalid" (click)="confirmButtonClicked()" />
+    <tp-action-button
+      [type]="'success'"
+      [title]="'Portal.CreateOrganization.Submit'"
+      [disabled]="organizationName.invalid"
+      (click)="confirmButtonClicked()"
+    />
   </div>
 </tp-page-frame>

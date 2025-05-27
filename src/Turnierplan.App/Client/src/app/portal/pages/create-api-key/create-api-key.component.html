@@ -21,7 +21,7 @@
         </span>
       </div>
     </div>
-    
+
     <hr />
 
     <div class="d-flex flex-row justify-content-end">
@@ -33,22 +33,26 @@
     <div [formGroup]="form">
       <div class="mb-3">
         <label for="create_apiKey_name" class="form-label" translate="Portal.CreateApiKey.Form.Name"></label>
-        <input id="create_apiKey_name"
-               type="text"
-               class="form-control"
-               formControlName="name"
-               [ngClass]="nameControl.dirty || nameControl.touched ? (nameControl.invalid ? 'is-invalid' : 'is-valid') : ''"/>
+        <input
+          id="create_apiKey_name"
+          type="text"
+          class="form-control"
+          formControlName="name"
+          [ngClass]="nameControl.dirty || nameControl.touched ? (nameControl.invalid ? 'is-invalid' : 'is-valid') : ''"
+        />
         <div class="invalid-feedback" translate="Portal.CreateApiKey.Form.NameInvalid"></div>
         <div class="valid-feedback" translate="Portal.CreateApiKey.Form.NameValid"></div>
       </div>
 
       <div class="mb-3">
         <label for="create_apiKey_description" class="form-label" translate="Portal.CreateApiKey.Form.Description"></label>
-        <input id="create_apiKey_description"
-               type="text"
-               class="form-control"
-               formControlName="description"
-               [ngClass]="descriptionControl.dirty || descriptionControl.touched ? (descriptionControl.invalid ? 'is-invalid' : 'is-valid') : ''"/>
+        <input
+          id="create_apiKey_description"
+          type="text"
+          class="form-control"
+          formControlName="description"
+          [ngClass]="descriptionControl.dirty || descriptionControl.touched ? (descriptionControl.invalid ? 'is-invalid' : 'is-valid') : ''"
+        />
         <div class="invalid-feedback" translate="Portal.CreateApiKey.Form.DescriptionInvalid"></div>
         <div class="valid-feedback" translate="Portal.CreateApiKey.Form.DescriptionValid"></div>
       </div>
@@ -69,7 +73,10 @@
 
     <div class="form-text">
       <i class="bi bi-info-circle"></i>
-      <span class="ms-2" [innerHTML]="'Portal.CreateApiKey.OrganizationNotice' | translate : { 'organizationName': organization?.name } "></span>
+      <span
+        class="ms-2"
+        [innerHTML]="'Portal.CreateApiKey.OrganizationNotice' | translate: { organizationName: organization?.name }"
+      ></span>
     </div>
 
     <hr />
@@ -82,7 +89,12 @@
     <hr />
 
     <div class="d-flex flex-row justify-content-end">
-      <tp-action-button [type]="'success'" [title]="'Portal.CreateApiKey.Submit'" [disabled]="form.invalid" (click)="confirmButtonClicked()" />
+      <tp-action-button
+        [type]="'success'"
+        [title]="'Portal.CreateApiKey.Submit'"
+        [disabled]="form.invalid"
+        (click)="confirmButtonClicked()"
+      />
     </div>
   </tp-page-frame>
 }

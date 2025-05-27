@@ -6,11 +6,21 @@
   <div class="modal-body d-flex flex-column">
     <div class="form-group">
       <label class="form-label" for="content" [translate]="translationKey + '.EnterNewName'"></label>
-      <textarea id="content" class="form-control" [rows]="10" [(ngModel)]="currentValue" [ngClass]="{ 'is-invalid': currentLength > maxLength }" (keyup.enter)="save(true)" (change)="wasChanged = true"></textarea>
-      <div class="small mt-1 text-end"
-           [ngClass]="currentLength > maxLength ? 'text-danger' : 'text-dark'"
-           [translate]="'Portal.General.CharacterLimit'"
-           [translateParams]="{ current: currentLength, maximum: maxLength}"></div>
+      <textarea
+        id="content"
+        class="form-control"
+        [rows]="10"
+        [(ngModel)]="currentValue"
+        [ngClass]="{ 'is-invalid': currentLength > maxLength }"
+        (keyup.enter)="save(true)"
+        (change)="wasChanged = true"
+      ></textarea>
+      <div
+        class="small mt-1 text-end"
+        [ngClass]="currentLength > maxLength ? 'text-danger' : 'text-dark'"
+        [translate]="'Portal.General.CharacterLimit'"
+        [translateParams]="{ current: currentLength, maximum: maxLength }"
+      ></div>
     </div>
   </div>
   <div class="modal-footer">

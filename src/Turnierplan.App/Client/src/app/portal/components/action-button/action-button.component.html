@@ -1,19 +1,19 @@
-@if (mode === 'IconLeftAndText') {
-  <button type="button" class="btn btn-sm btn-{{ type }} text-nowrap" [ngClass]="{ 'disabled': disabled }">
+@if (mode === "IconLeftAndText") {
+  <button type="button" class="btn btn-sm btn-{{ type }} text-nowrap" [ngClass]="{ disabled: disabled }">
     @if (icon) {
       <i class="bi bi-{{ icon }}" aria-hidden="true"></i>
     }
     <span [translate]="title" [ngClass]="{ 'ms-2': icon }"></span>
   </button>
-} @else if (mode === 'IconRightAndText') {
-  <button type="button" class="btn btn-sm btn-{{ type }} text-nowrap" [ngClass]="{ 'disabled': disabled }">
+} @else if (mode === "IconRightAndText") {
+  <button type="button" class="btn btn-sm btn-{{ type }} text-nowrap" [ngClass]="{ disabled: disabled }">
     <span [translate]="title" [ngClass]="{ 'me-2': icon }"></span>
     @if (icon) {
       <i class="bi bi-{{ icon }}" aria-hidden="true"></i>
     }
   </button>
-} @else if (mode === 'IconOnly' && icon) {
-  <button type="button" class="btn btn-sm btn-{{ type }}" [ngClass]="{ 'disabled': disabled }" [attr.aria-label]="title | translate">
+} @else if (mode === "IconOnly" && icon) {
+  <button type="button" class="btn btn-sm btn-{{ type }}" [ngClass]="{ disabled: disabled }" [attr.aria-label]="title | translate">
     <i class="bi bi-{{ icon }}" aria-hidden="true"></i>
   </button>
 }

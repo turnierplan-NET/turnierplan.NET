@@ -1,21 +1,30 @@
 <ng-container *tpLoadingState="loadingState">
   <tp-page-frame [title]="'Portal.LandingPage.Title' | translate" [navigationTabs]="pages">
     <ng-template #buttons>
-      <tp-action-button *tpHasRole="administratorRoleId"
-                        [title]="'Portal.Administration.Title'"
-                        [type]="'outline-primary'"
-                        [icon]="'gear'"
-                        [routerLink]="'administration'"/>
-      <tp-action-button [title]="'Portal.LandingPage.NewOrganization'"
-                        [type]="'outline-success'"
-                        [icon]="'plus-circle'"
-                        [routerLink]="'create/organization'" />
+      <tp-action-button
+        *tpHasRole="administratorRoleId"
+        [title]="'Portal.Administration.Title'"
+        [type]="'outline-primary'"
+        [icon]="'gear'"
+        [routerLink]="'administration'"
+      />
+      <tp-action-button
+        [title]="'Portal.LandingPage.NewOrganization'"
+        [type]="'outline-success'"
+        [icon]="'plus-circle'"
+        [routerLink]="'create/organization'"
+      />
     </ng-template>
     <ng-template #content>
       <div class="card">
         @if (organizations.length === 0) {
           <div class="card-body">
-            <tp-alert *tpHasRole="administratorRoleId" [type]="'warning'" [icon]="'exclamation-triangle'" [text]="'Portal.LandingPage.AdministratorWarning'" />
+            <tp-alert
+              *tpHasRole="administratorRoleId"
+              [type]="'warning'"
+              [icon]="'exclamation-triangle'"
+              [text]="'Portal.LandingPage.AdministratorWarning'"
+            />
             <div class="py-5 d-flex flex-column align-items-center gap-5">
               <tp-illustration [name]="'select'"></tp-illustration>
               <span translate="Portal.LandingPage.NoOrganizations" class="tp-text-pre-wrap text-center"></span>

@@ -1,72 +1,72 @@
 <table class="table table-hover" [attr.aria-label]="'Portal.ViewTournament.MatchPlan.TableLabel' | translate">
   <thead>
-  <tr>
-    <th class="text-center" translate="Portal.ViewTournament.MatchPlan.Index"></th>
-    <th class="text-center" translate="Portal.ViewTournament.MatchPlan.Group"></th>
-    @if (showCourtColumn) {
-      <th class="text-center" translate="Portal.ViewTournament.MatchPlan.Court"></th>
-    }
-    <th class="text-center" translate="Portal.ViewTournament.MatchPlan.Kickoff"></th>
-    <th class="text-center" translate="Portal.ViewTournament.MatchPlan.Teams" colspan="2"></th>
-    <th class="text-center" translate="Portal.ViewTournament.MatchPlan.Outcome" [attr.colspan]="showAccumulatedScore ? 2 : 1"></th>
-  </tr>
+    <tr>
+      <th class="text-center" translate="Portal.ViewTournament.MatchPlan.Index"></th>
+      <th class="text-center" translate="Portal.ViewTournament.MatchPlan.Group"></th>
+      @if (showCourtColumn) {
+        <th class="text-center" translate="Portal.ViewTournament.MatchPlan.Court"></th>
+      }
+      <th class="text-center" translate="Portal.ViewTournament.MatchPlan.Kickoff"></th>
+      <th class="text-center" translate="Portal.ViewTournament.MatchPlan.Teams" colspan="2"></th>
+      <th class="text-center" translate="Portal.ViewTournament.MatchPlan.Outcome" [attr.colspan]="showAccumulatedScore ? 2 : 1"></th>
+    </tr>
   </thead>
   <tbody>
-  @if (matchCount === 0) {
-    <tr>
-      <td translate="Portal.ViewTournament.MatchPlan.NoMatches" [attr.colspan]="columnCount"></td>
-    </tr>
-  }
-  @for (matchGroup of groupedMatches; track matchGroup) {
-    @if (matchGroup.title.displayName.length > 0 && !matchGroup.title.hideOnMatchPlan) {
+    @if (matchCount === 0) {
       <tr>
-        <td class="pe-none fw-bold text-center" [attr.colspan]="columnCount">{{ matchGroup.title.displayName }}</td>
+        <td translate="Portal.ViewTournament.MatchPlan.NoMatches" [attr.colspan]="columnCount"></td>
       </tr>
     }
-    @for (match of matchGroup.matches; track match) {
-      <tr class="tp-cursor-pointer" (click)="matchClick.emit(match.id)">
-        <td class="text-center align-middle">{{ match.index }}</td>
-        <td class="text-center align-middle">{{ match.group }}</td>
-        @if (showCourtColumn) {
-          <td class="text-center align-middle">{{ match.court }}</td>
-        }
-        <td class="text-center align-middle">
-          @if (match.kickoff) {
-            {{ match.kickoff | translateDate : (showKickoffWithSeconds ? 'mediumTime' : 'shortTime') }}
+    @for (matchGroup of groupedMatches; track matchGroup) {
+      @if (matchGroup.title.displayName.length > 0 && !matchGroup.title.hideOnMatchPlan) {
+        <tr>
+          <td class="pe-none fw-bold text-center" [attr.colspan]="columnCount">{{ matchGroup.title.displayName }}</td>
+        </tr>
+      }
+      @for (match of matchGroup.matches; track match) {
+        <tr class="tp-cursor-pointer" (click)="matchClick.emit(match.id)">
+          <td class="text-center align-middle">{{ match.index }}</td>
+          <td class="text-center align-middle">{{ match.group }}</td>
+          @if (showCourtColumn) {
+            <td class="text-center align-middle">{{ match.court }}</td>
           }
-        </td>
-        <td class="align-middle">
-          <div class="d-flex flex-column">
-            <span>{{ match.teamA }}</span>
-            <span class="team-selector">{{ match.teamSelectorA }}</span>
-          </div>
-        </td>
-        <td class="align-middle">
-          <div class="d-flex flex-column">
-            <span>{{ match.teamB }}</span>
-            <span class="team-selector">{{ match.teamSelectorB }}</span>
-          </div>
-        </td>
-        <td class="text-center align-middle">
-          @if (match.showLoadingIndicator) {
-            <tp-small-spinner />
-          } @else {
-            <span>{{ match.scoreA ?? '' }}:{{ match.scoreB ?? ''}}</span>
-            @if (match.outcomeType !== undefined && match.outcomeType !== 'Standard') {
-              <span class="ms-1" [translate]="'General.MatchOutcomeType.' + match.outcomeType"></span>
-            }
-            @if (match.isLive) {
-              <tp-live-indicator class="ms-2" />
-            }
-          }
-        </td>
-        @if (showAccumulatedScore) {
           <td class="text-center align-middle">
-            {{ match.scoreAccumulated ?? '' }}
+            @if (match.kickoff) {
+              {{ match.kickoff | translateDate: (showKickoffWithSeconds ? "mediumTime" : "shortTime") }}
+            }
           </td>
-        }
-      </tr>
+          <td class="align-middle">
+            <div class="d-flex flex-column">
+              <span>{{ match.teamA }}</span>
+              <span class="team-selector">{{ match.teamSelectorA }}</span>
+            </div>
+          </td>
+          <td class="align-middle">
+            <div class="d-flex flex-column">
+              <span>{{ match.teamB }}</span>
+              <span class="team-selector">{{ match.teamSelectorB }}</span>
+            </div>
+          </td>
+          <td class="text-center align-middle">
+            @if (match.showLoadingIndicator) {
+              <tp-small-spinner />
+            } @else {
+              <span>{{ match.scoreA ?? "" }}:{{ match.scoreB ?? "" }}</span>
+              @if (match.outcomeType !== undefined && match.outcomeType !== "Standard") {
+                <span class="ms-1" [translate]="'General.MatchOutcomeType.' + match.outcomeType"></span>
+              }
+              @if (match.isLive) {
+                <tp-live-indicator class="ms-2" />
+              }
+            }
+          </td>
+          @if (showAccumulatedScore) {
+            <td class="text-center align-middle">
+              {{ match.scoreAccumulated ?? "" }}
+            </td>
+          }
+        </tr>
+      }
     }
-  }
   </tbody>
 </table>

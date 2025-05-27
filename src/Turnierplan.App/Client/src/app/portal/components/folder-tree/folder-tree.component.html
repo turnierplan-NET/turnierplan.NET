@@ -1,9 +1,11 @@
 @for (node of treeData; track node.id) {
-  <div class="overflow-hidden text-nowrap tp-cursor-pointer d-flex flex-row align-items-center gap-2 mb-1"
-       [ngClass]="{ 'fw-bold': node.id === selectedFolder }"
-       [ngStyle]="{ 'margin-left': node.indentation * 15 + 'px', 'padding-left': '3px' }"
-       [title]="node.label"
-       (click)="selectedFolder = node.id; selectedFolderChange.emit(node.id)">
+  <div
+    class="overflow-hidden text-nowrap tp-cursor-pointer d-flex flex-row align-items-center gap-2 mb-1"
+    [ngClass]="{ 'fw-bold': node.id === selectedFolder }"
+    [ngStyle]="{ 'margin-left': node.indentation * 15 + 'px', 'padding-left': '3px' }"
+    [title]="node.label"
+    (click)="selectedFolder = node.id; selectedFolderChange.emit(node.id)"
+  >
     @if (node.isRoot) {
       <i class="bi bi-boxes"></i>
     } @else if (node.id === selectedFolder) {

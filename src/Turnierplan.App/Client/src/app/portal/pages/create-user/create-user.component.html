@@ -2,44 +2,50 @@
   <form [formGroup]="form">
     <div class="mb-3">
       <label for="create_user_name" class="form-label" translate="Portal.CreateUser.Form.UserName"></label>
-      <input id="create_user_name"
-             type="text"
-             class="form-control"
-             formControlName="userName"
-             [required]="true"
-             [minlength]="1"
-             [maxlength]="100"
-             [ngClass]="userNameControl.dirty || userNameControl.touched ? (userNameControl.invalid ? 'is-invalid' : 'is-valid') : ''"/>
+      <input
+        id="create_user_name"
+        type="text"
+        class="form-control"
+        formControlName="userName"
+        [required]="true"
+        [minlength]="1"
+        [maxlength]="100"
+        [ngClass]="userNameControl.dirty || userNameControl.touched ? (userNameControl.invalid ? 'is-invalid' : 'is-valid') : ''"
+      />
       <div class="invalid-feedback" translate="Portal.CreateUser.Form.UserNameInvalid"></div>
     </div>
 
     <div class="mb-3">
       <label for="create_user_email" class="form-label" translate="Portal.CreateUser.Form.Email"></label>
-      <input id="create_user_email"
-             type="email"
-             class="form-control"
-             formControlName="eMail"
-             [required]="true"
-             [minlength]="1"
-             [maxlength]="100"
-             [ngClass]="eMailControl.dirty || eMailControl.touched ? (eMailControl.invalid ? 'is-invalid' : 'is-valid') : ''"/>
+      <input
+        id="create_user_email"
+        type="email"
+        class="form-control"
+        formControlName="eMail"
+        [required]="true"
+        [minlength]="1"
+        [maxlength]="100"
+        [ngClass]="eMailControl.dirty || eMailControl.touched ? (eMailControl.invalid ? 'is-invalid' : 'is-valid') : ''"
+      />
       <div class="invalid-feedback" translate="Portal.CreateUser.Form.EmailInvalid"></div>
     </div>
 
     <div>
       <label for="create_user_password" class="form-label" translate="Portal.CreateUser.Form.Password"></label>
-      <input id="create_user_password"
-             type="password"
-             class="form-control"
-             formControlName="password"
-             [required]="true"
-             [minlength]="1"
-             [maxlength]="64"
-             [ngClass]="passwordControl.dirty || passwordControl.touched ? (passwordControl.invalid ? 'is-invalid' : 'is-valid') : ''"/>
+      <input
+        id="create_user_password"
+        type="password"
+        class="form-control"
+        formControlName="password"
+        [required]="true"
+        [minlength]="1"
+        [maxlength]="64"
+        [ngClass]="passwordControl.dirty || passwordControl.touched ? (passwordControl.invalid ? 'is-invalid' : 'is-valid') : ''"
+      />
       <div class="invalid-feedback" translate="Portal.CreateUser.Form.PasswordInvalid"></div>
     </div>
   </form>
-  
+
   <hr />
 
   <div class="form-text">

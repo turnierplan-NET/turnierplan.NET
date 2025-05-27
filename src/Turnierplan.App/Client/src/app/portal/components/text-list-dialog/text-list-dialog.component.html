@@ -5,12 +5,21 @@
   </div>
   <div class="modal-body d-flex flex-column">
     <div class="mb-3" [translate]="translationKey + '.HelpText'" [translateParams]="{ maxCount: maxItemCount }"></div>
-    
+
     @for (control of getControls(); track control; let i = $index) {
       <div class="mb-2 d-flex flex-row align-items-start gap-2">
         <div class="flex-grow-1 form-group">
-          <input class="form-control" type="text" [formControl]="control" [ngClass]="{ 'is-invalid': control.invalid && (!control.pristine || control.touched) }"/>
-          <div class="invalid-feedback" [translate]="translationKey + '.InvalidEntry'" [translateParams]="{ maxLength: maxItemLength }"></div>
+          <input
+            class="form-control"
+            type="text"
+            [formControl]="control"
+            [ngClass]="{ 'is-invalid': control.invalid && (!control.pristine || control.touched) }"
+          />
+          <div
+            class="invalid-feedback"
+            [translate]="translationKey + '.InvalidEntry'"
+            [translateParams]="{ maxLength: maxItemLength }"
+          ></div>
         </div>
         <i class="mt-2 bi bi-trash text-danger tp-cursor-pointer" (click)="removeControlAtIndex(i)"></i>
       </div>
@@ -19,9 +28,19 @@
     }
 
     <div class="mt-3 d-flex flex-row align-items-center">
-      <tp-action-button [type]="'outline-primary'" [title]="translationKey + '.AddEntry'" [icon]="'plus-circle'" [disabled]="formArray.length >= maxItemCount" (click)="addEmptyControl()" />
+      <tp-action-button
+        [type]="'outline-primary'"
+        [title]="translationKey + '.AddEntry'"
+        [icon]="'plus-circle'"
+        [disabled]="formArray.length >= maxItemCount"
+        (click)="addEmptyControl()"
+      />
       @if (formArray.length >= maxItemCount) {
-        <tp-tooltip-icon [icon]="'question-circle'" [tooltipText]="translationKey + '.MaximumReached'" [tooltipTextParams]="{ maxCount: maxItemCount }" />
+        <tp-tooltip-icon
+          [icon]="'question-circle'"
+          [tooltipText]="translationKey + '.MaximumReached'"
+          [tooltipTextParams]="{ maxCount: maxItemCount }"
+        />
       }
     </div>
   </div>

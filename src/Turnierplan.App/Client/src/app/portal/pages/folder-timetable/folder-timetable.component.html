@@ -1,20 +1,26 @@
-<tp-page-frame *tpLoadingState="loadingState" [title]="'Portal.FolderTimetable.Title' | translate : { folder: folderName }" [backLink]="'../../organization/' + organizationId">
+<tp-page-frame
+  *tpLoadingState="loadingState"
+  [title]="'Portal.FolderTimetable.Title' | translate: { folder: folderName }"
+  [backLink]="'../../organization/' + organizationId"
+>
   <ng-template #buttons>
     @if (showRefreshButton) {
-      <tp-action-button [title]="'Portal.FolderTimetable.Refresh'"
-                        [type]="'outline-secondary'"
-                        [icon]="'arrow-clockwise'"
-                        (click)="reloadTimetable()" />
+      <tp-action-button
+        [title]="'Portal.FolderTimetable.Refresh'"
+        [type]="'outline-secondary'"
+        [icon]="'arrow-clockwise'"
+        (click)="reloadTimetable()"
+      />
     }
   </ng-template>
   <ng-template #content>
     @if (view) {
       @if (missingTournaments.length > 0) {
-        <tp-alert [type]="'warning'" [icon]="'exclamation-triangle'" >
+        <tp-alert [type]="'warning'" [icon]="'exclamation-triangle'">
           <div>
             <div translate="Portal.FolderTimetable.MissingTournaments"></div>
             <div>
-              @for (missing of missingTournaments; track missing.id; let isLast=$last) {
+              @for (missing of missingTournaments; track missing.id; let isLast = $last) {
                 <span>{{ missing.name }}</span>
                 @if (!isLast) {
                   <span> &middot; </span>
@@ -28,50 +34,63 @@
 
       <div class="d-flex flex-row gap-1">
         <div class="d-flex flex-column gap-1">
-          <div style="height: 3em;">
+          <div style="height: 3em">
             <!-- Spacing for hour markers -->
           </div>
           @for (day of view.days; track day.date) {
             <div class="border">
-              <div class="px-2 timetable-compact-text timetable-date d-flex flex-column align-items-center justify-content-center"
-                   [ngStyle]="{ 'height': (day.rows.length * 3.5 + (day.rows.length - 1) * 0.25) + 'em' }">
-                <span class="fw-bold">{{ day.date | translateDate : 'shortDate' }}</span>
-                <span class="small">{{ day.date | translateDate : 'EEEE' }}</span>
+              <div
+                class="px-2 timetable-compact-text timetable-date d-flex flex-column align-items-center justify-content-center"
+                [ngStyle]="{ height: day.rows.length * 3.5 + (day.rows.length - 1) * 0.25 + 'em' }"
+              >
+                <span class="fw-bold">{{ day.date | translateDate: "shortDate" }}</span>
+                <span class="small">{{ day.date | translateDate: "EEEE" }}</span>
               </div>
             </div>
           }
         </div>
         <div class="flex-grow-1 d-flex flex-column gap-1">
-          <div class="d-flex flex-row" >
+          <div class="d-flex flex-row">
             @for (hour of view.hourMarks; track hour) {
-              <div class="position-relative" style="height: 3em;" [ngStyle]="{ 'margin-right': (100 / (view.hourMarks.length - 1)) + '%' }">
-                <div class="position-absolute border-start" style="bottom: 0; left: 0; height: 0.5em;"></div>
-                <span class="position-absolute small fw-bold" style="bottom: 0; left: 0; transform: translate(-50%, -0.6em);">{{ hour }}</span>
+              <div class="position-relative" style="height: 3em" [ngStyle]="{ 'margin-right': 100 / (view.hourMarks.length - 1) + '%' }">
+                <div class="position-absolute border-start" style="bottom: 0; left: 0; height: 0.5em"></div>
+                <span class="position-absolute small fw-bold" style="bottom: 0; left: 0; transform: translate(-50%, -0.6em)">{{
+                  hour
+                }}</span>
               </div>
             }
           </div>
           @for (day of view.days; track day.date) {
             <div class="border timetable-row d-flex flex-column">
               @for (row of day.rows; track row; let isFirst = $first) {
-                <div class="d-flex flex-row" [ngStyle]="{ 'height': '3.5em', 'margin-top': isFirst ? '0' : '0.25em' }">
-                  @for (entry of row.entries; track entry.tournament.id; let isFirst=$first) {
-                    <div [ngStyle]="{ 'width': (entry.columnsSpacing * view.percentPerColumn) + '%' }" [ngbTooltip]="isFirst ? undefined : ('Portal.FolderTimetable.Break' | translate : { minutes: entry.columnsSpacing })"></div>
-                    <a class="px-3 overflow-hidden timetable-tournament tp-cursor-pointer d-flex flex-row align-items-center text-decoration-none"
-                       href="./portal/tournament/{{ entry.tournament.id }}"
-                       target="{{ openInNewTab ? '_blank' : '_self' }}"
-                       [ngStyle]="{ 'width': (entry.columnsCount * view.percentPerColumn) + '%' }"
-                       (click)="tournamentLinkClicked()">
+                <div class="d-flex flex-row" [ngStyle]="{ height: '3.5em', 'margin-top': isFirst ? '0' : '0.25em' }">
+                  @for (entry of row.entries; track entry.tournament.id; let isFirst = $first) {
+                    <div
+                      [ngStyle]="{ width: entry.columnsSpacing * view.percentPerColumn + '%' }"
+                      [ngbTooltip]="isFirst ? undefined : ('Portal.FolderTimetable.Break' | translate: { minutes: entry.columnsSpacing })"
+                    ></div>
+                    <a
+                      class="px-3 overflow-hidden timetable-tournament tp-cursor-pointer d-flex flex-row align-items-center text-decoration-none"
+                      href="./portal/tournament/{{ entry.tournament.id }}"
+                      target="{{ openInNewTab ? '_blank' : '_self' }}"
+                      [ngStyle]="{ width: entry.columnsCount * view.percentPerColumn + '%' }"
+                      (click)="tournamentLinkClicked()"
+                    >
                       <div class="timetable-compact-text">
                         <div>{{ entry.tournament.name }}</div>
                         <div class="small text-nowrap">
-                          <span>{{ entry.tournament.startDate | translateDate : 'shortTime' }}</span>
+                          <span>{{ entry.tournament.startDate | translateDate: "shortTime" }}</span>
                           <span> - </span>
-                          <span>{{ entry.tournament.endDate | translateDate : 'shortTime' }}</span>
+                          <span>{{ entry.tournament.endDate | translateDate: "shortTime" }}</span>
                         </div>
                       </div>
                       @if (entry.pastMidnight) {
                         <span class="flex-grow-1"></span>
-                        <tp-tooltip-icon [icon]="'moon-stars'" [tooltipText]="'Portal.FolderTimetable.MidnightTournament'" [margin]="false" />
+                        <tp-tooltip-icon
+                          [icon]="'moon-stars'"
+                          [tooltipText]="'Portal.FolderTimetable.MidnightTournament'"
+                          [margin]="false"
+                        />
                       }
                     </a>
                   }
@@ -85,7 +104,13 @@
 
     <div class="mt-3 small d-flex flex-row justify-content-end">
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="openTournamentInNewTab" [ngModel]="openInNewTab" (ngModelChange)="setOpenInNewTab($event)" />
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="openTournamentInNewTab"
+          [ngModel]="openInNewTab"
+          (ngModelChange)="setOpenInNewTab($event)"
+        />
         <label class="form-check-label" for="openTournamentInNewTab" translate="Portal.FolderTimetable.OpenInNewTab"></label>
       </div>
     </div>

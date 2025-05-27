@@ -4,13 +4,24 @@
 </div>
 <div *ngIf="match" class="modal-body p-0 d-flex flex-column">
   <div class="border-bottom tp-border-card py-3 d-flex flex-row justify-content-center gap-4">
-    <ng-container *ngTemplateOutlet="matchInfoColumn; context: { 'name': 'Portal.ViewTournament.EditMatchDialog.Index', 'value': match.index }"></ng-container>
+    <ng-container
+      *ngTemplateOutlet="matchInfoColumn; context: { name: 'Portal.ViewTournament.EditMatchDialog.Index', value: match.index }"
+    ></ng-container>
     @if (match.kickoff) {
-      <ng-container *ngTemplateOutlet="matchInfoColumn; context: { 'name': 'Portal.ViewTournament.EditMatchDialog.Kickoff', 'value': (match.kickoff | translateDate : 'shortTime') }"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="
+          matchInfoColumn;
+          context: { name: 'Portal.ViewTournament.EditMatchDialog.Kickoff', value: (match.kickoff | translateDate: 'shortTime') }
+        "
+      ></ng-container>
     }
-    <ng-container *ngTemplateOutlet="matchInfoColumn; context: { 'name': 'Portal.ViewTournament.EditMatchDialog.Type', 'value': match.type.displayName }"></ng-container>
+    <ng-container
+      *ngTemplateOutlet="matchInfoColumn; context: { name: 'Portal.ViewTournament.EditMatchDialog.Type', value: match.type.displayName }"
+    ></ng-container>
     @if (match.group.length > 0) {
-      <ng-container *ngTemplateOutlet="matchInfoColumn; context: { 'name': 'Portal.ViewTournament.EditMatchDialog.Group', 'value': match.group }"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="matchInfoColumn; context: { name: 'Portal.ViewTournament.EditMatchDialog.Group', value: match.group }"
+      ></ng-container>
     }
   </div>
 
@@ -20,8 +31,16 @@
       <span class="small">{{ match.teamSelectorA }}</span>
       <div class="mt-4 align-self-end d-flex flex-column align-items-center gap-2">
         <i class="bi bi-chevron-up tp-cursor-pointer" (click)="scoreTeamA = scoreTeamA + 1"></i>
-        <input class="form-control match-result-input tp-no-spin-buttons text-center" type="number" min="0" step="1" [(ngModel)]="scoreTeamA" (keydown.enter)="closeModal('save')" #inputScoreA />
-        <i class="bi bi-chevron-down tp-cursor-pointer" (click)="(scoreTeamA >= 1) && (scoreTeamA = scoreTeamA - 1)"></i>
+        <input
+          class="form-control match-result-input tp-no-spin-buttons text-center"
+          type="number"
+          min="0"
+          step="1"
+          [(ngModel)]="scoreTeamA"
+          (keydown.enter)="closeModal('save')"
+          #inputScoreA
+        />
+        <i class="bi bi-chevron-down tp-cursor-pointer" (click)="scoreTeamA >= 1 && (scoreTeamA = scoreTeamA - 1)"></i>
       </div>
     </div>
     <div class="pt-3 pb-4 ps-4 col-6 d-flex flex-column justify-content-between border-start tp-border-card">
@@ -29,17 +48,35 @@
       <span class="small">{{ match.teamSelectorB }}</span>
       <div class="mt-4 align-self-start d-flex flex-column align-items-center gap-2">
         <i class="bi bi-chevron-up tp-cursor-pointer" (click)="scoreTeamB = scoreTeamB + 1"></i>
-        <input class="form-control match-result-input tp-no-spin-buttons text-center" type="number" min="0" step="1" [(ngModel)]="scoreTeamB" (keydown.enter)="closeModal('save')" />
-        <i class="bi bi-chevron-down tp-cursor-pointer" (click)="(scoreTeamB >= 1) && (scoreTeamB = scoreTeamB - 1)"></i>
+        <input
+          class="form-control match-result-input tp-no-spin-buttons text-center"
+          type="number"
+          min="0"
+          step="1"
+          [(ngModel)]="scoreTeamB"
+          (keydown.enter)="closeModal('save')"
+        />
+        <i class="bi bi-chevron-down tp-cursor-pointer" (click)="scoreTeamB >= 1 && (scoreTeamB = scoreTeamB - 1)"></i>
       </div>
     </div>
   </div>
-  
+
   <div class="border-top tp-border-card py-3 d-flex flex-row flex-wrap justify-content-center gap-3">
     @for (type of matchOutcomeTypes; track type) {
       <div class="form-check">
-        <input class="form-check-input" type="radio" name="outcomeType" [id]="'outcomeType_' + type" [checked]="outcomeType === type" (change)="outcomeType = type" />
-        <label class="form-check-label" [for]="'outcomeType_' + type" [translate]="'Portal.ViewTournament.EditMatchDialog.OutcomeType.' + type"></label>
+        <input
+          class="form-check-input"
+          type="radio"
+          name="outcomeType"
+          [id]="'outcomeType_' + type"
+          [checked]="outcomeType === type"
+          (change)="outcomeType = type"
+        />
+        <label
+          class="form-check-label"
+          [for]="'outcomeType_' + type"
+          [translate]="'Portal.ViewTournament.EditMatchDialog.OutcomeType.' + type"
+        ></label>
       </div>
     }
   </div>
@@ -60,7 +97,7 @@
   <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="closeModal('cancel')" />
   <tp-action-button [type]="'outline-danger'" [title]="'Portal.ViewTournament.EditMatchDialog.Clear'" (click)="closeModal('clear')" />
   <div class="flex-grow-1"></div>
-  
+
   <button type="button" class="btn btn-sm btn-outline-secondary text-nowrap" (click)="closeModal('saveLive')">
     <!-- Don't use tp-action-button here because we need to include another component inside the button content.  -->
     <tp-live-indicator class="me-1" />

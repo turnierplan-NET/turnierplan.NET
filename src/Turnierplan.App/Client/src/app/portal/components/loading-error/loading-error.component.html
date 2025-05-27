@@ -1,9 +1,12 @@
 @if (statusCode === 404) {
-  <tp-error-page [illustrationName]="'taken'" [actionButton]="{
+  <tp-error-page
+    [illustrationName]="'taken'"
+    [actionButton]="{
       label: 'Portal.General.BackToLandingPage',
       icon: 'house',
       routerLink: '/portal'
-    }">
+    }"
+  >
     <div id="resourceNotFoundError" class="mb-2 tp-text-pre-wrap" translate>Portal.ErrorPage.ResourceNotFound</div>
   </tp-error-page>
 } @else {
