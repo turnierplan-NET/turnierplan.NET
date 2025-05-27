@@ -5,6 +5,7 @@ import { ImageDto, ImageType } from '../../../api';
 import { ImageChooserComponent } from '../image-chooser/image-chooser.component';
 
 @Component({
+  standalone: false,
   selector: 'tp-image-widget',
   templateUrl: './image-widget.component.html'
 })
@@ -27,7 +28,10 @@ export class ImageWidgetComponent {
   @Output()
   public apiError = new EventEmitter<unknown>();
 
-  constructor(private readonly modalService: NgbModal, private readonly injector: Injector) {}
+  constructor(
+    private readonly modalService: NgbModal,
+    private readonly injector: Injector
+  ) {}
 
   protected openSelectionDialog(): void {
     const ref = this.modalService.open(ImageChooserComponent, {

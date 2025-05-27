@@ -4,6 +4,7 @@ import { SafeUrl } from '@angular/platform-browser';
 import { environment } from '../../../../environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'tp-share-widget',
   templateUrl: './share-widget.component.html'
 })

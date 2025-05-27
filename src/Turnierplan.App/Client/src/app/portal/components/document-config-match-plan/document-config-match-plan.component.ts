@@ -6,6 +6,7 @@ import { MatchPlanDateFormat, MatchPlanDocumentConfiguration, MatchPlanOutcomes 
 import { CURRENT_CONFIGURATION, DocumentConfigComponent } from '../document-config-frame/document-config-frame.component';
 
 @Component({
+  standalone: false,
   templateUrl: './document-config-match-plan.component.html'
 })
 export class DocumentConfigMatchPlanComponent extends DocumentConfigComponent<MatchPlanDocumentConfiguration> implements OnInit, OnDestroy {

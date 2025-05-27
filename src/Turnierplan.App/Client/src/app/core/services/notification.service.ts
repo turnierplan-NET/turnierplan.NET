@@ -4,7 +4,10 @@ import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class NotificationService {
-  constructor(private readonly toastr: ToastrService, private readonly translator: TranslateService) {}
+  constructor(
+    private readonly toastr: ToastrService,
+    private readonly translator: TranslateService
+  ) {}
 
   public showNotification(
     type: 'success' | 'warning' | 'error' | 'info',

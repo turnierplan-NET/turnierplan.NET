@@ -6,6 +6,7 @@ import { LoadingState } from '../../directives/loading-state/loading-state.direc
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
 
 @Component({
+  standalone: false,
   templateUrl: './tournament-select.component.html',
   styleUrl: './tournament-select.component.scss'
 })
@@ -17,7 +18,10 @@ export class TournamentSelectComponent implements OnInit {
   private organizationId!: string;
   private organizationName!: string;
 
-  constructor(protected readonly modal: NgbActiveModal, private readonly tournamentService: TournamentsService) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly tournamentService: TournamentsService
+  ) {}
 
   public set organization(value: { name: string; id: string }) {
     this.organizationId = value.id;

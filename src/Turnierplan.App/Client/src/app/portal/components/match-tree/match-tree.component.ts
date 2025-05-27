@@ -30,6 +30,7 @@ type ConnectingLine = {
 };
 
 @Component({
+  standalone: false,
   selector: 'tp-match-tree',
   templateUrl: './match-tree.component.html',
   styleUrl: './match-tree.component.scss'

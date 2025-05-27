@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'tp-tooltip-icon',
   templateUrl: './tooltip-icon.component.html'
 })

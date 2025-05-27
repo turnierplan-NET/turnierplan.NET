@@ -36,7 +36,10 @@ export class AuthenticationService implements OnDestroy {
   private tokenEnsureCompleted$?: Subject<boolean>;
   private readonly destroyed$ = new Subject<void>();
 
-  constructor(private readonly identityService: IdentityService, private readonly router: Router) {
+  constructor(
+    private readonly identityService: IdentityService,
+    private readonly router: Router
+  ) {
     const storedUserId = this.readUserIdFromLocalStorage();
     const storedUserName = this.readUserNameFromLocalStorage();
     const storedUserEMail = this.readUserEMailFromLocalStorage();

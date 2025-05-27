@@ -10,7 +10,10 @@ export interface NamedEntity {
 
 @Injectable()
 export class TitleService {
-  constructor(private readonly title: Title, private readonly translate: TranslateService) {}
+  constructor(
+    private readonly title: Title,
+    private readonly translate: TranslateService
+  ) {}
 
   public setTitleFrom(value: NamedEntity | undefined): void {
     if (!value) {

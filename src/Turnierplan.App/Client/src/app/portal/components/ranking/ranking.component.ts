@@ -6,6 +6,7 @@ export interface RankingView {
 }
 
 @Component({
+  standalone: false,
   selector: 'tp-ranking',
   templateUrl: './ranking.component.html'
 })

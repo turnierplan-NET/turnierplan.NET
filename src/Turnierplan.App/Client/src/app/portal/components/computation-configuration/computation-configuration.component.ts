@@ -7,6 +7,7 @@ import { ComputationConfigurationDto } from '../../../api';
 import { availableComparisonModeOptions, ComparisonModeOption } from './computation-configuration.component-data';
 
 @Component({
+  standalone: false,
   templateUrl: './computation-configuration.component.html'
 })
 export class ComputationConfigurationComponent {

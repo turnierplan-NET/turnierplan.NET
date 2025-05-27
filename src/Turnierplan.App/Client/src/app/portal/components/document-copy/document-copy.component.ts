@@ -7,6 +7,7 @@ import { LoadingState } from '../../directives/loading-state/loading-state.direc
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
 
 @Component({
+  standalone: false,
   templateUrl: './document-copy.component.html',
   styleUrl: './document-copy.component.scss'
 })

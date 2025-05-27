@@ -40,6 +40,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
 
 @Component({
+  standalone: false,
   templateUrl: './view-tournament.component.html'
 })
 export class ViewTournamentComponent implements OnInit, OnDestroy {

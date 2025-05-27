@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'tp-tournament-edit-warning',
   templateUrl: './tournament-edit-warning.component.html'
 })

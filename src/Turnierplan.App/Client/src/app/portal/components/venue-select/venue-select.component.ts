@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { NullableOfPublicId, VenueDto, VenuesService } from '../../../api';
 
 @Component({
+  standalone: false,
   templateUrl: './venue-select.component.html'
 })
 export class VenueSelectComponent {
@@ -16,7 +17,10 @@ export class VenueSelectComponent {
   protected currentVenueId: string = '';
   protected venues: VenueDto[] = [];
 
-  constructor(protected readonly modal: NgbActiveModal, private readonly venueService: VenuesService) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly venueService: VenuesService
+  ) {}
 
   public initialize(organizationId: string, currentVenueId?: NullableOfPublicId): void {
     this.venueService.getVenues({ organizationId: organizationId }).subscribe({

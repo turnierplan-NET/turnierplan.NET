@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 const pad = (i: number): string => (i < 10 ? `0${i}` : `${i}`);
 
 @Component({
+  standalone: false,
   selector: 'tp-duration-picker',
   templateUrl: './duration-picker.component.html'
 })

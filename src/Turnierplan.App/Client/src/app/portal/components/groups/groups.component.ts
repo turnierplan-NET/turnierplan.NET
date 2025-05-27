@@ -24,6 +24,7 @@ export interface GroupTeamView {
 }
 
 @Component({
+  standalone: false,
   selector: 'tp-groups',
   templateUrl: './groups.component.html'
 })

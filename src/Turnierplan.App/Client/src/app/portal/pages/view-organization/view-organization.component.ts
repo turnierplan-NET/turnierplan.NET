@@ -21,6 +21,7 @@ const venuesPageId = 1;
 const apiKeysPageId = 2;
 
 @Component({
+  standalone: false,
   templateUrl: './view-organization.component.html'
 })
 export class ViewOrganizationComponent implements OnInit, OnDestroy {

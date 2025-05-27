@@ -16,6 +16,7 @@ enum PasswordChangeFailedReason {
 }
 
 @Component({
+  standalone: false,
   templateUrl: './change-password.component.html'
 })
 export class ChangePasswordComponent implements OnInit, OnDestroy {

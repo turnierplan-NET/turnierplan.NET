@@ -11,6 +11,7 @@ import { DocumentConfigMatchPlanComponent } from '../document-config-match-plan/
 import { DocumentConfigReceiptsComponent } from '../document-config-receipts/document-config-receipts.component';
 
 @Component({
+  standalone: false,
   selector: 'tp-document-manager',
   templateUrl: './document-manager.component.html',
   styleUrls: ['document-manager.component.scss']

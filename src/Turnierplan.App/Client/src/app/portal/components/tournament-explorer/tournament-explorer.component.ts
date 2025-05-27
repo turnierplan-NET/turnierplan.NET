@@ -5,6 +5,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
 
 @Component({
+  standalone: false,
   selector: 'tp-tournament-explorer',
   templateUrl: './tournament-explorer.component.html'
 })
@@ -23,7 +24,10 @@ export class TournamentExplorerComponent implements OnChanges {
   protected treeData: FolderTreeEntry[] = [];
   protected isUpdatingFolderName: boolean = false;
 
-  constructor(private readonly folderService: FoldersService, private readonly localStorageService: LocalStorageService) {}
+  constructor(
+    private readonly folderService: FoldersService,
+    private readonly localStorageService: LocalStorageService
+  ) {}
 
   public ngOnChanges(): void {
     this.treeData = FolderTreeComponent.generateTree(this.organization.name, this.tournaments);

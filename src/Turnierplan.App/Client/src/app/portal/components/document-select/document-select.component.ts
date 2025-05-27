@@ -13,6 +13,7 @@ type DocumentTypeEntry = {
 };
 
 @Component({
+  standalone: false,
   templateUrl: './document-select.component.html',
   styleUrl: './document-select.component.scss'
 })
@@ -22,7 +23,10 @@ export class DocumentSelectComponent implements OnInit {
   protected loadingState: LoadingState = { isLoading: false };
   protected documentTypes: DocumentTypeEntry[] = [];
 
-  constructor(protected readonly modal: NgbActiveModal, private readonly translateService: TranslateService) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly translateService: TranslateService
+  ) {}
 
   public ngOnInit(): void {
     // Translate the document types using the TranslateService so a name-based alphabetical sorting can be done.

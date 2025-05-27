@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Visibility } from '../../../api';
 
 @Component({
+  standalone: false,
   selector: 'tp-visibility-selector',
   templateUrl: './visibility-selector.component.html'
 })

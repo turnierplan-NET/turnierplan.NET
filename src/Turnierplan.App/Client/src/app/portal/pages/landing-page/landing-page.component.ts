@@ -8,6 +8,7 @@ import { RoleIds } from '../../helpers/role-ids';
 import { TitleService } from '../../services/title.service';
 
 @Component({
+  standalone: false,
   templateUrl: './landing-page.component.html'
 })
 export class LandingPageComponent implements OnInit {
@@ -24,7 +25,10 @@ export class LandingPageComponent implements OnInit {
     }
   ];
 
-  constructor(private readonly organizationService: OrganizationsService, private readonly titleService: TitleService) {}
+  constructor(
+    private readonly organizationService: OrganizationsService,
+    private readonly titleService: TitleService
+  ) {}
 
   public ngOnInit(): void {
     this.titleService.setTitleTranslated('Portal.LandingPage.Title');

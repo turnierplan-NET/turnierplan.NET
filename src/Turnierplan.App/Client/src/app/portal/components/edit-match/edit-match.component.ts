@@ -7,6 +7,7 @@ import { GroupView } from '../groups/groups.component';
 import { MatchView } from '../match-plan/match-plan.component';
 
 @Component({
+  standalone: false,
   templateUrl: './edit-match.component.html',
   styleUrls: ['./edit-match.component.scss']
 })

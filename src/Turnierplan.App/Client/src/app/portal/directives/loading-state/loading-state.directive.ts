@@ -10,6 +10,7 @@ export interface LoadingState {
 }
 
 @Directive({
+  standalone: false,
   selector: '[tpLoadingState]'
 })
 export class LoadingStateDirective {

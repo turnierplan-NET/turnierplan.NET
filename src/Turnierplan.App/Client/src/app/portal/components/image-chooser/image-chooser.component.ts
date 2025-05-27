@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ImageDto2, ImageType, ImagesService } from '../../../api';
 
 @Component({
+  standalone: false,
   templateUrl: './image-chooser.component.html',
   styleUrls: ['./image-chooser.component.scss']
 })
@@ -25,7 +26,10 @@ export class ImageChooserComponent {
 
   protected imageForDetailView?: ImageDto2;
 
-  constructor(protected readonly modal: NgbActiveModal, private readonly imageService: ImagesService) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly imageService: ImagesService
+  ) {}
 
   protected get isInImageDetailView(): boolean {
     return this.imageForDetailView !== undefined;

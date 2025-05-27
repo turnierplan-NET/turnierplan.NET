@@ -9,6 +9,7 @@ import { LoadingState } from '../../directives/loading-state/loading-state.direc
 import { TitleService } from '../../services/title.service';
 
 @Component({
+  standalone: false,
   templateUrl: './create-api-key.component.html'
 })
 export class CreateApiKeyComponent {

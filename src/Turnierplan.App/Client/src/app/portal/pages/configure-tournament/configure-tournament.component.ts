@@ -50,6 +50,7 @@ interface TemporaryAdditionalPlayoff {
 }
 
 @Component({
+  standalone: false,
   templateUrl: './configure-tournament.component.html',
   styleUrls: ['./configure-tournament.component.scss']
 })

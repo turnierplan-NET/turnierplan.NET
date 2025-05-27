@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+  standalone: false,
   templateUrl: './text-list-dialog.component.html'
 })
 export class TextListDialogComponent {
@@ -14,7 +15,10 @@ export class TextListDialogComponent {
 
   protected formArray!: FormArray;
 
-  constructor(protected readonly modal: NgbActiveModal, private readonly formBuilder: FormBuilder) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly formBuilder: FormBuilder
+  ) {}
 
   public init(translationKey: string, maxItemCount: number, maxItemLength: number, initialValue: string[]): void {
     if (this.isInitialized) {

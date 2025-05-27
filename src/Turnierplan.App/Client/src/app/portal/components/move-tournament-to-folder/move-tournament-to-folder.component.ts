@@ -8,6 +8,7 @@ import { FolderDto, SetTournamentFolderEndpointRequest, FoldersService, Nullable
 type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 
 @Component({
+  standalone: false,
   templateUrl: './move-tournament-to-folder.component.html'
 })
 export class MoveTournamentToFolderComponent {
@@ -24,7 +25,10 @@ export class MoveTournamentToFolderComponent {
   protected moveToFolderId: string | undefined = undefined;
   protected moveToNewFolder = new FormControl<string | undefined>('');
 
-  constructor(protected readonly modal: NgbActiveModal, private readonly folderService: FoldersService) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly folderService: FoldersService
+  ) {}
 
   protected get disableExistingFolders(): boolean {
     return !!this.availableFolders && this.availableFolders.length === 0;

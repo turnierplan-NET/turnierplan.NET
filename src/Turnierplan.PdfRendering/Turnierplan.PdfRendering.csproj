@@ -19,5 +19,4 @@
     <ProjectReference Include="..\Turnierplan.ImageStorage\Turnierplan.ImageStorage.csproj" />
     <ProjectReference Include="..\Turnierplan.Localization\Turnierplan.Localization.csproj" />
   </ItemGroup>
-
 </Project>
