@@ -10,7 +10,7 @@ jobs:
     name: 'Validate'
     runs-on: ubuntu-24.04
     env:
-      RUN_SONARQUBE_ANALYSIS: ${{ secrets.SONAR_TOKEN != '' }}
+      RUN_SONARQUBE_ANALYSIS: ${{ secrets.SONAR_TDDOKEN != '' }}
     steps:
       - uses: actions/checkout@v2
         with:
