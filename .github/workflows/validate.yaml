@@ -28,6 +28,8 @@ jobs:
         id: 'setup-chrome'
       - name: 'Set CHROME_BIN environment variable'
         run: 'echo "CHROME_BIN=${{ steps.setup-chrome.outputs.chrome-path }}" >> $env:GITHUB_ENV'
+      - name: 'Test'
+        run: 'echo ${{env.RUN_SONARQUBE_ANALYSIS}}'
       - name: Install SonarQube Cloud scanner
         if: ${{ env.RUN_SONARQUBE_ANALYSIS }}
         run: 'dotnet tool install --global dotnet-sonarscanner'
