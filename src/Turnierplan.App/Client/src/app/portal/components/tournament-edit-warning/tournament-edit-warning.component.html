@@ -10,8 +10,7 @@
         id="editWarningAccepted"
         type="checkbox"
         [ngModel]="accepted"
-        (ngModelChange)="acceptedChange.emit($event)"
-      />
+        (ngModelChange)="acceptedChange.emit($event)" />
       <label class="form-check-label" for="editWarningAccepted" [translate]="translationKey + '.CheckboxLabel'"></label>
     </div>
   </div>

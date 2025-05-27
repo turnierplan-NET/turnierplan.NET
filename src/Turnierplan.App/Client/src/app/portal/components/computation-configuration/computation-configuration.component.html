@@ -8,8 +8,7 @@
       <label
         class="form-label mb-0"
         for="matchWonPoints"
-        translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.MatchWonPoints"
-      ></label>
+        translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.MatchWonPoints"></label>
     </div>
     <div class="col-8">
       <input
@@ -20,8 +19,7 @@
         [min]="0"
         [max]="100"
         [(ngModel)]="matchWonPoints"
-        [ngClass]="{ 'is-invalid': matchWonPointsInvalid }"
-      />
+        [ngClass]="{ 'is-invalid': matchWonPointsInvalid }" />
     </div>
   </div>
 
@@ -30,8 +28,7 @@
       <label
         class="form-label mb-0"
         for="matchDrawnPoints"
-        translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.MatchDrawnPoints"
-      ></label>
+        translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.MatchDrawnPoints"></label>
     </div>
     <div class="col-8">
       <input
@@ -42,8 +39,7 @@
         [min]="0"
         [max]="100"
         [(ngModel)]="matchDrawnPoints"
-        [ngClass]="{ 'is-invalid': matchDrawnPointsInvalid }"
-      />
+        [ngClass]="{ 'is-invalid': matchDrawnPointsInvalid }" />
     </div>
   </div>
 
@@ -52,8 +48,7 @@
       <label
         class="form-label mb-0"
         for="matchLostPoints"
-        translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.MatchLostPoints"
-      ></label>
+        translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.MatchLostPoints"></label>
     </div>
     <div class="col-8">
       <input
@@ -64,32 +59,28 @@
         [min]="0"
         [max]="100"
         [(ngModel)]="matchLostPoints"
-        [ngClass]="{ 'is-invalid': matchLostPointsInvalid }"
-      />
+        [ngClass]="{ 'is-invalid': matchLostPointsInvalid }" />
     </div>
   </div>
 
   <label
     class="form-label"
     for="comparisonModes"
-    translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.ComparisonModes.Label"
-  ></label>
+    translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.ComparisonModes.Label"></label>
   <select
     class="form-select"
     id="comparisonModes"
     [(ngModel)]="comparisonModeOptionId"
-    [ngClass]="{ 'is-invalid': comparisonModesInvalid }"
-  >
+    [ngClass]="{ 'is-invalid': comparisonModesInvalid }">
     <option
       value=""
       class="text-secondary"
       disabled
-      translate="Portal.ViewTournament.ComputationConfigurationDialog.StandardComparisonModes"
-    ></option>
+      translate="Portal.ViewTournament.ComputationConfigurationDialog.StandardComparisonModes"></option>
     @for (entry of standardComparisonModeOptions; track entry.id) {
       <option [value]="entry.id">
         @for (mode of entry.modes; track mode; let isLast = $last) {
-          <span>{{ "Portal.ViewTournament.Settings.EditComputationConfig.Properties.ComparisonModes.Values." + mode | translate }}</span>
+          <span>{{ 'Portal.ViewTournament.Settings.EditComputationConfig.Properties.ComparisonModes.Values.' + mode | translate }}</span>
           @if (!isLast) {
             <span>,&nbsp;</span>
           }
@@ -100,12 +91,11 @@
       value=""
       class="text-secondary"
       disabled
-      translate="Portal.ViewTournament.ComputationConfigurationDialog.NonStandardComparisonModes"
-    ></option>
+      translate="Portal.ViewTournament.ComputationConfigurationDialog.NonStandardComparisonModes"></option>
     @for (entry of nonStandardComparisonModeOptions; track entry.id) {
       <option [value]="entry.id">
         @for (mode of entry.modes; track mode; let isLast = $last) {
-          <span>{{ "Portal.ViewTournament.Settings.EditComputationConfig.Properties.ComparisonModes.Values." + mode | translate }}</span>
+          <span>{{ 'Portal.ViewTournament.Settings.EditComputationConfig.Properties.ComparisonModes.Values.' + mode | translate }}</span>
           @if (!isLast) {
             <span>,&nbsp;</span>
           }

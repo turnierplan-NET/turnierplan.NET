@@ -4,24 +4,20 @@
       <label
         class="form-label"
         for="organizerNameOverride"
-        translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.OrganizerNameOverride"
-      ></label>
+        translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.OrganizerNameOverride"></label>
       <tp-tooltip-icon
         [icon]="'question-circle'"
-        [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.OrganizerNameOverrideTooltip'"
-      />
+        [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.OrganizerNameOverrideTooltip'" />
     </div>
     <input
       class="form-control"
       id="organizerNameOverride"
       formControlName="organizerNameOverride"
-      [ngClass]="{ 'is-invalid': organizerNameOverride.touched && !organizerNameOverride.valid }"
-    />
+      [ngClass]="{ 'is-invalid': organizerNameOverride.touched && !organizerNameOverride.valid }" />
     <div
       class="invalid-feedback"
       *ngIf="organizerNameOverride.touched && !organizerNameOverride.valid"
-      translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.OrganizerNameOverrideInvalid"
-    ></div>
+      translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.OrganizerNameOverrideInvalid"></div>
   </div>
 
   <div class="form-group">
@@ -29,24 +25,20 @@
       <label
         class="form-label"
         for="tournamentNameOverride"
-        translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.TournamentNameOverride"
-      ></label>
+        translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.TournamentNameOverride"></label>
       <tp-tooltip-icon
         [icon]="'question-circle'"
-        [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.TournamentNameOverrideTooltip'"
-      />
+        [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.TournamentNameOverrideTooltip'" />
     </div>
     <input
       class="form-control"
       id="tournamentNameOverride"
       formControlName="tournamentNameOverride"
-      [ngClass]="{ 'is-invalid': tournamentNameOverride.touched && !tournamentNameOverride.valid }"
-    />
+      [ngClass]="{ 'is-invalid': tournamentNameOverride.touched && !tournamentNameOverride.valid }" />
     <div
       class="invalid-feedback"
       *ngIf="tournamentNameOverride.touched && !tournamentNameOverride.valid"
-      translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.TournamentNameOverrideInvalid"
-    ></div>
+      translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.TournamentNameOverrideInvalid"></div>
   </div>
 
   <div class="form-group">
@@ -54,24 +46,20 @@
       <label
         class="form-label"
         for="venueOverride"
-        translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.VenueOverride"
-      ></label>
+        translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.VenueOverride"></label>
       <tp-tooltip-icon
         [icon]="'question-circle'"
-        [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.VenueOverrideTooltip'"
-      />
+        [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.VenueOverrideTooltip'" />
     </div>
     <input
       class="form-control"
       id="venueOverride"
       formControlName="venueOverride"
-      [ngClass]="{ 'is-invalid': venueOverride.touched && !venueOverride.valid }"
-    />
+      [ngClass]="{ 'is-invalid': venueOverride.touched && !venueOverride.valid }" />
     <div
       class="invalid-feedback"
       *ngIf="venueOverride.touched && !venueOverride.valid"
-      translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.VenueOverrideInvalid"
-    ></div>
+      translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.VenueOverrideInvalid"></div>
   </div>
 
   <div class="form-group">
@@ -99,13 +87,11 @@
     <label
       class="form-check-label"
       for="includeRankingTable"
-      translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.IncludeRankingTable"
-    ></label>
+      translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.IncludeRankingTable"></label>
     @if (includeRankingTable.disabled) {
       <tp-tooltip-icon
         [icon]="'question-circle'"
-        [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.IncludeRankingTableTooltip'"
-      />
+        [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.IncludeRankingTableTooltip'" />
     }
   </div>
 
@@ -114,12 +100,10 @@
     <label
       class="form-check-label"
       for="includeQrCode"
-      translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.IncludeQrCode"
-    ></label>
+      translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.IncludeQrCode"></label>
     <tp-tooltip-icon
       [icon]="'question-circle'"
-      [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.IncludeQrCodeTooltip'"
-    />
+      [tooltipText]="'Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.IncludeQrCodeTooltip'" />
   </div>
 
   <tp-alert [type]="'info'" [icon]="'exclamation-triangle'">

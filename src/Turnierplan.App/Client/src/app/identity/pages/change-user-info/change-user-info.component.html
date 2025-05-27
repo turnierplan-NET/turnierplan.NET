@@ -27,8 +27,7 @@
     class="btn btn-primary"
     [ngClass]="{ disabled: isLoading }"
     translate="Identity.ChangeUserInfo.Submit"
-    (click)="submit()"
-  ></button>
+    (click)="submit()"></button>
 </div>
 
 @if (!isLoading && isRequestFailed) {

@@ -5,13 +5,11 @@
     id="visibilityPrivate"
     autocomplete="off"
     [checked]="visibility === Visibility.Private"
-    (click)="setVisibility(Visibility.Private)"
-  />
+    (click)="setVisibility(Visibility.Private)" />
   <label
     class="btn btn-sm px-3"
     for="visibilityPrivate"
-    [ngClass]="visibility === Visibility.Private ? 'btn-outline-danger' : 'btn-outline-secondary'"
-  >
+    [ngClass]="visibility === Visibility.Private ? 'btn-outline-danger' : 'btn-outline-secondary'">
     <i class="bi bi-lock"></i>
     <span class="ms-2" translate="Portal.VisibilitySelector.Private"></span>
   </label>
@@ -21,13 +19,11 @@
     id="visibilityPublic"
     autocomplete="off"
     [checked]="visibility === Visibility.Public"
-    (click)="setVisibility(Visibility.Public)"
-  />
+    (click)="setVisibility(Visibility.Public)" />
   <label
     class="btn btn-sm px-3"
     for="visibilityPublic"
-    [ngClass]="visibility === Visibility.Public ? 'btn-outline-success' : 'btn-outline-secondary'"
-  >
+    [ngClass]="visibility === Visibility.Public ? 'btn-outline-success' : 'btn-outline-secondary'">
     <i class="bi bi-globe-europe-africa"></i>
     <span class="ms-2" translate="Portal.VisibilitySelector.Public"></span>
   </label>

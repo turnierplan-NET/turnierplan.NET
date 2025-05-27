@@ -1,16 +1,14 @@
 <tp-page-frame
   *tpLoadingState="loadingState"
   [title]="'Portal.FolderTimetable.Title' | translate: { folder: folderName }"
-  [backLink]="'../../organization/' + organizationId"
->
+  [backLink]="'../../organization/' + organizationId">
   <ng-template #buttons>
     @if (showRefreshButton) {
       <tp-action-button
         [title]="'Portal.FolderTimetable.Refresh'"
         [type]="'outline-secondary'"
         [icon]="'arrow-clockwise'"
-        (click)="reloadTimetable()"
-      />
+        (click)="reloadTimetable()" />
     }
   </ng-template>
   <ng-template #content>
@@ -41,10 +39,9 @@
             <div class="border">
               <div
                 class="px-2 timetable-compact-text timetable-date d-flex flex-column align-items-center justify-content-center"
-                [ngStyle]="{ height: day.rows.length * 3.5 + (day.rows.length - 1) * 0.25 + 'em' }"
-              >
-                <span class="fw-bold">{{ day.date | translateDate: "shortDate" }}</span>
-                <span class="small">{{ day.date | translateDate: "EEEE" }}</span>
+                [ngStyle]="{ height: day.rows.length * 3.5 + (day.rows.length - 1) * 0.25 + 'em' }">
+                <span class="fw-bold">{{ day.date | translateDate: 'shortDate' }}</span>
+                <span class="small">{{ day.date | translateDate: 'EEEE' }}</span>
               </div>
             </div>
           }
@@ -67,21 +64,21 @@
                   @for (entry of row.entries; track entry.tournament.id; let isFirst = $first) {
                     <div
                       [ngStyle]="{ width: entry.columnsSpacing * view.percentPerColumn + '%' }"
-                      [ngbTooltip]="isFirst ? undefined : ('Portal.FolderTimetable.Break' | translate: { minutes: entry.columnsSpacing })"
-                    ></div>
+                      [ngbTooltip]="
+                        isFirst ? undefined : ('Portal.FolderTimetable.Break' | translate: { minutes: entry.columnsSpacing })
+                      "></div>
                     <a
                       class="px-3 overflow-hidden timetable-tournament tp-cursor-pointer d-flex flex-row align-items-center text-decoration-none"
                       href="./portal/tournament/{{ entry.tournament.id }}"
                       target="{{ openInNewTab ? '_blank' : '_self' }}"
                       [ngStyle]="{ width: entry.columnsCount * view.percentPerColumn + '%' }"
-                      (click)="tournamentLinkClicked()"
-                    >
+                      (click)="tournamentLinkClicked()">
                       <div class="timetable-compact-text">
                         <div>{{ entry.tournament.name }}</div>
                         <div class="small text-nowrap">
-                          <span>{{ entry.tournament.startDate | translateDate: "shortTime" }}</span>
+                          <span>{{ entry.tournament.startDate | translateDate: 'shortTime' }}</span>
                           <span> - </span>
-                          <span>{{ entry.tournament.endDate | translateDate: "shortTime" }}</span>
+                          <span>{{ entry.tournament.endDate | translateDate: 'shortTime' }}</span>
                         </div>
                       </div>
                       @if (entry.pastMidnight) {
@@ -89,8 +86,7 @@
                         <tp-tooltip-icon
                           [icon]="'moon-stars'"
                           [tooltipText]="'Portal.FolderTimetable.MidnightTournament'"
-                          [margin]="false"
-                        />
+                          [margin]="false" />
                       }
                     </a>
                   }
@@ -109,8 +105,7 @@
           type="checkbox"
           id="openTournamentInNewTab"
           [ngModel]="openInNewTab"
-          (ngModelChange)="setOpenInNewTab($event)"
-        />
+          (ngModelChange)="setOpenInNewTab($event)" />
         <label class="form-check-label" for="openTournamentInNewTab" translate="Portal.FolderTimetable.OpenInNewTab"></label>
       </div>
     </div>

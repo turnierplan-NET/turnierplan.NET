@@ -6,8 +6,7 @@
   popoverClass="tp-popover-slim"
   [tabindex]="popover.isOpen() ? 0 : -1"
   (keydown)="popover.isOpen() && confirmed.emit()"
-  [ngClass]="reducedFootprint ? 'tp-cursor-pointer' : 'btn btn-sm btn-outline-danger'"
->
+  [ngClass]="reducedFootprint ? 'tp-cursor-pointer' : 'btn btn-sm btn-outline-danger'">
   <i class="bi bi-trash"></i>
 </div>
 
@@ -16,12 +15,10 @@
     <i
       class="tp-cursor-pointer bi bi-trash text-danger fs-5"
       (click)="confirmed.emit()"
-      [title]="'Portal.DeleteButton.ConfirmTooltip' | translate"
-    ></i>
+      [title]="'Portal.DeleteButton.ConfirmTooltip' | translate"></i>
     <span
       class="tp-cursor-pointer text-decoration-underline text-secondary"
       (click)="popover.close()"
-      translate="Portal.DeleteButton.Cancel"
-    ></span>
+      translate="Portal.DeleteButton.Cancel"></span>
   </div>
 </ng-template>

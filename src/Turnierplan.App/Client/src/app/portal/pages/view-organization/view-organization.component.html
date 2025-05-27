@@ -5,8 +5,7 @@
     [backLink]="'../..'"
     [navigationTabs]="pages"
     [rememberNavigationTabKey]="organization.id"
-    (navigationTabSelected)="togglePage($event.id)"
-  >
+    (navigationTabSelected)="togglePage($event.id)">
     <ng-template #buttons>
       @switch (currentPage) {
         @case (0) {
@@ -14,24 +13,21 @@
             [title]="'Portal.ViewOrganization.NewTournament'"
             [type]="'outline-success'"
             [icon]="'plus-circle'"
-            [routerLink]="'create/tournament'"
-          />
+            [routerLink]="'create/tournament'" />
         }
         @case (1) {
           <tp-action-button
             [title]="'Portal.ViewOrganization.NewVenue'"
             [type]="'outline-success'"
             [icon]="'plus-circle'"
-            [routerLink]="'create/venue'"
-          />
+            [routerLink]="'create/venue'" />
         }
         @case (2) {
           <tp-action-button
             [title]="'Portal.ViewOrganization.NewApiKey'"
             [type]="'outline-success'"
             [icon]="'plus-circle'"
-            [routerLink]="'create/api-key'"
-          />
+            [routerLink]="'create/api-key'" />
         }
         @case (3) {
           @if (isUpdatingName) {
@@ -42,8 +38,7 @@
             [maxLength]="60"
             [current]="organization.name"
             [disabled]="isUpdatingName"
-            (renamed)="renameOrganization($event)"
-          />
+            (renamed)="renameOrganization($event)" />
         }
       }
     </ng-template>
@@ -65,8 +60,7 @@
                 <tp-tournament-explorer
                   [organization]="organization"
                   [tournaments]="tournaments"
-                  (requestError)="loadingState = { isLoading: false, error: $event }"
-                />
+                  (requestError)="loadingState = { isLoading: false, error: $event }" />
               </div>
             }
           }
@@ -121,9 +115,9 @@
                           <div>{{ apiKey.name }}</div>
                           <div class="small text-secondary">{{ apiKey.description }}</div>
                         </td>
-                        <td class="align-middle">{{ apiKey.createdAt | translateDate: "medium" }}</td>
+                        <td class="align-middle">{{ apiKey.createdAt | translateDate: 'medium' }}</td>
                         <td class="align-middle" [ngClass]="{ 'text-secondary': apiKey.isExpired }">
-                          {{ apiKey.expiryDate | translateDate: "medium" }}
+                          {{ apiKey.expiryDate | translateDate: 'medium' }}
                           @if (apiKey.isExpired) {
                             <tp-tooltip-icon [tooltipText]="'Portal.ViewOrganization.ApiKeys.Expired'" />
                           }
@@ -137,8 +131,7 @@
                                 type="checkbox"
                                 class="form-check-input"
                                 [ngModel]="apiKey.isActive"
-                                (ngModelChange)="setApiKeyActive(apiKey, $event)"
-                              />
+                                (ngModelChange)="setApiKeyActive(apiKey, $event)" />
                             </div>
                           }
                         </td>
@@ -148,8 +141,7 @@
                             type="outline-secondary"
                             [attr.aria-label]="'Portal.ViewOrganization.ApiKeys.ViewCharts' | translate"
                             [mode]="'IconOnly'"
-                            (click)="displayApiKeyUsage = apiKey.id"
-                          />
+                            (click)="displayApiKeyUsage = apiKey.id" />
                         </td>
                         <td class="align-middle" style="width: 1px">
                           <tp-delete-button (confirmed)="deleteApiKey(apiKey.id)" />
@@ -178,8 +170,7 @@
               <tp-delete-widget
                 [translationKey]="'Portal.ViewOrganization.DeleteWidget'"
                 [targetObjectName]="organization.name"
-                (deleteClick)="deleteOrganization()"
-              ></tp-delete-widget>
+                (deleteClick)="deleteOrganization()"></tp-delete-widget>
             </div>
           }
         }

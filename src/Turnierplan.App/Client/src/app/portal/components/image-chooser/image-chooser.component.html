@@ -19,20 +19,16 @@
         <div>
           <div
             translate="Portal.ViewTournament.Settings.EditImages.Chooser.DetailView.Name"
-            [translateParams]="{ value: imageForDetailView!.name }"
-          ></div>
+            [translateParams]="{ value: imageForDetailView!.name }"></div>
           <div
             translate="Portal.ViewTournament.Settings.EditImages.Chooser.DetailView.CreatedAt"
-            [translateParams]="{ value: imageForDetailView!.createdAt | translateDate: 'medium' }"
-          ></div>
+            [translateParams]="{ value: imageForDetailView!.createdAt | translateDate: 'medium' }"></div>
           <div
             translate="Portal.ViewTournament.Settings.EditImages.Chooser.DetailView.FileSize"
-            [translateParams]="{ value: getRoundedFileSize(imageForDetailView!.fileSize) }"
-          ></div>
+            [translateParams]="{ value: getRoundedFileSize(imageForDetailView!.fileSize) }"></div>
           <div
             translate="Portal.ViewTournament.Settings.EditImages.Chooser.DetailView.Resolution"
-            [translateParams]="{ width: imageForDetailView!.width, height: imageForDetailView!.height }"
-          ></div>
+            [translateParams]="{ width: imageForDetailView!.width, height: imageForDetailView!.height }"></div>
         </div>
         <div class="d-flex flex-column align-items-center">
           <tp-delete-button (confirmed)="deleteCurrentViewedImage()" />
@@ -51,8 +47,7 @@
             [type]="'outline-primary'"
             [icon]="'cloud-upload-fill'"
             [title]="'Portal.ViewTournament.Settings.EditImages.Chooser.Upload'"
-            (click)="openFileSelectionDialog()"
-          />
+            (click)="openFileSelectionDialog()" />
         }
       </div>
 
@@ -61,28 +56,24 @@
           class="px-3 my-3"
           [type]="'danger'"
           [icon]="'exclamation-octagon'"
-          [text]="'Portal.ViewTournament.Settings.EditImages.Chooser.UploadFailed'"
-        />
+          [text]="'Portal.ViewTournament.Settings.EditImages.Chooser.UploadFailed'" />
       }
 
       <div class="p-3 d-flex flex-row flex-wrap gap-2 overflow-y-scroll justify-content-start image-container">
         @for (image of existingImages; track image.id) {
           <div
             class="border shadow-sm image-tile position-relative"
-            [ngClass]="{ 'border-success current': image.id === currentImageId, 'hover-override': image.id === hoverOverrideImageId }"
-          >
+            [ngClass]="{ 'border-success current': image.id === currentImageId, 'hover-override': image.id === hoverOverrideImageId }">
             <div
               class="hover-buttons d-none position-absolute flex-row align-items-center justify-content-center gap-2"
-              style="top: 0; left: 0"
-            >
+              style="top: 0; left: 0">
               <tp-action-button [type]="'primary'" [mode]="'IconOnly'" [icon]="'info-circle'" (click)="imageForDetailView = image" />
               @if (image.id !== currentImageId) {
                 <tp-action-button
                   [type]="'success'"
                   [mode]="'IconOnly'"
                   [icon]="'check-lg'"
-                  (click)="image.id !== currentImageId && modal.close(image.id)"
-                />
+                  (click)="image.id !== currentImageId && modal.close(image.id)" />
               }
             </div>
             <div class="image-wrapper d-flex flex-column align-items-center justify-content-center">
@@ -91,8 +82,7 @@
                 [src]="image.url"
                 [alt]="image.name"
                 [title]="image.name"
-                (click)="hoverOverrideImageId = image.id"
-              />
+                (click)="hoverOverrideImageId = image.id" />
             </div>
           </div>
         } @empty {
@@ -110,8 +100,7 @@
           <tp-action-button
             [type]="'outline-secondary'"
             [title]="'Portal.ViewTournament.Settings.EditImages.Chooser.Remove'"
-            (click)="modal.close(undefined)"
-          />
+            (click)="modal.close(undefined)" />
         }
         <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
       }

@@ -13,8 +13,7 @@
       <ng-template #userInfoPopover>
         <div
           class="tp-text-pre-wrap mb-3"
-          [innerHTML]="'Portal.UserInfoPopover.Text' | translate: { userName: currentUser.displayName }"
-        ></div>
+          [innerHTML]="'Portal.UserInfoPopover.Text' | translate: { userName: currentUser.displayName }"></div>
         <ng-container *tpHasRole="administratorRoleId">
           <div class="d-flex flex-row tp-cursor-pointer mt-1" [routerLink]="'/portal/administration'">
             <i class="bi bi-gear me-2" aria-hidden="true"></i>
@@ -23,12 +22,10 @@
         </ng-container>
         <ng-container
           [ngTemplateOutlet]="userInfoAction"
-          [ngTemplateOutletContext]="{ isFirst: true, action: 'EditUserInfo' }"
-        ></ng-container>
+          [ngTemplateOutletContext]="{ isFirst: true, action: 'EditUserInfo' }"></ng-container>
         <ng-container
           [ngTemplateOutlet]="userInfoAction"
-          [ngTemplateOutletContext]="{ isFirst: false, action: 'ChangePassword' }"
-        ></ng-container>
+          [ngTemplateOutletContext]="{ isFirst: false, action: 'ChangePassword' }"></ng-container>
         <ng-container [ngTemplateOutlet]="userInfoAction" [ngTemplateOutletContext]="{ isFirst: false, action: 'Logout' }"></ng-container>
       </ng-template>
       <ng-template #userInfoAction let-action="action">

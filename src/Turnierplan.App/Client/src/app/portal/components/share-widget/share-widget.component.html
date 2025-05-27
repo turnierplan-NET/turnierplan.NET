@@ -9,8 +9,7 @@
     class="bi bi-box-arrow-up-right tp-cursor-pointer"
     [title]="'Portal.General.OpenInNewTab' | translate"
     [href]="resourceUrl"
-    target="_blank"
-  ></a>
+    target="_blank"></a>
 </div>
 
 @if (showQrCode || viewsCounter !== undefined) {
@@ -28,8 +27,7 @@
               [margin]="1"
               [scale]="1"
               [width]="250"
-              (qrCodeURL)="qrCodeUrl = $event"
-            />
+              (qrCodeURL)="qrCodeUrl = $event" />
 
             @if (downloadName) {
               <a [href]="qrCodeUrl" [download]="downloadName" class="btn btn-outline-secondary btn-sm">

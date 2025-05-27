@@ -13,14 +13,12 @@
         [(ngModel)]="currentValue"
         [ngClass]="{ 'is-invalid': currentLength > maxLength }"
         (keyup.enter)="save(true)"
-        (change)="wasChanged = true"
-      ></textarea>
+        (change)="wasChanged = true"></textarea>
       <div
         class="small mt-1 text-end"
         [ngClass]="currentLength > maxLength ? 'text-danger' : 'text-dark'"
         [translate]="'Portal.General.CharacterLimit'"
-        [translateParams]="{ current: currentLength, maximum: maxLength }"
-      ></div>
+        [translateParams]="{ current: currentLength, maximum: maxLength }"></div>
     </div>
   </div>
   <div class="modal-footer">

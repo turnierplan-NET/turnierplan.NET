@@ -20,13 +20,11 @@
         name="moveTournament_folderMode"
         id="moveTournament_folderMode_noFolder"
         [value]="'NoFolder'"
-        [(ngModel)]="folderMode"
-      />
+        [(ngModel)]="folderMode" />
       <label
         class="form-check-label"
         for="moveTournament_folderMode_noFolder"
-        translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.UseNoFolder"
-      ></label>
+        translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.UseNoFolder"></label>
     </div>
   }
 
@@ -38,23 +36,21 @@
       id="moveTournament_folderMode_existingFolder"
       [value]="'ExistingFolder'"
       [(ngModel)]="folderMode"
-      [disabled]="disableExistingFolders"
-    />
+      [disabled]="disableExistingFolders" />
     <label class="form-check-label" for="moveTournament_folderMode_existingFolder">
       <span translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.UseExistingFolder"></span>
-      @if (folderMode === "ExistingFolder") {
+      @if (folderMode === 'ExistingFolder') {
         <span>:</span>
       }
     </label>
     @if (disableExistingFolders && !isLoading) {
       <tp-tooltip-icon
         [icon]="'question-circle'"
-        [tooltipText]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.ExistingFolderDisabledTooltip'"
-      />
+        [tooltipText]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.ExistingFolderDisabledTooltip'" />
     }
   </div>
 
-  @if (folderMode === "ExistingFolder") {
+  @if (folderMode === 'ExistingFolder') {
     @if (availableFolders && availableFolders.length > 0) {
       <select id="moveTournament_existingFolderId" class="form-select flex-grow-1" [(ngModel)]="moveToFolderId">
         @for (folder of availableFolders; track folder.id) {
@@ -73,17 +69,16 @@
       name="moveTournament_folderMode"
       id="moveTournament_folderMode_newFolder"
       [value]="'NewFolder'"
-      [(ngModel)]="folderMode"
-    />
+      [(ngModel)]="folderMode" />
     <label class="form-check-label" for="moveTournament_folderMode_newFolder">
       <span translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.CreateNewFolder"></span>
-      @if (folderMode === "NewFolder") {
+      @if (folderMode === 'NewFolder') {
         <span>:</span>
       }
     </label>
   </div>
 
-  @if (folderMode === "NewFolder") {
+  @if (folderMode === 'NewFolder') {
     <input
       type="text"
       class="form-control"
@@ -92,8 +87,7 @@
       [minlength]="1"
       [maxlength]="60"
       [placeholder]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.NamePlaceholder' | translate"
-      [ngClass]="moveToNewFolder.dirty || moveToNewFolder.touched ? (moveToNewFolder.invalid ? 'is-invalid' : 'is-valid') : ''"
-    />
+      [ngClass]="moveToNewFolder.dirty || moveToNewFolder.touched ? (moveToNewFolder.invalid ? 'is-invalid' : 'is-valid') : ''" />
     <div class="invalid-feedback" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.FolderNameInvalid"></div>
     <div class="valid-feedback" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.FolderNameValid"></div>
   }

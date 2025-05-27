@@ -30,12 +30,11 @@
               [current]="doc.name"
               [maxLength]="30"
               [disabled]="currentlyUpdatingName !== undefined"
-              (renamed)="renameDocument(doc.id, $event)"
-            />
+              (renamed)="renameDocument(doc.id, $event)" />
           }
         </td>
         <td class="align-middle">{{ doc.name }}</td>
-        <td class="align-middle">{{ doc.lastModifiedAt | translateDate: "short" }}</td>
+        <td class="align-middle">{{ doc.lastModifiedAt | translateDate: 'short' }}</td>
         <td class="align-middle">
           <!-- If this is removed at any point, the manual incrementation of the generationCount property on download/preview can be removed, too. -->
           {{ doc.generationCount }}
@@ -50,8 +49,7 @@
                 [icon]="'gear'"
                 [mode]="'IconOnly'"
                 [attr.aria-label]="'Portal.ViewTournament.Documents.Configure' | translate"
-                (click)="configureDocument(doc.id)"
-              />
+                (click)="configureDocument(doc.id)" />
             }
           }
         </td>
@@ -65,8 +63,7 @@
               [mode]="'IconOnly'"
               [disabled]="downloadOrPreviewDisabled"
               [attr.aria-label]="'Portal.ViewTournament.Documents.Download' | translate"
-              (click)="downloadDocument(doc.id)"
-            />
+              (click)="downloadDocument(doc.id)" />
           }
         </td>
         <td class="align-middle">
@@ -79,8 +76,7 @@
               [icon]="'file-earmark-pdf'"
               [title]="'Portal.ViewTournament.Documents.OpenPreview'"
               [disabled]="downloadOrPreviewDisabled"
-              (click)="previewDocument(doc.id)"
-            />
+              (click)="previewDocument(doc.id)" />
           }
         </td>
         <td class="align-middle">

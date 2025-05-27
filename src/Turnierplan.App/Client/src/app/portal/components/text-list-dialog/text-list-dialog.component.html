@@ -13,13 +13,11 @@
             class="form-control"
             type="text"
             [formControl]="control"
-            [ngClass]="{ 'is-invalid': control.invalid && (!control.pristine || control.touched) }"
-          />
+            [ngClass]="{ 'is-invalid': control.invalid && (!control.pristine || control.touched) }" />
           <div
             class="invalid-feedback"
             [translate]="translationKey + '.InvalidEntry'"
-            [translateParams]="{ maxLength: maxItemLength }"
-          ></div>
+            [translateParams]="{ maxLength: maxItemLength }"></div>
         </div>
         <i class="mt-2 bi bi-trash text-danger tp-cursor-pointer" (click)="removeControlAtIndex(i)"></i>
       </div>
@@ -33,14 +31,12 @@
         [title]="translationKey + '.AddEntry'"
         [icon]="'plus-circle'"
         [disabled]="formArray.length >= maxItemCount"
-        (click)="addEmptyControl()"
-      />
+        (click)="addEmptyControl()" />
       @if (formArray.length >= maxItemCount) {
         <tp-tooltip-icon
           [icon]="'question-circle'"
           [tooltipText]="translationKey + '.MaximumReached'"
-          [tooltipTextParams]="{ maxCount: maxItemCount }"
-        />
+          [tooltipTextParams]="{ maxCount: maxItemCount }" />
       }
     </div>
   </div>

@@ -6,14 +6,12 @@
         [title]="'Portal.Administration.Title'"
         [type]="'outline-primary'"
         [icon]="'gear'"
-        [routerLink]="'administration'"
-      />
+        [routerLink]="'administration'" />
       <tp-action-button
         [title]="'Portal.LandingPage.NewOrganization'"
         [type]="'outline-success'"
         [icon]="'plus-circle'"
-        [routerLink]="'create/organization'"
-      />
+        [routerLink]="'create/organization'" />
     </ng-template>
     <ng-template #content>
       <div class="card">
@@ -23,8 +21,7 @@
               *tpHasRole="administratorRoleId"
               [type]="'warning'"
               [icon]="'exclamation-triangle'"
-              [text]="'Portal.LandingPage.AdministratorWarning'"
-            />
+              [text]="'Portal.LandingPage.AdministratorWarning'" />
             <div class="py-5 d-flex flex-column align-items-center gap-5">
               <tp-illustration [name]="'select'"></tp-illustration>
               <span translate="Portal.LandingPage.NoOrganizations" class="tp-text-pre-wrap text-center"></span>

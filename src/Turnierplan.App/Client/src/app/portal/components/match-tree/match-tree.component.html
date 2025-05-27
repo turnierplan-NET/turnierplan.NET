@@ -17,8 +17,7 @@
       style="z-index: -1"
       [attr.width]="connectingLinesSvgWidth"
       [attr.height]="connectingLinesSvgHeight"
-      #linesSvg
-    >
+      #linesSvg>
       @for (line of connectingLines; track line) {
         <line [attr.x1]="line.x1" [attr.y1]="line.y1" [attr.x2]="line.x2" [attr.y2]="line.y2" stroke="#777777" stroke-width="1" />
       }
@@ -37,14 +36,13 @@
     [ngStyle]="{ width: '300px', display: isPlayoff ? 'none' : 'block' }"
     [ngClass]="{ 'position-absolute': isPlayoff }"
     (click)="matchClick.emit(match.id)"
-    #matchTile
-  >
+    #matchTile>
     <div class="card-header d-flex flex-row justify-content-between">
       <span class="small">{{ match.index }}</span>
       <span class="fw-bold">{{ match.type.displayName }}</span>
       <span class="small">
         @if (match.kickoff) {
-          {{ match.kickoff | translateDate: (showKickoffWithSeconds ? "mediumTime" : "shortTime") }}
+          {{ match.kickoff | translateDate: (showKickoffWithSeconds ? 'mediumTime' : 'shortTime') }}
         }
       </span>
     </div>
@@ -69,7 +67,7 @@
             <tp-small-spinner />
           } @else if (match.isLive) {
             <tp-live-indicator />
-          } @else if (match.outcomeType !== undefined && match.outcomeType !== "Standard") {
+          } @else if (match.outcomeType !== undefined && match.outcomeType !== 'Standard') {
             <span class="small" [translate]="'General.MatchOutcomeType.' + match.outcomeType"></span>
           }
         </div>

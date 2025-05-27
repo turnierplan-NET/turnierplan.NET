@@ -19,8 +19,7 @@
                 [allowReset]="false"
                 [maxLength]="60"
                 [current]="currentEntry.label"
-                (renamed)="renameFolder(currentEntry.folderId, $event)"
-              />
+                (renamed)="renameFolder(currentEntry.folderId, $event)" />
             }
 
             <span class="flex-grow-1"></span>
@@ -28,14 +27,12 @@
               icon="calendar-range"
               type="outline-dark"
               [title]="'Portal.ViewOrganization.TournamentExplorer.Timetable'"
-              [routerLink]="'../../timetable/' + currentEntry.folderId"
-            />
+              [routerLink]="'../../timetable/' + currentEntry.folderId" />
             <tp-action-button
               icon="calculator"
               type="outline-dark"
               [title]="'Portal.ViewOrganization.TournamentExplorer.Statistics'"
-              [routerLink]="'../../statistics/' + currentEntry.folderId"
-            />
+              [routerLink]="'../../statistics/' + currentEntry.folderId" />
           </div>
         }
 
@@ -47,21 +44,19 @@
               </div>
               <div class="card-footer d-flex">
                 @switch (tournament.visibility) {
-                  @case ("Private") {
+                  @case ('Private') {
                     <tp-tooltip-icon
                       [icon]="'lock'"
                       [iconClass]="'text-danger'"
                       [margin]="false"
-                      [tooltipText]="'Portal.ViewOrganization.TournamentExplorer.Tile.Visibility.Private'"
-                    />
+                      [tooltipText]="'Portal.ViewOrganization.TournamentExplorer.Tile.Visibility.Private'" />
                   }
-                  @case ("Public") {
+                  @case ('Public') {
                     <tp-tooltip-icon
                       [icon]="'globe-europe-africa'"
                       [iconClass]="'text-success'"
                       [margin]="false"
-                      [tooltipText]="'Portal.ViewOrganization.TournamentExplorer.Tile.Visibility.Public'"
-                    />
+                      [tooltipText]="'Portal.ViewOrganization.TournamentExplorer.Tile.Visibility.Public'" />
                   }
                 }
                 <div class="flex-grow-1"></div>

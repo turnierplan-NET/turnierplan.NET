@@ -2,8 +2,7 @@
   *tpLoadingState="loadingState"
   [ultraSlim]="true"
   [title]="'Portal.ConfigureTournament.Title' | translate: { tournament: tournamentName }"
-  [backLink]="'..'"
->
+  [backLink]="'..'">
   <div translate="Portal.ConfigureTournament.Subtitle"></div>
   @if (displayEditWarning) {
     <tp-tournament-edit-warning [translationKey]="'Portal.ConfigureTournament.DestructiveWarning'" [(accepted)]="editWarningAccepted" />
@@ -51,8 +50,7 @@
         [type]="'success'"
         [title]="'Portal.ConfigureTournament.Submit'"
         [disabled]="!canSave"
-        (click)="saveButtonClicked()"
-      />
+        (click)="saveButtonClicked()" />
     </div>
   </div>
 </tp-page-frame>
@@ -65,15 +63,13 @@
         class="form-control form-control-sm"
         type="datetime-local"
         [ngModel]="firstMatchKickoff | date: 'yyyy-MM-ddTHH:mm'"
-        (ngModelChange)="setKickoffDatetime($event)"
-      />
+        (ngModelChange)="setKickoffDatetime($event)" />
       @if (firstMatchKickoff < timeStampToday) {
         <tp-alert
           class="align-self-stretch"
           [type]="'info'"
           [text]="'Portal.ConfigureTournament.Sections.General.KickoffDateTimeInPast'"
-          [margin]="'mt-2 mb-0'"
-        />
+          [margin]="'mt-2 mb-0'" />
       }
     </div>
   </div>
@@ -87,14 +83,12 @@
           <span
             class="flex-grow-1"
             translate="Portal.ConfigureTournament.Sections.Participants.GroupWithName"
-            [translateParams]="{ alphabeticalId: group.alphabeticalId, displayName: group.displayName }"
-          ></span>
+            [translateParams]="{ alphabeticalId: group.alphabeticalId, displayName: group.displayName }"></span>
         } @else {
           <span
             class="flex-grow-1"
             translate="Portal.ConfigureTournament.Sections.Participants.GroupWithoutName"
-            [translateParams]="{ alphabeticalId: group.alphabeticalId }"
-          ></span>
+            [translateParams]="{ alphabeticalId: group.alphabeticalId }"></span>
         }
         <tp-delete-button [reducedFootprint]="true" (confirmed)="removeGroup(groupIndex)" />
       </div>
@@ -104,21 +98,18 @@
         <div
           class="px-2 py-1 border rounded text-secondary fst-italic"
           dndPlaceholderRef
-          translate="Portal.ConfigureTournament.Sections.Participants.DragDropPlaceholder"
-        ></div>
+          translate="Portal.ConfigureTournament.Sections.Participants.DragDropPlaceholder"></div>
 
         <div
           *ngFor="let team of group.teams; let index = index"
           [dndDraggable]="team"
           (dndMoved)="removeTeam(group, index)"
           dndEffectAllowed="move"
-          class="px-2 py-1 border rounded d-flex flex-row gap-2 tp-cursor-move"
-        >
+          class="px-2 py-1 border rounded d-flex flex-row gap-2 tp-cursor-move">
           <span
             class="flex-grow-1"
             translate="Portal.ConfigureTournament.Sections.Participants.TeamEntry"
-            [translateParams]="{ index: index + 1, name: team.name }"
-          ></span>
+            [translateParams]="{ index: index + 1, name: team.name }"></span>
           <tp-delete-button [reducedFootprint]="true" (confirmed)="removeTeam(group, index)" />
         </div>
 
@@ -127,8 +118,7 @@
         <div
           class="empty-notice d-none small"
           [ngClass]="attemptedToSaveChanges ? 'fw-bold text-danger' : 'fst-italic'"
-          translate="Portal.ConfigureTournament.Sections.Participants.NoTeamsNotice"
-        ></div>
+          translate="Portal.ConfigureTournament.Sections.Participants.NoTeamsNotice"></div>
       </div>
 
       <div class="card-footer p-2 d-flex flex-row align-items-center justify-content-center gap-2">
@@ -137,22 +127,19 @@
           class="form-control form-control-sm w-50"
           [placeholder]="'Portal.ConfigureTournament.Sections.Participants.NewTeamNamePlaceholder' | translate"
           #teamNameInput
-          (keyup.enter)="addTeam(group, teamNameInput)"
-        />
+          (keyup.enter)="addTeam(group, teamNameInput)" />
         <tp-action-button
           [type]="'outline-primary'"
           [icon]="'plus-circle'"
           [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeamButton'"
-          (click)="addTeam(group, teamNameInput)"
-        />
+          (click)="addTeam(group, teamNameInput)" />
       </div>
     </div>
   } @empty {
     <div
       class="text-center fst-italic mb-2 py-2 border rounded"
       [ngClass]="attemptedToSaveChanges && groups.length === 0 ? 'border-danger' : 'border-transparent'"
-      translate="Portal.ConfigureTournament.Sections.Participants.NoGroupsNotice"
-    ></div>
+      translate="Portal.ConfigureTournament.Sections.Participants.NoGroupsNotice"></div>
   }
   <div class="d-flex flex-row justify-content-center gap-2">
     <tp-action-button
@@ -160,14 +147,12 @@
       [icon]="'shuffle'"
       [disabled]="totalTeamCount <= 1"
       [title]="'Portal.ConfigureTournament.Sections.Participants.ShuffleGroupsButton'"
-      (click)="shuffleGroups()"
-    />
+      (click)="shuffleGroups()" />
     <tp-action-button
       [type]="'outline-primary'"
       [icon]="'plus-circle'"
       [title]="'Portal.ConfigureTournament.Sections.Participants.AddGroupButton'"
-      (click)="addGroup()"
-    />
+      (click)="addGroup()" />
   </div>
 </ng-template>
 
@@ -184,13 +169,11 @@
             id="groupMatchesSequential"
             autocomplete="off"
             [checked]="!groupPhaseAlternating"
-            (change)="groupPhaseAlternating = !groupPhaseAlternating; markDirty()"
-          />
+            (change)="groupPhaseAlternating = !groupPhaseAlternating; markDirty()" />
           <label
             class="btn btn-outline-secondary"
             for="groupMatchesSequential"
-            translate="Portal.ConfigureTournament.Sections.GroupPhase.OrderSequential"
-          ></label>
+            translate="Portal.ConfigureTournament.Sections.GroupPhase.OrderSequential"></label>
 
           <input
             type="radio"
@@ -199,13 +182,11 @@
             id="groupMatchesAlternating"
             autocomplete="off"
             [checked]="groupPhaseAlternating"
-            (change)="groupPhaseAlternating = !groupPhaseAlternating; markDirty()"
-          />
+            (change)="groupPhaseAlternating = !groupPhaseAlternating; markDirty()" />
           <label
             class="btn btn-outline-secondary"
             for="groupMatchesAlternating"
-            translate="Portal.ConfigureTournament.Sections.GroupPhase.OrderAlternating"
-          ></label>
+            translate="Portal.ConfigureTournament.Sections.GroupPhase.OrderAlternating"></label>
         </div>
       }
 
@@ -220,13 +201,11 @@
           step="1"
           [(ngModel)]="groupPhaseRounds"
           (ngModelChange)="markDirty()"
-          [ngClass]="{ 'is-invalid': isGroupPhaseRoundsInvalid }"
-        />
+          [ngClass]="{ 'is-invalid': isGroupPhaseRoundsInvalid }" />
         <div
           *ngIf="isGroupPhaseRoundsInvalid"
           class="invalid-feedback"
-          translate="Portal.ConfigureTournament.Sections.GroupPhase.InvalidNumberOfRounds"
-        ></div>
+          translate="Portal.ConfigureTournament.Sections.GroupPhase.InvalidNumberOfRounds"></div>
       </div>
       <div class="mt-2" translate="Portal.ConfigureTournament.Sections.GroupPhase.NumberOfCourtsLabel"></div>
       <div class="d-flex flex-row gap-2">
@@ -239,13 +218,11 @@
           step="1"
           [(ngModel)]="groupPhaseCourts"
           (ngModelChange)="markDirty()"
-          [ngClass]="{ 'is-invalid': isGroupPhaseCourtsInvalid }"
-        />
+          [ngClass]="{ 'is-invalid': isGroupPhaseCourtsInvalid }" />
         <div
           *ngIf="isGroupPhaseCourtsInvalid"
           class="invalid-feedback"
-          translate="Portal.ConfigureTournament.Sections.GroupPhase.InvalidNumberOfCourts"
-        ></div>
+          translate="Portal.ConfigureTournament.Sections.GroupPhase.InvalidNumberOfCourts"></div>
       </div>
       <div class="mt-2" translate="Portal.ConfigureTournament.Sections.GroupPhase.PlayTimeLabel"></div>
       <tp-duration-picker [(duration)]="groupPhasePlayTime" />
@@ -265,13 +242,11 @@
         id="enableFinalsRound"
         type="checkbox"
         [(ngModel)]="enableFinalsRound"
-        (ngModelChange)="markDirty()"
-      />
+        (ngModelChange)="markDirty()" />
       <label
         class="form-check-label"
         for="enableFinalsRound"
-        translate="Portal.ConfigureTournament.Sections.FinalsPhase.EnableCheckbox"
-      ></label>
+        translate="Portal.ConfigureTournament.Sections.FinalsPhase.EnableCheckbox"></label>
     </div>
     @if (enableFinalsRound) {
       <div class="card shadow-sm">
@@ -282,10 +257,9 @@
           <select
             class="form-select"
             [(ngModel)]="currentFinalRound"
-            (ngModelChange)="determineAvailableAdditionalPlayoffMatches(); markDirty()"
-          >
+            (ngModelChange)="determineAvailableAdditionalPlayoffMatches(); markDirty()">
             <option *ngFor="let option of availableFinalRounds" [value]="option">
-              {{ "Portal.ConfigureTournament.Sections.FinalsPhase.FinalsRound." + option | translate }}
+              {{ 'Portal.ConfigureTournament.Sections.FinalsPhase.FinalsRound.' + option | translate }}
             </option>
           </select>
           @if ((currentFinalRound && currentFinalRound !== firstFinalRounds.Final) || additionalPlayoffPositions.length > 0) {
@@ -298,13 +272,11 @@
                 id="thirdPlacePlayoff"
                 type="checkbox"
                 [(ngModel)]="enableThirdPlacePlayoff"
-                (ngModelChange)="determineAvailableAdditionalPlayoffMatches(); markDirty()"
-              />
+                (ngModelChange)="determineAvailableAdditionalPlayoffMatches(); markDirty()" />
               <label
                 class="form-check-label"
                 for="thirdPlacePlayoff"
-                translate="Portal.ConfigureTournament.Sections.FinalsPhase.ThirdPlacePlayoff"
-              ></label>
+                translate="Portal.ConfigureTournament.Sections.FinalsPhase.ThirdPlacePlayoff"></label>
               <tp-tooltip-icon [tooltipText]="'Portal.ConfigureTournament.Sections.FinalsPhase.ThirdPlacePlayoffTooltip'" />
             </div>
           }
@@ -315,13 +287,11 @@
                 id="additionalPlayoffs"
                 type="checkbox"
                 [(ngModel)]="enableAdditionalPlayoffs"
-                (ngModelChange)="markDirty()"
-              />
+                (ngModelChange)="markDirty()" />
               <label
                 class="form-check-label"
                 for="additionalPlayoffs"
-                translate="Portal.ConfigureTournament.Sections.FinalsPhase.AdditionalPlayoffs"
-              ></label>
+                translate="Portal.ConfigureTournament.Sections.FinalsPhase.AdditionalPlayoffs"></label>
               <tp-tooltip-icon [tooltipText]="'Portal.ConfigureTournament.Sections.FinalsPhase.AdditionalPlayoffsTooltip'" />
             </div>
           }
@@ -336,13 +306,11 @@
               step="1"
               [(ngModel)]="finalsPhaseCourts"
               (ngModelChange)="markDirty()"
-              [ngClass]="{ 'is-invalid': isFinalsPhaseCourtsInvalid }"
-            />
+              [ngClass]="{ 'is-invalid': isFinalsPhaseCourtsInvalid }" />
             <div
               *ngIf="isFinalsPhaseCourtsInvalid"
               class="invalid-feedback"
-              translate="Portal.ConfigureTournament.Sections.FinalsPhase.InvalidNumberOfCourts"
-            ></div>
+              translate="Portal.ConfigureTournament.Sections.FinalsPhase.InvalidNumberOfCourts"></div>
           </div>
           <div class="mt-2" translate="Portal.ConfigureTournament.Sections.FinalsPhase.PlayTimeLabel"></div>
           <tp-duration-picker [(duration)]="finalsPhasePlayTime" />
@@ -372,14 +340,12 @@
                 id="additionalPlayoff{{ position }}"
                 type="checkbox"
                 [ngModel]="additionalPlayoffs[position].isEnabled"
-                (ngModelChange)="setAdditionalPlayoffEnabled(position, $event)"
-              />
+                (ngModelChange)="setAdditionalPlayoffEnabled(position, $event)" />
               <label
                 class="form-check-label"
                 for="additionalPlayoff{{ position }}"
                 translate="Portal.ConfigureTournament.Sections.AdditionalPlayoffs.MatchLabel"
-                [translateParams]="{ position: position }"
-              ></label>
+                [translateParams]="{ position: position }"></label>
             </div>
           </div>
           @if (additionalPlayoffs[position].isEnabled) {
@@ -391,16 +357,14 @@
                   'border-danger': attemptedToSaveChanges && additionalPlayoffs[position].teamSelectorA === ''
                 }"
                 [ngModel]="additionalPlayoffs[position].teamSelectorA"
-                (ngModelChange)="setAdditionalPlayoffTeamSelectorA(position, $event)"
-              >
+                (ngModelChange)="setAdditionalPlayoffTeamSelectorA(position, $event)">
                 <option
                   value=""
                   class="text-secondary"
-                  translate="Portal.ConfigureTournament.Sections.AdditionalPlayoffs.DropdownPlaceholder"
-                ></option>
+                  translate="Portal.ConfigureTournament.Sections.AdditionalPlayoffs.DropdownPlaceholder"></option>
                 @for (item of abstractTeamSelectors; track item) {
                   <option [value]="item" class="text-black">
-                    {{ item | abstractTeamSelector: groupAlphabeticalIdsForTeamSelectors : "de" }}
+                    {{ item | abstractTeamSelector: groupAlphabeticalIdsForTeamSelectors : 'de' }}
                   </option>
                 }
               </select>
@@ -413,16 +377,14 @@
                   'border-danger': attemptedToSaveChanges && additionalPlayoffs[position].teamSelectorB === ''
                 }"
                 [ngModel]="additionalPlayoffs[position].teamSelectorB"
-                (ngModelChange)="setAdditionalPlayoffTeamSelectorB(position, $event)"
-              >
+                (ngModelChange)="setAdditionalPlayoffTeamSelectorB(position, $event)">
                 <option
                   value=""
                   class="text-secondary"
-                  translate="Portal.ConfigureTournament.Sections.AdditionalPlayoffs.DropdownPlaceholder"
-                ></option>
+                  translate="Portal.ConfigureTournament.Sections.AdditionalPlayoffs.DropdownPlaceholder"></option>
                 @for (item of abstractTeamSelectors; track item) {
                   <option [value]="item" class="text-black">
-                    {{ item | abstractTeamSelector: groupAlphabeticalIdsForTeamSelectors : "de" }}
+                    {{ item | abstractTeamSelector: groupAlphabeticalIdsForTeamSelectors : 'de' }}
                   </option>
                 }
               </select>
@@ -433,8 +395,7 @@
                   [icon]="'exclamation-triangle'"
                   [iconClass]="'text-warning'"
                   [margin]="false"
-                  [tooltipText]="'Portal.ConfigureTournament.Sections.AdditionalPlayoffs.DuplicateTeam'"
-                />
+                  [tooltipText]="'Portal.ConfigureTournament.Sections.AdditionalPlayoffs.DuplicateTeam'" />
               }
             </div>
           } @else {

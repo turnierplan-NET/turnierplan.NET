@@ -5,23 +5,28 @@
 <div *ngIf="match" class="modal-body p-0 d-flex flex-column">
   <div class="border-bottom tp-border-card py-3 d-flex flex-row justify-content-center gap-4">
     <ng-container
-      *ngTemplateOutlet="matchInfoColumn; context: { name: 'Portal.ViewTournament.EditMatchDialog.Index', value: match.index }"
-    ></ng-container>
+      *ngTemplateOutlet="
+        matchInfoColumn;
+        context: { name: 'Portal.ViewTournament.EditMatchDialog.Index', value: match.index }
+      "></ng-container>
     @if (match.kickoff) {
       <ng-container
         *ngTemplateOutlet="
           matchInfoColumn;
           context: { name: 'Portal.ViewTournament.EditMatchDialog.Kickoff', value: (match.kickoff | translateDate: 'shortTime') }
-        "
-      ></ng-container>
+        "></ng-container>
     }
     <ng-container
-      *ngTemplateOutlet="matchInfoColumn; context: { name: 'Portal.ViewTournament.EditMatchDialog.Type', value: match.type.displayName }"
-    ></ng-container>
+      *ngTemplateOutlet="
+        matchInfoColumn;
+        context: { name: 'Portal.ViewTournament.EditMatchDialog.Type', value: match.type.displayName }
+      "></ng-container>
     @if (match.group.length > 0) {
       <ng-container
-        *ngTemplateOutlet="matchInfoColumn; context: { name: 'Portal.ViewTournament.EditMatchDialog.Group', value: match.group }"
-      ></ng-container>
+        *ngTemplateOutlet="
+          matchInfoColumn;
+          context: { name: 'Portal.ViewTournament.EditMatchDialog.Group', value: match.group }
+        "></ng-container>
     }
   </div>
 
@@ -38,8 +43,7 @@
           step="1"
           [(ngModel)]="scoreTeamA"
           (keydown.enter)="closeModal('save')"
-          #inputScoreA
-        />
+          #inputScoreA />
         <i class="bi bi-chevron-down tp-cursor-pointer" (click)="scoreTeamA >= 1 && (scoreTeamA = scoreTeamA - 1)"></i>
       </div>
     </div>
@@ -54,8 +58,7 @@
           min="0"
           step="1"
           [(ngModel)]="scoreTeamB"
-          (keydown.enter)="closeModal('save')"
-        />
+          (keydown.enter)="closeModal('save')" />
         <i class="bi bi-chevron-down tp-cursor-pointer" (click)="scoreTeamB >= 1 && (scoreTeamB = scoreTeamB - 1)"></i>
       </div>
     </div>
@@ -70,13 +73,11 @@
           name="outcomeType"
           [id]="'outcomeType_' + type"
           [checked]="outcomeType === type"
-          (change)="outcomeType = type"
-        />
+          (change)="outcomeType = type" />
         <label
           class="form-check-label"
           [for]="'outcomeType_' + type"
-          [translate]="'Portal.ViewTournament.EditMatchDialog.OutcomeType.' + type"
-        ></label>
+          [translate]="'Portal.ViewTournament.EditMatchDialog.OutcomeType.' + type"></label>
       </div>
     }
   </div>

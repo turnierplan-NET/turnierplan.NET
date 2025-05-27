@@ -7,8 +7,7 @@
     [title]="'Portal.ViewTournament.Share.PresentationConfig.CopyFromOtherTournament'"
     [type]="'outline-secondary'"
     [icon]="'copy'"
-    (click)="copyFromOtherTournament()"
-  />
+    (click)="copyFromOtherTournament()" />
 </div>
 
 <div class="row">
@@ -20,20 +19,16 @@
         id="headerLine1"
         style="max-width: 400px"
         [ngModel]="header1Content"
-        (ngModelChange)="header1Content = $event; onChanged()"
-      >
+        (ngModelChange)="header1Content = $event; onChanged()">
         <option
           [value]="HeaderLineContent.TournamentName"
-          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.TournamentName"
-        ></option>
+          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.TournamentName"></option>
         <option
           [value]="HeaderLineContent.OrganizerName"
-          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.OrganizerName"
-        ></option>
+          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.OrganizerName"></option>
         <option
           [value]="HeaderLineContent.CustomValue"
-          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.CustomValue"
-        ></option>
+          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.CustomValue"></option>
       </select>
       @if (header1Content === HeaderLineContent.CustomValue) {
         <input
@@ -42,8 +37,7 @@
           [ngModel]="header1CustomContent"
           (ngModelChange)="header1CustomContent = $event; onChanged()"
           [placeholder]="'Portal.ViewTournament.Share.PresentationConfig.HeaderCustomValuePlaceholder' | translate"
-          [ngClass]="{ 'is-invalid': saveAttempted && isHeader2CustomContentInvalid }"
-        />
+          [ngClass]="{ 'is-invalid': saveAttempted && isHeader2CustomContentInvalid }" />
         <div class="invalid-feedback" translate="Portal.ViewTournament.Share.PresentationConfig.HeaderCustomValueInvalid"></div>
       }
     </div>
@@ -54,20 +48,16 @@
         id="headerLine2"
         style="max-width: 400px"
         [ngModel]="header2Content"
-        (ngModelChange)="header2Content = $event; onChanged()"
-      >
+        (ngModelChange)="header2Content = $event; onChanged()">
         <option
           [value]="HeaderLineContent.TournamentName"
-          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.TournamentName"
-        ></option>
+          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.TournamentName"></option>
         <option
           [value]="HeaderLineContent.OrganizerName"
-          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.OrganizerName"
-        ></option>
+          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.OrganizerName"></option>
         <option
           [value]="HeaderLineContent.CustomValue"
-          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.CustomValue"
-        ></option>
+          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.CustomValue"></option>
       </select>
       @if (header2Content === HeaderLineContent.CustomValue) {
         <input
@@ -76,8 +66,7 @@
           [ngModel]="header2CustomContent"
           (ngModelChange)="header2CustomContent = $event; onChanged()"
           [placeholder]="'Portal.ViewTournament.Share.PresentationConfig.HeaderCustomValuePlaceholder' | translate"
-          [ngClass]="{ 'is-invalid': saveAttempted && isHeader2CustomContentInvalid }"
-        />
+          [ngClass]="{ 'is-invalid': saveAttempted && isHeader2CustomContentInvalid }" />
         <div class="invalid-feedback" translate="Portal.ViewTournament.Share.PresentationConfig.HeaderCustomValueInvalid"></div>
       }
     </div>
@@ -90,13 +79,11 @@
         id="showResults"
         style="max-width: 400px"
         [ngModel]="showResults"
-        (ngModelChange)="showResults = $event; onChanged()"
-      >
+        (ngModelChange)="showResults = $event; onChanged()">
         <option [value]="ResultsMode.Default" translate="Portal.ViewTournament.Share.PresentationConfig.ResultsMode.Default"></option>
         <option
           [value]="ResultsMode.OnlyMatchOutcomes"
-          translate="Portal.ViewTournament.Share.PresentationConfig.ResultsMode.OnlyMatchOutcomes"
-        ></option>
+          translate="Portal.ViewTournament.Share.PresentationConfig.ResultsMode.OnlyMatchOutcomes"></option>
         <option [value]="ResultsMode.NoResults" translate="Portal.ViewTournament.Share.PresentationConfig.ResultsMode.NoResults"></option>
       </select>
     </div>
@@ -108,13 +95,11 @@
         role="switch"
         id="showOrganizerLogo"
         [ngModel]="showOrganizerLogo"
-        (ngModelChange)="showOrganizerLogo = $event; onChanged()"
-      />
+        (ngModelChange)="showOrganizerLogo = $event; onChanged()" />
       <label
         class="form-check-label"
         for="showOrganizerLogo"
-        translate="Portal.ViewTournament.Share.PresentationConfig.ShowOrganizerLogo"
-      ></label>
+        translate="Portal.ViewTournament.Share.PresentationConfig.ShowOrganizerLogo"></label>
     </div>
 
     <div class="form-check form-switch">
@@ -124,13 +109,11 @@
         role="switch"
         id="showSponsorLogo"
         [ngModel]="showSponsorLogo"
-        (ngModelChange)="showSponsorLogo = $event; onChanged()"
-      />
+        (ngModelChange)="showSponsorLogo = $event; onChanged()" />
       <label
         class="form-check-label"
         for="showSponsorLogo"
-        translate="Portal.ViewTournament.Share.PresentationConfig.ShowSponsorLogo"
-      ></label>
+        translate="Portal.ViewTournament.Share.PresentationConfig.ShowSponsorLogo"></label>
     </div>
   </div>
 </div>
@@ -145,7 +128,6 @@
       [icon]="'floppy'"
       [title]="'Portal.General.ApplyChanges'"
       [disabled]="isSaving"
-      (click)="saveChanges()"
-    />
+      (click)="saveChanges()" />
   </div>
 }

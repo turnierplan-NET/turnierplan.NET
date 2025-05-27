@@ -17,8 +17,7 @@
             <div
               class="invisible-button overflow-hidden text-nowrap tp-cursor-pointer d-flex flex-row align-items-center gap-2 px-2 py-1"
               [ngClass]="{ 'fw-bold': entry.id === selectedTournamentId, 'border-bottom': !isLast }"
-              (click)="selectTournament(entry.id)"
-            >
+              (click)="selectTournament(entry.id)">
               <i class="bi bi-trophy"></i>
               <span>{{ entry.name }}</span>
             </div>
@@ -37,8 +36,7 @@
           <div
             class="invisible-button overflow-hidden text-nowrap tp-cursor-pointer d-flex flex-row align-items-center gap-2 px-2 py-1"
             [ngClass]="{ 'border-bottom': !isLast }"
-            (click)="selectDocument(document.id)"
-          >
+            (click)="selectDocument(document.id)">
             <i class="bi bi-file-earmark-ruled"></i>
             <span>{{ document.name }}</span>
           </div>

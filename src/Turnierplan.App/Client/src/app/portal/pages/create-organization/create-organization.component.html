@@ -2,8 +2,7 @@
   *tpLoadingState="loadingState"
   [ultraSlim]="true"
   [title]="'Portal.CreateOrganization.LongTitle' | translate"
-  [backLink]="'../..'"
->
+  [backLink]="'../..'">
   <label for="create_organization_name" class="form-label" translate="Portal.CreateOrganization.Form.Name"></label>
   <input
     id="create_organization_name"
@@ -13,8 +12,7 @@
     [required]="true"
     [minlength]="1"
     [maxlength]="40"
-    [ngClass]="organizationName.dirty || organizationName.touched ? (organizationName.invalid ? 'is-invalid' : 'is-valid') : ''"
-  />
+    [ngClass]="organizationName.dirty || organizationName.touched ? (organizationName.invalid ? 'is-invalid' : 'is-valid') : ''" />
   <div class="invalid-feedback" translate="Portal.CreateOrganization.Form.NameInvalid"></div>
   <div class="valid-feedback" translate="Portal.CreateOrganization.Form.NameValid"></div>
 
@@ -32,7 +30,6 @@
       [type]="'success'"
       [title]="'Portal.CreateOrganization.Submit'"
       [disabled]="organizationName.invalid"
-      (click)="confirmButtonClicked()"
-    />
+      (click)="confirmButtonClicked()" />
   </div>
 </tp-page-frame>

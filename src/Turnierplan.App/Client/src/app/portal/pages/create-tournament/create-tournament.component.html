@@ -8,8 +8,7 @@
     [required]="true"
     [minlength]="1"
     [maxlength]="60"
-    [ngClass]="tournamentName.dirty || tournamentName.touched ? (tournamentName.invalid ? 'is-invalid' : 'is-valid') : ''"
-  />
+    [ngClass]="tournamentName.dirty || tournamentName.touched ? (tournamentName.invalid ? 'is-invalid' : 'is-valid') : ''" />
   <div class="invalid-feedback" translate="Portal.CreateTournament.Form.NameInvalid"></div>
   <div class="valid-feedback" translate="Portal.CreateTournament.Form.NameValid"></div>
 
@@ -28,13 +27,11 @@
         name="createTournament_folderMode"
         id="createTournament_folderMode_noFolder"
         [value]="'NoFolder'"
-        [(ngModel)]="folderMode"
-      />
+        [(ngModel)]="folderMode" />
       <label
         class="form-check-label"
         for="createTournament_folderMode_noFolder"
-        translate="Portal.CreateTournament.Form.UseNoFolder"
-      ></label>
+        translate="Portal.CreateTournament.Form.UseNoFolder"></label>
     </div>
 
     <div class="form-check">
@@ -45,11 +42,10 @@
         id="createTournament_folderMode_existingFolder"
         [value]="'ExistingFolder'"
         [(ngModel)]="folderMode"
-        [disabled]="disableExistingFolders"
-      />
+        [disabled]="disableExistingFolders" />
       <label class="form-check-label" for="createTournament_folderMode_existingFolder">
         <span translate="Portal.CreateTournament.Form.UseExistingFolder"></span>
-        @if (folderMode === "ExistingFolder") {
+        @if (folderMode === 'ExistingFolder') {
           <span>:</span>
         }
       </label>
@@ -58,7 +54,7 @@
       }
     </div>
 
-    @if (folderMode === "ExistingFolder" && existingFolders && existingFolders.length > 0) {
+    @if (folderMode === 'ExistingFolder' && existingFolders && existingFolders.length > 0) {
       <select id="createTournament_existingFolderId" class="form-select flex-grow-1" [formControl]="existingFolderId">
         @for (folder of existingFolders; track folder.id) {
           <option [value]="folder.id">{{ folder.name }}</option>
@@ -73,17 +69,16 @@
         name="createTournament_folderMode"
         id="createTournament_folderMode_newFolder"
         [value]="'NewFolder'"
-        [(ngModel)]="folderMode"
-      />
+        [(ngModel)]="folderMode" />
       <label class="form-check-label" for="createTournament_folderMode_newFolder">
         <span translate="Portal.CreateTournament.Form.CreateNewFolder"></span>
-        @if (folderMode === "NewFolder") {
+        @if (folderMode === 'NewFolder') {
           <span>:</span>
         }
       </label>
     </div>
 
-    @if (folderMode === "NewFolder") {
+    @if (folderMode === 'NewFolder') {
       <input
         type="text"
         class="form-control"
@@ -92,8 +87,7 @@
         [minlength]="1"
         [maxlength]="60"
         [placeholder]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.NamePlaceholder' | translate"
-        [ngClass]="newFolderName.dirty || newFolderName.touched ? (newFolderName.invalid ? 'is-invalid' : 'is-valid') : ''"
-      />
+        [ngClass]="newFolderName.dirty || newFolderName.touched ? (newFolderName.invalid ? 'is-invalid' : 'is-valid') : ''" />
       <div class="invalid-feedback" translate="Portal.CreateTournament.Form.FolderNameInvalid"></div>
       <div class="valid-feedback" translate="Portal.CreateTournament.Form.FolderNameValid"></div>
     }
@@ -116,11 +110,10 @@
     <i class="bi bi-info-circle"></i>
     <span
       class="ms-2"
-      [innerHTML]="'Portal.CreateTournament.OrganizationNotice' | translate: { organizationName: organization?.name }"
-    ></span>
+      [innerHTML]="'Portal.CreateTournament.OrganizationNotice' | translate: { organizationName: organization?.name }"></span>
   </div>
 
-  @if (visibility === "Private") {
+  @if (visibility === 'Private') {
     <div class="form-text text-primary-emphasis">
       <i class="bi bi-exclamation-triangle"></i>
       <span class="ms-2" [innerHTML]="'Portal.CreateTournament.VisibilityPrivateNotice' | translate"></span>
@@ -134,7 +127,6 @@
       [type]="'success'"
       [title]="'Portal.CreateTournament.Submit'"
       [disabled]="tournamentName.invalid"
-      (click)="confirmButtonClicked()"
-    />
+      (click)="confirmButtonClicked()" />
   </div>
 </tp-page-frame>

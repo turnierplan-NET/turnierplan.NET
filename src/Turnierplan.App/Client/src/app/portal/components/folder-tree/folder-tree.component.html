@@ -4,8 +4,7 @@
     [ngClass]="{ 'fw-bold': node.id === selectedFolder }"
     [ngStyle]="{ 'margin-left': node.indentation * 15 + 'px', 'padding-left': '3px' }"
     [title]="node.label"
-    (click)="selectedFolder = node.id; selectedFolderChange.emit(node.id)"
-  >
+    (click)="selectedFolder = node.id; selectedFolderChange.emit(node.id)">
     @if (node.isRoot) {
       <i class="bi bi-boxes"></i>
     } @else if (node.id === selectedFolder) {

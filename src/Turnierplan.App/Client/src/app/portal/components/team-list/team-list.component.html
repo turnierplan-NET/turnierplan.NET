@@ -27,8 +27,7 @@
             [allowReset]="false"
             [maxLength]="60"
             [current]="team.name"
-            (renamed)="renameTeam(team.id, $event)"
-          />
+            (renamed)="renameTeam(team.id, $event)" />
         </td>
         <td class="align-middle">
           @if (team.showLoadingIndicator.name) {
@@ -61,8 +60,7 @@
                 role="switch"
                 [checked]="team.outOfCompetition"
                 [ngClass]="{ 'pe-none': isUpdatingAnyTeam }"
-                (change)="toggleTeamOutOfCompetition(team.id)"
-              />
+                (change)="toggleTeamOutOfCompetition(team.id)" />
             </div>
           }
         </td>
@@ -74,7 +72,7 @@
               <i class="bi bi-check-circle-fill text-success"></i>
               <span class="small text-secondary">
                 <span translate="Portal.ViewTournament.Teams.EntryFeePaid.PaidAt"></span>
-                <span class="ms-1">{{ team.entryFeePaidAt | translateDate: "medium" }}</span>
+                <span class="ms-1">{{ team.entryFeePaidAt | translateDate: 'medium' }}</span>
               </span>
               <i
                 class="bi bi-arrow-counterclockwise tp-cursor-pointer"
@@ -82,8 +80,7 @@
                 [popoverContext]="{ teamId: team.id }"
                 [autoClose]="'outside'"
                 [container]="'body'"
-                [popoverClass]="'tp-popover-slim'"
-              ></i>
+                [popoverClass]="'tp-popover-slim'"></i>
             } @else {
               <i class="bi bi-x-circle text-danger"></i>
               <span class="small text-secondary" translate="Portal.ViewTournament.Teams.EntryFeePaid.NotPaid"></span>
@@ -92,8 +89,7 @@
                 type="outline-secondary"
                 [ngClass]="{ 'pe-none': isUpdatingAnyTeam }"
                 [title]="'Portal.ViewTournament.Teams.EntryFeePaid.Pay'"
-                (click)="setTeamEntryFeePaid(team.id, true)"
-              />
+                (click)="setTeamEntryFeePaid(team.id, true)" />
             }
           </div>
         </td>

@@ -5,8 +5,7 @@
       class="form-select form-select-sm mb-3"
       id="api_usage_timeRange"
       [ngModel]="timeRange"
-      (ngModelChange)="timeRange = $event; reload$.next()"
-    >
+      (ngModelChange)="timeRange = $event; reload$.next()">
       <option value="1" translate="Portal.ApiKeyUsage.TimeRange1"></option>
       <option value="7" translate="Portal.ApiKeyUsage.TimeRange7"></option>
       <option value="14" translate="Portal.ApiKeyUsage.TimeRange14"></option>
@@ -18,8 +17,7 @@
         [type]="'outline-secondary'"
         [icon]="'arrow-counterclockwise'"
         [title]="'Portal.ApiKeyUsage.Reload'"
-        (click)="reload$.next()"
-      />
+        (click)="reload$.next()" />
     </div>
 
     @if (showNoRequestsNotification) {

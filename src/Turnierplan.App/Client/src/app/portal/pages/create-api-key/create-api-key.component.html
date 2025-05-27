@@ -38,8 +38,7 @@
           type="text"
           class="form-control"
           formControlName="name"
-          [ngClass]="nameControl.dirty || nameControl.touched ? (nameControl.invalid ? 'is-invalid' : 'is-valid') : ''"
-        />
+          [ngClass]="nameControl.dirty || nameControl.touched ? (nameControl.invalid ? 'is-invalid' : 'is-valid') : ''" />
         <div class="invalid-feedback" translate="Portal.CreateApiKey.Form.NameInvalid"></div>
         <div class="valid-feedback" translate="Portal.CreateApiKey.Form.NameValid"></div>
       </div>
@@ -51,8 +50,9 @@
           type="text"
           class="form-control"
           formControlName="description"
-          [ngClass]="descriptionControl.dirty || descriptionControl.touched ? (descriptionControl.invalid ? 'is-invalid' : 'is-valid') : ''"
-        />
+          [ngClass]="
+            descriptionControl.dirty || descriptionControl.touched ? (descriptionControl.invalid ? 'is-invalid' : 'is-valid') : ''
+          " />
         <div class="invalid-feedback" translate="Portal.CreateApiKey.Form.DescriptionInvalid"></div>
         <div class="valid-feedback" translate="Portal.CreateApiKey.Form.DescriptionValid"></div>
       </div>
@@ -75,8 +75,7 @@
       <i class="bi bi-info-circle"></i>
       <span
         class="ms-2"
-        [innerHTML]="'Portal.CreateApiKey.OrganizationNotice' | translate: { organizationName: organization?.name }"
-      ></span>
+        [innerHTML]="'Portal.CreateApiKey.OrganizationNotice' | translate: { organizationName: organization?.name }"></span>
     </div>
 
     <hr />
@@ -93,8 +92,7 @@
         [type]="'success'"
         [title]="'Portal.CreateApiKey.Submit'"
         [disabled]="form.invalid"
-        (click)="confirmButtonClicked()"
-      />
+        (click)="confirmButtonClicked()" />
     </div>
   </tp-page-frame>
 }

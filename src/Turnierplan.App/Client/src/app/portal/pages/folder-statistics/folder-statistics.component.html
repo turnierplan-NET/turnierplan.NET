@@ -1,8 +1,7 @@
 <tp-page-frame
   *tpLoadingState="loadingState"
   [title]="'Portal.FolderStatistics.Title' | translate: { folder: folderName }"
-  [backLink]="'../../organization/' + organizationId"
->
+  [backLink]="'../../organization/' + organizationId">
   @if (statistics && statistics.numberOfTournaments > 0 && statistics.numberOfMatches > 0) {
     <div class="mt-5 d-flex flex-column">
       <div class="text-center text-decoration-underline" translate="Portal.FolderStatistics.ImportantFacts"></div>
@@ -20,8 +19,7 @@
             average: true,
             goalDistributionNotice: true
           }
-        "
-      />
+        " />
       <ng-container *ngTemplateOutlet="statistic; context: { value: statistics.totalPublicPageViews, name: 'TotalPublicPageViews' }" />
 
       @if (statistics.mostSignificantOutcome.scoreA !== 0 || statistics.mostSignificantOutcome.scoreB !== 0) {
@@ -32,28 +30,23 @@
               value: statistics.mostSignificantOutcome.scoreA + ':' + statistics.mostSignificantOutcome.scoreB,
               name: 'MostSignificantOutcome'
             }
-          "
-        />
+          " />
       }
 
       <ng-container
-        *ngTemplateOutlet="statistic; context: { value: statistics.mostGoalsPerMatch, name: 'MostGoalsPerMatch', hideIfZero: true }"
-      />
+        *ngTemplateOutlet="statistic; context: { value: statistics.mostGoalsPerMatch, name: 'MostGoalsPerMatch', hideIfZero: true }" />
       <ng-container
         *ngTemplateOutlet="
           statistic;
           context: { value: statistics.numberOfDecidingMatches, name: 'NumberOfDecidingMatches', hideIfZero: true }
-        "
-      />
+        " />
       <ng-container
         *ngTemplateOutlet="
           statistic;
           context: { value: statistics.numberOfPenaltyShootouts, name: 'NumberOfPenaltyShootouts', hideIfZero: true }
-        "
-      />
+        " />
       <ng-container
-        *ngTemplateOutlet="statistic; context: { value: statistics.numberOfOverTimes, name: 'NumberOfOverTimes', hideIfZero: true }"
-      />
+        *ngTemplateOutlet="statistic; context: { value: statistics.numberOfOverTimes, name: 'NumberOfOverTimes', hideIfZero: true }" />
 
       <div
         class="text-center mt-4 mb-2"
@@ -62,8 +55,7 @@
           done: statistics.numberOfFinishedMatches,
           total: statistics.numberOfMatches,
           percent: statistics.percentageOfFinishedMatches / 100 | percent
-        }"
-      ></div>
+        }"></div>
       <div class="progress mb-3">
         <div class="progress-bar progress-bar-striped bg-success" [ngStyle]="{ width: statistics.percentageOfFinishedMatches + '%' }"></div>
       </div>
@@ -81,8 +73,7 @@
             baseChart
             type="bar"
             [data]="outcomesBarChart"
-            [options]="barChartOptions"
-          ></canvas>
+            [options]="barChartOptions"></canvas>
         </div>
       }
 
@@ -96,8 +87,7 @@
             baseChart
             type="bar"
             [data]="pageViewsBarChart"
-            [options]="barChartOptions"
-          ></canvas>
+            [options]="barChartOptions"></canvas>
         </div>
       }
     </div>
@@ -112,8 +102,7 @@
   let-name="name"
   let-average="average"
   let-hideIfZero="hideIfZero"
-  let-goalDistributionNotice="goalDistributionNotice"
->
+  let-goalDistributionNotice="goalDistributionNotice">
   @if (hideIfZero !== true || value !== 0) {
     <div class="d-flex flex-row align-items-baseline gap-2">
       <div class="w-50 fs-1 fw-bold text-end">
@@ -136,7 +125,6 @@
   @if (goalDistributionExcludedTournaments) {
     <tp-tooltip-icon
       [tooltipText]="'Portal.FolderStatistics.ExcludedTournamentsNotice'"
-      [tooltipTextParams]="{ tournamentNames: goalDistributionExcludedTournaments }"
-    />
+      [tooltipTextParams]="{ tournamentNames: goalDistributionExcludedTournaments }" />
   }
 </ng-template>

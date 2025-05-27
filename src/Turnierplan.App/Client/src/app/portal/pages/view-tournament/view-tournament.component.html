@@ -6,8 +6,7 @@
     [navigationTabs]="pages"
     [rememberNavigationTabKey]="tournament.id"
     [enableBottomPadding]="!isTournamentTreeVisible"
-    (navigationTabSelected)="togglePage($event.id)"
-  >
+    (navigationTabSelected)="togglePage($event.id)">
     <ng-template #buttons>
       @switch (currentPage) {
         @case (0) {
@@ -17,15 +16,13 @@
                 [title]="'Portal.ViewTournament.MatchPlan.ShowMatchList'"
                 [type]="'outline-secondary'"
                 [icon]="'list-columns'"
-                (click)="showTournamentTree = false"
-              />
+                (click)="showTournamentTree = false" />
             } @else {
               <tp-action-button
                 [title]="'Portal.ViewTournament.MatchPlan.ShowMatchTree'"
                 [type]="'outline-secondary'"
                 [icon]="'diagram-2'"
-                (click)="showTournamentTree = true"
-              />
+                (click)="showTournamentTree = true" />
             }
           }
         }
@@ -34,14 +31,12 @@
             [title]="'Portal.ViewTournament.Documents.Copy'"
             [type]="'outline-secondary'"
             [icon]="'copy'"
-            (click)="copyDocument()"
-          />
+            (click)="copyDocument()" />
           <tp-action-button
             [title]="'Portal.ViewTournament.Documents.Create'"
             [type]="'outline-success'"
             [icon]="'plus-circle'"
-            (click)="createDocument()"
-          />
+            (click)="createDocument()" />
         }
         @case (6) {
           @if (isUpdatingName) {
@@ -52,8 +47,7 @@
             [maxLength]="60"
             [current]="tournament.name"
             [disabled]="isUpdatingName"
-            (renamed)="renameTournament($event)"
-          />
+            (renamed)="renameTournament($event)" />
         }
       }
     </ng-template>
@@ -74,13 +68,11 @@
                   id="accumulateScoreCheckbox"
                   type="checkbox"
                   [ngModel]="showAccumulatedScore"
-                  (ngModelChange)="saveAccumulatedScoreSetting($event)"
-                />
+                  (ngModelChange)="saveAccumulatedScoreSetting($event)" />
                 <label
                   class="form-check-label"
                   for="accumulateScoreCheckbox"
-                  translate="Portal.ViewTournament.MatchPlan.AccumulateGoals"
-                ></label>
+                  translate="Portal.ViewTournament.MatchPlan.AccumulateGoals"></label>
               </div>
             </div>
             <div class="card-body p-0">
@@ -88,8 +80,7 @@
                 [showAccumulatedScore]="showAccumulatedScore"
                 [matches]="processedMatches"
                 [groups]="processedGroups"
-                (matchClick)="matchClicked($event)"
-              ></tp-match-plan>
+                (matchClick)="matchClicked($event)"></tp-match-plan>
               @if (processedMatches.length === 0) {
                 <div class="mt-5 mb-3 d-flex flex-row justify-content-center">
                   <tp-action-button
@@ -97,8 +88,7 @@
                     [icon]="'arrow-right-circle'"
                     [mode]="'IconRightAndText'"
                     [title]="'Portal.ViewTournament.MatchPlan.CreateMatchPlan'"
-                    [routerLink]="'configure'"
-                  />
+                    [routerLink]="'configure'" />
                 </div>
               }
             </div>
@@ -121,8 +111,7 @@
                 (teamRename)="renameTeam($event.teamId, $event.name)"
                 (teamSetPriority)="setTeamPriority($event.teamId, $event.groupId, $event.priority)"
                 (teamSetEntryFeePaid)="setTeamEntryFeePaid($event.teamId, $event.entryFeePaid)"
-                (teamSetOutOfCompetition)="setTeamOutOfCompetition($event.teamId, $event.outOfCompetition)"
-              />
+                (teamSetOutOfCompetition)="setTeamOutOfCompetition($event.teamId, $event.outOfCompetition)" />
             </div>
           }
           @case (3) {
@@ -146,8 +135,7 @@
                   [documents]="documents"
                   [recentDocumentId]="recentDocumentId"
                   (deleteClick)="deleteDocument($event)"
-                  (errorOccured)="loadingState = { isLoading: false, error: $event }"
-                />
+                  (errorOccured)="loadingState = { isLoading: false, error: $event }" />
               </div>
             }
           }
@@ -160,8 +148,7 @@
                 <tp-visibility-selector
                   [ngClass]="{ 'pe-none': isUpdatingVisibility }"
                   [visibility]="tournament.visibility"
-                  (visibilityChange)="setTournamentVisibility($event)"
-                />
+                  (visibilityChange)="setTournamentVisibility($event)" />
 
                 @if (isUpdatingVisibility) {
                   <tp-small-spinner />
@@ -179,16 +166,14 @@
                   [resourcePath]="'/tournament?id=' + tournament.id"
                   [resourceName]="'Portal.ViewTournament.Share.QrCodeDownloadFileName' | translate: { tournamentName: tournament.name }"
                   [translationKey]="'Portal.ViewTournament.Share.VisitorLink'"
-                  [viewsCounter]="tournament.publicPageViews"
-                />
+                  [viewsCounter]="tournament.publicPageViews" />
               </div>
               <hr class="m-0" />
               <div class="card-body">
                 <tp-share-widget
                   [resourcePath]="'/tournamentFullscreen?id=' + tournament.id"
                   [translationKey]="'Portal.ViewTournament.Share.FullscreenLink'"
-                  [showQrCode]="false"
-                />
+                  [showQrCode]="false" />
               </div>
               <hr class="m-0" />
               <div class="card-body">
@@ -197,8 +182,7 @@
                   [organizationId]="tournament.organizationId"
                   [organizationName]="tournament.organizationName"
                   [config]="tournament.presentationConfiguration"
-                  (errorOccured)="loadingState = { isLoading: false, error: $event }"
-                />
+                  (errorOccured)="loadingState = { isLoading: false, error: $event }" />
               </div>
             }
           }
@@ -211,23 +195,20 @@
                   [type]="'outline-secondary'"
                   [title]="'Portal.ViewTournament.Settings.EditMatchPlan.ButtonEdit'"
                   [icon]="'gear'"
-                  [routerLink]="'edit-match-plan'"
-                />
+                  [routerLink]="'edit-match-plan'" />
                 <tp-action-button
                   class="ms-2"
                   [type]="'outline-danger'"
                   [title]="'Portal.ViewTournament.Settings.EditMatchPlan.ButtonRecreate'"
                   [icon]="'arrow-clockwise'"
-                  [routerLink]="'configure'"
-                />
+                  [routerLink]="'configure'" />
               } @else {
                 <div class="mb-3" translate="Portal.ConfigureTournament.Subtitle"></div>
                 <tp-action-button
                   [type]="'outline-primary'"
                   [title]="'Portal.ViewTournament.Settings.EditMatchPlan.ButtonCreate'"
                   [icon]="'gear'"
-                  [routerLink]="'configure'"
-                />
+                  [routerLink]="'configure'" />
               }
             </div>
             <hr class="m-0" />
@@ -250,8 +231,7 @@
                 [type]="'outline-secondary'"
                 [title]="'Portal.ViewTournament.Settings.EditVenue.Button'"
                 [icon]="'gear'"
-                (click)="editVenueAssignment()"
-              />
+                (click)="editVenueAssignment()" />
             </div>
             <hr class="m-0" />
             <div class="card-body">
@@ -272,8 +252,7 @@
                 @for (entry of tournament.computationConfiguration.comparisonModes; track entry; let isLast = $last) {
                   <span
                     class="fw-bold"
-                    [translate]="'Portal.ViewTournament.Settings.EditComputationConfig.Properties.ComparisonModes.Values.' + entry"
-                  ></span>
+                    [translate]="'Portal.ViewTournament.Settings.EditComputationConfig.Properties.ComparisonModes.Values.' + entry"></span>
                   @if (!isLast) {
                     <span>,&nbsp;</span>
                   }
@@ -283,8 +262,7 @@
                 [type]="'outline-secondary'"
                 [title]="'Portal.ViewTournament.Settings.EditComputationConfig.Button'"
                 [icon]="'gear'"
-                (click)="editComputationConfiguration()"
-              />
+                (click)="editComputationConfiguration()" />
             </div>
             <hr class="m-0" />
             <div class="card-body">
@@ -300,8 +278,7 @@
                     [imageType]="ImageType.SquareLargeLogo"
                     [organizationId]="tournament.organizationId"
                     (imageChange)="setImage('organizerLogo', $event)"
-                    (apiError)="loadingState = { isLoading: false, error: $event }"
-                  />
+                    (apiError)="loadingState = { isLoading: false, error: $event }" />
                   <tp-image-widget
                     class="flex-md-grow-1"
                     [currentImage]="images.sponsorLogo"
@@ -309,8 +286,7 @@
                     [imageType]="ImageType.SquareLargeLogo"
                     [organizationId]="tournament.organizationId"
                     (imageChange)="setImage('sponsorLogo', $event)"
-                    (apiError)="loadingState = { isLoading: false, error: $event }"
-                  />
+                    (apiError)="loadingState = { isLoading: false, error: $event }" />
                   <tp-image-widget
                     class="flex-md-grow-1"
                     [currentImage]="images.sponsorBanner"
@@ -318,8 +294,7 @@
                     [imageType]="ImageType.SponsorBanner"
                     [organizationId]="tournament.organizationId"
                     (imageChange)="setImage('sponsorBanner', $event)"
-                    (apiError)="loadingState = { isLoading: false, error: $event }"
-                  />
+                    (apiError)="loadingState = { isLoading: false, error: $event }" />
                 </div>
               }
             </div>
@@ -338,16 +313,14 @@
                 [type]="'outline-secondary'"
                 [title]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.Button'"
                 [icon]="'box-arrow-right'"
-                (click)="moveToAnotherFolder()"
-              />
+                (click)="moveToAnotherFolder()" />
             </div>
             <hr class="m-0" />
             <div class="card-body">
               <tp-delete-widget
                 [translationKey]="'Portal.ViewTournament.DeleteWidget'"
                 [targetObjectName]="tournament.name"
-                (deleteClick)="deleteTournament()"
-              />
+                (deleteClick)="deleteTournament()" />
             </div>
           }
         }

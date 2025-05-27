@@ -32,7 +32,7 @@
           }
           <td class="text-center align-middle">
             @if (match.kickoff) {
-              {{ match.kickoff | translateDate: (showKickoffWithSeconds ? "mediumTime" : "shortTime") }}
+              {{ match.kickoff | translateDate: (showKickoffWithSeconds ? 'mediumTime' : 'shortTime') }}
             }
           </td>
           <td class="align-middle">
@@ -51,8 +51,8 @@
             @if (match.showLoadingIndicator) {
               <tp-small-spinner />
             } @else {
-              <span>{{ match.scoreA ?? "" }}:{{ match.scoreB ?? "" }}</span>
-              @if (match.outcomeType !== undefined && match.outcomeType !== "Standard") {
+              <span>{{ match.scoreA ?? '' }}:{{ match.scoreB ?? '' }}</span>
+              @if (match.outcomeType !== undefined && match.outcomeType !== 'Standard') {
                 <span class="ms-1" [translate]="'General.MatchOutcomeType.' + match.outcomeType"></span>
               }
               @if (match.isLive) {
@@ -62,7 +62,7 @@
           </td>
           @if (showAccumulatedScore) {
             <td class="text-center align-middle">
-              {{ match.scoreAccumulated ?? "" }}
+              {{ match.scoreAccumulated ?? '' }}
             </td>
           }
         </tr>
