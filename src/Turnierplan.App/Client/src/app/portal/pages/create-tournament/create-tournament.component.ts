@@ -11,6 +11,7 @@ import { TitleService } from '../../services/title.service';
 type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 
 @Component({
+  standalone: false,
   templateUrl: './create-tournament.component.html'
 })
 export class CreateTournamentComponent implements OnDestroy {

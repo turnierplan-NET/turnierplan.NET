@@ -8,6 +8,7 @@ import { RoleIds } from '../../helpers/role-ids';
 import { TitleService } from '../../services/title.service';
 
 @Component({
+  standalone: false,
   templateUrl: './landing-page.component.html'
 })
 export class LandingPageComponent implements OnInit {

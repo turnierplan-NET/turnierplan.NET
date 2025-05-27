@@ -24,6 +24,7 @@ export abstract class DocumentConfigComponent<T> {
 export const CURRENT_CONFIGURATION = new InjectionToken<string>('CURRENT_CONFIGURATION');
 
 @Component({
+  standalone: false,
   templateUrl: './document-config-frame.component.html'
 })
 export class DocumentConfigFrameComponent implements AfterViewInit {

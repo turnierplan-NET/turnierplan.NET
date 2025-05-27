@@ -7,6 +7,7 @@ import { NotificationService } from '../../../core/services/notification.service
 import { TournamentSelectComponent } from '../tournament-select/tournament-select.component';
 
 @Component({
+  standalone: false,
   selector: 'tp-presentation-config-widget',
   templateUrl: './presentation-config-widget.component.html'
 })

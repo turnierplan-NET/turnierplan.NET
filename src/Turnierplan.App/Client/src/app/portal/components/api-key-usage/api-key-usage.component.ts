@@ -7,6 +7,7 @@ import { BehaviorSubject, combineLatestWith, delay, distinctUntilChanged, map, S
 import { ApiKeysService } from '../../../api';
 
 @Component({
+  standalone: false,
   selector: 'tp-api-key-usage',
   templateUrl: './api-key-usage.component.html'
 })

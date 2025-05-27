@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { NullableOfPublicId, VenueDto, VenuesService } from '../../../api';
 
 @Component({
+  standalone: false,
   templateUrl: './venue-select.component.html'
 })
 export class VenueSelectComponent {

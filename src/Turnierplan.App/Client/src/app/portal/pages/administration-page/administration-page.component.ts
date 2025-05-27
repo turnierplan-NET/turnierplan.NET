@@ -12,6 +12,7 @@ import { RoleIds } from '../../helpers/role-ids';
 import { TitleService } from '../../services/title.service';
 
 @Component({
+  standalone: false,
   templateUrl: './administration-page.component.html'
 })
 export class AdministrationPageComponent implements OnInit {

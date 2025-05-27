@@ -6,6 +6,7 @@ import { LoadingState } from '../../directives/loading-state/loading-state.direc
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
 
 @Component({
+  standalone: false,
   templateUrl: './tournament-select.component.html',
   styleUrl: './tournament-select.component.scss'
 })

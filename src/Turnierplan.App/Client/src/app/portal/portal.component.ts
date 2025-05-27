@@ -10,6 +10,7 @@ import { RoleIds } from './helpers/role-ids';
 type UserInfoAction = 'EditUserInfo' | 'ChangePassword' | 'Logout';
 
 @Component({
+  standalone: false,
   templateUrl: './portal.component.html',
   styleUrls: ['./portal.component.scss']
 })

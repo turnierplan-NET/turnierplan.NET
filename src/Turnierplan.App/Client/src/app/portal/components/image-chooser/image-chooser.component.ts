@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ImageDto2, ImageType, ImagesService } from '../../../api';
 
 @Component({
+  standalone: false,
   templateUrl: './image-chooser.component.html',
   styleUrls: ['./image-chooser.component.scss']
 })

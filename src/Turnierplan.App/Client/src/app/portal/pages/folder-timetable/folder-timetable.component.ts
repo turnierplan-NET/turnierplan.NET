@@ -33,6 +33,7 @@ type TimetableViewDayRowEntry = {
 };
 
 @Component({
+  standalone: false,
   templateUrl: './folder-timetable.component.html',
   styleUrl: './folder-timetable.component.scss'
 })

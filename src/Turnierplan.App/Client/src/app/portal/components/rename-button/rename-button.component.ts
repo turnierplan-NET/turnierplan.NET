@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RenameDialogComponent } from '../rename-dialog/rename-dialog.component';
 
 @Component({
+  standalone: false,
   selector: 'tp-rename-button',
   templateUrl: './rename-button.component.html'
 })

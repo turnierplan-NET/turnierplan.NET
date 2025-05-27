@@ -40,6 +40,7 @@ interface MatchViewGrouping {
 }
 
 @Component({
+  standalone: false,
   selector: 'tp-match-plan',
   templateUrl: './match-plan.component.html',
   styleUrls: ['./match-plan.component.scss']

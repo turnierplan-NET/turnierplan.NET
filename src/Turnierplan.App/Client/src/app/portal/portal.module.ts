@@ -4,8 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { NgbPopover, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { QRCodeModule } from 'angularx-qrcode';
-import { NgChartsModule } from 'ng2-charts';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { DndDraggableDirective, DndDropzoneDirective, DndHandleDirective, DndPlaceholderRefDirective } from 'ngx-drag-drop';
 
@@ -80,6 +78,8 @@ import { TranslateDatePipe } from './pipes/translate-date.pipe';
 import { PortalComponent } from './portal.component';
 import { LocalStorageService } from './services/local-storage.service';
 import { TitleService } from './services/title.service';
+import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { QRCodeComponent } from 'angularx-qrcode';
 
 const routes: Routes = [
   {
@@ -235,12 +235,11 @@ const routes: Routes = [
     DndPlaceholderRefDirective,
     PdfJsViewerModule,
     NgbTooltip,
-    QRCodeModule,
     TranslateModule,
     DndHandleDirective,
-    NgChartsModule
+    BaseChartDirective,
+    QRCodeComponent
   ],
-  exports: [ActionButtonComponent, LoadingIndicatorComponent],
-  providers: [LocalStorageService, TitleService]
+  providers: [LocalStorageService, TitleService, provideCharts(withDefaultRegisterables())]
 })
 export class PortalModule {}

@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 
 @Component({
+  standalone: false,
   templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit, OnDestroy {

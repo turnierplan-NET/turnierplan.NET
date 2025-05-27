@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
+  standalone: false,
   templateUrl: './loading-error.component.html',
   styleUrls: ['./loading-error.component.scss']
 })

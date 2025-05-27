@@ -8,6 +8,7 @@ import { LoadingState } from '../../directives/loading-state/loading-state.direc
 import { TitleService } from '../../services/title.service';
 
 @Component({
+  standalone: false,
   templateUrl: './create-user.component.html'
 })
 export class CreateUserComponent implements OnInit {

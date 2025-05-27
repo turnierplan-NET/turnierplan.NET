@@ -13,6 +13,7 @@ type DocumentTypeEntry = {
 };
 
 @Component({
+  standalone: false,
   templateUrl: './document-select.component.html',
   styleUrl: './document-select.component.scss'
 })

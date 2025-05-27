@@ -13,6 +13,7 @@ import { LoadingState } from '../../directives/loading-state/loading-state.direc
 import { TitleService } from '../../services/title.service';
 
 @Component({
+  standalone: false,
   templateUrl: './view-venue.component.html'
 })
 export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDetector {

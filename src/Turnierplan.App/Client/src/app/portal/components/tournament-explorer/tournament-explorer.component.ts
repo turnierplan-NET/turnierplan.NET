@@ -5,6 +5,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
 
 @Component({
+  standalone: false,
   selector: 'tp-tournament-explorer',
   templateUrl: './tournament-explorer.component.html'
 })

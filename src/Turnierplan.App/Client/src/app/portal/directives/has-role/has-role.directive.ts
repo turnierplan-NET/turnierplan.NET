@@ -4,6 +4,7 @@ import { ReplaySubject, Subject, switchMap, takeUntil } from 'rxjs';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 
 @Directive({
+  standalone: false,
   selector: '[tpHasRole]'
 })
 export class HasRoleDirective implements OnInit, OnDestroy {

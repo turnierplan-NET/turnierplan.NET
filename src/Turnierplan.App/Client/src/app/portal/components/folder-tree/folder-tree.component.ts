@@ -12,6 +12,7 @@ export type FolderTreeEntry = {
 };
 
 @Component({
+  standalone: false,
   selector: 'tp-folder-tree',
   templateUrl: './folder-tree.component.html'
 })

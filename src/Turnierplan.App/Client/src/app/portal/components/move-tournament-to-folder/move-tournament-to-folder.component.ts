@@ -8,6 +8,7 @@ import { FolderDto, SetTournamentFolderEndpointRequest, FoldersService, Nullable
 type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 
 @Component({
+  standalone: false,
   templateUrl: './move-tournament-to-folder.component.html'
 })
 export class MoveTournamentToFolderComponent {

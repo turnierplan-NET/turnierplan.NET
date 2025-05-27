@@ -6,6 +6,7 @@ import { ReceiptsDocumentConfiguration } from '../../../api';
 import { CURRENT_CONFIGURATION, DocumentConfigComponent } from '../document-config-frame/document-config-frame.component';
 
 @Component({
+  standalone: false,
   templateUrl: './document-config-receipts.component.html'
 })
 export class DocumentConfigReceiptsComponent extends DocumentConfigComponent<ReceiptsDocumentConfiguration> implements OnDestroy {

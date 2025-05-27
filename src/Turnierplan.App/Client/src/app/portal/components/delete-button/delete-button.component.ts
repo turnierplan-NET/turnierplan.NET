@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'tp-delete-button',
   templateUrl: './delete-button.component.html'
 })

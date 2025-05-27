@@ -12,6 +12,7 @@ export interface TeamView {
 }
 
 @Component({
+  standalone: false,
   selector: 'tp-team-list',
   templateUrl: './team-list.component.html'
 })

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+  standalone: false,
   templateUrl: './text-area-dialog.component.html'
 })
 export class TextAreaDialogComponent {

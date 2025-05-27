@@ -9,6 +9,7 @@ import { LoadingState } from '../../directives/loading-state/loading-state.direc
 import { TitleService } from '../../services/title.service';
 
 @Component({
+  standalone: false,
   templateUrl: './folder-statistics.component.html'
 })
 export class FolderStatisticsComponent implements OnInit, OnDestroy {

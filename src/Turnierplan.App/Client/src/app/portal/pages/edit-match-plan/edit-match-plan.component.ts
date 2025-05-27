@@ -27,6 +27,7 @@ type ExtendedMatchEntry = SetTournamentMatchPlanEndpointRequestEntry & {
 };
 
 @Component({
+  standalone: false,
   templateUrl: './edit-match-plan.component.html'
 })
 export class EditMatchPlanComponent implements OnInit, OnDestroy, DiscardChangesDetector {

@@ -9,6 +9,7 @@ export interface PageFrameNavigationTab {
 }
 
 @Component({
+  standalone: false,
   selector: 'tp-page-frame',
   templateUrl: './page-frame.component.html',
   styleUrls: ['./page-frame.component.scss']

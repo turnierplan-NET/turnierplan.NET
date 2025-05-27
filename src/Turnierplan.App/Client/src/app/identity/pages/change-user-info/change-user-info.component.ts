@@ -6,6 +6,7 @@ import { AuthenticationService } from '../../../core/services/authentication.ser
 import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
+  standalone: false,
   templateUrl: './change-user-info.component.html'
 })
 export class ChangeUserInfoComponent implements OnInit, OnDestroy {

@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+  standalone: false,
   templateUrl: './text-list-dialog.component.html'
 })
 export class TextListDialogComponent {

@@ -5,6 +5,7 @@ import { ImageDto, ImageType } from '../../../api';
 import { ImageChooserComponent } from '../image-chooser/image-chooser.component';
 
 @Component({
+  standalone: false,
   selector: 'tp-image-widget',
   templateUrl: './image-widget.component.html'
 })
