@@ -18,5 +18,4 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\i18n\*.json" />
   </ItemGroup>
-
 </Project>
