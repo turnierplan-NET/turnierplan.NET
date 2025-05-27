@@ -28,13 +28,11 @@ jobs:
         id: 'setup-chrome'
       - name: 'Set CHROME_BIN environment variable'
         run: 'echo "CHROME_BIN=${{ steps.setup-chrome.outputs.chrome-path }}" >> $env:GITHUB_ENV'
-      - name: 'Test'
-        run: 'echo ${{env.RUN_SONARQUBE_ANALYSIS}}'
       - name: Install SonarQube Cloud scanner
-        if: ${{ env.RUN_SONARQUBE_ANALYSIS }}
+        if: ${{ env.RUN_SONARQUBE_ANALYSIS == 'true' }}
         run: 'dotnet tool install --global dotnet-sonarscanner'
       - name: Begin SonarQube Cloud analysis
-        if: ${{ env.RUN_SONARQUBE_ANALYSIS }}
+        if: ${{ env.RUN_SONARQUBE_ANALYSIS == 'true' }}
         run: 'dotnet-sonarscanner begin /k:"turnierplan-NET_turnierplan.NET" /o:"turnierplan-net" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml" /d:sonar.javascript.lcov.reportPaths="**/lcov.info" /d:sonar.coverage.exclusions="**/*.spec.ts" /d:sonar.exclusions="Turnierplan.Dal/Migrations/*"'
         working-directory: './src'
       - name: 'Restore .NET solution'
@@ -61,6 +59,6 @@ jobs:
         run: 'npm run test:ci'
         working-directory: './src/Turnierplan.App/Client/'
       - name: End SonarQube Cloud analysis
-        if: ${{ env.RUN_SONARQUBE_ANALYSIS }}
+        if: ${{ env.RUN_SONARQUBE_ANALYSIS == 'true' }}
         run: 'dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"'
         working-directory: './src'
