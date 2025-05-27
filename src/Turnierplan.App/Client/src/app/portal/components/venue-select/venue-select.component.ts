@@ -16,7 +16,10 @@ export class VenueSelectComponent {
   protected currentVenueId: string = '';
   protected venues: VenueDto[] = [];
 
-  constructor(protected readonly modal: NgbActiveModal, private readonly venueService: VenuesService) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly venueService: VenuesService
+  ) {}
 
   public initialize(organizationId: string, currentVenueId?: NullableOfPublicId): void {
     this.venueService.getVenues({ organizationId: organizationId }).subscribe({

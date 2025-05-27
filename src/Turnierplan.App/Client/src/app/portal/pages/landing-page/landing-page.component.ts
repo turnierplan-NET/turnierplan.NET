@@ -24,7 +24,10 @@ export class LandingPageComponent implements OnInit {
     }
   ];
 
-  constructor(private readonly organizationService: OrganizationsService, private readonly titleService: TitleService) {}
+  constructor(
+    private readonly organizationService: OrganizationsService,
+    private readonly titleService: TitleService
+  ) {}
 
   public ngOnInit(): void {
     this.titleService.setTitleTranslated('Portal.LandingPage.Title');

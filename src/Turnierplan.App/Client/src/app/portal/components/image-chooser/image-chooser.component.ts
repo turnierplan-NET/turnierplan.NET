@@ -25,7 +25,10 @@ export class ImageChooserComponent {
 
   protected imageForDetailView?: ImageDto2;
 
-  constructor(protected readonly modal: NgbActiveModal, private readonly imageService: ImagesService) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly imageService: ImagesService
+  ) {}
 
   protected get isInImageDetailView(): boolean {
     return this.imageForDetailView !== undefined;

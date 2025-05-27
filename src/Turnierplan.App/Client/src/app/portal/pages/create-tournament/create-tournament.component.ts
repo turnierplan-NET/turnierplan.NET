@@ -124,8 +124,8 @@ export class CreateTournamentComponent implements OnDestroy {
           body: {
             organizationId: this.organization.id,
             name: this.tournamentName.value,
-            folderId: this.folderMode === 'ExistingFolder' ? this.existingFolderId.value ?? undefined : undefined,
-            folderName: this.folderMode === 'NewFolder' ? this.newFolderName.value ?? undefined : undefined,
+            folderId: this.folderMode === 'ExistingFolder' ? (this.existingFolderId.value ?? undefined) : undefined,
+            folderName: this.folderMode === 'NewFolder' ? (this.newFolderName.value ?? undefined) : undefined,
             visibility: this.visibility
           }
         })

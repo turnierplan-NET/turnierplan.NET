@@ -16,7 +16,10 @@ export class DocumentConfigReceiptsComponent extends DocumentConfigComponent<Rec
 
   protected amountKeys: string[] = ['1'];
 
-  constructor(private readonly formBuilder: FormBuilder, @Inject(CURRENT_CONFIGURATION) config: ReceiptsDocumentConfiguration) {
+  constructor(
+    private readonly formBuilder: FormBuilder,
+    @Inject(CURRENT_CONFIGURATION) config: ReceiptsDocumentConfiguration
+  ) {
     super();
 
     if (!config.amounts) {

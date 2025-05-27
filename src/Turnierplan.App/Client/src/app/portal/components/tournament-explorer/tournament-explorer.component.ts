@@ -23,7 +23,10 @@ export class TournamentExplorerComponent implements OnChanges {
   protected treeData: FolderTreeEntry[] = [];
   protected isUpdatingFolderName: boolean = false;
 
-  constructor(private readonly folderService: FoldersService, private readonly localStorageService: LocalStorageService) {}
+  constructor(
+    private readonly folderService: FoldersService,
+    private readonly localStorageService: LocalStorageService
+  ) {}
 
   public ngOnChanges(): void {
     this.treeData = FolderTreeComponent.generateTree(this.organization.name, this.tournaments);

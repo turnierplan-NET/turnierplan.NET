@@ -21,7 +21,10 @@ export class PortalComponent implements OnInit, OnDestroy {
 
   private readonly destroyed$ = new Subject<void>();
 
-  constructor(private readonly authenticationService: AuthenticationService, @Inject(DOCUMENT) private readonly document: Document) {}
+  constructor(
+    private readonly authenticationService: AuthenticationService,
+    @Inject(DOCUMENT) private readonly document: Document
+  ) {}
 
   public ngOnInit(): void {
     this.authenticationService.authentication$.pipe(takeUntil(this.destroyed$)).subscribe((user) => {

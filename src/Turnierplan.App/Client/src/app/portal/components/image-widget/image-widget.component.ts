@@ -27,7 +27,10 @@ export class ImageWidgetComponent {
   @Output()
   public apiError = new EventEmitter<unknown>();
 
-  constructor(private readonly modalService: NgbModal, private readonly injector: Injector) {}
+  constructor(
+    private readonly modalService: NgbModal,
+    private readonly injector: Injector
+  ) {}
 
   protected openSelectionDialog(): void {
     const ref = this.modalService.open(ImageChooserComponent, {

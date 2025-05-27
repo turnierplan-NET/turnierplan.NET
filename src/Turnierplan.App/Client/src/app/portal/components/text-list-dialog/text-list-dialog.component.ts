@@ -14,7 +14,10 @@ export class TextListDialogComponent {
 
   protected formArray!: FormArray;
 
-  constructor(protected readonly modal: NgbActiveModal, private readonly formBuilder: FormBuilder) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly formBuilder: FormBuilder
+  ) {}
 
   public init(translationKey: string, maxItemCount: number, maxItemLength: number, initialValue: string[]): void {
     if (this.isInitialized) {

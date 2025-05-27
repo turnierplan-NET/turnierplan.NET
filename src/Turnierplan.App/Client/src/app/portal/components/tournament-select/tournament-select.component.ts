@@ -17,7 +17,10 @@ export class TournamentSelectComponent implements OnInit {
   private organizationId!: string;
   private organizationName!: string;
 
-  constructor(protected readonly modal: NgbActiveModal, private readonly tournamentService: TournamentsService) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly tournamentService: TournamentsService
+  ) {}
 
   public set organization(value: { name: string; id: string }) {
     this.organizationId = value.id;
