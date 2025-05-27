@@ -21,9 +21,9 @@
   @if (isLoading) {
     <tp-small-spinner />
   }
-  <button class="btn btn-primary" [ngClass]="{ 'disabled': isLoading }" translate="Identity.Login.Submit" (click)="attemptLogin()"></button>
+  <button class="btn btn-primary" [ngClass]="{ disabled: isLoading }" translate="Identity.Login.Submit" (click)="attemptLogin()"></button>
 </div>
 
-@if(!isLoading && loginFailed) {
+@if (!isLoading && loginFailed) {
   <div class="mt-3 text-danger" translate="Identity.Login.LoginFailed"></div>
 }

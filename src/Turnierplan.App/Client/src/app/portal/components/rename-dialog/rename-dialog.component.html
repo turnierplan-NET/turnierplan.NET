@@ -6,10 +6,20 @@
   <div class="modal-body d-flex flex-column">
     <div class="form-group">
       <label class="form-label" for="name" [translate]="translationKey + '.EnterNewName'"></label>
-      <input class="form-control" type="text" id="name" [(ngModel)]="currentValue" [ngClass]="{ 'is-invalid': showError }" (keyup.enter)="save(true)" (change)="wasChanged = true" />
+      <input
+        class="form-control"
+        type="text"
+        id="name"
+        [(ngModel)]="currentValue"
+        [ngClass]="{ 'is-invalid': showError }"
+        (keyup.enter)="save(true)"
+        (change)="wasChanged = true" />
 
-      @if (showError === "MaxLengthFeedback") {
-        <div class="invalid-feedback" [translate]="translationKey + '.MaxLengthFeedback'" [translateParams]="{ maxLength: maxLength }"></div>
+      @if (showError === 'MaxLengthFeedback') {
+        <div
+          class="invalid-feedback"
+          [translate]="translationKey + '.MaxLengthFeedback'"
+          [translateParams]="{ maxLength: maxLength }"></div>
       } @else if (showError) {
         <div class="invalid-feedback" [translate]="translationKey + '.' + showError"></div>
       }

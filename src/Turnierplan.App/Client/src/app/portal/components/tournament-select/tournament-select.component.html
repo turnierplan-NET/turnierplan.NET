@@ -14,7 +14,9 @@
       <div class="w-lg-50 pe-2 d-flex flex-column">
         @if (selectedNode) {
           @for (entry of selectedNode.tournaments; track entry.id) {
-            <div class="invisible-button overflow-hidden text-nowrap tp-cursor-pointer d-flex flex-row align-items-center gap-2 px-2 py-1" (click)="modal.close(entry.id)">
+            <div
+              class="invisible-button overflow-hidden text-nowrap tp-cursor-pointer d-flex flex-row align-items-center gap-2 px-2 py-1"
+              (click)="modal.close(entry.id)">
               <i class="bi bi-trophy"></i>
               <span>{{ entry.name }}</span>
             </div>

@@ -1,5 +1,21 @@
 <div class="d-flex flex-row align-items-center gap-1">
-  <input class="form-control form-control-sm" style="width: 6em;" type="number" min="0" max="1439" step="1" [(ngModel)]="minutes" (ngModelChange)="valueChanged()" />
+  <input
+    class="form-control form-control-sm"
+    style="width: 6em"
+    type="number"
+    min="0"
+    max="1439"
+    step="1"
+    [(ngModel)]="minutes"
+    (ngModelChange)="valueChanged()" />
   <span>:</span>
-  <input class="form-control form-control-sm" style="width: 6em;" type="number" min="0" max="60" step="1" [(ngModel)]="seconds" (ngModelChange)="valueChanged()" />
+  <input
+    class="form-control form-control-sm"
+    style="width: 6em"
+    type="number"
+    min="0"
+    max="60"
+    step="1"
+    [(ngModel)]="seconds"
+    (ngModelChange)="valueChanged()" />
 </div>

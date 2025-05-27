@@ -13,23 +13,26 @@
             @if (isUpdatingFolderName) {
               <tp-small-spinner class="ms-2" />
             } @else {
-              <tp-rename-button translationKey="Portal.ViewOrganization.TournamentExplorer.RenameFolder"
-                                [displayLabel]="false"
-                                [allowReset]="false"
-                                [maxLength]="60"
-                                [current]="currentEntry.label"
-                                (renamed)="renameFolder(currentEntry.folderId, $event)" />
+              <tp-rename-button
+                translationKey="Portal.ViewOrganization.TournamentExplorer.RenameFolder"
+                [displayLabel]="false"
+                [allowReset]="false"
+                [maxLength]="60"
+                [current]="currentEntry.label"
+                (renamed)="renameFolder(currentEntry.folderId, $event)" />
             }
 
             <span class="flex-grow-1"></span>
-            <tp-action-button icon="calendar-range"
-                              type="outline-dark"
-                              [title]="'Portal.ViewOrganization.TournamentExplorer.Timetable'"
-                              [routerLink]="'../../timetable/' + currentEntry.folderId"/>
-            <tp-action-button icon="calculator"
-                              type="outline-dark"
-                              [title]="'Portal.ViewOrganization.TournamentExplorer.Statistics'"
-                              [routerLink]="'../../statistics/' + currentEntry.folderId"/>
+            <tp-action-button
+              icon="calendar-range"
+              type="outline-dark"
+              [title]="'Portal.ViewOrganization.TournamentExplorer.Timetable'"
+              [routerLink]="'../../timetable/' + currentEntry.folderId" />
+            <tp-action-button
+              icon="calculator"
+              type="outline-dark"
+              [title]="'Portal.ViewOrganization.TournamentExplorer.Statistics'"
+              [routerLink]="'../../statistics/' + currentEntry.folderId" />
           </div>
         }
 
@@ -42,10 +45,18 @@
               <div class="card-footer d-flex">
                 @switch (tournament.visibility) {
                   @case ('Private') {
-                    <tp-tooltip-icon [icon]="'lock'" [iconClass]="'text-danger'" [margin]="false" [tooltipText]="'Portal.ViewOrganization.TournamentExplorer.Tile.Visibility.Private'" />
+                    <tp-tooltip-icon
+                      [icon]="'lock'"
+                      [iconClass]="'text-danger'"
+                      [margin]="false"
+                      [tooltipText]="'Portal.ViewOrganization.TournamentExplorer.Tile.Visibility.Private'" />
                   }
                   @case ('Public') {
-                    <tp-tooltip-icon [icon]="'globe-europe-africa'" [iconClass]="'text-success'" [margin]="false" [tooltipText]="'Portal.ViewOrganization.TournamentExplorer.Tile.Visibility.Public'" />
+                    <tp-tooltip-icon
+                      [icon]="'globe-europe-africa'"
+                      [iconClass]="'text-success'"
+                      [margin]="false"
+                      [tooltipText]="'Portal.ViewOrganization.TournamentExplorer.Tile.Visibility.Public'" />
                   }
                 }
                 <div class="flex-grow-1"></div>

@@ -3,41 +3,70 @@
     <div class="fw-bold mb-3" translate="Portal.ViewTournament.Share.Settings"></div>
     <div translate="Portal.ViewTournament.Share.SettingsInfo"></div>
   </div>
-  <tp-action-button [title]="'Portal.ViewTournament.Share.PresentationConfig.CopyFromOtherTournament'"
-                    [type]="'outline-secondary'"
-                    [icon]="'copy'"
-                    (click)="copyFromOtherTournament()" />
+  <tp-action-button
+    [title]="'Portal.ViewTournament.Share.PresentationConfig.CopyFromOtherTournament'"
+    [type]="'outline-secondary'"
+    [icon]="'copy'"
+    (click)="copyFromOtherTournament()" />
 </div>
 
 <div class="row">
   <div class="col-12 col-md-6 d-flex flex-column gap-3">
     <div class="form-group">
       <label class="form-label" for="headerLine1" translate="Portal.ViewTournament.Share.PresentationConfig.Header1"></label>
-      <select class="form-select" id="headerLine1" style="max-width: 400px;" [ngModel]="header1Content" (ngModelChange)="header1Content = $event; onChanged();">
-        <option [value]="HeaderLineContent.TournamentName" translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.TournamentName"></option>
-        <option [value]="HeaderLineContent.OrganizerName" translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.OrganizerName"></option>
-        <option [value]="HeaderLineContent.CustomValue" translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.CustomValue"></option>
+      <select
+        class="form-select"
+        id="headerLine1"
+        style="max-width: 400px"
+        [ngModel]="header1Content"
+        (ngModelChange)="header1Content = $event; onChanged()">
+        <option
+          [value]="HeaderLineContent.TournamentName"
+          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.TournamentName"></option>
+        <option
+          [value]="HeaderLineContent.OrganizerName"
+          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.OrganizerName"></option>
+        <option
+          [value]="HeaderLineContent.CustomValue"
+          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.CustomValue"></option>
       </select>
       @if (header1Content === HeaderLineContent.CustomValue) {
-        <input class="mt-2 form-control" style="max-width: 400px;"
-               [ngModel]="header1CustomContent" (ngModelChange)="header1CustomContent = $event; onChanged();"
-               [placeholder]="'Portal.ViewTournament.Share.PresentationConfig.HeaderCustomValuePlaceholder' | translate"
-               [ngClass]="{ 'is-invalid': saveAttempted && isHeader2CustomContentInvalid }"/>
+        <input
+          class="mt-2 form-control"
+          style="max-width: 400px"
+          [ngModel]="header1CustomContent"
+          (ngModelChange)="header1CustomContent = $event; onChanged()"
+          [placeholder]="'Portal.ViewTournament.Share.PresentationConfig.HeaderCustomValuePlaceholder' | translate"
+          [ngClass]="{ 'is-invalid': saveAttempted && isHeader2CustomContentInvalid }" />
         <div class="invalid-feedback" translate="Portal.ViewTournament.Share.PresentationConfig.HeaderCustomValueInvalid"></div>
       }
     </div>
     <div class="form-group">
       <label class="form-label" for="headerLine2" translate="Portal.ViewTournament.Share.PresentationConfig.Header2"></label>
-      <select class="form-select" id="headerLine2" style="max-width: 400px;" [ngModel]="header2Content" (ngModelChange)="header2Content = $event; onChanged();">
-        <option [value]="HeaderLineContent.TournamentName" translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.TournamentName"></option>
-        <option [value]="HeaderLineContent.OrganizerName" translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.OrganizerName"></option>
-        <option [value]="HeaderLineContent.CustomValue" translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.CustomValue"></option>
+      <select
+        class="form-select"
+        id="headerLine2"
+        style="max-width: 400px"
+        [ngModel]="header2Content"
+        (ngModelChange)="header2Content = $event; onChanged()">
+        <option
+          [value]="HeaderLineContent.TournamentName"
+          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.TournamentName"></option>
+        <option
+          [value]="HeaderLineContent.OrganizerName"
+          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.OrganizerName"></option>
+        <option
+          [value]="HeaderLineContent.CustomValue"
+          translate="Portal.ViewTournament.Share.PresentationConfig.HeaderLineContent.CustomValue"></option>
       </select>
       @if (header2Content === HeaderLineContent.CustomValue) {
-        <input class="mt-2 form-control" style="max-width: 400px;"
-               [ngModel]="header2CustomContent" (ngModelChange)="header2CustomContent = $event; onChanged();"
-               [placeholder]="'Portal.ViewTournament.Share.PresentationConfig.HeaderCustomValuePlaceholder' | translate"
-               [ngClass]="{ 'is-invalid': saveAttempted && isHeader2CustomContentInvalid }"/>
+        <input
+          class="mt-2 form-control"
+          style="max-width: 400px"
+          [ngModel]="header2CustomContent"
+          (ngModelChange)="header2CustomContent = $event; onChanged()"
+          [placeholder]="'Portal.ViewTournament.Share.PresentationConfig.HeaderCustomValuePlaceholder' | translate"
+          [ngClass]="{ 'is-invalid': saveAttempted && isHeader2CustomContentInvalid }" />
         <div class="invalid-feedback" translate="Portal.ViewTournament.Share.PresentationConfig.HeaderCustomValueInvalid"></div>
       }
     </div>
@@ -45,21 +74,46 @@
   <div class="col-12 col-md-6 pt-3 pt-md-0 d-flex flex-column gap-3">
     <div class="form-group">
       <label class="form-label" for="showResults" translate="Portal.ViewTournament.Share.PresentationConfig.ShowResults"></label>
-      <select class="form-select" id="showResults" style="max-width: 400px;" [ngModel]="showResults" (ngModelChange)="showResults = $event; onChanged();">
+      <select
+        class="form-select"
+        id="showResults"
+        style="max-width: 400px"
+        [ngModel]="showResults"
+        (ngModelChange)="showResults = $event; onChanged()">
         <option [value]="ResultsMode.Default" translate="Portal.ViewTournament.Share.PresentationConfig.ResultsMode.Default"></option>
-        <option [value]="ResultsMode.OnlyMatchOutcomes" translate="Portal.ViewTournament.Share.PresentationConfig.ResultsMode.OnlyMatchOutcomes"></option>
+        <option
+          [value]="ResultsMode.OnlyMatchOutcomes"
+          translate="Portal.ViewTournament.Share.PresentationConfig.ResultsMode.OnlyMatchOutcomes"></option>
         <option [value]="ResultsMode.NoResults" translate="Portal.ViewTournament.Share.PresentationConfig.ResultsMode.NoResults"></option>
       </select>
     </div>
 
     <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" role="switch" id="showOrganizerLogo" [ngModel]="showOrganizerLogo" (ngModelChange)="showOrganizerLogo = $event; onChanged()" />
-      <label class="form-check-label" for="showOrganizerLogo" translate="Portal.ViewTournament.Share.PresentationConfig.ShowOrganizerLogo"></label>
+      <input
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        id="showOrganizerLogo"
+        [ngModel]="showOrganizerLogo"
+        (ngModelChange)="showOrganizerLogo = $event; onChanged()" />
+      <label
+        class="form-check-label"
+        for="showOrganizerLogo"
+        translate="Portal.ViewTournament.Share.PresentationConfig.ShowOrganizerLogo"></label>
     </div>
 
     <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" role="switch" id="showSponsorLogo" [ngModel]="showSponsorLogo" (ngModelChange)="showSponsorLogo = $event; onChanged()" />
-      <label class="form-check-label" for="showSponsorLogo" translate="Portal.ViewTournament.Share.PresentationConfig.ShowSponsorLogo"></label>
+      <input
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        id="showSponsorLogo"
+        [ngModel]="showSponsorLogo"
+        (ngModelChange)="showSponsorLogo = $event; onChanged()" />
+      <label
+        class="form-check-label"
+        for="showSponsorLogo"
+        translate="Portal.ViewTournament.Share.PresentationConfig.ShowSponsorLogo"></label>
     </div>
   </div>
 </div>
@@ -69,6 +123,11 @@
     @if (isSaving) {
       <tp-small-spinner />
     }
-    <tp-action-button [type]="'success'" [icon]="'floppy'" [title]="'Portal.General.ApplyChanges'" [disabled]="isSaving" (click)="saveChanges()" />
+    <tp-action-button
+      [type]="'success'"
+      [icon]="'floppy'"
+      [title]="'Portal.General.ApplyChanges'"
+      [disabled]="isSaving"
+      (click)="saveChanges()" />
   </div>
 }

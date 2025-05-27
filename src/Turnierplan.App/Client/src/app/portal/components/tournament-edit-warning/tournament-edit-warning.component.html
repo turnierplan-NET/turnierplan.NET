@@ -5,7 +5,12 @@
       <span [translate]="translationKey + '.Text'"></span>
     </div>
     <div class="form-check">
-      <input class="form-check-input" id="editWarningAccepted" type="checkbox" [ngModel]="accepted" (ngModelChange)="acceptedChange.emit($event)" />
+      <input
+        class="form-check-input"
+        id="editWarningAccepted"
+        type="checkbox"
+        [ngModel]="accepted"
+        (ngModelChange)="acceptedChange.emit($event)" />
       <label class="form-check-label" for="editWarningAccepted" [translate]="translationKey + '.CheckboxLabel'"></label>
     </div>
   </div>

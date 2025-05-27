@@ -1,4 +1,8 @@
-<tp-page-frame *tpLoadingState="loadingState" [ultraSlim]="true" [title]="'Portal.EditMatchPlan.Title' | translate : { tournament: tournamentName }" [backLink]="'..'">
+<tp-page-frame
+  *tpLoadingState="loadingState"
+  [ultraSlim]="true"
+  [title]="'Portal.EditMatchPlan.Title' | translate: { tournament: tournamentName }"
+  [backLink]="'..'">
   <div translate="Portal.EditMatchPlan.Subtitle"></div>
   @if (displayEditWarning) {
     <tp-tournament-edit-warning [translationKey]="'Portal.EditMatchPlan.DestructiveWarning'" [(accepted)]="editWarningAccepted" />
@@ -20,7 +24,11 @@
     </thead>
     <tbody [dndDropzone]="" (dndDrop)="moveMatch($event)">
       @for (match of currentState; track match.id) {
-        <tr [dndDraggable]="true" [dndEffectAllowed]="'move'" (dndStart)="currentlyMovingMatchId = match.id" (dndEnd)="currentlyMovingMatchId = undefined">
+        <tr
+          [dndDraggable]="true"
+          [dndEffectAllowed]="'move'"
+          (dndStart)="currentlyMovingMatchId = match.id"
+          (dndEnd)="currentlyMovingMatchId = undefined">
           <td dndHandle class="align-middle tp-cursor-move">
             <i class="bi bi-grip-horizontal"></i>
           </td>
@@ -35,7 +43,7 @@
           </td>
           <td class="align-middle text-center">
             @if (match.kickoff) {
-              {{ match.kickoff | translateDate : (showKickoffWithSeconds ? 'mediumTime' : 'shortTime') }}
+              {{ match.kickoff | translateDate: (showKickoffWithSeconds ? 'mediumTime' : 'shortTime') }}
             }
           </td>
           <td class="align-middle">
@@ -45,11 +53,12 @@
             {{ localizedTeamSelectors[match.teamSelectorB] }}
           </td>
           <td>
-            <tp-action-button icon="pencil"
-                              type="outline-secondary"
-                              [attr.aria-label]="'Portal.EditMatchPlan.EditButtonTooltip.Button' | translate"
-                              [mode]="'IconOnly'"
-                              (click)="currentlyEditingMatchId = (currentlyEditingMatchId === match.id ? undefined : match.id)" />
+            <tp-action-button
+              icon="pencil"
+              type="outline-secondary"
+              [attr.aria-label]="'Portal.EditMatchPlan.EditButtonTooltip.Button' | translate"
+              [mode]="'IconOnly'"
+              (click)="currentlyEditingMatchId = currentlyEditingMatchId === match.id ? undefined : match.id" />
           </td>
         </tr>
         @if (match.id === currentlyEditingMatchId) {
@@ -58,27 +67,42 @@
             <td colspan="4">
               <div class="d-flex flex-column align-items-start gap-2">
                 <div translate="Portal.EditMatchPlan.EditMatch.Court"></div>
-                <input class="form-control form-control-sm" type="number" min="1" [ngModel]="match.court + 1" (ngModelChange)="setMatchCourt(match.id, $event - 1)">
+                <input
+                  class="form-control form-control-sm"
+                  type="number"
+                  min="1"
+                  [ngModel]="match.court + 1"
+                  (ngModelChange)="setMatchCourt(match.id, $event - 1)" />
 
                 <div translate="Portal.EditMatchPlan.EditMatch.Kickoff"></div>
-                <input class="form-control form-control-sm" type="datetime-local" [ngModel]="match.kickoff | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="setMatchKickoff(match.id, $event)" />
-                
+                <input
+                  class="form-control form-control-sm"
+                  type="datetime-local"
+                  [ngModel]="match.kickoff | date: 'yyyy-MM-ddTHH:mm'"
+                  (ngModelChange)="setMatchKickoff(match.id, $event)" />
+
                 <div translate="Portal.EditMatchPlan.EditMatch.TeamSelectorA"></div>
-                <select class="form-select form-select-sm" [ngModel]="match.teamSelectorA" (ngModelChange)="setMatchTeam(match.id,'A', $event)">
+                <select
+                  class="form-select form-select-sm"
+                  [ngModel]="match.teamSelectorA"
+                  (ngModelChange)="setMatchTeam(match.id, 'A', $event)">
                   @for (teamSelector of match.possibleTeamSelectors; track teamSelector) {
                     <option [value]="teamSelector">{{ localizedTeamSelectors[teamSelector] }}</option>
                   }
                 </select>
 
                 <div translate="Portal.EditMatchPlan.EditMatch.TeamSelectorB"></div>
-                <select class="form-select form-select-sm" [ngModel]="match.teamSelectorB" (ngModelChange)="setMatchTeam(match.id,'B', $event)">
+                <select
+                  class="form-select form-select-sm"
+                  [ngModel]="match.teamSelectorB"
+                  (ngModelChange)="setMatchTeam(match.id, 'B', $event)">
                   @for (teamSelector of match.possibleTeamSelectors; track teamSelector) {
                     <option [value]="teamSelector">{{ localizedTeamSelectors[teamSelector] }}</option>
                   }
                 </select>
 
                 @if (match.isGroupMatch) {
-                  <div class="small text-secondary d-flex flex-row align-items-center gap-2" style="width: 0; min-width: 100%;">
+                  <div class="small text-secondary d-flex flex-row align-items-center gap-2" style="width: 0; min-width: 100%">
                     <!-- The element style prevents the text from resizing its parent and disrupting the table layout. -->
                     <i class="bi bi-info-circle"></i>
                     <span translate="Portal.EditMatchPlan.EditMatch.GroupMatchRestriction"></span>

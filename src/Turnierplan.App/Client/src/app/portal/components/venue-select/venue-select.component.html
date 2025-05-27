@@ -25,5 +25,10 @@
   @if (isSaving) {
     <tp-small-spinner class="me-2" />
   }
-  <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" [disabled]="isSaving" [ngClass]="{ 'pe-none': isLoading || isSaving }" (click)="saveVenue()" />
+  <tp-action-button
+    [type]="'success'"
+    [title]="'Portal.General.Save'"
+    [disabled]="isSaving"
+    [ngClass]="{ 'pe-none': isLoading || isSaving }"
+    (click)="saveVenue()" />
 </div>

@@ -14,13 +14,29 @@
 
   @if (currentFolderId) {
     <div class="form-check">
-      <input class="form-check-input" type="radio" name="moveTournament_folderMode" id="moveTournament_folderMode_noFolder" [value]="'NoFolder'" [(ngModel)]="folderMode">
-      <label class="form-check-label" for="moveTournament_folderMode_noFolder" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.UseNoFolder"></label>
+      <input
+        class="form-check-input"
+        type="radio"
+        name="moveTournament_folderMode"
+        id="moveTournament_folderMode_noFolder"
+        [value]="'NoFolder'"
+        [(ngModel)]="folderMode" />
+      <label
+        class="form-check-label"
+        for="moveTournament_folderMode_noFolder"
+        translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.UseNoFolder"></label>
     </div>
   }
 
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="moveTournament_folderMode" id="moveTournament_folderMode_existingFolder" [value]="'ExistingFolder'" [(ngModel)]="folderMode" [disabled]="disableExistingFolders">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="moveTournament_folderMode"
+      id="moveTournament_folderMode_existingFolder"
+      [value]="'ExistingFolder'"
+      [(ngModel)]="folderMode"
+      [disabled]="disableExistingFolders" />
     <label class="form-check-label" for="moveTournament_folderMode_existingFolder">
       <span translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.UseExistingFolder"></span>
       @if (folderMode === 'ExistingFolder') {
@@ -28,7 +44,9 @@
       }
     </label>
     @if (disableExistingFolders && !isLoading) {
-      <tp-tooltip-icon [icon]="'question-circle'" [tooltipText]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.ExistingFolderDisabledTooltip'" />
+      <tp-tooltip-icon
+        [icon]="'question-circle'"
+        [tooltipText]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.ExistingFolderDisabledTooltip'" />
     }
   </div>
 
@@ -45,7 +63,13 @@
   }
 
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="moveTournament_folderMode" id="moveTournament_folderMode_newFolder" [value]="'NewFolder'" [(ngModel)]="folderMode">
+    <input
+      class="form-check-input"
+      type="radio"
+      name="moveTournament_folderMode"
+      id="moveTournament_folderMode_newFolder"
+      [value]="'NewFolder'"
+      [(ngModel)]="folderMode" />
     <label class="form-check-label" for="moveTournament_folderMode_newFolder">
       <span translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.CreateNewFolder"></span>
       @if (folderMode === 'NewFolder') {
@@ -55,14 +79,15 @@
   </div>
 
   @if (folderMode === 'NewFolder') {
-    <input type="text"
-           class="form-control"
-           [required]="true"
-           [formControl]="moveToNewFolder"
-           [minlength]="1"
-           [maxlength]="60"
-           [placeholder]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.NamePlaceholder' | translate"
-           [ngClass]="moveToNewFolder.dirty || moveToNewFolder.touched ? (moveToNewFolder.invalid ? 'is-invalid' : 'is-valid') : ''"/>
+    <input
+      type="text"
+      class="form-control"
+      [required]="true"
+      [formControl]="moveToNewFolder"
+      [minlength]="1"
+      [maxlength]="60"
+      [placeholder]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.NamePlaceholder' | translate"
+      [ngClass]="moveToNewFolder.dirty || moveToNewFolder.touched ? (moveToNewFolder.invalid ? 'is-invalid' : 'is-valid') : ''" />
     <div class="invalid-feedback" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.FolderNameInvalid"></div>
     <div class="valid-feedback" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.FolderNameValid"></div>
   }

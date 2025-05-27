@@ -1,13 +1,14 @@
 ﻿<tp-page-frame *tpLoadingState="loadingState" [ultraSlim]="true" [title]="'Portal.CreateVenue.Title' | translate" [backLink]="'../..'">
   <label for="create_venue_name" class="form-label" translate="Portal.CreateVenue.Form.Name"></label>
-  <input id="create_venue_name"
-         type="text"
-         class="form-control"
-         [formControl]="venueName"
-         [required]="true"
-         [minlength]="1"
-         [maxlength]="60"
-         [ngClass]="venueName.dirty || venueName.touched ? (venueName.invalid ? 'is-invalid' : 'is-valid') : ''"/>
+  <input
+    id="create_venue_name"
+    type="text"
+    class="form-control"
+    [formControl]="venueName"
+    [required]="true"
+    [minlength]="1"
+    [maxlength]="60"
+    [ngClass]="venueName.dirty || venueName.touched ? (venueName.invalid ? 'is-invalid' : 'is-valid') : ''" />
   <div class="invalid-feedback" translate="Portal.CreateVenue.Form.NameInvalid"></div>
   <div class="valid-feedback" translate="Portal.CreateVenue.Form.NameValid"></div>
 
@@ -15,13 +16,16 @@
 
   <div class="form-text">
     <i class="bi bi-info-circle"></i>
-    <span class="ms-2" [innerHTML]="'Portal.CreateVenue.OrganizationNotice' | translate : { 'organizationName': organization?.name } "></span>
+    <span class="ms-2" [innerHTML]="'Portal.CreateVenue.OrganizationNotice' | translate: { organizationName: organization?.name }"></span>
   </div>
 
   <hr />
 
   <div class="d-flex flex-row justify-content-end">
-    <tp-action-button [type]="'success'" [title]="'Portal.CreateVenue.Submit'" [disabled]="venueName.invalid" (click)="confirmButtonClicked()" />
+    <tp-action-button
+      [type]="'success'"
+      [title]="'Portal.CreateVenue.Submit'"
+      [disabled]="venueName.invalid"
+      (click)="confirmButtonClicked()" />
   </div>
 </tp-page-frame>
-

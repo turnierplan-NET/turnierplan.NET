@@ -1,9 +1,9 @@
-@import "bootstrap/scss/bootstrap";
-@import "bootstrap-icons/font/bootstrap-icons.min.css";
-@import "ngx-toastr/toastr";
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap-icons/font/bootstrap-icons.min.css';
+@import 'ngx-toastr/toastr';
 
 * {
-  font-family: system-ui, "Segoe UI", sans-serif !important;
+  font-family: system-ui, 'Segoe UI', sans-serif !important;
 }
 
 .font-monospace {
@@ -13,7 +13,7 @@
 body {
   background-color: #fff;
   font-optical-sizing: auto;
-  font-variation-settings: "wdth" 100;
+  font-variation-settings: 'wdth' 100;
   overflow-y: scroll;
 }
 
@@ -54,7 +54,7 @@ body {
     margin: 0;
   }
 
-  &[type="number"] {
+  &[type='number'] {
     appearance: textfield;
   }
 }
@@ -144,7 +144,7 @@ body {
 
   .footer-item:not(:last-child)::after {
     color: #888 !important;
-    content: "|";
+    content: '|';
     font-weight: normal !important;
     padding: 0 0.35em;
   }

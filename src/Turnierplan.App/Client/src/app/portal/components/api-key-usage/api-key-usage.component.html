@@ -1,15 +1,23 @@
-<div class="d-flex flex-row" style="min-height: 274px;">
-  <div style="width: 25%;">
+<div class="d-flex flex-row" style="min-height: 274px">
+  <div style="width: 25%">
     <label class="form-label" for="api_usage_timeRange" translate="Portal.ApiKeyUsage.TimeRange"></label>
-    <select class="form-select form-select-sm mb-3" id="api_usage_timeRange" [ngModel]="timeRange" (ngModelChange)="timeRange = $event; reload$.next()">
+    <select
+      class="form-select form-select-sm mb-3"
+      id="api_usage_timeRange"
+      [ngModel]="timeRange"
+      (ngModelChange)="timeRange = $event; reload$.next()">
       <option value="1" translate="Portal.ApiKeyUsage.TimeRange1"></option>
       <option value="7" translate="Portal.ApiKeyUsage.TimeRange7"></option>
       <option value="14" translate="Portal.ApiKeyUsage.TimeRange14"></option>
       <option value="30" translate="Portal.ApiKeyUsage.TimeRange30"></option>
     </select>
-    
+
     <div class="d-flex flex-column align-items-end">
-      <tp-action-button [type]="'outline-secondary'" [icon]="'arrow-counterclockwise'" [title]="'Portal.ApiKeyUsage.Reload'" (click)="reload$.next()" />
+      <tp-action-button
+        [type]="'outline-secondary'"
+        [icon]="'arrow-counterclockwise'"
+        [title]="'Portal.ApiKeyUsage.Reload'"
+        (click)="reload$.next()" />
     </div>
 
     @if (showNoRequestsNotification) {
@@ -23,9 +31,8 @@
       <span translate="Portal.ApiKeyUsage.LoadingData"></span>
     </div>
   } @else {
-    <div style="width: 50%;">
-      <canvas baseChart type="bar" [data]="chartData" [options]="chartOptions">
-      </canvas>
+    <div style="width: 50%">
+      <canvas baseChart type="bar" [data]="chartData" [options]="chartOptions"></canvas>
       <div class="text-center small">
         <span translate="Portal.ApiKeyUsage.Total"></span>
         <span class="ms-1 fw-bold">{{ totalCount }}</span>
