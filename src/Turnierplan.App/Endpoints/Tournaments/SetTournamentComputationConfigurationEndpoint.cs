@@ -45,6 +45,7 @@ internal sealed class SetTournamentComputationConfigurationEndpoint : EndpointBa
             MatchWonPoints = request.Configuration.MatchWonPoints,
             MatchDrawnPoints = request.Configuration.MatchDrawnPoints,
             MatchLostPoints = request.Configuration.MatchLostPoints,
+            HigherScoreLoses = request.Configuration.HigherScoreLoses,
             ComparisonModes = request.Configuration.ComparisonModes.ToList()
         };
 

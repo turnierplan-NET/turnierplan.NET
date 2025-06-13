@@ -36,20 +36,39 @@ public sealed record TeamGroupStatistics
         ScoreFor += scoreFor;
         ScoreAgainst += scoreAgainst;
 
-        if (scoreFor > scoreAgainst)
-        {
-            MatchesWon++;
-            Points += computationConfiguration.MatchWonPoints;
-        }
-        else if (scoreFor == scoreAgainst)
+        if (scoreFor == scoreAgainst)
         {
             MatchesDrawn++;
             Points += computationConfiguration.MatchDrawnPoints;
+
+            return;
+        }
+
+        if (computationConfiguration.HigherScoreLoses)
+        {
+            if (scoreFor > scoreAgainst)
+            {
+                MatchesLost++;
+                Points += computationConfiguration.MatchLostPoints;
+            }
+            else
+            {
+                MatchesWon++;
+                Points += computationConfiguration.MatchWonPoints;
+            }
         }
         else
         {
-            MatchesLost++;
-            Points += computationConfiguration.MatchLostPoints;
+            if (scoreFor > scoreAgainst)
+            {
+                MatchesWon++;
+                Points += computationConfiguration.MatchWonPoints;
+            }
+            else
+            {
+                MatchesLost++;
+                Points += computationConfiguration.MatchLostPoints;
+            }
         }
     }
 }
