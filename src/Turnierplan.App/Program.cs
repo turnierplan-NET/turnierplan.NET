@@ -98,3 +98,14 @@ app.UseStaticFiles();
 await app.InitializeDatabaseAsync().ConfigureAwait(false);
 
 await app.RunAsync().ConfigureAwait(false);
+
+internal static class TurnierplanApp
+{
+    public static readonly string Version;
+
+    static TurnierplanApp()
+    {
+        var assemblyVersion = typeof(TurnierplanApp).Assembly.GetName().Version?.ToString();
+        Version = assemblyVersion?[..assemblyVersion.LastIndexOf('.')] ?? "?.?.?";
+    }
+}
