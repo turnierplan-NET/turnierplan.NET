@@ -55,7 +55,7 @@ import { ValidationErrorDialogComponent } from './components/validation-error-di
 import { VenueSelectComponent } from './components/venue-select/venue-select.component';
 import { VenueTileComponent } from './components/venue-tile/venue-tile.component';
 import { VisibilitySelectorComponent } from './components/visibility-selector/visibility-selector.component';
-import { IsAdministratorDirective } from './directives/has-role/is-administrator.directive';
+import { IsAdministratorDirective } from './directives/is-administrator/is-administrator.directive';
 import { LoadingStateDirective } from './directives/loading-state/loading-state.directive';
 import { isAdministratorGuard } from './guards/is-administrator';
 import { AdministrationPageComponent } from './pages/administration-page/administration-page.component';
