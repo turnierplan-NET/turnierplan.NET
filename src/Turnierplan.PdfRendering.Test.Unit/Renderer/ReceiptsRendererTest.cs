@@ -1,6 +1,5 @@
 ﻿using Turnierplan.Core.Organization;
 using Turnierplan.Core.Tournament;
-using Turnierplan.Core.User;
 using Turnierplan.PdfRendering.Configuration;
 using Turnierplan.PdfRendering.Renderer;
 
@@ -72,8 +71,7 @@ public sealed class ReceiptsRendererTest(ITestOutputHelper testOutputHelper) : R
     {
         for (var i = 4; i <= 16; i += 4)
         {
-            var user = new User("test", "test@test.com");
-            var organization = new Organization(user, "Test");
+            var organization = new Organization("Test");
             var tournament = new Tournament(organization, "Test", Visibility.Public);
 
             for (var j = 0; j < i; j++)
@@ -89,8 +87,7 @@ public sealed class ReceiptsRendererTest(ITestOutputHelper testOutputHelper) : R
     [MemberData(nameof(CombineTeamsTestData))]
     public void ReceiptsRenderer___GenerateReceipts___Returns_Correct_Result(string[] tournamentTeamNames, bool combineSimilar, (string Name, int Count)[] expectedCombinedTeams)
     {
-        var user = new User("test", "test@test.com");
-        var organization = new Organization(user, "Test");
+        var organization = new Organization("Test");
         var tournament = new Tournament(organization, "Test", Visibility.Public);
 
         foreach (var teamName in tournamentTeamNames)

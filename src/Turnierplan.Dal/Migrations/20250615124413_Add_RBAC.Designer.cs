@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20250615114355_Add_RBAC")]
+    [Migration("20250615124413_Add_RBAC")]
     partial class Add_RBAC
     {
         /// <inheritdoc />
@@ -253,15 +253,10 @@ namespace Turnierplan.Dal.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 
-                    b.Property<Guid?>("OwnerId")
-                        .HasColumnType("uuid");
-
                     b.Property<long>("PublicId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
 
                     b.HasIndex("PublicId")
                         .IsUnique();
@@ -804,14 +799,6 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Organization.Organization", b =>
-                {
-                    b.HasOne("Turnierplan.Core.User.User", null)
-                        .WithMany("Organizations")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Restrict);
-                });
-
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.ApiKey.ApiKey>", b =>
                 {
                     b.HasOne("Turnierplan.Core.ApiKey.ApiKey", "Scope")
@@ -1310,11 +1297,6 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("RoleAssignments");
 
                     b.Navigation("Teams");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.User.User", b =>
-                {
-                    b.Navigation("Organizations");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.Venue.Venue", b =>

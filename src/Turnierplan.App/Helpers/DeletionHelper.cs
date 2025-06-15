@@ -44,17 +44,19 @@ internal sealed class DeletionHelper : IDeletionHelper
 
     public async Task<bool> DeleteUserAsync(User user, CancellationToken cancellationToken)
     {
-        foreach (var organization in user.Organizations.ToList()) // ToList() to avoid invalid operation exception
-        {
-            cancellationToken.ThrowIfCancellationRequested();
+        // TODO: Decide how to handle this (there is no longer a 1-n relation between user and organisation)
 
-            var result = await DeleteOrganizationAsync(organization, cancellationToken).ConfigureAwait(false);
-
-            if (!result)
-            {
-                return false;
-            }
-        }
+        // foreach (var organization in user.Organizations.ToList()) // ToList() to avoid invalid operation exception
+        // {
+        //     cancellationToken.ThrowIfCancellationRequested();
+        //
+        //     var result = await DeleteOrganizationAsync(organization, cancellationToken).ConfigureAwait(false);
+        //
+        //     if (!result)
+        //     {
+        //         return false;
+        //     }
+        // }
 
         cancellationToken.ThrowIfCancellationRequested();
 

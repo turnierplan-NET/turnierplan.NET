@@ -12,10 +12,8 @@ public sealed class Organization : Entity<long>, IEntityWithPublicId, IEntityWit
     internal readonly List<Tournament.Tournament> _tournaments = new();
     internal readonly List<Venue.Venue> _venues = new();
 
-    public Organization(User.User owner, string name)
+    public Organization(string name)
     {
-        owner._organizations.Add(this);
-
         Id = 0;
         PublicId = new PublicId.PublicId();
         CreatedAt = DateTime.UtcNow;

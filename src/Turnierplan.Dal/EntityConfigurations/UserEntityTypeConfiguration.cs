@@ -41,10 +41,5 @@ public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(x => x.SecurityStamp)
             .IsRequired();
-
-        builder.HasMany(x => x.Organizations)
-            .WithOne()
-            .HasForeignKey("OwnerId")
-            .OnDelete(DeleteBehavior.Restrict);
     }
 }

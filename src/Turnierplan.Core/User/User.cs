@@ -4,8 +4,6 @@ namespace Turnierplan.Core.User;
 
 public sealed class User : Entity<Guid>
 {
-    internal readonly List<Organization.Organization> _organizations = new();
-
     public User(string name, string email)
     {
         email = email.Trim();
@@ -53,8 +51,6 @@ public sealed class User : Entity<Guid>
     public DateTime? LastLogin { get; private set; }
 
     public Guid SecurityStamp { get; private set; }
-
-    public IReadOnlyList<Organization.Organization> Organizations => _organizations.AsReadOnly();
 
     public void UpdateLastLoginTime()
     {

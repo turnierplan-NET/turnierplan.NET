@@ -27,7 +27,7 @@ internal sealed class DeleteUserEndpoint : EndpointBase
             return Results.BadRequest("You cannot delete yourself.");
         }
 
-        var user = await repository.GetByIdAsync(id, true).ConfigureAwait(false);
+        var user = await repository.GetByIdAsync(id).ConfigureAwait(false);
 
         if (user is null)
         {

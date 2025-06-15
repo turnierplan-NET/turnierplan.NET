@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
+using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Organization;
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.User;
 using Turnierplan.Dal;
 
@@ -37,7 +39,9 @@ internal sealed class CreateOrganizationEndpoint : EndpointBase<OrganizationDto>
             return Results.Unauthorized();
         }
 
-        var organization = new Organization(user, request.Name.Trim());
+        var organization = new Organization(request.Name.Trim());
+
+        organization.AddRoleAssignment(Role.Owner, user.AsPrincipal());
 
         await organizationRepository.CreateAsync(organization).ConfigureAwait(false);
         await organizationRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);

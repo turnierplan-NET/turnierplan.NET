@@ -12,6 +12,11 @@ namespace Turnierplan.Dal.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Organizations_Users_OwnerId",
+                schema: "turnierplan",
+                table: "Organizations");
+
             migrationBuilder.DropTable(
                 name: "UserRoles",
                 schema: "turnierplan");
@@ -20,6 +25,16 @@ namespace Turnierplan.Dal.Migrations
                 name: "Roles",
                 schema: "turnierplan");
 
+            migrationBuilder.DropIndex(
+                name: "IX_Organizations_OwnerId",
+                schema: "turnierplan",
+                table: "Organizations");
+
+            migrationBuilder.DropColumn(
+                name: "OwnerId",
+                schema: "turnierplan",
+                table: "Organizations");
+
             migrationBuilder.AddColumn<bool>(
                 name: "IsAdministrator",
                 schema: "turnierplan",
@@ -27,15 +42,6 @@ namespace Turnierplan.Dal.Migrations
                 type: "boolean",
                 nullable: false,
                 defaultValue: false);
-
-            migrationBuilder.AlterColumn<Guid>(
-                name: "OwnerId",
-                schema: "turnierplan",
-                table: "Organizations",
-                type: "uuid",
-                nullable: true,
-                oldClrType: typeof(Guid),
-                oldType: "uuid");
 
             migrationBuilder.CreateTable(
                 name: "IAM_ApiKey",
@@ -256,16 +262,13 @@ namespace Turnierplan.Dal.Migrations
                 schema: "turnierplan",
                 table: "Users");
 
-            migrationBuilder.AlterColumn<Guid>(
+            migrationBuilder.AddColumn<Guid>(
                 name: "OwnerId",
                 schema: "turnierplan",
                 table: "Organizations",
                 type: "uuid",
                 nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"),
-                oldClrType: typeof(Guid),
-                oldType: "uuid",
-                oldNullable: true);
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.CreateTable(
                 name: "Roles",
@@ -314,6 +317,12 @@ namespace Turnierplan.Dal.Migrations
                 values: new object[] { new Guid("9da7acec-ed66-4698-a2d6-927c9ee3f83a"), "Administrator" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Organizations_OwnerId",
+                schema: "turnierplan",
+                table: "Organizations",
+                column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Roles_Name",
                 schema: "turnierplan",
                 table: "Roles",
@@ -325,6 +334,16 @@ namespace Turnierplan.Dal.Migrations
                 schema: "turnierplan",
                 table: "UserRoles",
                 column: "UserId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Organizations_Users_OwnerId",
+                schema: "turnierplan",
+                table: "Organizations",
+                column: "OwnerId",
+                principalSchema: "turnierplan",
+                principalTable: "Users",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
     }
 }
