@@ -22,6 +22,12 @@ public sealed class OrganizationEntityTypeConfiguration : IEntityTypeConfigurati
         builder.HasIndex(x => x.PublicId)
             .IsUnique();
 
+        builder.HasMany(x => x.RoleAssignments)
+            .WithOne(x => x.Scope)
+            .HasForeignKey("OrganizationId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
         builder.Property(x => x.CreatedAt)
             .IsRequired();
 
@@ -59,14 +65,11 @@ public sealed class OrganizationEntityTypeConfiguration : IEntityTypeConfigurati
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
+        builder.Metadata.FindNavigation(nameof(Organization.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(Organization.ApiKeys))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-
         builder.Metadata.FindNavigation(nameof(Organization.Folders))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-
         builder.Metadata.FindNavigation(nameof(Organization.Images))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-
         builder.Metadata.FindNavigation(nameof(Organization.Tournaments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-
         builder.Metadata.FindNavigation(nameof(Organization.Venues))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

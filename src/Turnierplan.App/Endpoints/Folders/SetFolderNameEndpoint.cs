@@ -35,7 +35,7 @@ internal sealed class SetFolderNameEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(folder.Organization))
+        if (!accessValidator.IsActionAllowed(folder, Actions.GenericWrite))
         {
             return Results.Forbid();
         }

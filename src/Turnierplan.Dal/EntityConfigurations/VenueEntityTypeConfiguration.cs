@@ -22,6 +22,12 @@ public sealed class VenueEntityTypeConfiguration : IEntityTypeConfiguration<Venu
         builder.HasIndex(x => x.PublicId)
             .IsUnique();
 
+        builder.HasMany(x => x.RoleAssignments)
+            .WithOne(x => x.Scope)
+            .HasForeignKey("VenueId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
         builder.Property(x => x.CreatedAt)
             .IsRequired();
 
@@ -42,6 +48,7 @@ public sealed class VenueEntityTypeConfiguration : IEntityTypeConfiguration<Venu
             .HasForeignKey("VenueId")
             .OnDelete(DeleteBehavior.SetNull);
 
+        builder.Metadata.FindNavigation(nameof(Venue.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(Venue.Tournaments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

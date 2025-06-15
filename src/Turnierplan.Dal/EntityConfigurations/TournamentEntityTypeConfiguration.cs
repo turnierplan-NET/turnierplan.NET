@@ -23,6 +23,12 @@ public sealed class TournamentEntityTypeConfiguration : IEntityTypeConfiguration
         builder.HasIndex(x => x.PublicId)
             .IsUnique();
 
+        builder.HasMany(x => x.RoleAssignments)
+            .WithOne(x => x.Scope)
+            .HasForeignKey("TournamentId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
         builder.Property(x => x.IsMigrated)
             .IsRequired();
 
@@ -109,12 +115,10 @@ public sealed class TournamentEntityTypeConfiguration : IEntityTypeConfiguration
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
+        builder.Metadata.FindNavigation(nameof(Tournament.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(Tournament.Teams))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-
         builder.Metadata.FindNavigation(nameof(Tournament.Groups))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-
         builder.Metadata.FindNavigation(nameof(Tournament.Matches))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-
         builder.Metadata.FindNavigation(nameof(Tournament.Documents))!.SetPropertyAccessMode(PropertyAccessMode.Field);
 
     }

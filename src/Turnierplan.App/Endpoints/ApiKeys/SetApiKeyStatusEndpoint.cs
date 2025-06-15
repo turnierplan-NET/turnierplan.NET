@@ -27,7 +27,7 @@ internal sealed class SetApiKeyStatusEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(apiKey.Organization))
+        if (!accessValidator.IsActionAllowed(apiKey.Organization, Actions.GenericWrite))
         {
             return Results.Forbid();
         }

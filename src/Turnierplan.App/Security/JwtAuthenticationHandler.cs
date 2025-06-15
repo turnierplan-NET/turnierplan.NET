@@ -55,8 +55,7 @@ internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityO
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero,
-                RoleClaimType = ClaimTypes.Role
+                ClockSkew = TimeSpan.Zero
             };
 
             var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out _);

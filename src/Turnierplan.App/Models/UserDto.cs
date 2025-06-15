@@ -12,5 +12,5 @@ public sealed record UserDto
 
     public required DateTime LastPasswordChange { get; init; }
 
-    public required UserRoleDto[] Roles { get; init; }
+    public required bool IsAdministrator { get; init; }
 }

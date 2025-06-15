@@ -4,7 +4,7 @@ namespace Turnierplan.Core.Tournament;
 
 public sealed class Group : Entity<int>
 {
-    internal List<GroupParticipant> _participants = [];
+    internal readonly List<GroupParticipant> _participants = [];
 
     internal Group(int id, char alphabeticalId, string? displayName = null)
     {

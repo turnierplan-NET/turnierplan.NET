@@ -2,6 +2,7 @@ using Turnierplan.App.Extensions;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.Core.Organization;
+using Turnierplan.Core.RoleAssignment;
 
 namespace Turnierplan.App.Endpoints.Organizations;
 
@@ -18,9 +19,19 @@ internal sealed class GetOrganizationsEndpoint : EndpointBase<IEnumerable<Organi
         IOrganizationRepository repository,
         IMapper mapper)
     {
-        var userId = context.GetCurrentUserIdOrThrow();
+        List<Organization> organizations;
 
-        var organizations = await repository.GetByOwnerUserIdAsync(userId).ConfigureAwait(false);
+        if (context.IsCurrentUserAdministrator())
+        {
+            organizations = await repository.GetAllAsync().ConfigureAwait(false);
+        }
+        else
+        {
+            var userId = context.GetCurrentUserIdOrThrow();
+            var principal = new Principal(PrincipalKind.User, userId.ToString());
+
+            organizations = await repository.GetByPrincipalAsync(principal).ConfigureAwait(false);
+        }
 
         return Results.Ok(mapper.MapCollection<OrganizationDto>(organizations));
     }

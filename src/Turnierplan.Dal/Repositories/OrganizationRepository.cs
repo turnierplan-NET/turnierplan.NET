@@ -1,11 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.RoleAssignment;
 
 namespace Turnierplan.Dal.Repositories;
 
 internal sealed class OrganizationRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Organization>(context, context.Organizations), IOrganizationRepository
 {
+    public override Task<Organization?> GetByPublicIdAsync(PublicId id)
+    {
+        return DbSet.Where(x => x.PublicId == id)
+            .Include(x => x.RoleAssignments)
+            .FirstOrDefaultAsync();
+    }
+
     public Task<Organization?> GetByPublicIdAsync(PublicId id, IOrganizationRepository.Include include)
     {
         var query = DbSet.Where(o => o.PublicId == id);
@@ -35,13 +43,27 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
             query = query.Include(x => x.ApiKeys);
         }
 
-        query = query.AsSplitQuery();
+        query = query
+            .Include(x => x.RoleAssignments)
+            .AsSplitQuery();
 
         return query.FirstOrDefaultAsync();
     }
 
-    public Task<List<Organization>> GetByOwnerUserIdAsync(Guid ownerUserId)
+    public Task<List<Organization>> GetAllAsync()
     {
-        return DbSet.Where(o => o.OwnerId == ownerUserId).ToListAsync();
+        return DbSet.ToListAsync();
+    }
+
+    /// <inheritdoc />
+    public Task<List<Organization>> GetByPrincipalAsync(Principal principal)
+    {
+        // TODO: Try to optimize this query directly within EF
+
+        return context.OrganizationRoleAssignments
+            .Where(r => r.Principal.Equals(principal))
+            .Include(r => r.Scope)
+            .Select(r => r.Scope)
+            .ToListAsync();
     }
 }

@@ -4,7 +4,6 @@ import { take } from 'rxjs';
 import { OrganizationDto, OrganizationsService } from '../../../api';
 import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { LoadingState } from '../../directives/loading-state/loading-state.directive';
-import { RoleIds } from '../../helpers/role-ids';
 import { TitleService } from '../../services/title.service';
 
 @Component({
@@ -12,8 +11,6 @@ import { TitleService } from '../../services/title.service';
   templateUrl: './landing-page.component.html'
 })
 export class LandingPageComponent implements OnInit {
-  protected readonly administratorRoleId = RoleIds.administratorRoleId;
-
   protected loadingState: LoadingState = { isLoading: true };
   protected organizations: OrganizationDto[] = [];
 

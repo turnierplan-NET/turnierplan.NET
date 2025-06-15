@@ -1,7 +1,6 @@
 ﻿using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament;
-using Turnierplan.Core.User;
 using Turnierplan.PdfRendering.Configuration;
 using Turnierplan.PdfRendering.Renderer;
 
@@ -103,8 +102,7 @@ public sealed class MatchPlanRendererTest(ITestOutputHelper testOutputHelper) : 
     [MemberData(nameof(TestData))]
     public void MatchPlanRenderer___Render_Match_Plan___Works_As_Expected(int[] teamsPerGroup, MatchPlanConfiguration configuration)
     {
-        var user = new User("test", "test@test.com");
-        var organization = new Organization(user, "Test");
+        var organization = new Organization("Test");
         var tournament = new Tournament(organization, "Test", Visibility.Public);
 
         for (var i = 0; i < teamsPerGroup.Length; i++)

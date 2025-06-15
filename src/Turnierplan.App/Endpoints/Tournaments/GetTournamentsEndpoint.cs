@@ -43,7 +43,7 @@ internal sealed class GetTournamentsEndpoint : EndpointBase<IEnumerable<Tourname
                 return Results.NotFound();
             }
 
-            if (!accessValidator.CanSessionUserAccess(organization))
+            if (!accessValidator.IsActionAllowed(organization, Actions.GenericRead))
             {
                 return Results.Forbid();
             }
@@ -59,7 +59,7 @@ internal sealed class GetTournamentsEndpoint : EndpointBase<IEnumerable<Tourname
                 return Results.NotFound();
             }
 
-            if (!accessValidator.CanSessionUserAccess(folder.Organization))
+            if (!accessValidator.IsActionAllowed(folder, Actions.GenericRead))
             {
                 return Results.Forbid();
             }

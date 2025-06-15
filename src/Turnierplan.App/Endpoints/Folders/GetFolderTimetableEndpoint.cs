@@ -26,7 +26,7 @@ internal sealed class GetFolderTimetableEndpoint : EndpointBase<FolderTimetableD
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(folder.Organization))
+        if (!accessValidator.IsActionAllowed(folder, Actions.GenericRead))
         {
             return Results.Forbid();
         }

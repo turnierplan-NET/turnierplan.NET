@@ -52,7 +52,7 @@ internal sealed class GetDocumentPdfEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(document.Tournament.Organization))
+        if (!accessValidator.IsActionAllowed(document.Tournament, Actions.GenericRead))
         {
             return Results.Forbid();
         }

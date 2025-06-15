@@ -34,7 +34,7 @@ internal sealed class SetTournamentVisibilityEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(tournament.Organization))
+        if (!accessValidator.IsActionAllowed(tournament, Actions.GenericWrite))
         {
             return Results.Forbid();
         }

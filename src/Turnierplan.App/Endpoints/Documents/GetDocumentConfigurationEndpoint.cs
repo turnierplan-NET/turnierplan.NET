@@ -55,7 +55,7 @@ internal abstract class GetDocumentConfigurationEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(document.Tournament.Organization))
+        if (!accessValidator.IsActionAllowed(document.Tournament, Actions.GenericRead))
         {
             return Results.Forbid();
         }

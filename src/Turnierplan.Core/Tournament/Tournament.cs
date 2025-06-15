@@ -1,6 +1,7 @@
 using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Image;
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament.Comparers;
 using Turnierplan.Core.Tournament.Definitions;
@@ -8,15 +9,16 @@ using Turnierplan.Core.Tournament.TeamSelectors;
 
 namespace Turnierplan.Core.Tournament;
 
-public sealed class Tournament : Entity<long>, IEntityWithPublicId, IEntityWithOwner
+public sealed class Tournament : Entity<long>, IEntityWithPublicId, IEntityWithRoleAssignments<Tournament>
 {
     internal readonly GroupParticipantComparer _groupParticipantComparer;
     internal int? _nextEntityId;
 
-    internal List<Team> _teams = new();
-    internal List<Group> _groups = new();
-    internal List<Match> _matches = new();
-    internal List<Document.Document> _documents = new();
+    internal readonly List<RoleAssignment<Tournament>> _roleAssignments = new();
+    internal readonly List<Team> _teams = new();
+    internal readonly List<Group> _groups = new();
+    internal readonly List<Match> _matches = new();
+    internal readonly List<Document.Document> _documents = new();
 
     public Tournament(Organization.Organization organization, string name, Visibility visibility)
     {
@@ -57,7 +59,7 @@ public sealed class Tournament : Entity<long>, IEntityWithPublicId, IEntityWithO
 
     public Organization.Organization Organization { get; internal set; } = null!;
 
-    Guid IEntityWithOwner.OwnerId => Organization.OwnerId;
+    public IReadOnlyList<RoleAssignment<Tournament>> RoleAssignments => _roleAssignments.AsReadOnly();
 
     public bool IsMigrated { get; }
 
@@ -143,6 +145,14 @@ public sealed class Tournament : Entity<long>, IEntityWithPublicId, IEntityWithO
 
             return lastMatch.Kickoff + duration;
         }
+    }
+
+    public RoleAssignment<Tournament> AddRoleAssignment(Role role, Principal principal, string? description = null)
+    {
+        var roleAssignment = new RoleAssignment<Tournament>(this, role, principal, description);
+        _roleAssignments.Add(roleAssignment);
+
+        return roleAssignment;
     }
 
     public Team AddTeam(string name)

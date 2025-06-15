@@ -22,6 +22,12 @@ public sealed class FolderEntityTypeConfiguration : IEntityTypeConfiguration<Fol
         builder.HasIndex(x => x.PublicId)
             .IsUnique();
 
+        builder.HasMany(x => x.RoleAssignments)
+            .WithOne(x => x.Scope)
+            .HasForeignKey("FolderId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
         builder.Property(x => x.CreatedAt)
             .IsRequired();
 
@@ -34,6 +40,7 @@ public sealed class FolderEntityTypeConfiguration : IEntityTypeConfiguration<Fol
             .HasForeignKey("FolderId")
             .OnDelete(DeleteBehavior.SetNull);
 
+        builder.Metadata.FindNavigation(nameof(Folder.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(Folder.Tournaments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }
