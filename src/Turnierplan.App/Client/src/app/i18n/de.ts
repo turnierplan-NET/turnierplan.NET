@@ -118,8 +118,7 @@ export const de = {
         EMail: 'E-Mail',
         CreatedAt: 'Erstellt am',
         LastPasswordChange: 'Letzte Passwortänderung',
-        Roles: 'Rollen',
-        NoRoles: 'keine'
+        Administrator: 'Admin'
       },
       DeleteUser: {
         Title: 'Benutzer löschen',

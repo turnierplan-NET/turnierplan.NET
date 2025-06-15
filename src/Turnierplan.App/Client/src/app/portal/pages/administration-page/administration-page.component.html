@@ -21,7 +21,7 @@
                 <th translate="Portal.Administration.Users.EMail"></th>
                 <th translate="Portal.Administration.Users.CreatedAt"></th>
                 <th translate="Portal.Administration.Users.LastPasswordChange"></th>
-                <th translate="Portal.Administration.Users.Roles"></th>
+                <th translate="Portal.Administration.Users.Administrator"></th>
                 <th></th>
               </tr>
             </thead>
@@ -34,12 +34,8 @@
                   <td class="align-middle small">{{ user.createdAt | translateDate: 'medium' }}</td>
                   <td class="align-middle small">{{ user.lastPasswordChange | translateDate: 'medium' }}</td>
                   <td class="align-middle">
-                    @if (user.roles.length === 0) {
-                      <span class="ms-1 small text-secondary" translate="Portal.Administration.Users.NoRoles"></span>
-                    } @else {
-                      @for (role of user.roles; track role) {
-                        <i class="ms-1 bi" [ngClass]="getRoleIcon(role.id)" [ngbTooltip]="role.name"></i>
-                      }
+                    @if (user.isAdministrator) {
+                      <i class="bi bi-check-circle"></i>
                     }
                   </td>
                   <td>

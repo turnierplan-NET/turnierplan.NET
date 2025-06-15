@@ -8,7 +8,6 @@ import { AuthenticationService } from '../../../core/services/authentication.ser
 import { NotificationService } from '../../../core/services/notification.service';
 import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { LoadingState } from '../../directives/loading-state/loading-state.directive';
-import { RoleIds } from '../../helpers/role-ids';
 import { TitleService } from '../../services/title.service';
 
 @Component({
@@ -53,15 +52,6 @@ export class AdministrationPageComponent implements OnInit {
         this.loadingState = { isLoading: false, error: error };
       }
     });
-  }
-
-  protected getRoleIcon(roleId: string): string {
-    switch (roleId) {
-      case RoleIds.administratorRoleId:
-        return 'bi-gear';
-      default:
-        throw new Error(`Unknown role ID: ${roleId}`);
-    }
   }
 
   protected deleteButtonClicked(id: string, template: TemplateRef<unknown>): void {

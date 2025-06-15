@@ -4,11 +4,13 @@ import { map } from 'rxjs';
 
 import { AuthenticationService } from '../../core/services/authentication.service';
 
-export const hasRoleGuard = (roleId: string): CanActivateFn => {
+export const isAdministratorGuard = (): CanActivateFn => {
   return () => {
     const router = inject(Router);
     const authenticationService = inject(AuthenticationService);
 
-    return authenticationService.checkIfUserHasRole(roleId).pipe(map((hasRole) => (hasRole ? true : router.createUrlTree(['/portal']))));
+    return authenticationService
+      .checkIfUserIsAdministrator()
+      .pipe(map((isAdministrator) => (isAdministrator ? true : router.createUrlTree(['/portal']))));
   };
 };

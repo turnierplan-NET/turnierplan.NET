@@ -5,8 +5,6 @@ import { Subject, takeUntil } from 'rxjs';
 import { AuthenticatedUser } from '../core/models/identity';
 import { AuthenticationService } from '../core/services/authentication.service';
 
-import { RoleIds } from './helpers/role-ids';
-
 type UserInfoAction = 'EditUserInfo' | 'ChangePassword' | 'Logout';
 
 @Component({
@@ -15,8 +13,6 @@ type UserInfoAction = 'EditUserInfo' | 'ChangePassword' | 'Logout';
   styleUrls: ['./portal.component.scss']
 })
 export class PortalComponent implements OnInit, OnDestroy {
-  protected readonly administratorRoleId = RoleIds.administratorRoleId;
-
   protected currentUser?: AuthenticatedUser;
   protected footerStyle = '';
 

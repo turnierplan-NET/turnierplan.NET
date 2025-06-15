@@ -12,7 +12,7 @@ internal sealed class GetUsersEndpoint : EndpointBase<IEnumerable<UserDto>>
 
     protected override Delegate Handler => Handle;
 
-    protected override Role[] Roles => [UserRoles.Administrator];
+    protected override bool? RequireAdministrator => true;
 
     private static async Task<IResult> Handle(
         IUserRepository repository,

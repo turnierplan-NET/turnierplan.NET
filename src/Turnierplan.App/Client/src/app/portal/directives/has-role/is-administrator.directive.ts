@@ -1,14 +1,13 @@
-import { Directive, ElementRef, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-import { ReplaySubject, Subject, switchMap, takeUntil } from 'rxjs';
+import { Directive, ElementRef, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 
 import { AuthenticationService } from '../../../core/services/authentication.service';
 
 @Directive({
   standalone: false,
-  selector: '[tpHasRole]'
+  selector: '[tpIsAdministrator]'
 })
-export class HasRoleDirective implements OnInit, OnDestroy {
-  private readonly roleId$ = new ReplaySubject<string>(1);
+export class IsAdministratorDirective implements OnInit, OnDestroy {
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
@@ -17,21 +16,14 @@ export class HasRoleDirective implements OnInit, OnDestroy {
     private readonly authenticationService: AuthenticationService
   ) {}
 
-  @Input()
-  public set tpHasRole(roleId: string) {
-    this.roleId$.next(roleId);
-  }
-
   public ngOnInit(): void {
-    this.roleId$
-      .pipe(
-        switchMap((roleId) => this.authenticationService.checkIfUserHasRole(roleId)),
-        takeUntil(this.destroyed$)
-      )
+    this.authenticationService
+      .checkIfUserIsAdministrator()
+      .pipe(takeUntil(this.destroyed$))
       .subscribe({
-        next: (hasRole) => {
+        next: (isAdministrator) => {
           this.viewContainer.clear();
-          if (hasRole) {
+          if (isAdministrator) {
             this.viewContainer.createEmbeddedView(this.templateRef);
           }
         }
@@ -39,7 +31,6 @@ export class HasRoleDirective implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.roleId$.complete();
     this.destroyed$.next();
     this.destroyed$.complete();
   }

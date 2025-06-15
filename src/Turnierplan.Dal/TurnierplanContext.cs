@@ -12,7 +12,6 @@ using Turnierplan.Core.Tournament;
 using Turnierplan.Core.User;
 using Turnierplan.Core.Venue;
 using Turnierplan.Dal.EntityConfigurations;
-using Role = Turnierplan.Core.User.Role;
 
 namespace Turnierplan.Dal;
 
@@ -55,8 +54,6 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
     public DbSet<Organization> Organizations { get; set; } = null!;
 
     public DbSet<RoleAssignment<Organization>> OrganizationRoleAssignments { get; set; } = null!;
-
-    public DbSet<Role> Roles { get; set; } = null!;
 
     public DbSet<Team> Teams { get; set; } = null!;
 
@@ -144,7 +141,6 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new ImageEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new MatchEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OrganizationEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new RoleEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TeamEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TournamentEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());

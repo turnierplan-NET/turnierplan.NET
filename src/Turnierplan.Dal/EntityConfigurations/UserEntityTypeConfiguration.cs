@@ -46,11 +46,5 @@ public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
             .WithOne()
             .HasForeignKey("OwnerId")
             .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasMany(x => x.Roles)
-            .WithMany()
-            .UsingEntity("UserRoles",
-                r => r.HasOne(typeof(Role)).WithMany().HasForeignKey("RoleId"),
-                l => l.HasOne(typeof(User)).WithMany().HasForeignKey("UserId"));
     }
 }

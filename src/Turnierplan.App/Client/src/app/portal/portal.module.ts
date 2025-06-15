@@ -55,10 +55,9 @@ import { ValidationErrorDialogComponent } from './components/validation-error-di
 import { VenueSelectComponent } from './components/venue-select/venue-select.component';
 import { VenueTileComponent } from './components/venue-tile/venue-tile.component';
 import { VisibilitySelectorComponent } from './components/visibility-selector/visibility-selector.component';
-import { HasRoleDirective } from './directives/has-role/has-role.directive';
+import { IsAdministratorDirective } from './directives/has-role/is-administrator.directive';
 import { LoadingStateDirective } from './directives/loading-state/loading-state.directive';
-import { hasRoleGuard } from './guards/has-role.guard';
-import { RoleIds } from './helpers/role-ids';
+import { isAdministratorGuard } from './guards/is-administrator';
 import { AdministrationPageComponent } from './pages/administration-page/administration-page.component';
 import { ConfigureTournamentComponent } from './pages/configure-tournament/configure-tournament.component';
 import { CreateApiKeyComponent } from './pages/create-api-key/create-api-key.component';
@@ -93,12 +92,12 @@ const routes: Routes = [
       {
         path: 'administration',
         component: AdministrationPageComponent,
-        canActivate: [hasRoleGuard(RoleIds.administratorRoleId)]
+        canActivate: [isAdministratorGuard()]
       },
       {
         path: 'administration/create/user',
         component: CreateUserComponent,
-        canActivate: [hasRoleGuard(RoleIds.administratorRoleId)]
+        canActivate: [isAdministratorGuard()]
       },
       {
         path: 'create/organization',
@@ -217,7 +216,7 @@ const routes: Routes = [
     TournamentSelectComponent,
     MatchTreeComponent,
     FolderStatisticsComponent,
-    HasRoleDirective,
+    IsAdministratorDirective,
     AdministrationPageComponent,
     CreateUserComponent,
     BadgeComponent

@@ -14,11 +14,7 @@ internal sealed class UserMappingRule : MappingRuleBase<User, UserDto>
             Name = source.Name,
             EMail = source.EMail,
             LastPasswordChange = source.LastPasswordChange,
-            Roles = source.Roles.Select(role => new UserRoleDto
-            {
-                Id = role.Id,
-                Name = role.Name
-            }).ToArray()
+            IsAdministrator = source.IsAdministrator
         };
     }
 }

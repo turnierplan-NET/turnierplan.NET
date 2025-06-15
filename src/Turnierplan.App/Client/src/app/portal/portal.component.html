@@ -14,7 +14,7 @@
         <div
           class="tp-text-pre-wrap mb-3"
           [innerHTML]="'Portal.UserInfoPopover.Text' | translate: { userName: currentUser.displayName }"></div>
-        <ng-container *tpHasRole="administratorRoleId">
+        <ng-container *tpIsAdministrator>
           <div class="d-flex flex-row tp-cursor-pointer mt-1" [routerLink]="'/portal/administration'">
             <i class="bi bi-gear me-2" aria-hidden="true"></i>
             <span class="text-decoration-underline" [translate]="'Portal.UserInfoPopover.Administration'"></span>

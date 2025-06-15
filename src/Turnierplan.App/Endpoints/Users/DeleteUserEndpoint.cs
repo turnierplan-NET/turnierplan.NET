@@ -13,7 +13,7 @@ internal sealed class DeleteUserEndpoint : EndpointBase
 
     protected override Delegate Handler => Handle;
 
-    protected override Role[] Roles => [UserRoles.Administrator];
+    protected override bool? RequireAdministrator => true;
 
     private static async Task<IResult> Handle(
         [FromRoute] Guid id,

@@ -10,7 +10,7 @@ interface TurnierplanAccessToken {
   exp: number;
   mail: string;
   name: string;
-  rol: string | string[];
+  adm?: string;
   uid: string;
 }
 
@@ -24,7 +24,7 @@ export class AuthenticationService implements OnDestroy {
   private static readonly localStorageUserIdKey = 'tp_id_userId';
   private static readonly localStorageUserNameKey = 'tp_id_userName';
   private static readonly localStorageUserEMailKey = 'tp_id_userEMail';
-  private static readonly localStorageUserRolesKey = 'tp_id_userRoles';
+  private static readonly localStorageUserAdministratorKey = 'tp_id_userAdmin';
   private static readonly localStorageAccessTokenExpiryKey = 'tp_id_accTokenExp';
   private static readonly localStorageRefreshTokenExpiryKey = 'tp_id_rfsTokenExp';
   private static readonly refreshAccessTokenIfExpiresInLessThanSeconds = 300;
@@ -66,7 +66,7 @@ export class AuthenticationService implements OnDestroy {
             decodedAccessToken.uid,
             decodedAccessToken.name,
             decodedAccessToken.mail,
-            decodedAccessToken.rol,
+            decodedAccessToken.adm === 'true',
             decodedAccessToken.exp,
             decodedRefreshToken.exp
           );
@@ -119,17 +119,8 @@ export class AuthenticationService implements OnDestroy {
     return expiry !== undefined && expiry * 1000 > new Date().getTime();
   }
 
-  public checkIfUserHasRole(roleId: string): Observable<boolean> {
-    return this.authentication$.pipe(
-      map(() => {
-        const storedValue = localStorage.getItem(AuthenticationService.localStorageUserRolesKey);
-        if (storedValue === null || storedValue === '') {
-          return false;
-        }
-
-        return storedValue.split(';').some((x) => x === roleId);
-      })
-    );
+  public checkIfUserIsAdministrator(): Observable<boolean> {
+    return this.authentication$.pipe(map(() => localStorage.getItem(AuthenticationService.localStorageUserAdministratorKey) === 'true'));
   }
 
   public changePassword(
@@ -214,7 +205,7 @@ export class AuthenticationService implements OnDestroy {
               decodedAccessToken.uid,
               decodedAccessToken.name,
               decodedAccessToken.mail,
-              decodedAccessToken.rol,
+              decodedAccessToken.adm === 'true',
               decodedAccessToken.exp,
               decodedRefreshToken.exp
             );
@@ -295,21 +286,14 @@ export class AuthenticationService implements OnDestroy {
     userId: string,
     userName: string,
     userEMail: string,
-    userRoles: string | string[],
+    userIsAdmin: boolean,
     accessTokenExpiry: number,
     refreshTokenExpiry: number
   ): void {
     localStorage.setItem(AuthenticationService.localStorageUserIdKey, userId);
     localStorage.setItem(AuthenticationService.localStorageUserNameKey, userName);
     localStorage.setItem(AuthenticationService.localStorageUserEMailKey, userEMail);
-
-    if (userRoles === undefined || userRoles === '' || (userRoles as string[])?.length === 0) {
-      localStorage.removeItem(AuthenticationService.localStorageUserRolesKey);
-    } else if (typeof userRoles === 'string') {
-      localStorage.setItem(AuthenticationService.localStorageUserRolesKey, userRoles);
-    } else {
-      localStorage.setItem(AuthenticationService.localStorageUserRolesKey, userRoles.join(';'));
-    }
+    localStorage.setItem(AuthenticationService.localStorageUserAdministratorKey, `${userIsAdmin}`);
 
     localStorage.setItem(AuthenticationService.localStorageAccessTokenExpiryKey, `${accessTokenExpiry}`);
     localStorage.setItem(AuthenticationService.localStorageRefreshTokenExpiryKey, `${refreshTokenExpiry}`);

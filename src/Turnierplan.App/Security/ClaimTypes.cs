@@ -2,6 +2,7 @@ namespace Turnierplan.App.Security;
 
 internal static class ClaimTypes
 {
+    public const string Administrator = "adm";
     public const string DisplayName = "name";
     public const string EMailAddress = "mail";
     public const string Role = "rol";

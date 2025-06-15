@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.RoleAssignment;
 
 namespace Turnierplan.Dal.Repositories;
 
@@ -42,6 +43,8 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
 
     public Task<List<Organization>> GetByOwnerUserIdAsync(Guid ownerUserId)
     {
-        return DbSet.Where(o => o.OwnerId == ownerUserId).ToListAsync();
+        var userIdString = ownerUserId.ToString();
+
+        return DbSet.Where(o => o.RoleAssignments.Any(r => r.Principal.Kind == PrincipalKind.User && r.Principal.ObjectId.Equals(userIdString))).ToListAsync();
     }
 }

@@ -36,7 +36,12 @@ internal abstract class IdentityEndpointBase<TResponse> : EndpointBase<TResponse
             claims.Add(new Claim(ClaimTypes.DisplayName, user.Name));
             claims.Add(new Claim(ClaimTypes.EMailAddress, user.EMail));
             claims.Add(new Claim(ClaimTypes.UserId, user.Id.ToString()));
-            claims.AddRange(user.Roles.Select(x => new Claim(ClaimTypes.Role, x.Id.ToString())));
+
+            if (user.IsAdministrator)
+            {
+                // TODO: Add administrator claim once the new authorization policy is tested & works
+                // claims.Add(new Claim(ClaimTypes.Administrator, "true"));
+            }
         }
 
         var identityOptions = _options.CurrentValue;

@@ -1,4 +1,3 @@
-using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.User;
@@ -6,7 +5,6 @@ namespace Turnierplan.Core.User;
 public sealed class User : Entity<Guid>
 {
     internal readonly List<Organization.Organization> _organizations = new();
-    internal readonly List<Role> _roles = new();
 
     public User(string name, string email)
     {
@@ -18,11 +16,12 @@ public sealed class User : Entity<Guid>
         EMail = email;
         NormalizedEMail = NormalizeEmail(email);
         PasswordHash = string.Empty;
+        IsAdministrator = false;
         LastPasswordChange = DateTime.MinValue;
         SecurityStamp = Guid.Empty;
     }
 
-    internal User(Guid id, DateTime createdAt, string name, string eMail, string normalizedEMail, string passwordHash, DateTime lastPasswordChange, Guid securityStamp)
+    internal User(Guid id, DateTime createdAt, string name, string eMail, string normalizedEMail, string passwordHash, bool isAdministrator, DateTime lastPasswordChange, Guid securityStamp)
     {
         Id = id;
         CreatedAt = createdAt;
@@ -30,6 +29,7 @@ public sealed class User : Entity<Guid>
         EMail = eMail;
         NormalizedEMail = normalizedEMail;
         PasswordHash = passwordHash;
+        IsAdministrator = isAdministrator;
         LastPasswordChange = lastPasswordChange;
         SecurityStamp = securityStamp;
     }
@@ -46,6 +46,8 @@ public sealed class User : Entity<Guid>
 
     public string PasswordHash { get; private set; }
 
+    public bool IsAdministrator { get; set; }
+
     public DateTime LastPasswordChange { get; private set; }
 
     public DateTime? LastLogin { get; private set; }
@@ -53,23 +55,6 @@ public sealed class User : Entity<Guid>
     public Guid SecurityStamp { get; private set; }
 
     public IReadOnlyList<Organization.Organization> Organizations => _organizations.AsReadOnly();
-
-    public IReadOnlyList<Role> Roles => _roles.AsReadOnly();
-
-    public void AddRole(Role role)
-    {
-        if (_roles.Any(x => x.Id == role.Id))
-        {
-            throw new TurnierplanException($"Role {role.Id} is already assigned to the user.");
-        }
-
-        _roles.Add(role);
-    }
-
-    public void RemoveRole(Role role)
-    {
-        _roles.RemoveAll(x => x.Id == role.Id);
-    }
 
     public void UpdateLastLoginTime()
     {
