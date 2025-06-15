@@ -17,7 +17,9 @@ internal sealed class ApiKeyRepository : RepositoryBaseWithPublicId<ApiKey>, IAp
     public override Task<ApiKey?> GetByPublicIdAsync(PublicId id)
     {
         return DbSet.Where(x => x.PublicId == id)
-            .Include(x => x.Organization)
+            .Include(x => x.Organization).ThenInclude(x => x.RoleAssignments)
+            .Include(x => x.RoleAssignments)
+            .AsSplitQuery()
             .FirstOrDefaultAsync();
     }
 

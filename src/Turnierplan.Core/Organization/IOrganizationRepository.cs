@@ -1,3 +1,4 @@
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.Organization;
@@ -6,7 +7,12 @@ public interface IOrganizationRepository : IRepositoryWithPublicId<Organization,
 {
     Task<Organization?> GetByPublicIdAsync(PublicId.PublicId id, Include include);
 
-    Task<List<Organization>> GetByOwnerUserIdAsync(Guid ownerUserId);
+    Task<List<Organization>> GetAllAsync();
+
+    /// <summary>
+    /// Returns a list of all organizations that have any role assignment for the specified principal.
+    /// </summary>
+    Task<List<Organization>> GetByPrincipalAsync(Principal principal);
 
     [Flags]
     public enum Include

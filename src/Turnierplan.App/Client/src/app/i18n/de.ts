@@ -94,7 +94,7 @@ export const de = {
         OrganizationCount: 'Organisationen'
       },
       AdministratorWarning:
-        'Sie sind mit einem Konto mit Administrator-Rolle angemeldet. Aktuell sehen Sie aber dennoch nur Organisationen, welche diesem Konto zugeordnet sind - jedoch nicht die Organisationen der anderen Benutzer.',
+        'Sie sind mit einem Administrator-Konto angemeldet und haben unbeschränkten Zugriff auf alle Organisationen - auch die von anderen Benutzern.',
       NoOrganizations:
         'Sie sind keinen Organisationen zugehörig.\nErstellen Sie eine neue Organisation, um Turniere anzulegen und zu bearbeiten',
       NewOrganization: 'Neue Organisation',
@@ -118,8 +118,7 @@ export const de = {
         EMail: 'E-Mail',
         CreatedAt: 'Erstellt am',
         LastPasswordChange: 'Letzte Passwortänderung',
-        Roles: 'Rollen',
-        NoRoles: 'keine'
+        Administrator: 'Admin'
       },
       DeleteUser: {
         Title: 'Benutzer löschen',
@@ -869,7 +868,7 @@ export const de = {
         Validity180: '180 Tage'
       },
       OrganizationNotice: 'Es wird ein neuer API-Schlüssel in der Organisation <span class="fw-bold">{{organizationName}}</span> angelegt.',
-      AccessNotice: 'Mit diesem Schlüssel kann auf alle Turniere der Organisation zugegriffen werden',
+      AccessNotice: 'Ein neuer API-Schlüssel erhält standardmäßig Leserechte für die aktuelle Organisation.',
       Submit: 'Erstellen',
       SuccessInformation: {
         Title: 'API-Schlüssel wurde erstellt',

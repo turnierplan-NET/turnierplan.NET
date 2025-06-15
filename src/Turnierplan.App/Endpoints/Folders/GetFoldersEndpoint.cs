@@ -28,7 +28,7 @@ internal sealed class GetFoldersEndpoint : EndpointBase<IEnumerable<FolderDto>>
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(organization))
+        if (!accessValidator.IsActionAllowed(organization, Actions.GenericRead))
         {
             return Results.Forbid();
         }

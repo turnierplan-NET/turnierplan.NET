@@ -17,7 +17,7 @@ internal sealed class CreateUserEndpoint : EndpointBase
 
     protected override Delegate Handler => Handle;
 
-    protected override Role[] Roles => [UserRoles.Administrator];
+    protected override bool? RequireAdministrator => true;
 
     private static async Task<IResult> Handle(
         [FromBody] CreateUserEndpointRequest request,

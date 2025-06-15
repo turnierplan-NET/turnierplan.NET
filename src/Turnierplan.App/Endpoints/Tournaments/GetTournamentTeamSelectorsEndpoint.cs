@@ -30,7 +30,7 @@ internal sealed class GetTournamentTeamSelectorsEndpoint : EndpointBase<IEnumera
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(tournament.Organization))
+        if (!accessValidator.IsActionAllowed(tournament, Actions.GenericRead))
         {
             return Results.Forbid();
         }

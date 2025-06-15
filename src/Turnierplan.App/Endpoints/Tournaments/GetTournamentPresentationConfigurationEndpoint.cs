@@ -28,7 +28,7 @@ internal sealed class GetTournamentPresentationConfigurationEndpoint : EndpointB
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(tournament.Organization))
+        if (!accessValidator.IsActionAllowed(tournament, Actions.GenericRead))
         {
             return Results.Forbid();
         }

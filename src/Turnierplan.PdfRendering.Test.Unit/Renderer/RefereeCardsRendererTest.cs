@@ -1,6 +1,5 @@
 ﻿using Turnierplan.Core.Organization;
 using Turnierplan.Core.Tournament;
-using Turnierplan.Core.User;
 using Turnierplan.PdfRendering.Configuration;
 using Turnierplan.PdfRendering.Renderer;
 
@@ -13,8 +12,7 @@ public sealed class RefereeCardsRendererTest(ITestOutputHelper testOutputHelper)
     {
         for (var i = 0; i < 3; i++)
         {
-            var user = new User("test", "test@test.com");
-            var organization = new Organization(user, "Test");
+            var organization = new Organization("Test");
             var tournament = new Tournament(organization, "Test", Visibility.Public);
 
             var groupA = tournament.AddGroup('A');

@@ -8,7 +8,12 @@ internal sealed class TournamentRepository(TurnierplanContext context) : Reposit
 {
     public override Task<Tournament?> GetByPublicIdAsync(PublicId id)
     {
-        return DbSet.Where(x => x.PublicId == id).Include(x => x.Organization).FirstOrDefaultAsync();
+        return DbSet.Where(x => x.PublicId == id)
+            .Include(x => x.Organization).ThenInclude(x => x.RoleAssignments)
+            .Include(x => x.Folder).ThenInclude(x => x!.RoleAssignments)
+            .Include(x => x.RoleAssignments)
+            .AsSplitQuery()
+            .FirstOrDefaultAsync();
     }
 
     public async Task<Tournament?> GetByPublicIdAsync(PublicId id, ITournamentRepository.Include include)
@@ -43,10 +48,11 @@ internal sealed class TournamentRepository(TurnierplanContext context) : Reposit
         if (include.HasFlag(ITournamentRepository.Include.FolderWithTournaments))
         {
             query = query.Include(x => x.Folder).ThenInclude(x => x!.Tournaments);
+            query = query.Include(x => x.Folder).ThenInclude(x => x!.RoleAssignments);
         }
         else if (include.HasFlag(ITournamentRepository.Include.Folder))
         {
-            query = query.Include(x => x.Folder);
+            query = query.Include(x => x.Folder).ThenInclude(x => x!.RoleAssignments);
         }
 
         if (include.HasFlag(ITournamentRepository.Include.Images))
@@ -56,7 +62,8 @@ internal sealed class TournamentRepository(TurnierplanContext context) : Reposit
             query = query.Include(x => x.SponsorBanner);
         }
 
-        query = query.Include(x => x.Organization);
+        query = query.Include(x => x.Organization).ThenInclude(x => x.RoleAssignments);
+        query = query.Include(x => x.RoleAssignments);
 
         query = query.AsSplitQuery();
 

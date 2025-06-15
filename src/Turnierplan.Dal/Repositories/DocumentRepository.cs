@@ -10,7 +10,8 @@ internal sealed class DocumentRepository(TurnierplanContext context) : Repositor
     {
         var query = DbSet.Where(x => x.PublicId == id);
 
-        query = query.Include(x => x.Tournament).ThenInclude(x => x.Organization);
+        query = query.Include(x => x.Tournament).ThenInclude(x => x.Organization).ThenInclude(x => x.RoleAssignments);
+        query = query.Include(x => x.Tournament).ThenInclude(x => x.RoleAssignments);
 
         if (includeTournamentDetails)
         {

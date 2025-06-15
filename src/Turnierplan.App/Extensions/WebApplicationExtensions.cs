@@ -29,13 +29,13 @@ internal static class WebApplicationExtensions
             const string initialEmail = "admin@example.com";
             var initialPassword = Guid.NewGuid().ToString();
 
-            // The available roles are inserted by the EFCore migration
-            var administratorRole = await context.Roles.Where(role => role.Id == UserRoles.Administrator.Id).SingleAsync().ConfigureAwait(false);
-
             var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
-            var initialUser = new User("Administrator", initialEmail);
 
-            initialUser.AddRole(administratorRole);
+            var initialUser = new User("Administrator", initialEmail)
+            {
+                IsAdministrator = true
+            };
+
             initialUser.UpdatePassword(passwordHasher.HashPassword(initialUser, initialPassword));
 
             await context.Users.AddAsync(initialUser).ConfigureAwait(false);

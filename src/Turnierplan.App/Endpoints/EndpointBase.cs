@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.RegularExpressions;
 using Turnierplan.App.Security;
-using Turnierplan.Core.User;
 
 namespace Turnierplan.App.Endpoints;
 
@@ -27,7 +26,7 @@ internal abstract partial class EndpointBase
 
     protected virtual bool? AllowApiKeyAccess => null;
 
-    protected virtual Role[]? Roles => null;
+    protected virtual bool? RequireAdministrator => null;
 
     public void Map(IEndpointRouteBuilder endpoints)
     {
@@ -52,9 +51,9 @@ internal abstract partial class EndpointBase
     {
         if (DisableAuthorization)
         {
-            if (Roles is not null)
+            if (RequireAdministrator is not null)
             {
-                throw new InvalidOperationException($"Cannot define {nameof(Roles)} when {nameof(DisableAuthorization)} is {true}.");
+                throw new InvalidOperationException($"Cannot define {nameof(RequireAdministrator)} when {nameof(DisableAuthorization)} is {true}.");
             }
 
             if (AllowApiKeyAccess.HasValue)
@@ -70,11 +69,11 @@ internal abstract partial class EndpointBase
                     ? [AuthenticationSchemes.AuthenticationSchemeApiKey, AuthenticationSchemes.AuthenticationSchemeSession]
                     : [AuthenticationSchemes.AuthenticationSchemeSession];
 
-                policy.RequireAssertion(context => context.User.Claims.Any(x => x.Type.Equals(ClaimTypes.OrganizationId) || x.Type.Equals(ClaimTypes.UserId)));
+                policy.RequireAssertion(context => context.User.Claims.Any(x => x.Type.Equals(ClaimTypes.ApiKeyId) || x.Type.Equals(ClaimTypes.UserId)));
 
-                if (Roles is not null && Roles.Length > 0)
+                if (RequireAdministrator == true)
                 {
-                    policy.RequireRole(Roles.Select(role => role.Id.ToString()));
+                    policy.RequireClaim(ClaimTypes.Administrator, "true");
                 }
             });
         }

@@ -9,7 +9,9 @@ internal sealed class ImageRepository(TurnierplanContext context) : RepositoryBa
     public override Task<Image?> GetByPublicIdAsync(PublicId id)
     {
         return DbSet.Where(x => x.PublicId == id)
-            .Include(x => x.Organization)
+            .Include(x => x.Organization).ThenInclude(x => x.RoleAssignments)
+            .Include(x => x.RoleAssignments)
+            .AsSplitQuery()
             .FirstOrDefaultAsync();
     }
 }

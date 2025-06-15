@@ -45,7 +45,6 @@ public sealed class TeamSelectorConverterTest
         "G1/",
         "G/1",
         "G11",
-        "1/1",
 
         // GroupResultsNthRankedSelector
         "1,2,3/1/1",
@@ -61,7 +60,6 @@ public sealed class TeamSelectorConverterTest
         "R1/",
         "R/1",
         "R11",
-        "1/1",
 
         // MatchSelector
         "W",
@@ -76,7 +74,8 @@ public sealed class TeamSelectorConverterTest
         // Other Invalid Strings
         string.Empty,
         "A",
-        "1"
+        "1",
+        "1/1"
     };
 
     [Theory]

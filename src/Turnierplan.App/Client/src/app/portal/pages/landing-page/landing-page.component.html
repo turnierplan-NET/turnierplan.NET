@@ -2,7 +2,7 @@
   <tp-page-frame [title]="'Portal.LandingPage.Title' | translate" [navigationTabs]="pages">
     <ng-template #buttons>
       <tp-action-button
-        *tpHasRole="administratorRoleId"
+        *tpIsAdministrator
         [title]="'Portal.Administration.Title'"
         [type]="'outline-primary'"
         [icon]="'gear'"
@@ -18,7 +18,7 @@
         @if (organizations.length === 0) {
           <div class="card-body">
             <tp-alert
-              *tpHasRole="administratorRoleId"
+              *tpIsAdministrator
               [type]="'warning'"
               [icon]="'exclamation-triangle'"
               [text]="'Portal.LandingPage.AdministratorWarning'" />
@@ -31,7 +31,7 @@
           <div class="card-header d-flex flex-row align-items-center">
             <tp-badge context="LandingPage" label="OrganizationCount" [value]="organizations.length" />
           </div>
-          <div class="card-body pb-0" *tpHasRole="administratorRoleId">
+          <div class="card-body pb-0" *tpIsAdministrator>
             <tp-alert [type]="'warning'" [icon]="'exclamation-triangle'" [text]="'Portal.LandingPage.AdministratorWarning'" />
           </div>
           <div class="card-body d-flex flex-row flex-wrap gap-3">

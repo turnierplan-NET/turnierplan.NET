@@ -29,7 +29,7 @@ internal sealed class SetTournamentVenueEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(tournament.Organization))
+        if (!accessValidator.IsActionAllowed(tournament, Actions.GenericWrite))
         {
             return Results.Forbid();
         }
@@ -47,7 +47,7 @@ internal sealed class SetTournamentVenueEndpoint : EndpointBase
                 return Results.NotFound();
             }
 
-            if (!accessValidator.CanSessionUserAccess(venue.Organization))
+            if (!accessValidator.IsActionAllowed(venue, Actions.GenericWrite))
             {
                 return Results.Forbid();
             }

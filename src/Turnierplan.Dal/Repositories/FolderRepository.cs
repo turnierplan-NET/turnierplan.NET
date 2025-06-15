@@ -9,7 +9,9 @@ internal sealed class FolderRepository(TurnierplanContext context) : RepositoryB
     public override Task<Folder?> GetByPublicIdAsync(PublicId id)
     {
         return DbSet.Where(x => x.PublicId == id)
-            .Include(x => x.Organization)
+            .Include(x => x.Organization).ThenInclude(x => x.RoleAssignments)
+            .Include(x => x.RoleAssignments)
+            .AsSplitQuery()
             .FirstOrDefaultAsync();
     }
 
@@ -17,7 +19,8 @@ internal sealed class FolderRepository(TurnierplanContext context) : RepositoryB
     {
         var query = DbSet.Where(x => x.PublicId == id);
 
-        query = query.Include(x => x.Organization);
+        query = query.Include(x => x.Organization).ThenInclude(x => x.RoleAssignments);
+        query = query.Include(x => x.RoleAssignments);
 
         if (include.HasFlag(IFolderRepository.Include.Tournaments))
         {
@@ -28,8 +31,6 @@ internal sealed class FolderRepository(TurnierplanContext context) : RepositoryB
         {
             query = query.Include(x => x.Tournaments).ThenInclude(x => x.Matches);
             query = query.Include(x => x.Tournaments).ThenInclude(x => x.Groups);
-
-            query = query.AsSplitQuery();
         }
 
         if (include.HasFlag(IFolderRepository.Include.TournamentsWithGameRelevant))
@@ -37,10 +38,8 @@ internal sealed class FolderRepository(TurnierplanContext context) : RepositoryB
             query = query.Include(x => x.Tournaments).ThenInclude(x => x.Matches);
             query = query.Include(x => x.Tournaments).ThenInclude(x => x.Groups);
             query = query.Include(x => x.Tournaments).ThenInclude(x => x.Teams);
-
-            query = query.AsSplitQuery();
         }
 
-        return await query.FirstOrDefaultAsync();
+        return await query.AsSplitQuery().FirstOrDefaultAsync();
     }
 }
