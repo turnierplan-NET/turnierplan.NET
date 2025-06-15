@@ -8,9 +8,10 @@ internal sealed class VenueRepository(TurnierplanContext context) : RepositoryBa
 {
     public override Task<Venue?> GetByPublicIdAsync(PublicId id)
     {
-        // Always include organization to allow for checking authorization via its owner
         return DbSet.Where(x => x.PublicId == id)
-            .Include(x => x.Organization)
+            .Include(x => x.Organization).ThenInclude(x => x.RoleAssignments)
+            .Include(x => x.RoleAssignments)
+            .AsSplitQuery()
             .FirstOrDefaultAsync();
     }
 }

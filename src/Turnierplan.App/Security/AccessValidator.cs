@@ -1,6 +1,11 @@
 using Turnierplan.App.Extensions;
+using Turnierplan.Core.ApiKey;
+using Turnierplan.Core.Folder;
+using Turnierplan.Core.Image;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
+using Turnierplan.Core.Tournament;
+using Turnierplan.Core.Venue;
 
 namespace Turnierplan.App.Security;
 
@@ -46,10 +51,31 @@ internal sealed class AccessValidator : IAccessValidator
             throw new InvalidOperationException("Could not determine active principal.");
         }
 
+        return IsActionAllowed(target, action, activePrincipal);
+    }
+
+    private static bool IsActionAllowed<T>(IEntityWithRoleAssignments<T> target, Actions.Action action, Principal activePrincipal)
+        where T : Entity<long>, IEntityWithRoleAssignments<T>
+    {
         var activePrincipalRoles = target.RoleAssignments
             .Where(x => x.Principal.Equals(activePrincipal))
             .Select(x => x.Role);
 
-        return action.IsAllowed(activePrincipalRoles);
+        var isAccessAllowed = action.IsAllowed(activePrincipalRoles);
+
+        if (isAccessAllowed)
+        {
+            return true;
+        }
+
+        return target switch
+        {
+            ApiKey apiKey => IsActionAllowed(apiKey.Organization, action, activePrincipal),
+            Image image => IsActionAllowed(image.Organization, action, activePrincipal),
+            Folder folder => IsActionAllowed(folder.Organization, action, activePrincipal),
+            Tournament tournament => (tournament.Folder is not null && IsActionAllowed(tournament.Folder, action, activePrincipal)) || IsActionAllowed(tournament.Organization, action, activePrincipal),
+            Venue venue => IsActionAllowed(venue.Organization, action, activePrincipal),
+            _ => false
+        };
     }
 }

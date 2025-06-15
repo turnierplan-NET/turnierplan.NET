@@ -7,6 +7,13 @@ namespace Turnierplan.Dal.Repositories;
 
 internal sealed class OrganizationRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Organization>(context, context.Organizations), IOrganizationRepository
 {
+    public override Task<Organization?> GetByPublicIdAsync(PublicId id)
+    {
+        return DbSet.Where(x => x.PublicId == id)
+            .Include(x => x.RoleAssignments)
+            .FirstOrDefaultAsync();
+    }
+
     public Task<Organization?> GetByPublicIdAsync(PublicId id, IOrganizationRepository.Include include)
     {
         var query = DbSet.Where(o => o.PublicId == id);
@@ -36,7 +43,9 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
             query = query.Include(x => x.ApiKeys);
         }
 
-        query = query.AsSplitQuery();
+        query = query
+            .Include(x => x.RoleAssignments)
+            .AsSplitQuery();
 
         return query.FirstOrDefaultAsync();
     }
