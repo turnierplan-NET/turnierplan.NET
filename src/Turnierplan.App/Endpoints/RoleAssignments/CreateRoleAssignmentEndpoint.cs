@@ -156,7 +156,6 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
                 .WithMessage($"Exactly only one of {nameof(CreateRoleAssignmentEndpointRequest.ApiKeyId)} and {nameof(CreateRoleAssignmentEndpointRequest.UserEmail)} must be specified.");
 
             RuleFor(x => x.Description)
-                .NotEmpty()
                 .MaximumLength(ValidationConstants.RoleAssignment.MaxDescriptionLength);
         }
     }
