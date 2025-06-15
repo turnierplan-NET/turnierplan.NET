@@ -226,8 +226,8 @@ namespace Turnierplan.Dal.Migrations
             // 1000 is the numerical value for the "Owner" role
 
             migrationBuilder.Sql("""
-INSERT INTO turnierplan."IAM_Organization" ("OrganizationId", "CreatedAt", "Role", "Principal", "Description")
-SELECT "Organizations"."Id", NOW(), 1000, ('User:' || "Organizations"."OwnerId"), ''
+INSERT INTO turnierplan."IAM_Organization" ("Id", "OrganizationId", "CreatedAt", "Role", "Principal", "Description")
+SELECT gen_random_uuid(), "Organizations"."Id", NOW(), 1000, ('User:' || "Organizations"."OwnerId"), ''
 FROM turnierplan."Organizations";
 """);
 
