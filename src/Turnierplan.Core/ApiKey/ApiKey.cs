@@ -1,10 +1,12 @@
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.ApiKey;
 
-public sealed class ApiKey : Entity<long>, IEntityWithPublicId, IEntityWithOwner
+public sealed class ApiKey : Entity<long>, IEntityWithPublicId, IEntityWithRoleAssignments<ApiKey>
 {
-    internal List<ApiKeyRequest> _requests = new();
+    internal readonly List<RoleAssignment<ApiKey>> _roleAssignments = new();
+    internal readonly List<ApiKeyRequest> _requests = new();
 
     public ApiKey(Organization.Organization organization, string name, string? description, DateTime expiryDate)
     {
@@ -39,7 +41,7 @@ public sealed class ApiKey : Entity<long>, IEntityWithPublicId, IEntityWithOwner
 
     public Organization.Organization Organization { get; internal set; } = null!;
 
-    Guid IEntityWithOwner.OwnerId => Organization.OwnerId;
+    public IReadOnlyList<RoleAssignment<ApiKey>> RoleAssignments => _roleAssignments.AsReadOnly();
 
     public string Name { get; }
 
@@ -56,6 +58,14 @@ public sealed class ApiKey : Entity<long>, IEntityWithPublicId, IEntityWithOwner
     public bool IsActive { get; set; }
 
     public IReadOnlyList<ApiKeyRequest> Requests => _requests.AsReadOnly();
+
+    public RoleAssignment<ApiKey> AddRoleAssignment(Role role, Principal principal, string? description = null)
+    {
+        var roleAssignment = new RoleAssignment<ApiKey>(this, role, principal, description);
+        _roleAssignments.Add(roleAssignment);
+
+        return roleAssignment;
+    }
 
     public void AssignNewSecret(Func<string, string> secretHashFunc, out string plainTextSecret)
     {

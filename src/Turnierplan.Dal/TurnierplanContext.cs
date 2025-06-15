@@ -6,11 +6,13 @@ using Turnierplan.Core.Document;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.User;
 using Turnierplan.Core.Venue;
 using Turnierplan.Dal.EntityConfigurations;
+using Role = Turnierplan.Core.User.Role;
 
 namespace Turnierplan.Dal;
 
@@ -30,11 +32,15 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<ApiKey> ApiKeys { get; set; } = null!;
 
+    public DbSet<RoleAssignment<ApiKey>> ApiKeyRoleAssignments { get; set; } = null!;
+
     public DbSet<ApiKeyRequest> ApiKeyRequests { get; set; } = null!;
 
     public DbSet<Document> Documents { get; set; } = null!;
 
     public DbSet<Folder> Folders { get; set; } = null!;
+
+    public DbSet<RoleAssignment<Folder>> FolderRoleAssignments { get; set; } = null!;
 
     public DbSet<Group> Groups { get; set; } = null!;
 
@@ -42,9 +48,13 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<Image> Images { get; set; } = null!;
 
+    public DbSet<RoleAssignment<Image>> ImageRoleAssignments { get; set; } = null!;
+
     public DbSet<Match> Matches { get; set; } = null!;
 
     public DbSet<Organization> Organizations { get; set; } = null!;
+
+    public DbSet<RoleAssignment<Organization>> OrganizationRoleAssignments { get; set; } = null!;
 
     public DbSet<Role> Roles { get; set; } = null!;
 
@@ -52,9 +62,13 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<Tournament> Tournaments { get; set; } = null!;
 
+    public DbSet<RoleAssignment<Tournament>> TournamentRoleAssignments { get; set; } = null!;
+
     public DbSet<User> Users { get; set; } = null!;
 
     public DbSet<Venue> Venues { get; set; } = null!;
+
+    public DbSet<RoleAssignment<Venue>> VenueRoleAssignments { get; set; } = null!;
 
     public async Task BeginTransactionAsync()
     {
@@ -135,5 +149,12 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new TournamentEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new VenueEntityTypeConfiguration());
+
+        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<ApiKey>());
+        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Folder>());
+        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Image>());
+        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Organization>());
+        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Tournament>());
+        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Venue>());
     }
 }

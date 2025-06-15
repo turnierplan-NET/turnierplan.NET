@@ -1,10 +1,12 @@
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.Venue;
 
-public sealed class Venue : Entity<long>, IEntityWithPublicId, IEntityWithOwner
+public sealed class Venue : Entity<long>, IEntityWithPublicId, IEntityWithRoleAssignments<Venue>
 {
-    internal List<Tournament.Tournament> _tournaments = new();
+    internal readonly List<RoleAssignment<Venue>> _roleAssignments = new();
+    internal readonly List<Tournament.Tournament> _tournaments = new();
 
     public Venue(Organization.Organization organization, string name, string description)
     {
@@ -33,7 +35,7 @@ public sealed class Venue : Entity<long>, IEntityWithPublicId, IEntityWithOwner
 
     public Organization.Organization Organization { get; internal set; } = null!;
 
-    Guid IEntityWithOwner.OwnerId => Organization.OwnerId;
+    public IReadOnlyList<RoleAssignment<Venue>> RoleAssignments => _roleAssignments.AsReadOnly();
 
     public DateTime CreatedAt { get; }
 
@@ -46,4 +48,12 @@ public sealed class Venue : Entity<long>, IEntityWithPublicId, IEntityWithOwner
     public List<string> ExternalLinks { get; set; } = new();
 
     public IReadOnlyList<Tournament.Tournament> Tournaments => _tournaments.AsReadOnly();
+
+    public RoleAssignment<Venue> AddRoleAssignment(Role role, Principal principal, string? description = null)
+    {
+        var roleAssignment = new RoleAssignment<Venue>(this, role, principal, description);
+        _roleAssignments.Add(roleAssignment);
+
+        return roleAssignment;
+    }
 }

@@ -16,6 +16,12 @@ public sealed class ImageEntityTypeConfiguration : IEntityTypeConfiguration<Imag
         builder.Property(x => x.Id)
             .IsRequired();
 
+        builder.HasMany(x => x.RoleAssignments)
+            .WithOne(x => x.Scope)
+            .HasForeignKey("ImageId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
         builder.Property(x => x.ResourceIdentifier)
             .IsRequired();
 
@@ -50,5 +56,7 @@ public sealed class ImageEntityTypeConfiguration : IEntityTypeConfiguration<Imag
 
         builder.Property(x => x.Height)
             .IsRequired();
+
+        builder.Metadata.FindNavigation(nameof(Image.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

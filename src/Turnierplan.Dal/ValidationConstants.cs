@@ -6,7 +6,6 @@ public static class ValidationConstants
     {
         public const int MaxNameLength = 25;
         public const int MaxDescriptionLength = 250;
-        public const int MaxSecretLength = 30;
     }
 
     public static class ApiKeyRequest
@@ -50,6 +49,11 @@ public static class ValidationConstants
     public static class Role
     {
         public const int MaxNameLength = 16;
+    }
+
+    public static class RoleAssignment
+    {
+        public const int MaxDescriptionLength = 250;
     }
 
     public static class Team

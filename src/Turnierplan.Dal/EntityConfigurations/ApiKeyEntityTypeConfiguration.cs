@@ -22,6 +22,12 @@ public sealed class ApiKeyEntityTypeConfiguration : IEntityTypeConfiguration<Api
         builder.HasIndex(x => x.PublicId)
             .IsUnique();
 
+        builder.HasMany(x => x.RoleAssignments)
+            .WithOne(x => x.Scope)
+            .HasForeignKey("ApiKeyId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
         builder.Property(x => x.Name)
             .IsRequired()
             .HasMaxLength(ValidationConstants.ApiKey.MaxNameLength);
@@ -50,6 +56,7 @@ public sealed class ApiKeyEntityTypeConfiguration : IEntityTypeConfiguration<Api
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
+        builder.Metadata.FindNavigation(nameof(ApiKey.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(ApiKey.Requests))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

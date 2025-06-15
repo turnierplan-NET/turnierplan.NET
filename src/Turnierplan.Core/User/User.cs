@@ -5,8 +5,8 @@ namespace Turnierplan.Core.User;
 
 public sealed class User : Entity<Guid>
 {
-    internal List<Organization.Organization> _organizations = new();
-    internal List<Role> _roles = new();
+    internal readonly List<Organization.Organization> _organizations = new();
+    internal readonly List<Role> _roles = new();
 
     public User(string name, string email)
     {

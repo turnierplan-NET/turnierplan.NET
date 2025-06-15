@@ -1,10 +1,12 @@
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.Folder;
 
-public sealed class Folder : Entity<long>, IEntityWithPublicId, IEntityWithOwner
+public sealed class Folder : Entity<long>, IEntityWithPublicId, IEntityWithRoleAssignments<Folder>
 {
-    internal List<Tournament.Tournament> _tournaments = new();
+    internal readonly List<RoleAssignment<Folder>> _roleAssignments = new();
+    internal readonly List<Tournament.Tournament> _tournaments = new();
 
     public Folder(Organization.Organization organization, string name)
     {
@@ -31,11 +33,19 @@ public sealed class Folder : Entity<long>, IEntityWithPublicId, IEntityWithOwner
 
     public Organization.Organization Organization { get; internal set; } = null!;
 
-    Guid IEntityWithOwner.OwnerId => Organization.OwnerId;
+    public IReadOnlyList<RoleAssignment<Folder>> RoleAssignments => _roleAssignments.AsReadOnly();
 
     public DateTime CreatedAt { get; }
 
     public string Name { get; set; }
 
     public IReadOnlyList<Tournament.Tournament> Tournaments => _tournaments.AsReadOnly();
+
+    public RoleAssignment<Folder> AddRoleAssignment(Role role, Principal principal, string? description = null)
+    {
+        var roleAssignment = new RoleAssignment<Folder>(this, role, principal, description);
+        _roleAssignments.Add(roleAssignment);
+
+        return roleAssignment;
+    }
 }

@@ -1,10 +1,13 @@
 using Turnierplan.Core.Exceptions;
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.Image;
 
-public sealed class Image : Entity<long>, IEntityWithPublicId, IEntityWithOwner
+public sealed class Image : Entity<long>, IEntityWithPublicId, IEntityWithRoleAssignments<Image>
 {
+    internal readonly List<RoleAssignment<Image>> _roleAssignments = new();
+
     public Image(Organization.Organization organization, string name, ImageType type, string fileType, long fileSize, ushort width, ushort height)
     {
         ValidateImageSize(type, width, height);
@@ -39,13 +42,13 @@ public sealed class Image : Entity<long>, IEntityWithPublicId, IEntityWithOwner
 
     public override long Id { get; protected set; }
 
+    public IReadOnlyList<RoleAssignment<Image>> RoleAssignments => _roleAssignments.AsReadOnly();
+
     public Guid ResourceIdentifier { get; }
 
     public PublicId.PublicId PublicId { get; }
 
     public Organization.Organization Organization { get; internal set; } = null!;
-
-    Guid IEntityWithOwner.OwnerId => Organization.OwnerId;
 
     public DateTime CreatedAt { get; }
 
@@ -60,6 +63,14 @@ public sealed class Image : Entity<long>, IEntityWithPublicId, IEntityWithOwner
     public ushort Width { get; }
 
     public ushort Height { get; }
+
+    public RoleAssignment<Image> AddRoleAssignment(Role role, Principal principal, string? description = null)
+    {
+        var roleAssignment = new RoleAssignment<Image>(this, role, principal, description);
+        _roleAssignments.Add(roleAssignment);
+
+        return roleAssignment;
+    }
 
     private static void ValidateImageSize(ImageType type, ushort width, ushort height)
     {

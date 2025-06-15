@@ -2,7 +2,7 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.User;
 
-public sealed class Role : Entity<Guid>
+public sealed class Role : Entity<Guid> // TODO: Delete
 {
     internal Role(Guid id, string name)
     {

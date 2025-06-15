@@ -1,9 +1,11 @@
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.Organization;
 
-public sealed class Organization : Entity<long>, IEntityWithPublicId, IEntityWithOwner
+public sealed class Organization : Entity<long>, IEntityWithPublicId, IEntityWithRoleAssignments<Organization>
 {
+    internal readonly List<RoleAssignment<Organization>> _roleAssignments = new();
     internal readonly List<ApiKey.ApiKey> _apiKeys = new();
     internal readonly List<Folder.Folder> _folders = new();
     internal readonly List<Image.Image> _images = new();
@@ -18,27 +20,25 @@ public sealed class Organization : Entity<long>, IEntityWithPublicId, IEntityWit
         PublicId = new PublicId.PublicId();
         CreatedAt = DateTime.UtcNow;
         Name = name;
-        OwnerId = owner.Id;
     }
 
-    internal Organization(long id, PublicId.PublicId publicId, DateTime createdAt, string name, Guid ownerId)
+    internal Organization(long id, PublicId.PublicId publicId, DateTime createdAt, string name)
     {
         Id = id;
         PublicId = publicId;
         CreatedAt = createdAt;
         Name = name;
-        OwnerId = ownerId;
     }
 
     public override long Id { get; protected set; }
 
     public PublicId.PublicId PublicId { get; }
 
+    public IReadOnlyList<RoleAssignment<Organization>> RoleAssignments => _roleAssignments.AsReadOnly();
+
     public DateTime CreatedAt { get; }
 
     public string Name { get; set; }
-
-    public Guid OwnerId { get; }
 
     public IReadOnlyList<ApiKey.ApiKey> ApiKeys => _apiKeys.AsReadOnly();
 
@@ -49,4 +49,12 @@ public sealed class Organization : Entity<long>, IEntityWithPublicId, IEntityWit
     public IReadOnlyList<Tournament.Tournament> Tournaments => _tournaments.AsReadOnly();
 
     public IReadOnlyList<Venue.Venue> Venues => _venues.AsReadOnly();
+
+    public RoleAssignment<Organization> AddRoleAssignment(Role role, Principal principal, string? description = null)
+    {
+        var roleAssignment = new RoleAssignment<Organization>(this, role, principal, description);
+        _roleAssignments.Add(roleAssignment);
+
+        return roleAssignment;
+    }
 }
