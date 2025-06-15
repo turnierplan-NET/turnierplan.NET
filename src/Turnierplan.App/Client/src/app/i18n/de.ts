@@ -868,7 +868,7 @@ export const de = {
         Validity180: '180 Tage'
       },
       OrganizationNotice: 'Es wird ein neuer API-Schlüssel in der Organisation <span class="fw-bold">{{organizationName}}</span> angelegt.',
-      AccessNotice: 'Mit diesem Schlüssel kann auf alle Turniere der Organisation zugegriffen werden',
+      AccessNotice: 'Ein neuer API-Schlüssel erhält standardmäßig Leserechte für die aktuelle Organisation.',
       Submit: 'Erstellen',
       SuccessInformation: {
         Title: 'API-Schlüssel wurde erstellt',

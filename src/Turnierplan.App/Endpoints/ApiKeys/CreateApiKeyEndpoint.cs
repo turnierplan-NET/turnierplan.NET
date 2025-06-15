@@ -6,9 +6,12 @@ using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
 using Turnierplan.Core.ApiKey;
+using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Dal;
+using Turnierplan.Dal.Extensions;
 
 namespace Turnierplan.App.Endpoints.ApiKeys;
 
@@ -52,7 +55,19 @@ internal sealed class CreateApiKeyEndpoint : EndpointBase<ApiKeyDto>
         apiKey.AssignNewSecret(plainText => secretHasher.HashPassword(apiKey, plainText), out var secret);
 
         await apiKeyRepository.CreateAsync(apiKey).ConfigureAwait(false);
-        await apiKeyRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+        await using (var transaction = await apiKeyRepository.UnitOfWork.WrapTransactionAsync().ConfigureAwait(false))
+        {
+            // Save changes to generate IDs for the api key
+            await apiKeyRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+            // Once the api key has an ID, the role assignment can be created
+            organization.AddRoleAssignment(Role.Reader, apiKey.AsPrincipal());
+
+            await apiKeyRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+            transaction.ShouldCommit = true;
+        }
 
         return Results.Ok(mapper.Map<ApiKeyDto>(apiKey) with { Secret = secret });
     }
