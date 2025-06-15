@@ -51,7 +51,7 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(organization))
+        if (!accessValidator.IsActionAllowed(organization, Actions.GenericWrite))
         {
             return Results.Forbid();
         }

@@ -30,7 +30,7 @@ internal sealed class GetImagesEndpoint : EndpointBase<IEnumerable<ImageDto>>
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(organization))
+        if (!accessValidator.IsActionAllowed(organization, Actions.GenericRead))
         {
             return Results.Forbid();
         }

@@ -35,7 +35,7 @@ internal sealed partial class UpdateVenueEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(venue.Organization))
+        if (!accessValidator.IsActionAllowed(venue, Actions.GenericWrite))
         {
             return Results.Forbid();
         }

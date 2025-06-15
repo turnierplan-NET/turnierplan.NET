@@ -49,7 +49,7 @@ internal abstract class SetDocumentConfigurationEndpoint<T> : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(document.Tournament.Organization))
+        if (!accessValidator.IsActionAllowed(document.Tournament, Actions.GenericWrite))
         {
             return Results.Forbid();
         }

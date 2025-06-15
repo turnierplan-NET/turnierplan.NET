@@ -37,7 +37,7 @@ internal sealed class SetTournamentFolderEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(tournament.Organization))
+        if (!accessValidator.IsActionAllowed(tournament, Actions.GenericWrite))
         {
             return Results.Forbid();
         }
@@ -73,7 +73,7 @@ internal sealed class SetTournamentFolderEndpoint : EndpointBase
                 return Results.NotFound();
             }
 
-            if (!accessValidator.CanSessionUserAccess(folder.Organization))
+            if (!accessValidator.IsActionAllowed(folder, Actions.GenericWrite))
             {
                 return Results.Forbid();
             }

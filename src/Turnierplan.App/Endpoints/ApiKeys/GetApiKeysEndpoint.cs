@@ -28,7 +28,7 @@ internal sealed class GetApiKeysEndpoint : EndpointBase<IEnumerable<ApiKeyDto>>
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(organization))
+        if (!accessValidator.IsActionAllowed(organization, Actions.GenericRead))
         {
             return Results.Forbid();
         }

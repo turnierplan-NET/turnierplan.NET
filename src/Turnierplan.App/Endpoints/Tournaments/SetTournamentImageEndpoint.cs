@@ -36,7 +36,7 @@ internal sealed class SetTournamentImageEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(tournament.Organization))
+        if (!accessValidator.IsActionAllowed(tournament, Actions.GenericWrite))
         {
             return Results.Forbid();
         }
@@ -52,7 +52,7 @@ internal sealed class SetTournamentImageEndpoint : EndpointBase
                 return Results.NotFound();
             }
 
-            if (!accessValidator.CanSessionUserAccess(image.Organization))
+            if (!accessValidator.IsActionAllowed(image, Actions.GenericWrite))
             {
                 return Results.Forbid();
             }

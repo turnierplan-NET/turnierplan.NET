@@ -28,7 +28,7 @@ internal sealed class GetVenueEndpoint : EndpointBase<VenueDto>
             return Results.NotFound();
         }
 
-        if (!accessValidator.CanSessionUserAccess(venue.Organization))
+        if (!accessValidator.IsActionAllowed(venue, Actions.GenericRead))
         {
             return Results.Forbid();
         }
