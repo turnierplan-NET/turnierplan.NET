@@ -28,8 +28,7 @@ internal abstract class RoleAssignmentMappingRuleBase<T> : MappingRuleBase<RoleA
                 ObjectId = source.Principal.ObjectId
             },
             Description = source.Description,
-            IsInherited = false,
-            InheritedFrom = null
+            IsInherited = false
         };
     }
 }

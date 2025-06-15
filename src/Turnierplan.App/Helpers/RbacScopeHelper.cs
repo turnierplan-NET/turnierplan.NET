@@ -10,7 +10,7 @@ internal static partial class RbacScopeHelper
     public static string GetScopeId<T>(this T entity)
         where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
-        return $"{typeof(T).FullName}/{entity.PublicId.ToString()}";
+        return $"{typeof(T).Name}/{entity.PublicId.ToString()}";
     }
 
     public static bool TryParseScopeId(string scopeId, [NotNullWhen(true)] out string? objectTypeName, out PublicId targetObjectId)
@@ -25,11 +25,11 @@ internal static partial class RbacScopeHelper
             return false;
         }
 
-        objectTypeName = match.Groups["FullTypeName"].Value;
+        objectTypeName = match.Groups["TypeName"].Value;
 
         return true;
     }
 
-    [GeneratedRegex(@"^(?<FullTypeName>Turnierplan\.Core\.(?<TypeName>\w+)\.\k<TypeName>)/(?<ObjectId>[A-Za-z0-9_-]{11})$")]
+    [GeneratedRegex(@"^(?<TypeName>\w+)/(?<ObjectId>[A-Za-z0-9_-]{11})$")]
     private static partial Regex ScopeIdRegex();
 }

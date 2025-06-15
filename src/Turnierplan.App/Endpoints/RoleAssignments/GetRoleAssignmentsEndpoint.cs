@@ -36,7 +36,7 @@ internal sealed class GetRoleAssignmentsEndpoint : EndpointBase<IEnumerable<Role
             return Results.BadRequest("Invalid scope ID provided.");
         }
 
-        if (typeName.Equals("Turnierplan.Core.Tournament.Tournament"))
+        if (typeName.Equals("Tournament"))
         {
             var tournament = await tournamentRepository.GetByPublicIdAsync(targetId).ConfigureAwait(false);
 
@@ -54,25 +54,13 @@ internal sealed class GetRoleAssignmentsEndpoint : EndpointBase<IEnumerable<Role
 
             result.AddRange(mapper.MapCollection<RoleAssignmentDto>(tournament.RoleAssignments));
 
-            var organizationScopeId = tournament.Organization.GetScopeId();
             result.AddRange(mapper.MapCollection<RoleAssignmentDto>(tournament.Organization.RoleAssignments)
-                .Select(r =>
-                    r with
-                    {
-                        IsInherited = true,
-                        InheritedFrom = organizationScopeId
-                    }));
+                .Select(r => r with { IsInherited = true }));
 
             if (tournament.Folder is not null)
             {
-                var folderScopeId = tournament.Folder.GetScopeId();
                 result.AddRange(mapper.MapCollection<RoleAssignmentDto>(tournament.Folder.RoleAssignments)
-                    .Select(r =>
-                        r with
-                        {
-                            IsInherited = true,
-                            InheritedFrom = folderScopeId
-                        }));
+                    .Select(r => r with { IsInherited = true }));
             }
 
             return Results.Ok(result);
