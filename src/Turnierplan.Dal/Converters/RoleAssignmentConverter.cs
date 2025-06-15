@@ -12,12 +12,12 @@ internal sealed partial class PrincipalConverter : ValueConverter<Principal, str
     {
     }
 
-    private static string FormatPrincipal(Principal principal)
+    internal static string FormatPrincipal(Principal principal)
     {
         return $"{principal.Kind}:{principal.ObjectId}";
     }
 
-    private static Principal ParsePrincipal(string input)
+    internal static Principal ParsePrincipal(string input)
     {
         var match = PrincipalRegex().Match(input);
 
@@ -29,6 +29,6 @@ internal sealed partial class PrincipalConverter : ValueConverter<Principal, str
         return new Principal(kind, match.Groups["ObjectId"].Value);
     }
 
-    [GeneratedRegex("^(?:(?<Kind>ApiKey):(?<ObjectId>\\d+))|(?:(?<Kind>User):(?<ObjectId>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$")]
+    [GeneratedRegex(@"^(?:(?<Kind>ApiKey):(?<ObjectId>\d+))$|^(?:(?<Kind>User):(?<ObjectId>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$")]
     private static partial Regex PrincipalRegex();
 }
