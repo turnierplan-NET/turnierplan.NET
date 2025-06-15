@@ -39,8 +39,7 @@ internal abstract class IdentityEndpointBase<TResponse> : EndpointBase<TResponse
 
             if (user.IsAdministrator)
             {
-                // TODO: Add administrator claim once the new authorization policy is tested & works
-                // claims.Add(new Claim(ClaimTypes.Administrator, "true"));
+                claims.Add(new Claim(ClaimTypes.Administrator, "true"));
             }
         }
 

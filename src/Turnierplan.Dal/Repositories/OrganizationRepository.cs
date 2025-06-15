@@ -41,10 +41,15 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
         return query.FirstOrDefaultAsync();
     }
 
-    public Task<List<Organization>> GetByOwnerUserIdAsync(Guid ownerUserId)
+    /// <inheritdoc />
+    public Task<List<Organization>> GetByPrincipalAsync(Principal principal)
     {
-        var userIdString = ownerUserId.ToString();
+        // TODO: Try to optimize this query directly within EF
 
-        return DbSet.Where(o => o.RoleAssignments.Any(r => r.Principal.Kind == PrincipalKind.User && r.Principal.ObjectId.Equals(userIdString))).ToListAsync();
+        return context.OrganizationRoleAssignments
+            .Where(r => r.Principal.Equals(principal))
+            .Include(r => r.Scope)
+            .Select(r => r.Scope)
+            .ToListAsync();
     }
 }
