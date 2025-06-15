@@ -99,6 +99,11 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
             return Results.BadRequest("Could not determine principal based on the provided information.");
         }
 
+        if (entity.RoleAssignments.Any(x => x.Role == request.Role && x.Principal.Equals(principal)))
+        {
+            return Results.Conflict("There already exists a role assignment for the specified principal/role combination.");
+        }
+
         var roleAssignment = entity.AddRoleAssignment(request.Role, principal, request.Description);
 
         await roleAssignmentRepository.CreateAsync(roleAssignment).ConfigureAwait(false);

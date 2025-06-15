@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SkiaSharp;
 using Turnierplan.App.Helpers;
 using Turnierplan.App.Security;
 using Turnierplan.Core.ApiKey;
@@ -6,13 +7,14 @@ using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.Venue;
 
 namespace Turnierplan.App.Endpoints.RoleAssignments;
 
-internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase // TODO: Ensure the owner cant delete himself
+internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Delete;
 
@@ -86,6 +88,16 @@ internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase // TODO: Ensur
         }
 
         entity.RemoveRoleAssignment(roleAssignment);
+
+        if (entity is Organization organization)
+        {
+            // An organization must always have at least one owner
+
+            if (!organization.RoleAssignments.Any(x => x.Role is Role.Owner))
+            {
+                return Results.BadRequest("When deleting role assignments from an Organization, at least one owner must always remain.");
+            }
+        }
 
         await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
