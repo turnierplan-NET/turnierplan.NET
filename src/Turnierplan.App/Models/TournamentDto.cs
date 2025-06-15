@@ -9,6 +9,8 @@ public sealed record TournamentDto
 
     public required PublicId OrganizationId { get; init; }
 
+    public required string RbacScopeId { get; init; }
+
     public PublicId? FolderId { get; init; }
 
     public PublicId? VenueId { get; init; }

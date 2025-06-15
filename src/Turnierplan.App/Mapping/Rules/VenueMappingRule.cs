@@ -1,3 +1,4 @@
+using Turnierplan.App.Helpers;
 using Turnierplan.App.Models;
 using Turnierplan.Core.Venue;
 
@@ -11,6 +12,7 @@ internal sealed class VenueMappingRule : MappingRuleBase<Venue, VenueDto>
         {
             Id = source.PublicId,
             OrganizationId = source.Organization.PublicId,
+            RbacScopeId = source.GetScopeId(),
             Name = source.Name,
             Description = source.Description,
             AddressDetails = source.AddressDetails.ToArray(),

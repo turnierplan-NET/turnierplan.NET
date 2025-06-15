@@ -1,3 +1,4 @@
+using Turnierplan.App.Helpers;
 using Turnierplan.App.Models;
 using Turnierplan.Core.Image;
 using Turnierplan.ImageStorage;
@@ -18,6 +19,7 @@ internal sealed class ImageMappingRule : MappingRuleBase<Image, ImageDto>
         return new ImageDto
         {
             Id = source.PublicId,
+            RbacScopeId = source.GetScopeId(),
             CreatedAt = source.CreatedAt,
             Name = source.Name,
             Url = _imageStorage.GetFullImageUrl(source),
