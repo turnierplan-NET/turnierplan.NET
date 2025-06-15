@@ -18,12 +18,12 @@ internal sealed class GetRoleAssignmentsEndpoint : EndpointBase<IEnumerable<Role
 {
     protected override HttpMethod Method => HttpMethod.Get;
 
-    protected override string Route => "/api/role-assignments";
+    protected override string Route => "/api/role-assignments/{scopeId}";
 
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
-        [FromQuery] string scope,
+        [FromRoute] string scopeId,
         IApiKeyRepository apiKeyRepository,
         IFolderRepository folderRepository,
         IImageRepository imageRepository,
@@ -33,7 +33,7 @@ internal sealed class GetRoleAssignmentsEndpoint : EndpointBase<IEnumerable<Role
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        if (!RbacScopeHelper.TryParseScopeId(scope, out var typeName, out var targetId))
+        if (!RbacScopeHelper.TryParseScopeId(scopeId, out var typeName, out var targetId))
         {
             return Results.BadRequest("Invalid scope identifier provided.");
         }
