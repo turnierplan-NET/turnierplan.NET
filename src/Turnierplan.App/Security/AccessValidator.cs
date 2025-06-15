@@ -32,33 +32,16 @@ internal sealed class AccessValidator : IAccessValidator
             return true;
         }
 
-        Principal? activePrincipal = null;
+        var principal = _httpContext.GetActivePrincipal();
 
-        foreach (var claim in _httpContext.User.Claims)
-        {
-            if (claim.Type.Equals(ClaimTypes.ApiKeyId))
-            {
-                activePrincipal = new Principal(PrincipalKind.ApiKey, claim.Value);
-            }
-            else if (claim.Type.Equals(ClaimTypes.UserId))
-            {
-                activePrincipal = new Principal(PrincipalKind.User, claim.Value);
-            }
-        }
-
-        if (activePrincipal is null)
-        {
-            throw new InvalidOperationException("Could not determine active principal.");
-        }
-
-        return IsActionAllowed(target, action, activePrincipal);
+        return IsActionAllowed(target, action, principal);
     }
 
-    private static bool IsActionAllowed<T>(IEntityWithRoleAssignments<T> target, Actions.Action action, Principal activePrincipal)
+    internal static bool IsActionAllowed<T>(IEntityWithRoleAssignments<T> target, Actions.Action action, Principal principal)
         where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
         var activePrincipalRoles = target.RoleAssignments
-            .Where(x => x.Principal.Equals(activePrincipal))
+            .Where(x => x.Principal.Equals(principal))
             .Select(x => x.Role);
 
         var isAccessAllowed = action.IsAllowed(activePrincipalRoles);
@@ -70,11 +53,11 @@ internal sealed class AccessValidator : IAccessValidator
 
         return target switch
         {
-            ApiKey apiKey => IsActionAllowed(apiKey.Organization, action, activePrincipal),
-            Image image => IsActionAllowed(image.Organization, action, activePrincipal),
-            Folder folder => IsActionAllowed(folder.Organization, action, activePrincipal),
-            Tournament tournament => (tournament.Folder is not null && IsActionAllowed(tournament.Folder, action, activePrincipal)) || IsActionAllowed(tournament.Organization, action, activePrincipal),
-            Venue venue => IsActionAllowed(venue.Organization, action, activePrincipal),
+            ApiKey apiKey => IsActionAllowed(apiKey.Organization, action, principal),
+            Image image => IsActionAllowed(image.Organization, action, principal),
+            Folder folder => IsActionAllowed(folder.Organization, action, principal),
+            Tournament tournament => (tournament.Folder is not null && IsActionAllowed(tournament.Folder, action, principal)) || IsActionAllowed(tournament.Organization, action, principal),
+            Venue venue => IsActionAllowed(venue.Organization, action, principal),
             _ => false
         };
     }

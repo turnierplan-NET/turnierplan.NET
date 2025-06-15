@@ -17,6 +17,7 @@ public sealed class Image : Entity<long>, IEntityWithPublicId, IEntityWithRoleAs
         Id = 0;
         ResourceIdentifier = Guid.NewGuid();
         PublicId = new PublicId.PublicId();
+        Organization = organization;
         CreatedAt = DateTime.UtcNow;
         Name = name;
         Type = type;
