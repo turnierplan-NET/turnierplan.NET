@@ -211,6 +211,9 @@ export const de = {
           Message: 'Der API-Schlüssel wurde gelöscht und kann nun nicht mehr für Anfragen verwendet werden.'
         }
       },
+      RbacWidget: {
+        Info: 'Verwalten Sie, welche Nutzer auf diese Organisation zugreifen können und welche Aktionen sie durchführen können.'
+      },
       DeleteWidget: {
         Title: 'Organisation löschen',
         Info: 'Wenn Sie eine Organisation löschen, werden automatisch alle darin enthaltenen Turniere, Spielstätten sämtliche hochgeladenen Bilder mitgelöscht. Diese Aktion kann nicht widerrufen werden!',
@@ -617,6 +620,9 @@ export const de = {
         NoVenues: 'In der aktuellen Organisation gibt es aktuell keine Spielstätten.',
         NoVenueOption: 'Keine Spielstätte verknüpfen'
       },
+      RbacWidget: {
+        Info: 'Verwalten Sie, welche Nutzer auf dieses Turnier zugreifen können und welche Aktionen sie durchführen können.'
+      },
       DeleteWidget: {
         Title: 'Turnier löschen',
         Info: 'Wenn Sie ein Turnier löschen, werden alle Mannschaften, Gruppen, Spiele und Ergebnisse gelöscht. Diese Aktion kann nicht widerrufen werden!',
@@ -804,6 +810,9 @@ export const de = {
           Message: 'Ihre Änderungen an dieser Spielstätte wurden gespeichert'
         }
       },
+      RbacWidget: {
+        Info: 'Verwalten Sie, welche Nutzer auf diese Spielstätte zugreifen können und welche Aktionen sie durchführen können.'
+      },
       DeleteWidget: {
         Title: 'Spielstätte löschen',
         Info: 'Wenn Sie eine Spielstätte löschen, wird diese von allen derzeit verknüpften Turnieren entfernt. Diesen Turnieren kann anschließend eine andere Spielstätte zugewiesen werden.',
@@ -908,6 +917,26 @@ export const de = {
       UnexpectedError:
         'Beim Verarbeiten der Anfrage ist ein unerwarteter Server-Fehler aufgetreten.\nLaden Sie die Seite neu und versuchen Sie es erneut.',
       ErrorDescription: 'Fehlerbeschreibung:'
+    },
+    RbacManagement: {
+      Title: 'Zugriff verwalten',
+      ButtonLabel: 'Verwalten',
+      Loading: 'Rollenzuweisungen werden geladen',
+      NumberOfAssignments: 'Anzahl Rollenzuweisungen:',
+      RoleNames: {
+        Owner: 'Besitzer',
+        Contributor: 'Mitwirkender',
+        Reader: 'Leser'
+      },
+      PrincipalKind: {
+        ApiKey: 'API-Schlüssel',
+        User: 'Benutzer'
+      },
+      Id: 'ID:',
+      CreatedAt: 'Erstellt am:',
+      NotInherited: 'Zuweisung stammt von dieser Resource',
+      Inherited: 'Vererbt von:',
+      InheritedTooltip: 'Diese Rollenzuweisung existiert implizit aufgrund der Zugehörigkeit zu einer anderen Resource'
     }
   }
 };

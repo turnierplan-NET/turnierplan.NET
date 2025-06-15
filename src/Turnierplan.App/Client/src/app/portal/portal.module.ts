@@ -79,6 +79,7 @@ import { LocalStorageService } from './services/local-storage.service';
 import { TitleService } from './services/title.service';
 import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { QRCodeComponent } from 'angularx-qrcode';
+import { RbacWidgetComponent } from './components/rbac-widget/rbac-widget.component';
 
 const routes: Routes = [
   {
@@ -219,7 +220,8 @@ const routes: Routes = [
     IsAdministratorDirective,
     AdministrationPageComponent,
     CreateUserComponent,
-    BadgeComponent
+    BadgeComponent,
+    RbacWidgetComponent
   ],
   imports: [
     CommonModule,

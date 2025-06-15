@@ -317,6 +317,13 @@
             </div>
             <hr class="m-0" />
             <div class="card-body">
+              <tp-rbac-widget
+                [translationKey]="'Portal.ViewTournament.RbacWidget'"
+                [target]="tournament"
+                (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+            </div>
+            <hr class="m-0" />
+            <div class="card-body">
               <tp-delete-widget
                 [translationKey]="'Portal.ViewTournament.DeleteWidget'"
                 [targetObjectName]="tournament.name"

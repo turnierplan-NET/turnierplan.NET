@@ -1,4 +1,4 @@
-@if (statusCode === 404) {
+@if (statusCode === 403 || statusCode === 404) {
   <tp-error-page
     [illustrationName]="'taken'"
     [actionButton]="{
