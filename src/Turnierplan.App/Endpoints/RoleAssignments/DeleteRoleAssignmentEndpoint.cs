@@ -89,14 +89,11 @@ internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
 
         entity.RemoveRoleAssignment(roleAssignment);
 
-        if (entity is Organization organization)
+        if (entity is Organization organization && !organization.RoleAssignments.Any(x => x.Role is Role.Owner))
         {
             // An organization must always have at least one owner
 
-            if (!organization.RoleAssignments.Any(x => x.Role is Role.Owner))
-            {
-                return Results.BadRequest("When deleting role assignments from an Organization, at least one owner must always remain.");
-            }
+            return Results.BadRequest("When deleting role assignments from an Organization, at least one owner must always remain.");
         }
 
         await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
