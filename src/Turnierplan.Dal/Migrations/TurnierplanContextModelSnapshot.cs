@@ -958,10 +958,6 @@ namespace Turnierplan.Dal.Migrations
                                 .HasColumnType("integer[]")
                                 .HasAnnotation("Relational:JsonPropertyName", "cmp");
 
-                            b1.Property<bool>("HigherScoreLoses")
-                                .HasColumnType("boolean")
-                                .HasAnnotation("Relational:JsonPropertyName", "r");
-
                             b1.Property<int>("MatchDrawnPoints")
                                 .HasColumnType("integer")
                                 .HasAnnotation("Relational:JsonPropertyName", "d");
