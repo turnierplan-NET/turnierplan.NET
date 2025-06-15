@@ -30,10 +30,8 @@ namespace Turnierplan.Dal.Migrations
                 schema: "turnierplan",
                 table: "Organizations");
 
-            migrationBuilder.DropColumn(
-                name: "OwnerId",
-                schema: "turnierplan",
-                table: "Organizations");
+            // The call to DropColumn() was generated here.
+            // See comment at the end of method
 
             migrationBuilder.AddColumn<bool>(
                 name: "IsAdministrator",
@@ -228,6 +226,22 @@ namespace Turnierplan.Dal.Migrations
                 schema: "turnierplan",
                 table: "IAM_Venue",
                 column: "VenueId");
+
+            // The DropColumn() call was moved here manually. This is done so that the
+            // corresponding role assignments can be created before the data is destroyed.
+
+            // 1000 is the numerical value for the "Owner" role
+
+            migrationBuilder.Sql("""
+INSERT INTO turnierplan."IAM_Organization" ("OrganizationId", "CreatedAt", "Role", "Principal", "Description")
+SELECT "Organizations"."Id", NOW(), 1000, ('User:' || "Organizations"."OwnerId"), ''
+FROM turnierplan."Organizations";
+""");
+
+            migrationBuilder.DropColumn(
+                name: "OwnerId",
+                schema: "turnierplan",
+                table: "Organizations");
         }
 
         /// <inheritdoc />
