@@ -20,7 +20,7 @@ internal static class ServiceCollectionExtensions
 
         services.AddSingleton<ISigningKeyProvider, SigningKeyProvider>();
 
-        services.AddAuthentication()
+        services.AddAuthentication(AuthenticationSchemes.AuthenticationSchemeSession)
             .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(AuthenticationSchemes.AuthenticationSchemeApiKey, _ => { })
             .AddScheme<IdentityOptions, JwtAuthenticationHandler>(AuthenticationSchemes.AuthenticationSchemeSession, _ => { });
 
