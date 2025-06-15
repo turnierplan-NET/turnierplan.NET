@@ -16,7 +16,7 @@ internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Delete;
 
-    protected override string Route => "/api/organizations/{scopeId}/{roleAssignmentId}";
+    protected override string Route => "/api/role-assignments/{scopeId}/{roleAssignmentId}";
 
     protected override Delegate Handler => Handle;
 
