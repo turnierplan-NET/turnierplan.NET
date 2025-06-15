@@ -1,3 +1,4 @@
+using Turnierplan.App.Helpers;
 using Turnierplan.App.Models;
 using Turnierplan.Core.Folder;
 
@@ -11,6 +12,7 @@ internal sealed class FolderMappingRule : MappingRuleBase<Folder, FolderDto>
         {
             Id = source.PublicId,
             OrganizationId = source.Organization.PublicId,
+            RbacScopeId = source.GetScopeId(),
             Name = source.Name
         };
     }

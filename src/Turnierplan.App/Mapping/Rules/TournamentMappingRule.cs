@@ -1,3 +1,4 @@
+using Turnierplan.App.Helpers;
 using Turnierplan.App.Models;
 using Turnierplan.App.Models.Enums;
 using Turnierplan.Core.Tournament;
@@ -14,6 +15,7 @@ internal sealed class TournamentMappingRule : MappingRuleBase<Tournament, Tourna
         {
             Id = source.PublicId,
             OrganizationId = source.Organization.PublicId,
+            RbacScopeId = source.GetScopeId(),
             FolderId = source.Folder?.PublicId,
             VenueId = source.Venue?.PublicId,
             Name = source.Name,

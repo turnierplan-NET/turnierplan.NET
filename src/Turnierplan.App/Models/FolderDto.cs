@@ -8,5 +8,7 @@ public sealed record FolderDto
 
     public required PublicId OrganizationId { get; init; }
 
+    public required string RbacScopeId { get; init; }
+
     public required string Name { get; init; }
 }

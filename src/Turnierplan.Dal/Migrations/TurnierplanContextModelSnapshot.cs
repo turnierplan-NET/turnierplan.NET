@@ -263,11 +263,9 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.ApiKey.ApiKey>", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<long>("ApiKeyId")
                         .HasColumnType("bigint");
@@ -296,11 +294,9 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Folder.Folder>", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -329,11 +325,9 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Image.Image>", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -362,11 +356,9 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Organization.Organization>", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -395,11 +387,9 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Tournament.Tournament>", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -428,11 +418,9 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Venue.Venue>", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");

@@ -3,7 +3,7 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.ApiKey;
 
-public sealed class ApiKey : Entity<long>, IEntityWithPublicId, IEntityWithRoleAssignments<ApiKey>
+public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>, IEntityWithOrganization
 {
     internal readonly List<RoleAssignment<ApiKey>> _roleAssignments = new();
     internal readonly List<ApiKeyRequest> _requests = new();
@@ -65,6 +65,11 @@ public sealed class ApiKey : Entity<long>, IEntityWithPublicId, IEntityWithRoleA
         _roleAssignments.Add(roleAssignment);
 
         return roleAssignment;
+    }
+
+    public void RemoveRoleAssignment(RoleAssignment<ApiKey> roleAssignment)
+    {
+        _roleAssignments.Remove(roleAssignment);
     }
 
     public void AssignNewSecret(Func<string, string> secretHashFunc, out string plainTextSecret)

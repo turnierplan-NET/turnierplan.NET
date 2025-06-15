@@ -4,7 +4,7 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.Image;
 
-public sealed class Image : Entity<long>, IEntityWithPublicId, IEntityWithRoleAssignments<Image>
+public sealed class Image : Entity<long>, IEntityWithRoleAssignments<Image>, IEntityWithOrganization
 {
     internal readonly List<RoleAssignment<Image>> _roleAssignments = new();
 
@@ -71,6 +71,11 @@ public sealed class Image : Entity<long>, IEntityWithPublicId, IEntityWithRoleAs
         _roleAssignments.Add(roleAssignment);
 
         return roleAssignment;
+    }
+
+    public void RemoveRoleAssignment(RoleAssignment<Image> roleAssignment)
+    {
+        _roleAssignments.Remove(roleAssignment);
     }
 
     private static void ValidateImageSize(ImageType type, ushort width, ushort height)

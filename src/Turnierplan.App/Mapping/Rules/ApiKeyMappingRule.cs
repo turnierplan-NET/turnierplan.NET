@@ -1,3 +1,4 @@
+using Turnierplan.App.Helpers;
 using Turnierplan.App.Models;
 using Turnierplan.Core.ApiKey;
 
@@ -10,6 +11,7 @@ internal sealed class ApiKeyMappingRule : MappingRuleBase<ApiKey, ApiKeyDto>
         return new ApiKeyDto
         {
             Id = source.PublicId,
+            RbacScopeId = source.GetScopeId(),
             Name = source.Name,
             Description = source.Description,
             Secret = null,

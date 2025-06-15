@@ -2,12 +2,12 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.RoleAssignment;
 
-public sealed class RoleAssignment<T> : Entity<long>
+public sealed class RoleAssignment<T> : Entity<Guid>
     where T : Entity<long>, IEntityWithRoleAssignments<T>
 {
     internal RoleAssignment(T scope, Role role, Principal principal, string? description = null)
     {
-        Id = 0;
+        Id = Guid.NewGuid();
         Scope = scope;
         CreatedAt =  DateTime.UtcNow;
         Role = role;
@@ -15,7 +15,7 @@ public sealed class RoleAssignment<T> : Entity<long>
         Description = description ?? string.Empty;
     }
 
-    internal RoleAssignment(long id, DateTime createdAt, Role role, Principal principal, string description)
+    internal RoleAssignment(Guid id, DateTime createdAt, Role role, Principal principal, string description)
     {
         Id = id;
         CreatedAt = createdAt;
@@ -24,7 +24,7 @@ public sealed class RoleAssignment<T> : Entity<long>
         Description = description;
     }
 
-    public override long Id { get; protected set; }
+    public override Guid Id { get; protected set; }
 
     public T Scope { get; internal set; } = null!;
 

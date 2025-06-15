@@ -3,7 +3,7 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.Venue;
 
-public sealed class Venue : Entity<long>, IEntityWithPublicId, IEntityWithRoleAssignments<Venue>
+public sealed class Venue : Entity<long>, IEntityWithRoleAssignments<Venue>, IEntityWithOrganization
 {
     internal readonly List<RoleAssignment<Venue>> _roleAssignments = new();
     internal readonly List<Tournament.Tournament> _tournaments = new();
@@ -55,5 +55,10 @@ public sealed class Venue : Entity<long>, IEntityWithPublicId, IEntityWithRoleAs
         _roleAssignments.Add(roleAssignment);
 
         return roleAssignment;
+    }
+
+    public void RemoveRoleAssignment(RoleAssignment<Venue> roleAssignment)
+    {
+        _roleAssignments.Remove(roleAssignment);
     }
 }
