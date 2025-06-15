@@ -3,7 +3,7 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.Folder;
 
-public sealed class Folder : Entity<long>, IEntityWithPublicId, IEntityWithRoleAssignments<Folder>
+public sealed class Folder : Entity<long>, IEntityWithRoleAssignments<Folder>
 {
     internal readonly List<RoleAssignment<Folder>> _roleAssignments = new();
     internal readonly List<Tournament.Tournament> _tournaments = new();

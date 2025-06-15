@@ -15,9 +15,8 @@ public interface ITournamentRepository : IRepositoryWithPublicId<Tournament, lon
         Matches = 4,
         Documents = 8,
         Venue = 16,
-        Folder = 32,
-        FolderWithTournaments = 64,
-        Images = 128,
+        FolderWithTournaments = 32,
+        Images = 64,
 
         GameRelevant = Teams | Groups | Matches
     }

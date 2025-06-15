@@ -24,7 +24,7 @@ public sealed class RoleAssignment<T> : Entity<long>
         Description = description;
     }
 
-    public override long Id { get; protected set; }
+    public override long Id { get; protected set; } // TODO: Replace with GUID
 
     public T Scope { get; internal set; } = null!;
 
