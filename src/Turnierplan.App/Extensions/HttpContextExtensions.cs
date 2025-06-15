@@ -15,4 +15,11 @@ internal static class HttpContextExtensions
 
         return userId;
     }
+
+    public static bool IsCurrentUserAdministrator(this HttpContext context)
+    {
+        var claimValue = context.User.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.Administrator))?.Value;
+
+        return !string.IsNullOrWhiteSpace(claimValue) && claimValue.Equals("true");
+    }
 }

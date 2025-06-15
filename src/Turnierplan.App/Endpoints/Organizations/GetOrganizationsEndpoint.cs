@@ -19,11 +19,19 @@ internal sealed class GetOrganizationsEndpoint : EndpointBase<IEnumerable<Organi
         IOrganizationRepository repository,
         IMapper mapper)
     {
-        var userId = context.GetCurrentUserIdOrThrow();
+        List<Organization> organizations;
 
-        var principal = new Principal(PrincipalKind.User, userId.ToString());
+        if (context.IsCurrentUserAdministrator())
+        {
+            organizations = await repository.GetAllAsync().ConfigureAwait(false);
+        }
+        else
+        {
+            var userId = context.GetCurrentUserIdOrThrow();
+            var principal = new Principal(PrincipalKind.User, userId.ToString());
 
-        var organizations = await repository.GetByPrincipalAsync(principal).ConfigureAwait(false);
+            organizations = await repository.GetByPrincipalAsync(principal).ConfigureAwait(false);
+        }
 
         return Results.Ok(mapper.MapCollection<OrganizationDto>(organizations));
     }

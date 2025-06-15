@@ -94,7 +94,7 @@ export const de = {
         OrganizationCount: 'Organisationen'
       },
       AdministratorWarning:
-        'Sie sind mit einem Konto mit Administrator-Rolle angemeldet. Aktuell sehen Sie aber dennoch nur Organisationen, welche diesem Konto zugeordnet sind - jedoch nicht die Organisationen der anderen Benutzer.',
+        'Sie sind mit einem Administrator-Konto angemeldet und haben unbeschränkten Zugriff auf alle Organisationen - auch die von anderen Benutzern.',
       NoOrganizations:
         'Sie sind keinen Organisationen zugehörig.\nErstellen Sie eine neue Organisation, um Turniere anzulegen und zu bearbeiten',
       NewOrganization: 'Neue Organisation',

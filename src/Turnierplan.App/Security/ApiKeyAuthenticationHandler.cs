@@ -79,7 +79,7 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
         await _apiKeyRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
 
         var identity = new ClaimsIdentity(claims: [
-            new Claim(ClaimTypes.OrganizationId, apiKey.Organization.Id.ToString())
+            new Claim(ClaimTypes.ApiKeyId, apiKey.Id.ToString())
         ]);
 
         var principal = new ClaimsPrincipal([ identity ]);

@@ -7,6 +7,8 @@ public interface IOrganizationRepository : IRepositoryWithPublicId<Organization,
 {
     Task<Organization?> GetByPublicIdAsync(PublicId.PublicId id, Include include);
 
+    Task<List<Organization>> GetAllAsync();
+
     /// <summary>
     /// Returns a list of all organizations that have any role assignment for the specified principal.
     /// </summary>

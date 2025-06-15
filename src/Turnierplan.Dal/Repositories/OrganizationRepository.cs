@@ -41,6 +41,11 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
         return query.FirstOrDefaultAsync();
     }
 
+    public Task<List<Organization>> GetAllAsync()
+    {
+        return DbSet.ToListAsync();
+    }
+
     /// <inheritdoc />
     public Task<List<Organization>> GetByPrincipalAsync(Principal principal)
     {

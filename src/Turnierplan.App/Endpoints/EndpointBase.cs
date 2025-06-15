@@ -69,7 +69,7 @@ internal abstract partial class EndpointBase
                     ? [AuthenticationSchemes.AuthenticationSchemeApiKey, AuthenticationSchemes.AuthenticationSchemeSession]
                     : [AuthenticationSchemes.AuthenticationSchemeSession];
 
-                policy.RequireAssertion(context => context.User.Claims.Any(x => x.Type.Equals(ClaimTypes.OrganizationId) || x.Type.Equals(ClaimTypes.UserId)));
+                policy.RequireAssertion(context => context.User.Claims.Any(x => x.Type.Equals(ClaimTypes.ApiKeyId) || x.Type.Equals(ClaimTypes.UserId)));
 
                 if (RequireAdministrator == true)
                 {
