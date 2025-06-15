@@ -9,7 +9,7 @@ using Turnierplan.Core.Tournament.TeamSelectors;
 
 namespace Turnierplan.Core.Tournament;
 
-public sealed class Tournament : Entity<long>, IEntityWithPublicId, IEntityWithRoleAssignments<Tournament>
+public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tournament>, IEntityWithOrganization
 {
     internal readonly GroupParticipantComparer _groupParticipantComparer;
     internal int? _nextEntityId;
@@ -153,6 +153,11 @@ public sealed class Tournament : Entity<long>, IEntityWithPublicId, IEntityWithR
         _roleAssignments.Add(roleAssignment);
 
         return roleAssignment;
+    }
+
+    public void RemoveRoleAssignment(RoleAssignment<Tournament> roleAssignment)
+    {
+        _roleAssignments.Remove(roleAssignment);
     }
 
     public Team AddTeam(string name)

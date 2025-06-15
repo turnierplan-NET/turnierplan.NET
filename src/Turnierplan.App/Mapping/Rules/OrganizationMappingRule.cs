@@ -1,3 +1,4 @@
+using Turnierplan.App.Helpers;
 using Turnierplan.App.Models;
 using Turnierplan.Core.Organization;
 
@@ -10,6 +11,7 @@ internal sealed class OrganizationMappingRule : MappingRuleBase<Organization, Or
         return new OrganizationDto
         {
             Id = source.PublicId,
+            RbacScopeId = source.GetScopeId(),
             Name = source.Name
         };
     }

@@ -6,6 +6,8 @@ public sealed record ImageDto
 {
     public required PublicId Id { get; init; }
 
+    public required string RbacScopeId { get; init; }
+
     public required DateTime CreatedAt { get; init; }
 
     public required string Name { get; init; }
