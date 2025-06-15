@@ -3,7 +3,7 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.ApiKey;
 
-public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>
+public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>, IEntityWithOrganization
 {
     internal readonly List<RoleAssignment<ApiKey>> _roleAssignments = new();
     internal readonly List<ApiKeyRequest> _requests = new();

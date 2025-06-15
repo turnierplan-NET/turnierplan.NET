@@ -3,7 +3,7 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.Venue;
 
-public sealed class Venue : Entity<long>, IEntityWithRoleAssignments<Venue>
+public sealed class Venue : Entity<long>, IEntityWithRoleAssignments<Venue>, IEntityWithOrganization
 {
     internal readonly List<RoleAssignment<Venue>> _roleAssignments = new();
     internal readonly List<Tournament.Tournament> _tournaments = new();

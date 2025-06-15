@@ -4,7 +4,7 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.Image;
 
-public sealed class Image : Entity<long>, IEntityWithRoleAssignments<Image>
+public sealed class Image : Entity<long>, IEntityWithRoleAssignments<Image>, IEntityWithOrganization
 {
     internal readonly List<RoleAssignment<Image>> _roleAssignments = new();
 
