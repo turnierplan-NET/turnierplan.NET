@@ -4,7 +4,7 @@ namespace Turnierplan.App.Models;
 
 public sealed record RoleAssignmentDto
 {
-    public required long Id { get; init; }
+    public required Guid Id { get; init; }
 
     public required string Scope { get; init; }
 
