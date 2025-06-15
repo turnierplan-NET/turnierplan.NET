@@ -12,7 +12,7 @@ using Turnierplan.Core.Venue;
 
 namespace Turnierplan.App.Endpoints.RoleAssignments;
 
-internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
+internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase // TODO: Ensure the owner cant delete himself
 {
     protected override HttpMethod Method => HttpMethod.Delete;
 
