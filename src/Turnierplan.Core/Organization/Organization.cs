@@ -55,4 +55,9 @@ public sealed class Organization : Entity<long>, IEntityWithRoleAssignments<Orga
 
         return roleAssignment;
     }
+
+    public void RemoveRoleAssignment(RoleAssignment<Organization> roleAssignment)
+    {
+        _roleAssignments.Remove(roleAssignment);
+    }
 }

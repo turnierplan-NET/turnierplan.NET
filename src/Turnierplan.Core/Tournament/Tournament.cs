@@ -155,6 +155,11 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         return roleAssignment;
     }
 
+    public void RemoveRoleAssignment(RoleAssignment<Tournament> roleAssignment)
+    {
+        _roleAssignments.Remove(roleAssignment);
+    }
+
     public Team AddTeam(string name)
     {
         var team = new Team(GetNextId(), name);

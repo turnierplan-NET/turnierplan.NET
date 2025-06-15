@@ -48,4 +48,9 @@ public sealed class Folder : Entity<long>, IEntityWithRoleAssignments<Folder>, I
 
         return roleAssignment;
     }
+
+    public void RemoveRoleAssignment(RoleAssignment<Folder> roleAssignment)
+    {
+        _roleAssignments.Remove(roleAssignment);
+    }
 }

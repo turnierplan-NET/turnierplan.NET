@@ -40,21 +40,21 @@ internal sealed class GetRoleAssignmentsEndpoint : EndpointBase<IEnumerable<Role
 
         var task = typeName switch
         {
-            "ApiKey" => GetRoleAssignmentsResultAsync(apiKeyRepository, targetId, accessValidator, mapper),
-            "Folder" => GetRoleAssignmentsResultAsync(folderRepository, targetId, accessValidator, mapper),
-            "Image" => GetRoleAssignmentsResultAsync(imageRepository, targetId, accessValidator, mapper),
-            "Organization" => GetRoleAssignmentsResultAsync(organizationRepository, targetId, accessValidator, mapper),
-            "Tournament" => GetRoleAssignmentsResultAsync(tournamentRepository, targetId, accessValidator, mapper),
-            "Venue" => GetRoleAssignmentsResultAsync(venueRepository, targetId, accessValidator, mapper),
+            "ApiKey" => GetRoleAssignmentsAsync(apiKeyRepository, targetId, accessValidator, mapper),
+            "Folder" => GetRoleAssignmentsAsync(folderRepository, targetId, accessValidator, mapper),
+            "Image" => GetRoleAssignmentsAsync(imageRepository, targetId, accessValidator, mapper),
+            "Organization" => GetRoleAssignmentsAsync(organizationRepository, targetId, accessValidator, mapper),
+            "Tournament" => GetRoleAssignmentsAsync(tournamentRepository, targetId, accessValidator, mapper),
+            "Venue" => GetRoleAssignmentsAsync(venueRepository, targetId, accessValidator, mapper),
             _ => null
         };
 
-        return task is null 
+        return task is null
             ? Results.BadRequest("Invalid scope identifier provided.")
             : await task.ConfigureAwait(false);
     }
 
-    private static async Task<IResult> GetRoleAssignmentsResultAsync<T>(IRepositoryWithPublicId<T, long> repository, PublicId targetId, IAccessValidator accessValidator, IMapper mapper)
+    private static async Task<IResult> GetRoleAssignmentsAsync<T>(IRepositoryWithPublicId<T, long> repository, PublicId targetId, IAccessValidator accessValidator, IMapper mapper)
         where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
         var entity = await repository.GetByPublicIdAsync(targetId).ConfigureAwait(false);

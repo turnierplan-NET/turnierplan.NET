@@ -67,6 +67,11 @@ public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>, I
         return roleAssignment;
     }
 
+    public void RemoveRoleAssignment(RoleAssignment<ApiKey> roleAssignment)
+    {
+        _roleAssignments.Remove(roleAssignment);
+    }
+
     public void AssignNewSecret(Func<string, string> secretHashFunc, out string plainTextSecret)
     {
         plainTextSecret = GenerateSecret();

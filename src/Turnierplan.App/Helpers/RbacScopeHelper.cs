@@ -30,6 +30,6 @@ internal static partial class RbacScopeHelper
         return true;
     }
 
-    [GeneratedRegex(@"^(?<TypeName>\w+)/(?<ObjectId>[A-Za-z0-9_-]{11})$")]
-    private static partial Regex ScopeIdRegex();
+    [GeneratedRegex(@"^(?<TypeName>ApiKey|Folder|Image|Organization|Tournament|Venue)/(?<ObjectId>[A-Za-z0-9_-]{11})$")]
+    public static partial Regex ScopeIdRegex();
 }

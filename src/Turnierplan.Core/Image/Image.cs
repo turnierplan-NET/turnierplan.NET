@@ -73,6 +73,11 @@ public sealed class Image : Entity<long>, IEntityWithRoleAssignments<Image>, IEn
         return roleAssignment;
     }
 
+    public void RemoveRoleAssignment(RoleAssignment<Image> roleAssignment)
+    {
+        _roleAssignments.Remove(roleAssignment);
+    }
+
     private static void ValidateImageSize(ImageType type, ushort width, ushort height)
     {
         var constraints = ImageConstraints.GetImageConstraints(type);

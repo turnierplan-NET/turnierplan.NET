@@ -8,4 +8,6 @@ public interface IEntityWithRoleAssignments<T> : IEntityWithPublicId
     IReadOnlyList<RoleAssignment<T>> RoleAssignments { get; }
 
     RoleAssignment<T> AddRoleAssignment(Role role, Principal principal, string? description = null);
+
+    void RemoveRoleAssignment(RoleAssignment<T> roleAssignment);
 }

@@ -56,4 +56,9 @@ public sealed class Venue : Entity<long>, IEntityWithRoleAssignments<Venue>, IEn
 
         return roleAssignment;
     }
+
+    public void RemoveRoleAssignment(RoleAssignment<Venue> roleAssignment)
+    {
+        _roleAssignments.Remove(roleAssignment);
+    }
 }
