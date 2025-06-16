@@ -4,6 +4,7 @@ import { PrincipalKind, Role, RoleAssignmentDto, RoleAssignmentsService } from '
 import { finalize } from 'rxjs';
 
 export interface IRbacWidgetTarget {
+  name: string;
   rbacScopeId: string;
 }
 

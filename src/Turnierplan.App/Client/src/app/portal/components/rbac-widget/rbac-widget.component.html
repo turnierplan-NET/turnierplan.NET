@@ -18,16 +18,17 @@
       </div>
     } @else {
       <div class="mb-4 d-flex flex-row align-items-center">
-        <span class="fw-bold me-2" translate="Portal.RbacManagement.NumberOfAssignments"></span>
-        <span>{{ roleAssignmentCount }}</span>
+        <span class="fst-italic text-decoration-underline">
+          {{ target.name }}
+        </span>
         <span class="flex-grow-1"></span>
         <tp-action-button [title]="'Portal.RbacManagement.NewRoleAssignment'" [type]="'outline-success'" [icon]="'plus-circle'" />
       </div>
 
-      <table class="table table-bordered">
+      <table class="mb-2 table table-bordered">
         <tbody>
           @for (group of roleAssignments | keyvalue; track group.key) {
-            <tr>
+            <tr class="table-active">
               <th>
                 <span [translate]="'Portal.RbacManagement.RoleName.' + group.key"></span>
                 <i class="ms-2 bi bi-info-circle" [ngbTooltip]="'Portal.RbacManagement.RoleDescription.' + group.key | translate"></i>
@@ -82,6 +83,13 @@
           }
         </tbody>
       </table>
+
+      @if (roleAssignmentCount > 1) {
+        <div class="small">
+          <span class="ms-1 me-1" translate="Portal.RbacManagement.TotalCount"></span>
+          <span>{{ roleAssignmentCount }}</span>
+        </div>
+      }
     }
   </div>
 </ng-template>

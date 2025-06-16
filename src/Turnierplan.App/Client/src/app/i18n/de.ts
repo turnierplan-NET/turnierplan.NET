@@ -922,7 +922,6 @@ export const de = {
       Title: 'Zugriff verwalten',
       ButtonLabel: 'Verwalten',
       Loading: 'Rollenzuweisungen werden geladen',
-      NumberOfAssignments: 'Anzahl Rollenzuweisungen:',
       NewRoleAssignment: 'Neue Rollenzuweisung',
       RoleName: {
         Owner: 'Besitzer',
@@ -938,6 +937,7 @@ export const de = {
         ApiKey: 'API-Schlüssel',
         User: 'Benutzer'
       },
+      TotalCount: 'Gesamt:',
       Id: 'ID:',
       CreatedAt: 'Erstellt am:',
       NotInherited: 'Zuweisung stammt von dieser Resource',
