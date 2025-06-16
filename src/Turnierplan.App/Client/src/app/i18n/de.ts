@@ -923,10 +923,15 @@ export const de = {
       ButtonLabel: 'Verwalten',
       Loading: 'Rollenzuweisungen werden geladen',
       NumberOfAssignments: 'Anzahl Rollenzuweisungen:',
-      RoleNames: {
+      RoleName: {
         Owner: 'Besitzer',
         Contributor: 'Mitwirkender',
         Reader: 'Leser'
+      },
+      RoleDescription: {
+        Owner: 'Der Benutzer kann sämtliche Änderungen durchführen inkl. Änderungen an Zugriffsrechten.',
+        Contributor: 'Der Benutzer kann sämtliche Änderungen durchführen ausgenommen Änderungen an Zugriffsrechten.',
+        Reader: 'Der Benutzer kann sämtliche Informationen lesen aber keine Änderungen durchführen.'
       },
       PrincipalKind: {
         ApiKey: 'API-Schlüssel',
@@ -935,7 +940,7 @@ export const de = {
       Id: 'ID:',
       CreatedAt: 'Erstellt am:',
       NotInherited: 'Zuweisung stammt von dieser Resource',
-      Inherited: 'Vererbt von:',
+      Inherited: 'Vererbt durch:',
       InheritedTooltip: 'Diese Rollenzuweisung existiert implizit aufgrund der Zugehörigkeit zu einer anderen Resource'
     }
   }

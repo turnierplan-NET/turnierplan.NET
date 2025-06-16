@@ -22,13 +22,13 @@
         <span>{{ roleAssignmentCount }}</span>
       </div>
 
-      <table class="table table-bordered table-hover">
+      <table class="table table-bordered">
         <tbody>
           @for (group of roleAssignments | keyvalue; track group.key) {
             <tr>
               <th>
-                <span [translate]="'Portal.RbacManagement.RoleNames.' + group.key"></span>
-                <span> ({{ group.value.length }})</span>
+                <span [translate]="'Portal.RbacManagement.RoleName.' + group.key"></span>
+                <i class="ms-2 bi bi-info-circle" [ngbTooltip]="'Portal.RbacManagement.RoleDescription.' + group.key | translate"></i>
               </th>
             </tr>
 
