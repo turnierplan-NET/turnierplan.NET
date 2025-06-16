@@ -17,9 +17,11 @@
         <span translate="Portal.RbacManagement.Loading"></span>
       </div>
     } @else {
-      <div class="mb-3">
-        <span class="fw-bold mb-2 me-2" translate="Portal.RbacManagement.NumberOfAssignments"></span>
+      <div class="mb-4 d-flex flex-row align-items-center">
+        <span class="fw-bold me-2" translate="Portal.RbacManagement.NumberOfAssignments"></span>
         <span>{{ roleAssignmentCount }}</span>
+        <span class="flex-grow-1"></span>
+        <tp-action-button [title]="'Portal.RbacManagement.NewRoleAssignment'" [type]="'outline-success'" [icon]="'plus-circle'" />
       </div>
 
       <table class="table table-bordered">

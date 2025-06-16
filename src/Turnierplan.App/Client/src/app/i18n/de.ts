@@ -923,6 +923,7 @@ export const de = {
       ButtonLabel: 'Verwalten',
       Loading: 'Rollenzuweisungen werden geladen',
       NumberOfAssignments: 'Anzahl Rollenzuweisungen:',
+      NewRoleAssignment: 'Neue Rollenzuweisung',
       RoleName: {
         Owner: 'Besitzer',
         Contributor: 'Mitwirkender',
