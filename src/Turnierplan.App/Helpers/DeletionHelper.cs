@@ -45,6 +45,7 @@ internal sealed class DeletionHelper : IDeletionHelper
     public async Task<bool> DeleteUserAsync(User user, CancellationToken cancellationToken)
     {
         // TODO: Decide how to handle this (there is no longer a 1-n relation between user and organisation)
+        // When this is decided: Update the information text on the "delete user" screen in the frontend
 
         // foreach (var organization in user.Organizations.ToList()) // ToList() to avoid invalid operation exception
         // {

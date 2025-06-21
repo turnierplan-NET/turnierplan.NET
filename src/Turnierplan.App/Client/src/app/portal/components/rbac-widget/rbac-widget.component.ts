@@ -47,10 +47,6 @@ export class RbacWidgetComponent {
   }
 
   protected buttonClicked(): void {
-    if (this.offcanvas) {
-      return;
-    }
-
     this.offcanvas = this.offcanvasService.open(RbacOffcanvasComponent, { position: 'end' });
     const component = this.offcanvas.componentInstance as RbacOffcanvasComponent;
 
@@ -62,7 +58,5 @@ export class RbacWidgetComponent {
     });
 
     component.setTarget(this.target);
-
-    this.offcanvas.hidden.subscribe({ next: () => (this.offcanvas = undefined) });
   }
 }
