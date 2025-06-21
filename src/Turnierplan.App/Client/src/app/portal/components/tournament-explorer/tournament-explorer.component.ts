@@ -58,6 +58,7 @@ export class TournamentExplorerComponent implements OnChanges {
         const folder = this.treeData.find((x) => x.folderId === folderId);
         if (folder) {
           folder.label = name;
+          folder.folderName = name;
         }
         this.isUpdatingFolderName = false;
       },

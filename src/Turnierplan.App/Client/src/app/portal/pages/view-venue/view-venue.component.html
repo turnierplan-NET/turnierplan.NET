@@ -111,6 +111,13 @@
           @case (1) {
             <!-- Settings page -->
             <div class="card-body">
+              <tp-rbac-widget
+                [translationKey]="'Portal.ViewVenue.RbacWidget'"
+                [target]="venue"
+                (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+            </div>
+            <hr class="m-0" />
+            <div class="card-body">
               <tp-delete-widget
                 [translationKey]="'Portal.ViewVenue.DeleteWidget'"
                 [targetObjectName]="venue.name"

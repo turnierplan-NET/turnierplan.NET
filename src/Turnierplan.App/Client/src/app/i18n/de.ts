@@ -211,6 +211,9 @@ export const de = {
           Message: 'Der API-Schlüssel wurde gelöscht und kann nun nicht mehr für Anfragen verwendet werden.'
         }
       },
+      RbacWidget: {
+        Info: 'Verwalten Sie, welche Nutzer auf diese Organisation zugreifen können und welche Aktionen sie durchführen können.'
+      },
       DeleteWidget: {
         Title: 'Organisation löschen',
         Info: 'Wenn Sie eine Organisation löschen, werden automatisch alle darin enthaltenen Turniere, Spielstätten sämtliche hochgeladenen Bilder mitgelöscht. Diese Aktion kann nicht widerrufen werden!',
@@ -617,6 +620,9 @@ export const de = {
         NoVenues: 'In der aktuellen Organisation gibt es aktuell keine Spielstätten.',
         NoVenueOption: 'Keine Spielstätte verknüpfen'
       },
+      RbacWidget: {
+        Info: 'Verwalten Sie, welche Nutzer auf dieses Turnier zugreifen können und welche Aktionen sie durchführen können.'
+      },
       DeleteWidget: {
         Title: 'Turnier löschen',
         Info: 'Wenn Sie ein Turnier löschen, werden alle Mannschaften, Gruppen, Spiele und Ergebnisse gelöscht. Diese Aktion kann nicht widerrufen werden!',
@@ -804,6 +810,9 @@ export const de = {
           Message: 'Ihre Änderungen an dieser Spielstätte wurden gespeichert'
         }
       },
+      RbacWidget: {
+        Info: 'Verwalten Sie, welche Nutzer auf diese Spielstätte zugreifen können und welche Aktionen sie durchführen können.'
+      },
       DeleteWidget: {
         Title: 'Spielstätte löschen',
         Info: 'Wenn Sie eine Spielstätte löschen, wird diese von allen derzeit verknüpften Turnieren entfernt. Diesen Turnieren kann anschließend eine andere Spielstätte zugewiesen werden.',
@@ -908,6 +917,50 @@ export const de = {
       UnexpectedError:
         'Beim Verarbeiten der Anfrage ist ein unerwarteter Server-Fehler aufgetreten.\nLaden Sie die Seite neu und versuchen Sie es erneut.',
       ErrorDescription: 'Fehlerbeschreibung:'
+    },
+    RbacManagement: {
+      Title: 'Zugriff verwalten',
+      ButtonLabel: 'Verwalten',
+      OffcanvasTitle: 'Rollenzuweisungen bearbeiten',
+      Loading: 'Rollenzuweisungen werden geladen',
+      NewRoleAssignment: 'Neue Rollenzuweisung',
+      RoleName: {
+        Owner: 'Besitzer',
+        Contributor: 'Mitwirkender',
+        Reader: 'Leser'
+      },
+      RoleDescription: {
+        Owner: 'Der Benutzer kann sämtliche Änderungen durchführen inkl. Änderungen an Zugriffsrechten.',
+        Contributor: 'Der Benutzer kann sämtliche Änderungen durchführen ausgenommen Änderungen an Zugriffsrechten.',
+        Reader: 'Der Benutzer kann sämtliche Informationen lesen aber keine Änderungen durchführen.'
+      },
+      PrincipalKind: {
+        ApiKey: 'API-Schlüssel',
+        User: 'Benutzer'
+      },
+      TotalCount: 'Gesamt:',
+      Id: 'ID:',
+      CreatedAt: 'Erstellt am:',
+      Inherited: 'Vererbt durch:',
+      InheritedTooltip: 'Diese Rollenzuweisung existiert implizit aufgrund der Zugehörigkeit zu einer anderen Resource',
+      ScopeType: {
+        Folder: {
+          NotInherited: 'Zuweisung liegt auf diesem Ordner'
+        },
+        Organization: {
+          NotInherited: 'Zuweisung liegt auf dieser Organisation'
+        },
+        Tournament: {
+          NotInherited: 'Zuweisung liegt auf diesem Turnier'
+        },
+        Venue: {
+          NotInherited: 'Zuweisung liegt auf dieser Spielstätte'
+        }
+      },
+      SuccessToast: {
+        Title: 'Rollenzuweisung gelöscht',
+        Message: 'Die Rollenzuweisung wurde erfolgreich gelöscht.'
+      }
     }
   }
 };

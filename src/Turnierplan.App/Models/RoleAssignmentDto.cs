@@ -6,7 +6,9 @@ public sealed record RoleAssignmentDto
 {
     public required Guid Id { get; init; }
 
-    public required string Scope { get; init; }
+    public required string ScopeId { get; init; }
+
+    public required string ScopeName { get; init; }
 
     public required DateTime CreatedAt { get; init; }
 
