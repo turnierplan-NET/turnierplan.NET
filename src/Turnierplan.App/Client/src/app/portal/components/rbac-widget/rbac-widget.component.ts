@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 import { RbacOffcanvasComponent } from '../rbac-offcanvas/rbac-offcanvas.component';
+import { NavigationStart, Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs/operators';
 
 interface IRbacWidgetTarget {
   name: string;
@@ -25,19 +28,41 @@ export class RbacWidgetComponent {
   @Output()
   public errorOccured = new EventEmitter<unknown>();
 
-  constructor(private readonly offcanvasService: NgbOffcanvas) {}
+  private offcanvas?: NgbOffcanvasRef;
+
+  constructor(
+    private readonly offcanvasService: NgbOffcanvas,
+    private readonly router: Router
+  ) {
+    this.router.events
+      .pipe(
+        takeUntilDestroyed(),
+        filter((event) => event instanceof NavigationStart)
+      )
+      .subscribe({
+        next: () => {
+          this.offcanvas?.close();
+        }
+      });
+  }
 
   protected buttonClicked(): void {
-    const ref = this.offcanvasService.open(RbacOffcanvasComponent, { position: 'end' });
-    const component = ref.componentInstance as RbacOffcanvasComponent;
+    if (this.offcanvas) {
+      return;
+    }
+
+    this.offcanvas = this.offcanvasService.open(RbacOffcanvasComponent, { position: 'end' });
+    const component = this.offcanvas.componentInstance as RbacOffcanvasComponent;
 
     component.error$.subscribe({
       next: (value) => {
-        ref.close();
+        this.offcanvas?.close();
         this.errorOccured.emit(value);
       }
     });
 
     component.setTarget(this.target);
+
+    this.offcanvas.hidden.subscribe({ next: () => (this.offcanvas = undefined) });
   }
 }
