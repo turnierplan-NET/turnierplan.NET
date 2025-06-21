@@ -2,7 +2,6 @@ import { Component, OnDestroy } from '@angular/core';
 import { finalize, Observable, Subject } from 'rxjs';
 import { PrincipalKind, Role, RoleAssignmentDto, RoleAssignmentsService } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
-import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 
 interface IRbacOffcanvasTarget {
   name: string;
