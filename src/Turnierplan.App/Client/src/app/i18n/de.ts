@@ -944,16 +944,16 @@ export const de = {
       Inherited: 'Vererbt durch:',
       InheritedTooltip: 'Diese Rollenzuweisung existiert implizit aufgrund der Zugehörigkeit zu einer anderen Resource',
       ScopeType: {
+        Folder: {
+          NotInherited: 'Zuweisung liegt auf diesem Ordner'
+        },
         Organization: {
-          Info: 'Verwalten Sie, welche Nutzer auf diese Organisation zugreifen können und welche Aktionen sie durchführen können.',
           NotInherited: 'Zuweisung liegt auf dieser Organisation'
         },
         Tournament: {
-          Info: 'Verwalten Sie, welche Nutzer auf dieses Turnier zugreifen können und welche Aktionen sie durchführen können.',
           NotInherited: 'Zuweisung liegt auf diesem Turnier'
         },
         Venue: {
-          Info: 'Verwalten Sie, welche Nutzer auf diese Spielstätte zugreifen können und welche Aktionen sie durchführen können.',
           NotInherited: 'Zuweisung liegt auf dieser Spielstätte'
         }
       },
