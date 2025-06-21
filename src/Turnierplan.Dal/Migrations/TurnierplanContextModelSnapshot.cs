@@ -18,7 +18,7 @@ namespace Turnierplan.Dal.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.6")
+                .HasAnnotation("ProductVersion", "9.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -250,201 +250,20 @@ namespace Turnierplan.Dal.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("character varying(40)");
 
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid");
+
                     b.Property<long>("PublicId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OwnerId");
+
                     b.HasIndex("PublicId")
                         .IsUnique();
 
                     b.ToTable("Organizations", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.ApiKey.ApiKey>", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<long>("ApiKeyId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
-
-                    b.Property<string>("Principal")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApiKeyId");
-
-                    b.ToTable("IAM_ApiKey", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Folder.Folder>", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
-
-                    b.Property<long>("FolderId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Principal")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FolderId");
-
-                    b.ToTable("IAM_Folder", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Image.Image>", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
-
-                    b.Property<long>("ImageId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Principal")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ImageId");
-
-                    b.ToTable("IAM_Image", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Organization.Organization>", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
-
-                    b.Property<long>("OrganizationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Principal")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.ToTable("IAM_Organization", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Tournament.Tournament>", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
-
-                    b.Property<string>("Principal")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
-                    b.Property<long>("TournamentId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TournamentId");
-
-                    b.ToTable("IAM_Tournament", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Venue.Venue>", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
-
-                    b.Property<string>("Principal")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
-                    b.Property<long>("VenueId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VenueId");
-
-                    b.ToTable("IAM_Venue", "turnierplan");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.Tournament.Group", b =>
@@ -636,6 +455,32 @@ namespace Turnierplan.Dal.Migrations
                     b.ToTable("Tournaments", "turnierplan");
                 });
 
+            modelBuilder.Entity("Turnierplan.Core.User.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Roles", "turnierplan");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("9da7acec-ed66-4698-a2d6-927c9ee3f83a"),
+                            Name = "Administrator"
+                        });
+                });
+
             modelBuilder.Entity("Turnierplan.Core.User.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -649,9 +494,6 @@ namespace Turnierplan.Dal.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
-
-                    b.Property<bool>("IsAdministrator")
-                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("LastLogin")
                         .HasColumnType("timestamp with time zone");
@@ -729,6 +571,21 @@ namespace Turnierplan.Dal.Migrations
                     b.ToTable("Venues", "turnierplan");
                 });
 
+            modelBuilder.Entity("UserRoles", b =>
+                {
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("RoleId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRoles", "turnierplan");
+                });
+
             modelBuilder.Entity("Turnierplan.Core.ApiKey.ApiKey", b =>
                 {
                     b.HasOne("Turnierplan.Core.Organization.Organization", "Organization")
@@ -784,70 +641,13 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.ApiKey.ApiKey>", b =>
+            modelBuilder.Entity("Turnierplan.Core.Organization.Organization", b =>
                 {
-                    b.HasOne("Turnierplan.Core.ApiKey.ApiKey", "Scope")
-                        .WithMany("RoleAssignments")
-                        .HasForeignKey("ApiKeyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Turnierplan.Core.User.User", null)
+                        .WithMany("Organizations")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Scope");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Folder.Folder>", b =>
-                {
-                    b.HasOne("Turnierplan.Core.Folder.Folder", "Scope")
-                        .WithMany("RoleAssignments")
-                        .HasForeignKey("FolderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Scope");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Image.Image>", b =>
-                {
-                    b.HasOne("Turnierplan.Core.Image.Image", "Scope")
-                        .WithMany("RoleAssignments")
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Scope");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Organization.Organization>", b =>
-                {
-                    b.HasOne("Turnierplan.Core.Organization.Organization", "Scope")
-                        .WithMany("RoleAssignments")
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Scope");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Tournament.Tournament>", b =>
-                {
-                    b.HasOne("Turnierplan.Core.Tournament.Tournament", "Scope")
-                        .WithMany("RoleAssignments")
-                        .HasForeignKey("TournamentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Scope");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Venue.Venue>", b =>
-                {
-                    b.HasOne("Turnierplan.Core.Venue.Venue", "Scope")
-                        .WithMany("RoleAssignments")
-                        .HasForeignKey("VenueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Scope");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.Tournament.Group", b =>
@@ -1232,23 +1032,29 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Organization");
                 });
 
+            modelBuilder.Entity("UserRoles", b =>
+                {
+                    b.HasOne("Turnierplan.Core.User.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Turnierplan.Core.User.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Turnierplan.Core.ApiKey.ApiKey", b =>
                 {
                     b.Navigation("Requests");
-
-                    b.Navigation("RoleAssignments");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.Folder.Folder", b =>
                 {
-                    b.Navigation("RoleAssignments");
-
                     b.Navigation("Tournaments");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.Image.Image", b =>
-                {
-                    b.Navigation("RoleAssignments");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.Organization.Organization", b =>
@@ -1258,8 +1064,6 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Folders");
 
                     b.Navigation("Images");
-
-                    b.Navigation("RoleAssignments");
 
                     b.Navigation("Tournaments");
 
@@ -1279,15 +1083,16 @@ namespace Turnierplan.Dal.Migrations
 
                     b.Navigation("Matches");
 
-                    b.Navigation("RoleAssignments");
-
                     b.Navigation("Teams");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.User.User", b =>
+                {
+                    b.Navigation("Organizations");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.Venue.Venue", b =>
                 {
-                    b.Navigation("RoleAssignments");
-
                     b.Navigation("Tournaments");
                 });
 #pragma warning restore 612, 618
