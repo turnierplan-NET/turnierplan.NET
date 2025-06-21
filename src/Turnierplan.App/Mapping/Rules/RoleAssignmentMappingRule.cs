@@ -19,7 +19,8 @@ internal abstract class RoleAssignmentMappingRuleBase<T> : MappingRuleBase<RoleA
         return new RoleAssignmentDto
         {
             Id = source.Id,
-            Scope = source.Scope.GetScopeId(),
+            ScopeId = source.Scope.GetScopeId(),
+            ScopeName = source.Scope.Name,
             CreatedAt = source.CreatedAt,
             Role = source.Role,
             Principal = new PrincipalDto

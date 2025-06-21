@@ -80,6 +80,7 @@ import { TitleService } from './services/title.service';
 import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { QRCodeComponent } from 'angularx-qrcode';
 import { RbacWidgetComponent } from './components/rbac-widget/rbac-widget.component';
+import { RbacOffcanvasComponent } from './components/rbac-offcanvas/rbac-offcanvas.component';
 
 const routes: Routes = [
   {
@@ -221,7 +222,8 @@ const routes: Routes = [
     AdministrationPageComponent,
     CreateUserComponent,
     BadgeComponent,
-    RbacWidgetComponent
+    RbacWidgetComponent,
+    RbacOffcanvasComponent
   ],
   imports: [
     CommonModule,

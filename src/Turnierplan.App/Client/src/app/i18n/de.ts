@@ -921,6 +921,7 @@ export const de = {
     RbacManagement: {
       Title: 'Zugriff verwalten',
       ButtonLabel: 'Verwalten',
+      OffcanvasTitle: 'Rollenzuweisungen bearbeiten',
       Loading: 'Rollenzuweisungen werden geladen',
       NewRoleAssignment: 'Neue Rollenzuweisung',
       RoleName: {
@@ -940,9 +941,22 @@ export const de = {
       TotalCount: 'Gesamt:',
       Id: 'ID:',
       CreatedAt: 'Erstellt am:',
-      NotInherited: 'Zuweisung stammt von dieser Resource',
       Inherited: 'Vererbt durch:',
       InheritedTooltip: 'Diese Rollenzuweisung existiert implizit aufgrund der Zugehörigkeit zu einer anderen Resource',
+      ScopeType: {
+        Organization: {
+          Info: 'Verwalten Sie, welche Nutzer auf diese Organisation zugreifen können und welche Aktionen sie durchführen können.',
+          NotInherited: 'Zuweisung liegt auf dieser Organisation'
+        },
+        Tournament: {
+          Info: 'Verwalten Sie, welche Nutzer auf dieses Turnier zugreifen können und welche Aktionen sie durchführen können.',
+          NotInherited: 'Zuweisung liegt auf diesem Turnier'
+        },
+        Venue: {
+          Info: 'Verwalten Sie, welche Nutzer auf diese Spielstätte zugreifen können und welche Aktionen sie durchführen können.',
+          NotInherited: 'Zuweisung liegt auf dieser Spielstätte'
+        }
+      },
       SuccessToast: {
         Title: 'Rollenzuweisung gelöscht',
         Message: 'Die Rollenzuweisung wurde erfolgreich gelöscht.'
