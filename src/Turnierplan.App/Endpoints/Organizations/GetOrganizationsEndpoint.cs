@@ -27,8 +27,7 @@ internal sealed class GetOrganizationsEndpoint : EndpointBase<IEnumerable<Organi
         }
         else
         {
-            var userId = context.GetCurrentUserIdOrThrow();
-            var principal = new Principal(PrincipalKind.User, userId.ToString());
+            var principal = context.GetActivePrincipal();
 
             organizations = await repository.GetByPrincipalAsync(principal).ConfigureAwait(false);
         }

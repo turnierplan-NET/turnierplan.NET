@@ -26,7 +26,7 @@ internal abstract class RoleAssignmentMappingRuleBase<T> : MappingRuleBase<RoleA
             Principal = new PrincipalDto
             {
                 Kind = source.Principal.Kind,
-                ObjectId = source.Principal.ObjectId
+                PrincipalId = source.Principal.PrincipalId
             },
             Description = source.Description,
             IsInherited = false

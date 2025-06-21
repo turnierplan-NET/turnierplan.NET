@@ -9,6 +9,7 @@ public sealed class User : Entity<Guid>
         email = email.Trim();
 
         Id = Guid.NewGuid();
+        PrincipalId = Guid.NewGuid();
         CreatedAt = DateTime.UtcNow;
         Name = name;
         EMail = email;
@@ -19,9 +20,10 @@ public sealed class User : Entity<Guid>
         SecurityStamp = Guid.Empty;
     }
 
-    internal User(Guid id, DateTime createdAt, string name, string eMail, string normalizedEMail, string passwordHash, bool isAdministrator, DateTime lastPasswordChange, Guid securityStamp)
+    internal User(Guid id, Guid principalId, DateTime createdAt, string name, string eMail, string normalizedEMail, string passwordHash, bool isAdministrator, DateTime lastPasswordChange, Guid securityStamp)
     {
         Id = id;
+        PrincipalId = principalId;
         CreatedAt = createdAt;
         Name = name;
         EMail = eMail;
@@ -33,6 +35,8 @@ public sealed class User : Entity<Guid>
     }
 
     public override Guid Id { get; protected set; }
+
+    public Guid PrincipalId { get; }
 
     public DateTime CreatedAt { get; }
 

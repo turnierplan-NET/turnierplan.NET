@@ -13,6 +13,7 @@ public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>, I
         organization._apiKeys.Add(this);
 
         Id = 0;
+        PrincipalId = Guid.NewGuid();
         PublicId = new PublicId.PublicId();
         Organization = organization;
         Name = name;
@@ -23,9 +24,10 @@ public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>, I
         IsActive = true;
     }
 
-    internal ApiKey(long id, PublicId.PublicId publicId, string name, string description, string secretHash, DateTime createdAt, DateTime expiryDate, bool isActive)
+    internal ApiKey(long id, Guid principalId, PublicId.PublicId publicId, string name, string description, string secretHash, DateTime createdAt, DateTime expiryDate, bool isActive)
     {
         Id = id;
+        PrincipalId = principalId;
         PublicId = publicId;
         Name = name;
         Description = description;
@@ -36,6 +38,8 @@ public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>, I
     }
 
     public override long Id { get; protected set; }
+
+    public Guid PrincipalId { get; }
 
     public PublicId.PublicId PublicId { get; }
 

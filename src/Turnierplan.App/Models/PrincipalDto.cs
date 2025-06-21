@@ -6,5 +6,5 @@ public sealed record PrincipalDto
 {
     public required PrincipalKind Kind { get; init; }
 
-    public required string ObjectId { get; init; }
+    public required Guid PrincipalId { get; init; }
 }

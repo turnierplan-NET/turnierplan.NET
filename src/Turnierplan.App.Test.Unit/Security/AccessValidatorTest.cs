@@ -17,8 +17,8 @@ public sealed class AccessValidatorTest
     {
         var target = new Organization("Test");
 
-        var principal = new Principal(PrincipalKind.User, "faa6d5d3-93ad-410e-bc81-171a04cf0130");
-        var otherPrincipal = new Principal(PrincipalKind.User, "98f8cb8c-606f-47fc-805f-244210e1df51");
+        var principal = new Principal(PrincipalKind.User, Guid.Parse("faa6d5d3-93ad-410e-bc81-171a04cf0130"));
+        var otherPrincipal = new Principal(PrincipalKind.User, Guid.Parse("98f8cb8c-606f-47fc-805f-244210e1df51"));
 
         target.AddRoleAssignment(Role.Reader, principal);
         target.AddRoleAssignment(Role.Contributor, otherPrincipal);
@@ -35,8 +35,8 @@ public sealed class AccessValidatorTest
     {
         var organization = new Organization("Test");
 
-        var principal = new Principal(PrincipalKind.User, "faa6d5d3-93ad-410e-bc81-171a04cf0130");
-        var otherPrincipal = new Principal(PrincipalKind.User, "98f8cb8c-606f-47fc-805f-244210e1df51");
+        var principal = new Principal(PrincipalKind.User, Guid.Parse("faa6d5d3-93ad-410e-bc81-171a04cf0130"));
+        var otherPrincipal = new Principal(PrincipalKind.User, Guid.Parse("98f8cb8c-606f-47fc-805f-244210e1df51"));
 
         organization.AddRoleAssignment(Role.Reader, principal);
         organization.AddRoleAssignment(Role.Contributor, otherPrincipal);
@@ -66,8 +66,8 @@ public sealed class AccessValidatorTest
         var organization = new Organization("Test");
         var folder = new Folder(organization, "Test");
 
-        var principal = new Principal(PrincipalKind.User, "faa6d5d3-93ad-410e-bc81-171a04cf0130");
-        var otherPrincipal = new Principal(PrincipalKind.User, "98f8cb8c-606f-47fc-805f-244210e1df51");
+        var principal = new Principal(PrincipalKind.User, Guid.Parse("faa6d5d3-93ad-410e-bc81-171a04cf0130"));
+        var otherPrincipal = new Principal(PrincipalKind.User, Guid.Parse("98f8cb8c-606f-47fc-805f-244210e1df51"));
 
         folder.AddRoleAssignment(Role.Reader, principal);
         folder.AddRoleAssignment(Role.Contributor, otherPrincipal);

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Turnierplan.App.Options;
 using Turnierplan.App.Security;
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.User;
 using ClaimTypes = Turnierplan.App.Security.ClaimTypes;
 
@@ -36,6 +37,8 @@ internal abstract class IdentityEndpointBase<TResponse> : EndpointBase<TResponse
             claims.Add(new Claim(ClaimTypes.DisplayName, user.Name));
             claims.Add(new Claim(ClaimTypes.EMailAddress, user.EMail));
             claims.Add(new Claim(ClaimTypes.UserId, user.Id.ToString()));
+            claims.Add(new Claim(ClaimTypes.PrincipalId, user.PrincipalId.ToString()));
+            claims.Add(new Claim(ClaimTypes.PrincipalKind, nameof(PrincipalKind.User)));
 
             if (user.IsAdministrator)
             {

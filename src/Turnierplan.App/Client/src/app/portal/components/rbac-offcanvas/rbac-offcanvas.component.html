@@ -39,7 +39,7 @@
                       }
                     }
                     <!-- TODO: Resolve ApiKey/User name -->
-                    <span>{{ assignment.principal.objectId }}</span>
+                    <span>{{ assignment.principal.principalId }}</span>
                     @if (canDeleteAssignment(assignment)) {
                       <span class="flex-grow-1"></span>
                       <tp-delete-button [reducedFootprint]="true" (confirmed)="removeRoleAssignment(assignment.id)" />
