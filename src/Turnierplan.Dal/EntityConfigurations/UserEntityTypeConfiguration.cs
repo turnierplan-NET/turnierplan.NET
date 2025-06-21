@@ -15,6 +15,12 @@ public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.Id)
             .IsRequired();
 
+        builder.Property(x => x.PrincipalId)
+            .IsRequired();
+
+        builder.HasIndex(x => x.PrincipalId)
+            .IsUnique();
+
         builder.Property(x => x.CreatedAt)
             .IsRequired();
 
