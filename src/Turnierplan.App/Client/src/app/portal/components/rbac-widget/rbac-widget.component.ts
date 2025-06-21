@@ -19,6 +19,9 @@ export class RbacWidgetComponent {
   @Input()
   public target!: IRbacWidgetTarget;
 
+  @Input()
+  public buttonOnly: boolean = false;
+
   @Output()
   public errorOccured = new EventEmitter<unknown>();
 

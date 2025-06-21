@@ -1,10 +1,14 @@
-<div class="fw-bold mb-3" translate="Portal.RbacManagement.Title"></div>
-<div translate="{{ translationKey }}.Info"></div>
+@if (buttonOnly) {
+  <tp-action-button [type]="'outline-secondary'" [icon]="'shield-lock'" [mode]="'IconOnly'" (click)="buttonClicked()" />
+} @else {
+  <div class="fw-bold mb-3" translate="Portal.RbacManagement.Title"></div>
+  <div translate="{{ translationKey }}.Info"></div>
 
-<div class="mt-3 d-flex flex-row">
-  <tp-action-button
-    [type]="'outline-secondary'"
-    [icon]="'shield-lock'"
-    [title]="'Portal.RbacManagement.ButtonLabel'"
-    (click)="buttonClicked()" />
-</div>
+  <div class="mt-3 d-flex flex-row">
+    <tp-action-button
+      [type]="'outline-secondary'"
+      [icon]="'shield-lock'"
+      [title]="'Portal.RbacManagement.ButtonLabel'"
+      (click)="buttonClicked()" />
+  </div>
+}

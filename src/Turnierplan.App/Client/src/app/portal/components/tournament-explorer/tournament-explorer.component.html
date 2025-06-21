@@ -7,7 +7,7 @@
   <div class="p-0 col-12 col-lg-8">
     @if (currentEntry) {
       <div class="p-3 d-flex flex-column">
-        @if (currentEntry.folderId) {
+        @if (currentEntry.folderId && currentEntry.folderName) {
           <div class="mb-4 d-flex flex-row align-items-center gap-2">
             <div class="fs-5 fw-bold">{{ currentEntry.label }}</div>
             @if (isUpdatingFolderName) {
@@ -22,7 +22,13 @@
                 (renamed)="renameFolder(currentEntry.folderId, $event)" />
             }
 
+            <tp-rbac-widget
+              [target]="{ rbacScopeId: 'Folder:' + currentEntry.folderId, name: currentEntry.folderName }"
+              [buttonOnly]="true"
+              (errorOccured)="requestError.emit($event)" />
+
             <span class="flex-grow-1"></span>
+
             <tp-action-button
               icon="calendar-range"
               type="outline-dark"

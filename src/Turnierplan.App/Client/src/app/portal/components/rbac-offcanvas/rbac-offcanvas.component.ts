@@ -48,6 +48,9 @@ export class RbacOffcanvasComponent implements OnDestroy {
     this.scopeTranslationKey = `Portal.RbacManagement.ScopeType.${scopeType}`;
 
     switch (scopeType) {
+      case 'Folder':
+        this.targetIcon = 'folder2-open';
+        break;
       case 'Organization':
         this.targetIcon = 'boxes';
         break;
