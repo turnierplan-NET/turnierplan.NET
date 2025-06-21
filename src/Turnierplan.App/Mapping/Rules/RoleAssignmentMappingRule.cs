@@ -12,7 +12,7 @@ using Turnierplan.Core.Venue;
 namespace Turnierplan.App.Mapping.Rules;
 
 internal abstract class RoleAssignmentMappingRuleBase<T> : MappingRuleBase<RoleAssignment<T>, RoleAssignmentDto>
-    where T : Entity<long>, IEntityWithRoleAssignments<T>
+    where T : Entity, IEntityWithRoleAssignments<T>
 {
     protected override RoleAssignmentDto Map(IMapper mapper, MappingContext context, RoleAssignment<T> source)
     {

@@ -7,7 +7,7 @@ using Turnierplan.Dal.Converters;
 namespace Turnierplan.Dal.EntityConfigurations;
 
 public sealed class RoleAssignmentEntityTypeConfiguration<T> : IEntityTypeConfiguration<RoleAssignment<T>>
-    where T : Entity<long>, IEntityWithRoleAssignments<T>
+    where T : Entity, IEntityWithRoleAssignments<T>
 {
     public void Configure(EntityTypeBuilder<RoleAssignment<T>> builder)
     {

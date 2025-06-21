@@ -3,7 +3,7 @@ using Turnierplan.Core.RoleAssignment;
 namespace Turnierplan.Core.SeedWork;
 
 public interface IEntityWithRoleAssignments<T> : IEntityWithPublicId
-    where T : Entity<long>, IEntityWithRoleAssignments<T>
+    where T : Entity, IEntityWithRoleAssignments<T>
 {
     string Name { get; }
 

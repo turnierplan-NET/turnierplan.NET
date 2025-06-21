@@ -4,7 +4,7 @@ using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.Dal.Repositories;
 
-internal sealed class ApiKeyRepository : RepositoryBaseWithPublicId<ApiKey>, IApiKeyRepository
+internal sealed class ApiKeyRepository : RepositoryBaseWithPublicId<ApiKey, Guid>, IApiKeyRepository
 {
     private readonly DbSet<ApiKeyRequest> _requests;
 

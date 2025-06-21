@@ -4,7 +4,7 @@ using Turnierplan.Core.Venue;
 
 namespace Turnierplan.Dal.Repositories;
 
-internal sealed class VenueRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Venue>(context, context.Venues), IVenueRepository
+internal sealed class VenueRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Venue, long>(context, context.Venues), IVenueRepository
 {
     public override Task<Venue?> GetByPublicIdAsync(PublicId id)
     {

@@ -4,7 +4,7 @@ using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.Dal.Repositories;
 
-internal sealed class ImageRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Image>(context, context.Images), IImageRepository
+internal sealed class ImageRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Image, long>(context, context.Images), IImageRepository
 {
     public override Task<Image?> GetByPublicIdAsync(PublicId id)
     {

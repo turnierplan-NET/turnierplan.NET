@@ -3,7 +3,7 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.ApiKey;
 
-public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>, IEntityWithOrganization
+public sealed class ApiKey : Entity<Guid>, IEntityWithRoleAssignments<ApiKey>, IEntityWithOrganization
 {
     internal readonly List<RoleAssignment<ApiKey>> _roleAssignments = new();
     internal readonly List<ApiKeyRequest> _requests = new();
@@ -12,7 +12,7 @@ public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>, I
     {
         organization._apiKeys.Add(this);
 
-        Id = 0;
+        Id = Guid.NewGuid();
         PublicId = new PublicId.PublicId();
         Organization = organization;
         Name = name;
@@ -23,7 +23,7 @@ public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>, I
         IsActive = true;
     }
 
-    internal ApiKey(long id, PublicId.PublicId publicId, string name, string description, string secretHash, DateTime createdAt, DateTime expiryDate, bool isActive)
+    internal ApiKey(Guid id, PublicId.PublicId publicId, string name, string description, string secretHash, DateTime createdAt, DateTime expiryDate, bool isActive)
     {
         Id = id;
         PublicId = publicId;
@@ -35,7 +35,7 @@ public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>, I
         IsActive = isActive;
     }
 
-    public override long Id { get; protected set; }
+    public override Guid Id { get; protected set; }
 
     public PublicId.PublicId PublicId { get; }
 

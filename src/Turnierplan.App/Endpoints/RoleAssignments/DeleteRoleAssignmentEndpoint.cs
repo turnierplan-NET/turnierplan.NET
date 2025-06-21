@@ -60,13 +60,13 @@ internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
             : await task.ConfigureAwait(false);
     }
 
-    private static async Task<IResult> DeleteRoleAssignmentAsync<T>(
-        IRepositoryWithPublicId<T, long> repository,
+    private static async Task<IResult> DeleteRoleAssignmentAsync<TEntity, TIdentifier>(
+        IRepositoryWithPublicId<TEntity, TIdentifier> repository,
         PublicId targetId,
         IAccessValidator accessValidator,
         Guid roleAssignmentId,
         CancellationToken cancellationToken)
-        where T : Entity<long>, IEntityWithRoleAssignments<T>
+        where TEntity : Entity<TIdentifier>, IEntityWithRoleAssignments<TEntity>
     {
         var entity = await repository.GetByPublicIdAsync(targetId).ConfigureAwait(false);
 

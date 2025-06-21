@@ -3,7 +3,7 @@ using Turnierplan.Core.SeedWork;
 namespace Turnierplan.Core.RoleAssignment;
 
 public sealed class RoleAssignment<T> : Entity<Guid>
-    where T : Entity<long>, IEntityWithRoleAssignments<T>
+    where T : Entity, IEntityWithRoleAssignments<T>
 {
     internal RoleAssignment(T scope, Role role, Principal principal, string? description = null)
     {

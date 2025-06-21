@@ -4,8 +4,8 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Dal.Repositories;
 
-public abstract class RepositoryBaseWithPublicId<TEntity> : RepositoryBase<TEntity, long>, IRepositoryWithPublicId<TEntity, long>
-    where TEntity : Entity<long>, IEntityWithPublicId
+public abstract class RepositoryBaseWithPublicId<TEntity, TIdentifier> : RepositoryBase<TEntity, TIdentifier>, IRepositoryWithPublicId<TEntity, TIdentifier>
+    where TEntity : Entity<TIdentifier>, IEntityWithPublicId
 {
     protected RepositoryBaseWithPublicId(IUnitOfWork unitOfWork, DbSet<TEntity> dbSet)
         : base(unitOfWork, dbSet)
