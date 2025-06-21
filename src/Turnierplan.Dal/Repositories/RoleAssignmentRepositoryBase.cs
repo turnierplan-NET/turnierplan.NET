@@ -11,7 +11,7 @@ using Turnierplan.Core.Venue;
 namespace Turnierplan.Dal.Repositories;
 
 internal abstract class RoleAssignmentRepositoryBase<T>(TurnierplanContext context, DbSet<RoleAssignment<T>> dbSet) : RepositoryBase<RoleAssignment<T>, Guid>(context, dbSet), IRoleAssignmentRepository<T>
-    where T : Entity, IEntityWithRoleAssignments<T>;
+    where T : Entity<long>, IEntityWithRoleAssignments<T>;
 
 internal sealed class ApiKeyRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<ApiKey>(context, context.ApiKeyRoleAssignments);
 

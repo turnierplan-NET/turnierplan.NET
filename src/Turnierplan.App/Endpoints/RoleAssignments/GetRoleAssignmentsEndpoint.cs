@@ -54,12 +54,8 @@ internal sealed class GetRoleAssignmentsEndpoint : EndpointBase<IEnumerable<Role
             : await task.ConfigureAwait(false);
     }
 
-    private static async Task<IResult> GetRoleAssignmentsAsync<TEntity, TIdentifier>(
-        IRepositoryWithPublicId<TEntity, TIdentifier> repository,
-        PublicId targetId,
-        IAccessValidator accessValidator,
-        IMapper mapper)
-        where TEntity : Entity<TIdentifier>, IEntityWithRoleAssignments<TEntity>
+    private static async Task<IResult> GetRoleAssignmentsAsync<T>(IRepositoryWithPublicId<T, long> repository, PublicId targetId, IAccessValidator accessValidator, IMapper mapper)
+        where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
         var entity = await repository.GetByPublicIdAsync(targetId).ConfigureAwait(false);
 

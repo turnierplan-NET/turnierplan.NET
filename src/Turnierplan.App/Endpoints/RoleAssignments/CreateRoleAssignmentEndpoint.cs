@@ -68,17 +68,17 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
             : await task.ConfigureAwait(false);
     }
 
-    private static async Task<IResult> CreateRoleAssignmentAsync<TEntity, TIdentifier>(
+    private static async Task<IResult> CreateRoleAssignmentAsync<T>(
         CreateRoleAssignmentEndpointRequest request,
-        IRepositoryWithPublicId<TEntity, TIdentifier> repository,
+        IRepositoryWithPublicId<T, long> repository,
         PublicId targetId,
         IAccessValidator accessValidator,
         IApiKeyRepository apiKeyRepository,
         IUserRepository userRepository,
-        IRoleAssignmentRepository<TEntity> roleAssignmentRepository,
+        IRoleAssignmentRepository<T> roleAssignmentRepository,
         IMapper mapper,
         CancellationToken cancellationToken)
-        where TEntity : Entity<TIdentifier>, IEntityWithRoleAssignments<TEntity>
+        where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
         var entity = await repository.GetByPublicIdAsync(targetId).ConfigureAwait(false);
 

@@ -8,7 +8,7 @@ namespace Turnierplan.App.Helpers;
 internal static partial class RbacScopeHelper
 {
     public static string GetScopeId<T>(this T entity)
-        where T : Entity, IEntityWithRoleAssignments<T>
+        where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
         return $"{typeof(T).Name}:{entity.PublicId.ToString()}";
     }

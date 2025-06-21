@@ -5,7 +5,7 @@ using Turnierplan.Core.RoleAssignment;
 
 namespace Turnierplan.Dal.Repositories;
 
-internal sealed class OrganizationRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Organization, long>(context, context.Organizations), IOrganizationRepository
+internal sealed class OrganizationRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Organization>(context, context.Organizations), IOrganizationRepository
 {
     public override Task<Organization?> GetByPublicIdAsync(PublicId id)
     {

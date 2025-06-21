@@ -42,7 +42,7 @@ public sealed class AccessValidatorTest
         organization.AddRoleAssignment(Role.Contributor, otherPrincipal);
 
         void Test<T>(Func<T> factory)
-            where T : Entity, IEntityWithRoleAssignments<T>
+            where T : Entity<long>, IEntityWithRoleAssignments<T>
         {
             var target = factory();
 

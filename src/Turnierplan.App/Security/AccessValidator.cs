@@ -12,7 +12,7 @@ namespace Turnierplan.App.Security;
 internal interface IAccessValidator
 {
     bool IsActionAllowed<T>(IEntityWithRoleAssignments<T> target, Actions.Action action)
-        where T : Entity, IEntityWithRoleAssignments<T>;
+        where T : Entity<long>, IEntityWithRoleAssignments<T>;
 }
 
 internal sealed class AccessValidator : IAccessValidator
@@ -25,7 +25,7 @@ internal sealed class AccessValidator : IAccessValidator
     }
 
     public bool IsActionAllowed<T>(IEntityWithRoleAssignments<T> target, Actions.Action action)
-        where T : Entity, IEntityWithRoleAssignments<T>
+        where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
         if (_httpContext.IsCurrentUserAdministrator())
         {
@@ -38,7 +38,7 @@ internal sealed class AccessValidator : IAccessValidator
     }
 
     internal static bool IsActionAllowed<T>(IEntityWithRoleAssignments<T> target, Actions.Action action, Principal principal)
-        where T : Entity, IEntityWithRoleAssignments<T>
+        where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
         var activePrincipalRoles = target.RoleAssignments
             .Where(x => x.Principal.Equals(principal))
