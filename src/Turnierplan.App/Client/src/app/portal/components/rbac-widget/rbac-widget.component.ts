@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@an
 import { NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 import { PrincipalKind, Role, RoleAssignmentDto, RoleAssignmentsService } from '../../../api';
 import { finalize } from 'rxjs';
+import { NotificationService } from '../../../core/services/notification.service';
 
 export interface IRbacWidgetTarget {
   name: string;
@@ -35,7 +36,8 @@ export class RbacWidgetComponent {
 
   constructor(
     private readonly offcanvasService: NgbOffcanvas,
-    private readonly roleAssignmentsService: RoleAssignmentsService
+    private readonly roleAssignmentsService: RoleAssignmentsService,
+    private readonly notificationService: NotificationService
   ) {}
 
   protected buttonClicked(template: TemplateRef<unknown>): void {
@@ -66,12 +68,38 @@ export class RbacWidgetComponent {
         },
         error: (error) => {
           this.errorOccured.emit(error);
+          this.currentOffcanvas?.close();
         }
       });
   }
 
   protected removeRoleAssignment(id: string): void {
-    // TODO: Implement this method
+    this.roleAssignmentsService.deleteRoleAssignment({ scopeId: this.target.rbacScopeId, roleAssignmentId: id }).subscribe({
+      next: () => {
+        this.roleAssignmentCount = 0;
+
+        for (const key of Object.keys(this.roleAssignments)) {
+          const filtered = this.roleAssignments[key].filter((x) => x.id !== id);
+          this.roleAssignmentCount += filtered.length;
+
+          if (filtered.length > 0) {
+            this.roleAssignments[key] = filtered;
+          } else {
+            delete this.roleAssignments[key];
+          }
+        }
+
+        this.notificationService.showNotification(
+          'success',
+          'Portal.RbacManagement.SuccessToast.Title',
+          'Portal.RbacManagement.SuccessToast.Message'
+        );
+      },
+      error: (error) => {
+        this.errorOccured.emit(error);
+        this.currentOffcanvas?.close();
+      }
+    });
   }
 
   protected canDeleteAssignment(assignment: RoleAssignmentDto): boolean {

@@ -942,7 +942,11 @@ export const de = {
       CreatedAt: 'Erstellt am:',
       NotInherited: 'Zuweisung stammt von dieser Resource',
       Inherited: 'Vererbt durch:',
-      InheritedTooltip: 'Diese Rollenzuweisung existiert implizit aufgrund der Zugehörigkeit zu einer anderen Resource'
+      InheritedTooltip: 'Diese Rollenzuweisung existiert implizit aufgrund der Zugehörigkeit zu einer anderen Resource',
+      SuccessToast: {
+        Title: 'Rollenzuweisung gelöscht',
+        Message: 'Die Rollenzuweisung wurde erfolgreich gelöscht.'
+      }
     }
   }
 };
