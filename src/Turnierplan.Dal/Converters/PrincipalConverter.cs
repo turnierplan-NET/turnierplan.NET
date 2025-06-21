@@ -14,21 +14,23 @@ internal sealed partial class PrincipalConverter : ValueConverter<Principal, str
 
     internal static string FormatPrincipal(Principal principal)
     {
-        return $"{principal.Kind}:{principal.ObjectId}";
+        return $"{principal.Kind}:{principal.PrincipalId}";
     }
 
     internal static Principal ParsePrincipal(string input)
     {
         var match = PrincipalRegex().Match(input);
 
-        if (!match.Success || !Enum.TryParse<PrincipalKind>(match.Groups["Kind"].Value, out var kind))
+        if (!match.Success
+            || !Enum.TryParse<PrincipalKind>(match.Groups["Kind"].Value, out var kind)
+            || !Guid.TryParse(match.Groups["PrincipalId"].Value, out var principalId))
         {
             throw new TurnierplanException("Invalid principal string.");
         }
 
-        return new Principal(kind, match.Groups["ObjectId"].Value);
+        return new Principal(kind, principalId);
     }
 
-    [GeneratedRegex(@"^(?:(?<Kind>ApiKey):(?<ObjectId>\d+))$|^(?:(?<Kind>User):(?<ObjectId>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$")]
+    [GeneratedRegex(@"^(?<Kind>ApiKey|User):(?<PrincipalId>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$")]
     private static partial Regex PrincipalRegex();
 }

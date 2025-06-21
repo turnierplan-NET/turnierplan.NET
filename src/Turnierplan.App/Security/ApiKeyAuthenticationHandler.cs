@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Dal;
 
 namespace Turnierplan.App.Security;
@@ -79,7 +80,8 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
         await _apiKeyRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
 
         var identity = new ClaimsIdentity(claims: [
-            new Claim(ClaimTypes.ApiKeyId, apiKey.Id.ToString())
+            new Claim(ClaimTypes.PrincipalId, apiKey.PrincipalId.ToString()),
+            new Claim(ClaimTypes.PrincipalKind, nameof(PrincipalKind.ApiKey))
         ]);
 
         var principal = new ClaimsPrincipal([ identity ]);
