@@ -797,7 +797,7 @@ export const de = {
         EditExternalLinks: {
           Title: 'Externe Referenzen bearbeiten',
           HelpText:
-            'Sie können bis zu {{maxCount}} Referenzen hinzufügen. Beispiele hierfür sind z.B. Links zu Ihrer Webseite oder einem Kartenanbieter. Bitte beachten Sie, dass externe Links prinzipiell immer als nicht vertrauenswürdig präsentiert werden.',
+            'Sie können bis zu {{maxCount}} Referenzen hinzufügen. Beispiele hierfür sind z.B. Links zu Ihrer Webseite oder einem Kartenanbieter.',
           InvalidEntry:
             'Jeder Eintrag muss zwischen 1 und {{maxLength}} Zeichen lang sein. Es muss sich auch um einen gültigen HTTPS-Link handeln.',
           NoEntries: 'Keine Links vorhanden',
