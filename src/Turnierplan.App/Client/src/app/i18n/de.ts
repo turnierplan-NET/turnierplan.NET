@@ -174,7 +174,7 @@ export const de = {
       NoVenues:
         'In dieser Organisation gibt es aktuell keine Spielstätten.\nErstellen Sie eine Spielstätte mit der Schaltfläche oben rechts.',
       TournamentExplorer: {
-        EmptyFolder: 'In diesem Ordner befinden sich keine Turniere. Wählen Sie links einen anderen Ordner oder erstellen Sie ein Turnier.',
+        EmptyFolder: 'In diesem Ordner befinden sich keine Turniere. Wählen Sie einen anderen Ordner oder erstellen Sie ein Turnier.',
         RenameFolder: {
           Button: 'Name ändern',
           Title: 'Ordner umbenennen',
