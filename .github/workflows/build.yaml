@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - release
+      - eliaspr/build-workflow-update
 
 jobs:
   container-image:
@@ -9,50 +9,50 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v2
-      - name: 'Extract turnierplan.NET version'
-        shell: pwsh
-        run: |
-          $VersionXmlContent = Get-Content -Path "version.xml" -Raw
-          $Version = [regex]::Match($VersionXmlContent, '<Version>(\d+\.\d+\.\d+)</Version>').Groups[1].Value
-          Write-Host $Version
-          Add-Content -Path $env:GITHUB_ENV -Value "TURNIERPLAN_APPLICATION_VERSION=$Version"
-        working-directory: './src'
-      - name: 'Replace environment tokens'
-        uses: cschleiden/replace-tokens@v1
-        with:
-          files: '["**/environment.prod.ts"]'
-        env:
-          TOKEN_APPLICATION_VERSION: "${{ env.TURNIERPLAN_APPLICATION_VERSION }}"
-      - name: Login to Docker Hub
-        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      - name: 'Build and push container image'
-        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
-        with:
-          context: ./src
-          file: ./src/Turnierplan.App/Dockerfile
-          push: true
-          tags: '${{ vars.DOCKER_HUB_REPOSITORY }}:latest,${{ vars.DOCKER_HUB_REPOSITORY }}:${{ env.TURNIERPLAN_APPLICATION_VERSION }}'
+     # - name: 'Extract turnierplan.NET version'
+     #   shell: pwsh
+     #   run: |
+     #     $VersionXmlContent = Get-Content -Path "version.xml" -Raw
+     #     $Version = [regex]::Match($VersionXmlContent, '<Version>(\d+\.\d+\.\d+)</Version>').Groups[1].Value
+     #     Write-Host $Version
+     #     Add-Content -Path $env:GITHUB_ENV -Value "TURNIERPLAN_APPLICATION_VERSION=$Version"
+     #   working-directory: './src'
+     # - name: 'Replace environment tokens'
+     #   uses: cschleiden/replace-tokens@v1
+     #   with:
+     #     files: '["**/environment.prod.ts"]'
+     #   env:
+     #     TOKEN_APPLICATION_VERSION: "${{ env.TURNIERPLAN_APPLICATION_VERSION }}"
+     # - name: Login to Docker Hub
+     #   uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+     #   with:
+     #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
+     #     password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+     # - name: 'Build and push container image'
+     #   uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+     #   with:
+     #     context: ./src
+     #     file: ./src/Turnierplan.App/Dockerfile
+     #     push: true
+     #     tags: '${{ vars.DOCKER_HUB_REPOSITORY }}:latest,${{ vars.DOCKER_HUB_REPOSITORY }}:${{ env.TURNIERPLAN_APPLICATION_VERSION }}'
 
   nuget-package:
     name: 'Build NuGet package'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v2
-      - name: 'Setup .NET SDK 9.x'
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '9.x'
-      - name: 'Restore .NET solution'
-        run: 'dotnet restore'
-        working-directory: './src'
-      - name: 'Pack Turnierplan.Adapter'
-        run: 'dotnet pack Turnierplan.Adapter/Turnierplan.Adapter.csproj -c Release -o .'
-        working-directory: './src'
-      - name: 'Push to NuGet'
-        env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: 'dotnet nuget push ./*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate'
-        working-directory: './src'
+    #  - name: 'Setup .NET SDK 9.x'
+    #    uses: actions/setup-dotnet@v3
+    #    with:
+    #      dotnet-version: '9.x'
+    #  - name: 'Restore .NET solution'
+    #    run: 'dotnet restore'
+    #    working-directory: './src'
+    #  - name: 'Pack Turnierplan.Adapter'
+    #    run: 'dotnet pack Turnierplan.Adapter/Turnierplan.Adapter.csproj -c Release -o .'
+    #    working-directory: './src'
+    #  - name: 'Push to NuGet'
+    #    env:
+    #      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+    #    run: 'dotnet nuget push ./*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate'
+    #    working-directory: './src'
