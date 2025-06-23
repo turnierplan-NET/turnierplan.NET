@@ -174,7 +174,7 @@ export const de = {
       NoVenues:
         'In dieser Organisation gibt es aktuell keine Spielstätten.\nErstellen Sie eine Spielstätte mit der Schaltfläche oben rechts.',
       TournamentExplorer: {
-        EmptyFolder: 'In diesem Ordner befinden sich keine Turniere. Wählen Sie links einen anderen Ordner oder erstellen Sie ein Turnier.',
+        EmptyFolder: 'In diesem Ordner befinden sich keine Turniere. Wählen Sie einen anderen Ordner oder erstellen Sie ein Turnier.',
         RenameFolder: {
           Button: 'Name ändern',
           Title: 'Ordner umbenennen',
@@ -210,6 +210,9 @@ export const de = {
           Title: 'API-Schlüssel wurde gelöscht',
           Message: 'Der API-Schlüssel wurde gelöscht und kann nun nicht mehr für Anfragen verwendet werden.'
         }
+      },
+      RbacWidget: {
+        Info: 'Verwalten Sie, welche Nutzer auf diese Organisation zugreifen können und welche Aktionen sie durchführen können.'
       },
       DeleteWidget: {
         Title: 'Organisation löschen',
@@ -617,6 +620,9 @@ export const de = {
         NoVenues: 'In der aktuellen Organisation gibt es aktuell keine Spielstätten.',
         NoVenueOption: 'Keine Spielstätte verknüpfen'
       },
+      RbacWidget: {
+        Info: 'Verwalten Sie, welche Nutzer auf dieses Turnier zugreifen können und welche Aktionen sie durchführen können.'
+      },
       DeleteWidget: {
         Title: 'Turnier löschen',
         Info: 'Wenn Sie ein Turnier löschen, werden alle Mannschaften, Gruppen, Spiele und Ergebnisse gelöscht. Diese Aktion kann nicht widerrufen werden!',
@@ -791,7 +797,7 @@ export const de = {
         EditExternalLinks: {
           Title: 'Externe Referenzen bearbeiten',
           HelpText:
-            'Sie können bis zu {{maxCount}} Referenzen hinzufügen. Beispiele hierfür sind z.B. Links zu Ihrer Webseite oder einem Kartenanbieter. Bitte beachten Sie, dass externe Links prinzipiell immer als nicht vertrauenswürdig präsentiert werden.',
+            'Sie können bis zu {{maxCount}} Referenzen hinzufügen. Beispiele hierfür sind z.B. Links zu Ihrer Webseite oder einem Kartenanbieter.',
           InvalidEntry:
             'Jeder Eintrag muss zwischen 1 und {{maxLength}} Zeichen lang sein. Es muss sich auch um einen gültigen HTTPS-Link handeln.',
           NoEntries: 'Keine Links vorhanden',
@@ -803,6 +809,9 @@ export const de = {
           Title: 'Spielstätte gespeichert',
           Message: 'Ihre Änderungen an dieser Spielstätte wurden gespeichert'
         }
+      },
+      RbacWidget: {
+        Info: 'Verwalten Sie, welche Nutzer auf diese Spielstätte zugreifen können und welche Aktionen sie durchführen können.'
       },
       DeleteWidget: {
         Title: 'Spielstätte löschen',
@@ -908,6 +917,50 @@ export const de = {
       UnexpectedError:
         'Beim Verarbeiten der Anfrage ist ein unerwarteter Server-Fehler aufgetreten.\nLaden Sie die Seite neu und versuchen Sie es erneut.',
       ErrorDescription: 'Fehlerbeschreibung:'
+    },
+    RbacManagement: {
+      Title: 'Zugriff verwalten',
+      ButtonLabel: 'Verwalten',
+      OffcanvasTitle: 'Rollenzuweisungen bearbeiten',
+      Loading: 'Rollenzuweisungen werden geladen',
+      NewRoleAssignment: 'Neue Rollenzuweisung',
+      RoleName: {
+        Owner: 'Besitzer',
+        Contributor: 'Mitwirkender',
+        Reader: 'Leser'
+      },
+      RoleDescription: {
+        Owner: 'Der Benutzer kann sämtliche Änderungen durchführen inkl. Änderungen an Zugriffsrechten.',
+        Contributor: 'Der Benutzer kann sämtliche Änderungen durchführen ausgenommen Änderungen an Zugriffsrechten.',
+        Reader: 'Der Benutzer kann sämtliche Informationen lesen aber keine Änderungen durchführen.'
+      },
+      PrincipalKind: {
+        ApiKey: 'API-Schlüssel',
+        User: 'Benutzer'
+      },
+      TotalCount: 'Gesamt:',
+      Id: 'ID:',
+      CreatedAt: 'Erstellt am:',
+      Inherited: 'Vererbt durch:',
+      InheritedTooltip: 'Diese Rollenzuweisung existiert implizit aufgrund der Zugehörigkeit zu einer anderen Resource',
+      ScopeType: {
+        Folder: {
+          NotInherited: 'Zuweisung liegt auf diesem Ordner'
+        },
+        Organization: {
+          NotInherited: 'Zuweisung liegt auf dieser Organisation'
+        },
+        Tournament: {
+          NotInherited: 'Zuweisung liegt auf diesem Turnier'
+        },
+        Venue: {
+          NotInherited: 'Zuweisung liegt auf dieser Spielstätte'
+        }
+      },
+      SuccessToast: {
+        Title: 'Rollenzuweisung gelöscht',
+        Message: 'Die Rollenzuweisung wurde erfolgreich gelöscht.'
+      }
     }
   }
 };

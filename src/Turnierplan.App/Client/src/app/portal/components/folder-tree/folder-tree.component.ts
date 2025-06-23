@@ -5,6 +5,7 @@ import { TournamentHeaderDto } from '../../../api';
 export type FolderTreeEntry = {
   id: string;
   folderId?: string;
+  folderName?: string;
   label: string;
   isRoot: boolean;
   indentation: number;
@@ -54,6 +55,7 @@ export class FolderTreeComponent {
       const folderEntry: FolderTreeEntry = {
         id: '/' + folder.id,
         folderId: folder.id,
+        folderName: folder.name,
         label: folder.name ?? '?',
         isRoot: false,
         indentation: 1,

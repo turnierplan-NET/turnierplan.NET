@@ -167,6 +167,13 @@
           }
           @case (3) {
             <div class="card-body">
+              <tp-rbac-widget
+                [translationKey]="'Portal.ViewOrganization.RbacWidget'"
+                [target]="organization"
+                (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+            </div>
+            <hr class="m-0" />
+            <div class="card-body">
               <tp-delete-widget
                 [translationKey]="'Portal.ViewOrganization.DeleteWidget'"
                 [targetObjectName]="organization.name"

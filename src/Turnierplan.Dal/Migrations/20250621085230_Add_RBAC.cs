@@ -40,6 +40,22 @@ namespace Turnierplan.Dal.Migrations
                 nullable: false,
                 defaultValue: false);
 
+            migrationBuilder.AddColumn<Guid>(
+                name: "PrincipalId",
+                schema: "turnierplan",
+                table: "Users",
+                type: "uuid",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+
+            migrationBuilder.AddColumn<Guid>(
+                name: "PrincipalId",
+                schema: "turnierplan",
+                table: "ApiKeys",
+                type: "uuid",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+
             migrationBuilder.CreateTable(
                 name: "IAM_ApiKey",
                 schema: "turnierplan",
@@ -184,6 +200,25 @@ namespace Turnierplan.Dal.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.Sql("""
+UPDATE turnierplan."ApiKeys" SET "PrincipalId" = gen_random_uuid();
+UPDATE turnierplan."Users" SET "PrincipalId" = gen_random_uuid();
+""");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_PrincipalId",
+                schema: "turnierplan",
+                table: "Users",
+                column: "PrincipalId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApiKeys_PrincipalId",
+                schema: "turnierplan",
+                table: "ApiKeys",
+                column: "PrincipalId",
+                unique: true);
+
             migrationBuilder.CreateIndex(
                 name: "IX_IAM_ApiKey_ApiKeyId",
                 schema: "turnierplan",
@@ -227,8 +262,9 @@ namespace Turnierplan.Dal.Migrations
 
             migrationBuilder.Sql("""
 INSERT INTO turnierplan."IAM_Organization" ("Id", "OrganizationId", "CreatedAt", "Role", "Principal", "Description")
-SELECT gen_random_uuid(), "Organizations"."Id", NOW(), 1000, ('User:' || "Organizations"."OwnerId"), ''
-FROM turnierplan."Organizations";
+SELECT gen_random_uuid(), "Organizations"."Id", NOW(), 1000, ('User:' || "Users"."PrincipalId"), ''
+FROM turnierplan."Organizations"
+INNER JOIN turnierplan."Users" ON "Organizations"."OwnerId" = "Users"."Id";
 """);
 
             migrationBuilder.DropColumn(
@@ -264,10 +300,30 @@ FROM turnierplan."Organizations";
                 name: "IAM_Venue",
                 schema: "turnierplan");
 
+            migrationBuilder.DropIndex(
+                name: "IX_Users_PrincipalId",
+                schema: "turnierplan",
+                table: "Users");
+
+            migrationBuilder.DropIndex(
+                name: "IX_ApiKeys_PrincipalId",
+                schema: "turnierplan",
+                table: "ApiKeys");
+
             migrationBuilder.DropColumn(
                 name: "IsAdministrator",
                 schema: "turnierplan",
                 table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "PrincipalId",
+                schema: "turnierplan",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "PrincipalId",
+                schema: "turnierplan",
+                table: "ApiKeys");
 
             migrationBuilder.AddColumn<Guid>(
                 name: "OwnerId",

@@ -1,0 +1,86 @@
+<div class="p-3">
+  <div class="fs-4 fw-bold mb-3" translate="Portal.RbacManagement.OffcanvasTitle"></div>
+  @if (isLoadingRoleAssignments) {
+    <div class="d-flex flex-row gap-2">
+      <tp-small-spinner />
+      <span translate="Portal.RbacManagement.Loading"></span>
+    </div>
+  } @else {
+    <div class="mb-4 d-flex flex-row align-items-center">
+      <i class="bi bi-{{ targetIcon }} me-2"></i>
+      <span class="fw-bold">
+        {{ target.name }}
+      </span>
+      <span class="flex-grow-1"></span>
+      <tp-action-button [title]="'Portal.RbacManagement.NewRoleAssignment'" [type]="'outline-success'" [icon]="'plus-circle'" />
+    </div>
+
+    <table class="mb-2 table table-bordered">
+      <tbody>
+        @for (group of roleAssignments | keyvalue; track group.key) {
+          <tr class="table-active">
+            <th>
+              <span [translate]="'Portal.RbacManagement.RoleName.' + group.key"></span>
+              <i class="ms-2 bi bi-info-circle" [ngbTooltip]="'Portal.RbacManagement.RoleDescription.' + group.key | translate"></i>
+            </th>
+          </tr>
+
+          @for (assignment of group.value; track assignment.id) {
+            <tr>
+              <td>
+                <div class="d-flex flex-column gap-2">
+                  <div class="d-flex gap-2">
+                    @switch (assignment.principal.kind) {
+                      @case (PrincipalKind.ApiKey) {
+                        <i class="bi bi-key" [ngbTooltip]="'Portal.RbacManagement.PrincipalKind.ApiKey' | translate"></i>
+                      }
+                      @case (PrincipalKind.User) {
+                        <i class="bi bi-person" [ngbTooltip]="'Portal.RbacManagement.PrincipalKind.User' | translate"></i>
+                      }
+                    }
+                    <!-- TODO: Resolve ApiKey/User name -->
+                    <span>{{ assignment.principal.principalId }}</span>
+                    @if (canDeleteAssignment(assignment)) {
+                      <span class="flex-grow-1"></span>
+                      <tp-delete-button [reducedFootprint]="true" (confirmed)="removeRoleAssignment(assignment.id)" />
+                    }
+                  </div>
+                  @if (assignment.isInherited) {
+                    <div class="text-primary d-flex gap-2">
+                      <i class="bi bi-info-circle" [ngbTooltip]="'Portal.RbacManagement.InheritedTooltip' | translate"></i>
+                      <span translate="Portal.RbacManagement.Inherited"></span>
+                      <a
+                        class="text-decoration-underline tp-cursor-pointer"
+                        (click)="navigateToScope(assignment.scopeId, assignment.scopeName)"
+                        >{{ assignment.scopeName }}</a
+                      >
+                    </div>
+                  } @else {
+                    <div class="text-secondary d-flex gap-2">
+                      <i class="bi bi-info-circle"></i>
+                      <span [translate]="scopeTranslationKey + '.NotInherited'"></span>
+                    </div>
+                  }
+                  <div style="font-size: 0.7em" class="text-secondary d-flex gap-1">
+                    <span translate="Portal.RbacManagement.Id"></span>
+                    <span>{{ assignment.id }}</span>
+                    <span>&middot;</span>
+                    <span translate="Portal.RbacManagement.CreatedAt"></span>
+                    <span>{{ assignment.createdAt | translateDate }}</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+
+    @if (roleAssignmentCount > 1) {
+      <div class="small">
+        <span class="ms-1 me-1" translate="Portal.RbacManagement.TotalCount"></span>
+        <span>{{ roleAssignmentCount }}</span>
+      </div>
+    }
+  }
+</div>

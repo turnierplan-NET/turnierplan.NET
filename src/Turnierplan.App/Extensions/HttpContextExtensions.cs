@@ -26,17 +26,25 @@ internal static class HttpContextExtensions
 
     public static Principal GetActivePrincipal(this HttpContext context)
     {
+        PrincipalKind? kind = null;
+        Guid? principalId = null;
+
         foreach (var claim in context.User.Claims)
         {
-            if (claim.Type.Equals(ClaimTypes.ApiKeyId))
+            if (claim.Type.Equals(ClaimTypes.PrincipalKind))
             {
-                return new Principal(PrincipalKind.ApiKey, claim.Value);
+                kind = Enum.Parse<PrincipalKind>(claim.Value);
             }
 
-            if (claim.Type.Equals(ClaimTypes.UserId))
+            if (claim.Type.Equals(ClaimTypes.PrincipalId))
             {
-                return new Principal(PrincipalKind.User, claim.Value);
+                principalId = Guid.Parse(claim.Value);
             }
+        }
+
+        if (kind.HasValue && principalId.HasValue)
+        {
+            return new Principal(kind.Value, principalId.Value);
         }
 
         throw new InvalidOperationException("Could not determine active principal.");

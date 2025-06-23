@@ -29,6 +29,7 @@ internal sealed class CreateApiKeyEndpoint : EndpointBase<ApiKeyDto>
         IAccessValidator accessValidator,
         IPasswordHasher<ApiKey> secretHasher,
         IApiKeyRepository apiKeyRepository,
+        IRoleAssignmentRepository<Organization> organizationRoleAssignmentRepository,
         IMapper mapper,
         CancellationToken cancellationToken)
     {
@@ -62,8 +63,9 @@ internal sealed class CreateApiKeyEndpoint : EndpointBase<ApiKeyDto>
             await apiKeyRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
             // Once the api key has an ID, the role assignment can be created
-            organization.AddRoleAssignment(Role.Reader, apiKey.AsPrincipal());
+            var roleAssignment = organization.AddRoleAssignment(Role.Reader, apiKey.AsPrincipal());
 
+            await organizationRoleAssignmentRepository.CreateAsync(roleAssignment).ConfigureAwait(false);
             await apiKeyRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
             transaction.ShouldCommit = true;

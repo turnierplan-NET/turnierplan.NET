@@ -16,6 +16,12 @@ public sealed class ApiKeyEntityTypeConfiguration : IEntityTypeConfiguration<Api
         builder.Property(x => x.Id)
             .IsRequired();
 
+        builder.Property(x => x.PrincipalId)
+            .IsRequired();
+
+        builder.HasIndex(x => x.PrincipalId)
+            .IsUnique();
+
         builder.Property(x => x.PublicId)
             .HasConversion<PublicIdConverter>();
 

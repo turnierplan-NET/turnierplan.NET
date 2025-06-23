@@ -53,6 +53,9 @@ namespace Turnierplan.Dal.Migrations
                     b.Property<long>("OrganizationId")
                         .HasColumnType("bigint");
 
+                    b.Property<Guid>("PrincipalId")
+                        .HasColumnType("uuid");
+
                     b.Property<long>("PublicId")
                         .HasColumnType("bigint");
 
@@ -63,6 +66,9 @@ namespace Turnierplan.Dal.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OrganizationId");
+
+                    b.HasIndex("PrincipalId")
+                        .IsUnique();
 
                     b.HasIndex("PublicId")
                         .IsUnique();
@@ -673,12 +679,18 @@ namespace Turnierplan.Dal.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("PrincipalId")
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("SecurityStamp")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEMail")
+                        .IsUnique();
+
+                    b.HasIndex("PrincipalId")
                         .IsUnique();
 
                     b.ToTable("Users", "turnierplan");
