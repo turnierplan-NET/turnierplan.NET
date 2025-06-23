@@ -4,11 +4,40 @@ on:
       - eliaspr/build-workflow-update
 
 jobs:
-  container-image:
-    name: 'Build container image'
+  validate-version:
+    name: 'Validate version'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v2
+      - name: 'Extract and validate turnierplan.NET version'
+        id: extract-version
+        shell: pwsh
+        run: |
+          $LatestTag = git describe --tags --abbrev=0 --match=[0-9]*.[0-9]*.[0-9]*
+          $VersionXmlContent = Get-Content -Path "version.xml" -Raw
+          $Version = [regex]::Match($VersionXmlContent, '<Version>(\d+\.\d+\.\d+)</Version>').Groups[1].Value
+          Write-Host "Last git tag: $LatestTag"
+          Write-Host "Detected version: $Version"
+          if ($Version -eq $LatestTag) {
+            Write-Host "Version equals latest tag, failing workflow!"
+            exit 1
+          }
+          Add-Content -Path $env:GITHUB_OUTPUT -Value "turnierplan_version=$Version"
+        working-directory: './src'
+    outputs:
+      turnierplan_version: ${{ steps.extract-version.outputs.turnierplan_version }}
+
+  container-image:
+    name: 'Build container image'
+    runs-on: ubuntu-24.04
+    needs:
+      - validate-version
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'Test'
+        shell: pwsh
+        run: |
+          Write-Host ${{ needs.validate-version.outputs.turnierplan_version }}
      # - name: 'Extract turnierplan.NET version'
      #   shell: pwsh
      #   run: |
@@ -39,6 +68,8 @@ jobs:
   nuget-package:
     name: 'Build NuGet package'
     runs-on: ubuntu-24.04
+    needs:
+      - validate-version
     steps:
       - uses: actions/checkout@v2
     #  - name: 'Setup .NET SDK 9.x'
