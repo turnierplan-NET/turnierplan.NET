@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
       - name: 'Extract and validate turnierplan.NET version'
         id: extract-version
         shell: pwsh
