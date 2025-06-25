@@ -921,10 +921,7 @@ export const de = {
     RbacManagement: {
       Title: 'Zugriff verwalten',
       ButtonLabel: 'Verwalten',
-      OffcanvasTitle: {
-        Default: 'Rollenzuweisungen bearbeiten',
-        Creating: 'Rollenzuweisungen hinzufügen'
-      },
+      OffcanvasTitle: 'Rollenzuweisungen bearbeiten',
       Loading: 'Rollenzuweisungen werden geladen',
       NewRoleAssignment: 'Neue Rollenzuweisung',
       RoleName: {
