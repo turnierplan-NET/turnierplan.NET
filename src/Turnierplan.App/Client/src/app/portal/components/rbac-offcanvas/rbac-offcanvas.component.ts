@@ -20,8 +20,8 @@ export class RbacOffcanvasComponent implements OnDestroy {
   protected isLoadingRoleAssignments = false;
   protected roleAssignments: { [key: string]: RoleAssignmentDto[] } = {};
   protected roleAssignmentCount: number = 0;
-
   protected scopeTranslationKey: string = '';
+  protected isCreatingRoleAssignment = false;
 
   private readonly errorSubject$ = new Subject<unknown>();
   private targetIsOrganization: boolean = false;
@@ -136,5 +136,13 @@ export class RbacOffcanvasComponent implements OnDestroy {
       rbacScopeId: scopeId,
       name: scopeName
     });
+  }
+
+  protected switchCreatingRoleAssignment(target: boolean): void {
+    this.isCreatingRoleAssignment = target;
+
+    if (target) {
+      // FIXME: Reset form
+    }
   }
 }
