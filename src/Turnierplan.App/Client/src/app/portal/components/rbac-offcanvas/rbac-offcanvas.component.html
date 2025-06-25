@@ -7,7 +7,7 @@
     </div>
   } @else {
     <div class="mb-4 d-flex flex-row align-items-center">
-      <i class="bi bi-{{ targetIcon }} me-2"></i>
+      <i class="bi bi-{{ targetIcon }} me-2" [ngbTooltip]="scopeTranslationKey + '.Tooltip' | translate"></i>
       <span class="fw-bold">
         {{ target.name }}
       </span>

@@ -945,15 +945,19 @@ export const de = {
       InheritedTooltip: 'Diese Rollenzuweisung existiert implizit aufgrund der Zugehörigkeit zu einer anderen Resource',
       ScopeType: {
         Folder: {
+          Tooltip: 'Ordner',
           NotInherited: 'Zuweisung liegt auf diesem Ordner'
         },
         Organization: {
+          Tooltip: 'Organisation',
           NotInherited: 'Zuweisung liegt auf dieser Organisation'
         },
         Tournament: {
+          Tooltip: 'Turnier',
           NotInherited: 'Zuweisung liegt auf diesem Turnier'
         },
         Venue: {
+          Tooltip: 'Spielstätte',
           NotInherited: 'Zuweisung liegt auf dieser Spielstätte'
         }
       },
