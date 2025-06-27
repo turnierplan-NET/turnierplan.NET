@@ -6,5 +6,4 @@
     <i class="bi bi-person" [ngbTooltip]="'Portal.RbacManagement.PrincipalKind.User' | translate"></i>
   }
 }
-<!-- TODO: Resolve ApiKey/User name -->
-<span class="ms-1">{{ principal.principalId }}</span>
+<span class="ms-2">{{ displayName$ | async }}</span>
