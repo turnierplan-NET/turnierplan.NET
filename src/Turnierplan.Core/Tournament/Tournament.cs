@@ -147,9 +147,9 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         }
     }
 
-    public RoleAssignment<Tournament> AddRoleAssignment(Role role, Principal principal, string? description = null)
+    public RoleAssignment<Tournament> AddRoleAssignment(Role role, Principal principal)
     {
-        var roleAssignment = new RoleAssignment<Tournament>(this, role, principal, description);
+        var roleAssignment = new RoleAssignment<Tournament>(this, role, principal);
         _roleAssignments.Add(roleAssignment);
 
         return roleAssignment;

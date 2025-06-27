@@ -28,7 +28,6 @@ internal abstract class RoleAssignmentMappingRuleBase<T> : MappingRuleBase<RoleA
                 Kind = source.Principal.Kind,
                 PrincipalId = source.Principal.PrincipalId
             },
-            Description = source.Description,
             IsInherited = false
         };
     }

@@ -41,9 +41,9 @@ public sealed class Folder : Entity<long>, IEntityWithRoleAssignments<Folder>, I
 
     public IReadOnlyList<Tournament.Tournament> Tournaments => _tournaments.AsReadOnly();
 
-    public RoleAssignment<Folder> AddRoleAssignment(Role role, Principal principal, string? description = null)
+    public RoleAssignment<Folder> AddRoleAssignment(Role role, Principal principal)
     {
-        var roleAssignment = new RoleAssignment<Folder>(this, role, principal, description);
+        var roleAssignment = new RoleAssignment<Folder>(this, role, principal);
         _roleAssignments.Add(roleAssignment);
 
         return roleAssignment;
