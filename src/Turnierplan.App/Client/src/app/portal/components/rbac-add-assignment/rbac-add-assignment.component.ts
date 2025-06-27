@@ -53,6 +53,7 @@ export class RbacAddAssignmentComponent implements OnDestroy {
       this.step = 'SelectPrincipal';
     }
   }
+
   protected selectRole(role: Role): void {
     this.selectedRole = role;
     this.step = 'SelectPrincipal';
