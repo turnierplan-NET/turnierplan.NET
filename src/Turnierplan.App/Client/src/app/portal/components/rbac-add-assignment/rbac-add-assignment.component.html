@@ -11,10 +11,6 @@
     <span
       [translate]="'Portal.RbacManagement.AddRoleAssignment.StepTitle.SelectPrincipal'"
       [ngClass]="{ 'text-decoration-underline': step === 'SelectPrincipal' }"></span>
-    <span> &middot; </span>
-    <span
-      [translate]="'Portal.RbacManagement.AddRoleAssignment.StepTitle.Confirm'"
-      [ngClass]="{ 'text-decoration-underline': step === 'Confirm' }"></span>
   </div>
 
   @switch (step) {
@@ -38,60 +34,48 @@
       </table>
     }
     @case ('SelectPrincipal') {
-      <div class="mb-3 d-flex flex-row align-items-center gap-2">
+      <div class="mb-3" translate="Portal.RbacManagement.AddRoleAssignment.AddAssignmentInfo"></div>
+      <div class="d-flex flex-row align-items-center gap-2">
+        <div class="btn-group" role="group">
+          <input
+            type="radio"
+            class="btn-check"
+            name="addAssignment_principalKind"
+            id="addAssignment_principalKind_user"
+            [value]="PrincipalKind.User"
+            [(ngModel)]="selectedPrincipalKind" />
+          <label
+            class="btn btn-sm btn-outline-secondary"
+            for="addAssignment_principalKind_user"
+            [ngbTooltip]="'Portal.RbacManagement.PrincipalKind.User' | translate">
+            <i class="bi bi-person"></i>
+          </label>
+          <input
+            type="radio"
+            class="btn-check"
+            name="addAssignment_principalKind"
+            id="addAssignment_principalKind_apiKey"
+            [value]="PrincipalKind.ApiKey"
+            [(ngModel)]="selectedPrincipalKind" />
+          <label
+            class="btn btn-sm btn-outline-secondary"
+            for="addAssignment_principalKind_apiKey"
+            [ngbTooltip]="'Portal.RbacManagement.PrincipalKind.ApiKey' | translate">
+            <i class="bi bi-key"></i>
+          </label>
+        </div>
+
         <input
           type="text"
-          [placeholder]="'Portal.RbacManagement.AddRoleAssignment.SearchPrincipalPlaceholder' | translate"
+          [placeholder]="'Portal.RbacManagement.AddRoleAssignment.SearchPrincipalPlaceholder.' + selectedPrincipalKind | translate"
           [(ngModel)]="searchPrincipalInput"
           class="flex-grow-1 form-control form-control-sm" />
+
         <tp-action-button
           [icon]="'search'"
           [title]="'Portal.RbacManagement.AddRoleAssignment.SearchPrincipalButton'"
-          (click)="searchPrincipal()" />
+          (click)="addRoleAssignment()" />
       </div>
-
-      @if (selectedPrincipals.length === 0) {
-        <div class="small text-secondary fst-italic" translate="Portal.RbacManagement.AddRoleAssignment.NoPrincipalsSelected"></div>
-      } @else {
-        <table class="table table-bordered">
-          <tbody>
-            @for (principal of selectedPrincipals; track principal; let index = $index) {
-              <tr>
-                <td class="align-middle">
-                  <tp-rbac-principal [principal]="principal" />
-                </td>
-                <td style="width: 1px" class="align-middle">
-                  <tp-action-button [type]="'outline-danger'" [mode]="'IconOnly'" [icon]="'trash'" (click)="removePrincipal(index)" />
-                </td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      }
-    }
-    @case ('Confirm') {
-      <div class="mb-3" translate="Portal.RbacManagement.AddRoleAssignment.ConfirmMessage"></div>
-      <table class="table table-bordered">
-        <tbody>
-          <tr>
-            <td translate="Portal.RbacManagement.AddRoleAssignment.ConfirmTable.Role"></td>
-            <td>
-              <div [translate]="'Portal.RbacManagement.RoleName.' + selectedRole"></div>
-              <div class="small text-secondary" [translate]="'Portal.RbacManagement.RoleDescription.' + selectedRole"></div>
-            </td>
-          </tr>
-          <tr>
-            <td translate="Portal.RbacManagement.AddRoleAssignment.ConfirmTable.Principals"></td>
-            <td>
-              @for (principal of selectedPrincipals; track principal) {
-                <div>
-                  <tp-rbac-principal [principal]="principal" />
-                </div>
-              }
-            </td>
-          </tr>
-        </tbody>
-      </table>
     }
   }
 </div>
@@ -106,11 +90,8 @@
       (click)="previousStep()" />
   }
   <span class="flex-grow-1"></span>
-  @if (step === 'Confirm') {
-    <tp-action-button [type]="'success'" [title]="'Portal.RbacManagement.AddRoleAssignment.Confirm'" (click)="confirm()" />
-  } @else {
-    @let nextDisabled =
-      (step === 'SelectRole' && selectedRole === undefined) || (step === 'SelectPrincipal' && selectedPrincipals.length === 0);
+  @if (step === 'SelectRole') {
+    @let nextDisabled = selectedRole === undefined;
     <div [ngClass]="{ 'tp-cursor-not-allowed': nextDisabled }">
       <tp-action-button
         [type]="'outline-dark'"
@@ -119,5 +100,7 @@
         [disabled]="nextDisabled"
         (click)="nextStep()" />
     </div>
+  } @else {
+    <tp-action-button [type]="'outline-success'" [title]="'Portal.General.Done'" (click)="modal.close()" />
   }
 </div>

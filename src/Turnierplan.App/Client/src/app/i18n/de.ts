@@ -972,17 +972,15 @@ export const de = {
         Confirm: 'Erstellen',
         StepTitle: {
           SelectRole: 'Rolle selektieren',
-          SelectPrincipal: 'Prinzipal selektieren',
-          Confirm: 'Prüfen und bestätigen'
+          SelectPrincipal: 'Prinzipal selektieren'
         },
-        SearchPrincipalPlaceholder: 'E-Mailadresse oder API-Key ID eingeben',
-        SearchPrincipalButton: 'Suchen & hinzufügen',
-        NoPrincipalsSelected: 'Kein Prinzipal selektiert',
-        ConfirmMessage: 'Prüfen Sie Ihre Selektion auf Richtigkeit:',
-        ConfirmTable: {
-          Role: 'Rolle:',
-          Principals: 'Prinzipal:'
-        }
+        AddAssignmentInfo:
+          'Suchen Sie den gewünschten Nutzer oder API-Schlüssel anhand von E-Mailadresse bzw. API-Schlüssel-ID. Durch Klick auf "Suchen & hinzufügen" wird der spezifizierte Prinzipal gesucht und - sofern gefunden - eine entsprechende Rollenzuweisung erstellt.',
+        SearchPrincipalPlaceholder: {
+          ApiKey: 'ID des API-Schlüssels eingeben',
+          User: 'E-Mailadresse des Nutzers eingeben'
+        },
+        SearchPrincipalButton: 'Suchen & hinzufügen'
       }
     }
   }

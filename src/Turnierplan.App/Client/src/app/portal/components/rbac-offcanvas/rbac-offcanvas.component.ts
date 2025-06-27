@@ -2,8 +2,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { finalize, Observable, Subject } from 'rxjs';
 import { Role, RoleAssignmentDto, RoleAssignmentsService } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
-import { AddRoleAssignmentComponent } from '../add-role-assignment/add-role-assignment.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RbacAddAssignmentComponent } from '../rbac-add-assignment/rbac-add-assignment.component';
 
 interface IRbacOffcanvasTarget {
   name: string;
@@ -117,15 +117,16 @@ export class RbacOffcanvasComponent implements OnDestroy {
   }
 
   protected showAddRoleAssignmentDialog(): void {
-    const ref = this.modalService.open(AddRoleAssignmentComponent, {
+    const ref = this.modalService.open(RbacAddAssignmentComponent, {
       size: 'lg',
       fullscreen: 'lg',
       centered: true
     });
 
-    (ref.componentInstance as AddRoleAssignmentComponent).scopeId = this.target.rbacScopeId;
+    const component = ref.componentInstance as RbacAddAssignmentComponent;
 
-    ref.closed.subscribe(() => this.loadRoleAssignments());
+    component.scopeId = this.target.rbacScopeId;
+    component.assignmentAdded$.subscribe(() => this.loadRoleAssignments());
   }
 
   private loadRoleAssignments(): void {
