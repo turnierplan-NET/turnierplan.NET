@@ -18,7 +18,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
   protected target!: IRbacOffcanvasTarget;
   protected targetIcon: string = '';
   protected isLoadingRoleAssignments = false;
-  protected roleAssignments: { [key: string]: RoleAssignmentDto[] } = {};
+  protected roleAssignments: { role: Role; assignments: RoleAssignmentDto[] }[] = [];
   protected roleAssignmentCount: number = 0;
 
   protected scopeTranslationKey: string = '';
@@ -73,16 +73,12 @@ export class RbacOffcanvasComponent implements OnDestroy {
       next: () => {
         this.roleAssignmentCount = 0;
 
-        for (const key of Object.keys(this.roleAssignments)) {
-          const filtered = this.roleAssignments[key].filter((x) => x.id !== id);
-          this.roleAssignmentCount += filtered.length;
-
-          if (filtered.length > 0) {
-            this.roleAssignments[key] = filtered;
-          } else {
-            delete this.roleAssignments[key];
-          }
+        for (const entry of this.roleAssignments) {
+          entry.assignments = entry.assignments.filter((x) => x.id !== id);
+          this.roleAssignmentCount += entry.assignments.length;
         }
+
+        this.roleAssignments = this.roleAssignments.filter((x) => x.assignments.length > 0);
 
         this.notificationService.showNotification(
           'success',
@@ -101,7 +97,11 @@ export class RbacOffcanvasComponent implements OnDestroy {
       return false;
     }
 
-    if (assignment.role === Role.Owner && this.targetIsOrganization && this.roleAssignments[Role.Owner].length === 1) {
+    if (
+      assignment.role === Role.Owner &&
+      this.targetIsOrganization &&
+      this.roleAssignments.find((x) => x.role === Role.Owner)?.assignments.length === 1
+    ) {
       // This is a special case which forbids deleting the only Owner assignment from an organization.
       return false;
     }
@@ -139,18 +139,22 @@ export class RbacOffcanvasComponent implements OnDestroy {
       .pipe(finalize(() => (this.isLoadingRoleAssignments = false)))
       .subscribe({
         next: (roleAssignments) => {
-          this.roleAssignments = {};
+          // This definition guarantees the correct ordering
+          this.roleAssignments = Object.keys(Role).map((x) => ({ role: x as Role, assignments: [] as RoleAssignmentDto[] }));
           this.roleAssignmentCount = 0;
 
           for (const roleAssignment of roleAssignments) {
             this.roleAssignmentCount++;
 
-            if (roleAssignment.role in this.roleAssignments) {
-              this.roleAssignments[roleAssignment.role].push(roleAssignment);
-            } else {
-              this.roleAssignments[roleAssignment.role] = [roleAssignment];
+            for (const entry of this.roleAssignments) {
+              if (entry.role === roleAssignment.role) {
+                entry.assignments.push(roleAssignment);
+                break;
+              }
             }
           }
+
+          this.roleAssignments = this.roleAssignments.filter((x) => x.assignments.length > 0);
         },
         error: (error) => {
           this.errorSubject$.next(error);

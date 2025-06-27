@@ -21,15 +21,15 @@
 
     <table class="mb-2 table table-bordered">
       <tbody>
-        @for (group of roleAssignments | keyvalue; track group.key) {
+        @for (group of roleAssignments; track group) {
           <tr class="table-active">
             <th>
-              <span [translate]="'Portal.RbacManagement.RoleName.' + group.key"></span>
-              <i class="ms-2 bi bi-info-circle" [ngbTooltip]="'Portal.RbacManagement.RoleDescription.' + group.key | translate"></i>
+              <span [translate]="'Portal.RbacManagement.RoleName.' + group.role"></span>
+              <i class="ms-2 bi bi-info-circle" [ngbTooltip]="'Portal.RbacManagement.RoleDescription.' + group.role | translate"></i>
             </th>
           </tr>
 
-          @for (assignment of group.value; track assignment.id) {
+          @for (assignment of group.assignments; track assignment.id) {
             <tr>
               <td>
                 <div class="d-flex flex-column gap-2">
