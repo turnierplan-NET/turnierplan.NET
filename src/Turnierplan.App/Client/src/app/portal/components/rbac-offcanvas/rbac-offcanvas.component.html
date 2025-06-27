@@ -12,7 +12,11 @@
         {{ target.name }}
       </span>
       <span class="flex-grow-1"></span>
-      <tp-action-button [title]="'Portal.RbacManagement.NewRoleAssignment'" [type]="'outline-success'" [icon]="'plus-circle'" />
+      <tp-action-button
+        [title]="'Portal.RbacManagement.NewRoleAssignment'"
+        [type]="'outline-success'"
+        [icon]="'plus-circle'"
+        (click)="showAddRoleAssignmentDialog()" />
     </div>
 
     <table class="mb-2 table table-bordered">

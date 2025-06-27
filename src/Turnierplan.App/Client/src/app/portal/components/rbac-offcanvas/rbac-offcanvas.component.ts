@@ -2,6 +2,9 @@ import { Component, OnDestroy } from '@angular/core';
 import { finalize, Observable, Subject } from 'rxjs';
 import { PrincipalKind, Role, RoleAssignmentDto, RoleAssignmentsService } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
+import { DocumentCopyComponent } from '../document-copy/document-copy.component';
+import { AddRoleAssignmentComponent } from '../add-role-assignment/add-role-assignment.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 interface IRbacOffcanvasTarget {
   name: string;
@@ -28,7 +31,8 @@ export class RbacOffcanvasComponent implements OnDestroy {
 
   constructor(
     private readonly roleAssignmentsService: RoleAssignmentsService,
-    private readonly notificationService: NotificationService
+    private readonly notificationService: NotificationService,
+    private readonly modalService: NgbModal
   ) {}
 
   public get error$(): Observable<unknown> {
@@ -135,6 +139,14 @@ export class RbacOffcanvasComponent implements OnDestroy {
     this.setTarget({
       rbacScopeId: scopeId,
       name: scopeName
+    });
+  }
+
+  protected showAddRoleAssignmentDialog(): void {
+    const ref = this.modalService.open(AddRoleAssignmentComponent, {
+      size: 'lg',
+      fullscreen: 'lg',
+      centered: true
     });
   }
 }
