@@ -9,7 +9,7 @@ public interface IEntityWithRoleAssignments<T> : IEntityWithPublicId
 
     IReadOnlyList<RoleAssignment<T>> RoleAssignments { get; }
 
-    RoleAssignment<T> AddRoleAssignment(Role role, Principal principal, string? description = null);
+    RoleAssignment<T> AddRoleAssignment(Role role, Principal principal);
 
     void RemoveRoleAssignment(RoleAssignment<T> roleAssignment);
 }

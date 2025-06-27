@@ -279,11 +279,6 @@ namespace Turnierplan.Dal.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
-
                     b.Property<string>("Principal")
                         .IsRequired()
                         .HasColumnType("text");
@@ -306,11 +301,6 @@ namespace Turnierplan.Dal.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
 
                     b.Property<long>("FolderId")
                         .HasColumnType("bigint");
@@ -338,11 +328,6 @@ namespace Turnierplan.Dal.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
-
                     b.Property<long>("ImageId")
                         .HasColumnType("bigint");
 
@@ -368,11 +353,6 @@ namespace Turnierplan.Dal.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
 
                     b.Property<long>("OrganizationId")
                         .HasColumnType("bigint");
@@ -400,11 +380,6 @@ namespace Turnierplan.Dal.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
-
                     b.Property<string>("Principal")
                         .IsRequired()
                         .HasColumnType("text");
@@ -430,11 +405,6 @@ namespace Turnierplan.Dal.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
 
                     b.Property<string>("Principal")
                         .IsRequired()

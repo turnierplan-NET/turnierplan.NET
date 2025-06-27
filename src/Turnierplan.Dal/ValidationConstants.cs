@@ -46,11 +46,6 @@ public static class ValidationConstants
         public const int MaxNameLength = 40;
     }
 
-    public static class RoleAssignment
-    {
-        public const int MaxDescriptionLength = 250;
-    }
-
     public static class Team
     {
         public const int MaxNameLength = 60;

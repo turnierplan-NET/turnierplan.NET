@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Turnierplan.Dal.Migrations
 {
     /// <inheritdoc />
-    public partial class Add_RBAC : Migration
+    public partial class Add_Rbac : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,8 +65,7 @@ namespace Turnierplan.Dal.Migrations
                     ApiKeyId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Role = table.Column<int>(type: "integer", nullable: false),
-                    Principal = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false)
+                    Principal = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,8 +88,7 @@ namespace Turnierplan.Dal.Migrations
                     FolderId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Role = table.Column<int>(type: "integer", nullable: false),
-                    Principal = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false)
+                    Principal = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -113,8 +111,7 @@ namespace Turnierplan.Dal.Migrations
                     ImageId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Role = table.Column<int>(type: "integer", nullable: false),
-                    Principal = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false)
+                    Principal = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -137,8 +134,7 @@ namespace Turnierplan.Dal.Migrations
                     OrganizationId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Role = table.Column<int>(type: "integer", nullable: false),
-                    Principal = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false)
+                    Principal = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -161,8 +157,7 @@ namespace Turnierplan.Dal.Migrations
                     TournamentId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Role = table.Column<int>(type: "integer", nullable: false),
-                    Principal = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false)
+                    Principal = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -185,8 +180,7 @@ namespace Turnierplan.Dal.Migrations
                     VenueId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Role = table.Column<int>(type: "integer", nullable: false),
-                    Principal = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false)
+                    Principal = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -261,8 +255,8 @@ UPDATE turnierplan."Users" SET "PrincipalId" = gen_random_uuid();
             // 1000 is the numerical value for the "Owner" role
 
             migrationBuilder.Sql("""
-INSERT INTO turnierplan."IAM_Organization" ("Id", "OrganizationId", "CreatedAt", "Role", "Principal", "Description")
-SELECT gen_random_uuid(), "Organizations"."Id", NOW(), 1000, ('User:' || "Users"."PrincipalId"), ''
+INSERT INTO turnierplan."IAM_Organization" ("Id", "OrganizationId", "CreatedAt", "Role", "Principal")
+SELECT gen_random_uuid(), "Organizations"."Id", NOW(), 1000, ('User:' || "Users"."PrincipalId")
 FROM turnierplan."Organizations"
 INNER JOIN turnierplan."Users" ON "Organizations"."OwnerId" = "Users"."Id";
 """);

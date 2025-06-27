@@ -69,7 +69,6 @@ export class RbacAddAssignmentComponent implements OnDestroy {
     const request: CreateRoleAssignmentEndpointRequest = {
       scopeId: this.targetScopeId,
       role: this.selectedRole,
-      description: null, // TODO
       apiKeyId: this.selectedPrincipalKind === PrincipalKind.ApiKey ? this.searchPrincipalInput.trim() : null,
       userEmail: this.selectedPrincipalKind === PrincipalKind.User ? this.searchPrincipalInput.trim() : null
     };
