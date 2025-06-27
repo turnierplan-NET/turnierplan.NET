@@ -7,7 +7,7 @@ namespace Turnierplan.App.Endpoints.Principals;
 
 internal sealed class GetPrincipalNameEndpoint : EndpointBase<GetPrincipalNameEndpoint.GetPrincipalNameEndpointResponse>
 {
-    protected override HttpMethod Method => HttpMethod.Post;
+    protected override HttpMethod Method => HttpMethod.Get;
 
     protected override string Route => "/api/principals/name";
 
