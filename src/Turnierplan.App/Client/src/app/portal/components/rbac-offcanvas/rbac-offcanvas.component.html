@@ -34,16 +34,7 @@
               <td>
                 <div class="d-flex flex-column gap-2">
                   <div class="d-flex gap-2">
-                    @switch (assignment.principal.kind) {
-                      @case (PrincipalKind.ApiKey) {
-                        <i class="bi bi-key" [ngbTooltip]="'Portal.RbacManagement.PrincipalKind.ApiKey' | translate"></i>
-                      }
-                      @case (PrincipalKind.User) {
-                        <i class="bi bi-person" [ngbTooltip]="'Portal.RbacManagement.PrincipalKind.User' | translate"></i>
-                      }
-                    }
-                    <!-- TODO: Resolve ApiKey/User name -->
-                    <span>{{ assignment.principal.principalId }}</span>
+                    <tp-rbac-principal [principal]="assignment.principal" />
                     @if (canDeleteAssignment(assignment)) {
                       <span class="flex-grow-1"></span>
                       <tp-delete-button [reducedFootprint]="true" (confirmed)="removeRoleAssignment(assignment.id)" />

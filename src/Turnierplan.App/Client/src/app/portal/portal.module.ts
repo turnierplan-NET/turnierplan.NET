@@ -82,6 +82,7 @@ import { QRCodeComponent } from 'angularx-qrcode';
 import { RbacWidgetComponent } from './components/rbac-widget/rbac-widget.component';
 import { RbacOffcanvasComponent } from './components/rbac-offcanvas/rbac-offcanvas.component';
 import { AddRoleAssignmentComponent } from './components/add-role-assignment/add-role-assignment.component';
+import { RbacPrincipalComponent } from './components/rbac-principal/rbac-principal.component';
 
 const routes: Routes = [
   {
@@ -225,7 +226,8 @@ const routes: Routes = [
     BadgeComponent,
     RbacWidgetComponent,
     RbacOffcanvasComponent,
-    AddRoleAssignmentComponent
+    AddRoleAssignmentComponent,
+    RbacPrincipalComponent
   ],
   imports: [
     CommonModule,

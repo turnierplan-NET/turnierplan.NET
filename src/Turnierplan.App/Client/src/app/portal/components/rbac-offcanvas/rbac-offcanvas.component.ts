@@ -1,8 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { finalize, Observable, Subject } from 'rxjs';
-import { PrincipalKind, Role, RoleAssignmentDto, RoleAssignmentsService } from '../../../api';
+import { Role, RoleAssignmentDto, RoleAssignmentsService } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
-import { DocumentCopyComponent } from '../document-copy/document-copy.component';
 import { AddRoleAssignmentComponent } from '../add-role-assignment/add-role-assignment.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -16,8 +15,6 @@ interface IRbacOffcanvasTarget {
   templateUrl: './rbac-offcanvas.component.html'
 })
 export class RbacOffcanvasComponent implements OnDestroy {
-  protected readonly PrincipalKind = PrincipalKind;
-
   protected target!: IRbacOffcanvasTarget;
   protected targetIcon: string = '';
   protected isLoadingRoleAssignments = false;
