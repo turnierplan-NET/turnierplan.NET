@@ -126,7 +126,9 @@ export class RbacOffcanvasComponent implements OnDestroy {
     const component = ref.componentInstance as RbacAddAssignmentComponent;
 
     component.scopeId = this.target.rbacScopeId;
-    component.assignmentAdded$.subscribe(() => this.loadRoleAssignments());
+    component.error$.subscribe((error) => this.errorSubject$.next(error));
+
+    ref.closed.subscribe(() => this.loadRoleAssignments());
   }
 
   private loadRoleAssignments(): void {

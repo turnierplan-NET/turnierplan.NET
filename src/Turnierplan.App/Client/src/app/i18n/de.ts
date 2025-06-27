@@ -976,11 +976,25 @@ export const de = {
         },
         AddAssignmentInfo:
           'Suchen Sie den gewünschten Nutzer oder API-Schlüssel anhand von E-Mailadresse bzw. API-Schlüssel-ID. Durch Klick auf "Suchen & hinzufügen" wird der spezifizierte Prinzipal gesucht und - sofern gefunden - eine entsprechende Rollenzuweisung erstellt.',
+        SelectedRole: 'Gewählte Rolle:',
         SearchPrincipalPlaceholder: {
           ApiKey: 'ID des API-Schlüssels eingeben',
           User: 'E-Mailadresse des Nutzers eingeben'
         },
-        SearchPrincipalButton: 'Suchen & hinzufügen'
+        SearchPrincipalButton: 'Suchen & hinzufügen',
+        CreatingRoleAssignment: 'Die Rollenzuweisung wird erstellt',
+        CreateSuccessToast: {
+          Title: 'Rollenzuweisung erstellt',
+          Message: 'Die Rollenzuweisung wurde erfolgreich erstellt.'
+        },
+        PrincipalNotFoundToast: {
+          Title: 'Rollenzuweisung konnte nicht erstellt werden',
+          Message: 'Es existiert kein Prinzipal mit der angegebenen Api-Key-ID bzw. E-Mailadresse.'
+        },
+        AssignmentAlreadyExists: {
+          Title: 'Rollenzuweisung konnte nicht erstellt werden',
+          Message: 'Die angegebene Rolle ist bereits für den spezifizierten Prinzipal zugewiesen.'
+        }
       }
     }
   }

@@ -35,6 +35,10 @@
     }
     @case ('SelectPrincipal') {
       <div class="mb-3" translate="Portal.RbacManagement.AddRoleAssignment.AddAssignmentInfo"></div>
+      <div class="mb-3">
+        <span translate="Portal.RbacManagement.AddRoleAssignment.SelectedRole"></span>
+        <span class="ms-2 fw-bold" [translate]="'Portal.RbacManagement.RoleName.' + selectedRole"></span>
+      </div>
       <div class="d-flex flex-row align-items-center gap-2">
         <div class="btn-group" role="group">
           <input
@@ -71,11 +75,22 @@
           [(ngModel)]="searchPrincipalInput"
           class="flex-grow-1 form-control form-control-sm" />
 
-        <tp-action-button
-          [icon]="'search'"
-          [title]="'Portal.RbacManagement.AddRoleAssignment.SearchPrincipalButton'"
-          (click)="addRoleAssignment()" />
+        @let createDisabled = isCreatingRoleAssignment || searchPrincipalInput.length === 0;
+        <div [ngClass]="{ 'tp-cursor-not-allowed': createDisabled }">
+          <tp-action-button
+            [icon]="'search'"
+            [title]="'Portal.RbacManagement.AddRoleAssignment.SearchPrincipalButton'"
+            [disabled]="createDisabled"
+            (click)="addRoleAssignment()" />
+        </div>
       </div>
+
+      @if (isCreatingRoleAssignment) {
+        <div class="mt-3 d-flex flex-row gap-2">
+          <tp-small-spinner />
+          <span translate="Portal.RbacManagement.AddRoleAssignment.CreatingRoleAssignment"></span>
+        </div>
+      }
     }
   }
 </div>
@@ -100,7 +115,5 @@
         [disabled]="nextDisabled"
         (click)="nextStep()" />
     </div>
-  } @else {
-    <tp-action-button [type]="'outline-success'" [title]="'Portal.General.Done'" (click)="modal.close()" />
   }
 </div>

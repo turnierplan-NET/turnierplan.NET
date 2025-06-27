@@ -1,7 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
-import { PrincipalKind, Role } from '../../../api';
+import { CreateRoleAssignmentEndpointRequest, PrincipalKind, Role, RoleAssignmentsService } from '../../../api';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, Subject } from 'rxjs';
+import { finalize, Observable, Subject } from 'rxjs';
+import { NotificationService } from '../../../core/services/notification.service';
 
 type Step = 'SelectRole' | 'SelectPrincipal';
 
@@ -11,29 +12,34 @@ type Step = 'SelectRole' | 'SelectPrincipal';
   styleUrl: './rbac-add-assignment.component.scss'
 })
 export class RbacAddAssignmentComponent implements OnDestroy {
+  protected readonly PrincipalKind = PrincipalKind;
   protected readonly availableRoles = Object.keys(Role) as Role[];
 
   protected step: Step = 'SelectRole';
   protected selectedRole?: Role = undefined;
   protected selectedPrincipalKind: PrincipalKind = PrincipalKind.User;
   protected searchPrincipalInput: string = '';
+  protected isCreatingRoleAssignment = false;
 
-  private readonly assignmentAddedSubject$ = new Subject<void>();
-
+  private readonly errorSubject$ = new Subject<unknown>();
   private targetScopeId: string = '';
 
-  constructor(protected readonly modal: NgbActiveModal) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly roleAssignmentsService: RoleAssignmentsService,
+    private readonly notificationService: NotificationService
+  ) {}
 
   public set scopeId(value: string) {
     this.targetScopeId = value;
   }
 
-  public get assignmentAdded$(): Observable<void> {
-    return this.assignmentAddedSubject$.asObservable();
+  public get error$(): Observable<unknown> {
+    return this.errorSubject$.asObservable();
   }
 
   public ngOnDestroy(): void {
-    this.assignmentAddedSubject$.complete();
+    this.errorSubject$.complete();
   }
 
   protected previousStep(): void {
@@ -53,17 +59,49 @@ export class RbacAddAssignmentComponent implements OnDestroy {
   }
 
   protected addRoleAssignment(): void {
-    if (this.selectedRole === undefined || this.searchPrincipalInput.trim().length === 0) {
+    if (this.isCreatingRoleAssignment || this.selectedRole === undefined || this.searchPrincipalInput.trim().length === 0) {
       return;
     }
 
-    // TODO: Add switch button to determine whether ApiKey/User
-    //       Add notifications for various outcomes
+    this.isCreatingRoleAssignment = true;
 
-    // TODO: Only if successful
-    this.searchPrincipalInput = '';
-    this.assignmentAddedSubject$.next();
+    const request: CreateRoleAssignmentEndpointRequest = {
+      scopeId: this.targetScopeId,
+      role: this.selectedRole,
+      description: null, // TODO
+      apiKeyId: this.selectedPrincipalKind === PrincipalKind.ApiKey ? this.searchPrincipalInput.trim() : null,
+      userEmail: this.selectedPrincipalKind === PrincipalKind.User ? this.searchPrincipalInput.trim() : null
+    };
+
+    this.roleAssignmentsService
+      .createRoleAssignment({ body: request })
+      .pipe(finalize(() => (this.isCreatingRoleAssignment = false)))
+      .subscribe({
+        next: () => {
+          this.notificationService.showNotification(
+            'success',
+            'Portal.RbacManagement.AddRoleAssignment.CreateSuccessToast.Title',
+            'Portal.RbacManagement.AddRoleAssignment.CreateSuccessToast.Message'
+          );
+          this.modal.close();
+        },
+        error: (error: { status?: number }) => {
+          if (error.status === 400) {
+            this.notificationService.showNotification(
+              'error',
+              'Portal.RbacManagement.AddRoleAssignment.PrincipalNotFoundToast.Title',
+              'Portal.RbacManagement.AddRoleAssignment.PrincipalNotFoundToast.Message'
+            );
+          } else if (error.status === 409) {
+            this.notificationService.showNotification(
+              'error',
+              'Portal.RbacManagement.AddRoleAssignment.AssignmentAlreadyExists.Title',
+              'Portal.RbacManagement.AddRoleAssignment.AssignmentAlreadyExists.Message'
+            );
+          } else {
+            this.errorSubject$.next(error);
+          }
+        }
+      });
   }
-
-  protected readonly PrincipalKind = PrincipalKind;
 }
