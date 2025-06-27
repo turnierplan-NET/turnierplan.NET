@@ -961,9 +961,20 @@ export const de = {
           NotInherited: 'Zuweisung liegt auf dieser Spielstätte'
         }
       },
-      SuccessToast: {
+      DeletedSuccessToast: {
         Title: 'Rollenzuweisung gelöscht',
         Message: 'Die Rollenzuweisung wurde erfolgreich gelöscht.'
+      },
+      AddRoleAssignment: {
+        Title: 'Rollenzuweisung hinzufügen',
+        PreviousStep: 'Zurück',
+        NextStep: 'Weiter',
+        Confirm: 'Erstellen',
+        StepTitle: {
+          SelectRole: 'Rolle selektieren',
+          SelectPrincipal: 'Prinzipal selektieren',
+          Confirm: 'Prüfen und bestätigen'
+        }
       }
     }
   }

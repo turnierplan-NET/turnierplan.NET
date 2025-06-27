@@ -112,8 +112,8 @@ export class RbacOffcanvasComponent implements OnDestroy {
 
         this.notificationService.showNotification(
           'success',
-          'Portal.RbacManagement.SuccessToast.Title',
-          'Portal.RbacManagement.SuccessToast.Message'
+          'Portal.RbacManagement.DeletedSuccessToast.Title',
+          'Portal.RbacManagement.DeletedSuccessToast.Message'
         );
       },
       error: (error) => {

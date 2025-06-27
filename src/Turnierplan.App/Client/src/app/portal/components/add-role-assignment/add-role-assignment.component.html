@@ -1,1 +1,40 @@
-<p>add-role-assignment works!</p>
+<div class="modal-header">
+  <h4 class="modal-title" translate="Portal.RbacManagement.AddRoleAssignment.Title"></h4>
+  <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <div class="text-secondary small">
+    <span
+      [translate]="'Portal.RbacManagement.AddRoleAssignment.StepTitle.SelectRole'"
+      [ngClass]="{ 'text-decoration-underline': step === 'SelectRole' }"></span>
+    <span> &middot; </span>
+    <span
+      [translate]="'Portal.RbacManagement.AddRoleAssignment.StepTitle.SelectPrincipal'"
+      [ngClass]="{ 'text-decoration-underline': step === 'SelectPrincipal' }"></span>
+    <span> &middot; </span>
+    <span
+      [translate]="'Portal.RbacManagement.AddRoleAssignment.StepTitle.Confirm'"
+      [ngClass]="{ 'text-decoration-underline': step === 'Confirm' }"></span>
+  </div>
+</div>
+<div class="modal-footer">
+  @if (step === 'SelectRole') {
+    <tp-action-button [type]="'outline-secondary'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
+  } @else {
+    <tp-action-button
+      [type]="'outline-dark'"
+      [title]="'Portal.RbacManagement.AddRoleAssignment.PreviousStep'"
+      [icon]="'arrow-left-circle'"
+      (click)="previousStep()" />
+  }
+  <span class="flex-grow-1"></span>
+  @if (step === 'Confirm') {
+    <tp-action-button [type]="'success'" [title]="'Portal.RbacManagement.AddRoleAssignment.Confirm'" (click)="confirm()" />
+  } @else {
+    <tp-action-button
+      [type]="'outline-dark'"
+      [title]="'Portal.RbacManagement.AddRoleAssignment.NextStep'"
+      [icon]="'arrow-right-circle'"
+      (click)="nextStep()" />
+  }
+</div>
