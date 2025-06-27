@@ -16,6 +16,11 @@ internal sealed class UserRepository(TurnierplanContext context) : RepositoryBas
         return DbSet.Where(x => x.Id.Equals(id)).FirstOrDefaultAsync();
     }
 
+    public Task<User?> GetByPrincipalIdAsync(Guid id)
+    {
+        return DbSet.Where(x => x.PrincipalId == id).FirstOrDefaultAsync();
+    }
+
     public Task<User?> GetByEmailAsync(string email)
     {
         var normalizedEMail = User.NormalizeEmail(email);
