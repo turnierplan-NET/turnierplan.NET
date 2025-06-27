@@ -3,7 +3,7 @@
   <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
 </div>
 <div class="modal-body">
-  <div class="text-secondary small">
+  <div class="text-secondary small mb-4">
     <span
       [translate]="'Portal.RbacManagement.AddRoleAssignment.StepTitle.SelectRole'"
       [ngClass]="{ 'text-decoration-underline': step === 'SelectRole' }"></span>
@@ -16,6 +16,30 @@
       [translate]="'Portal.RbacManagement.AddRoleAssignment.StepTitle.Confirm'"
       [ngClass]="{ 'text-decoration-underline': step === 'Confirm' }"></span>
   </div>
+
+  @switch (step) {
+    @case ('SelectRole') {
+      <table class="table table-bordered">
+        <tbody>
+          @for (role of availableRoles; track role) {
+            <tr>
+              <td>
+                <div
+                  [ngClass]="{ 'fw-bold text-decoration-underline': role === selectedRole }"
+                  [translate]="'Portal.RbacManagement.RoleName.' + role"></div>
+                <div class="small text-secondary" [translate]="'Portal.RbacManagement.RoleDescription.' + role"></div>
+              </td>
+              <td style="width: 1px" class="align-middle">
+                <tp-action-button [mode]="'IconOnly'" [icon]="'arrow-right-circle'" (click)="selectRole(role)" />
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+    @case ('SelectPrincipal') {}
+    @case ('Confirm') {}
+  }
 </div>
 <div class="modal-footer">
   @if (step === 'SelectRole') {

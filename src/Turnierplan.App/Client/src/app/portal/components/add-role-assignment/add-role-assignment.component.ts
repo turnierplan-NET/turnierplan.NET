@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Role } from '../../../api';
 
 type Step = 'SelectRole' | 'SelectPrincipal' | 'Confirm';
 
@@ -9,7 +10,10 @@ type Step = 'SelectRole' | 'SelectPrincipal' | 'Confirm';
   styleUrl: './add-role-assignment.component.scss'
 })
 export class AddRoleAssignmentComponent {
+  protected readonly availableRoles = Object.keys(Role) as Role[];
+
   protected step: Step = 'SelectRole';
+  protected selectedRole: Role = Role.Reader;
 
   constructor(protected readonly modal: NgbActiveModal) {}
 
@@ -35,6 +39,11 @@ export class AddRoleAssignmentComponent {
         this.step = 'Confirm';
         break;
     }
+  }
+
+  protected selectRole(role: Role): void {
+    this.selectedRole = role;
+    this.nextStep();
   }
 
   protected confirm(): void {}
