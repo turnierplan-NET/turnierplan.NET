@@ -974,6 +974,14 @@ export const de = {
           SelectRole: 'Rolle selektieren',
           SelectPrincipal: 'Prinzipal selektieren',
           Confirm: 'Prüfen und bestätigen'
+        },
+        SearchPrincipalPlaceholder: 'E-Mailadresse oder API-Key ID eingeben',
+        SearchPrincipalButton: 'Suchen & hinzufügen',
+        NoPrincipalsSelected: 'Kein Prinzipal selektiert',
+        ConfirmMessage: 'Prüfen Sie Ihre Selektion auf Richtigkeit:',
+        ConfirmTable: {
+          Role: 'Rolle:',
+          Principals: 'Prinzipal:'
         }
       }
     }

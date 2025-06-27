@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Role } from '../../../api';
+import { PrincipalDto, PrincipalKind, Role } from '../../../api';
 
 type Step = 'SelectRole' | 'SelectPrincipal' | 'Confirm';
 
@@ -13,13 +13,20 @@ export class AddRoleAssignmentComponent {
   protected readonly availableRoles = Object.keys(Role) as Role[];
 
   protected step: Step = 'SelectRole';
-  protected selectedRole: Role = Role.Reader;
+  protected selectedRole?: Role = undefined;
+  protected selectedPrincipals: PrincipalDto[] = [];
+  protected searchPrincipalInput: string = '';
+
+  private targetScopeId: string = '';
 
   constructor(protected readonly modal: NgbActiveModal) {}
 
+  public set scopeId(value: string) {
+    this.targetScopeId = value;
+  }
+
   protected previousStep(): void {
     switch (this.step) {
-      case 'SelectRole':
       case 'SelectPrincipal':
         this.step = 'SelectRole';
         break;
@@ -35,8 +42,9 @@ export class AddRoleAssignmentComponent {
         this.step = 'SelectPrincipal';
         break;
       case 'SelectPrincipal':
-      case 'Confirm':
-        this.step = 'Confirm';
+        if (this.selectedPrincipals.length > 0) {
+          this.step = 'Confirm';
+        }
         break;
     }
   }
@@ -46,5 +54,29 @@ export class AddRoleAssignmentComponent {
     this.nextStep();
   }
 
-  protected confirm(): void {}
+  protected searchPrincipal(): void {
+    // TODO: Send request and, if not already present, add to list
+    //       Add notifications for various outcomes
+
+    this.selectedPrincipals.push({
+      principalId: 'blubb',
+      kind: PrincipalKind.User
+    });
+
+    // TODO Only reset if successful
+    this.searchPrincipalInput = '';
+  }
+
+  protected removePrincipal(index: number): void {
+    // Can't use .slice(index, 1) because that wouldn't trigger Angular change detection
+    this.selectedPrincipals = this.selectedPrincipals.filter((_, i) => i !== index);
+  }
+
+  protected confirm(): void {
+    if (!this.selectedRole || this.selectedPrincipals.length === 0) {
+      return;
+    }
+
+    this.modal.close();
+  }
 }

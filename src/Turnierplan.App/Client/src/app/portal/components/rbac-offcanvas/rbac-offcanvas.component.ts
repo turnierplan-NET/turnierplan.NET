@@ -65,30 +65,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
         break;
     }
 
-    this.isLoadingRoleAssignments = true;
-
-    this.roleAssignmentsService
-      .getRoleAssignments({ scopeId: this.target.rbacScopeId })
-      .pipe(finalize(() => (this.isLoadingRoleAssignments = false)))
-      .subscribe({
-        next: (roleAssignments) => {
-          this.roleAssignments = {};
-          this.roleAssignmentCount = 0;
-
-          for (const roleAssignment of roleAssignments) {
-            this.roleAssignmentCount++;
-
-            if (roleAssignment.role in this.roleAssignments) {
-              this.roleAssignments[roleAssignment.role].push(roleAssignment);
-            } else {
-              this.roleAssignments[roleAssignment.role] = [roleAssignment];
-            }
-          }
-        },
-        error: (error) => {
-          this.errorSubject$.next(error);
-        }
-      });
+    this.loadRoleAssignments();
   }
 
   protected removeRoleAssignment(id: string): void {
@@ -145,5 +122,36 @@ export class RbacOffcanvasComponent implements OnDestroy {
       fullscreen: 'lg',
       centered: true
     });
+
+    (ref.componentInstance as AddRoleAssignmentComponent).scopeId = this.target.rbacScopeId;
+
+    ref.closed.subscribe(() => this.loadRoleAssignments());
+  }
+
+  private loadRoleAssignments(): void {
+    this.isLoadingRoleAssignments = true;
+
+    this.roleAssignmentsService
+      .getRoleAssignments({ scopeId: this.target.rbacScopeId })
+      .pipe(finalize(() => (this.isLoadingRoleAssignments = false)))
+      .subscribe({
+        next: (roleAssignments) => {
+          this.roleAssignments = {};
+          this.roleAssignmentCount = 0;
+
+          for (const roleAssignment of roleAssignments) {
+            this.roleAssignmentCount++;
+
+            if (roleAssignment.role in this.roleAssignments) {
+              this.roleAssignments[roleAssignment.role].push(roleAssignment);
+            } else {
+              this.roleAssignments[roleAssignment.role] = [roleAssignment];
+            }
+          }
+        },
+        error: (error) => {
+          this.errorSubject$.next(error);
+        }
+      });
   }
 }

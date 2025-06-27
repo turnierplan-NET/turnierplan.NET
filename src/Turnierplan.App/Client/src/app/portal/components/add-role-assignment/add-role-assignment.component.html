@@ -37,8 +37,62 @@
         </tbody>
       </table>
     }
-    @case ('SelectPrincipal') {}
-    @case ('Confirm') {}
+    @case ('SelectPrincipal') {
+      <div class="mb-3 d-flex flex-row align-items-center gap-2">
+        <input
+          type="text"
+          [placeholder]="'Portal.RbacManagement.AddRoleAssignment.SearchPrincipalPlaceholder' | translate"
+          [(ngModel)]="searchPrincipalInput"
+          class="flex-grow-1 form-control form-control-sm" />
+        <tp-action-button
+          [icon]="'search'"
+          [title]="'Portal.RbacManagement.AddRoleAssignment.SearchPrincipalButton'"
+          (click)="searchPrincipal()" />
+      </div>
+
+      @if (selectedPrincipals.length === 0) {
+        <div class="small text-secondary fst-italic" translate="Portal.RbacManagement.AddRoleAssignment.NoPrincipalsSelected"></div>
+      } @else {
+        <table class="table table-bordered">
+          <tbody>
+            @for (principal of selectedPrincipals; track principal; let index = $index) {
+              <tr>
+                <td class="align-middle">
+                  <tp-rbac-principal [principal]="principal" />
+                </td>
+                <td style="width: 1px" class="align-middle">
+                  <tp-action-button [type]="'outline-danger'" [mode]="'IconOnly'" [icon]="'trash'" (click)="removePrincipal(index)" />
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    }
+    @case ('Confirm') {
+      <div class="mb-3" translate="Portal.RbacManagement.AddRoleAssignment.ConfirmMessage"></div>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td translate="Portal.RbacManagement.AddRoleAssignment.ConfirmTable.Role"></td>
+            <td>
+              <div [translate]="'Portal.RbacManagement.RoleName.' + selectedRole"></div>
+              <div class="small text-secondary" [translate]="'Portal.RbacManagement.RoleDescription.' + selectedRole"></div>
+            </td>
+          </tr>
+          <tr>
+            <td translate="Portal.RbacManagement.AddRoleAssignment.ConfirmTable.Principals"></td>
+            <td>
+              @for (principal of selectedPrincipals; track principal) {
+                <div>
+                  <tp-rbac-principal [principal]="principal" />
+                </div>
+              }
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    }
   }
 </div>
 <div class="modal-footer">
@@ -55,10 +109,15 @@
   @if (step === 'Confirm') {
     <tp-action-button [type]="'success'" [title]="'Portal.RbacManagement.AddRoleAssignment.Confirm'" (click)="confirm()" />
   } @else {
-    <tp-action-button
-      [type]="'outline-dark'"
-      [title]="'Portal.RbacManagement.AddRoleAssignment.NextStep'"
-      [icon]="'arrow-right-circle'"
-      (click)="nextStep()" />
+    @let nextDisabled =
+      (step === 'SelectRole' && selectedRole === undefined) || (step === 'SelectPrincipal' && selectedPrincipals.length === 0);
+    <div [ngClass]="{ 'tp-cursor-not-allowed': nextDisabled }">
+      <tp-action-button
+        [type]="'outline-dark'"
+        [title]="'Portal.RbacManagement.AddRoleAssignment.NextStep'"
+        [icon]="'arrow-right-circle'"
+        [disabled]="nextDisabled"
+        (click)="nextStep()" />
+    </div>
   }
 </div>
