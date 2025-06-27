@@ -1,7 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import { finalize, Observable, Subject } from 'rxjs';
-import { PrincipalKind, Role, RoleAssignmentDto, RoleAssignmentsService } from '../../../api';
+import { Role, RoleAssignmentDto, RoleAssignmentsService } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RbacAddAssignmentComponent } from '../rbac-add-assignment/rbac-add-assignment.component';
 
 interface IRbacOffcanvasTarget {
   name: string;
@@ -13,8 +15,6 @@ interface IRbacOffcanvasTarget {
   templateUrl: './rbac-offcanvas.component.html'
 })
 export class RbacOffcanvasComponent implements OnDestroy {
-  protected readonly PrincipalKind = PrincipalKind;
-
   protected target!: IRbacOffcanvasTarget;
   protected targetIcon: string = '';
   protected isLoadingRoleAssignments = false;
@@ -28,7 +28,8 @@ export class RbacOffcanvasComponent implements OnDestroy {
 
   constructor(
     private readonly roleAssignmentsService: RoleAssignmentsService,
-    private readonly notificationService: NotificationService
+    private readonly notificationService: NotificationService,
+    private readonly modalService: NgbModal
   ) {}
 
   public get error$(): Observable<unknown> {
@@ -64,30 +65,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
         break;
     }
 
-    this.isLoadingRoleAssignments = true;
-
-    this.roleAssignmentsService
-      .getRoleAssignments({ scopeId: this.target.rbacScopeId })
-      .pipe(finalize(() => (this.isLoadingRoleAssignments = false)))
-      .subscribe({
-        next: (roleAssignments) => {
-          this.roleAssignments = {};
-          this.roleAssignmentCount = 0;
-
-          for (const roleAssignment of roleAssignments) {
-            this.roleAssignmentCount++;
-
-            if (roleAssignment.role in this.roleAssignments) {
-              this.roleAssignments[roleAssignment.role].push(roleAssignment);
-            } else {
-              this.roleAssignments[roleAssignment.role] = [roleAssignment];
-            }
-          }
-        },
-        error: (error) => {
-          this.errorSubject$.next(error);
-        }
-      });
+    this.loadRoleAssignments();
   }
 
   protected removeRoleAssignment(id: string): void {
@@ -108,8 +86,8 @@ export class RbacOffcanvasComponent implements OnDestroy {
 
         this.notificationService.showNotification(
           'success',
-          'Portal.RbacManagement.SuccessToast.Title',
-          'Portal.RbacManagement.SuccessToast.Message'
+          'Portal.RbacManagement.DeletedSuccessToast.Title',
+          'Portal.RbacManagement.DeletedSuccessToast.Message'
         );
       },
       error: (error) => {
@@ -136,5 +114,47 @@ export class RbacOffcanvasComponent implements OnDestroy {
       rbacScopeId: scopeId,
       name: scopeName
     });
+  }
+
+  protected showAddRoleAssignmentDialog(): void {
+    const ref = this.modalService.open(RbacAddAssignmentComponent, {
+      size: 'lg',
+      fullscreen: 'lg',
+      centered: true
+    });
+
+    const component = ref.componentInstance as RbacAddAssignmentComponent;
+
+    component.scopeId = this.target.rbacScopeId;
+    component.error$.subscribe((error) => this.errorSubject$.next(error));
+
+    ref.closed.subscribe(() => this.loadRoleAssignments());
+  }
+
+  private loadRoleAssignments(): void {
+    this.isLoadingRoleAssignments = true;
+
+    this.roleAssignmentsService
+      .getRoleAssignments({ scopeId: this.target.rbacScopeId })
+      .pipe(finalize(() => (this.isLoadingRoleAssignments = false)))
+      .subscribe({
+        next: (roleAssignments) => {
+          this.roleAssignments = {};
+          this.roleAssignmentCount = 0;
+
+          for (const roleAssignment of roleAssignments) {
+            this.roleAssignmentCount++;
+
+            if (roleAssignment.role in this.roleAssignments) {
+              this.roleAssignments[roleAssignment.role].push(roleAssignment);
+            } else {
+              this.roleAssignments[roleAssignment.role] = [roleAssignment];
+            }
+          }
+        },
+        error: (error) => {
+          this.errorSubject$.next(error);
+        }
+      });
   }
 }

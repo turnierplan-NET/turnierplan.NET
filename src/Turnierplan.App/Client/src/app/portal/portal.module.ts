@@ -81,6 +81,8 @@ import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2
 import { QRCodeComponent } from 'angularx-qrcode';
 import { RbacWidgetComponent } from './components/rbac-widget/rbac-widget.component';
 import { RbacOffcanvasComponent } from './components/rbac-offcanvas/rbac-offcanvas.component';
+import { RbacPrincipalComponent } from './components/rbac-principal/rbac-principal.component';
+import { RbacAddAssignmentComponent } from './components/rbac-add-assignment/rbac-add-assignment.component';
 
 const routes: Routes = [
   {
@@ -223,7 +225,9 @@ const routes: Routes = [
     CreateUserComponent,
     BadgeComponent,
     RbacWidgetComponent,
-    RbacOffcanvasComponent
+    RbacOffcanvasComponent,
+    RbacAddAssignmentComponent,
+    RbacPrincipalComponent
   ],
   imports: [
     CommonModule,

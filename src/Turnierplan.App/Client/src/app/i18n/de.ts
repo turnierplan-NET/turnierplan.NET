@@ -945,21 +945,55 @@ export const de = {
       InheritedTooltip: 'Diese Rollenzuweisung existiert implizit aufgrund der Zugehörigkeit zu einer anderen Resource',
       ScopeType: {
         Folder: {
+          Tooltip: 'Ordner',
           NotInherited: 'Zuweisung liegt auf diesem Ordner'
         },
         Organization: {
+          Tooltip: 'Organisation',
           NotInherited: 'Zuweisung liegt auf dieser Organisation'
         },
         Tournament: {
+          Tooltip: 'Turnier',
           NotInherited: 'Zuweisung liegt auf diesem Turnier'
         },
         Venue: {
+          Tooltip: 'Spielstätte',
           NotInherited: 'Zuweisung liegt auf dieser Spielstätte'
         }
       },
-      SuccessToast: {
+      DeletedSuccessToast: {
         Title: 'Rollenzuweisung gelöscht',
         Message: 'Die Rollenzuweisung wurde erfolgreich gelöscht.'
+      },
+      AddRoleAssignment: {
+        Title: 'Rollenzuweisung hinzufügen',
+        PreviousStep: 'Zurück',
+        NextStep: 'Weiter',
+        StepTitle: {
+          SelectRole: 'Rolle selektieren',
+          SelectPrincipal: 'Prinzipal selektieren'
+        },
+        AddAssignmentInfo:
+          'Suchen Sie den gewünschten Nutzer oder API-Schlüssel anhand von E-Mailadresse bzw. API-Schlüssel-ID. Durch Klick auf "Suchen & hinzufügen" wird der spezifizierte Prinzipal gesucht und - sofern gefunden - eine entsprechende Rollenzuweisung erstellt.',
+        SelectedRole: 'Gewählte Rolle:',
+        SearchPrincipalPlaceholder: {
+          ApiKey: 'ID des API-Schlüssels eingeben',
+          User: 'E-Mailadresse des Nutzers eingeben'
+        },
+        SearchPrincipalButton: 'Suchen & hinzufügen',
+        CreatingRoleAssignment: 'Die Rollenzuweisung wird erstellt',
+        CreateSuccessToast: {
+          Title: 'Rollenzuweisung erstellt',
+          Message: 'Die Rollenzuweisung wurde erfolgreich erstellt.'
+        },
+        PrincipalNotFoundToast: {
+          Title: 'Rollenzuweisung konnte nicht erstellt werden',
+          Message: 'Es existiert kein Prinzipal mit der angegebenen Api-Key-ID bzw. E-Mailadresse.'
+        },
+        AssignmentAlreadyExists: {
+          Title: 'Rollenzuweisung konnte nicht erstellt werden',
+          Message: 'Die angegebene Rolle ist bereits für den spezifizierten Prinzipal zugewiesen.'
+        }
       }
     }
   }

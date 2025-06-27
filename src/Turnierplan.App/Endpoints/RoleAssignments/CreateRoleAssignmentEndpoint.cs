@@ -144,7 +144,7 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
 
         public required string? UserEmail { get; init; }
 
-        public required string Description { get; init; }
+        public required string? Description { get; init; }
     }
 
     private sealed class Validator : AbstractValidator<CreateRoleAssignmentEndpointRequest>
@@ -164,7 +164,9 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
                 .WithMessage($"Exactly only one of {nameof(CreateRoleAssignmentEndpointRequest.ApiKeyId)} and {nameof(CreateRoleAssignmentEndpointRequest.UserEmail)} must be specified.");
 
             RuleFor(x => x.Description)
-                .MaximumLength(ValidationConstants.RoleAssignment.MaxDescriptionLength);
+                .NotEmpty()
+                .MaximumLength(ValidationConstants.RoleAssignment.MaxDescriptionLength)
+                .When(x => x.Description is not null);
         }
     }
 }
