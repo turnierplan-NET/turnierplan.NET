@@ -255,8 +255,8 @@ UPDATE turnierplan."Users" SET "PrincipalId" = gen_random_uuid();
             // 1000 is the numerical value for the "Owner" role
 
             migrationBuilder.Sql("""
-INSERT INTO turnierplan."IAM_Organization" ("Id", "OrganizationId", "CreatedAt", "Role", "Principal", "Description")
-SELECT gen_random_uuid(), "Organizations"."Id", NOW(), 1000, ('User:' || "Users"."PrincipalId"), ''
+INSERT INTO turnierplan."IAM_Organization" ("Id", "OrganizationId", "CreatedAt", "Role", "Principal")
+SELECT gen_random_uuid(), "Organizations"."Id", NOW(), 1000, ('User:' || "Users"."PrincipalId")
 FROM turnierplan."Organizations"
 INNER JOIN turnierplan."Users" ON "Organizations"."OwnerId" = "Users"."Id";
 """);
