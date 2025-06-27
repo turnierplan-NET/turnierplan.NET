@@ -445,6 +445,14 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
                     groupRefereeMap[_groups[0]] = _groups[0];
                     break;
                 }
+            case 4:
+                {
+                    groupRefereeMap[_groups[0]] = _groups[2];
+                    groupRefereeMap[_groups[1]] = _groups[3];
+                    groupRefereeMap[_groups[2]] = _groups[0];
+                    groupRefereeMap[_groups[3]] = _groups[1];
+                    break;
+                }
             default:
                 {
                     for (var i = 0; i < _groups.Count; i++)
