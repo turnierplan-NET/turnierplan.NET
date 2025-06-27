@@ -969,7 +969,6 @@ export const de = {
         Title: 'Rollenzuweisung hinzufügen',
         PreviousStep: 'Zurück',
         NextStep: 'Weiter',
-        Confirm: 'Erstellen',
         StepTitle: {
           SelectRole: 'Rolle selektieren',
           SelectPrincipal: 'Prinzipal selektieren'
