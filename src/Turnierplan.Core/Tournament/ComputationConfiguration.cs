@@ -21,6 +21,9 @@ public sealed record ComputationConfiguration
     [JsonPropertyName("l")]
     public int MatchLostPoints { get; set; } = 0;
 
+    [JsonPropertyName("r")]
+    public bool HigherScoreLoses { get; set; } = false;
+
     [JsonPropertyName("cmp")]
     public List<TeamComparisonMode> ComparisonModes { get; set; } = [..__defaultTeamComparisonModes];
 }
