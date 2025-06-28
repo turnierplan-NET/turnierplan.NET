@@ -16,7 +16,5 @@ public sealed record RoleAssignmentDto
 
     public required PrincipalDto Principal { get; init; }
 
-    public required string Description { get; init; }
-
     public required bool IsInherited { get; init; }
 }

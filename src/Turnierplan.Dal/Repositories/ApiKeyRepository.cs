@@ -23,6 +23,11 @@ internal sealed class ApiKeyRepository : RepositoryBaseWithPublicId<ApiKey>, IAp
             .FirstOrDefaultAsync();
     }
 
+    public Task<ApiKey?> GetByPrincipalIdAsync(Guid id)
+    {
+        return DbSet.Where(x => x.PrincipalId == id).FirstOrDefaultAsync();
+    }
+
     public Task<List<ApiKeyRequest>> GetRequestsInTimeRange(ApiKey apiKey, DateTime start, DateTime end)
     {
         return _requests.Where(x => x.ApiKey == apiKey && x.Timestamp >= start && x.Timestamp <= end)

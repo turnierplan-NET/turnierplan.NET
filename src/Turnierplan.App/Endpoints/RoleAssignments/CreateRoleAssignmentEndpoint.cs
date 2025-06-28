@@ -16,7 +16,6 @@ using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.User;
 using Turnierplan.Core.Venue;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.RoleAssignments;
 
@@ -104,7 +103,7 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
             return Results.Conflict("There already exists a role assignment for the specified principal/role combination.");
         }
 
-        var roleAssignment = entity.AddRoleAssignment(request.Role, principal, request.Description);
+        var roleAssignment = entity.AddRoleAssignment(request.Role, principal);
 
         await roleAssignmentRepository.CreateAsync(roleAssignment).ConfigureAwait(false);
         await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
@@ -143,8 +142,6 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
         public required PublicId? ApiKeyId { get; init; }
 
         public required string? UserEmail { get; init; }
-
-        public required string Description { get; init; }
     }
 
     private sealed class Validator : AbstractValidator<CreateRoleAssignmentEndpointRequest>
@@ -162,9 +159,6 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
             RuleFor(x => x)
                 .Must(x => x.ApiKeyId is null ^ x.UserEmail is null)
                 .WithMessage($"Exactly only one of {nameof(CreateRoleAssignmentEndpointRequest.ApiKeyId)} and {nameof(CreateRoleAssignmentEndpointRequest.UserEmail)} must be specified.");
-
-            RuleFor(x => x.Description)
-                .MaximumLength(ValidationConstants.RoleAssignment.MaxDescriptionLength);
         }
     }
 }

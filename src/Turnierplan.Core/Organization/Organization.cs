@@ -48,9 +48,9 @@ public sealed class Organization : Entity<long>, IEntityWithRoleAssignments<Orga
 
     public IReadOnlyList<Venue.Venue> Venues => _venues.AsReadOnly();
 
-    public RoleAssignment<Organization> AddRoleAssignment(Role role, Principal principal, string? description = null)
+    public RoleAssignment<Organization> AddRoleAssignment(Role role, Principal principal)
     {
-        var roleAssignment = new RoleAssignment<Organization>(this, role, principal, description);
+        var roleAssignment = new RoleAssignment<Organization>(this, role, principal);
         _roleAssignments.Add(roleAssignment);
 
         return roleAssignment;

@@ -27,9 +27,5 @@ public sealed class RoleAssignmentEntityTypeConfiguration<T> : IEntityTypeConfig
         builder.Property(x => x.Principal)
             .IsRequired()
             .HasConversion<PrincipalConverter>();
-
-        builder.Property(x => x.Description)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.RoleAssignment.MaxDescriptionLength);
     }
 }

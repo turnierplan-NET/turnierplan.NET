@@ -1,7 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import { finalize, Observable, Subject } from 'rxjs';
-import { PrincipalKind, Role, RoleAssignmentDto, RoleAssignmentsService } from '../../../api';
+import { Role, RoleAssignmentDto, RoleAssignmentsService } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RbacAddAssignmentComponent } from '../rbac-add-assignment/rbac-add-assignment.component';
 
 interface IRbacOffcanvasTarget {
   name: string;
@@ -13,12 +15,10 @@ interface IRbacOffcanvasTarget {
   templateUrl: './rbac-offcanvas.component.html'
 })
 export class RbacOffcanvasComponent implements OnDestroy {
-  protected readonly PrincipalKind = PrincipalKind;
-
   protected target!: IRbacOffcanvasTarget;
   protected targetIcon: string = '';
   protected isLoadingRoleAssignments = false;
-  protected roleAssignments: { [key: string]: RoleAssignmentDto[] } = {};
+  protected roleAssignments: { role: Role; assignments: RoleAssignmentDto[] }[] = [];
   protected roleAssignmentCount: number = 0;
 
   protected scopeTranslationKey: string = '';
@@ -28,7 +28,8 @@ export class RbacOffcanvasComponent implements OnDestroy {
 
   constructor(
     private readonly roleAssignmentsService: RoleAssignmentsService,
-    private readonly notificationService: NotificationService
+    private readonly notificationService: NotificationService,
+    private readonly modalService: NgbModal
   ) {}
 
   public get error$(): Observable<unknown> {
@@ -64,30 +65,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
         break;
     }
 
-    this.isLoadingRoleAssignments = true;
-
-    this.roleAssignmentsService
-      .getRoleAssignments({ scopeId: this.target.rbacScopeId })
-      .pipe(finalize(() => (this.isLoadingRoleAssignments = false)))
-      .subscribe({
-        next: (roleAssignments) => {
-          this.roleAssignments = {};
-          this.roleAssignmentCount = 0;
-
-          for (const roleAssignment of roleAssignments) {
-            this.roleAssignmentCount++;
-
-            if (roleAssignment.role in this.roleAssignments) {
-              this.roleAssignments[roleAssignment.role].push(roleAssignment);
-            } else {
-              this.roleAssignments[roleAssignment.role] = [roleAssignment];
-            }
-          }
-        },
-        error: (error) => {
-          this.errorSubject$.next(error);
-        }
-      });
+    this.loadRoleAssignments();
   }
 
   protected removeRoleAssignment(id: string): void {
@@ -95,21 +73,17 @@ export class RbacOffcanvasComponent implements OnDestroy {
       next: () => {
         this.roleAssignmentCount = 0;
 
-        for (const key of Object.keys(this.roleAssignments)) {
-          const filtered = this.roleAssignments[key].filter((x) => x.id !== id);
-          this.roleAssignmentCount += filtered.length;
-
-          if (filtered.length > 0) {
-            this.roleAssignments[key] = filtered;
-          } else {
-            delete this.roleAssignments[key];
-          }
+        for (const entry of this.roleAssignments) {
+          entry.assignments = entry.assignments.filter((x) => x.id !== id);
+          this.roleAssignmentCount += entry.assignments.length;
         }
+
+        this.roleAssignments = this.roleAssignments.filter((x) => x.assignments.length > 0);
 
         this.notificationService.showNotification(
           'success',
-          'Portal.RbacManagement.SuccessToast.Title',
-          'Portal.RbacManagement.SuccessToast.Message'
+          'Portal.RbacManagement.DeletedSuccessToast.Title',
+          'Portal.RbacManagement.DeletedSuccessToast.Message'
         );
       },
       error: (error) => {
@@ -123,7 +97,11 @@ export class RbacOffcanvasComponent implements OnDestroy {
       return false;
     }
 
-    if (assignment.role === Role.Owner && this.targetIsOrganization && this.roleAssignments[Role.Owner].length === 1) {
+    if (
+      assignment.role === Role.Owner &&
+      this.targetIsOrganization &&
+      this.roleAssignments.find((x) => x.role === Role.Owner)?.assignments.length === 1
+    ) {
       // This is a special case which forbids deleting the only Owner assignment from an organization.
       return false;
     }
@@ -136,5 +114,51 @@ export class RbacOffcanvasComponent implements OnDestroy {
       rbacScopeId: scopeId,
       name: scopeName
     });
+  }
+
+  protected showAddRoleAssignmentDialog(): void {
+    const ref = this.modalService.open(RbacAddAssignmentComponent, {
+      size: 'lg',
+      fullscreen: 'lg',
+      centered: true
+    });
+
+    const component = ref.componentInstance as RbacAddAssignmentComponent;
+
+    component.scopeId = this.target.rbacScopeId;
+    component.error$.subscribe((error) => this.errorSubject$.next(error));
+
+    ref.closed.subscribe(() => this.loadRoleAssignments());
+  }
+
+  private loadRoleAssignments(): void {
+    this.isLoadingRoleAssignments = true;
+
+    this.roleAssignmentsService
+      .getRoleAssignments({ scopeId: this.target.rbacScopeId })
+      .pipe(finalize(() => (this.isLoadingRoleAssignments = false)))
+      .subscribe({
+        next: (roleAssignments) => {
+          // This definition guarantees the correct ordering
+          this.roleAssignments = Object.keys(Role).map((x) => ({ role: x as Role, assignments: [] as RoleAssignmentDto[] }));
+          this.roleAssignmentCount = 0;
+
+          for (const roleAssignment of roleAssignments) {
+            this.roleAssignmentCount++;
+
+            for (const entry of this.roleAssignments) {
+              if (entry.role === roleAssignment.role) {
+                entry.assignments.push(roleAssignment);
+                break;
+              }
+            }
+          }
+
+          this.roleAssignments = this.roleAssignments.filter((x) => x.assignments.length > 0);
+        },
+        error: (error) => {
+          this.errorSubject$.next(error);
+        }
+      });
   }
 }

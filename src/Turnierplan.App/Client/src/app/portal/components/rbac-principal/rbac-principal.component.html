@@ -1,0 +1,9 @@
+@switch (principal.kind) {
+  @case (PrincipalKind.ApiKey) {
+    <i class="bi bi-key" [ngbTooltip]="'Portal.RbacManagement.PrincipalKind.ApiKey' | translate"></i>
+  }
+  @case (PrincipalKind.User) {
+    <i class="bi bi-person" [ngbTooltip]="'Portal.RbacManagement.PrincipalKind.User' | translate"></i>
+  }
+}
+<span class="ms-2">{{ displayName$ | async }}</span>

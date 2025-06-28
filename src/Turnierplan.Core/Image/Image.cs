@@ -65,9 +65,9 @@ public sealed class Image : Entity<long>, IEntityWithRoleAssignments<Image>, IEn
 
     public ushort Height { get; }
 
-    public RoleAssignment<Image> AddRoleAssignment(Role role, Principal principal, string? description = null)
+    public RoleAssignment<Image> AddRoleAssignment(Role role, Principal principal)
     {
-        var roleAssignment = new RoleAssignment<Image>(this, role, principal, description);
+        var roleAssignment = new RoleAssignment<Image>(this, role, principal);
         _roleAssignments.Add(roleAssignment);
 
         return roleAssignment;

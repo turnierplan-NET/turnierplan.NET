@@ -9,6 +9,8 @@ import { NotificationService } from '../../../core/services/notification.service
 import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { LoadingState } from '../../directives/loading-state/loading-state.directive';
 import { TitleService } from '../../services/title.service';
+import { NavigationStart, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   standalone: false,
@@ -35,9 +37,21 @@ export class AdministrationPageComponent implements OnInit {
     private readonly titleService: TitleService,
     private readonly authenticationService: AuthenticationService,
     private readonly offcanvasService: NgbOffcanvas,
-    private readonly notificationService: NotificationService
+    private readonly notificationService: NotificationService,
+    private readonly router: Router
   ) {
     this.authenticationService.authentication$.pipe(takeUntilDestroyed()).subscribe((userInfo) => (this.currentUserId = userInfo.id));
+
+    this.router.events
+      .pipe(
+        takeUntilDestroyed(),
+        filter((event) => event instanceof NavigationStart)
+      )
+      .subscribe({
+        next: () => {
+          this.currentOffcanvas?.close();
+        }
+      });
   }
 
   public ngOnInit(): void {
