@@ -30,7 +30,7 @@ The credentials of the initial admin user are displayed in the container logs.
 To persist the **turnierplan.NET** application data, create a Docker volume mapping to the `/var/turnierplan` folder inside the container.
 
 > [!CAUTION]
-> This folder will store the JWT signing key!
+> This folder contains the JWT signing key for issued access/refresh tokens.
 
 ### Environment Variables
 
