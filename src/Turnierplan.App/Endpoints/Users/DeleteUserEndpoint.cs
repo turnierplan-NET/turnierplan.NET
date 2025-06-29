@@ -34,12 +34,9 @@ internal sealed class DeleteUserEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        var result = await deletionHelper.DeleteUserAsync(user, cancellationToken).ConfigureAwait(false);
+        repository.Remove(user);
 
-        if (!result)
-        {
-            return Results.InternalServerError("The deletion of the user failed. Please check the application logs for details.");
-        }
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         return Results.NoContent();
     }

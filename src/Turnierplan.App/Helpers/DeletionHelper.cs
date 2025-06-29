@@ -1,7 +1,6 @@
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.Tournament;
-using Turnierplan.Core.User;
 using Turnierplan.Core.Venue;
 using Turnierplan.ImageStorage;
 
@@ -9,14 +8,11 @@ namespace Turnierplan.App.Helpers;
 
 internal interface IDeletionHelper
 {
-    Task<bool> DeleteUserAsync(User user, CancellationToken cancellationToken);
-
     Task<bool> DeleteOrganizationAsync(Organization organization, CancellationToken cancellationToken);
 }
 
 internal sealed class DeletionHelper : IDeletionHelper
 {
-    private readonly IUserRepository _userRepository;
     private readonly IOrganizationRepository _organizationRepository;
     private readonly ITournamentRepository _tournamentRepository;
     private readonly IVenueRepository _venueRepository;
@@ -25,7 +21,6 @@ internal sealed class DeletionHelper : IDeletionHelper
     private readonly ILogger<DeletionHelper> _logger;
 
     public DeletionHelper(
-        IUserRepository userRepository,
         IOrganizationRepository organizationRepository,
         ITournamentRepository tournamentRepository,
         IVenueRepository venueRepository,
@@ -33,39 +28,12 @@ internal sealed class DeletionHelper : IDeletionHelper
         IImageStorage imageStorage,
         ILogger<DeletionHelper> logger)
     {
-        _userRepository = userRepository;
         _organizationRepository = organizationRepository;
         _tournamentRepository = tournamentRepository;
         _venueRepository = venueRepository;
         _imageRepository = imageRepository;
         _imageStorage = imageStorage;
         _logger = logger;
-    }
-
-    public async Task<bool> DeleteUserAsync(User user, CancellationToken cancellationToken)
-    {
-        // TODO: Decide how to handle this (there is no longer a 1-n relation between user and organisation)
-        // When this is decided: Update the information text on the "delete user" screen in the frontend
-
-        // foreach (var organization in user.Organizations.ToList()) // ToList() to avoid invalid operation exception
-        // {
-        //     cancellationToken.ThrowIfCancellationRequested();
-        //
-        //     var result = await DeleteOrganizationAsync(organization, cancellationToken).ConfigureAwait(false);
-        //
-        //     if (!result)
-        //     {
-        //         return false;
-        //     }
-        // }
-
-        cancellationToken.ThrowIfCancellationRequested();
-
-        _userRepository.Remove(user);
-
-        await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-
-        return true;
     }
 
     public async Task<bool> DeleteOrganizationAsync(Organization organization, CancellationToken cancellationToken)
