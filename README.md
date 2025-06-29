@@ -27,20 +27,29 @@ The credentials of the initial admin user are displayed in the container logs.
 
 ### Persisting Data
 
-To persist the **turnierplan.NET** application data (including any uploaded images), create a Docker volume mapping to the `/var/turnierplan` folder inside the container.
+To persist the **turnierplan.NET** application data, create a Docker volume mapping to the `/var/turnierplan` folder inside the container.
 
 > [!CAUTION]
-> Treat the data as highly confidential as it contains the signing key used for issued JWT tokens!
+> This folder contains the JWT signing key for issued access/refresh tokens.
 
 ### Environment Variables
 
-The application can be configured by setting the following environment variables:
+For a basic installation, the following environment variables *must* be set:
 
-| Environment Variable                    | Description                                                                                                                                                                     | Required | Default |
-|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
-| `ApplicationUrl`                        | The URL which can be used to access your instance in the format `https://hostname-or-IP:port/`. The port can be omitted.                                                        | Yes      | -       |
-| `Database__ConnectionString`            | The PostgreSQL connection string with read/write permission                                                                                                                     | Yes      | -       |
-| `ApplicationInsights__ConnectionString` | Can be set if you wish that your instance sends telemetry data to [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview) | No       | -       |
+| Environment Variable         | Description                                                  |
+|------------------------------|--------------------------------------------------------------|
+| `ApplicationUrl`             | The URL used to access the website.                          |
+| `Database__ConnectionString` | The PostgreSQL connection string with read/write permission. |
+
+The following environment variables *can* be set if you want to enable specific features or modify default behavior:
+
+| Environment Variable                    | Description                                                                                                                                                                      | Default      |
+|-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| `ApplicationInsights__ConnectionString` | Can be set if you wish that your instance sends telemetry data to [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview). | -            |
+| `Identity__AccessTokenLifetime`         | Defines the lifetime of issued JWT access tokens.                                                                                                                                | `00:30:00`   |
+| `Identity__RefreshTokenLifetime`        | Defines the lifetime of issued JWT refresh tokens.                                                                                                                               | `1.00:00:00` |
+
+> The token lifetimes must be specified as .NET `TimeSpan` strings. For example `00:30:00` means 30 minutes or `1.00:00.00` means 1 day.
 
 ### Docker Compose Example
 
@@ -49,7 +58,7 @@ You can use the following docker compose file to get a complete instance running
 ```yaml
 services:
   turnierplan.database:
-    image: postgres:17.0
+    image: postgres:latest
     environment:
       - POSTGRES_PASSWORD=P@ssw0rd
       - POSTGRES_DB=turnierplan
@@ -83,7 +92,7 @@ networks:
 ```
 
 > [!TIP]
-> Choose a secure password for the database user.
+> It is recommended to *not* use the `latest` tag. Rather, pin your docker services to a specific image version.
 
 ## Documentation
 
@@ -114,7 +123,7 @@ Add the package reference to your project:
 
 ```csproj
 <ItemGroup>
-  <PackageReference Include="Turnierplan.Adapter" Version="1.0.0" /> <!-- Use the latest version! -->
+  <PackageReference Include="Turnierplan.Adapter" Version="2025.1.0" /> <!-- Use the latest version! -->
 </ItemGroup>
 ```
 
