@@ -1,3 +1,6 @@
+@let displayName = displayName$ | async;
+@let notFound = displayName?.found === false;
+
 @switch (principal.kind) {
   @case (PrincipalKind.ApiKey) {
     <i class="bi bi-key" [ngbTooltip]="'Portal.RbacManagement.PrincipalKind.ApiKey' | translate"></i>
@@ -6,4 +9,9 @@
     <i class="bi bi-person" [ngbTooltip]="'Portal.RbacManagement.PrincipalKind.User' | translate"></i>
   }
 }
-<span class="ms-2">{{ displayName$ | async }}</span>
+
+@if (notFound) {
+  <i class="ms-2 text-danger bi bi-exclamation-diamond-fill" [ngbTooltip]="'Portal.RbacManagement.PrincipalNotFound' | translate"></i>
+}
+
+<span class="ms-2" [ngClass]="{ 'text-danger': notFound }">{{ displayName?.value }}</span>
