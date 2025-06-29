@@ -82,12 +82,9 @@ public sealed class Match : Entity<int>
 
     public void SetOutcome(bool isCurrentlyPlaying, int scoreA, int scoreB, MatchOutcomeType outcomeType)
     {
-        if (!isCurrentlyPlaying)
+        if (!isCurrentlyPlaying && IsDecidingMatch && scoreA == scoreB)
         {
-            if (IsDecidingMatch && scoreA == scoreB)
-            {
-                throw new TurnierplanException("Deciding matches cannot end with a draw.");
-            }
+            throw new TurnierplanException("Deciding matches cannot end with a draw.");
         }
 
         IsCurrentlyPlaying = isCurrentlyPlaying;
