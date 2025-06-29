@@ -927,12 +927,15 @@ export const de = {
       RoleName: {
         Owner: 'Besitzer',
         Contributor: 'Mitwirkender',
-        Reader: 'Leser'
+        Reader: 'Leser',
+        Reporter: 'Turnierdurchführung'
       },
       RoleDescription: {
         Owner: 'Der Benutzer kann sämtliche Änderungen durchführen inkl. Änderungen an Zugriffsrechten.',
         Contributor: 'Der Benutzer kann sämtliche Änderungen durchführen ausgenommen Änderungen an Zugriffsrechten.',
-        Reader: 'Der Benutzer kann sämtliche Informationen lesen aber keine Änderungen durchführen.'
+        Reader: 'Der Benutzer kann sämtliche Informationen lesen aber keine Änderungen durchführen.',
+        Reporter:
+          'Der Benutzer kann Spielergebnisse melden und löschen sowie Änderungen an der Startgebühr und Priorität der Mannschaften durchführen.'
       },
       PrincipalKind: {
         ApiKey: 'API-Schlüssel',
