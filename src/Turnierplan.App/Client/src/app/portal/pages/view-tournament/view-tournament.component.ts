@@ -468,9 +468,13 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
             const team = this.tournament.teams.find((x) => x.id === teamId);
 
             if (team) {
-              // This is only an approximation because the actual value of the 'entryFeePaidAt' of the team will
-              // be slightly different. IDEA: An additional request could be performed to get the actual value.
-              team.entryFeePaidAt = new Date().toISOString();
+              if (entryFeePaid) {
+                // This is only an approximation because the actual value of the 'entryFeePaidAt' of the team will
+                // be slightly different. IDEA: An additional request could be performed to get the actual value.
+                team.entryFeePaidAt = new Date().toISOString();
+              } else {
+                team.entryFeePaidAt = undefined;
+              }
             }
 
             this.processTournament();
