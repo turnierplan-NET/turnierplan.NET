@@ -34,13 +34,22 @@ To persist the **turnierplan.NET** application data (including any uploaded imag
 
 ### Environment Variables
 
-The application can be configured by setting the following environment variables:
+For a basic installation, the following environment variables *must* be set:
 
-| Environment Variable                    | Description                                                                                                                                                                     | Required | Default |
-|-----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|---------|
-| `ApplicationUrl`                        | The URL which can be used to access your instance in the format `https://hostname-or-IP:port/`. The port can be omitted.                                                        | Yes      | -       |
-| `Database__ConnectionString`            | The PostgreSQL connection string with read/write permission                                                                                                                     | Yes      | -       |
-| `ApplicationInsights__ConnectionString` | Can be set if you wish that your instance sends telemetry data to [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview) | No       | -       |
+| Environment Variable         | Description                                                       |
+|------------------------------|-------------------------------------------------------------------|
+| `ApplicationUrl`             | The preferred URL used to access the website as an external user. |
+| `Database__ConnectionString` | The PostgreSQL connection string with read/write permission.      |
+
+> The `ApplicationUrl` is currently only used when creating PDF documents that contain a link/QR-Code to the **turnierplan.NET** application.
+
+The following environment variables *can* be set if you want to enable specific features or modify default behavior:
+
+| Environment Variable                    | Description                                                                                                                                                                      | Default              |
+|-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
+| `ApplicationInsights__ConnectionString` | Can be set if you wish that your instance sends telemetry data to [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview). | -                    |
+| `Identity__AccessTokenLifetime`         | Defines the lifetime of issued JWT access tokens.                                                                                                                                | `00:30:00` (30 mins) |
+| `Identity__RefreshTokenLifetime`        | Defines the lifetime of issued JWT refresh tokens.                                                                                                                               | `1.00:00:00` (1 day) |
 
 ### Docker Compose Example
 
@@ -114,7 +123,7 @@ Add the package reference to your project:
 
 ```csproj
 <ItemGroup>
-  <PackageReference Include="Turnierplan.Adapter" Version="1.0.0" /> <!-- Use the latest version! -->
+  <PackageReference Include="Turnierplan.Adapter" Version="2025.1.0" /> <!-- Use the latest version! -->
 </ItemGroup>
 ```
 
