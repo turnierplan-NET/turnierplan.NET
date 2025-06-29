@@ -88,11 +88,6 @@ public sealed class Match : Entity<int>
             {
                 throw new TurnierplanException("Deciding matches cannot end with a draw.");
             }
-
-            if (outcomeType == MatchOutcomeType.AfterPenalties && scoreA == scoreB)
-            {
-                throw new TurnierplanException($"When outcome type is '{nameof(MatchOutcomeType.AfterPenalties)}', the match may not be a draw.");
-            }
         }
 
         IsCurrentlyPlaying = isCurrentlyPlaying;
