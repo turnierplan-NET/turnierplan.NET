@@ -28,7 +28,7 @@ internal sealed class SetTeamPriorityEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(tournament, Actions.GenericWrite))
+        if (!accessValidator.IsActionAllowed(tournament, Actions.TournamentConduct))
         {
             return Results.Forbid();
         }
