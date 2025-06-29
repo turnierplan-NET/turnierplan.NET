@@ -19,6 +19,11 @@ internal static class Actions
     /// </summary>
     public static readonly Action GenericRead = new(Role.Owner, Role.Contributor, Role.Reader);
 
+    /// <summary>
+    /// Any action that modifies a tournament in a way that is required during "playtime".
+    /// </summary>
+    public static readonly Action TournamentConduct = new(Role.Owner, Role.Contributor, Role.Reporter);
+
     internal sealed class Action(params Role[] requiredRoles)
     {
         public bool IsAllowed(IEnumerable<Role> availableRoles)
