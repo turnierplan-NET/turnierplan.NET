@@ -122,7 +122,7 @@ export const de = {
       },
       DeleteUser: {
         Title: 'Benutzer löschen',
-        Info: 'Wenn Sie eine Benutzer löschen, werden automatisch alle darin enthaltenen Organisationen, Turniere, Spielstätten sämtliche hochgeladenen Bilder mitgelöscht. Diese Aktion kann nicht widerrufen werden!',
+        Info: 'Wenn Sie eine Benutzer löschen, werden die Organisationen des Benutzers nicht mitgelöscht und bleiben weiterhin für alle Administratoren sichtbar.',
         IdConfirmation: 'Benutzer-ID:',
         SuccessToast: {
           Title: 'Benutzer wurde gelöscht',
@@ -941,6 +941,7 @@ export const de = {
         ApiKey: 'API-Schlüssel',
         User: 'Benutzer'
       },
+      PrincipalNotFound: 'Der Prinzipal konnte nicht mehr gefunden werden. Wurde der Nutzer/API-Schlüssel gelöscht?',
       TotalCount: 'Gesamt:',
       Id: 'ID:',
       CreatedAt: 'Erstellt am:',

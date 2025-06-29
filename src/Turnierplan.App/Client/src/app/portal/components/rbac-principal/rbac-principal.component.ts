@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 export class RbacPrincipalComponent implements OnInit {
   protected readonly PrincipalKind = PrincipalKind;
 
-  protected displayName$?: Observable<string>;
+  protected displayName$?: Observable<{ found: boolean; value: string | undefined }>;
 
   @Input()
   public principal!: PrincipalDto;
@@ -26,8 +26,8 @@ export class RbacPrincipalComponent implements OnInit {
         principalId: this.principal.principalId
       })
       .pipe(
-        map((result) => result.name),
-        catchError(() => of(this.principal.principalId))
+        map((result) => ({ found: true, value: result.name })),
+        catchError(() => of({ found: false, value: this.principal.principalId }))
       );
   }
 }
