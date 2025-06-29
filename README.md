@@ -41,15 +41,17 @@ For a basic installation, the following environment variables *must* be set:
 | `ApplicationUrl`             | The preferred URL used to access the website as an external user. |
 | `Database__ConnectionString` | The PostgreSQL connection string with read/write permission.      |
 
-> The `ApplicationUrl` is currently only used when creating PDF documents that contain a link/QR-Code to the **turnierplan.NET** application.
+> The `ApplicationUrl` is currently only used when creating PDF documents that contain a link/qr-code to the **turnierplan.NET** application.
 
 The following environment variables *can* be set if you want to enable specific features or modify default behavior:
 
-| Environment Variable                    | Description                                                                                                                                                                      | Default              |
-|-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------|
-| `ApplicationInsights__ConnectionString` | Can be set if you wish that your instance sends telemetry data to [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview). | -                    |
-| `Identity__AccessTokenLifetime`         | Defines the lifetime of issued JWT access tokens.                                                                                                                                | `00:30:00` (30 mins) |
-| `Identity__RefreshTokenLifetime`        | Defines the lifetime of issued JWT refresh tokens.                                                                                                                               | `1.00:00:00` (1 day) |
+| Environment Variable                    | Description                                                                                                                                                                      | Default      |
+|-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| `ApplicationInsights__ConnectionString` | Can be set if you wish that your instance sends telemetry data to [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview). | -            |
+| `Identity__AccessTokenLifetime`         | Defines the lifetime of issued JWT access tokens.                                                                                                                                | `00:30:00`   |
+| `Identity__RefreshTokenLifetime`        | Defines the lifetime of issued JWT refresh tokens.                                                                                                                               | `1.00:00:00` |
+
+> The token lifetimes must be specified as .NET `TimeSpan` strings. For example `00:30:00` means 30 minutes or `1.00:00.00` means 1 day.
 
 ### Docker Compose Example
 
