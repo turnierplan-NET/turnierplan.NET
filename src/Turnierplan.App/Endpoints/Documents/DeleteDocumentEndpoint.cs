@@ -26,7 +26,7 @@ internal sealed class DeleteDocumentEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(document.Tournament, Actions.GenericWrite))
+        if (!accessValidator.IsActionAllowed(document.Tournament, Actions.GenericDelete))
         {
             return Results.Forbid();
         }

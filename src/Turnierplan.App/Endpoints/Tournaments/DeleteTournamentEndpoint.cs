@@ -28,7 +28,7 @@ internal sealed class DeleteTournamentEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(tournament, Actions.GenericWrite))
+        if (!accessValidator.IsActionAllowed(tournament, Actions.GenericDelete))
         {
             return Results.Forbid();
         }
