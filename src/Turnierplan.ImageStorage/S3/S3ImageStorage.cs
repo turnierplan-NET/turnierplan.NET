@@ -58,12 +58,11 @@ internal sealed class S3ImageStorage : IImageStorage
 
     public string GetFullImageUrl(Image image)
     {
-        // The _serviceUrl is deliberately not evaluated in the constructor such that, if accessing the ServiceURL
-        // property fails or returns null, the application can still start up and only the request which calls
-        // the GetFullImageUrl() method fails.
-        _serviceUrl ??= _client.Config.ServiceURL?.TrimEnd('/') ?? throw new InvalidOperationException("Could not get service URL from S3 client.");
+        var objectKey = GetObjectKey(image);
 
-        return $"{_serviceUrl}/{GetObjectKey(image)}";
+        return string.IsNullOrWhiteSpace(_client.Config.ServiceURL)
+            ? $"https://{_bucketName}.s3.{_client.Config.RegionEndpoint.SystemName}.amazonaws.com/{objectKey}"
+            : $"{_client.Config.ServiceURL}/{objectKey}";
     }
 
     public async Task<bool> SaveImageAsync(Image image, MemoryStream imageData)
