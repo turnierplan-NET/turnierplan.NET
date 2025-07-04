@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" Version="4.0.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Turnierplan.Core\Turnierplan.Core.csproj" />
   </ItemGroup>
 </Project>
