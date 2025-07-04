@@ -32,6 +32,9 @@ jobs:
   container-image:
     name: 'Build container image'
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
     needs:
       - extract-version
     steps:
@@ -45,15 +48,16 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: 'Build and push container image'
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
           context: ./src
           file: ./src/Turnierplan.App/Dockerfile
           push: true
-          tags: '${{ vars.DOCKER_HUB_REPOSITORY }}:latest,${{ vars.DOCKER_HUB_REPOSITORY }}:${{ needs.extract-version.outputs.turnierplan_version }}'
+          tags: 'ghcr.io/turnierplan-net/turnierplan:latest,ghcr.io/turnierplan-net/turnierplan:${{ needs.extract-version.outputs.turnierplan_version }}'
 
   nuget-package:
     name: 'Build NuGet package'
