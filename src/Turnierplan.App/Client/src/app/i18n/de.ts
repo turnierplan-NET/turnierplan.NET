@@ -41,8 +41,7 @@ export const de = {
       Title: 'Benutzerprofil',
       UserName: 'Nutzername:',
       EMail: 'E-Mail Adresse:',
-      ChangeEmailNotice:
-        'Wenn Sie eine andere E-Mail Adresse angeben, müssen sie die neue E-Mail Adresse bestätigen, bevor die Änderung übernommen wird.',
+      ChangeEmailNotice: 'Wenn Sie eine andere E-Mail Adresse angeben, müssen Sie sich ab sofort mit dieser neuen E-Mail Adresse anmelden.',
       RequestFailed: 'Bei der Bearbeitung der Anfrage ist ein Fehler aufgetreten.',
       SuccessToast: {
         Title: 'Nutzerdaten aktualisiert',
