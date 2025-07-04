@@ -10,6 +10,8 @@
 
 This readme describes how to deploy the application using the pre-built containers or how to get a local development environment up and running.
 
+> 🇩🇪 The user interface is currently only available in German.
+
 ## Deployment
 
 **turnierplan.NET** comes as a pre-built container image which can be deployed with minimal configuration. The image is available on GitHub: [ghcr.io/turnierplan-net/turnierplan](https://github.com/turnierplan-NET/turnierplan.NET/pkgs/container/turnierplan)
@@ -93,6 +95,16 @@ networks:
 
 > [!TIP]
 > It is recommended to *not* use the `latest` tag. Rather, pin your docker services to a specific image version.
+
+## Screenshots
+
+Below are some screenshots of the application.
+
+![sf](images/screenshot1.webp)
+
+![sf](images/screenshot2.webp)
+
+![sf](images/screenshot3.webp)
 
 ## Documentation
 
