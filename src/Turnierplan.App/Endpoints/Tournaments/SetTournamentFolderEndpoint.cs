@@ -2,9 +2,12 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
+using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament;
+using Turnierplan.Core.User;
 using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Tournaments;
@@ -20,6 +23,8 @@ internal sealed class SetTournamentFolderEndpoint : EndpointBase
     private static async Task<IResult> Handle(
         [FromRoute] PublicId id,
         [FromBody] SetTournamentFolderEndpointRequest request,
+        HttpContext httpContext,
+        IUserRepository userRepository,
         ITournamentRepository tournamentRepository,
         IFolderRepository folderRepository,
         IAccessValidator accessValidator,
@@ -55,7 +60,15 @@ internal sealed class SetTournamentFolderEndpoint : EndpointBase
             {
                 // Assign tournament to a newly created folder
 
+                var user = await userRepository.GetByIdAsync(httpContext.GetCurrentUserIdOrThrow()).ConfigureAwait(false);
+
+                if (user is null)
+                {
+                    return Results.Unauthorized();
+                }
+
                 var folder = new Folder(tournament.Organization, request.FolderName);
+                folder.AddRoleAssignment(Role.Owner, user.AsPrincipal());
 
                 tournament.SetFolder(folder);
 

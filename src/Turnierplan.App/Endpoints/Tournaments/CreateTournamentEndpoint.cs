@@ -4,10 +4,13 @@ using Turnierplan.App.Extensions;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
+using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament;
+using Turnierplan.Core.User;
 using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Tournaments;
@@ -22,6 +25,8 @@ internal sealed class CreateTournamentEndpoint : EndpointBase<TournamentDto>
 
     private static async Task<IResult> Handle(
         [FromBody] CreateTournamentEndpointRequest request,
+        HttpContext httpContext,
+        IUserRepository userRepository,
         IOrganizationRepository organizationRepository,
         IAccessValidator accessValidator,
         IFolderRepository folderRepository,
@@ -32,6 +37,13 @@ internal sealed class CreateTournamentEndpoint : EndpointBase<TournamentDto>
         if (!Validator.Instance.ValidateAndGetResult(request, out var result))
         {
             return result;
+        }
+
+        var user = await userRepository.GetByIdAsync(httpContext.GetCurrentUserIdOrThrow()).ConfigureAwait(false);
+
+        if (user is null)
+        {
+            return Results.Unauthorized();
         }
 
         var queryDetails = request.FolderId is not null ? IOrganizationRepository.Include.Folders : IOrganizationRepository.Include.None;
@@ -61,11 +73,13 @@ internal sealed class CreateTournamentEndpoint : EndpointBase<TournamentDto>
         else if (request.FolderName is not null)
         {
             folder = new Folder(organization, request.FolderName);
+            folder.AddRoleAssignment(Role.Owner, user.AsPrincipal());
 
             await folderRepository.CreateAsync(folder).ConfigureAwait(false);
         }
 
         var tournament = new Tournament(organization, request.Name.Trim(), request.Visibility);
+        tournament.AddRoleAssignment(Role.Owner, user.AsPrincipal());
         tournament.SetFolder(folder);
 
         await tournamentRepository.CreateAsync(tournament).ConfigureAwait(false);

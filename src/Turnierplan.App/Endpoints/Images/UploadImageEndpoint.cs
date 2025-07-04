@@ -5,9 +5,12 @@ using Turnierplan.App.Extensions;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
+using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.RoleAssignment;
+using Turnierplan.Core.User;
 using Turnierplan.Dal;
 using Turnierplan.ImageStorage;
 
@@ -25,8 +28,9 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
-        // Note the usage of [FromForm] instead of [FromBody]
-        [FromForm] UploadImageEndpointRequest request,
+        [FromForm] UploadImageEndpointRequest request, // note that we use [FromForm] instead of [FromBody]
+        HttpContext httpContext,
+        IUserRepository userRepository,
         IOrganizationRepository organizationRepository,
         IAccessValidator accessValidator,
         IImageStorage imageStorage,
@@ -42,6 +46,13 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
         if (!PublicId.TryParse(request.OrganizationId, out var organizationId))
         {
             return Results.BadRequest("Invalid organization ID provided.");
+        }
+
+        var user = await userRepository.GetByIdAsync(httpContext.GetCurrentUserIdOrThrow()).ConfigureAwait(false);
+
+        if (user is null)
+        {
+            return Results.Unauthorized();
         }
 
         var organization = await organizationRepository.GetByPublicIdAsync(organizationId.Value).ConfigureAwait(false);
@@ -93,6 +104,7 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
         memoryStream.Seek(0, SeekOrigin.Begin);
 
         var image = new Image(organization, request.ImageName, request.ImageType, "webp", memoryStream.Length, (ushort)imageData.Width, (ushort)imageData.Height);
+        image.AddRoleAssignment(Role.Owner, user.AsPrincipal());
 
         // Dispose here because Image() ctor accesses width and height of imageData
         imageData.Dispose();
