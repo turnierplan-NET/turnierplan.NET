@@ -10,7 +10,10 @@
 
 This readme describes how to deploy the application using the pre-built containers or how to get a local development environment up and running.
 
-> 🇩🇪 The user interface is currently only available in German.
+> [!NOTE]  
+> The user interface is currently only available in German 🇩🇪
+
+Some screenshots of the application can be found in the [section below](#screenshots).
 
 ## Deployment
 
@@ -96,16 +99,6 @@ networks:
 > [!TIP]
 > It is recommended to *not* use the `latest` tag. Rather, pin your docker services to a specific image version.
 
-## Screenshots
-
-Below are some screenshots of the application.
-
-![sf](images/screenshot1.webp)
-
-![sf](images/screenshot2.webp)
-
-![sf](images/screenshot3.webp)
-
 ## Documentation
 
 The developer documentation of **turnierplan.NET** is located in the `docs` directory of this repository.
@@ -126,6 +119,16 @@ To run the application from source, follow these steps:
 4. Access the client application using [http://localhost:45001](http://localhost:45001) and log in using the credentials you got from step `2`.
 
 When running locally, the API documentation can be viewed by opening [http://localhost:45000/scalar](http://localhost:45000/scalar).
+
+## Screenshots
+
+Below are some screenshots of the application.
+
+![sf](images/screenshot1.webp)
+
+![sf](images/screenshot2.webp)
+
+![sf](images/screenshot3.webp)
 
 ## Turnierplan.Adapter
 
