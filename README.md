@@ -12,12 +12,12 @@ This readme describes how to deploy the application using the pre-built containe
 
 ## Deployment
 
-**turnierplan.NET** comes as a pre-built container image which can be deployed with minimal configuration. The image is available on [Docker Hub](https://hub.docker.com/r/eliaspr/turnierplan-net).
+**turnierplan.NET** comes as a pre-built container image which can be deployed with minimal configuration. The image is available on GitHub: [ghcr.io/turnierplan-net/turnierplan](https://github.com/turnierplan-NET/turnierplan.NET/pkgs/container/turnierplan).
 
 In the simplest case, run the container directly using the following command. Make sure to substitute the correct PostgreSQL database connection string:
 
 ```shell
-docker run -p 80:8080 -e ApplicationUrl="http://localhost" -e Database__ConnectionString="" eliaspr/turnierplan-net:latest
+docker run -p 80:8080 -e ApplicationUrl="http://localhost" -e Database__ConnectionString="" ghcr.io/turnierplan-net/turnierplan:latest
 ```
 
 The credentials of the initial admin user are displayed in the container logs.
@@ -69,7 +69,7 @@ services:
     restart: unless-stopped
 
   turnierplan.app:
-    image: eliaspr/turnierplan-net:latest
+    image: ghcr.io/turnierplan-net/turnierplan:latest
     depends_on:
       - turnierplan.database
     environment:
