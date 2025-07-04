@@ -6,14 +6,12 @@
 
 ## Introduction
 
-**turnierplan.NET** is mostly written in C# using [.NET](https://dotnet.microsoft.com/). This includes the core logic, the backend API and database connection as well as all publicly visible web pages. In addition, it serves the *turnierplan.NET portal*, the client application for authenticated users, based on the [Angular](https://angular.dev/) framework.
+**turnierplan.NET** is mostly written in C# using [.NET](https://dotnet.microsoft.com/). This includes the core logic, the backend API and database connection as well as all publicly visible web pages. In addition, it serves the *turnierplan.NET portal*, the client application for authenticated users, based on the [Angular](https://angular.dev/) framework. Some screenshots can be seen in the [section at the end](#screenshots).
 
 This readme describes how to deploy the application using the pre-built containers or how to get a local development environment up and running.
 
 > [!NOTE]  
 > The user interface is currently only available in German 🇩🇪
-
-Some screenshots of the application can be found in the [section below](#screenshots).
 
 ## Deployment
 
