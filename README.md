@@ -12,7 +12,7 @@ This readme describes how to deploy the application using the pre-built containe
 
 ## Deployment
 
-**turnierplan.NET** comes as a pre-built container image which can be deployed with minimal configuration. The image is available on GitHub: [ghcr.io/turnierplan-net/turnierplan](https://github.com/turnierplan-NET/turnierplan.NET/pkgs/container/turnierplan).
+**turnierplan.NET** comes as a pre-built container image which can be deployed with minimal configuration. The image is available on GitHub: [ghcr.io/turnierplan-net/turnierplan](https://github.com/turnierplan-NET/turnierplan.NET/pkgs/container/turnierplan)
 
 In the simplest case, run the container directly using the following command. Make sure to substitute the correct PostgreSQL database connection string:
 
