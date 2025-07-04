@@ -25,15 +25,32 @@ internal sealed class S3ImageStorage : IImageStorage
         _logger = logger;
 
         var s3Credentials = new BasicAWSCredentials(options.Value.AccessKey, options.Value.AccessKeySecret);
-        var s3Config = new AmazonS3Config
+        var s3Config = new AmazonS3Config();
+
+        var hasValidRegionEndpoint = false;
+
+        if (!string.IsNullOrWhiteSpace(options.Value.RegionEndpoint))
         {
-            RegionEndpoint = !string.IsNullOrWhiteSpace(options.Value.RegionEndpoint)
-                ? RegionEndpoint.GetBySystemName(options.Value.RegionEndpoint)
-                : null,
-            ServiceURL = !string.IsNullOrWhiteSpace(options.Value.ServiceUrl)
-                ? options.Value.ServiceUrl
-                : null
-        };
+            var regionEndpoint = RegionEndpoint.GetBySystemName(options.Value.RegionEndpoint);
+
+            if (regionEndpoint.DisplayName.Contains("unknown", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException($"The specified region endpoint '{options.Value.RegionEndpoint}' seems to be unknown.");
+            }
+
+            s3Config.RegionEndpoint = regionEndpoint;
+            hasValidRegionEndpoint = true;
+        }
+
+        if (!string.IsNullOrWhiteSpace(options.Value.ServiceUrl))
+        {
+            if (hasValidRegionEndpoint)
+            {
+                throw new InvalidOperationException($"Pleace specify either '{nameof(S3ImageStorageOptions.RegionEndpoint)}' or '{nameof(S3ImageStorageOptions.ServiceUrl)}'.");
+            }
+
+            s3Config.ServiceURL = options.Value.ServiceUrl;
+        }
 
         _client = new AmazonS3Client(s3Credentials, s3Config);
         _bucketName = options.Value.BucketName;
