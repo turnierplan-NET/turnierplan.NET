@@ -10,6 +10,11 @@ internal static class Actions
     public static readonly Action ReadOrWriteRoleAssignments = new(Role.Owner);
 
     /// <summary>
+    /// Any action that deletes some entity.
+    /// </summary>
+    public static readonly Action GenericDelete = new(Role.Owner);
+
+    /// <summary>
     /// Any action that modifies some entity.
     /// </summary>
     public static readonly Action GenericWrite = new(Role.Owner, Role.Contributor);
