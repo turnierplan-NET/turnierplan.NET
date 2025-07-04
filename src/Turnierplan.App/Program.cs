@@ -23,7 +23,7 @@ Console.WriteLine( @"   \ \ \_\ \ \_\ \ \ \/ /\ \/\ \ \ \/\  __/\ \ \/ \ \ \L\ \
 Console.WriteLine( @"    \ \__\\ \____/\ \_\ \ \_\ \_\ \_\ \____\\ \_\  \ \ ,__//\____\ \__/.\_\ \_\ \_\/\_\ \_\ \_\ \____\\ \__\");
 Console.WriteLine( @"     \/__/ \/___/  \/_/  \/_/\/_/\/_/\/____/ \/_/   \ \ \/ \/____/\/__/\/_/\/_/\/_/\/_/\/_/\/_/\/____/ \/__/");
 Console.WriteLine( @"                                                     \ \_\");
-Console.WriteLine($@"                                                      \/_/  v{TurnierplanMetadata.Version}");
+Console.WriteLine($@"                                                      \/_/   v{TurnierplanMetadata.Version}");
 Console.WriteLine();
 
 ValidatorOptions.Global.LanguageManager.Enabled = false;
