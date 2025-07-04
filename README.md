@@ -122,13 +122,13 @@ When running locally, the API documentation can be viewed by opening [http://loc
 
 Below are some screenshots of the application:
 
-1. *Creating a new tournament*  
+1. *Creating a new tournament:*  
    ![Screenshot that shows the create tournament page](images/create-tournament.png)
-2. *Exporting a tournament to PDF document*    
+2. *Exporting a tournament to PDF document:*    
    ![Screenshot that shows the PDF export page](images/export-pdf.png)
-3. *Viewing a timetable of multiple tournaments*
+3. *Viewing a timetable of multiple tournaments:*
    ![Screenshot that shows the folder timetable page](images/folder-timetable.png)
-4. *Reporting the outcome of a match*
+4. *Reporting the outcome of a match:*
    ![Screenshow that shows the match reporting dialog](images/report-match.png)
 
 ## Turnierplan.Adapter
