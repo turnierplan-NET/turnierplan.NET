@@ -1,4 +1,5 @@
 using System.Net;
+using Amazon;
 using Amazon.Runtime;
 using Amazon.S3;
 using Amazon.S3.Model;
@@ -24,7 +25,15 @@ internal sealed class S3ImageStorage : IImageStorage
         _logger = logger;
 
         var s3Credentials = new BasicAWSCredentials(options.Value.AccessKey, options.Value.AccessKeySecret);
-        var s3Config = new AmazonS3Config { ServiceURL = options.Value.ServiceUrl };
+        var s3Config = new AmazonS3Config
+        {
+            RegionEndpoint = !string.IsNullOrWhiteSpace(options.Value.RegionEndpoint)
+                ? RegionEndpoint.GetBySystemName(options.Value.RegionEndpoint)
+                : null,
+            ServiceURL = !string.IsNullOrWhiteSpace(options.Value.ServiceUrl)
+                ? options.Value.ServiceUrl
+                : null
+        };
 
         _client = new AmazonS3Client(s3Credentials, s3Config);
         _bucketName = options.Value.BucketName;
