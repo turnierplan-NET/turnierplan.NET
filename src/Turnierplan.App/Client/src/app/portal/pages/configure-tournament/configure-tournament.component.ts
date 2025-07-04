@@ -423,7 +423,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
       return {
         id: group.id,
         alphabeticalId: group.alphabeticalId,
-        displayName: group.displayName ?? '',
+        displayName: group.hasCustomDisplayName ? group.displayName : '',
         teams: group.participants.map((participant) => ({
           id: participant.teamId,
           name: result.teams.find((x) => x.id === participant.teamId)?.name ?? ''
