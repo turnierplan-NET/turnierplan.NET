@@ -6,9 +6,12 @@
 
 ## Introduction
 
-**turnierplan.NET** is mostly written in C# using [.NET](https://dotnet.microsoft.com/). This includes the core logic, the backend API and database connection as well as all publicly visible web pages. In addition, it serves the *turnierplan.NET portal*, the client application for authenticated users, based on the [Angular](https://angular.dev/) framework.
+**turnierplan.NET** is mostly written in C# using [.NET](https://dotnet.microsoft.com/). This includes the core logic, the backend API and database connection as well as all publicly visible web pages. In addition, it serves the *turnierplan.NET portal*, the client application for authenticated users, based on the [Angular](https://angular.dev/) framework. Some screenshots can be seen in the [section at the end](#screenshots).
 
 This readme describes how to deploy the application using the pre-built containers or how to get a local development environment up and running.
+
+> [!NOTE]  
+> The user interface is currently only available in German 🇩🇪
 
 ## Deployment
 
@@ -114,6 +117,19 @@ To run the application from source, follow these steps:
 4. Access the client application using [http://localhost:45001](http://localhost:45001) and log in using the credentials you got from step `2`.
 
 When running locally, the API documentation can be viewed by opening [http://localhost:45000/scalar](http://localhost:45000/scalar).
+
+## Screenshots
+
+Below are some screenshots of the application:
+
+1. *Creating a new tournament:*  
+   ![Screenshot that shows the create tournament page](images/create-tournament.png)
+2. *Exporting a tournament to PDF document:*    
+   ![Screenshot that shows the PDF export page](images/export-pdf.png)
+3. *Viewing a timetable of multiple tournaments:*
+   ![Screenshot that shows the folder timetable page](images/folder-timetable.png)
+4. *Reporting the outcome of a match:*
+   ![Screenshow that shows the match reporting dialog](images/report-match.png)
 
 ## Turnierplan.Adapter
 
