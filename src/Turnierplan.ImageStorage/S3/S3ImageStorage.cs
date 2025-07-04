@@ -14,7 +14,6 @@ internal sealed class S3ImageStorage : IImageStorage
     private readonly ILogger<S3ImageStorage> _logger;
     private readonly AmazonS3Client _client;
     private readonly string _bucketName;
-    private string? _serviceUrl;
 
     public S3ImageStorage(IOptions<S3ImageStorageOptions> options, ILogger<S3ImageStorage> logger)
     {
