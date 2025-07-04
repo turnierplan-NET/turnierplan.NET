@@ -45,7 +45,7 @@ jobs:
           files: '["**/environment.prod.ts"]'
         env:
           TOKEN_APPLICATION_VERSION: "${{ needs.extract-version.outputs.turnierplan_version }}"
-      - name: Login to Docker Hub
+      - name: Login to container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
           registry: ghcr.io
