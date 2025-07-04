@@ -97,6 +97,24 @@ networks:
 > [!TIP]
 > It is recommended to *not* use the `latest` tag. Rather, pin your docker services to a specific image version.
 
+### Using AWS S3 for image storage
+
+If you prefer to store uploaded images in an AWS S3 or S3-compatible bucket, add the following environment variables to your deployment:
+
+| Environment Variable            | Description                                      |
+|---------------------------------|--------------------------------------------------|
+| `ImageStorage__Type`            | The image storage type, **must** be `S3`.        |
+| `ImageStorage__RegionEndpoint`  | The AWS region endpoint, such as `eu-central-1`. |
+| `ImageStorage__ServiceUrl`      | The service URL when using a non-AWS S3 bucket.  |
+| `ImageStorage__AccessKey`       | The access key identifier.                       |
+| `ImageStorage__AccessKeySecret` | The access key secret.                           |
+| `ImageStorage__BucketName`      | The name of the bucket.                          |
+
+The access key must have permissions to create, read and delete objects.
+
+> [!NOTE]
+> The `RegionEndpoint` and `ServiceUrl` variables are *mutually exclusive*. Use the former if you are using an AWS S3 bucket and use the latter if you use a S3-compatible bucket from a third party.
+
 ## Documentation
 
 The developer documentation of **turnierplan.NET** is located in the `docs` directory of this repository.
