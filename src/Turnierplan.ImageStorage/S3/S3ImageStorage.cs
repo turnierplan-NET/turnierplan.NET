@@ -14,7 +14,7 @@ internal sealed class S3ImageStorage : IImageStorage
     private readonly ILogger<S3ImageStorage> _logger;
     private readonly AmazonS3Client _client;
     private readonly string _bucketName;
-    private readonly string _serviceUrl;
+    private string? _serviceUrl;
 
     public S3ImageStorage(IOptions<S3ImageStorageOptions> options, ILogger<S3ImageStorage> logger)
     {
@@ -37,11 +37,15 @@ internal sealed class S3ImageStorage : IImageStorage
 
         _client = new AmazonS3Client(s3Credentials, s3Config);
         _bucketName = options.Value.BucketName;
-        _serviceUrl = s3Config.ServiceURL?.TrimEnd('/') ?? throw new InvalidOperationException("Could not get service URL from S3 client.");
     }
 
     public string GetFullImageUrl(Image image)
     {
+        // The _serviceUrl is deliberately not evaluated in the constructor such that, if accessing the ServiceURL
+        // property fails or returns null, the application can still start up and only the request which calls
+        // the GetFullImageUrl() method fails.
+        _serviceUrl ??= _client.Config.ServiceURL?.TrimEnd('/') ?? throw new InvalidOperationException("Could not get service URL from S3 client.");
+
         return $"{_serviceUrl}/{GetObjectKey(image)}";
     }
 
