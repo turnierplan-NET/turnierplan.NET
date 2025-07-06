@@ -13,10 +13,14 @@ internal interface IAccessValidator
 {
     bool IsActionAllowed<T>(IEntityWithRoleAssignments<T> target, Actions.Action action)
         where T : Entity<long>, IEntityWithRoleAssignments<T>;
+
+    void AddRolesToResponseHeader<T>(IEntityWithRoleAssignments<T> target)
+        where T : Entity<long>, IEntityWithRoleAssignments<T>;
 }
 
 internal sealed class AccessValidator : IAccessValidator
 {
+    private const string RolesHeaderName = "X-Turnierplan-Roles";
     private readonly HttpContext _httpContext;
 
     public AccessValidator(IHttpContextAccessor contextAccessor)
@@ -35,6 +39,28 @@ internal sealed class AccessValidator : IAccessValidator
         var principal = _httpContext.GetActivePrincipal();
 
         return IsActionAllowed(target, action, principal);
+    }
+
+    public void AddRolesToResponseHeader<T>(IEntityWithRoleAssignments<T> target)
+        where T : Entity<long>, IEntityWithRoleAssignments<T>
+    {
+        var availableRoles = new List<Role>();
+
+        if (_httpContext.IsCurrentUserAdministrator())
+        {
+            availableRoles.Add(Role.Owner);
+        }
+        else
+        {
+            var principal = _httpContext.GetActivePrincipal();
+            AddAvailableRoles(target, availableRoles, principal);
+        }
+
+        var targetPublicId = target.PublicId.ToString();
+        var rolesList = string.Join(",", availableRoles.Select(x => x.ToString()));
+        var rolesHeaderValue = $"{targetPublicId}={rolesList}";
+
+        _httpContext.Response.Headers.Append(RolesHeaderName, rolesHeaderValue);
     }
 
     internal static bool IsActionAllowed<T>(IEntityWithRoleAssignments<T> target, Actions.Action action, Principal principal)
@@ -60,5 +86,34 @@ internal sealed class AccessValidator : IAccessValidator
             Venue venue => IsActionAllowed(venue.Organization, action, principal),
             _ => false
         };
+    }
+
+    internal static void AddAvailableRoles<T>(IEntityWithRoleAssignments<T> target, List<Role> rolesList, Principal principal)
+        where T : Entity<long>, IEntityWithRoleAssignments<T>
+    {
+        rolesList.AddRange(target.RoleAssignments.Where(x => x.Principal.Equals(principal)).Select(x => x.Role));
+
+        switch (target)
+        {
+            case ApiKey apiKey:
+                AddAvailableRoles(apiKey.Organization, rolesList, principal);
+                break;
+            case Image image:
+                AddAvailableRoles(image.Organization, rolesList, principal);
+                break;
+            case Folder folder:
+                AddAvailableRoles(folder.Organization, rolesList, principal);
+                break;
+            case Tournament tournament:
+                AddAvailableRoles(tournament.Organization, rolesList, principal);
+                if (tournament.Folder is not null)
+                {
+                    AddAvailableRoles(tournament.Folder, rolesList, principal);
+                }
+                break;
+            case Venue venue:
+                AddAvailableRoles(venue.Organization, rolesList, principal);
+                break;
+        }
     }
 }

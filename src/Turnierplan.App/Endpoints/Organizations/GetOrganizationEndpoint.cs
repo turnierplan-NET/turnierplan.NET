@@ -33,6 +33,8 @@ internal sealed class GetOrganizationEndpoint : EndpointBase<OrganizationDto>
             return Results.Forbid();
         }
 
+        accessValidator.AddRolesToResponseHeader(organization);
+
         return Results.Ok(mapper.Map<OrganizationDto>(organization));
     }
 }

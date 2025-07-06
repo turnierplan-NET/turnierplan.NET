@@ -33,6 +33,11 @@ internal sealed class GetFoldersEndpoint : EndpointBase<IEnumerable<FolderDto>>
             return Results.Forbid();
         }
 
+        foreach (var folder in organization.Folders)
+        {
+            accessValidator.AddRolesToResponseHeader(folder);
+        }
+
         return Results.Ok(mapper.MapCollection<FolderDto>(organization.Folders));
     }
 }

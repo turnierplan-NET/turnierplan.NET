@@ -33,6 +33,8 @@ internal sealed class GetVenueEndpoint : EndpointBase<VenueDto>
             return Results.Forbid();
         }
 
+        accessValidator.AddRolesToResponseHeader(venue);
+
         return Results.Ok(mapper.Map<VenueDto>(venue));
     }
 }
