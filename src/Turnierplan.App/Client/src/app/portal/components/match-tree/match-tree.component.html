@@ -32,10 +32,10 @@
 <ng-template #matchTile let-match let-isPlayoff="isPlayoff">
   <div
     id="match-tile-{{ match.id }}"
-    class="card tp-cursor-pointer shadow-sm"
+    class="card shadow-sm"
     [ngStyle]="{ width: '300px', display: isPlayoff ? 'none' : 'block' }"
-    [ngClass]="{ 'position-absolute': isPlayoff }"
-    (click)="matchClick.emit(match.id)"
+    [ngClass]="{ 'position-absolute': isPlayoff, 'tp-cursor-pointer': allowReporting }"
+    (click)="allowReporting && matchClick.emit(match.id)"
     #matchTile>
     <div class="card-header d-flex flex-row justify-content-between">
       <span class="small">{{ match.index }}</span>
