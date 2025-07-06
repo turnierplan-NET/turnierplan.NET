@@ -19,6 +19,7 @@ import { AuthenticationInterceptor } from './core/interceptors/authentication.in
 import { de as languageDE } from './i18n/de';
 import { identityPages } from './identity/identity.module';
 import { SharedModule } from './shared/shared.module';
+import { RolesInterceptor } from './core/interceptors/roles.interceptor';
 
 const routes: Routes = [
   {
@@ -73,7 +74,10 @@ class ImmediateTranslateLoader implements TranslateLoader {
     ApiModule.forRoot({ rootUrl: window.origin })
   ],
   bootstrap: [AppComponent],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: RolesInterceptor, multi: true }
+  ]
 })
 export class AppModule {
   constructor(translateService: TranslateService) {
