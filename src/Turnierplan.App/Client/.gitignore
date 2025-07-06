@@ -5,8 +5,9 @@ dist
 # Code coverage reports
 coverage
 
-# Remove generated API client
+# Generated typescript code
 src/app/api/*
+src/app/generated/*
 
 # Local chrome installation
 chrome

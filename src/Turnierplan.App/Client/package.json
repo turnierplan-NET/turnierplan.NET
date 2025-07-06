@@ -10,8 +10,9 @@
   "scripts": {
     "ng": "ng",
     "gen:api": "ng-openapi-gen --input ../obj/Turnierplan.App_turnierplan.json --output src/app/api --indexFile true --endOfLineStyle lf && replace-in-file \"PublicId = any\" \"PublicId = string\" src/app/api/**/*",
-    "build:prod": "npm run gen:api && npm run ng -- build --configuration production",
-    "start": "npm run gen:api && npm run ng -- serve --port 45001",
+    "gen:tp": "node code-gen.js",
+    "build:prod": "npm run gen:api && npm run gen:tp && npm run ng -- build --configuration production",
+    "start": "npm run gen:api && npm run gen:tp && npm run ng -- serve --port 45001",
     "prettier": "prettier \"**/*.*css\" \"**/*.*js\" \"**/*.ts\" \"**/*.json\" \"**/*.html\"",
     "lint": "npm run prettier -- --write",
     "lint:ci": "npm run prettier -- --check",
