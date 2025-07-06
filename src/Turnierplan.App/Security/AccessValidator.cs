@@ -57,7 +57,7 @@ internal sealed class AccessValidator : IAccessValidator
         }
 
         var targetPublicId = target.PublicId.ToString();
-        var rolesList = string.Join(",", availableRoles.Select(x => x.ToString()));
+        var rolesList = string.Join('+', availableRoles.Select(x => x.ToString()));
         var rolesHeaderValue = $"{targetPublicId}={rolesList}";
 
         _httpContext.Response.Headers.Append(RolesHeaderName, rolesHeaderValue);
