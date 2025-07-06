@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core
 import { OrganizationDto, TournamentHeaderDto, FoldersService } from '../../../api';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
+import { Actions } from '../../../generated/actions';
 
 @Component({
   standalone: false,
@@ -18,6 +19,8 @@ export class TournamentExplorerComponent implements OnChanges {
 
   @Output()
   public requestError = new EventEmitter<unknown>();
+
+  protected readonly Actions = Actions;
 
   protected currentId: string = '/';
   protected currentEntry?: FolderTreeEntry;

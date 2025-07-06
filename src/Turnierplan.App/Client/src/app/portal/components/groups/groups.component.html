@@ -12,6 +12,7 @@
             <tp-rename-button
               class="ms-3"
               translationKey="Portal.ViewTournament.Group.Rename"
+              *tpIsActionAllowed="[tournamentId, Actions.GenericWrite]"
               [disabled]="isUpdatingAnyGroup"
               [displayLabel]="false"
               [allowReset]="true"

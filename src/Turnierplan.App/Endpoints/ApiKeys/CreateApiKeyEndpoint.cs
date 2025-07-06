@@ -71,6 +71,8 @@ internal sealed class CreateApiKeyEndpoint : EndpointBase<ApiKeyDto>
             transaction.ShouldCommit = true;
         }
 
+        accessValidator.AddRolesToResponseHeader(apiKey);
+
         return Results.Ok(mapper.Map<ApiKeyDto>(apiKey) with { Secret = secret });
     }
 

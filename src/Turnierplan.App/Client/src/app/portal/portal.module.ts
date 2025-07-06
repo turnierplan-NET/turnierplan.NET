@@ -83,6 +83,7 @@ import { RbacWidgetComponent } from './components/rbac-widget/rbac-widget.compon
 import { RbacOffcanvasComponent } from './components/rbac-offcanvas/rbac-offcanvas.component';
 import { RbacPrincipalComponent } from './components/rbac-principal/rbac-principal.component';
 import { RbacAddAssignmentComponent } from './components/rbac-add-assignment/rbac-add-assignment.component';
+import { IsActionAllowedDirective } from './directives/is-action-allowed/is-action-allowed.directive';
 
 const routes: Routes = [
   {
@@ -227,7 +228,8 @@ const routes: Routes = [
     RbacWidgetComponent,
     RbacOffcanvasComponent,
     RbacAddAssignmentComponent,
-    RbacPrincipalComponent
+    RbacPrincipalComponent,
+    IsActionAllowedDirective
   ],
   imports: [
     CommonModule,

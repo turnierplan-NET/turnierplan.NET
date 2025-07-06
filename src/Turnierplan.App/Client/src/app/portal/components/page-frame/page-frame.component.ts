@@ -1,11 +1,14 @@
 import { Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
 
 import { LocalStorageService } from '../../services/local-storage.service';
+import { Action } from '../../../generated/actions';
+import { AuthorizationService } from '../../../core/services/authorization.service';
 
 export interface PageFrameNavigationTab {
   id: number;
   title: string;
   icon: string;
+  authorization?: Action;
 }
 
 @Component({
@@ -28,7 +31,10 @@ export class PageFrameComponent implements OnInit, OnChanges {
   public navigationTabs?: PageFrameNavigationTab[] = undefined;
 
   @Input()
-  public rememberNavigationTabKey?: string;
+  public contextEntityId?: string;
+
+  @Input()
+  public rememberNavigationTab: boolean = false;
 
   @Input()
   public enableBottomPadding = true;
@@ -45,13 +51,20 @@ export class PageFrameComponent implements OnInit, OnChanges {
   protected readonly history = history;
   protected currentTabId?: number;
 
-  constructor(private readonly localStorageService: LocalStorageService) {}
+  constructor(
+    protected readonly authorizationService: AuthorizationService,
+    private readonly localStorageService: LocalStorageService
+  ) {}
 
   public ngOnInit(): void {
-    if (this.rememberNavigationTabKey && this.navigationTabs) {
-      const value = this.localStorageService.getNavigationTab(this.rememberNavigationTabKey);
-      if (value !== undefined) {
-        this.toggleNavigationTab(value);
+    if (this.rememberNavigationTab && this.navigationTabs) {
+      if (this.contextEntityId) {
+        const value = this.localStorageService.getNavigationTab(this.contextEntityId);
+        if (value !== undefined) {
+          this.toggleNavigationTab(value);
+        }
+      } else {
+        console.error('Cannot retrieve active navigation tab because [contextEntityId] is not set.');
       }
     }
   }
@@ -79,8 +92,12 @@ export class PageFrameComponent implements OnInit, OnChanges {
       return;
     }
 
-    if (this.rememberNavigationTabKey) {
-      this.localStorageService.setNavigationTab(this.rememberNavigationTabKey, navigationTab.id);
+    if (this.rememberNavigationTab) {
+      if (this.contextEntityId) {
+        this.localStorageService.setNavigationTab(this.contextEntityId, navigationTab.id);
+      } else {
+        console.error('Cannot retrieve active navigation tab because [contextEntityId] is not set.');
+      }
     }
 
     this.currentTabId = navigationTab.id;

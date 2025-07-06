@@ -63,6 +63,8 @@ internal sealed class CreateTournamentEndpoint : EndpointBase<TournamentDto>
             folder = new Folder(organization, request.FolderName);
 
             await folderRepository.CreateAsync(folder).ConfigureAwait(false);
+
+            accessValidator.AddRolesToResponseHeader(folder);
         }
 
         var tournament = new Tournament(organization, request.Name.Trim(), request.Visibility);
@@ -70,6 +72,8 @@ internal sealed class CreateTournamentEndpoint : EndpointBase<TournamentDto>
 
         await tournamentRepository.CreateAsync(tournament).ConfigureAwait(false);
         await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+        accessValidator.AddRolesToResponseHeader(tournament);
 
         return Results.Ok(mapper.Map<TournamentDto>(tournament));
     }

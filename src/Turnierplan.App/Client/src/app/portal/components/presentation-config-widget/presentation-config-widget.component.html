@@ -3,11 +3,13 @@
     <div class="fw-bold mb-3" translate="Portal.ViewTournament.Share.Settings"></div>
     <div translate="Portal.ViewTournament.Share.SettingsInfo"></div>
   </div>
-  <tp-action-button
-    [title]="'Portal.ViewTournament.Share.PresentationConfig.CopyFromOtherTournament'"
-    [type]="'outline-secondary'"
-    [icon]="'copy'"
-    (click)="copyFromOtherTournament()" />
+  @if (canSaveChanges) {
+    <tp-action-button
+      [title]="'Portal.ViewTournament.Share.PresentationConfig.CopyFromOtherTournament'"
+      [type]="'outline-secondary'"
+      [icon]="'copy'"
+      (click)="copyFromOtherTournament()" />
+  }
 </div>
 
 <div class="row">
@@ -123,11 +125,13 @@
     @if (isSaving) {
       <tp-small-spinner />
     }
-    <tp-action-button
-      [type]="'success'"
-      [icon]="'floppy'"
-      [title]="'Portal.General.ApplyChanges'"
-      [disabled]="isSaving"
-      (click)="saveChanges()" />
+    <div [ngClass]="{ 'tp-cursor-not-allowed': !canSaveChanges }">
+      <tp-action-button
+        [type]="'success'"
+        [icon]="'floppy'"
+        [title]="'Portal.General.ApplyChanges'"
+        [disabled]="!canSaveChanges || isSaving"
+        (click)="canSaveChanges && saveChanges()" />
+    </div>
   </div>
 }

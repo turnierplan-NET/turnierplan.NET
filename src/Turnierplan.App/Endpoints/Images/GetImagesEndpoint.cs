@@ -37,6 +37,11 @@ internal sealed class GetImagesEndpoint : EndpointBase<IEnumerable<ImageDto>>
 
         var filteredImages = organization.Images.Where(x => x.Type == imageType).ToList();
 
+        foreach (var image in filteredImages)
+        {
+            accessValidator.AddRolesToResponseHeader(image);
+        }
+
         return Results.Ok(mapper.MapCollection<ImageDto>(filteredImages));
     }
 }

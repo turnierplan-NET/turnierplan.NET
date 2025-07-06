@@ -1,4 +1,7 @@
-<table class="table table-hover" [attr.aria-label]="'Portal.ViewTournament.MatchPlan.TableLabel' | translate">
+<table
+  class="table"
+  [ngClass]="{ 'table-hover': allowReporting }"
+  [attr.aria-label]="'Portal.ViewTournament.MatchPlan.TableLabel' | translate">
   <thead>
     <tr>
       <th class="text-center" translate="Portal.ViewTournament.MatchPlan.Index"></th>
@@ -24,7 +27,7 @@
         </tr>
       }
       @for (match of matchGroup.matches; track match) {
-        <tr class="tp-cursor-pointer" (click)="matchClick.emit(match.id)">
+        <tr [ngClass]="{ 'tp-cursor-pointer': allowReporting }" (click)="allowReporting && matchClick.emit(match.id)">
           <td class="text-center align-middle">{{ match.index }}</td>
           <td class="text-center align-middle">{{ match.group }}</td>
           @if (showCourtColumn) {

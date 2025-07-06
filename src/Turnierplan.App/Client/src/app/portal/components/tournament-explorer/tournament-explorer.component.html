@@ -15,6 +15,7 @@
             } @else {
               <tp-rename-button
                 translationKey="Portal.ViewOrganization.TournamentExplorer.RenameFolder"
+                *tpIsActionAllowed="[currentEntry.folderId, Actions.GenericWrite]"
                 [displayLabel]="false"
                 [allowReset]="false"
                 [maxLength]="60"
@@ -23,6 +24,7 @@
             }
 
             <tp-rbac-widget
+              *tpIsActionAllowed="[currentEntry.folderId, Actions.ReadOrWriteRoleAssignments]"
               [target]="{ rbacScopeId: 'Folder:' + currentEntry.folderId, name: currentEntry.folderName }"
               [buttonOnly]="true"
               (errorOccured)="requestError.emit($event)" />

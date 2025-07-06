@@ -31,7 +31,7 @@
             [translateParams]="{ width: imageForDetailView!.width, height: imageForDetailView!.height }"></div>
         </div>
         <div class="d-flex flex-column align-items-center">
-          <tp-delete-button (confirmed)="deleteCurrentViewedImage()" />
+          <tp-delete-button *tpIsActionAllowed="[imageForDetailView!.id, Actions.GenericWrite]" (confirmed)="deleteCurrentViewedImage()" />
         </div>
       </div>
     } @else {
@@ -44,6 +44,7 @@
           <tp-small-spinner />
         } @else {
           <tp-action-button
+            *tpIsActionAllowed="[organizationId, Actions.GenericWrite]"
             [type]="'outline-primary'"
             [icon]="'cloud-upload-fill'"
             [title]="'Portal.ViewTournament.Settings.EditImages.Chooser.Upload'"
