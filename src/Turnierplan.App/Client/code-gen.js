@@ -44,7 +44,7 @@ const generatedContent = `/* tslint:disable */
 
 import { Role } from '../api';
 
-class Action {
+export class Action {
   constructor(private readonly requiredRoles: Role[]) {}
 
   public isAllowed(availableRoles: Role[]): boolean {
