@@ -4,7 +4,8 @@
     [title]="organization.name"
     [backLink]="'../..'"
     [navigationTabs]="pages"
-    [rememberNavigationTabKey]="organization.id"
+    [contextEntityId]="organization.id"
+    [rememberNavigationTab]="true"
     (navigationTabSelected)="togglePage($event.id)">
     <ng-template #buttons>
       @switch (currentPage) {

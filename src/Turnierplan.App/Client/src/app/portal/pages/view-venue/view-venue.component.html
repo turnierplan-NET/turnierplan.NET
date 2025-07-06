@@ -4,7 +4,8 @@
     [title]="venue.name"
     [backLink]="'../../organization/' + venue.organizationId"
     [navigationTabs]="pages"
-    [rememberNavigationTabKey]="venue.id"
+    [contextEntityId]="venue.id"
+    [rememberNavigationTab]="true"
     (navigationTabSelected)="togglePage($event.id)">
     <ng-template #content>
       <div class="card">

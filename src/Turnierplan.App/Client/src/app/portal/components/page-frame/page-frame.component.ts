@@ -28,7 +28,10 @@ export class PageFrameComponent implements OnInit, OnChanges {
   public navigationTabs?: PageFrameNavigationTab[] = undefined;
 
   @Input()
-  public rememberNavigationTabKey?: string;
+  public contextEntityId?: string;
+
+  @Input()
+  public rememberNavigationTab: boolean = false;
 
   @Input()
   public enableBottomPadding = true;
@@ -48,10 +51,14 @@ export class PageFrameComponent implements OnInit, OnChanges {
   constructor(private readonly localStorageService: LocalStorageService) {}
 
   public ngOnInit(): void {
-    if (this.rememberNavigationTabKey && this.navigationTabs) {
-      const value = this.localStorageService.getNavigationTab(this.rememberNavigationTabKey);
-      if (value !== undefined) {
-        this.toggleNavigationTab(value);
+    if (this.rememberNavigationTab && this.navigationTabs) {
+      if (this.contextEntityId) {
+        const value = this.localStorageService.getNavigationTab(this.contextEntityId);
+        if (value !== undefined) {
+          this.toggleNavigationTab(value);
+        }
+      } else {
+        console.error('Cannot retrieve active navigation tab because [contextEntityId] is not set.');
       }
     }
   }
@@ -79,8 +86,12 @@ export class PageFrameComponent implements OnInit, OnChanges {
       return;
     }
 
-    if (this.rememberNavigationTabKey) {
-      this.localStorageService.setNavigationTab(this.rememberNavigationTabKey, navigationTab.id);
+    if (this.rememberNavigationTab) {
+      if (this.contextEntityId) {
+        this.localStorageService.setNavigationTab(this.contextEntityId, navigationTab.id);
+      } else {
+        console.error('Cannot retrieve active navigation tab because [contextEntityId] is not set.');
+      }
     }
 
     this.currentTabId = navigationTab.id;

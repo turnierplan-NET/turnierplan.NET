@@ -4,7 +4,8 @@
     [title]="tournament.name"
     [backLink]="'../../organization/' + tournament.organizationId"
     [navigationTabs]="pages"
-    [rememberNavigationTabKey]="tournament.id"
+    [contextEntityId]="tournament.id"
+    [rememberNavigationTab]="true"
     [enableBottomPadding]="!isTournamentTreeVisible"
     (navigationTabSelected)="togglePage($event.id)">
     <ng-template #buttons>
