@@ -519,6 +519,11 @@ export const de = {
             MatchWonPoints: 'Punkte für Sieg:',
             MatchDrawnPoints: 'Punkte für Unentschieden:',
             MatchLostPoints: 'Punkte für Niederlage:',
+            HigherScoreLoses: {
+              Label: 'Ergebnis invertieren:',
+              Tooltip: 'Wenn aktiviert, ist diejenige Mannschaft, welche weniger Tore geschossen hat, der Gewinner vom Spiel.',
+              Activated: 'Die Ergebnisse werden invertiert. Das heißt, die Mannschaft mit weniger Toren gewinnt.'
+            },
             ComparisonModes: {
               Label: 'Platzierungsregel in Gruppen:',
               Values: {

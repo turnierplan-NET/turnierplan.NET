@@ -128,6 +128,7 @@ internal sealed class TournamentMappingRule : MappingRuleBase<Tournament, Tourna
                 MatchWonPoints = source.ComputationConfiguration.MatchWonPoints,
                 MatchDrawnPoints = source.ComputationConfiguration.MatchDrawnPoints,
                 MatchLostPoints = source.ComputationConfiguration.MatchLostPoints,
+                HigherScoreLoses = source.ComputationConfiguration.HigherScoreLoses,
                 ComparisonModes = source.ComputationConfiguration.ComparisonModes.ToArray()
             },
             PresentationConfiguration = mapper.Map<PresentationConfigurationDto>(source.PresentationConfiguration)

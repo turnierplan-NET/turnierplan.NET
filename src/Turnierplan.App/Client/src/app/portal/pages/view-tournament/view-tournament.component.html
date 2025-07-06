@@ -258,6 +258,11 @@
                 <span translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.MatchLostPoints"></span>
                 <span class="fw-bold">{{ tournament.computationConfiguration.matchLostPoints }}</span>
               </div>
+              @if (tournament.computationConfiguration.higherScoreLoses) {
+                <div
+                  class="mb-2"
+                  translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.HigherScoreLoses.Activated"></div>
+              }
               <div class="mb-3 d-flex flex-row">
                 <span class="me-2" translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.ComparisonModes.Label"></span>
                 @for (entry of tournament.computationConfiguration.comparisonModes; track entry; let isLast = $last) {

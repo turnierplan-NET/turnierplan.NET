@@ -10,5 +10,7 @@ public sealed record ComputationConfigurationDto
 
     public required int MatchLostPoints { get; init; }
 
+    public required bool HigherScoreLoses { get; init; }
+
     public required TeamComparisonMode[] ComparisonModes { get; init; }
 }

@@ -18,6 +18,7 @@ export class ComputationConfigurationComponent {
   protected matchWonPoints: number = 0;
   protected matchDrawnPoints: number = 0;
   protected matchLostPoints: number = 0;
+  protected higherScoreLoses: boolean = false;
 
   protected standardComparisonModeOptions: ComparisonModeOption[] = [];
   protected nonStandardComparisonModeOptions: ComparisonModeOption[] = [];
@@ -37,6 +38,7 @@ export class ComputationConfigurationComponent {
     this.matchWonPoints = computationConfiguration.matchWonPoints;
     this.matchDrawnPoints = computationConfiguration.matchDrawnPoints;
     this.matchLostPoints = computationConfiguration.matchLostPoints;
+    this.higherScoreLoses = computationConfiguration.higherScoreLoses;
 
     this.comparisonModeOptionId = '';
     for (const option of availableComparisonModeOptions) {
@@ -67,6 +69,7 @@ export class ComputationConfigurationComponent {
       matchWonPoints: this.matchWonPoints,
       matchDrawnPoints: this.matchDrawnPoints,
       matchLostPoints: this.matchLostPoints,
+      higherScoreLoses: this.higherScoreLoses,
       comparisonModes: [...(comparisonModes ?? [])]
     });
     this.save$.complete();
