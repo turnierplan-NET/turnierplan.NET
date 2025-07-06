@@ -51,6 +51,8 @@ The following environment variables *can* be set if you want to enable specific 
 | `ApplicationInsights__ConnectionString` | Can be set if you wish that your instance sends telemetry data to [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview). | -            |
 | `Identity__AccessTokenLifetime`         | Defines the lifetime of issued JWT access tokens.                                                                                                                                | `00:30:00`   |
 | `Identity__RefreshTokenLifetime`        | Defines the lifetime of issued JWT refresh tokens.                                                                                                                               | `1.00:00:00` |
+| `Turnierplan__ImprintUrl`               | The URL of your external imprint page if you want it to be linked on the public pages.                                                                                           | -            |
+| `Turnierplan__PrivacyUrl`               | The URL of your external privacy page if you want it to be linked on the public pages.                                                                                           | -            |
 
 > The token lifetimes must be specified as .NET `TimeSpan` strings. For example `00:30:00` means 30 minutes or `1.00:00.00` means 1 day.
 
