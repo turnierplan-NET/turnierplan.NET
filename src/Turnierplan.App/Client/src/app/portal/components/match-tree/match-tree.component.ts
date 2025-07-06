@@ -43,6 +43,9 @@ export class MatchTreeComponent implements OnChanges, AfterViewInit {
   @Input()
   public groups: GroupView[] = [];
 
+  @Input()
+  public allowReporting = false;
+
   @Output()
   public matchClick = new EventEmitter<number>();
 

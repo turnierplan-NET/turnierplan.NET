@@ -354,7 +354,11 @@
   </tp-page-frame>
 
   @if (tournament && isTournamentTreeVisible) {
-    <tp-match-tree [matches]="processedMatches" [groups]="processedGroups" (matchClick)="matchClicked($event)" />
+    <tp-match-tree
+      [allowReporting]="(authorizationService.isActionAllowed$(tournament.id, Actions.TournamentConduct) | async) ?? false"
+      [matches]="processedMatches"
+      [groups]="processedGroups"
+      (matchClick)="matchClicked($event)" />
 
     <!-- Normally, this padding is added by the page frame. In case of the tournament tree, that padding is disabled. -->
     <div style="height: 5em"></div>
