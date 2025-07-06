@@ -50,7 +50,7 @@ internal sealed class GetTournamentsEndpoint : EndpointBase<IEnumerable<Tourname
 
             tournaments = organization.Tournaments;
         }
-        else if (folderId.HasValue)
+        else
         {
             var folder = await folderRepository.GetByPublicIdAsync(folderId.Value, IFolderRepository.Include.Tournaments).ConfigureAwait(false);
 
@@ -65,10 +65,6 @@ internal sealed class GetTournamentsEndpoint : EndpointBase<IEnumerable<Tourname
             }
 
             tournaments = folder.Tournaments;
-        }
-        else
-        {
-            return Results.InternalServerError();
         }
 
         foreach (var folder in tournaments.Where(x => x.Folder is not null).Select(x => x.Folder!).Distinct())

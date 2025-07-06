@@ -52,7 +52,7 @@ internal sealed class SetTournamentImageEndpoint : EndpointBase
                 return Results.NotFound();
             }
 
-            if (!accessValidator.IsActionAllowed(image, Actions.GenericWrite))
+            if (!accessValidator.IsActionAllowed(image, Actions.GenericRead))
             {
                 return Results.Forbid();
             }
@@ -75,7 +75,7 @@ internal sealed class SetTournamentImageEndpoint : EndpointBase
                 tournament.SetSponsorBanner(image);
                 break;
             default:
-                // This cannot happen because its prevented by the validator
+                // This cannot happen because it's prevented by the validator
                 throw new InvalidOperationException();
         }
 

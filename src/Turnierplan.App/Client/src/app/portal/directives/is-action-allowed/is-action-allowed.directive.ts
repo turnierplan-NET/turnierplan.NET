@@ -1,8 +1,7 @@
 import { Directive, ElementRef, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-import { Subject, switchMap, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { Action } from '../../../generated/actions';
-import { map } from 'rxjs/operators';
 
 type Config = [string, Action];
 
