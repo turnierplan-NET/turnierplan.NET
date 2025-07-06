@@ -16,7 +16,7 @@ RUN dotnet build "./Turnierplan.App.csproj" -c "$BUILD_CONFIGURATION" -o /app/bu
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && apt-get install -y nodejs
 
 RUN dotnet publish "./Turnierplan.App.csproj" -c "$BUILD_CONFIGURATION" -o /app/publish /p:UseAppHost=false
 
