@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ImageDto2, ImageType, ImagesService } from '../../../api';
+import { Actions } from '../../../generated/actions';
 
 @Component({
   standalone: false,
@@ -9,6 +10,8 @@ import { ImageDto2, ImageType, ImagesService } from '../../../api';
   styleUrls: ['./image-chooser.component.scss']
 })
 export class ImageChooserComponent {
+  protected readonly Actions = Actions;
+
   protected isInitialized = false;
 
   protected organizationId!: string;
