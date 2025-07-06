@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20250628084603_Add_HigherScoreLoses")]
+    [Migration("20250706170447_Add_HigherScoreLoses")]
     partial class Add_HigherScoreLoses
     {
         /// <inheritdoc />
