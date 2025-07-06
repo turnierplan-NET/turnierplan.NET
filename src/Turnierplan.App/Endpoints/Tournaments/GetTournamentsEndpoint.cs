@@ -32,7 +32,7 @@ internal sealed class GetTournamentsEndpoint : EndpointBase<IEnumerable<Tourname
             return Results.BadRequest("Specify either organizationId or folderId");
         }
 
-        IReadOnlyCollection<Tournament>? tournaments = null;
+        IReadOnlyCollection<Tournament>? tournaments;
 
         if (organizationId.HasValue)
         {
@@ -66,7 +66,16 @@ internal sealed class GetTournamentsEndpoint : EndpointBase<IEnumerable<Tourname
 
             tournaments = folder.Tournaments;
         }
+        else
+        {
+            return Results.InternalServerError();
+        }
 
-        return Results.Ok(mapper.MapCollection<TournamentHeaderDto>(tournaments!));
+        foreach (var folder in tournaments.Where(x => x.Folder is not null).Select(x => x.Folder!).Distinct())
+        {
+            accessValidator.AddRolesToResponseHeader(folder);
+        }
+
+        return Results.Ok(mapper.MapCollection<TournamentHeaderDto>(tournaments));
     }
 }
