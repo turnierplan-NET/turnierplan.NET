@@ -32,7 +32,7 @@ internal sealed class GetApiKeyUsageEndpoint : EndpointBase<ApiKeyUsageDto>
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(apiKey.Organization, Actions.GenericRead))
+        if (!accessValidator.IsActionAllowed(apiKey, Actions.GenericRead))
         {
             return Results.Forbid();
         }
