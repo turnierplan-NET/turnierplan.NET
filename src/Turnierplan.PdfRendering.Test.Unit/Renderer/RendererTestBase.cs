@@ -31,7 +31,7 @@ public abstract partial class RendererTestBase<TRenderer>
         serviceCollection.AddLogging();
         serviceCollection.AddSingleton(new TelemetryClient(new TelemetryConfiguration()));
         serviceCollection.AddTurnierplanLocalization();
-        serviceCollection.AddTurnierplanDocumentRendering("https://turnierplan-renderer-test");
+        serviceCollection.AddTurnierplanDocumentRendering<TestApplicationUrlProvider>();
         serviceCollection.AddSingleton<IImageStorage, TestImageStorage>();
 
         __serviceProvider = serviceCollection.BuildServiceProvider();
@@ -114,5 +114,10 @@ public abstract partial class RendererTestBase<TRenderer>
         public Task<Stream> GetImageAsync(Image image) => throw new NotSupportedException();
 
         public Task<bool> DeleteImageAsync(Image image) => throw new NotSupportedException();
+    }
+
+    private sealed class TestApplicationUrlProvider : IApplicationUrlProvider
+    {
+        public string GetApplicationUrl() => "https://turnierplan-renderer-test";
     }
 }

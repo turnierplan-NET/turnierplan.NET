@@ -7,12 +7,12 @@ namespace Turnierplan.PdfRendering.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddTurnierplanDocumentRendering(this IServiceCollection services, string applicationUrl)
+    public static void AddTurnierplanDocumentRendering<TApplicationUrlProvider>(this IServiceCollection services)
+        where TApplicationUrlProvider : class, IApplicationUrlProvider
     {
         QuestPDF.Settings.License = LicenseType.Community;
 
-        services.Configure<DocumentOptions>(options => options.HomepageBaseUrl = applicationUrl);
-
+        services.AddSingleton<IApplicationUrlProvider, TApplicationUrlProvider>();
         services.AddSingleton<IDocumentTypeRegistry, DocumentTypeRegistry>();
 
         var baseType = typeof(IDocumentRenderer);
