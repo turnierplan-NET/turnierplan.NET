@@ -41,7 +41,7 @@ internal static class WebApplicationExtensions
             await context.Users.AddAsync(initialUser).ConfigureAwait(false);
             await context.SaveChangesAsync().ConfigureAwait(false);
 
-            logger.LogWarning("An initial user was created. You can log in using \"{Email}\" and the password \"{Password}\". IMMEDIATELY change this password when running in a production environment!", initialEmail, initialPassword);
+            logger.LogInformation("An initial user was created. You can log in using \"{Email}\" and the password \"{Password}\". IMMEDIATELY change this password when running in a production environment!", initialEmail, initialPassword);
         }
         else
         {

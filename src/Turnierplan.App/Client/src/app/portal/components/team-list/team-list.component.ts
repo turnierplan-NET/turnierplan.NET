@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AuthorizationService } from '../../../core/services/authorization.service';
+import { Actions } from '../../../generated/actions';
 
 export interface TeamView {
   id: number;
@@ -17,6 +19,11 @@ export interface TeamView {
   templateUrl: './team-list.component.html'
 })
 export class TeamListComponent {
+  protected readonly Actions = Actions;
+
+  @Input()
+  public tournamentId: string = '';
+
   @Input()
   public teams: TeamView[] = [];
 
@@ -31,6 +38,8 @@ export class TeamListComponent {
 
   @Output()
   public teamSetOutOfCompetition = new EventEmitter<{ teamId: number; outOfCompetition: boolean }>();
+
+  constructor(protected readonly authorizationService: AuthorizationService) {}
 
   protected get isUpdatingAnyTeam(): boolean {
     return this.teams.some(

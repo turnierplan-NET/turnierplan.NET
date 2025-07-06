@@ -41,8 +41,7 @@ export const de = {
       Title: 'Benutzerprofil',
       UserName: 'Nutzername:',
       EMail: 'E-Mail Adresse:',
-      ChangeEmailNotice:
-        'Wenn Sie eine andere E-Mail Adresse angeben, müssen sie die neue E-Mail Adresse bestätigen, bevor die Änderung übernommen wird.',
+      ChangeEmailNotice: 'Wenn Sie Ihre E-Mail Adresse ändern, müssen Sie sich ab sofort mit dieser neuen E-Mail Adresse anmelden.',
       RequestFailed: 'Bei der Bearbeitung der Anfrage ist ein Fehler aufgetreten.',
       SuccessToast: {
         Title: 'Nutzerdaten aktualisiert',
@@ -122,7 +121,7 @@ export const de = {
       },
       DeleteUser: {
         Title: 'Benutzer löschen',
-        Info: 'Wenn Sie eine Benutzer löschen, werden automatisch alle darin enthaltenen Organisationen, Turniere, Spielstätten sämtliche hochgeladenen Bilder mitgelöscht. Diese Aktion kann nicht widerrufen werden!',
+        Info: 'Wenn Sie eine Benutzer löschen, werden die Organisationen des Benutzers nicht mitgelöscht und bleiben weiterhin für alle Administratoren sichtbar.',
         IdConfirmation: 'Benutzer-ID:',
         SuccessToast: {
           Title: 'Benutzer wurde gelöscht',
@@ -927,17 +926,21 @@ export const de = {
       RoleName: {
         Owner: 'Besitzer',
         Contributor: 'Mitwirkender',
-        Reader: 'Leser'
+        Reader: 'Leser',
+        Reporter: 'Turnierdurchführung'
       },
       RoleDescription: {
         Owner: 'Der Benutzer kann sämtliche Änderungen durchführen inkl. Änderungen an Zugriffsrechten.',
         Contributor: 'Der Benutzer kann sämtliche Änderungen durchführen ausgenommen Änderungen an Zugriffsrechten.',
-        Reader: 'Der Benutzer kann sämtliche Informationen lesen aber keine Änderungen durchführen.'
+        Reader: 'Der Benutzer kann sämtliche Informationen lesen aber keine Änderungen durchführen.',
+        Reporter:
+          'Der Benutzer kann Spielergebnisse melden und löschen sowie Änderungen an der Startgebühr und Priorität der Mannschaften durchführen.'
       },
       PrincipalKind: {
         ApiKey: 'API-Schlüssel',
         User: 'Benutzer'
       },
+      PrincipalNotFound: 'Der Prinzipal konnte nicht mehr gefunden werden. Wurde der Nutzer/API-Schlüssel gelöscht?',
       TotalCount: 'Gesamt:',
       Id: 'ID:',
       CreatedAt: 'Erstellt am:',

@@ -33,6 +33,11 @@ internal sealed class GetApiKeysEndpoint : EndpointBase<IEnumerable<ApiKeyDto>>
             return Results.Forbid();
         }
 
+        foreach (var apiKey in organization.ApiKeys)
+        {
+            accessValidator.AddRolesToResponseHeader(apiKey);
+        }
+
         return Results.Ok(mapper.MapCollection<ApiKeyDto>(organization.ApiKeys));
     }
 }

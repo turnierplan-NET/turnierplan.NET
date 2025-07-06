@@ -21,7 +21,17 @@ public enum Role
     /// <summary>
     /// This role grants the permission to view the target entity but not to make modifications.
     /// </summary>
-    Reader = 1002
+    Reader = 1002,
+
+    #endregion
+
+    #region Tournament Roles
+
+    /// <summary>
+    /// This role grants the permission to perform all actions in a tournament which
+    /// are necessary while the tournament is played.
+    /// </summary>
+    Reporter = 2000
 
     #endregion
 }

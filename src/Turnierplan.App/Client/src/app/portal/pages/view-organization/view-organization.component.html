@@ -4,12 +4,14 @@
     [title]="organization.name"
     [backLink]="'../..'"
     [navigationTabs]="pages"
-    [rememberNavigationTabKey]="organization.id"
+    [contextEntityId]="organization.id"
+    [rememberNavigationTab]="true"
     (navigationTabSelected)="togglePage($event.id)">
     <ng-template #buttons>
       @switch (currentPage) {
         @case (0) {
           <tp-action-button
+            *tpIsActionAllowed="[organization.id, Actions.GenericWrite]"
             [title]="'Portal.ViewOrganization.NewTournament'"
             [type]="'outline-success'"
             [icon]="'plus-circle'"
@@ -17,6 +19,7 @@
         }
         @case (1) {
           <tp-action-button
+            *tpIsActionAllowed="[organization.id, Actions.GenericWrite]"
             [title]="'Portal.ViewOrganization.NewVenue'"
             [type]="'outline-success'"
             [icon]="'plus-circle'"
@@ -24,6 +27,7 @@
         }
         @case (2) {
           <tp-action-button
+            *tpIsActionAllowed="[organization.id, Actions.GenericWrite]"
             [title]="'Portal.ViewOrganization.NewApiKey'"
             [type]="'outline-success'"
             [icon]="'plus-circle'"
@@ -91,6 +95,7 @@
             @if (isLoadingApiKeys || !apiKeys) {
               <tp-loading-indicator class="my-5" [marginY]="false" />
             } @else {
+              @let writeAllowed = (authorizationService.isActionAllowed$(organization.id, Actions.GenericWrite) | async) ?? false;
               <div class="card-header d-flex flex-row align-items-center">
                 <tp-badge context="ViewOrganization" label="ApiKeyCount" [value]="apiKeys.length" />
               </div>
@@ -104,7 +109,9 @@
                       <th translate="Portal.ViewOrganization.ApiKeys.ExpiryDate"></th>
                       <th class="text-center" translate="Portal.ViewOrganization.ApiKeys.IsActive"></th>
                       <th></th>
-                      <th></th>
+                      @if (writeAllowed) {
+                        <th></th>
+                      }
                     </tr>
                   </thead>
                   <tbody>
@@ -130,12 +137,13 @@
                               <input
                                 type="checkbox"
                                 class="form-check-input"
+                                [disabled]="!writeAllowed"
                                 [ngModel]="apiKey.isActive"
-                                (ngModelChange)="setApiKeyActive(apiKey, $event)" />
+                                (ngModelChange)="writeAllowed && setApiKeyActive(apiKey, $event)" />
                             </div>
                           }
                         </td>
-                        <td class="align-middle pe-0" style="width: 1px">
+                        <td class="align-middle" style="width: 1px" [ngClass]="{ 'pe-0': writeAllowed }">
                           <tp-action-button
                             icon="bar-chart-line"
                             type="outline-secondary"
@@ -143,14 +151,16 @@
                             [mode]="'IconOnly'"
                             (click)="displayApiKeyUsage = apiKey.id" />
                         </td>
-                        <td class="align-middle" style="width: 1px">
-                          <tp-delete-button (confirmed)="deleteApiKey(apiKey.id)" />
-                        </td>
+                        @if (writeAllowed) {
+                          <td class="align-middle" style="width: 1px">
+                            <tp-delete-button (confirmed)="deleteApiKey(apiKey.id)" />
+                          </td>
+                        }
                       </tr>
 
                       @if (apiKey.id === displayApiKeyUsage) {
                         <tr>
-                          <td [attr.colspan]="7">
+                          <td [attr.colspan]="writeAllowed ? 7 : 6">
                             <tp-api-key-usage [apiKeyId]="apiKey.id" (errorOccured)="loadingState = { isLoading: false, error: $event }" />
                           </td>
                         </tr>

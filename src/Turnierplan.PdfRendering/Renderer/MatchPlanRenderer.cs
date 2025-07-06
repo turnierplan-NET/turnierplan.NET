@@ -1,5 +1,4 @@
 using Microsoft.ApplicationInsights;
-using Microsoft.Extensions.Options;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -14,7 +13,7 @@ using Turnierplan.PdfRendering.Extensions;
 namespace Turnierplan.PdfRendering.Renderer;
 
 [DocumentRenderer]
-public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageStorage imageStorage, IOptions<DocumentOptions> options) : DocumentRendererBase<MatchPlanDocumentConfiguration>(telemetryClient)
+public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageStorage imageStorage, IApplicationUrlProvider applicationUrlProvider) : DocumentRendererBase<MatchPlanDocumentConfiguration>(telemetryClient)
 {
     private readonly TelemetryClient _telemetryClient = telemetryClient;
 
@@ -219,7 +218,7 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
     /// <remarks>Internal for testing.</remarks>
     internal string GetPublicTournamentUrl(PublicId tournamentId)
     {
-        return $"{options.Value.HomepageBaseUrl.TrimEnd('/')}/tournament?id={tournamentId.ToString()}";
+        return $"{applicationUrlProvider.GetApplicationUrl().TrimEnd('/')}/tournament?id={tournamentId.ToString()}";
     }
 
     private static IEnumerable<string> GetHeaderRows(Tournament tournament, MatchPlanDocumentConfiguration configuration, ILocalization localization)

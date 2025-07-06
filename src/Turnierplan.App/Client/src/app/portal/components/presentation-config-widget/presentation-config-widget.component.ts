@@ -21,6 +21,9 @@ export class PresentationConfigWidgetComponent {
   @Input()
   public organizationName!: string;
 
+  @Input()
+  public canSaveChanges: boolean = false;
+
   @Output()
   public errorOccured = new EventEmitter<unknown>();
 
@@ -139,6 +142,15 @@ export class PresentationConfigWidgetComponent {
       },
       error: (error) => {
         this.errorOccured.emit(error);
+      }
+    });
+
+    ref.dismissed.subscribe({
+      next: (reason?: { isApiError?: boolean; apiError?: unknown }) => {
+        if (reason?.isApiError === true) {
+          // If reason is specified, this means an error occurred
+          this.errorOccured.emit(reason.apiError);
+        }
       }
     });
   }

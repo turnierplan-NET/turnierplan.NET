@@ -3,15 +3,29 @@ using System.Text.Json.Serialization;
 using FluentValidation;
 using Microsoft.AspNetCore.Http.Json;
 using Scalar.AspNetCore;
+using Turnierplan.App.Constants;
 using Turnierplan.App.Converters;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Helpers;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.OpenApi;
+using Turnierplan.App.Options;
 using Turnierplan.Dal.Extensions;
 using Turnierplan.ImageStorage.Extensions;
 using Turnierplan.Localization.Extensions;
 using Turnierplan.PdfRendering.Extensions;
+
+Console.WriteLine();
+Console.WriteLine(  "  __                                                     ___                                        __");
+Console.WriteLine( @" /\ \__                        __                       /\_ \                                      /\ \__");
+Console.WriteLine( @" \ \ ,_\  __  __  _ __    ___ /\_\     __   _ __   _____\//\ \      __      ___         ___      __\ \ ,_\");
+Console.WriteLine( @"  \ \ \/ /\ \/\ \/\`'__\/' _ `\/\ \  /'__`\/\`'__\/\ '__`\\ \ \   /'__`\  /' _ `\     /' _ `\  /'__`\ \ \/");
+Console.WriteLine( @"   \ \ \_\ \ \_\ \ \ \/ /\ \/\ \ \ \/\  __/\ \ \/ \ \ \L\ \\_\ \_/\ \L\.\_/\ \/\ \  __/\ \/\ \/\  __/\ \ \_");
+Console.WriteLine( @"    \ \__\\ \____/\ \_\ \ \_\ \_\ \_\ \____\\ \_\  \ \ ,__//\____\ \__/.\_\ \_\ \_\/\_\ \_\ \_\ \____\\ \__\");
+Console.WriteLine( @"     \/__/ \/___/  \/_/  \/_/\/_/\/_/\/____/ \/_/   \ \ \/ \/____/\/__/\/_/\/_/\/_/\/_/\/_/\/_/\/____/ \/__/");
+Console.WriteLine( @"                                                     \ \_\");
+Console.WriteLine($@"                                                      \/_/   v{TurnierplanMetadata.Version}");
+Console.WriteLine();
 
 ValidatorOptions.Global.LanguageManager.Enabled = false;
 
@@ -19,8 +33,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationInsightsTelemetry();
 
+builder.Services.Configure<TurnierplanOptions>(builder.Configuration.GetSection("Turnierplan"));
+
 builder.Services.AddTurnierplanDataAccessLayer(builder.Configuration);
-builder.Services.AddTurnierplanDocumentRendering(builder.Configuration.GetValue<string>("ApplicationUrl")!);
+builder.Services.AddTurnierplanDocumentRendering<ApplicationUrlProvider>();
 builder.Services.AddTurnierplanImageStorage(builder.Configuration.GetSection("ImageStorage"));
 builder.Services.AddTurnierplanLocalization();
 builder.Services.AddTurnierplanSecurity(builder.Configuration.GetSection("Identity"));

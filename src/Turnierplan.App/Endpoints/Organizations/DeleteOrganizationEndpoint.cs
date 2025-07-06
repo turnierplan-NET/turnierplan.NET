@@ -28,7 +28,7 @@ internal sealed class DeleteOrganizationEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(organization, Actions.GenericWrite))
+        if (!accessValidator.IsActionAllowed(organization, Actions.PrivilegedDelete))
         {
             return Results.Forbid();
         }

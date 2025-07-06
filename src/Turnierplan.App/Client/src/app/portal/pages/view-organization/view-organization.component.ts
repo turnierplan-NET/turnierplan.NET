@@ -16,6 +16,8 @@ import { NotificationService } from '../../../core/services/notification.service
 import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { LoadingState } from '../../directives/loading-state/loading-state.directive';
 import { TitleService } from '../../services/title.service';
+import { Actions } from '../../../generated/actions';
+import { AuthorizationService } from '../../../core/services/authorization.service';
 
 const venuesPageId = 1;
 const apiKeysPageId = 2;
@@ -25,6 +27,8 @@ const apiKeysPageId = 2;
   templateUrl: './view-organization.component.html'
 })
 export class ViewOrganizationComponent implements OnInit, OnDestroy {
+  protected readonly Actions = Actions;
+
   protected loadingState: LoadingState = { isLoading: true };
   protected organization?: OrganizationDto;
   protected tournaments?: TournamentHeaderDto[];
@@ -56,13 +60,15 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     {
       id: 3,
       title: 'Portal.ViewOrganization.Pages.Settings',
-      icon: 'bi-gear'
+      icon: 'bi-gear',
+      authorization: Actions.GenericWrite
     }
   ];
 
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
+    protected readonly authorizationService: AuthorizationService,
     private readonly route: ActivatedRoute,
     private readonly organizationService: OrganizationsService,
     private readonly tournamentService: TournamentsService,

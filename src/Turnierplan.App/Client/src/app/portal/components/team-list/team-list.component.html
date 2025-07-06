@@ -1,3 +1,6 @@
+@let genericWriteAllowed = (authorizationService.isActionAllowed$(tournamentId, Actions.GenericWrite) | async) ?? false;
+@let tournamentConductAllowed = (authorizationService.isActionAllowed$(tournamentId, Actions.TournamentConduct) | async) ?? false;
+
 <table class="table table-hover" [attr.aria-label]="'Portal.ViewTournament.Teams.TableLabelTableLabel' | translate">
   <thead>
     <tr>
@@ -21,13 +24,15 @@
     @for (team of teams; track team.id) {
       <tr>
         <td class="align-middle">
-          <tp-rename-button
-            translationKey="Portal.ViewTournament.Teams.Rename"
-            [displayLabel]="false"
-            [allowReset]="false"
-            [maxLength]="60"
-            [current]="team.name"
-            (renamed)="renameTeam(team.id, $event)" />
+          @if (genericWriteAllowed) {
+            <tp-rename-button
+              translationKey="Portal.ViewTournament.Teams.Rename"
+              [displayLabel]="false"
+              [allowReset]="false"
+              [maxLength]="60"
+              [current]="team.name"
+              (renamed)="renameTeam(team.id, $event)" />
+          }
         </td>
         <td class="align-middle">
           @if (team.showLoadingIndicator.name) {
@@ -39,13 +44,17 @@
         <td class="align-middle">
           @if (team.groupId !== undefined && team.priority !== undefined) {
             <div class="d-flex flex-row gap-2 justify-content-between align-items-center" style="width: 4em">
-              <i class="bi bi-dash-circle tp-cursor-pointer" (click)="setTeamPriority(team.id, -1)"></i>
+              @if (tournamentConductAllowed) {
+                <i class="bi bi-dash-circle tp-cursor-pointer" (click)="setTeamPriority(team.id, -1)"></i>
+              }
               @if (team.showLoadingIndicator.priority) {
                 <tp-small-spinner />
               } @else {
                 <span>{{ team.priority }}</span>
               }
-              <i class="bi bi-plus-circle tp-cursor-pointer" (click)="setTeamPriority(team.id, 1)"></i>
+              @if (tournamentConductAllowed) {
+                <i class="bi bi-plus-circle tp-cursor-pointer" (click)="setTeamPriority(team.id, 1)"></i>
+              }
             </div>
           }
         </td>
@@ -58,6 +67,7 @@
                 class="form-check-input"
                 type="checkbox"
                 role="switch"
+                [disabled]="!genericWriteAllowed"
                 [checked]="team.outOfCompetition"
                 [ngClass]="{ 'pe-none': isUpdatingAnyTeam }"
                 (change)="toggleTeamOutOfCompetition(team.id)" />
@@ -74,22 +84,26 @@
                 <span translate="Portal.ViewTournament.Teams.EntryFeePaid.PaidAt"></span>
                 <span class="ms-1">{{ team.entryFeePaidAt | translateDate: 'medium' }}</span>
               </span>
-              <i
-                class="bi bi-arrow-counterclockwise tp-cursor-pointer"
-                [ngbPopover]="resetEntryFeeConfirmationPopup"
-                [popoverContext]="{ teamId: team.id }"
-                [autoClose]="'outside'"
-                [container]="'body'"
-                [popoverClass]="'tp-popover-slim'"></i>
+              @if (tournamentConductAllowed) {
+                <i
+                  class="bi bi-arrow-counterclockwise tp-cursor-pointer"
+                  [ngbPopover]="resetEntryFeeConfirmationPopup"
+                  [popoverContext]="{ teamId: team.id }"
+                  [autoClose]="'outside'"
+                  [container]="'body'"
+                  [popoverClass]="'tp-popover-slim'"></i>
+              }
             } @else {
               <i class="bi bi-x-circle text-danger"></i>
               <span class="small text-secondary" translate="Portal.ViewTournament.Teams.EntryFeePaid.NotPaid"></span>
-              <tp-action-button
-                icon="cash-coin"
-                type="outline-secondary"
-                [ngClass]="{ 'pe-none': isUpdatingAnyTeam }"
-                [title]="'Portal.ViewTournament.Teams.EntryFeePaid.Pay'"
-                (click)="setTeamEntryFeePaid(team.id, true)" />
+              @if (tournamentConductAllowed) {
+                <tp-action-button
+                  icon="cash-coin"
+                  type="outline-secondary"
+                  [ngClass]="{ 'pe-none': isUpdatingAnyTeam }"
+                  [title]="'Portal.ViewTournament.Teams.EntryFeePaid.Pay'"
+                  (click)="setTeamEntryFeePaid(team.id, true)" />
+              }
             }
           </div>
         </td>
