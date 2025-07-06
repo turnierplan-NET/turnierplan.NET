@@ -11,9 +11,7 @@ const regex = /^\s+public static readonly Action (\w+) = new\((Role\.\w+(?:, Rol
 const matches = [...content.matchAll(regex)];
 console.log(`Found ${matches.length} matches:`);
 
-const rolesSet = new Set([]);
 let generatedActionDefinitions = '';
-let generatedRolesEnumDefinitions = '';
 
 for (let i = 0; i < matches.length; i++) {
   const match = matches[i];
@@ -38,28 +36,13 @@ for (let i = 0; i < matches.length; i++) {
   if (i < matches.length - 1) {
     generatedActionDefinitions += '\n';
   }
-
-  for (const role of processedRoles) {
-    rolesSet.add(role);
-  }
-}
-
-const sortedRoles = [...rolesSet].sort((a, b) => a.localeCompare(b));
-for (let i = 0; i < sortedRoles.length; i++) {
-  const role = sortedRoles[i];
-  generatedRolesEnumDefinitions += `  ${role} = '${role}'`;
-  if (i < sortedRoles.length - 1) {
-    generatedRolesEnumDefinitions += ',\n';
-  }
 }
 
 const generatedContent = `/* tslint:disable */
 /* eslint-disable */
 /* This file is auto-generated based on the 'Actions.cs' C# source file */
 
-export enum Role {
-${generatedRolesEnumDefinitions}
-}
+import { Role } from '../api';
 
 class Action {
   constructor(private readonly requiredRoles: Role[]) {}
