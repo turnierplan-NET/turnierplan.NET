@@ -25,6 +25,6 @@ html, body, .overlay-background {
   }
 
   .footer-section-right {
-    justify-content: end;
+    align-items: end;
   }
 }

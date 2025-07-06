@@ -1,4 +1,7 @@
-﻿@using Turnierplan.App.Constants
+﻿@using Microsoft.Extensions.Options
+@using Turnierplan.App.Constants
+@using Turnierplan.App.Options
+@inject IOptions<TurnierplanOptions> TurnierplanOptions
 <!doctype html>
 <html lang="de">
 <head>
@@ -42,14 +45,27 @@
 
     <div class="bg-dark text-white">
         <div class="container px-5 py-4 d-flex flex-wrap flex-row">
-            <div class="footer-section">
-                <span>turnierplan.NET <span class="small">v@(TurnierplanMetadata.Version)</span></span>
-            </div>
-            <div class="footer-section footer-section-right d-flex">
-                <a class="text-white text-decoration-none d-flex flex-row align-items-center gap-2" target="_blank" href="https://github.com/turnierplan-NET/turnierplan.NET" rel="noopener">
+            <div class="footer-section d-flex flex-column">
+                <span>turnierplan.NET</span>
+                <span class="small">v@(TurnierplanMetadata.Version)</span>
+                <a class="mt-2 small text-white text-decoration-none d-flex flex-row align-items-center gap-2" target="_blank" href="https://github.com/turnierplan-NET/turnierplan.NET" rel="noopener">
                     <img src="./assets/github.svg" alt="GitHub-Logo"/>
                     <span>GitHub</span>
                 </a>
+            </div>
+            <div class="footer-section footer-section-right d-flex flex-column">
+                @if (!string.IsNullOrWhiteSpace(TurnierplanOptions.Value.ImprintUrl))
+                {
+                    <a class="text-white" href="@TurnierplanOptions.Value.ImprintUrl" target="_blank" rel="noopener">
+                        Impressum
+                    </a>
+                }
+                @if (!string.IsNullOrWhiteSpace(TurnierplanOptions.Value.PrivacyUrl))
+                {
+                    <a class="text-white" href="@TurnierplanOptions.Value.PrivacyUrl" target="_blank" rel="noopener">
+                        Datenschutz
+                    </a>
+                }
             </div>
         </div>
     </div>
