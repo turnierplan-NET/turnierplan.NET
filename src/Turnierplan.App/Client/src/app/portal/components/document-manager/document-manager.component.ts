@@ -9,6 +9,8 @@ import { DocumentConfiguration } from '../../models/document-configuration';
 import { DocumentConfigComponent, DocumentConfigFrameComponent } from '../document-config-frame/document-config-frame.component';
 import { DocumentConfigMatchPlanComponent } from '../document-config-match-plan/document-config-match-plan.component';
 import { DocumentConfigReceiptsComponent } from '../document-config-receipts/document-config-receipts.component';
+import { Actions } from '../../../generated/actions';
+import { AuthorizationService } from '../../../core/services/authorization.service';
 
 @Component({
   standalone: false,
@@ -17,6 +19,9 @@ import { DocumentConfigReceiptsComponent } from '../document-config-receipts/doc
   styleUrls: ['document-manager.component.scss']
 })
 export class DocumentManagerComponent {
+  @Input()
+  public tournamentId: string = '';
+
   @Input()
   public tournamentName: string = '';
 
@@ -45,6 +50,7 @@ export class DocumentManagerComponent {
   private readonly configComponents = new Map<DocumentType, Type<DocumentConfigComponent<DocumentConfiguration>>>();
 
   constructor(
+    protected readonly authorizationService: AuthorizationService,
     private readonly injector: Injector,
     private readonly documentService: DocumentsService,
     private readonly translateService: TranslateService,
@@ -231,4 +237,6 @@ export class DocumentManagerComponent {
   private getTimeZoneName(): string {
     return Intl.DateTimeFormat().resolvedOptions().timeZone;
   }
+
+  protected readonly Actions = Actions;
 }

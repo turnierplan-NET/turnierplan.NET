@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Actions } from '../../../generated/actions';
 
 export interface GroupView {
   id: number;
@@ -29,6 +30,11 @@ export interface GroupTeamView {
   templateUrl: './groups.component.html'
 })
 export class GroupsComponent {
+  protected readonly Actions = Actions;
+
+  @Input()
+  public tournamentId: string = '';
+
   @Input()
   public groups: GroupView[] = [];
 

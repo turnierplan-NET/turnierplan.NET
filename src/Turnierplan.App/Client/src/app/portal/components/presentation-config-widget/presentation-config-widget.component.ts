@@ -21,6 +21,9 @@ export class PresentationConfigWidgetComponent {
   @Input()
   public organizationName!: string;
 
+  @Input()
+  public canSaveChanges: boolean = false;
+
   @Output()
   public errorOccured = new EventEmitter<unknown>();
 

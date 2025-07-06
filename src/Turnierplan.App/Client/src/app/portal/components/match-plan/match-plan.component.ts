@@ -54,6 +54,9 @@ export class MatchPlanComponent implements OnChanges {
   public groups: GroupView[] = [];
 
   @Input()
+  public allowReporting = false;
+
+  @Input()
   public showAccumulatedScore = false;
 
   @Output()

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Role } from '../../api';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Action } from '../../generated/actions';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthorizationService {
@@ -21,5 +23,13 @@ export class AuthorizationService {
       this.rolesSubjects[entityId] = new BehaviorSubject([] as Role[]);
     }
     return this.rolesSubjects[entityId].asObservable();
+  }
+
+  public isActionAllowed$(entityId: string, action: Action): Observable<boolean> {
+    return this.getRoles$(entityId).pipe(map((roles) => action.isAllowed(roles)));
+  }
+
+  public isActionNotAllowed$(entityId: string, action: Action): Observable<boolean> {
+    return this.getRoles$(entityId).pipe(map((roles) => !action.isAllowed(roles)));
   }
 }

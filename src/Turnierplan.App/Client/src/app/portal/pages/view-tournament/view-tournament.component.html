@@ -28,16 +28,18 @@
           }
         }
         @case (4) {
-          <tp-action-button
-            [title]="'Portal.ViewTournament.Documents.Copy'"
-            [type]="'outline-secondary'"
-            [icon]="'copy'"
-            (click)="copyDocument()" />
-          <tp-action-button
-            [title]="'Portal.ViewTournament.Documents.Create'"
-            [type]="'outline-success'"
-            [icon]="'plus-circle'"
-            (click)="createDocument()" />
+          <ng-container *tpIsActionAllowed="[tournament.id, Actions.GenericWrite]">
+            <tp-action-button
+              [title]="'Portal.ViewTournament.Documents.Copy'"
+              [type]="'outline-secondary'"
+              [icon]="'copy'"
+              (click)="copyDocument()" />
+            <tp-action-button
+              [title]="'Portal.ViewTournament.Documents.Create'"
+              [type]="'outline-success'"
+              [icon]="'plus-circle'"
+              (click)="createDocument()" />
+          </ng-container>
         }
         @case (6) {
           @if (isUpdatingName) {
@@ -78,6 +80,7 @@
             </div>
             <div class="card-body p-0">
               <tp-match-plan
+                [allowReporting]="(authorizationService.isActionAllowed$(tournament.id, Actions.TournamentConduct) | async) ?? false"
                 [showAccumulatedScore]="showAccumulatedScore"
                 [matches]="processedMatches"
                 [groups]="processedGroups"
@@ -99,7 +102,10 @@
               <tp-badge context="ViewTournament" label="GroupCount" [value]="processedGroups.length" />
             </div>
             <div class="card-body p-0">
-              <tp-groups [groups]="processedGroups" (groupRename)="renameGroup($event.groupId, $event.name)" />
+              <tp-groups
+                [tournamentId]="tournament.id"
+                [groups]="processedGroups"
+                (groupRename)="renameGroup($event.groupId, $event.name)" />
             </div>
           }
           @case (2) {
@@ -108,6 +114,7 @@
             </div>
             <div class="card-body p-0">
               <tp-team-list
+                [tournamentId]="tournament.id"
                 [teams]="processedTeams"
                 (teamRename)="renameTeam($event.teamId, $event.name)"
                 (teamSetPriority)="setTeamPriority($event.teamId, $event.groupId, $event.priority)"
@@ -132,6 +139,7 @@
               </div>
               <div class="card-body p-0">
                 <tp-document-manager
+                  [tournamentId]="tournament.id"
                   [tournamentName]="tournament.name"
                   [documents]="documents"
                   [recentDocumentId]="recentDocumentId"
@@ -149,6 +157,7 @@
                 <tp-visibility-selector
                   [ngClass]="{ 'pe-none': isUpdatingVisibility }"
                   [visibility]="tournament.visibility"
+                  [disabled]="(authorizationService.isActionNotAllowed$(tournament.id, Actions.GenericWrite) | async) ?? true"
                   (visibilityChange)="setTournamentVisibility($event)" />
 
                 @if (isUpdatingVisibility) {
@@ -183,6 +192,7 @@
                   [organizationId]="tournament.organizationId"
                   [organizationName]="tournament.organizationName"
                   [config]="tournament.presentationConfiguration"
+                  [canSaveChanges]="(authorizationService.isActionAllowed$(tournament.id, Actions.GenericWrite) | async) ?? false"
                   (errorOccured)="loadingState = { isLoading: false, error: $event }" />
               </div>
             }
@@ -316,13 +326,15 @@
                 [icon]="'box-arrow-right'"
                 (click)="moveToAnotherFolder()" />
             </div>
-            <hr class="m-0" />
-            <div class="card-body">
-              <tp-rbac-widget
-                [translationKey]="'Portal.ViewTournament.RbacWidget'"
-                [target]="tournament"
-                (errorOccured)="loadingState = { isLoading: false, error: $event }" />
-            </div>
+            <ng-container *tpIsActionAllowed="[tournament.id, Actions.ReadOrWriteRoleAssignments]">
+              <hr class="m-0" />
+              <div class="card-body">
+                <tp-rbac-widget
+                  [translationKey]="'Portal.ViewTournament.RbacWidget'"
+                  [target]="tournament"
+                  (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+              </div>
+            </ng-container>
             <hr class="m-0" />
             <div class="card-body">
               <tp-delete-widget

@@ -21,17 +21,20 @@ export class IsActionAllowedDirective implements OnInit, OnDestroy {
   ) {}
 
   @Input()
-  public set tpIsActionAllowed(value: Config) {
+  public set tpIsActionAllowed(value: Config | undefined) {
     this.config = value;
   }
 
   public ngOnInit(): void {
+    if (!this.config) {
+      this.viewContainer.clear();
+      this.viewContainer.createEmbeddedView(this.templateRef);
+      return;
+    }
+
     this.authorizationService
-      .getRoles$(this.config![0])
-      .pipe(
-        takeUntil(this.destroyed$),
-        map((availableRoles) => this.config![1].isAllowed(availableRoles))
-      )
+      .isActionAllowed$(this.config[0], this.config[1])
+      .pipe(takeUntil(this.destroyed$))
       .subscribe({
         next: (isAllowed) => {
           this.viewContainer.clear();

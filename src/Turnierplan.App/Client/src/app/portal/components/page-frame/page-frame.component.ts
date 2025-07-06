@@ -1,11 +1,14 @@
 import { Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
 
 import { LocalStorageService } from '../../services/local-storage.service';
+import { Action } from '../../../generated/actions';
+import { AuthorizationService } from '../../../core/services/authorization.service';
 
 export interface PageFrameNavigationTab {
   id: number;
   title: string;
   icon: string;
+  authorization?: Action;
 }
 
 @Component({
@@ -48,7 +51,10 @@ export class PageFrameComponent implements OnInit, OnChanges {
   protected readonly history = history;
   protected currentTabId?: number;
 
-  constructor(private readonly localStorageService: LocalStorageService) {}
+  constructor(
+    protected readonly authorizationService: AuthorizationService,
+    private readonly localStorageService: LocalStorageService
+  ) {}
 
   public ngOnInit(): void {
     if (this.rememberNavigationTab && this.navigationTabs) {
