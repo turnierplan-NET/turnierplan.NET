@@ -141,6 +141,15 @@ export class PresentationConfigWidgetComponent {
         this.errorOccured.emit(error);
       }
     });
+
+    ref.dismissed.subscribe({
+      next: (reason?: { isApiError?: boolean; apiError?: unknown }) => {
+        if (reason?.isApiError === true) {
+          // If reason is specified, this means an error occurred
+          this.errorOccured.emit(reason.apiError);
+        }
+      }
+    });
   }
 
   private initialize(value: PresentationConfigurationDto): void {
