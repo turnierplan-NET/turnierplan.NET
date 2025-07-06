@@ -63,6 +63,23 @@
     </div>
   </div>
 
+  <div class="mb-4 row align-items-center">
+    <div class="col-4">
+      <label
+        class="form-label mb-0"
+        for="higherScoreLoses"
+        translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.HigherScoreLoses.Label"></label>
+    </div>
+    <div class="col-8 d-flex flex-row align-items-center gap-1">
+      <div class="form-check form-switch">
+        <input class="form-check-input" id="higherScoreLoses" type="checkbox" [(ngModel)]="higherScoreLoses" />
+      </div>
+      <i
+        class="bi bi-info-circle"
+        [ngbTooltip]="'Portal.ViewTournament.Settings.EditComputationConfig.Properties.HigherScoreLoses.Tooltip' | translate"></i>
+    </div>
+  </div>
+
   <label
     class="form-label"
     for="comparisonModes"
