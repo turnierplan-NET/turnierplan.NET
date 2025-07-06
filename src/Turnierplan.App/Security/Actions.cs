@@ -2,6 +2,11 @@ using Turnierplan.Core.RoleAssignment;
 
 namespace Turnierplan.App.Security;
 
+/// <remarks>
+/// The contents of this source file are parsed using regex during the build of the Angular client application. Because
+/// of this, the formatting must be consistent with the regular expression such that all actions are read properly.
+/// Refer to the 'Client/actions.gen.js' file for implementation details including the regex.
+/// </remarks>
 internal static class Actions
 {
     /// <summary>
