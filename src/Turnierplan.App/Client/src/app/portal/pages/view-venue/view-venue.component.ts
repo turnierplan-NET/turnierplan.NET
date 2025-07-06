@@ -11,6 +11,7 @@ import { TextAreaDialogComponent } from '../../components/text-area-dialog/text-
 import { TextListDialogComponent } from '../../components/text-list-dialog/text-list-dialog.component';
 import { LoadingState } from '../../directives/loading-state/loading-state.directive';
 import { TitleService } from '../../services/title.service';
+import { Actions } from '../../../generated/actions';
 
 @Component({
   standalone: false,
@@ -32,7 +33,8 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
     {
       id: 1,
       title: 'Portal.ViewVenue.Pages.Settings',
-      icon: 'bi-gear'
+      icon: 'bi-gear',
+      authorization: Actions.GenericWrite
     }
   ];
 
@@ -196,4 +198,6 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
       }
     });
   }
+
+  protected readonly Actions = Actions;
 }

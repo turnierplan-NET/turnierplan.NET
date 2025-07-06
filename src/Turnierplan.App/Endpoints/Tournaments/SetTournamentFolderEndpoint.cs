@@ -59,6 +59,8 @@ internal sealed class SetTournamentFolderEndpoint : EndpointBase
 
                 tournament.SetFolder(folder);
 
+                accessValidator.AddRolesToResponseHeader(folder);
+
                 await folderRepository.CreateAsync(folder).ConfigureAwait(false);
             }
         }

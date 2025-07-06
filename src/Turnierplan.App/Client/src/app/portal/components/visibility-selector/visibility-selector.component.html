@@ -1,10 +1,11 @@
-<div class="btn-group" role="group">
+<div class="btn-group" role="group" [ngClass]="{ 'tp-cursor-not-allowed': disabled }">
   <input
     type="radio"
     class="btn-check"
     id="visibilityPrivate"
     autocomplete="off"
     [checked]="visibility === Visibility.Private"
+    [disabled]="disabled"
     (click)="setVisibility(Visibility.Private)" />
   <label
     class="btn btn-sm px-3"
@@ -19,6 +20,7 @@
     id="visibilityPublic"
     autocomplete="off"
     [checked]="visibility === Visibility.Public"
+    [disabled]="disabled"
     (click)="setVisibility(Visibility.Public)" />
   <label
     class="btn btn-sm px-3"

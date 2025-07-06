@@ -1,4 +1,7 @@
-﻿@using Turnierplan.App.Constants
+﻿@using Microsoft.Extensions.Options
+@using Turnierplan.App.Constants
+@using Turnierplan.App.Options
+@inject IOptions<TurnierplanOptions> TurnierplanOptions
 <!doctype html>
 <html lang="de">
 <head>
@@ -28,8 +31,24 @@
     <div class="position-fixed w-100 bg-white shadow">
         <div class="container px-4 py-4 d-flex flex-row justify-content-center">
             <div class="header-logo d-flex flex-row align-items-center" href="/">
-                <img class="me-3" src="/favicon-96x96.png" alt="turnierplan.NET Logo"/>
-                <span class="text-dark fw-bold fs-5">turnierplan.NET</span>
+                @{
+                    var hasCustomInstanceName = !string.IsNullOrWhiteSpace(TurnierplanOptions.Value.InstanceName);
+                    var instanceName = hasCustomInstanceName
+                        ? TurnierplanOptions.Value.InstanceName
+                        : "turnierplan.NET";
+                }
+                
+                @if (!string.IsNullOrWhiteSpace(TurnierplanOptions.Value.LogoUrl))
+                {
+                    var imageAlt = hasCustomInstanceName ? $"Logo von {instanceName}" : "Veranstalter-Logo";
+                    <img class="me-3" src="@TurnierplanOptions.Value.LogoUrl" alt="@imageAlt"/>
+                }
+                else
+                {
+                    <img class="me-3" src="/favicon-96x96.png" alt="turnierplan.NET-Logo"/>
+                }
+
+                <span class="text-dark fw-bold fs-5">@instanceName</span>
             </div>
         </div>
     </div>
@@ -42,14 +61,31 @@
 
     <div class="bg-dark text-white">
         <div class="container px-5 py-4 d-flex flex-wrap flex-row">
-            <div class="footer-section">
-                <span>turnierplan.NET <span class="small">v@(TurnierplanMetadata.Version)</span></span>
-            </div>
-            <div class="footer-section footer-section-right d-flex">
-                <a class="text-white text-decoration-none d-flex flex-row align-items-center gap-2" target="_blank" href="https://github.com/turnierplan-NET/turnierplan.NET" rel="noopener">
+            <div class="footer-section d-flex flex-column">
+                <span>turnierplan.NET</span>
+                <span class="small">v@(TurnierplanMetadata.Version)</span>
+                <a class="mt-2 small text-white text-decoration-none d-flex flex-row align-items-center gap-2" target="_blank" href="https://github.com/turnierplan-NET/turnierplan.NET" rel="noopener">
                     <img src="./assets/github.svg" alt="GitHub-Logo"/>
                     <span>GitHub</span>
                 </a>
+            </div>
+            <div class="footer-section footer-section-right d-flex flex-column">
+                @if (hasCustomInstanceName)
+                {
+                    <span>@TurnierplanOptions.Value.InstanceName</span>
+                }
+                @if (!string.IsNullOrWhiteSpace(TurnierplanOptions.Value.ImprintUrl))
+                {
+                    <a class="text-white" href="@TurnierplanOptions.Value.ImprintUrl" target="_blank" rel="noopener">
+                        Impressum
+                    </a>
+                }
+                @if (!string.IsNullOrWhiteSpace(TurnierplanOptions.Value.PrivacyUrl))
+                {
+                    <a class="text-white" href="@TurnierplanOptions.Value.PrivacyUrl" target="_blank" rel="noopener">
+                        Datenschutz
+                    </a>
+                }
             </div>
         </div>
     </div>

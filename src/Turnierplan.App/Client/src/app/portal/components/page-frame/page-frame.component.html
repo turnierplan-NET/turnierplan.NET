@@ -3,10 +3,18 @@
     [ngClass]="ultraSlim ? 'tp-ultra-slim-container' : 'container'"
     class="d-flex flex-row flex-wrap align-items-end justify-content-start">
     @for (tab of navigationTabs; track tab.id) {
+      @let isTabDisabled =
+        tab.authorization !== undefined &&
+        (!contextEntityId || ((authorizationService.isActionNotAllowed$(contextEntityId, tab.authorization) | async) ?? false));
+
       <div
         class="tp-navigation-tab px-3 py-1 d-flex flex-row gap-2"
-        [ngClass]="tab.id === currentTabId ? 'tp-text-shadow tp-navigation-tab-selected tp-cursor-default' : 'tp-cursor-pointer'"
-        (click)="toggleNavigationTab(tab.id)">
+        [ngClass]="{
+          'tp-cursor-not-allowed text-secondary': isTabDisabled,
+          'tp-text-shadow tp-navigation-tab-selected tp-cursor-default': !isTabDisabled && tab.id === currentTabId,
+          'tp-cursor-pointer': !isTabDisabled && tab.id !== currentTabId
+        }"
+        (click)="!isTabDisabled && toggleNavigationTab(tab.id)">
         <i class="bi" [ngClass]="tab.icon"></i>
         <span>{{ tab.title | translate }}</span>
       </div>

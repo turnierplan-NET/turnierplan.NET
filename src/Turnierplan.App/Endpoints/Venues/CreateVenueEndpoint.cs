@@ -49,6 +49,8 @@ internal sealed class CreateVenueEndpoint : EndpointBase<VenueDto>
         await venueRepository.CreateAsync(venue).ConfigureAwait(false);
         await venueRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
+        accessValidator.AddRolesToResponseHeader(venue);
+
         return Results.Ok(mapper.Map<VenueDto>(venue));
     }
 

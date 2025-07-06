@@ -7,6 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <SpaRoot>Client/</SpaRoot>
+    <UserSecretsId>2606c507-78c2-4d50-a7e9-152869c52210</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -9,6 +9,7 @@ using Turnierplan.App.Extensions;
 using Turnierplan.App.Helpers;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.OpenApi;
+using Turnierplan.App.Options;
 using Turnierplan.Dal.Extensions;
 using Turnierplan.ImageStorage.Extensions;
 using Turnierplan.Localization.Extensions;
@@ -32,8 +33,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationInsightsTelemetry();
 
+builder.Services.Configure<TurnierplanOptions>(builder.Configuration.GetSection("Turnierplan"));
+
 builder.Services.AddTurnierplanDataAccessLayer(builder.Configuration);
-builder.Services.AddTurnierplanDocumentRendering(builder.Configuration.GetValue<string>("ApplicationUrl")!);
+builder.Services.AddTurnierplanDocumentRendering<ApplicationUrlProvider>();
 builder.Services.AddTurnierplanImageStorage(builder.Configuration.GetSection("ImageStorage"));
 builder.Services.AddTurnierplanLocalization();
 builder.Services.AddTurnierplanSecurity(builder.Configuration.GetSection("Identity"));

@@ -4,7 +4,8 @@
     [title]="venue.name"
     [backLink]="'../../organization/' + venue.organizationId"
     [navigationTabs]="pages"
-    [rememberNavigationTabKey]="venue.id"
+    [contextEntityId]="venue.id"
+    [rememberNavigationTab]="true"
     (navigationTabSelected)="togglePage($event.id)">
     <ng-template #content>
       <div class="card">
@@ -23,6 +24,7 @@
               <div>{{ venue.name }}</div>
 
               <tp-rename-button
+                *tpIsActionAllowed="[venue.id, Actions.GenericWrite]"
                 [translationKey]="'Portal.ViewVenue.Details.Rename'"
                 [current]="venue.name"
                 [maxLength]="60"
@@ -39,6 +41,7 @@
               }
 
               <tp-action-button
+                *tpIsActionAllowed="[venue.id, Actions.GenericWrite]"
                 [type]="'outline-secondary'"
                 [icon]="'pencil'"
                 [title]="'Portal.ViewVenue.Details.Edit'"
@@ -62,6 +65,7 @@
               }
 
               <tp-action-button
+                *tpIsActionAllowed="[venue.id, Actions.GenericWrite]"
                 [type]="'outline-secondary'"
                 [icon]="'pencil'"
                 [title]="'Portal.ViewVenue.Details.Edit'"
@@ -87,6 +91,7 @@
               }
 
               <tp-action-button
+                *tpIsActionAllowed="[venue.id, Actions.GenericWrite]"
                 [type]="'outline-secondary'"
                 [icon]="'pencil'"
                 [title]="'Portal.ViewVenue.Details.Edit'"
@@ -110,13 +115,15 @@
           }
           @case (1) {
             <!-- Settings page -->
-            <div class="card-body">
-              <tp-rbac-widget
-                [translationKey]="'Portal.ViewVenue.RbacWidget'"
-                [target]="venue"
-                (errorOccured)="loadingState = { isLoading: false, error: $event }" />
-            </div>
-            <hr class="m-0" />
+            <ng-container *tpIsActionAllowed="[venue.id, Actions.ReadOrWriteRoleAssignments]">
+              <div class="card-body">
+                <tp-rbac-widget
+                  [translationKey]="'Portal.ViewVenue.RbacWidget'"
+                  [target]="venue"
+                  (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+              </div>
+              <hr class="m-0" />
+            </ng-container>
             <div class="card-body">
               <tp-delete-widget
                 [translationKey]="'Portal.ViewVenue.DeleteWidget'"

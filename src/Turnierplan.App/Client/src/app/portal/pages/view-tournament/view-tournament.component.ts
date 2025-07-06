@@ -38,6 +38,8 @@ import { LoadingState } from '../../directives/loading-state/loading-state.direc
 import { getDocumentName } from '../../helpers/document-name';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
+import { Actions } from '../../../generated/actions';
+import { AuthorizationService } from '../../../core/services/authorization.service';
 
 @Component({
   standalone: false,
@@ -49,6 +51,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
 
   protected readonly ImageType = ImageType;
   protected readonly Visibility = Visibility;
+  protected readonly Actions = Actions;
 
   protected loadingState: LoadingState = { isLoading: true };
   protected tournament?: TournamentDto;
@@ -88,7 +91,8 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     {
       id: 6,
       title: 'Portal.ViewTournament.Pages.Settings',
-      icon: 'bi-gear'
+      icon: 'bi-gear',
+      authorization: Actions.GenericWrite
     }
   ];
 
@@ -119,6 +123,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
+    protected readonly authorizationService: AuthorizationService,
     private readonly injector: Injector,
     private readonly route: ActivatedRoute,
     private readonly tournamentService: TournamentsService,

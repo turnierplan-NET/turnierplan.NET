@@ -30,12 +30,20 @@ jobs:
         id: 'setup-chrome'
       - name: 'Set CHROME_BIN environment variable'
         run: 'echo "CHROME_BIN=${{ steps.setup-chrome.outputs.chrome-path }}" >> $env:GITHUB_ENV'
+      - name: 'Extract turnierplan.NET version'
+        shell: pwsh
+        run: |
+          $VersionXmlContent = Get-Content -Path "version.xml" -Raw
+          $Version = [regex]::Match($VersionXmlContent, '<Version>(\d+\.\d+\.\d+)</Version>').Groups[1].Value
+          Write-Host $Version
+          Add-Content -Path $env:GITHUB_ENV -Value "TURNIERPLAN_APPLICATION_VERSION=$Version"
+        working-directory: './src'
       - name: Install SonarQube Cloud scanner
         if: ${{ env.RUN_SONARQUBE_ANALYSIS == 'true' }}
         run: 'dotnet tool install --global dotnet-sonarscanner'
       - name: Begin SonarQube Cloud analysis
         if: ${{ env.RUN_SONARQUBE_ANALYSIS == 'true' }}
-        run: 'dotnet-sonarscanner begin /k:"turnierplan-NET_turnierplan.NET" /o:"turnierplan-net" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml" /d:sonar.javascript.lcov.reportPaths="**/lcov.info" /d:sonar.coverage.exclusions="**/*.spec.ts" /d:sonar.exclusions="Turnierplan.Dal/Migrations/*"'
+        run: 'dotnet-sonarscanner begin /k:"turnierplan-NET_turnierplan.NET" /o:"turnierplan-net" /v:"${{ env.TURNIERPLAN_APPLICATION_VERSION }}" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths="coverage.xml" /d:sonar.javascript.lcov.reportPaths="**/lcov.info" /d:sonar.coverage.exclusions="**/*.spec.ts" /d:sonar.exclusions="Turnierplan.Dal/Migrations/*"'
         working-directory: './src'
       - name: 'Restore .NET solution'
         run: 'dotnet restore'
