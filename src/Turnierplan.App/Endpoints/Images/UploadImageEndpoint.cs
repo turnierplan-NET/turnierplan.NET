@@ -107,6 +107,8 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
         await imageRepository.CreateAsync(image).ConfigureAwait(false);
         await imageRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
+        accessValidator.AddRolesToResponseHeader(image);
+
         return Results.Ok(mapper.Map<ImageDto>(image));
     }
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
+using Turnierplan.App.Security;
 using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.RoleAssignment;
@@ -24,6 +25,7 @@ internal sealed class CreateOrganizationEndpoint : EndpointBase<OrganizationDto>
         HttpContext httpContext,
         IUserRepository userRepository,
         IOrganizationRepository organizationRepository,
+        IAccessValidator accessValidator,
         IMapper mapper,
         CancellationToken cancellationToken)
     {
@@ -45,6 +47,8 @@ internal sealed class CreateOrganizationEndpoint : EndpointBase<OrganizationDto>
 
         await organizationRepository.CreateAsync(organization).ConfigureAwait(false);
         await organizationRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+
+        accessValidator.AddRolesToResponseHeader(organization);
 
         return Results.Ok(mapper.Map<OrganizationDto>(organization));
     }
