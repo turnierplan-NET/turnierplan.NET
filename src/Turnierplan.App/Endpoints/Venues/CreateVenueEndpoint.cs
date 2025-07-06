@@ -4,11 +4,8 @@ using Turnierplan.App.Extensions;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
-using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
-using Turnierplan.Core.RoleAssignment;
-using Turnierplan.Core.User;
 using Turnierplan.Core.Venue;
 using Turnierplan.Dal;
 
@@ -24,8 +21,6 @@ internal sealed class CreateVenueEndpoint : EndpointBase<VenueDto>
 
     private static async Task<IResult> Handle(
         [FromBody] CreateVenueEndpointRequest request,
-        HttpContext httpContext,
-        IUserRepository userRepository,
         IOrganizationRepository organizationRepository,
         IAccessValidator accessValidator,
         IVenueRepository venueRepository,
@@ -35,13 +30,6 @@ internal sealed class CreateVenueEndpoint : EndpointBase<VenueDto>
         if (!Validator.Instance.ValidateAndGetResult(request, out var result))
         {
             return result;
-        }
-
-        var user = await userRepository.GetByIdAsync(httpContext.GetCurrentUserIdOrThrow()).ConfigureAwait(false);
-
-        if (user is null)
-        {
-            return Results.Unauthorized();
         }
 
         var organization = await organizationRepository.GetByPublicIdAsync(request.OrganizationId).ConfigureAwait(false);
@@ -57,7 +45,6 @@ internal sealed class CreateVenueEndpoint : EndpointBase<VenueDto>
         }
 
         var venue = new Venue(organization, request.Name.Trim(), string.Empty);
-        venue.AddRoleAssignment(Role.Owner, user.AsPrincipal());
 
         await venueRepository.CreateAsync(venue).ConfigureAwait(false);
         await venueRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);

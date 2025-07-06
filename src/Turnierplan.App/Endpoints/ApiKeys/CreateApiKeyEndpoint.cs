@@ -10,7 +10,6 @@ using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.RoleAssignment;
-using Turnierplan.Core.User;
 using Turnierplan.Dal;
 using Turnierplan.Dal.Extensions;
 
@@ -26,8 +25,6 @@ internal sealed class CreateApiKeyEndpoint : EndpointBase<ApiKeyDto>
 
     private static async Task<IResult> Handle(
         [FromBody] CreateApiKeyEndpointRequest request,
-        HttpContext httpContext,
-        IUserRepository userRepository,
         IOrganizationRepository organizationRepository,
         IAccessValidator accessValidator,
         IPasswordHasher<ApiKey> secretHasher,
@@ -39,13 +36,6 @@ internal sealed class CreateApiKeyEndpoint : EndpointBase<ApiKeyDto>
         if (!Validator.Instance.ValidateAndGetResult(request, out var result))
         {
             return result;
-        }
-
-        var user = await userRepository.GetByIdAsync(httpContext.GetCurrentUserIdOrThrow()).ConfigureAwait(false);
-
-        if (user is null)
-        {
-            return Results.Unauthorized();
         }
 
         var organization = await organizationRepository.GetByPublicIdAsync(request.OrganizationId).ConfigureAwait(false);
@@ -63,7 +53,6 @@ internal sealed class CreateApiKeyEndpoint : EndpointBase<ApiKeyDto>
         var expiryDate = DateTime.UtcNow.AddDays(request.Validity);
         var apiKey = new ApiKey(organization, request.Name.Trim(), request.Description.Trim(), expiryDate);
 
-        apiKey.AddRoleAssignment(Role.Owner, user.AsPrincipal());
         apiKey.AssignNewSecret(plainText => secretHasher.HashPassword(apiKey, plainText), out var secret);
 
         await apiKeyRepository.CreateAsync(apiKey).ConfigureAwait(false);
