@@ -26,7 +26,7 @@ internal sealed class DeleteVenueEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(venue, Actions.GenericDelete))
+        if (!accessValidator.IsActionAllowed(venue, Actions.GenericWrite))
         {
             return Results.Forbid();
         }

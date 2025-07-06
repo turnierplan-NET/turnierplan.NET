@@ -26,7 +26,7 @@ internal sealed class DeleteApiKeyEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(apiKey, Actions.GenericDelete))
+        if (!accessValidator.IsActionAllowed(apiKey, Actions.GenericWrite))
         {
             return Results.Forbid();
         }

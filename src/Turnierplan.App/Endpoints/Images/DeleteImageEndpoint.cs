@@ -28,7 +28,7 @@ internal sealed class DeleteImageEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(image, Actions.GenericDelete))
+        if (!accessValidator.IsActionAllowed(image, Actions.GenericWrite))
         {
             return Results.Forbid();
         }
