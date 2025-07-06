@@ -44,7 +44,7 @@ internal sealed class AccessValidator : IAccessValidator
     public void AddRolesToResponseHeader<T>(IEntityWithRoleAssignments<T> target)
         where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
-        var availableRoles = new List<Role>();
+        var availableRoles = new HashSet<Role>();
 
         if (_httpContext.IsCurrentUserAdministrator())
         {
@@ -88,10 +88,10 @@ internal sealed class AccessValidator : IAccessValidator
         };
     }
 
-    internal static void AddAvailableRoles<T>(IEntityWithRoleAssignments<T> target, List<Role> rolesList, Principal principal)
+    internal static void AddAvailableRoles<T>(IEntityWithRoleAssignments<T> target, HashSet<Role> rolesList, Principal principal)
         where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
-        rolesList.AddRange(target.RoleAssignments.Where(x => x.Principal.Equals(principal)).Select(x => x.Role));
+        rolesList.UnionWith(target.RoleAssignments.Where(x => x.Principal.Equals(principal)).Select(x => x.Role));
 
         switch (target)
         {
