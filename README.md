@@ -20,7 +20,7 @@ This readme describes how to deploy the application using the pre-built containe
 In the simplest case, run the container directly using the following command. Make sure to substitute the correct PostgreSQL database connection string:
 
 ```shell
-docker run -p 80:8080 -e ApplicationUrl="http://localhost" -e Database__ConnectionString="" ghcr.io/turnierplan-net/turnierplan:latest
+docker run -p 80:8080 -e Turnierplan__ApplicationUrl="http://localhost" -e Database__ConnectionString="" ghcr.io/turnierplan-net/turnierplan:latest
 ```
 
 The credentials of the initial admin user are displayed in the container logs.
@@ -39,10 +39,10 @@ To persist the **turnierplan.NET** application data, create a Docker volume mapp
 
 For a basic installation, the following environment variables *must* be set:
 
-| Environment Variable         | Description                                                  |
-|------------------------------|--------------------------------------------------------------|
-| `ApplicationUrl`             | The URL used to access the website.                          |
-| `Database__ConnectionString` | The PostgreSQL connection string with read/write permission. |
+| Environment Variable          | Description                                                  |
+|-------------------------------|--------------------------------------------------------------|
+| `Turnierplan__ApplicationUrl` | The URL used to access the website.                          |
+| `Database__ConnectionString`  | The PostgreSQL connection string with read/write permission. |
 
 The following environment variables *can* be set if you want to enable specific features or modify default behavior:
 
@@ -76,7 +76,7 @@ services:
     depends_on:
       - turnierplan.database
     environment:
-      - ApplicationUrl=http://localhost
+      - Turnierplan__ApplicationUrl=http://localhost
       - Database__ConnectionString=Host=turnierplan.database;Database=turnierplan;Username=postgres;Password=P@ssw0rd
     volumes:
       - turnierplan-app-data:/var/turnierplan
