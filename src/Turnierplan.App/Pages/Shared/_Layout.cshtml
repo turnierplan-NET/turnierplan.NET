@@ -31,8 +31,24 @@
     <div class="position-fixed w-100 bg-white shadow">
         <div class="container px-4 py-4 d-flex flex-row justify-content-center">
             <div class="header-logo d-flex flex-row align-items-center" href="/">
-                <img class="me-3" src="/favicon-96x96.png" alt="turnierplan.NET Logo"/>
-                <span class="text-dark fw-bold fs-5">turnierplan.NET</span>
+                @{
+                    var hasCustomInstanceName = !string.IsNullOrWhiteSpace(TurnierplanOptions.Value.InstanceName);
+                    var instanceName = hasCustomInstanceName
+                        ? TurnierplanOptions.Value.InstanceName
+                        : "turnierplan.NET";
+                }
+                
+                @if (!string.IsNullOrWhiteSpace(TurnierplanOptions.Value.LogoUrl))
+                {
+                    var imageAlt = hasCustomInstanceName ? $"Logo von {instanceName}" : "Veranstalter-Logo";
+                    <img class="me-3" src="@TurnierplanOptions.Value.LogoUrl" alt="@imageAlt"/>
+                }
+                else
+                {
+                    <img class="me-3" src="/favicon-96x96.png" alt="turnierplan.NET-Logo"/>
+                }
+
+                <span class="text-dark fw-bold fs-5">@instanceName</span>
             </div>
         </div>
     </div>
@@ -54,6 +70,10 @@
                 </a>
             </div>
             <div class="footer-section footer-section-right d-flex flex-column">
+                @if (hasCustomInstanceName)
+                {
+                    <span>@TurnierplanOptions.Value.InstanceName</span>
+                }
                 @if (!string.IsNullOrWhiteSpace(TurnierplanOptions.Value.ImprintUrl))
                 {
                     <a class="text-white" href="@TurnierplanOptions.Value.ImprintUrl" target="_blank" rel="noopener">
