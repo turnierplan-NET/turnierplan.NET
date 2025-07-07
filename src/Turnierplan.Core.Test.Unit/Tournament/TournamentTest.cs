@@ -137,7 +137,7 @@ public sealed class TournamentTest
         var tournament = TestTournament.Default;
         var action = () => tournament.IncrementPublicPageViews();
 
-        action.Should().ThrowExactly<TurnierplanException>().WithMessage("Cannot increment page view counter when visibility is 'Public'.");
+        action.Should().ThrowExactly<TurnierplanException>().WithMessage("Cannot increment page view counter when visibility is not 'Public'.");
     }
 
     [Fact]

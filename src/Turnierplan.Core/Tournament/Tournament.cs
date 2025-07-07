@@ -280,7 +280,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
     {
         if (Visibility != Visibility.Public)
         {
-            throw new TurnierplanException($"Cannot increment page view counter when visibility is '{Visibility.Public}'.");
+            throw new TurnierplanException($"Cannot increment page view counter when visibility is not '{Visibility.Public}'.");
         }
 
         if (PublicPageViews == int.MaxValue)
