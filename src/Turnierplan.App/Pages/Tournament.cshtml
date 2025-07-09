@@ -110,18 +110,10 @@
                     </div>
                 }
 
-                @if (tournament.Venue.ExternalLinks.Count > 0)
+                @foreach (var link in tournament.Venue.ExternalLinks)
                 {
-                    @foreach (var link in tournament.Venue.ExternalLinks)
-                    {
-                        <div>
-                            <a href="@link" target="_blank">@link</a>
-                        </div>
-                    }
-
-                    <div class="mt-3 mb-0 small text-danger-emphasis">
-                        <span class="fw-bold">Achtung:</span>
-                        <span>Externe Links können vom Veranstalter frei festgelegt werden</span>
+                    <div>
+                        <a href="@link" target="_blank">@link</a>
                     </div>
                 }
             </div>
