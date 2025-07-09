@@ -22,7 +22,7 @@ public sealed class Turnierklasse
     // später Bezug zu den verknüpften Turnieren
 }
 
-// Zwischen Turnierklasse & Anmeldungslink ggf. ein "Zwischenobjekt" um "max Mannschaften insg." & "offen/geschlosen" & "anmeldeschluss" dynamischer abzubilden?
+// Zwischen Turnierklasse & Anmeldungslink ggf. ein "Zwischenobjekt" um ("max Mannschaften insg.") & "offen/geschlosen" & "anmeldeschluss" dynamischer abzubilden?
 
 public sealed class Anmeldungslink
 {
