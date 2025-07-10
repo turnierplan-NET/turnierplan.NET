@@ -31,6 +31,7 @@ public sealed class Anmeldungslink
     // URL für Durchführungsbedingungen/Anmeldebedingungen, evtl. auch markdown/HTML?
     // opt. E-Mail / Telefon (allg. Kontaktdaten) für Rückfragen
     // Anmeldeschluss | Sollte dies evtl. für jede Altersklasse indivudell sein? Eher nein?
+    // "Farbcode" zur einfachden/schnellen identifizierung
     public List<Turnierklasse> Turnierklassen = new();
 }
 
