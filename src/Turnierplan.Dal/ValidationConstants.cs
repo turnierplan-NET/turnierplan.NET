@@ -41,6 +41,16 @@ public static class ValidationConstants
         public const int MaxFileTypeLength = 5;
     }
 
+    public static class InvitationLink
+    {
+        public const int MaxTitleLength = 100;
+        public const int MaxDescriptionLength = 5000;
+        public const int MaxColorCodeLength = 7;
+        public const int MaxContactPersonLength = 150;
+        public const int MaxContactEmailLength = 150;
+        public const int MaxContactTelephoneLength = 150;
+    }
+
     public static class Match
     {
         public const int MaxTeamSelectorLength = 32;

@@ -1,0 +1,48 @@
+using Turnierplan.Core.SeedWork;
+
+namespace Turnierplan.Core.Planning;
+
+public sealed class InvitationLink : Entity<int>, IEntityWithPublicId
+{
+    internal InvitationLink(int id, PublicId.PublicId publicId, string? title, string? description, string colorCode, DateTime? validUntil, string? contactPerson, string? contactEmail, string? contactTelephone)
+    {
+        Id = id;
+        PublicId = publicId;
+        Title = title;
+        Description = description;
+        ColorCode = colorCode;
+        ValidUntil = validUntil;
+        ContactPerson = contactPerson;
+        ContactEmail = contactEmail;
+        ContactTelephone = contactTelephone;
+    }
+
+    public override int Id { get; protected set; }
+
+    public PublicId.PublicId PublicId { get; }
+
+    public string? Title { get; set; }
+
+    public string? Description { get; set; }
+
+    public string ColorCode { get; set; }
+
+    public DateTime? ValidUntil { get; }
+
+    public string? ContactPerson { get; set; }
+
+    public string? ContactEmail { get; set; }
+
+    public string? ContactTelephone { get; set; }
+
+    public Image.Image? PrimaryLogo { get; internal set; }
+
+    public Image.Image? SecondaryLogo { get; internal set; }
+
+    public List<ExternalLink> ExternalLinks { get; set; } = new();
+
+    // TODO: Add properties
+    // verknüpfte Turnierklassen (via Zwischenobjekt)
+
+    public sealed record ExternalLink(string Name, string Url);
+}

@@ -1,7 +1,10 @@
 namespace Turnierplan.Core.NewFeature;
 
+#if false
 
-public sealed class Turnierklasse
+// Planungsumgebung => Realm
+
+public sealed class Turnierklasse // => TournamentClass
 {
     public string Name;
     // Konfigurationsoptionen:
@@ -12,16 +15,7 @@ public sealed class Turnierklasse
 
 // Zwischen Turnierklasse & Anmeldungslink ggf. ein "Zwischenobjekt" um ("max Mannschaften insg.") & "offen/geschlosen" & "anmeldeschluss" dynamischer abzubilden?
 
-public sealed class Anmeldungslink
-{
-    public PublicId.PublicId PublicId;
-    // Logo Image (+ sponsor logo?)
-    // URL für Durchführungsbedingungen/Anmeldebedingungen, evtl. auch markdown/HTML?
-    // opt. E-Mail / Telefon (allg. Kontaktdaten) für Rückfragen
-    // Anmeldeschluss | Sollte dies evtl. für jede Altersklasse indivudell sein? Eher nein?
-    // "Farbcode" zur einfachden/schnellen identifizierung
-    public List<Turnierklasse> Turnierklassen = new();
-}
+// Anmeldungslink => InvitationLink
 
 public sealed class Anmeldung
 {
@@ -48,3 +42,5 @@ public sealed class AnmeldungsMannschaft
  * - captcha im anmeldeformular
  * - wenn max. mannschaften pro anmeldung = 1, steht im formular keine eingabe für die anzahl zur verfügung
  */
+
+#endif
