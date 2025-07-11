@@ -5,9 +5,9 @@ using Turnierplan.Dal.Converters;
 
 namespace Turnierplan.Dal.EntityConfigurations;
 
-public sealed class RealmEntityTypeConfiguration : IEntityTypeConfiguration<Realm>
+public sealed class RealmEntityTypeConfiguration : IEntityTypeConfiguration<PlanningRealm>
 {
-    public void Configure(EntityTypeBuilder<Realm> builder)
+    public void Configure(EntityTypeBuilder<PlanningRealm> builder)
     {
         builder.ToTable("PL_Realms", TurnierplanContext.Schema);
 
@@ -33,7 +33,7 @@ public sealed class RealmEntityTypeConfiguration : IEntityTypeConfiguration<Real
 
         builder.Property(x => x.Name)
             .IsRequired()
-            .HasMaxLength(ValidationConstants.Realm.MaxNameLength);
+            .HasMaxLength(ValidationConstants.PlanningRealm.MaxNameLength);
 
         builder.HasMany(x => x.TournamentClasses)
             .WithOne()
@@ -47,8 +47,8 @@ public sealed class RealmEntityTypeConfiguration : IEntityTypeConfiguration<Real
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
-        builder.Metadata.FindNavigation(nameof(Realm.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-        builder.Metadata.FindNavigation(nameof(Realm.TournamentClasses))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-        builder.Metadata.FindNavigation(nameof(Realm.InvitationLinks))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(PlanningRealm.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(PlanningRealm.TournamentClasses))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(PlanningRealm.InvitationLinks))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

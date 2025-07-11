@@ -3,15 +3,15 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.Planning;
 
-public sealed class Realm : Entity<long>, IEntityWithRoleAssignments<Realm>, IEntityWithOrganization
+public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<PlanningRealm>, IEntityWithOrganization
 {
-    internal readonly List<RoleAssignment<Realm>> _roleAssignments = new();
+    internal readonly List<RoleAssignment<PlanningRealm>> _roleAssignments = new();
     internal readonly List<TournamentClass> _tournamentClasses = new();
     internal readonly List<InvitationLink> _invitationLinks = new();
 
-    public Realm(Organization.Organization organization, string name)
+    public PlanningRealm(Organization.Organization organization, string name)
     {
-        organization._realms.Add(this);
+        organization._planningRealms.Add(this);
 
         Id = 0;
         PublicId = new PublicId.PublicId();
@@ -20,7 +20,7 @@ public sealed class Realm : Entity<long>, IEntityWithRoleAssignments<Realm>, IEn
         Name = name;
     }
 
-    internal Realm(long id, PublicId.PublicId publicId, DateTime createdAt, string name)
+    internal PlanningRealm(long id, PublicId.PublicId publicId, DateTime createdAt, string name)
     {
         Id = id;
         PublicId = publicId;
@@ -34,7 +34,7 @@ public sealed class Realm : Entity<long>, IEntityWithRoleAssignments<Realm>, IEn
 
     public Organization.Organization Organization { get; internal set; } = null!;
 
-    public IReadOnlyList<RoleAssignment<Realm>> RoleAssignments => _roleAssignments.AsReadOnly();
+    public IReadOnlyList<RoleAssignment<PlanningRealm>> RoleAssignments => _roleAssignments.AsReadOnly();
 
     public DateTime CreatedAt { get; }
 
@@ -47,15 +47,15 @@ public sealed class Realm : Entity<long>, IEntityWithRoleAssignments<Realm>, IEn
     // TODO: Add properties
     // Anmeldungen
 
-    public RoleAssignment<Realm> AddRoleAssignment(Role role, Principal principal)
+    public RoleAssignment<PlanningRealm> AddRoleAssignment(Role role, Principal principal)
     {
-        var roleAssignment = new RoleAssignment<Realm>(this, role, principal);
+        var roleAssignment = new RoleAssignment<PlanningRealm>(this, role, principal);
         _roleAssignments.Add(roleAssignment);
 
         return roleAssignment;
     }
 
-    public void RemoveRoleAssignment(RoleAssignment<Realm> roleAssignment)
+    public void RemoveRoleAssignment(RoleAssignment<PlanningRealm> roleAssignment)
     {
         _roleAssignments.Remove(roleAssignment);
     }

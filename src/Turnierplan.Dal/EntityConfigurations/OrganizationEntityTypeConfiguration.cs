@@ -53,7 +53,7 @@ public sealed class OrganizationEntityTypeConfiguration : IEntityTypeConfigurati
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
 
-        builder.HasMany(x => x.Realms)
+        builder.HasMany(x => x.PlanningRealms)
             .WithOne(x => x.Organization)
             .HasForeignKey("OrganizationId")
             .OnDelete(DeleteBehavior.Restrict)
@@ -75,7 +75,7 @@ public sealed class OrganizationEntityTypeConfiguration : IEntityTypeConfigurati
         builder.Metadata.FindNavigation(nameof(Organization.ApiKeys))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(Organization.Folders))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(Organization.Images))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-        builder.Metadata.FindNavigation(nameof(Organization.Realms))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(Organization.PlanningRealms))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(Organization.Tournaments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(Organization.Venues))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }

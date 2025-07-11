@@ -58,9 +58,9 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<RoleAssignment<Organization>> OrganizationRoleAssignments { get; set; } = null!;
 
-    public DbSet<Realm> Realms { get; set; } = null!;
+    public DbSet<PlanningRealm> PlanningRealms { get; set; } = null!;
 
-    public DbSet<RoleAssignment<Realm>> RealmRoleAssignments { get; set; } = null!;
+    public DbSet<RoleAssignment<PlanningRealm>> PlanningRealmRoleAssignments { get; set; } = null!;
 
     public DbSet<Team> Teams { get; set; } = null!;
 
@@ -162,7 +162,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Folder>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Image>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Organization>());
-        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Realm>());
+        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<PlanningRealm>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Tournament>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Venue>());
     }

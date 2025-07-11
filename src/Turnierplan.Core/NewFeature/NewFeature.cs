@@ -2,7 +2,7 @@ namespace Turnierplan.Core.NewFeature;
 
 #if false
 
-// Planungsumgebung => Realm
+// Planungsumgebung => PlanningRealm
 
 public sealed class Turnierklasse // => TournamentClass
 {

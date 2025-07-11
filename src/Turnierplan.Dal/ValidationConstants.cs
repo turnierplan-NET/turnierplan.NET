@@ -61,7 +61,7 @@ public static class ValidationConstants
         public const int MaxNameLength = 40;
     }
 
-    public static class Realm
+    public static class PlanningRealm
     {
         public const int MaxNameLength = 60;
     }
