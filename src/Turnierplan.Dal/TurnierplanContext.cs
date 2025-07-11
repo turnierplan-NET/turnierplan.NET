@@ -6,6 +6,7 @@ using Turnierplan.Core.Document;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
+using Turnierplan.Core.Planning;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament;
@@ -35,6 +36,8 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<ApiKeyRequest> ApiKeyRequests { get; set; } = null!;
 
+    public DbSet<Class> Classes { get; set; } = null!;
+
     public DbSet<Document> Documents { get; set; } = null!;
 
     public DbSet<Folder> Folders { get; set; } = null!;
@@ -54,6 +57,10 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
     public DbSet<Organization> Organizations { get; set; } = null!;
 
     public DbSet<RoleAssignment<Organization>> OrganizationRoleAssignments { get; set; } = null!;
+
+    public DbSet<Realm> Realms { get; set; } = null!;
+
+    public DbSet<RoleAssignment<Realm>> RealmRoleAssignments { get; set; } = null!;
 
     public DbSet<Team> Teams { get; set; } = null!;
 
@@ -134,6 +141,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
         modelBuilder.ApplyConfiguration(new ApiKeyEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ApiKeyRequestEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ClassEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new DocumentEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new FolderEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new GroupEntityTypeConfiguration());
@@ -141,6 +149,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new ImageEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new MatchEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OrganizationEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new RealmEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TeamEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TournamentEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
@@ -150,6 +159,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Folder>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Image>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Organization>());
+        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Realm>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Tournament>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Venue>());
     }
