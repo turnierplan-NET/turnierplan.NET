@@ -58,5 +58,13 @@ public sealed class InvitationLinkEntityTypeConfiguration : IEntityTypeConfigura
         {
             x.ToJson();
         });
+
+        builder.HasMany(x => x.Entries)
+            .WithOne()
+            .HasForeignKey("InvitationLinkId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
+        builder.Metadata.FindNavigation(nameof(InvitationLink.Entries))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

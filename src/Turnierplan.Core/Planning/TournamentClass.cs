@@ -16,4 +16,6 @@ public sealed class TournamentClass : Entity<int>
     public string Name { get; set; }
 
     public int? MaxTeamCount { get; set; }
+
+    // TODO: At some point, this entity will need to reference Tournaments
 }

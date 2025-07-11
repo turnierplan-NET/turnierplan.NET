@@ -50,6 +50,8 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<InvitationLink> InvitationLinks { get; set; } = null!;
 
+    public DbSet<InvitationLinkEntry> InvitationLinkEntries { get; set; } = null!;
+
     public DbSet<RoleAssignment<Image>> ImageRoleAssignments { get; set; } = null!;
 
     public DbSet<Match> Matches { get; set; } = null!;
@@ -149,6 +151,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new GroupParticipantEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ImageEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new InvitationLinkEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new InvitationLinkEntryEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new MatchEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OrganizationEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new RealmEntityTypeConfiguration());

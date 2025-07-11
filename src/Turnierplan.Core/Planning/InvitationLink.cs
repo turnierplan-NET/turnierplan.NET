@@ -4,6 +4,8 @@ namespace Turnierplan.Core.Planning;
 
 public sealed class InvitationLink : Entity<int>, IEntityWithPublicId
 {
+    internal readonly List<InvitationLinkEntry> _entries = new();
+
     internal InvitationLink(int id, PublicId.PublicId publicId, string? title, string? description, string colorCode, DateTime? validUntil, string? contactPerson, string? contactEmail, string? contactTelephone)
     {
         Id = id;
@@ -41,8 +43,7 @@ public sealed class InvitationLink : Entity<int>, IEntityWithPublicId
 
     public List<ExternalLink> ExternalLinks { get; set; } = new();
 
-    // TODO: Add properties
-    // verknüpfte Turnierklassen (via Zwischenobjekt)
+    public IReadOnlyList<InvitationLinkEntry> Entries => _entries.AsReadOnly();
 
     public sealed record ExternalLink(string Name, string Url);
 }
