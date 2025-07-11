@@ -4,9 +4,9 @@ namespace Turnierplan.Core.Planning;
 
 public sealed class Application : Entity<long>
 {
-    internal readonly List<ApplicationTeam> _teams = new List<ApplicationTeam>();
+    internal readonly List<ApplicationTeam> _teams = new();
 
-    internal Application(long id, int tag, DateTime createdAt, string name, string? email, string? telephone, string? commentFromSender, string? notes)
+    internal Application(long id, int tag, DateTime createdAt, string name, string? email, string? telephone, string? commentFromSender, string notes)
     {
         Id = id;
         Tag = tag;
