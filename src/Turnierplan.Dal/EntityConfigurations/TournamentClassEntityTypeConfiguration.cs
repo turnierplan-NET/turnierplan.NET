@@ -8,7 +8,7 @@ public sealed class TournamentClassEntityTypeConfiguration : IEntityTypeConfigur
 {
     public void Configure(EntityTypeBuilder<TournamentClass> builder)
     {
-        builder.ToTable("PL_Classes", TurnierplanContext.Schema);
+        builder.ToTable("TournamentClasses", TurnierplanContext.Schema);
 
         builder.HasKey(x => x.Id);
 
