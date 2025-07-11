@@ -12,7 +12,7 @@ public sealed class InvitationLinkEntityTypeConfiguration : IEntityTypeConfigura
     {
         builder.ToTable("PL_InvitationLinks", TurnierplanContext.Schema);
 
-        builder.HasKey("RealmId", "Id");
+        builder.HasKey("PlanningRealmId", "Id");
 
         builder.Property(x => x.Id)
             .IsRequired();

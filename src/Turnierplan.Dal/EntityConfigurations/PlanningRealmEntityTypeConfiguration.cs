@@ -24,7 +24,7 @@ public sealed class RealmEntityTypeConfiguration : IEntityTypeConfiguration<Plan
 
         builder.HasMany(x => x.RoleAssignments)
             .WithOne(x => x.Scope)
-            .HasForeignKey("RealmId")
+            .HasForeignKey("PlanningRealmId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
@@ -37,13 +37,13 @@ public sealed class RealmEntityTypeConfiguration : IEntityTypeConfiguration<Plan
 
         builder.HasMany(x => x.TournamentClasses)
             .WithOne()
-            .HasForeignKey("RealmId")
+            .HasForeignKey("PlanningRealmId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         builder.HasMany(x => x.InvitationLinks)
             .WithOne()
-            .HasForeignKey("RealmId")
+            .HasForeignKey("PlanningRealmId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
