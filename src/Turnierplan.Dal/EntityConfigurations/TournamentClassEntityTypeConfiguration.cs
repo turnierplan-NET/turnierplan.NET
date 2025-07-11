@@ -4,11 +4,11 @@ using Turnierplan.Core.Planning;
 
 namespace Turnierplan.Dal.EntityConfigurations;
 
-public sealed class ClassEntityTypeConfiguration : IEntityTypeConfiguration<Class>
+public sealed class TournamentClassEntityTypeConfiguration : IEntityTypeConfiguration<TournamentClass>
 {
-    public void Configure(EntityTypeBuilder<Class> builder)
+    public void Configure(EntityTypeBuilder<TournamentClass> builder)
     {
-        builder.ToTable("PL_Classes", TurnierplanContext.Schema);
+        builder.ToTable("PL_TournamentClass", TurnierplanContext.Schema);
 
         builder.HasKey("RealmId", "Id");
 

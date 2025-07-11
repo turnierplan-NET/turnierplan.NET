@@ -2,9 +2,9 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.Planning;
 
-public sealed class Class : Entity<int>
+public sealed class TournamentClass : Entity<int>
 {
-    internal Class(int id, string name, int? maxTeamCount)
+    internal TournamentClass(int id, string name, int? maxTeamCount)
     {
         Id = id;
         Name = name;
