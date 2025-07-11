@@ -2,16 +2,16 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.Planning;
 
-public sealed class TournamentClass : Entity<int>
+public sealed class TournamentClass : Entity<long>
 {
-    internal TournamentClass(int id, string name, int? maxTeamCount)
+    internal TournamentClass(long id, string name, int? maxTeamCount)
     {
         Id = id;
         Name = name;
         MaxTeamCount = maxTeamCount;
     }
 
-    public override int Id { get; protected set; }
+    public override long Id { get; protected set; }
 
     public string Name { get; set; }
 

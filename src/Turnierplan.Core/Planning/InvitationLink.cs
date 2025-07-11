@@ -2,11 +2,11 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.Planning;
 
-public sealed class InvitationLink : Entity<int>, IEntityWithPublicId
+public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 {
     internal readonly List<InvitationLinkEntry> _entries = new();
 
-    internal InvitationLink(int id, PublicId.PublicId publicId, string? title, string? description, string colorCode, DateTime? validUntil, string? contactPerson, string? contactEmail, string? contactTelephone)
+    internal InvitationLink(long id, PublicId.PublicId publicId, string? title, string? description, string colorCode, DateTime? validUntil, string? contactPerson, string? contactEmail, string? contactTelephone)
     {
         Id = id;
         PublicId = publicId;
@@ -19,7 +19,7 @@ public sealed class InvitationLink : Entity<int>, IEntityWithPublicId
         ContactTelephone = contactTelephone;
     }
 
-    public override int Id { get; protected set; }
+    public override long Id { get; protected set; }
 
     public PublicId.PublicId PublicId { get; }
 

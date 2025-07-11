@@ -9,7 +9,7 @@ public sealed class RealmEntityTypeConfiguration : IEntityTypeConfiguration<Plan
 {
     public void Configure(EntityTypeBuilder<PlanningRealm> builder)
     {
-        builder.ToTable("PL_Realms", TurnierplanContext.Schema);
+        builder.ToTable("PlanningRealms", TurnierplanContext.Schema);
 
         builder.HasKey(x => x.Id);
 
