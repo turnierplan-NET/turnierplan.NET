@@ -5,7 +5,6 @@ public sealed class Turnierklasse
 {
     public string Name;
     // Konfigurationsoptionen:
-    //  - max. Mannschaften pro Anmeldung                                                  | Sollte dies evtl. für jeden Link individuell festgelegt werden können? Eher nein?
     //  - max. Mannschaften insgesamt                                                      | Sollte dies evtl. für jeden Link individuell festgelegt werden können? Eher nein?
     //  - Anmeldung offen/geschlossen -> wird auf der Anmeldeseite entsprechend angezeigt  | Sollte dies evtl. für jeden Link individuell festgelegt werden können? Eher nein?
     // später Bezug zu den verknüpften Turnieren

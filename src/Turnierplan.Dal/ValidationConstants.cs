@@ -13,6 +13,11 @@ public static class ValidationConstants
         public const int MaxPathLength = 150;
     }
 
+    public static class Class
+    {
+        public const int MaxNameLength = 60;
+    }
+
     public static class Document
     {
         public const int MaxNameLength = 30;

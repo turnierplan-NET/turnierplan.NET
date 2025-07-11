@@ -6,6 +6,7 @@ namespace Turnierplan.Core.Planning;
 public sealed class Realm : Entity<long>, IEntityWithRoleAssignments<Realm>, IEntityWithOrganization
 {
     internal readonly List<RoleAssignment<Realm>> _roleAssignments = new();
+    internal readonly List<Class> _classes = new();
 
     public Realm(Organization.Organization organization, string name)
     {
@@ -38,8 +39,9 @@ public sealed class Realm : Entity<long>, IEntityWithRoleAssignments<Realm>, IEn
 
     public string Name { get; set; }
 
+    public IReadOnlyList<Class> Classes => _classes.AsReadOnly();
+
     // TODO: Add properties
-    // Turnierklasse
     // Anmeldungslinks
     // Anmeldungen
 

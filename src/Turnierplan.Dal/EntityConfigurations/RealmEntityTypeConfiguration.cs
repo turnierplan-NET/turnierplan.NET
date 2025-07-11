@@ -34,5 +34,14 @@ public sealed class RealmEntityTypeConfiguration : IEntityTypeConfiguration<Real
         builder.Property(x => x.Name)
             .IsRequired()
             .HasMaxLength(ValidationConstants.Realm.MaxNameLength);
+
+        builder.HasMany(x => x.Classes)
+            .WithOne()
+            .HasForeignKey("TournamentId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
+        builder.Metadata.FindNavigation(nameof(Realm.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(Realm.Classes))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }
