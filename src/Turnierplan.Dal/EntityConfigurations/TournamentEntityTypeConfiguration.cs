@@ -29,9 +29,6 @@ public sealed class TournamentEntityTypeConfiguration : IEntityTypeConfiguration
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
-        builder.Property(x => x.IsMigrated)
-            .IsRequired();
-
         builder.Property(x => x.CreatedAt)
             .IsRequired();
 
