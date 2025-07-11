@@ -61,7 +61,7 @@ public sealed class InvitationLinkEntityTypeConfiguration : IEntityTypeConfigura
 
         builder.HasMany(x => x.Entries)
             .WithOne()
-            .HasForeignKey("InvitationLinkId")
+            .HasForeignKey("PlanningRealmId", "InvitationLinkId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
