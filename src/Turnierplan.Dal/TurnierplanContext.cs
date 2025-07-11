@@ -36,6 +36,10 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<ApiKeyRequest> ApiKeyRequests { get; set; } = null!;
 
+    public DbSet<Application> Applications { get; set; } = null!;
+
+    public DbSet<ApplicationTeam> ApplicationTeams { get; set; } = null!;
+
     public DbSet<Document> Documents { get; set; } = null!;
 
     public DbSet<Folder> Folders { get; set; } = null!;
@@ -145,6 +149,8 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
         modelBuilder.ApplyConfiguration(new ApiKeyEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ApiKeyRequestEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ApplicationEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ApplicationTeamEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new DocumentEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new FolderEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new GroupEntityTypeConfiguration());

@@ -58,7 +58,7 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
     /// <inheritdoc />
     public Task<List<Organization>> GetByPrincipalAsync(Principal principal)
     {
-        // TODO: Try to optimize this query directly within EF
+        // IDEA: Try to optimize this query directly within EF
 
         return context.OrganizationRoleAssignments
             .Where(r => r.Principal.Equals(principal))

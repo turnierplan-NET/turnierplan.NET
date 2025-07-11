@@ -13,6 +13,20 @@ public static class ValidationConstants
         public const int MaxPathLength = 150;
     }
 
+    public static class Application
+    {
+        public const int MaxNameLength = 60;
+        public const int MaxEmailLength = 100;
+        public const int MaxTelephoneLength = 100;
+        public const int MaxCommentFromSenderLength = 1000;
+        public const int MaxNotesLength = 5000;
+    }
+
+    public static class ApplicationTeam
+    {
+        public const int MaxNameLength = 60;
+    }
+
     public static class Class
     {
         public const int MaxNameLength = 60;
@@ -46,9 +60,9 @@ public static class ValidationConstants
         public const int MaxTitleLength = 100;
         public const int MaxDescriptionLength = 5000;
         public const int MaxColorCodeLength = 7;
-        public const int MaxContactPersonLength = 150;
-        public const int MaxContactEmailLength = 150;
-        public const int MaxContactTelephoneLength = 150;
+        public const int MaxContactPersonLength = 100;
+        public const int MaxContactEmailLength = 100;
+        public const int MaxContactTelephoneLength = 100;
     }
 
     public static class Match
