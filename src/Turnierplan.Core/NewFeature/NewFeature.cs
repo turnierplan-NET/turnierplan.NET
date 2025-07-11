@@ -1,16 +1,5 @@
 namespace Turnierplan.Core.NewFeature;
 
-// EntityWithPublicId
-// EntityWithRoleAssignments
-public sealed class Planungsumgebung
-{
-    // Organization (parent org)
-    public string Name;
-    public DateTime CreatedAt;
-    public List<Turnierklasse> Turnierklassen = new();
-    public List<Anmeldungslink> Anmeldungslinks = new();
-    public List<Anmeldung> Anmeldungen = new();
-}
 
 public sealed class Turnierklasse
 {
