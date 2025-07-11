@@ -24,7 +24,7 @@ public sealed class RealmEntityTypeConfiguration : IEntityTypeConfiguration<Real
 
         builder.HasMany(x => x.RoleAssignments)
             .WithOne(x => x.Scope)
-            .HasForeignKey("TournamentId")
+            .HasForeignKey("RealmId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
@@ -37,11 +37,18 @@ public sealed class RealmEntityTypeConfiguration : IEntityTypeConfiguration<Real
 
         builder.HasMany(x => x.TournamentClasses)
             .WithOne()
-            .HasForeignKey("TournamentId")
+            .HasForeignKey("RealmId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
+        builder.HasMany(x => x.InvitationLinks)
+            .WithOne()
+            .HasForeignKey("RealmId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         builder.Metadata.FindNavigation(nameof(Realm.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(Realm.TournamentClasses))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(Realm.InvitationLinks))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }
