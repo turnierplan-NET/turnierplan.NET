@@ -10,7 +10,7 @@ public sealed class TournamentClassEntityTypeConfiguration : IEntityTypeConfigur
     {
         builder.ToTable("PL_Classes", TurnierplanContext.Schema);
 
-        builder.HasKey("PlanningRealmId", "Id");
+        builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Id)
             .IsRequired();
