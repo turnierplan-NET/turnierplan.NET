@@ -29,7 +29,6 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         Id = 0;
         PublicId = new PublicId.PublicId();
         Organization = organization;
-        IsMigrated = false;
         CreatedAt = DateTime.UtcNow;
         Name = name;
         Visibility = visibility;
@@ -38,13 +37,12 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         PresentationConfiguration = new PresentationConfiguration();
     }
 
-    internal Tournament(long id, PublicId.PublicId publicId, bool isMigrated, DateTime createdAt, string name, Visibility visibility, int publicPageViews)
+    internal Tournament(long id, PublicId.PublicId publicId, DateTime createdAt, string name, Visibility visibility, int publicPageViews)
     {
         _groupParticipantComparer = new GroupParticipantComparer(this);
 
         Id = id;
         PublicId = publicId;
-        IsMigrated = isMigrated;
         CreatedAt = createdAt;
         Name = name;
         Visibility = visibility;
@@ -60,8 +58,6 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
     public Organization.Organization Organization { get; internal set; } = null!;
 
     public IReadOnlyList<RoleAssignment<Tournament>> RoleAssignments => _roleAssignments.AsReadOnly();
-
-    public bool IsMigrated { get; }
 
     public DateTime CreatedAt { get; }
 
