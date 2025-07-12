@@ -857,6 +857,16 @@ export const de = {
       },
       ExcludedTournamentsNotice: 'Folgende Turniere sind bei dieser Statistik ausgenommen: {{tournamentNames}}'
     },
+    CreatePlanningRealm: {
+      Title: 'Neuen Turnierplaner erstellen',
+      Form: {
+        Name: 'Name',
+        NameInvalid: 'Der Name eines neuen Turnierplaners darf nicht leer sein.',
+        NameValid: 'Dieser Name kann verwendet werden.'
+      },
+      OrganizationNotice: 'Es wird ein neuer Turnierplaner in der Organisation <span class="fw-bold">{{organizationName}}</span> angelegt.',
+      Submit: 'Erstellen'
+    },
     CreateApiKey: {
       Title: 'Neuen API-Schlüssel erstellen',
       Form: {
