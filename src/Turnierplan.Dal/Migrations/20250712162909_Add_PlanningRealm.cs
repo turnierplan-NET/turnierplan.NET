@@ -142,7 +142,8 @@ namespace Turnierplan.Dal.Migrations
                     Email = table.Column<string>(type: "text", nullable: true),
                     Telephone = table.Column<string>(type: "text", nullable: true),
                     CommentFromSender = table.Column<string>(type: "text", nullable: true),
-                    Notes = table.Column<string>(type: "text", nullable: false)
+                    Notes = table.Column<string>(type: "text", nullable: false),
+                    PlanningRealmId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -154,6 +155,13 @@ namespace Turnierplan.Dal.Migrations
                         principalTable: "InvitationLinks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Applications_PlanningRealms_PlanningRealmId",
+                        column: x => x.PlanningRealmId,
+                        principalSchema: "turnierplan",
+                        principalTable: "PlanningRealms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,6 +224,12 @@ namespace Turnierplan.Dal.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Applications_PlanningRealmId",
+                schema: "turnierplan",
+                table: "Applications",
+                column: "PlanningRealmId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_SourceLinkId",

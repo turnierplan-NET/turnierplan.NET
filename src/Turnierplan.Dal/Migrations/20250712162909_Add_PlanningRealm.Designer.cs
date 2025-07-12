@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20250712064741_Add_PlanningRealm")]
+    [Migration("20250712162909_Add_PlanningRealm")]
     partial class Add_PlanningRealm
     {
         /// <inheritdoc />
@@ -286,6 +286,9 @@ namespace Turnierplan.Dal.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<long>("PlanningRealmId")
+                        .HasColumnType("bigint");
+
                     b.Property<long?>("SourceLinkId")
                         .HasColumnType("bigint");
 
@@ -296,6 +299,8 @@ namespace Turnierplan.Dal.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PlanningRealmId");
 
                     b.HasIndex("SourceLinkId");
 
@@ -984,6 +989,12 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("Turnierplan.Core.Planning.Application", b =>
                 {
+                    b.HasOne("Turnierplan.Core.Planning.PlanningRealm", null)
+                        .WithMany("Applications")
+                        .HasForeignKey("PlanningRealmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Turnierplan.Core.Planning.InvitationLink", "SourceLink")
                         .WithMany()
                         .HasForeignKey("SourceLinkId")
@@ -1609,6 +1620,8 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("Turnierplan.Core.Planning.PlanningRealm", b =>
                 {
+                    b.Navigation("Applications");
+
                     b.Navigation("InvitationLinks");
 
                     b.Navigation("RoleAssignments");
