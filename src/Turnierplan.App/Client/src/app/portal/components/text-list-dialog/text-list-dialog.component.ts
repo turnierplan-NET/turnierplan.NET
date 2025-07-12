@@ -9,10 +9,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class TextListDialogComponent {
   protected isInitialized = false;
   protected translationKey: string = '';
-  protected maxItemCount: number = 0;
-  protected maxItemLength: number = 0;
+  protected itemRegex?: RegExp;
   protected initialValue: string[] = [];
-
   protected formArray!: FormArray;
 
   constructor(
@@ -20,20 +18,16 @@ export class TextListDialogComponent {
     private readonly formBuilder: FormBuilder
   ) {}
 
-  public init(translationKey: string, maxItemCount: number, maxItemLength: number, initialValue: string[]): void {
+  public init(translationKey: string, itemRegex: RegExp | undefined, initialValue: string[]): void {
     if (this.isInitialized) {
       return;
     }
 
     this.translationKey = translationKey;
-    this.maxItemCount = maxItemCount;
-    this.maxItemLength = maxItemLength;
+    this.itemRegex = itemRegex;
     this.initialValue = [...initialValue];
 
-    this.formArray = this.formBuilder.array(
-      this.initialValue.map((x) => this.createControl(x)),
-      Validators.maxLength(maxItemCount)
-    );
+    this.formArray = this.formBuilder.array(this.initialValue.map((x) => this.createControl(x)));
 
     this.isInitialized = true;
   }
@@ -61,16 +55,13 @@ export class TextListDialogComponent {
   }
 
   protected createControl(value: string): FormControl {
-    const validators = [Validators.required, Validators.maxLength(this.maxItemLength)];
-
-    return this.formBuilder.control(value, Validators.compose(validators));
+    return this.formBuilder.control(
+      value,
+      this.itemRegex ? Validators.compose([Validators.required, Validators.pattern(this.itemRegex)]) : Validators.required
+    );
   }
 
   protected addEmptyControl(): void {
-    if (this.formArray.length >= this.maxItemCount) {
-      return;
-    }
-
     this.formArray.push(this.createControl(''));
   }
 

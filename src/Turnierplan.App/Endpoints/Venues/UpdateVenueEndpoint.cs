@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
@@ -7,7 +8,7 @@ using Turnierplan.Core.Venue;
 
 namespace Turnierplan.App.Endpoints.Venues;
 
-internal sealed class UpdateVenueEndpoint : EndpointBase
+internal sealed partial class UpdateVenueEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Put;
 
@@ -73,7 +74,11 @@ internal sealed class UpdateVenueEndpoint : EndpointBase
                 .NotEmpty();
 
             RuleForEach(x => x.ExternalLinks)
-                .NotEmpty();
+                .NotEmpty()
+                .Matches(ExternalLinkRegex());
         }
     }
+
+    [GeneratedRegex(@"^https:\/\/(?:[A-Za-z0-9-]+\.)+[a-z]+(?:\/.*)?$")]
+    private static partial Regex ExternalLinkRegex();
 }

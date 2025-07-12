@@ -11,7 +11,6 @@
     [formControl]="organizationName"
     [required]="true"
     [minlength]="1"
-    [maxlength]="40"
     [ngClass]="organizationName.dirty || organizationName.touched ? (organizationName.invalid ? 'is-invalid' : 'is-valid') : ''" />
   <div class="invalid-feedback" translate="Portal.CreateOrganization.Form.NameInvalid"></div>
   <div class="valid-feedback" translate="Portal.CreateOrganization.Form.NameValid"></div>

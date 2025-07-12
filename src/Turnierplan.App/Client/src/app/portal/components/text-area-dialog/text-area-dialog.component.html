@@ -11,18 +11,12 @@
         class="form-control"
         [rows]="10"
         [(ngModel)]="currentValue"
-        [ngClass]="{ 'is-invalid': currentLength > maxLength }"
         (keyup.enter)="save(true)"
         (change)="wasChanged = true"></textarea>
-      <div
-        class="small mt-1 text-end"
-        [ngClass]="currentLength > maxLength ? 'text-danger' : 'text-dark'"
-        [translate]="'Portal.General.CharacterLimit'"
-        [translateParams]="{ current: currentLength, maximum: maxLength }"></div>
     </div>
   </div>
   <div class="modal-footer">
     <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
-    <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" [disabled]="currentLength > maxLength" (click)="save()" />
+    <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" (click)="save()" />
   </div>
 }
