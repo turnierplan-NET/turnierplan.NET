@@ -10,7 +10,9 @@ import {
   ApiKeysService,
   OrganizationsService,
   TournamentsService,
-  VenuesService
+  VenuesService,
+  PlanningRealmHeaderDto,
+  PlanningRealmsService
 } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
 import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
@@ -19,24 +21,27 @@ import { TitleService } from '../../services/title.service';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 
-const venuesPageId = 1;
-const apiKeysPageId = 2;
-
 @Component({
   standalone: false,
   templateUrl: './view-organization.component.html'
 })
 export class ViewOrganizationComponent implements OnInit, OnDestroy {
+  private static readonly venuesPageId = 1;
+  private static readonly apiKeysPageId = 2;
+  private static readonly planningRealmsPageId = 4;
+
   protected readonly Actions = Actions;
 
   protected loadingState: LoadingState = { isLoading: true };
   protected organization?: OrganizationDto;
   protected tournaments?: TournamentHeaderDto[];
   protected venues?: VenueDto[];
+  protected planningRealms?: PlanningRealmHeaderDto[];
   protected apiKeys?: ApiKeyDto[];
   protected displayApiKeyUsage?: string;
   protected isLoadingVenues = false;
   protected isLoadingApiKeys = false;
+  protected isLoadingPlanningRealms = false;
 
   protected isUpdatingName = false;
 
@@ -48,12 +53,17 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       icon: 'bi-trophy'
     },
     {
-      id: venuesPageId,
+      id: ViewOrganizationComponent.venuesPageId,
       title: 'Portal.ViewOrganization.Pages.Venues',
       icon: 'bi-buildings'
     },
     {
-      id: apiKeysPageId,
+      id: ViewOrganizationComponent.planningRealmsPageId,
+      title: 'Portal.ViewOrganization.Pages.PlanningRealms',
+      icon: 'bi-kanban'
+    },
+    {
+      id: ViewOrganizationComponent.apiKeysPageId,
       title: 'Portal.ViewOrganization.Pages.ApiKeys',
       icon: 'bi-key'
     },
@@ -73,6 +83,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     private readonly organizationService: OrganizationsService,
     private readonly tournamentService: TournamentsService,
     private readonly venueService: VenuesService,
+    private readonly planningRealmsService: PlanningRealmsService,
     private readonly apiKeyService: ApiKeysService,
     private readonly titleService: TitleService,
     private readonly router: Router,
@@ -123,7 +134,11 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
   protected togglePage(number: number): void {
     this.currentPage = number;
 
-    if (number === venuesPageId && this.organization && !this.venues && !this.isLoadingVenues) {
+    if (!this.organization) {
+      return;
+    }
+
+    if (number === ViewOrganizationComponent.venuesPageId && !this.venues && !this.isLoadingVenues) {
       // Load venues only when the page is opened
       this.isLoadingVenues = true;
       this.venueService.getVenues({ organizationId: this.organization.id }).subscribe({
@@ -137,7 +152,21 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (this.organization && number === apiKeysPageId && !this.isLoadingApiKeys) {
+    if (number === ViewOrganizationComponent.planningRealmsPageId && !this.planningRealms && !this.isLoadingPlanningRealms) {
+      // Load planning realms only when the page is opened
+      this.isLoadingPlanningRealms = true;
+      this.planningRealmsService.getPlanningRealms({ organizationId: this.organization.id }).subscribe({
+        next: (planningRealms) => {
+          this.planningRealms = planningRealms;
+          this.isLoadingPlanningRealms = false;
+        },
+        error: (error) => {
+          this.loadingState = { isLoading: false, error: error };
+        }
+      });
+    }
+
+    if (number === ViewOrganizationComponent.apiKeysPageId && !this.apiKeys && !this.isLoadingApiKeys) {
       // Load API keys only when the page is opened
       this.loadApiKeys().subscribe({
         error: (error) => {

@@ -25,6 +25,14 @@
             [icon]="'plus-circle'"
             [routerLink]="'create/venue'" />
         }
+        @case (4) {
+          <tp-action-button
+            *tpIsActionAllowed="[organization.id, Actions.GenericWrite]"
+            [title]="'Portal.ViewOrganization.NewPlanningRealm'"
+            [type]="'outline-success'"
+            [icon]="'plus-circle'"
+            [routerLink]="'create/planning-realm'" />
+        }
         @case (2) {
           <tp-action-button
             *tpIsActionAllowed="[organization.id, Actions.GenericWrite]"
@@ -83,6 +91,38 @@
                   <div class="d-flex flex-column gap-3">
                     @for (venue of venues; track venue.id) {
                       <tp-venue-tile [venue]="venue" />
+                    }
+                  </div>
+                }
+              </div>
+            }
+          }
+          @case (4) {
+            @if (isLoadingPlanningRealms || !planningRealms) {
+              <tp-loading-indicator class="my-5" [marginY]="false" />
+            } @else {
+              <div class="card-header d-flex flex-row align-items-center">
+                <tp-badge context="ViewOrganization" label="PlanningRealmCount" [value]="planningRealms.length" />
+              </div>
+              <div class="card-body">
+                @if (planningRealms.length === 0) {
+                  <div class="d-flex flex-row justify-content-center py-4 text-center">
+                    <span class="tp-text-pre-wrap" translate="Portal.ViewOrganization.NoPlanningRealms"></span>
+                  </div>
+                } @else {
+                  <div class="d-flex flex-column gap-3">
+                    @for (planningRealm of planningRealms; track planningRealm.id) {
+                      <div class="card shadow-sm">
+                        <div class="card-body d-flex flex-column gap-2">
+                          <div class="fs-5 fw-bold card-title mb-0">{{ planningRealm.name }}</div>
+                        </div>
+                        <div class="card-footer text-end pe-2">
+                          <a class="card-link" [routerLink]="'/portal/planning-realm/' + planningRealm.id">
+                            <span translate="Portal.ViewOrganization.OpenPlanningRealm"></span>
+                            <i class="ms-2 bi bi-arrow-right-circle" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </div>
                     }
                   </div>
                 }

@@ -84,6 +84,8 @@ import { RbacOffcanvasComponent } from './components/rbac-offcanvas/rbac-offcanv
 import { RbacPrincipalComponent } from './components/rbac-principal/rbac-principal.component';
 import { RbacAddAssignmentComponent } from './components/rbac-add-assignment/rbac-add-assignment.component';
 import { IsActionAllowedDirective } from './directives/is-action-allowed/is-action-allowed.directive';
+import { CreatePlanningRealmComponent } from './pages/create-planning-realm/create-planning-realm.component';
+import { ViewPlanningRealmComponent } from './pages/view-planning-realm/view-planning-realm.component';
 
 const routes: Routes = [
   {
@@ -117,12 +119,20 @@ const routes: Routes = [
         component: CreateApiKeyComponent
       },
       {
+        path: 'organization/:id/create/planning-realm',
+        component: CreatePlanningRealmComponent
+      },
+      {
         path: 'organization/:id/create/tournament',
         component: CreateTournamentComponent
       },
       {
         path: 'organization/:id/create/venue',
         component: CreateVenueComponent
+      },
+      {
+        path: 'planning-realm/:id',
+        component: ViewPlanningRealmComponent
       },
       {
         path: 'statistics/:id',
@@ -229,7 +239,9 @@ const routes: Routes = [
     RbacOffcanvasComponent,
     RbacAddAssignmentComponent,
     RbacPrincipalComponent,
-    IsActionAllowedDirective
+    IsActionAllowedDirective,
+    CreatePlanningRealmComponent,
+    ViewPlanningRealmComponent
   ],
   imports: [
     CommonModule,

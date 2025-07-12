@@ -1,0 +1,2 @@
+- captcha im anmeldeformular
+- wenn max. mannschaften pro anmeldung = 1, steht im formular keine eingabe für die anzahl zur verfügung

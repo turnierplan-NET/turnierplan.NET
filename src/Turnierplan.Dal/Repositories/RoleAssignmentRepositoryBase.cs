@@ -3,6 +3,7 @@ using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
+using Turnierplan.Core.Planning;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament;
@@ -20,6 +21,8 @@ internal sealed class FolderRoleAssignmentRepository(TurnierplanContext context)
 internal sealed class ImageRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<Image>(context, context.ImageRoleAssignments);
 
 internal sealed class OrganizationRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<Organization>(context, context.OrganizationRoleAssignments);
+
+internal sealed class PlanningRealmRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<PlanningRealm>(context, context.PlanningRealmRoleAssignments);
 
 internal sealed class TournamentRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<Tournament>(context, context.TournamentRoleAssignments);
 

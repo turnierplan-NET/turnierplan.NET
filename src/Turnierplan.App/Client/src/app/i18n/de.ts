@@ -157,20 +157,26 @@ export const de = {
       Pages: {
         Tournaments: 'Turniere',
         Venues: 'Spielstätten',
+        PlanningRealms: 'Turnierplaner',
         ApiKeys: 'API-Schlüssel',
         Settings: 'Einstellungen'
       },
       Badges: {
         TournamentCount: 'Turniere',
         VenueCount: 'Spielstätten',
+        PlanningRealmCount: 'Turnierplaner',
         ApiKeyCount: 'API-Schlüssel'
       },
       NewTournament: 'Neues Turnier',
       NewVenue: 'Neue Spielstätte',
+      NewPlanningRealm: 'Neuer Turnierplaner',
       NewApiKey: 'Neuer API-Schlüssel',
       NoTournaments: 'In dieser Organisation gibt es aktuell keine Turniere.\nErstellen Sie ein Turner mit der Schaltfläche oben rechts.',
       NoVenues:
         'In dieser Organisation gibt es aktuell keine Spielstätten.\nErstellen Sie eine Spielstätte mit der Schaltfläche oben rechts.',
+      NoPlanningRealms:
+        'In dieser Organisation gibt es aktuell keine Turnierplaner.\nErstellen Sie einen Turnierplaner mit der Schaltfläche oben rechts.',
+      OpenPlanningRealm: 'öffnen',
       TournamentExplorer: {
         EmptyFolder: 'In diesem Ordner befinden sich keine Turniere. Wählen Sie einen anderen Ordner oder erstellen Sie ein Turnier.',
         RenameFolder: {
@@ -851,6 +857,16 @@ export const de = {
         TotalPublicPageViews: 'Seitenaufrufe insgesamt'
       },
       ExcludedTournamentsNotice: 'Folgende Turniere sind bei dieser Statistik ausgenommen: {{tournamentNames}}'
+    },
+    CreatePlanningRealm: {
+      Title: 'Neuen Turnierplaner erstellen',
+      Form: {
+        Name: 'Name',
+        NameInvalid: 'Der Name eines neuen Turnierplaners darf nicht leer sein.',
+        NameValid: 'Dieser Name kann verwendet werden.'
+      },
+      OrganizationNotice: 'Es wird ein neuer Turnierplaner in der Organisation <span class="fw-bold">{{organizationName}}</span> angelegt.',
+      Submit: 'Erstellen'
     },
     CreateApiKey: {
       Title: 'Neuen API-Schlüssel erstellen',

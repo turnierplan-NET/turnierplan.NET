@@ -10,6 +10,7 @@ using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
+using Turnierplan.Core.Planning;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
@@ -33,6 +34,7 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
         IFolderRepository folderRepository,
         IImageRepository imageRepository,
         IOrganizationRepository organizationRepository,
+        IPlanningRealmRepository planningRealmRepository,
         ITournamentRepository tournamentRepository,
         IUserRepository userRepository,
         IVenueRepository venueRepository,
@@ -57,6 +59,7 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
             "Folder" => CreateRoleAssignmentAsync(request, folderRepository, targetId, accessValidator, apiKeyRepository, userRepository, serviceProvider.GetRequiredService<IRoleAssignmentRepository<Folder>>(), mapper, cancellationToken),
             "Image" => CreateRoleAssignmentAsync(request, imageRepository, targetId, accessValidator, apiKeyRepository, userRepository, serviceProvider.GetRequiredService<IRoleAssignmentRepository<Image>>(), mapper, cancellationToken),
             "Organization" => CreateRoleAssignmentAsync(request, organizationRepository, targetId, accessValidator, apiKeyRepository, userRepository, serviceProvider.GetRequiredService<IRoleAssignmentRepository<Organization>>(), mapper, cancellationToken),
+            "PlanningRealm" => CreateRoleAssignmentAsync(request, planningRealmRepository, targetId, accessValidator, apiKeyRepository, userRepository, serviceProvider.GetRequiredService<IRoleAssignmentRepository<PlanningRealm>>(), mapper, cancellationToken),
             "Tournament" => CreateRoleAssignmentAsync(request, tournamentRepository, targetId, accessValidator, apiKeyRepository, userRepository, serviceProvider.GetRequiredService<IRoleAssignmentRepository<Tournament>>(), mapper, cancellationToken),
             "Venue" => CreateRoleAssignmentAsync(request, venueRepository, targetId, accessValidator, apiKeyRepository, userRepository, serviceProvider.GetRequiredService<IRoleAssignmentRepository<Venue>>(), mapper, cancellationToken),
             _ => null

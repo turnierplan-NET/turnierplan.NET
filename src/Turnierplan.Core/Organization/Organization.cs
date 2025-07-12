@@ -1,3 +1,4 @@
+using Turnierplan.Core.Planning;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 
@@ -9,6 +10,7 @@ public sealed class Organization : Entity<long>, IEntityWithRoleAssignments<Orga
     internal readonly List<ApiKey.ApiKey> _apiKeys = new();
     internal readonly List<Folder.Folder> _folders = new();
     internal readonly List<Image.Image> _images = new();
+    internal readonly List<PlanningRealm> _planningRealms = new();
     internal readonly List<Tournament.Tournament> _tournaments = new();
     internal readonly List<Venue.Venue> _venues = new();
 
@@ -43,6 +45,8 @@ public sealed class Organization : Entity<long>, IEntityWithRoleAssignments<Orga
     public IReadOnlyList<Folder.Folder> Folders => _folders.AsReadOnly();
 
     public IReadOnlyList<Image.Image> Images => _images.AsReadOnly();
+
+    public IReadOnlyList<PlanningRealm> PlanningRealms => _planningRealms.AsReadOnly();
 
     public IReadOnlyList<Tournament.Tournament> Tournaments => _tournaments.AsReadOnly();
 
