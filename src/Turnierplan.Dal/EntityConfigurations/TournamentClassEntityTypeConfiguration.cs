@@ -16,8 +16,7 @@ public sealed class TournamentClassEntityTypeConfiguration : IEntityTypeConfigur
             .IsRequired();
 
         builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.Class.MaxNameLength);
+            .IsRequired();
 
         builder.Property(x => x.MaxTeamCount);
     }

@@ -27,23 +27,15 @@ public sealed class ApplicationEntityTypeConfiguration : IEntityTypeConfiguratio
             .IsRequired();
 
         builder.Property(x => x.Name)
-            .HasMaxLength(ValidationConstants.Application.MaxNameLength)
             .IsRequired();
 
-        builder.Property(x => x.Email)
-            .HasMaxLength(ValidationConstants.Application.MaxEmailLength)
-            .IsRequired(false);
+        builder.Property(x => x.Email);
 
-        builder.Property(x => x.Telephone)
-            .HasMaxLength(ValidationConstants.Application.MaxTelephoneLength)
-            .IsRequired(false);
+        builder.Property(x => x.Telephone);
 
-        builder.Property(x => x.CommentFromSender)
-            .HasMaxLength(ValidationConstants.Application.MaxCommentFromSenderLength)
-            .IsRequired(false);
+        builder.Property(x => x.CommentFromSender);
 
         builder.Property(x => x.Notes)
-            .HasMaxLength(ValidationConstants.Application.MaxNotesLength)
             .IsRequired();
 
         builder.HasMany(x => x.Teams)

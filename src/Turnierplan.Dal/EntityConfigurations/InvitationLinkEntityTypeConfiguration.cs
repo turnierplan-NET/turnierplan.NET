@@ -23,26 +23,20 @@ public sealed class InvitationLinkEntityTypeConfiguration : IEntityTypeConfigura
         builder.HasIndex(x => x.PublicId)
             .IsUnique();
 
-        builder.Property(x => x.Title)
-            .HasMaxLength(ValidationConstants.InvitationLink.MaxTitleLength);
+        builder.Property(x => x.Title);
 
-        builder.Property(x => x.Description)
-            .HasMaxLength(ValidationConstants.InvitationLink.MaxDescriptionLength);
+        builder.Property(x => x.Description);
 
         builder.Property(x => x.ColorCode)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.InvitationLink.MaxColorCodeLength);
+            .IsRequired();
 
         builder.Property(x => x.ValidUntil);
 
-        builder.Property(x => x.ContactPerson)
-            .HasMaxLength(ValidationConstants.InvitationLink.MaxContactPersonLength);
+        builder.Property(x => x.ContactPerson);
 
-        builder.Property(x => x.ContactEmail)
-            .HasMaxLength(ValidationConstants.InvitationLink.MaxContactEmailLength);
+        builder.Property(x => x.ContactEmail);
 
-        builder.Property(x => x.ContactTelephone)
-            .HasMaxLength(ValidationConstants.InvitationLink.MaxContactTelephoneLength);
+        builder.Property(x => x.ContactTelephone);
 
         builder.HasOne<Image>(x => x.PrimaryLogo)
             .WithMany()

@@ -32,8 +32,7 @@ public sealed class RealmEntityTypeConfiguration : IEntityTypeConfiguration<Plan
             .IsRequired();
 
         builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.PlanningRealm.MaxNameLength);
+            .IsRequired();
 
         builder.HasMany(x => x.TournamentClasses)
             .WithOne()
