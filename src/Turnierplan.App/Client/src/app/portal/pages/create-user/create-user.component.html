@@ -9,7 +9,6 @@
         formControlName="userName"
         [required]="true"
         [minlength]="1"
-        [maxlength]="100"
         [ngClass]="userNameControl.dirty || userNameControl.touched ? (userNameControl.invalid ? 'is-invalid' : 'is-valid') : ''" />
       <div class="invalid-feedback" translate="Portal.CreateUser.Form.UserNameInvalid"></div>
     </div>
@@ -23,7 +22,6 @@
         formControlName="eMail"
         [required]="true"
         [minlength]="1"
-        [maxlength]="100"
         [ngClass]="eMailControl.dirty || eMailControl.touched ? (eMailControl.invalid ? 'is-invalid' : 'is-valid') : ''" />
       <div class="invalid-feedback" translate="Portal.CreateUser.Form.EmailInvalid"></div>
     </div>
@@ -37,7 +35,6 @@
         formControlName="password"
         [required]="true"
         [minlength]="1"
-        [maxlength]="64"
         [ngClass]="passwordControl.dirty || passwordControl.touched ? (passwordControl.invalid ? 'is-invalid' : 'is-valid') : ''" />
       <div class="invalid-feedback" translate="Portal.CreateUser.Form.PasswordInvalid"></div>
     </div>

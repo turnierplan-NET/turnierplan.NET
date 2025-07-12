@@ -39,7 +39,7 @@
           [ngModel]="header1CustomContent"
           (ngModelChange)="header1CustomContent = $event; onChanged()"
           [placeholder]="'Portal.ViewTournament.Share.PresentationConfig.HeaderCustomValuePlaceholder' | translate"
-          [ngClass]="{ 'is-invalid': saveAttempted && isHeader2CustomContentInvalid }" />
+          [ngClass]="{ 'is-invalid': saveAttempted && isHeader1CustomContentInvalid }" />
         <div class="invalid-feedback" translate="Portal.ViewTournament.Share.PresentationConfig.HeaderCustomValueInvalid"></div>
       }
     </div>

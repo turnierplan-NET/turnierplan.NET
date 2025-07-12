@@ -15,9 +15,9 @@ export class CreateUserComponent implements OnInit {
   protected loadingState: LoadingState = { isLoading: false };
 
   protected form = new FormGroup({
-    userName: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(100)] }),
-    eMail: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email, Validators.maxLength(100)] }),
-    password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(64)] })
+    userName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    eMail: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+    password: new FormControl('', { nonNullable: true, validators: [Validators.required] })
   });
 
   constructor(

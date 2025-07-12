@@ -22,9 +22,6 @@ export class RenameButtonComponent {
   public allowReset = false;
 
   @Input()
-  public maxLength?: number;
-
-  @Input()
   public disabled = false;
 
   @Output()
@@ -41,7 +38,7 @@ export class RenameButtonComponent {
     });
 
     const component = ref.componentInstance as RenameDialogComponent;
-    component.init(this.translationKey, this.allowReset, this.maxLength, this.current);
+    component.init(this.translationKey, this.allowReset, this.current);
 
     ref.closed.subscribe({
       next: (value: string) => {

@@ -9,23 +9,20 @@ export class RenameDialogComponent {
   protected isInitialized = false;
   protected translationKey: string = '';
   protected allowReset = false;
-  protected maxLength?: number;
   protected initialValue?: string;
   protected currentValue: string = '';
   protected wasChanged = false;
-
-  protected showError?: 'RequiredFeedback' | 'MaxLengthFeedback';
+  protected showError?: 'RequiredFeedback';
 
   constructor(protected readonly modal: NgbActiveModal) {}
 
-  public init(translationKey: string, allowReset: boolean, maxLength?: number, initialValue?: string): void {
+  public init(translationKey: string, allowReset: boolean, initialValue?: string): void {
     if (this.isInitialized) {
       return;
     }
 
     this.translationKey = translationKey;
     this.allowReset = allowReset;
-    this.maxLength = maxLength;
     this.initialValue = initialValue;
     this.currentValue = initialValue ?? '';
     this.wasChanged = false;
@@ -42,11 +39,6 @@ export class RenameDialogComponent {
 
     const sanitized = this.currentValue.trim();
     const sanitizedInitial = (this.initialValue ?? '').trim();
-
-    if (this.maxLength !== undefined && sanitized.length > this.maxLength) {
-      this.showError = 'MaxLengthFeedback';
-      return;
-    }
 
     if (sanitized.length > 0) {
       if (sanitized !== sanitizedInitial) {

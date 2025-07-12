@@ -39,7 +39,6 @@
           }
           <tp-rename-button
             translationKey="Portal.ViewOrganization.Settings.Rename"
-            [maxLength]="60"
             [current]="organization.name"
             [disabled]="isUpdatingName"
             (renamed)="renameOrganization($event)" />
