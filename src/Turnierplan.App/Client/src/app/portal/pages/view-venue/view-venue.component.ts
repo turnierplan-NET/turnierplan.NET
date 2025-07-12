@@ -128,10 +128,14 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
 
     switch (which) {
       case 'addressDetails':
-        component.init('Portal.ViewVenue.Details.EditAddressDetails', this.venue.addressDetails);
+        component.init('Portal.ViewVenue.Details.EditAddressDetails', undefined, this.venue.addressDetails);
         break;
       case 'externalLinks':
-        component.init('Portal.ViewVenue.Details.EditExternalLinks', this.venue.externalLinks);
+        component.init(
+          'Portal.ViewVenue.Details.EditExternalLinks',
+          /^https:\/\/(?:[A-Za-z0-9-]+\.)+[a-z]+(?:\/.*)?$/,
+          this.venue.externalLinks
+        );
         break;
     }
 

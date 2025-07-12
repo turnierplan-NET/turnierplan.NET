@@ -9,8 +9,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class TextListDialogComponent {
   protected isInitialized = false;
   protected translationKey: string = '';
+  protected itemRegex?: RegExp;
   protected initialValue: string[] = [];
-
   protected formArray!: FormArray;
 
   constructor(
@@ -18,12 +18,13 @@ export class TextListDialogComponent {
     private readonly formBuilder: FormBuilder
   ) {}
 
-  public init(translationKey: string, initialValue: string[]): void {
+  public init(translationKey: string, itemRegex: RegExp | undefined, initialValue: string[]): void {
     if (this.isInitialized) {
       return;
     }
 
     this.translationKey = translationKey;
+    this.itemRegex = itemRegex;
     this.initialValue = [...initialValue];
 
     this.formArray = this.formBuilder.array(this.initialValue.map((x) => this.createControl(x)));
@@ -54,7 +55,10 @@ export class TextListDialogComponent {
   }
 
   protected createControl(value: string): FormControl {
-    return this.formBuilder.control(value, Validators.required);
+    return this.formBuilder.control(
+      value,
+      this.itemRegex ? Validators.compose([Validators.required, Validators.pattern(this.itemRegex)]) : Validators.required
+    );
   }
 
   protected addEmptyControl(): void {
