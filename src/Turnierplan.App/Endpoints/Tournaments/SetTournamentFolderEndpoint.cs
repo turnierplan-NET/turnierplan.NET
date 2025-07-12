@@ -5,7 +5,6 @@ using Turnierplan.App.Security;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Tournaments;
 

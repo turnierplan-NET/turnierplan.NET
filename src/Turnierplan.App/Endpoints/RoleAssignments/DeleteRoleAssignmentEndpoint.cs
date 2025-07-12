@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using SkiaSharp;
 using Turnierplan.App.Helpers;
 using Turnierplan.App.Security;
 using Turnierplan.Core.ApiKey;

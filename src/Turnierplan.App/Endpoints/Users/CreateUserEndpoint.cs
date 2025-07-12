@@ -5,7 +5,6 @@ using Turnierplan.App.Extensions;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.Core.User;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Users;
 

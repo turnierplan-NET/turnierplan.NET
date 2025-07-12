@@ -8,7 +8,6 @@ using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.User;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Organizations;
 

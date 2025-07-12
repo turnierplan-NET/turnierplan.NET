@@ -4,7 +4,6 @@ using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
 using Turnierplan.Core.Document;
 using Turnierplan.Core.PublicId;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Documents;
 

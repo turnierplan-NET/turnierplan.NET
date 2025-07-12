@@ -7,7 +7,6 @@ using Turnierplan.App.Security;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Venue;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Venues;
 

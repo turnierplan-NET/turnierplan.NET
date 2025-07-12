@@ -10,7 +10,6 @@ using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.RoleAssignment;
-using Turnierplan.Dal;
 using Turnierplan.Dal.Extensions;
 
 namespace Turnierplan.App.Endpoints.ApiKeys;
