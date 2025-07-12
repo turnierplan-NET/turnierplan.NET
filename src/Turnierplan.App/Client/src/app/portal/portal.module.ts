@@ -85,6 +85,7 @@ import { RbacPrincipalComponent } from './components/rbac-principal/rbac-princip
 import { RbacAddAssignmentComponent } from './components/rbac-add-assignment/rbac-add-assignment.component';
 import { IsActionAllowedDirective } from './directives/is-action-allowed/is-action-allowed.directive';
 import { CreatePlanningRealmComponent } from './pages/create-planning-realm/create-planning-realm.component';
+import { ViewPlanningRealmComponent } from './pages/view-planning-realm/view-planning-realm.component';
 
 const routes: Routes = [
   {
@@ -128,6 +129,10 @@ const routes: Routes = [
       {
         path: 'organization/:id/create/venue',
         component: CreateVenueComponent
+      },
+      {
+        path: 'planning-realm/:id',
+        component: ViewPlanningRealmComponent
       },
       {
         path: 'statistics/:id',
@@ -235,7 +240,8 @@ const routes: Routes = [
     RbacAddAssignmentComponent,
     RbacPrincipalComponent,
     IsActionAllowedDirective,
-    CreatePlanningRealmComponent
+    CreatePlanningRealmComponent,
+    ViewPlanningRealmComponent
   ],
   imports: [
     CommonModule,
