@@ -781,23 +781,20 @@ export const de = {
         NoAddressDetails: 'Keine Adressdetails vorhanden',
         EditAddressDetails: {
           Title: 'Adressdetails bearbeiten',
-          HelpText: 'Sie können bis zu {{maxCount}} Einträge hinzufügen. Beispiele hierfür sind z.B. Straße, Hausnummer, PLZ oder Ort.',
+          HelpText: 'Beispiele für Adressdetails sind z.B. Straße, Hausnummer, PLZ oder Ort.',
           InvalidEntry: 'Ein bestehender Eintrag darf nicht leer sein.',
           NoEntries: 'Keine Einträge vorhanden',
-          AddEntry: 'Zeile hinzufügen',
-          MaximumReached: 'Das Maximum von {{maxCount}} Zeilen ist erreicht'
+          AddEntry: 'Zeile hinzufügen'
         },
         ExternalLinks: 'Externe Referenzen',
         ExternalLinksTooltip: 'Externe Links sind z.B. Links zu Kartenanbietern oder einer externen Webseite.',
         NoExternalLinks: 'Keine externen Referenzen vorhanden',
         EditExternalLinks: {
           Title: 'Externe Referenzen bearbeiten',
-          HelpText:
-            'Sie können bis zu {{maxCount}} Referenzen hinzufügen. Beispiele hierfür sind z.B. Links zu Ihrer Webseite oder einem Kartenanbieter.',
+          HelpText: 'Beispiele für Externe Referenzen sind z.B. Links zu Ihrer Webseite oder einem Kartenanbieter.',
           InvalidEntry: 'Ein bestehender Eintrag darf nicht leer sein und es muss sich um einen gültigen HTTPS-Link handeln.',
           NoEntries: 'Keine Links vorhanden',
-          AddEntry: 'Link hinzufügen',
-          MaximumReached: 'Das Maximum von {{maxCount}} Links ist erreicht'
+          AddEntry: 'Link hinzufügen'
         },
         UnsavedChanges: 'Sie haben ungespeicherte Änderungen, welche noch übernommen werden müssen.',
         SuccessToast: {
