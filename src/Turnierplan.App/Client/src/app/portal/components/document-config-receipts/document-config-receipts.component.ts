@@ -37,10 +37,10 @@ export class DocumentConfigReceiptsComponent extends DocumentConfigComponent<Rec
 
     this.form = formBuilder.group({
       amounts: formBuilder.group(amountGroups),
-      currency: [config.currency, [Validators.required, Validators.maxLength(10)]],
-      headerInfo: [config.headerInfo, Validators.maxLength(100)],
-      signatureLocation: [config.signatureLocation, Validators.maxLength(100)],
-      signatureRecipient: [config.signatureRecipient, Validators.maxLength(100)],
+      currency: [config.currency, [Validators.required]],
+      headerInfo: [config.headerInfo],
+      signatureLocation: [config.signatureLocation],
+      signatureRecipient: [config.signatureRecipient],
       showSponsorLogo: [config.showSponsorLogo],
       combineSimilarTeams: [config.combineSimilarTeams]
     });

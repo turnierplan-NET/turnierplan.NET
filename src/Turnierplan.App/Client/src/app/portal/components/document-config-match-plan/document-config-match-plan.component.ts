@@ -22,9 +22,9 @@ export class DocumentConfigMatchPlanComponent extends DocumentConfigComponent<Ma
     super();
 
     this.form = formBuilder.group({
-      organizerNameOverride: [config.organizerNameOverride ?? '', Validators.maxLength(100)],
-      tournamentNameOverride: [config.tournamentNameOverride ?? '', Validators.maxLength(100)],
-      venueOverride: [config.venueOverride ?? '', Validators.maxLength(100)],
+      organizerNameOverride: [config.organizerNameOverride ?? ''],
+      tournamentNameOverride: [config.tournamentNameOverride ?? ''],
+      venueOverride: [config.venueOverride ?? ''],
       dateFormat: [config.dateFormat],
       outcomes: [config.outcomes],
       includeQrCode: [config.includeQrCode],

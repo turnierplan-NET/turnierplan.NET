@@ -50,17 +50,11 @@ export class PresentationConfigWidgetComponent {
   ) {}
 
   protected get isHeader1CustomContentInvalid(): boolean {
-    return (
-      this.header1Content === HeaderLineContent.CustomValue &&
-      (this.header1CustomContent.trim().length === 0 || this.header1CustomContent.length > 60)
-    );
+    return this.header1Content === HeaderLineContent.CustomValue && this.header1CustomContent.trim().length === 0;
   }
 
   protected get isHeader2CustomContentInvalid(): boolean {
-    return (
-      this.header2Content === HeaderLineContent.CustomValue &&
-      (this.header2CustomContent.trim().length === 0 || this.header2CustomContent.length > 60)
-    );
+    return this.header2Content === HeaderLineContent.CustomValue && this.header2CustomContent.trim().length === 0;
   }
 
   @Input()

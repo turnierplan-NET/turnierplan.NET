@@ -7,7 +7,6 @@
     [formControl]="tournamentName"
     [required]="true"
     [minlength]="1"
-    [maxlength]="60"
     [ngClass]="tournamentName.dirty || tournamentName.touched ? (tournamentName.invalid ? 'is-invalid' : 'is-valid') : ''" />
   <div class="invalid-feedback" translate="Portal.CreateTournament.Form.NameInvalid"></div>
   <div class="valid-feedback" translate="Portal.CreateTournament.Form.NameValid"></div>
@@ -85,7 +84,6 @@
         [formControl]="newFolderName"
         [required]="true"
         [minlength]="1"
-        [maxlength]="60"
         [placeholder]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.NamePlaceholder' | translate"
         [ngClass]="newFolderName.dirty || newFolderName.touched ? (newFolderName.invalid ? 'is-invalid' : 'is-valid') : ''" />
       <div class="invalid-feedback" translate="Portal.CreateTournament.Form.FolderNameInvalid"></div>

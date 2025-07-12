@@ -47,7 +47,6 @@
           }
           <tp-rename-button
             translationKey="Portal.ViewTournament.Settings.Rename"
-            [maxLength]="60"
             [current]="tournament.name"
             [disabled]="isUpdatingName"
             (renamed)="renameTournament($event)" />
