@@ -4,7 +4,6 @@ using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
 using Turnierplan.Core.Document;
 using Turnierplan.Core.PublicId;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Documents;
 
@@ -59,8 +58,7 @@ internal sealed class SetDocumentNameEndpoint : EndpointBase
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Document.MaxNameLength);
+                .NotEmpty();
         }
     }
 }

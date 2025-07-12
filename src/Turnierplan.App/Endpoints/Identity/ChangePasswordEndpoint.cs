@@ -5,7 +5,6 @@ using Microsoft.Extensions.Options;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
 using Turnierplan.Core.User;
-using Turnierplan.Dal;
 using IdentityOptions = Turnierplan.App.Options.IdentityOptions;
 
 namespace Turnierplan.App.Endpoints.Identity;
@@ -129,16 +128,13 @@ internal sealed class ChangePasswordEndpoint : IdentityEndpointBase<ChangePasswo
         {
             RuleFor(x => x.EMail)
                 .NotEmpty()
-                .EmailAddress()
-                .MaximumLength(ValidationConstants.User.MaxEMailLength);
+                .EmailAddress();
 
             RuleFor(x => x.CurrentPassword)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.User.MaxPasswordLength);
+                .NotEmpty();
 
             RuleFor(x => x.NewPassword)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.User.MaxPasswordLength);
+                .NotEmpty();
         }
     }
 }

@@ -16,8 +16,7 @@ public sealed class TeamEntityTypeConfiguration : IEntityTypeConfiguration<Team>
             .IsRequired();
 
         builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.Team.MaxNameLength);
+            .IsRequired();
 
         builder.Property(x => x.OutOfCompetition)
             .IsRequired();

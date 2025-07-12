@@ -6,7 +6,6 @@ using Turnierplan.App.Security;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.Tournament.Definitions;
-using Turnierplan.Dal;
 using Turnierplan.Dal.Extensions;
 
 namespace Turnierplan.App.Endpoints.Tournaments;
@@ -236,6 +235,10 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
 
     internal sealed class Validator : AbstractValidator<ConfigureTournamentEndpointRequest>
     {
+        private const int MinNumberOfTeamsPerGroup = 2;
+        private const int MaxNumberOfTeamsPerGroup = 9;
+        private const int MaxNumberOfGroupPhaseRounds = 8;
+
         public static readonly Validator Instance = new();
 
         private Validator()
@@ -243,10 +246,6 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
             RuleFor(x => x.Groups)
                 .NotEmpty()
                 .WithMessage("Configuration must include at least one group.");
-
-            RuleFor(x => x.Groups)
-                .Must(x => x.Sum(y => y.Teams.Length) <= ValidationConstants.Tournament.MaxNumberOfTeams)
-                .WithMessage($"Configuration may include at most {ValidationConstants.Tournament.MaxNumberOfTeams} teams.");
 
             RuleFor(x => x.Groups.Select(y => y.AlphabeticalId).ToList())
                 .Must(x => x.Count == x.Distinct().Count())
@@ -273,24 +272,20 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
 
                 group.RuleFor(x => x.DisplayName)
                     .NotEmpty()
-                    .WithMessage("Group display name must be null or a non-empty string with at most 25 characters.")
-                    .MaximumLength(ValidationConstants.Group.MaxDisplayNameLength)
-                    .WithMessage("Group display name must be null or a non-empty string with at most 25 characters.")
+                    .WithMessage("Group display name must be null or a non-empty string.")
                     .When(y => y.DisplayName is not null);
 
                 group.RuleFor(x => x.Teams)
-                    .Must(x => x.Length >= 2)
-                    .WithMessage("Each group must contain at least two teams.")
-                    .Must(x => x.Length <= ValidationConstants.Group.MaxNumberOfTeams)
-                    .WithMessage($"Each group must contain at most {ValidationConstants.Group.MaxNumberOfTeams} teams.");
+                    .Must(x => x.Length >= MinNumberOfTeamsPerGroup)
+                    .WithMessage($"Each group must contain at least {MinNumberOfTeamsPerGroup} teams.")
+                    .Must(x => x.Length <= MaxNumberOfTeamsPerGroup)
+                    .WithMessage($"Each group must contain at most {MaxNumberOfTeamsPerGroup} teams.");
 
                 group.RuleForEach(x => x.Teams).ChildRules(team =>
                 {
                     team.RuleFor(x => x.Name)
                         .NotEmpty()
-                        .WithMessage($"Team name must be a non-empty string with at most {ValidationConstants.Team.MaxNameLength} characters.")
-                        .MaximumLength(ValidationConstants.Team.MaxNameLength)
-                        .WithMessage($"Team name must be a non-empty string with at most {ValidationConstants.Team.MaxNameLength} characters.");
+                        .WithMessage($"Team name must be a non-empty string.");
                 });
             });
 
@@ -307,9 +302,9 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
 
                     groupPhase.RuleFor(x => x.NumberOfGroupRounds)
                         .GreaterThanOrEqualTo(1)
-                        .WithMessage($"Number of group phase rounds must be between 1 and {ValidationConstants.Tournament.MaxNumberOfGroupPhaseRounds}.")
-                        .LessThanOrEqualTo(ValidationConstants.Tournament.MaxNumberOfGroupPhaseRounds)
-                        .WithMessage($"Number of group phase rounds must be between 1 and {ValidationConstants.Tournament.MaxNumberOfGroupPhaseRounds}.");
+                        .WithMessage($"Number of group phase rounds must be between 1 and {MaxNumberOfGroupPhaseRounds}.")
+                        .LessThanOrEqualTo(MaxNumberOfGroupPhaseRounds)
+                        .WithMessage($"Number of group phase rounds must be between 1 and {MaxNumberOfGroupPhaseRounds}.");
                 })
                 .When(x => x.GroupPhase is not null);
 
@@ -365,15 +360,11 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
                             playoff.RuleFor(x => x.TeamSelectorA)
                                 .NotEmpty()
                                 .WithMessage("Additional playoff definition must contain only valid team selectors.")
-                                .MaximumLength(ValidationConstants.Match.MaxTeamSelectorLength)
-                                .WithMessage("Additional playoff definition must contain only valid team selectors.")
                                 .Must(x => AbstractTeamSelectorParser.TryParseAbstractTeamSelector(x, out _))
                                 .WithMessage("Additional playoff definition must contain only valid team selectors.");
 
                             playoff.RuleFor(x => x.TeamSelectorB)
                                 .NotEmpty()
-                                .WithMessage("Additional playoff definition must contain only valid team selectors.")
-                                .MaximumLength(ValidationConstants.Match.MaxTeamSelectorLength)
                                 .WithMessage("Additional playoff definition must contain only valid team selectors.")
                                 .Must(x => AbstractTeamSelectorParser.TryParseAbstractTeamSelector(x, out _))
                                 .WithMessage("Additional playoff definition must contain only valid team selectors.");

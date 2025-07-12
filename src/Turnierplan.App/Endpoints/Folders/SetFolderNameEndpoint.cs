@@ -4,7 +4,6 @@ using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.PublicId;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Folders;
 
@@ -59,8 +58,7 @@ internal sealed class SetFolderNameEndpoint : EndpointBase
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Folder.MaxNameLength);
+                .NotEmpty();
         }
     }
 }

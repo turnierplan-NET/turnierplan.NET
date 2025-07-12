@@ -4,11 +4,10 @@ using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Venue;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Venues;
 
-internal sealed partial class UpdateVenueEndpoint : EndpointBase
+internal sealed class UpdateVenueEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Put;
 
@@ -61,30 +60,20 @@ internal sealed partial class UpdateVenueEndpoint : EndpointBase
         public required string[] ExternalLinks { get; init; }
     }
 
-    internal sealed partial class Validator : AbstractValidator<UpdateVenueEndpointRequest>
+    internal sealed class Validator : AbstractValidator<UpdateVenueEndpointRequest>
     {
         public static readonly Validator Instance = new();
 
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Venue.MaxNameLength);
-
-            RuleFor(x => x.Description)
-                .MaximumLength(ValidationConstants.Venue.MaxDescriptionLength);
-
-            RuleFor(x => x.AddressDetails.Length)
-                .InclusiveBetween(0, ValidationConstants.Venue.MaxAddressDetailCount);
+                .NotEmpty();
 
             RuleForEach(x => x.AddressDetails)
-                .MaximumLength(ValidationConstants.Venue.MaxAddressDetailLength);
-
-            RuleFor(x => x.ExternalLinks.Length)
-                .InclusiveBetween(0, ValidationConstants.Venue.MaxExternalLinkCount);
+                .NotEmpty();
 
             RuleForEach(x => x.ExternalLinks)
-                .MaximumLength(ValidationConstants.Venue.MaxExternalLinkLength);
+                .NotEmpty();
         }
     }
 }

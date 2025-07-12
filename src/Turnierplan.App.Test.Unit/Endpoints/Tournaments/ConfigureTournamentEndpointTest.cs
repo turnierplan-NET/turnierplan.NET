@@ -55,41 +55,6 @@ public sealed class ConfigureTournamentEndpointTest
             .Only();
     }
 
-    [Theory]
-    [InlineData(false, 4, 4, 4, 4, 4, 4, 4, 4, 4)] // 9 * 4 = 36
-    [InlineData(false, 8, 8, 8, 7, 2)] // 3 * 8 + 7 + 2 = 33
-    [InlineData(true, 4, 4, 4, 4, 4, 4, 4, 4)] // 9 * 4 = 32
-    [InlineData(true, 8, 8, 8, 8)] // 4 * 8 = 32
-    public void ConfigureTournamentEndpointRequest___With_Too_Many_Total_Teams___Is_Invalid(bool isValid, params int[] teamsPerGroup)
-    {
-        var groups = teamsPerGroup.Select((x, index) =>
-        {
-            var teams = Enumerable.Range(0, x).Select(_ => new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test")).ToArray();
-            return new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestGroupEntry(null, (char)('A' + index), null, teams);
-        }).ToArray();
-
-        var command = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest
-        {
-            Groups = groups,
-            FirstMatchKickoff = null,
-            GroupPhase = __groupPhase,
-            FinalsPhase = __finalsPhase
-        };
-
-        var result = ConfigureTournamentEndpoint.Validator.Instance.TestValidate(command);
-
-        if (isValid)
-        {
-            result.ShouldNotHaveAnyValidationErrors();
-        }
-        else
-        {
-            result.ShouldHaveValidationErrorFor(x => x.Groups)
-                .WithErrorMessage("Configuration may include at most 32 teams.")
-                .Only();
-        }
-    }
-
     [Fact]
     public void ConfigureTournamentEndpointRequest___With_Non_Unique_Alphabetical_Ids___Is_Invalid()
     {
@@ -214,8 +179,7 @@ public sealed class ConfigureTournamentEndpointTest
     [InlineData(true, null)]
     [InlineData(false, "")]
     [InlineData(false, " ")]
-    [InlineData(true, "0123456789012345678901234")] // 25 characters
-    [InlineData(false, "01234567890123456789012345")] // 26 characters
+    [InlineData(true, "Test group 123")]
     public void ConfigureTournamentEndpointRequest___With_Invalid_Group_DisplayName___Is_Invalid(bool isValid, string? displayName)
     {
         var groups = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestGroupEntry[]
@@ -243,7 +207,7 @@ public sealed class ConfigureTournamentEndpointTest
         else
         {
             result.ShouldHaveValidationErrorFor("Groups[0].DisplayName")
-                .WithErrorMessage("Group display name must be null or a non-empty string with at most 25 characters.")
+                .WithErrorMessage("Group display name must be null or a non-empty string.")
                 .Only();
         }
     }
@@ -281,7 +245,7 @@ public sealed class ConfigureTournamentEndpointTest
         else
         {
             var message = teamsPerGroup[invalidGroupIndex!.Value] <= 1
-                ? "Each group must contain at least two teams."
+                ? "Each group must contain at least 2 teams."
                 : "Each group must contain at most 9 teams.";
 
             result.ShouldHaveValidationErrorFor($"Groups[{invalidGroupIndex}].Teams")
@@ -293,7 +257,6 @@ public sealed class ConfigureTournamentEndpointTest
     [Theory]
     [InlineData("")]
     [InlineData(" ")]
-    [InlineData("0123456789012345678901234567890123456789012345678901234567890")] // 61 characters
     public void ConfigureTournamentEndpointRequest___With_Invalid_Team_Name___Is_Invalid(string teamName)
     {
         var groups = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestGroupEntry[]
@@ -315,7 +278,7 @@ public sealed class ConfigureTournamentEndpointTest
         var result = ConfigureTournamentEndpoint.Validator.Instance.TestValidate(command);
 
         result.ShouldHaveValidationErrorFor("Groups[0].Teams[0].Name")
-            .WithErrorMessage("Team name must be a non-empty string with at most 60 characters.")
+            .WithErrorMessage("Team name must be a non-empty string.")
             .Only();
     }
 
@@ -371,9 +334,10 @@ public sealed class ConfigureTournamentEndpointTest
     [Theory]
     [InlineData(false, 0)]
     [InlineData(true, 1)]
+    [InlineData(true, 2)]
     [InlineData(true, 4)]
-    [InlineData(false, 5)]
-    [InlineData(false, 8)]
+    [InlineData(true, 8)]
+    [InlineData(false, 9)]
     public void ConfigureTournamentEndpointRequest___With_Invalid_Number_Of_Group_Phase_Rounds___Is_Invalid(bool isValid, int numberOfGroupPhaseRounds)
     {
         var groupPhaseConfig = new GroupPhaseConfigurationDto { Schedule = null, NumberOfCourts = 1, UseAlternatingOrder = true, NumberOfGroupRounds = numberOfGroupPhaseRounds };
@@ -394,7 +358,7 @@ public sealed class ConfigureTournamentEndpointTest
         else
         {
             result.ShouldHaveValidationErrorFor(x => x.GroupPhase!.NumberOfGroupRounds)
-                .WithErrorMessage("Number of group phase rounds must be between 1 and 4.")
+                .WithErrorMessage("Number of group phase rounds must be between 1 and 8.")
                 .Only();
         }
     }

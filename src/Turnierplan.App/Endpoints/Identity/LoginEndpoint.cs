@@ -5,7 +5,6 @@ using Microsoft.Extensions.Options;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
 using Turnierplan.Core.User;
-using Turnierplan.Dal;
 using IdentityOptions = Turnierplan.App.Options.IdentityOptions;
 
 namespace Turnierplan.App.Endpoints.Identity;
@@ -101,12 +100,10 @@ internal sealed class LoginEndpoint : IdentityEndpointBase<LoginEndpoint.LoginEn
         {
             RuleFor(x => x.EMail)
                 .NotEmpty()
-                .EmailAddress()
-                .MaximumLength(ValidationConstants.User.MaxEMailLength);
+                .EmailAddress();
 
             RuleFor(x => x.Password)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.User.MaxPasswordLength);
+                .NotEmpty();
         }
     }
 }

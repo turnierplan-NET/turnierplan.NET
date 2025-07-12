@@ -94,50 +94,6 @@ public sealed class SetTournamentPresentationConfigurationEndpointTest
     }
 
     [Fact]
-    public void SetTournamentPresentationConfigurationEndpointRequest___When_Header_1_Is_Custom_But_Custom_Value_Is_Too_Long___Is_Invalid()
-    {
-        var command = new SetTournamentPresentationConfigurationEndpoint.SetTournamentPresentationConfigurationEndpointRequest
-        {
-            Configuration = __validConfiguration with
-            {
-                Header1 = new PresentationConfigurationDto.HeaderLine
-                {
-                    Content = PresentationConfiguration.HeaderLineContent.CustomValue,
-                    CustomContent = "012345678901234567890123456789012345678901234567890123456789_"
-                }
-            }
-        };
-
-        var result = SetTournamentPresentationConfigurationEndpoint.Validator.Instance.TestValidate(command);
-
-        result.ShouldHaveValidationErrorFor(x => x.Configuration.Header1.CustomContent)
-            .WithErrorMessage("The length of 'Configuration Header1 Custom Content' must be 60 characters or fewer. You entered 61 characters.")
-            .Only();
-    }
-
-    [Fact]
-    public void SetTournamentPresentationConfigurationEndpointRequest___When_Header_2_Is_Custom_But_Custom_Value_Is_Too_Long___Is_Invalid()
-    {
-        var command = new SetTournamentPresentationConfigurationEndpoint.SetTournamentPresentationConfigurationEndpointRequest
-        {
-            Configuration = __validConfiguration with
-            {
-                Header2 = new PresentationConfigurationDto.HeaderLine
-                {
-                    Content = PresentationConfiguration.HeaderLineContent.CustomValue,
-                    CustomContent = "012345678901234567890123456789012345678901234567890123456789_"
-                }
-            }
-        };
-
-        var result = SetTournamentPresentationConfigurationEndpoint.Validator.Instance.TestValidate(command);
-
-        result.ShouldHaveValidationErrorFor(x => x.Configuration.Header2.CustomContent)
-            .WithErrorMessage("The length of 'Configuration Header2 Custom Content' must be 60 characters or fewer. You entered 61 characters.")
-            .Only();
-    }
-
-    [Fact]
     public void SetTournamentPresentationConfigurationEndpointRequest___When_Header_1_Has_Invalid_Type___Is_Invalid()
     {
         var command = new SetTournamentPresentationConfigurationEndpoint.SetTournamentPresentationConfigurationEndpointRequest

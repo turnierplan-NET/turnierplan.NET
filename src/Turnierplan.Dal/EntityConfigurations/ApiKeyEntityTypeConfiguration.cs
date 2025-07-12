@@ -35,12 +35,10 @@ public sealed class ApiKeyEntityTypeConfiguration : IEntityTypeConfiguration<Api
             .IsRequired();
 
         builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.ApiKey.MaxNameLength);
+            .IsRequired();
 
         builder.Property(x => x.Description)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.ApiKey.MaxDescriptionLength);
+            .IsRequired();
 
         builder.Property(x => x.SecretHash)
             .IsRequired();

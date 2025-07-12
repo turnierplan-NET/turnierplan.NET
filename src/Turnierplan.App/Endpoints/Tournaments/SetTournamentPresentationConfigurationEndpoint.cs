@@ -5,7 +5,6 @@ using Turnierplan.App.Models;
 using Turnierplan.App.Security;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Tournaments;
 
@@ -82,10 +81,6 @@ internal sealed class SetTournamentPresentationConfigurationEndpoint : EndpointB
                 .When(x => x.Configuration.Header1.Content is PresentationConfiguration.HeaderLineContent.CustomValue)
                 .WithMessage($"Custom content of header 1 must not be empty if content is '{nameof(PresentationConfiguration.HeaderLineContent.CustomValue)}'.");
 
-            RuleFor(x => x.Configuration.Header1.CustomContent)
-                .MaximumLength(ValidationConstants.Tournament.PresentationConfiguration.MaxCustomHeaderLength)
-                .When(x => x.Configuration.Header1.CustomContent is not null);
-
             RuleFor(x => x.Configuration.Header2.Content)
                 .IsInEnum();
 
@@ -93,10 +88,6 @@ internal sealed class SetTournamentPresentationConfigurationEndpoint : EndpointB
                 .NotEmpty()
                 .When(x => x.Configuration.Header2.Content is PresentationConfiguration.HeaderLineContent.CustomValue)
                 .WithMessage($"Custom content of header 2 must not be empty if content is '{nameof(PresentationConfiguration.HeaderLineContent.CustomValue)}'.");
-
-            RuleFor(x => x.Configuration.Header2.CustomContent)
-                .MaximumLength(ValidationConstants.Tournament.PresentationConfiguration.MaxCustomHeaderLength)
-                .When(x => x.Configuration.Header2.CustomContent is not null);
 
             RuleFor(x => x.Configuration.ShowResults)
                 .IsInEnum();

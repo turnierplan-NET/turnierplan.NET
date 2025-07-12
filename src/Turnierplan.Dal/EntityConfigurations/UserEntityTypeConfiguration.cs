@@ -25,16 +25,13 @@ public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
             .IsRequired();
 
         builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.User.MaxNameLength);
+            .IsRequired();
 
         builder.Property(x => x.EMail)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.User.MaxEMailLength);
+            .IsRequired();
 
         builder.Property(x => x.NormalizedEMail)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.User.MaxEMailLength);
+            .IsRequired();
 
         builder.HasIndex(x => x.NormalizedEMail)
             .IsUnique();

@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
@@ -8,7 +7,6 @@ using Turnierplan.App.Security;
 using Turnierplan.Core.Document;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament;
-using Turnierplan.Dal;
 using Turnierplan.PdfRendering;
 
 namespace Turnierplan.App.Endpoints.Documents;
@@ -74,7 +72,6 @@ internal sealed class CreateDocumentEndpoint : EndpointBase<DocumentDto>
 
         public required DocumentType Type { get; init; }
 
-        [MaxLength(ValidationConstants.Document.MaxNameLength)]
         public required string Name { get; init; }
     }
 
@@ -85,8 +82,7 @@ internal sealed class CreateDocumentEndpoint : EndpointBase<DocumentDto>
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Tournament.MaxNameLength);
+                .NotEmpty();
         }
     }
 }

@@ -8,7 +8,6 @@ using Turnierplan.App.Security;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
-using Turnierplan.Dal;
 using Turnierplan.ImageStorage;
 
 namespace Turnierplan.App.Endpoints.Images;
@@ -164,8 +163,7 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
                 .WithMessage("Image file size must be 1MB or less.");
 
             RuleFor(x => x.ImageName)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Image.MaxNameLength);
+                .NotEmpty();
         }
     }
 }
