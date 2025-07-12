@@ -866,7 +866,8 @@ export const de = {
         Validity7: '1 Woche',
         Validity30: '30 Tage',
         Validity90: '90 Tage',
-        Validity180: '180 Tage'
+        Validity180: '180 Tage',
+        Validity365: '365 Tage'
       },
       OrganizationNotice: 'Es wird ein neuer API-Schlüssel in der Organisation <span class="fw-bold">{{organizationName}}</span> angelegt.',
       AccessNotice: 'Ein neuer API-Schlüssel erhält standardmäßig Leserechte für die aktuelle Organisation.',

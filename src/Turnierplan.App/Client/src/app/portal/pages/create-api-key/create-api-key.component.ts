@@ -20,7 +20,7 @@ export class CreateApiKeyComponent {
   protected form = new FormGroup({
     name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     description: new FormControl('', { nonNullable: true }),
-    validity: new FormControl(30, { nonNullable: true, validators: [Validators.min(1)] })
+    validity: new FormControl(30, { nonNullable: true, validators: [Validators.min(1), Validators.max(365)] })
   });
 
   constructor(

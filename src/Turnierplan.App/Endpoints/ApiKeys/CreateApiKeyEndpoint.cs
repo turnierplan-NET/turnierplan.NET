@@ -97,7 +97,7 @@ internal sealed class CreateApiKeyEndpoint : EndpointBase<ApiKeyDto>
 
             RuleFor(x => x.Validity)
                 .GreaterThanOrEqualTo(1)
-                .LessThanOrEqualTo(180);
+                .LessThanOrEqualTo(365);
         }
     }
 }
