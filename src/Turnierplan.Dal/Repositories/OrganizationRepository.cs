@@ -43,6 +43,11 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
             query = query.Include(x => x.ApiKeys);
         }
 
+        if (include.HasFlag(IOrganizationRepository.Include.PlanningRealms))
+        {
+            query = query.Include(x => x.PlanningRealms);
+        }
+
         query = query
             .Include(x => x.RoleAssignments)
             .AsSplitQuery();

@@ -7,6 +7,7 @@ using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
+using Turnierplan.Core.Planning;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament;
@@ -28,6 +29,7 @@ internal sealed class GetRoleAssignmentsEndpoint : EndpointBase<IEnumerable<Role
         IFolderRepository folderRepository,
         IImageRepository imageRepository,
         IOrganizationRepository organizationRepository,
+        IPlanningRealmRepository planningRealmRepository,
         ITournamentRepository tournamentRepository,
         IVenueRepository venueRepository,
         IAccessValidator accessValidator,
@@ -44,6 +46,7 @@ internal sealed class GetRoleAssignmentsEndpoint : EndpointBase<IEnumerable<Role
             "Folder" => GetRoleAssignmentsAsync(folderRepository, targetId, accessValidator, mapper),
             "Image" => GetRoleAssignmentsAsync(imageRepository, targetId, accessValidator, mapper),
             "Organization" => GetRoleAssignmentsAsync(organizationRepository, targetId, accessValidator, mapper),
+            "PlanningRealm" => GetRoleAssignmentsAsync(planningRealmRepository, targetId, accessValidator, mapper),
             "Tournament" => GetRoleAssignmentsAsync(tournamentRepository, targetId, accessValidator, mapper),
             "Venue" => GetRoleAssignmentsAsync(venueRepository, targetId, accessValidator, mapper),
             _ => null
@@ -79,7 +82,6 @@ internal sealed class GetRoleAssignmentsEndpoint : EndpointBase<IEnumerable<Role
                 .Select(r => r with { IsInherited = true }));
         }
 
-        // Special case in generic method is not the cleanest...
         if (entity is Tournament { Folder: not null } tournament)
         {
             result.AddRange(mapper.MapCollection<RoleAssignmentDto>(tournament.Folder.RoleAssignments)
