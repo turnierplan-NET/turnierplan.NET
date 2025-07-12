@@ -7,7 +7,6 @@
     [formControl]="venueName"
     [required]="true"
     [minlength]="1"
-    [maxlength]="60"
     [ngClass]="venueName.dirty || venueName.touched ? (venueName.invalid ? 'is-invalid' : 'is-valid') : ''" />
   <div class="invalid-feedback" translate="Portal.CreateVenue.Form.NameInvalid"></div>
   <div class="valid-feedback" translate="Portal.CreateVenue.Form.NameValid"></div>

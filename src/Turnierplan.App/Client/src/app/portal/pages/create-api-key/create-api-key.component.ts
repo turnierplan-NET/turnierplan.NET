@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 
 import { ApiKeyDto, OrganizationDto, ApiKeysService, OrganizationsService } from '../../../api';
@@ -18,16 +18,15 @@ export class CreateApiKeyComponent {
   protected createdApiKey?: ApiKeyDto;
 
   protected form = new FormGroup({
-    name: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(25)] }),
-    description: new FormControl('', { nonNullable: true, validators: [Validators.maxLength(250)] }),
-    validity: new FormControl(30, { nonNullable: true, validators: [Validators.min(1), Validators.max(180)] })
+    name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    description: new FormControl('', { nonNullable: true }),
+    validity: new FormControl(30, { nonNullable: true, validators: [Validators.min(1), Validators.max(365)] })
   });
 
   constructor(
     private readonly organizationService: OrganizationsService,
     private readonly apiKeyService: ApiKeysService,
     private readonly route: ActivatedRoute,
-    private readonly router: Router,
     private readonly titleService: TitleService
   ) {
     this.route.paramMap

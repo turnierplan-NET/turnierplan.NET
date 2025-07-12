@@ -74,7 +74,6 @@ export const de = {
       IllustrationAlt: 'Eine Illustration, welche "{{description}}" symbolisiert.',
       CopyToClipboard: 'In die Zwischenablage kopieren',
       OpenInNewTab: 'In neuem Tab öffnen',
-      CharacterLimit: '{{current}} von {{maximum}} Zeichen',
       ApplyChanges: 'Änderungen übernehmen'
     },
     UserInfoPopover: {
@@ -134,11 +133,11 @@ export const de = {
       LongTitle: 'Neuen Benutzer erstellen',
       Form: {
         UserName: 'Name',
-        UserNameInvalid: 'Der Name eines neuen Nutzers muss zwischen 1 und 100 Zeichen lang sein.',
+        UserNameInvalid: 'Der Name eines neuen Nutzers darf nicht leer sein.',
         Email: 'E-Mailadresse',
-        EmailInvalid: 'Die E-Mailadresse ist ungültig oder zu lang (max. 100 Zeichen)',
+        EmailInvalid: 'Die eingegebene E-Mailadresse ist ungültig.',
         Password: 'Passwort',
-        PasswordInvalid: 'Das Passwort ist ungültig oder zu lang (max. 64 Zeichen)'
+        PasswordInvalid: 'Das eingegebene Passwort ist ungültig.'
       },
       UserNotice: 'Der erstellte Nutzer kann sich unmittelbar danach mit E-Mail und Passwort anmelden.',
       Submit: 'Erstellen'
@@ -148,7 +147,7 @@ export const de = {
       LongTitle: 'Neue Organisation erstellen',
       Form: {
         Name: 'Name',
-        NameInvalid: 'Der Name einer neuen Organisation muss zwischen 1 und 40 Zeichen lang sein.',
+        NameInvalid: 'Der Name einer neuen Organisation darf nicht leer sein.',
         NameValid: 'Dieser Name kann verwendet werden.'
       },
       UserNotice: 'Eine Organisation ist z.B. Ihr Sportverein oder Ihre Firma.',
@@ -178,8 +177,7 @@ export const de = {
           Button: 'Name ändern',
           Title: 'Ordner umbenennen',
           EnterNewName: 'Geben Sie den neuen Namen für den Ordner ein:',
-          RequiredFeedback: 'Der Ordername darf nicht leer sein.',
-          MaxLengthFeedback: 'Der Ordername darf max. {{maxLength}} Zeichen lang sein.'
+          RequiredFeedback: 'Der Ordername darf nicht leer sein.'
         },
         Timetable: 'Zeitplan',
         Statistics: 'Statistik',
@@ -225,8 +223,7 @@ export const de = {
         Rename: {
           Button: 'Umbenennen',
           Title: 'Organisation umbenennen',
-          EnterNewName: 'Geben Sie den neuen Namen für die Organisation ein:',
-          MaxLengthFeedback: 'Der Name der Organisation darf max. {{maxLength}} Zeichen lang sein.'
+          EnterNewName: 'Geben Sie den neuen Namen für die Organisation ein:'
         }
       }
     },
@@ -234,7 +231,7 @@ export const de = {
       Title: 'Neues Turnier erstellen',
       Form: {
         Name: 'Name',
-        NameInvalid: 'Der Name eines neuen Turniers muss zwischen 1 und 60 Zeichen lang sein.',
+        NameInvalid: 'Der Name eines neuen Turniers darf nicht leer sein.',
         NameValid: 'Dieser Name kann verwendet werden.',
         Folder: 'Ordner',
         FolderTooltip: 'Mithilfe von Ordnern können Sie Ihre Turniere organisieren.',
@@ -244,7 +241,7 @@ export const de = {
           'In Ihrer aktuellen Organisation gibt es aktuell keine Ordner. Erstellen Sie mit der unteren Option einen neuen Ordner.',
         CreateNewFolder: 'Neuen Ordner erstellen',
         NamePlaceholder: 'Geben Sie den Namen für den neuen Ordner ein...',
-        FolderNameInvalid: 'Der Name eines neuen Ordners muss zwischen 1 und 60 Zeichen lang sein.',
+        FolderNameInvalid: 'Der Name eines neuen Ordners darf nicht leer sein.',
         FolderNameValid: 'Dieser Name kann verwendet werden.',
         Visibility: 'Sichtbarkeit',
         VisibilityTooltip: 'Legen Sie fest, ob das Turnier von jedem gesehen kann oder nur, wenn Sie eingeloggt sind.'
@@ -303,7 +300,6 @@ export const de = {
           Button: 'Gruppennamen ändern',
           Title: 'Gruppennamen ändern',
           EnterNewName: 'Geben Sie den neuen Namen für die Gruppe ein:',
-          MaxLengthFeedback: 'Der Gruppenname darf max. {{maxLength}} Zeichen lang sein.',
           EmptyAllowed: 'Sie können das Feld leerlassen, um zum Standardnamen ("Gruppe A-Z") zurückzukehren.'
         }
       },
@@ -332,8 +328,7 @@ export const de = {
           Button: 'Name ändern',
           Title: 'Mannschaft umbenennen',
           EnterNewName: 'Geben Sie den neuen Namen für die Mannschaft ein:',
-          RequiredFeedback: 'Der Mannschaftsname darf nicht leer sein.',
-          MaxLengthFeedback: 'Der Mannschaftsname darf max. {{maxLength}} Zeichen lang sein.'
+          RequiredFeedback: 'Der Mannschaftsname darf nicht leer sein.'
         }
       },
       Ranking: {
@@ -360,8 +355,7 @@ export const de = {
         },
         Rename: {
           Title: 'Dokument umbenennen',
-          EnterNewName: 'Geben Sie den neuen Namen für das Dokument ein:',
-          MaxLengthFeedback: 'Der Dokument-Name darf max. {{maxLength}} Zeichen lang sein.'
+          EnterNewName: 'Geben Sie den neuen Namen für das Dokument ein:'
         },
         DeleteToast: {
           Title: 'Dokument wurde gelöscht',
@@ -385,16 +379,16 @@ export const de = {
             Amount: 'Betrag',
             AmountInvalid: 'Der Betrag muss min 0,01 betragen.',
             Currency: 'Währung',
-            CurrencyInvalid: 'Die Währung muss angegeben werden und darf max. 10 Zeichen lang sein.',
+            CurrencyInvalid: 'Die Währung muss angegeben werden und darf nicht leer sein.',
             HeaderInfo: 'Zusatz in der Kopfzeile (optional)',
             HeaderInfoTooltip: 'Sofern vorhanden, wird dieser Text zusätzlich zum Namen des Turniers angegeben.',
-            HeaderInfoInvalid: 'Der angegebene Text darf max. 100 Zeichen lang sein.',
+            HeaderInfoInvalid: 'Der angegebene Text ist ungültig.',
             SignatureLocation: 'Ort der Unterschrift (optional)',
-            SignatureLocationInvalid: 'Der angegebene Ort darf max. 100 Zeichen lang sein.',
+            SignatureLocationInvalid: 'Der angegebene Ort ist ungültig.',
             SignatureRecipient: 'Name des Empfängers (optional)',
             SignatureRecipientTooltip:
               'Wenn angegeben, wird dieser Zahlungsempfänger im Bereich der Unterschrift angegeben. Als Standard steht dort "(Turnierleitung)".',
-            SignatureRecipientInvalid: 'Der angegebene Text darf max. 100 Zeichen lang sein.',
+            SignatureRecipientInvalid: 'Der angegebene Text ist ungültig.',
             ShowSponsorLogo: 'Sponsorlogo abbilden (falls vorhanden)',
             CombineSimilarTeams: 'Mannschaften mit ähnlichem Namen kombinieren',
             CombineSimilarTeamsTooltip:
@@ -411,15 +405,15 @@ export const de = {
             OrganizerNameOverride: 'Veranstalter (optional)',
             OrganizerNameOverrideTooltip:
               'Standardmäßig wird auf dem Spielplan der Name der Organisation abgebildet. Wenn dieses Feld ausgefüllt wird, wird stattdessen der angegebene Text abgedruckt.',
-            OrganizerNameOverrideInvalid: 'Der Text muss entweder leer sein oder darf max. 100 Zeichen lang sein.',
+            OrganizerNameOverrideInvalid: 'Der angegebene Text ist ungültig.',
             TournamentNameOverride: 'Turniername (optional)',
             TournamentNameOverrideTooltip:
               'Standardmäßig wird auf dem Spielplan der Name des Turniers abgebildet. Wenn dieses Feld ausgefüllt wird, wird stattdessen der angegebene Text abgedruckt.',
-            TournamentNameOverrideInvalid: 'Der Text muss entweder leer sein oder darf max. 100 Zeichen lang sein.',
+            TournamentNameOverrideInvalid: 'Der angegebene Text ist ungültig.',
             VenueOverride: 'Spielort (optional)',
             VenueOverrideTooltip:
               'Standardmäßig wird auf dem Spielplan (sofern vorhanden) der Name der verknüpften Spielstätte abgebildet. Wenn dieses Feld ausgefüllt wird, wird stattdessen der angegebene Text abgedruckt.',
-            VenueOverrideInvalid: 'Der Text muss entweder leer sein oder darf max. 100 Zeichen lang sein.',
+            VenueOverrideInvalid: 'Der angegebene Text ist ungültig.',
             DateFormat: 'Angabe vom Datum',
             DateFormats: {
               NoDate: 'nicht angeben',
@@ -468,7 +462,7 @@ export const de = {
           Header1: 'Titelzeile 1:',
           Header2: 'Titelzeile 2:',
           HeaderCustomValuePlaceholder: 'Eigenen Text eingeben',
-          HeaderCustomValueInvalid: 'Der Text muss zwischen 1 und 60 Zeichen lang sein.',
+          HeaderCustomValueInvalid: 'Der Text darf nicht leer sein.',
           HeaderLineContent: {
             TournamentName: 'Name des Turniers',
             OrganizerName: 'Name der Organisation',
@@ -492,8 +486,7 @@ export const de = {
         Rename: {
           Button: 'Umbenennen',
           Title: 'Turnier umbenennen',
-          EnterNewName: 'Geben Sie den neuen Namen für das Turnier ein:',
-          MaxLengthFeedback: 'Der Turnier-Name darf max. {{maxLength}} Zeichen lang sein.'
+          EnterNewName: 'Geben Sie den neuen Namen für das Turnier ein:'
         },
         EditMatchPlan: {
           Title: 'Spielplan bearbeiten',
@@ -551,9 +544,9 @@ export const de = {
             UploadFailed: 'Das Bild konnte nicht hochgeladen werden. Prüfen Sie die Maße und die maximale Dateigröße.',
             Constraints: {
               SquareLargeLogo:
-                'Das Bild muss quadratisch sein mit einer Auflösung zwischen 50x50 und 3000x3000 Pixel. Die maximale Dateigröße beträgt 1 MB.',
+                'Das Bild muss quadratisch sein mit einer Auflösung zwischen 50x50 und 3000x3000 Pixel. Die maximale Dateigröße beträgt 8 MB.',
               SponsorBanner:
-                'Das Bild muss mindestens 50px hoch sein und darf maximal 3000px breit sein. Das Seitenverhältnis muss zwischen 3:1 und 5:1 liegen. Die maximale Dateigröße beträgt 1 MB.'
+                'Das Bild muss mindestens 50px hoch sein und darf maximal 3000px breit sein. Das Seitenverhältnis muss zwischen 3:1 und 5:1 liegen. Die maximale Dateigröße beträgt 8 MB.'
             },
             DetailView: {
               Title: 'Hier sehen Sie die Detailinformationen zu folgendem Bild:',
@@ -576,7 +569,7 @@ export const de = {
             'In Ihrer aktuellen Organisation gibt es aktuell keine weiteren Ordner. Erstellen Sie mit der unteren Option einen neuen Ordner.',
           CreateNewFolder: 'Neuen Ordner erstellen',
           NamePlaceholder: 'Geben Sie den Namen für den neuen Ordner ein...',
-          FolderNameInvalid: 'Der Name eines neuen Ordners muss zwischen 1 und 60 Zeichen lang sein.',
+          FolderNameInvalid: 'Der Name eines neuen Ordners darf nicht leer sein.',
           FolderNameValid: 'Dieser Name kann verwendet werden.'
         }
       },
@@ -755,7 +748,7 @@ export const de = {
       Title: 'Neue Spielstätte erstellen',
       Form: {
         Name: 'Name',
-        NameInvalid: 'Der Name einer neuen Spielstätte muss zwischen 1 und 60 Zeichen lang sein.',
+        NameInvalid: 'Der Name einer neuen Spielstätte darf nicht leer sein.',
         NameValid: 'Dieser Name kann verwendet werden.'
       },
       OrganizationNotice: 'Es wird eine neue Spielstätte in der Organisation <span class="fw-bold">{{organizationName}}</span> angelegt.',
@@ -775,8 +768,7 @@ export const de = {
           Button: 'Bearbeiten',
           Title: 'Spielstätte umbenennen',
           EnterNewName: 'Geben Sie den neuen Namen für die Spielstätte ein:',
-          RequiredFeedback: 'Der Name der Spielstätte darf nicht leer sein.',
-          MaxLengthFeedback: 'Der Name der Spielstätte darf max. {{maxLength}} Zeichen lang sein.'
+          RequiredFeedback: 'Der Name der Spielstätte darf nicht leer sein.'
         },
         Description: 'Beschreibung',
         NoDescription: 'Keine Beschreibung vorhanden',
@@ -789,24 +781,20 @@ export const de = {
         NoAddressDetails: 'Keine Adressdetails vorhanden',
         EditAddressDetails: {
           Title: 'Adressdetails bearbeiten',
-          HelpText: 'Sie können bis zu {{maxCount}} Einträge hinzufügen. Beispiele hierfür sind z.B. Straße, Hausnummer, PLZ oder Ort.',
-          InvalidEntry: 'Jeder Eintrag muss zwischen 1 und {{maxLength}} Zeichen lang sein.',
+          HelpText: 'Beispiele für Adressdetails sind z.B. Straße, Hausnummer, PLZ oder Ort.',
+          InvalidEntry: 'Ein bestehender Eintrag darf nicht leer sein.',
           NoEntries: 'Keine Einträge vorhanden',
-          AddEntry: 'Zeile hinzufügen',
-          MaximumReached: 'Das Maximum von {{maxCount}} Zeilen ist erreicht'
+          AddEntry: 'Zeile hinzufügen'
         },
         ExternalLinks: 'Externe Referenzen',
         ExternalLinksTooltip: 'Externe Links sind z.B. Links zu Kartenanbietern oder einer externen Webseite.',
         NoExternalLinks: 'Keine externen Referenzen vorhanden',
         EditExternalLinks: {
           Title: 'Externe Referenzen bearbeiten',
-          HelpText:
-            'Sie können bis zu {{maxCount}} Referenzen hinzufügen. Beispiele hierfür sind z.B. Links zu Ihrer Webseite oder einem Kartenanbieter.',
-          InvalidEntry:
-            'Jeder Eintrag muss zwischen 1 und {{maxLength}} Zeichen lang sein. Es muss sich auch um einen gültigen HTTPS-Link handeln.',
+          HelpText: 'Beispiele für Externe Referenzen sind z.B. Links zu Ihrer Webseite oder einem Kartenanbieter.',
+          InvalidEntry: 'Ein bestehender Eintrag darf nicht leer sein und es muss sich um einen gültigen HTTPS-Link handeln.',
           NoEntries: 'Keine Links vorhanden',
-          AddEntry: 'Link hinzufügen',
-          MaximumReached: 'Das Maximum von {{maxCount}} Links ist erreicht'
+          AddEntry: 'Link hinzufügen'
         },
         UnsavedChanges: 'Sie haben ungespeicherte Änderungen, welche noch übernommen werden müssen.',
         SuccessToast: {
@@ -868,17 +856,18 @@ export const de = {
       Title: 'Neuen API-Schlüssel erstellen',
       Form: {
         Name: 'Name',
-        NameInvalid: 'Der Name muss zwischen 1 und 25 Zeichen lang sein.',
+        NameInvalid: 'Der Name darf nicht leer sein.',
         NameValid: 'Dieser Name kann verwendet werden.',
         Description: 'Beschreibung',
-        DescriptionInvalid: 'Die Beschreibung darf max. 250 Zeichen lang sein.',
+        DescriptionInvalid: 'Die Beschreibung ist ungültig.',
         DescriptionValid: 'Diese Beschreibung kann verwendet werden.',
         Validity: 'Gültigkeit',
         Validity1: '1 Tag',
         Validity7: '1 Woche',
         Validity30: '30 Tage',
         Validity90: '90 Tage',
-        Validity180: '180 Tage'
+        Validity180: '180 Tage',
+        Validity365: '365 Tage'
       },
       OrganizationNotice: 'Es wird ein neuer API-Schlüssel in der Organisation <span class="fw-bold">{{organizationName}}</span> angelegt.',
       AccessNotice: 'Ein neuer API-Schlüssel erhält standardmäßig Leserechte für die aktuelle Organisation.',

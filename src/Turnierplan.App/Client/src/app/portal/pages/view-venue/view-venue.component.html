@@ -27,7 +27,6 @@
                 *tpIsActionAllowed="[venue.id, Actions.GenericWrite]"
                 [translationKey]="'Portal.ViewVenue.Details.Rename'"
                 [current]="venue.name"
-                [maxLength]="60"
                 (renamed)="venue.name = $event; isDirty = true" />
             </div>
             <hr class="m-0" />

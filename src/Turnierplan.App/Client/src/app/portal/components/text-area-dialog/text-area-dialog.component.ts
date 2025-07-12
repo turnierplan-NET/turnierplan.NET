@@ -8,24 +8,18 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class TextAreaDialogComponent {
   protected isInitialized = false;
   protected translationKey: string = '';
-  protected maxLength: number = 0;
   protected initialValue: string = '';
   protected currentValue: string = '';
   protected wasChanged = false;
 
   constructor(protected readonly modal: NgbActiveModal) {}
 
-  protected get currentLength(): number {
-    return this.currentValue.trim().length;
-  }
-
-  public init(translationKey: string, maxLength: number, initialValue: string): void {
+  public init(translationKey: string, initialValue: string): void {
     if (this.isInitialized) {
       return;
     }
 
     this.translationKey = translationKey;
-    this.maxLength = maxLength;
     this.initialValue = initialValue;
     this.currentValue = initialValue;
     this.wasChanged = false;
@@ -40,11 +34,6 @@ export class TextAreaDialogComponent {
     }
 
     const sanitized = this.currentValue.trim();
-
-    if (sanitized.length > this.maxLength) {
-      return;
-    }
-
     const sanitizedInitial = (this.initialValue ?? '').trim();
 
     if (sanitized !== sanitizedInitial) {

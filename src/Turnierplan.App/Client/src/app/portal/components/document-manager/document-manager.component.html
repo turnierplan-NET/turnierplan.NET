@@ -37,7 +37,6 @@
                 [translationKey]="'Portal.ViewTournament.Documents.Rename'"
                 [displayLabel]="false"
                 [current]="doc.name"
-                [maxLength]="30"
                 [disabled]="currentlyUpdatingName !== undefined"
                 (renamed)="renameDocument(doc.id, $event)" />
             }

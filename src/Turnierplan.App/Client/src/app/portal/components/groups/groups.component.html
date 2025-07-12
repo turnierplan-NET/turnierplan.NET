@@ -16,7 +16,6 @@
               [disabled]="isUpdatingAnyGroup"
               [displayLabel]="false"
               [allowReset]="true"
-              [maxLength]="25"
               [current]="group.hasCustomDisplayName ? group.displayName : undefined"
               (renamed)="renameGroup(group.id, $event)"
               (resetName)="renameGroup(group.id, undefined)" />

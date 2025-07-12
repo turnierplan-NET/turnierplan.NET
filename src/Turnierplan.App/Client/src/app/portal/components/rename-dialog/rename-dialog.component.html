@@ -15,12 +15,7 @@
         (keyup.enter)="save(true)"
         (change)="wasChanged = true" />
 
-      @if (showError === 'MaxLengthFeedback') {
-        <div
-          class="invalid-feedback"
-          [translate]="translationKey + '.MaxLengthFeedback'"
-          [translateParams]="{ maxLength: maxLength }"></div>
-      } @else if (showError) {
+      @if (showError) {
         <div class="invalid-feedback" [translate]="translationKey + '.' + showError"></div>
       }
     </div>
