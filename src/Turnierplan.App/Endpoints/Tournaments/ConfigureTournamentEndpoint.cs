@@ -273,9 +273,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
 
                 group.RuleFor(x => x.DisplayName)
                     .NotEmpty()
-                    .WithMessage("Group display name must be null or a non-empty string with at most 25 characters.")
-                    .MaximumLength(ValidationConstants.Group.MaxDisplayNameLength)
-                    .WithMessage("Group display name must be null or a non-empty string with at most 25 characters.")
+                    .WithMessage("Group display name must be null or a non-empty string.")
                     .When(y => y.DisplayName is not null);
 
                 group.RuleFor(x => x.Teams)
@@ -288,9 +286,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
                 {
                     team.RuleFor(x => x.Name)
                         .NotEmpty()
-                        .WithMessage($"Team name must be a non-empty string with at most {ValidationConstants.Team.MaxNameLength} characters.")
-                        .MaximumLength(ValidationConstants.Team.MaxNameLength)
-                        .WithMessage($"Team name must be a non-empty string with at most {ValidationConstants.Team.MaxNameLength} characters.");
+                        .WithMessage($"Team name must be a non-empty string.");
                 });
             });
 
@@ -365,15 +361,11 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
                             playoff.RuleFor(x => x.TeamSelectorA)
                                 .NotEmpty()
                                 .WithMessage("Additional playoff definition must contain only valid team selectors.")
-                                .MaximumLength(ValidationConstants.Match.MaxTeamSelectorLength)
-                                .WithMessage("Additional playoff definition must contain only valid team selectors.")
                                 .Must(x => AbstractTeamSelectorParser.TryParseAbstractTeamSelector(x, out _))
                                 .WithMessage("Additional playoff definition must contain only valid team selectors.");
 
                             playoff.RuleFor(x => x.TeamSelectorB)
                                 .NotEmpty()
-                                .WithMessage("Additional playoff definition must contain only valid team selectors.")
-                                .MaximumLength(ValidationConstants.Match.MaxTeamSelectorLength)
                                 .WithMessage("Additional playoff definition must contain only valid team selectors.")
                                 .Must(x => AbstractTeamSelectorParser.TryParseAbstractTeamSelector(x, out _))
                                 .WithMessage("Additional playoff definition must contain only valid team selectors.");

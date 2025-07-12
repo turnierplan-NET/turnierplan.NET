@@ -5,7 +5,6 @@ using Turnierplan.App.Security;
 using Turnierplan.Core.Document;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Documents;
 
@@ -49,9 +48,7 @@ internal sealed class CopyDocumentEndpoint : EndpointBase<DocumentDto>
             return Results.BadRequest("Source document must belong to the same organization as the destination tournament.");
         }
 
-        var documentCopyName = sourceDocument.Name.Length >= ValidationConstants.Document.MaxNameLength
-            ? sourceDocument.Name[..(ValidationConstants.Document.MaxNameLength - 1)] + "*"
-            : $"{sourceDocument.Name}*";
+        var documentCopyName = $"{sourceDocument.Name}*";
 
         var documentCopy = new Document(tournament, sourceDocument.Type, documentCopyName, sourceDocument.Configuration);
 

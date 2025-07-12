@@ -64,16 +64,13 @@ internal sealed class CreateUserEndpoint : EndpointBase
         private Validator()
         {
             RuleFor(x => x.UserName)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.User.MaxNameLength);
+                .NotEmpty();
 
             RuleFor(x => x.EMail)
-                .EmailAddress()
-                .MaximumLength(ValidationConstants.User.MaxEMailLength);
+                .EmailAddress();
 
             RuleFor(x => x.Password)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.User.MaxPasswordLength);
+                .NotEmpty();
         }
     }
 }

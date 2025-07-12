@@ -32,8 +32,7 @@ public sealed class FolderEntityTypeConfiguration : IEntityTypeConfiguration<Fol
             .IsRequired();
 
         builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.Folder.MaxNameLength);
+            .IsRequired();
 
         builder.HasMany(x => x.Tournaments)
             .WithOne(x => x.Folder)

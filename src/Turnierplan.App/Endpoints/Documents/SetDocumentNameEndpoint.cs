@@ -59,8 +59,7 @@ internal sealed class SetDocumentNameEndpoint : EndpointBase
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Document.MaxNameLength);
+                .NotEmpty();
         }
     }
 }

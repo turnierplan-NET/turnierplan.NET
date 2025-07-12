@@ -65,8 +65,7 @@ internal sealed class CreateOrganizationEndpoint : EndpointBase<OrganizationDto>
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Organization.MaxNameLength);
+                .NotEmpty();
         }
     }
 }

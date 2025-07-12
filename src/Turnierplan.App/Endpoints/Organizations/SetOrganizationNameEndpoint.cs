@@ -59,8 +59,7 @@ internal sealed class SetOrganizationNameEndpoint : EndpointBase
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Organization.MaxNameLength);
+                .NotEmpty();
         }
     }
 }

@@ -121,7 +121,6 @@ internal sealed class SetTournamentFolderEndpoint : EndpointBase
 
             RuleFor(x => x.FolderName)
                 .NotEmpty()
-                .MaximumLength(ValidationConstants.Folder.MaxNameLength)
                 .When(x => x.FolderName is not null);
         }
     }

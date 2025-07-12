@@ -67,8 +67,7 @@ internal sealed class SetTeamNameEndpoint : EndpointBase
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Team.MaxNameLength);
+                .NotEmpty();
         }
     }
 }

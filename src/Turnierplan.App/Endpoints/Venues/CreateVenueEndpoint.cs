@@ -68,8 +68,7 @@ internal sealed class CreateVenueEndpoint : EndpointBase<VenueDto>
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Venue.MaxNameLength);
+                .NotEmpty();
         }
     }
 }

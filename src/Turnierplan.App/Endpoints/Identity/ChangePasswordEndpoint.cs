@@ -129,16 +129,13 @@ internal sealed class ChangePasswordEndpoint : IdentityEndpointBase<ChangePasswo
         {
             RuleFor(x => x.EMail)
                 .NotEmpty()
-                .EmailAddress()
-                .MaximumLength(ValidationConstants.User.MaxEMailLength);
+                .EmailAddress();
 
             RuleFor(x => x.CurrentPassword)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.User.MaxPasswordLength);
+                .NotEmpty();
 
             RuleFor(x => x.NewPassword)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.User.MaxPasswordLength);
+                .NotEmpty();
         }
     }
 }

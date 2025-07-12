@@ -33,8 +33,7 @@ public sealed class TournamentEntityTypeConfiguration : IEntityTypeConfiguration
             .IsRequired();
 
         builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.Tournament.MaxNameLength);
+            .IsRequired();
 
         builder.Property(x => x.Visibility)
             .IsRequired();

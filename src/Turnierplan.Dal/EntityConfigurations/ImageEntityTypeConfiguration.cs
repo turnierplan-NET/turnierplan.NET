@@ -38,15 +38,13 @@ public sealed class ImageEntityTypeConfiguration : IEntityTypeConfiguration<Imag
             .IsRequired();
 
         builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.Image.MaxNameLength);
+            .IsRequired();
 
         builder.Property(x => x.Type)
             .IsRequired();
 
         builder.Property(x => x.FileType)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.Image.MaxFileTypeLength);
+            .IsRequired();
 
         builder.Property(x => x.FileSize)
             .IsRequired();

@@ -101,12 +101,10 @@ internal sealed class LoginEndpoint : IdentityEndpointBase<LoginEndpoint.LoginEn
         {
             RuleFor(x => x.EMail)
                 .NotEmpty()
-                .EmailAddress()
-                .MaximumLength(ValidationConstants.User.MaxEMailLength);
+                .EmailAddress();
 
             RuleFor(x => x.Password)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.User.MaxPasswordLength);
+                .NotEmpty();
         }
     }
 }

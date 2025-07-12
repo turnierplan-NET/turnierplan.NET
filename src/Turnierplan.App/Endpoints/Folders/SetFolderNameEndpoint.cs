@@ -59,8 +59,7 @@ internal sealed class SetFolderNameEndpoint : EndpointBase
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Folder.MaxNameLength);
+                .NotEmpty();
         }
     }
 }

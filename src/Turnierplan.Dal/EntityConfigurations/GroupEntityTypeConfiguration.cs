@@ -17,8 +17,7 @@ public sealed class GroupEntityTypeConfiguration : IEntityTypeConfiguration<Grou
 
         builder.Property(x => x.AlphabeticalId);
 
-        builder.Property(x => x.DisplayName)
-            .HasMaxLength(ValidationConstants.Group.MaxDisplayNameLength);
+        builder.Property(x => x.DisplayName);
 
         builder.HasMany<Match>()
             .WithOne(x => x.Group)

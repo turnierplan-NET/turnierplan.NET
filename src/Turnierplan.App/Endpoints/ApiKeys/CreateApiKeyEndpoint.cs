@@ -94,11 +94,7 @@ internal sealed class CreateApiKeyEndpoint : EndpointBase<ApiKeyDto>
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.ApiKey.MaxNameLength);
-
-            RuleFor(x => x.Description)
-                .MaximumLength(ValidationConstants.ApiKey.MaxDescriptionLength);
+                .NotEmpty();
 
             RuleFor(x => x.Validity)
                 .GreaterThanOrEqualTo(1)

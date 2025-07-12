@@ -74,7 +74,6 @@ internal sealed class CreateDocumentEndpoint : EndpointBase<DocumentDto>
 
         public required DocumentType Type { get; init; }
 
-        [MaxLength(ValidationConstants.Document.MaxNameLength)]
         public required string Name { get; init; }
     }
 
@@ -85,8 +84,7 @@ internal sealed class CreateDocumentEndpoint : EndpointBase<DocumentDto>
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Tournament.MaxNameLength);
+                .NotEmpty();
         }
     }
 }

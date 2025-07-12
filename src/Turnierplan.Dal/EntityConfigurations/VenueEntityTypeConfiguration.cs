@@ -32,12 +32,10 @@ public sealed class VenueEntityTypeConfiguration : IEntityTypeConfiguration<Venu
             .IsRequired();
 
         builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.Venue.MaxNameLength);
+            .IsRequired();
 
         builder.Property(x => x.Description)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.Venue.MaxDescriptionLength);
+            .IsRequired();
 
         builder.Property(x => x.AddressDetails);
 

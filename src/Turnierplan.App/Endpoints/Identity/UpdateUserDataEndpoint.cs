@@ -97,13 +97,11 @@ internal sealed class UpdateUserDataEndpoint : IdentityEndpointBase<UpdateUserDa
         private Validator()
         {
             RuleFor(x => x.UserName)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.User.MaxNameLength);
+                .NotEmpty();
 
             RuleFor(x => x.EMail)
                 .NotEmpty()
-                .EmailAddress()
-                .MaximumLength(ValidationConstants.User.MaxEMailLength);
+                .EmailAddress();
         }
     }
 }

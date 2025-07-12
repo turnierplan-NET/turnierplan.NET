@@ -4,7 +4,6 @@ using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Groups;
 
@@ -68,7 +67,6 @@ internal sealed class SetGroupNameEndpoint : EndpointBase
         {
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .MaximumLength(ValidationConstants.Group.MaxDisplayNameLength)
                 .When(x => x.Name is not null);
         }
     }
