@@ -4,7 +4,6 @@ using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Organizations;
 
@@ -59,8 +58,7 @@ internal sealed class SetOrganizationNameEndpoint : EndpointBase
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Organization.MaxNameLength);
+                .NotEmpty();
         }
     }
 }

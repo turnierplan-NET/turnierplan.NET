@@ -8,7 +8,6 @@ using Turnierplan.Core.Folder;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Tournaments;
 
@@ -98,8 +97,7 @@ internal sealed class CreateTournamentEndpoint : EndpointBase<TournamentDto>
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Tournament.MaxNameLength);
+                .NotEmpty();
 
             RuleFor(x => x)
                 .Must(x => x.FolderId is null ^ x.FolderName is null)
@@ -108,7 +106,6 @@ internal sealed class CreateTournamentEndpoint : EndpointBase<TournamentDto>
 
             RuleFor(x => x.FolderName)
                 .NotEmpty()
-                .MaximumLength(ValidationConstants.Folder.MaxNameLength)
                 .When(x => x.FolderName is not null);
 
             RuleFor(x => x.Visibility)

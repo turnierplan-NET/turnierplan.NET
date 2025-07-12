@@ -21,7 +21,6 @@ public sealed class ApiKeyRequestEntityTypeConfiguration : IEntityTypeConfigurat
         builder.HasIndex(x => x.Timestamp);
 
         builder.Property(x => x.Path)
-            .HasMaxLength(ValidationConstants.ApiKeyRequest.MaxPathLength)
             .IsRequired();
     }
 }

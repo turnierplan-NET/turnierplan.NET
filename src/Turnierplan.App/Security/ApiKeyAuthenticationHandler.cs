@@ -6,7 +6,6 @@ using Microsoft.Extensions.Options;
 using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.RoleAssignment;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Security;
 
@@ -68,14 +67,7 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
             return AuthenticateResult.Fail("There exists no valid API key with the specified ID and secret.");
         }
 
-        var requestPath = $"{Request.Path}{Request.QueryString}";
-
-        if (requestPath.Length > ValidationConstants.ApiKeyRequest.MaxPathLength)
-        {
-            requestPath = requestPath[..(ValidationConstants.ApiKeyRequest.MaxPathLength - 3)] + "...";
-        }
-
-        apiKey.AddRequest(new ApiKeyRequest(requestPath));
+        apiKey.AddRequest(new ApiKeyRequest($"{Request.Path}{Request.QueryString}"));
 
         await _apiKeyRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
 

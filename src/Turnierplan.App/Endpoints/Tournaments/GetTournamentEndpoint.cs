@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Turnierplan.App.Extensions;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;

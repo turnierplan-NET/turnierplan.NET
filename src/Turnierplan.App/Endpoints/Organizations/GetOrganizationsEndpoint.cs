@@ -2,7 +2,6 @@ using Turnierplan.App.Extensions;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.Core.Organization;
-using Turnierplan.Core.RoleAssignment;
 
 namespace Turnierplan.App.Endpoints.Organizations;
 

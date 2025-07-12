@@ -32,12 +32,10 @@ public sealed class DocumentEntityTypeConfiguration : IEntityTypeConfiguration<D
             .IsRequired();
 
         builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.Document.MaxNameLength);
+            .IsRequired();
 
         builder.Property(x => x.Configuration)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.Document.MaxConfigurationLength);
+            .IsRequired();
 
         builder.Property(x => x.GenerationCount)
             .IsRequired();

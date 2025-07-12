@@ -8,7 +8,6 @@ using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.User;
-using Turnierplan.Dal;
 
 namespace Turnierplan.App.Endpoints.Organizations;
 
@@ -65,8 +64,7 @@ internal sealed class CreateOrganizationEndpoint : EndpointBase<OrganizationDto>
         private Validator()
         {
             RuleFor(x => x.Name)
-                .NotEmpty()
-                .MaximumLength(ValidationConstants.Organization.MaxNameLength);
+                .NotEmpty();
         }
     }
 }

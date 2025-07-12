@@ -25,12 +25,10 @@ public sealed class MatchEntityTypeConfiguration : IEntityTypeConfiguration<Matc
         builder.Property(x => x.Kickoff);
 
         builder.Property(x => x.TeamSelectorA)
-            .HasMaxLength(ValidationConstants.Match.MaxTeamSelectorLength)
             .HasConversion(new TeamSelectorConverter())
             .IsRequired();
 
         builder.Property(x => x.TeamSelectorB)
-            .HasMaxLength(ValidationConstants.Match.MaxTeamSelectorLength)
             .HasConversion(new TeamSelectorConverter())
             .IsRequired();
 

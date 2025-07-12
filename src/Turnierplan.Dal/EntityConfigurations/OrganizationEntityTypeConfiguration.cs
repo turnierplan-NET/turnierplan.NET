@@ -32,8 +32,7 @@ public sealed class OrganizationEntityTypeConfiguration : IEntityTypeConfigurati
             .IsRequired();
 
         builder.Property(x => x.Name)
-            .IsRequired()
-            .HasMaxLength(ValidationConstants.Organization.MaxNameLength);
+            .IsRequired();
 
         builder.HasMany(x => x.ApiKeys)
             .WithOne(x => x.Organization)
