@@ -8,6 +8,7 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
     internal readonly List<RoleAssignment<PlanningRealm>> _roleAssignments = new();
     internal readonly List<TournamentClass> _tournamentClasses = new();
     internal readonly List<InvitationLink> _invitationLinks = new();
+    internal readonly List<Application> _applications = new();
 
     public PlanningRealm(Organization.Organization organization, string name)
     {
@@ -44,8 +45,7 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
 
     public IReadOnlyList<InvitationLink> InvitationLinks => _invitationLinks.AsReadOnly();
 
-    // TODO: Add properties
-    // Anmeldungen
+    public IReadOnlyList<Application> Applications => _applications.AsReadOnly();
 
     public RoleAssignment<PlanningRealm> AddRoleAssignment(Role role, Principal principal)
     {

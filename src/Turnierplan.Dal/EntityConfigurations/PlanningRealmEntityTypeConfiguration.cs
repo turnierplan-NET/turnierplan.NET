@@ -46,8 +46,15 @@ public sealed class RealmEntityTypeConfiguration : IEntityTypeConfiguration<Plan
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
+        builder.HasMany(x => x.Applications)
+            .WithOne()
+            .HasForeignKey("PlanningRealmId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
         builder.Metadata.FindNavigation(nameof(PlanningRealm.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(PlanningRealm.TournamentClasses))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(PlanningRealm.InvitationLinks))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(PlanningRealm.Applications))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }
