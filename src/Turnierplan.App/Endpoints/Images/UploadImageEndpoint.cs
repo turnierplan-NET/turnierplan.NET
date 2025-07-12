@@ -160,8 +160,8 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
                 .IsInEnum();
 
             RuleFor(x => x.Image.Length)
-                .LessThanOrEqualTo(8 * 1024 * 1024)
-                .WithMessage("Image file size must be 8MB or less.");
+                .LessThanOrEqualTo(1024 * 1024)
+                .WithMessage("Image file size must be 1MB or less.");
 
             RuleFor(x => x.ImageName)
                 .NotEmpty();
