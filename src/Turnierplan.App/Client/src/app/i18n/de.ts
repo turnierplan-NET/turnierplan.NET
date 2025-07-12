@@ -176,6 +176,7 @@ export const de = {
         'In dieser Organisation gibt es aktuell keine Spielstätten.\nErstellen Sie eine Spielstätte mit der Schaltfläche oben rechts.',
       NoPlanningRealms:
         'In dieser Organisation gibt es aktuell keine Turnierplaner.\nErstellen Sie einen Turnierplaner mit der Schaltfläche oben rechts.',
+      OpenPlanningRealm: 'öffnen',
       TournamentExplorer: {
         EmptyFolder: 'In diesem Ordner befinden sich keine Turniere. Wählen Sie einen anderen Ordner oder erstellen Sie ein Turnier.',
         RenameFolder: {

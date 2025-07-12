@@ -112,7 +112,17 @@
                 } @else {
                   <div class="d-flex flex-column gap-3">
                     @for (planningRealm of planningRealms; track planningRealm.id) {
-                      <!--                      <tp-venue-tile [venue]="venue" />-->
+                      <div class="card shadow-sm">
+                        <div class="card-body d-flex flex-column gap-2">
+                          <div class="fs-5 fw-bold card-title mb-0">{{ planningRealm.name }}</div>
+                        </div>
+                        <div class="card-footer text-end pe-2">
+                          <a class="card-link" [routerLink]="'/portal/planning-realm/' + planningRealm.id">
+                            <span translate="Portal.ViewOrganization.OpenPlanningRealm"></span>
+                            <i class="ms-2 bi bi-arrow-right-circle" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </div>
                     }
                   </div>
                 }
