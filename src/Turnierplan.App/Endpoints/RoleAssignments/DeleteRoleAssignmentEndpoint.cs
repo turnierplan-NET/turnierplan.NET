@@ -5,6 +5,7 @@ using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
+using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
@@ -28,6 +29,7 @@ internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
         IFolderRepository folderRepository,
         IImageRepository imageRepository,
         IOrganizationRepository organizationRepository,
+        IPlanningRealmRepository planningRealmRepository,
         ITournamentRepository tournamentRepository,
         IVenueRepository venueRepository,
         IAccessValidator accessValidator,
@@ -49,6 +51,7 @@ internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
             "Folder" => DeleteRoleAssignmentAsync(folderRepository, targetId, accessValidator, roleAssignmentGuid, cancellationToken),
             "Image" => DeleteRoleAssignmentAsync(imageRepository, targetId, accessValidator, roleAssignmentGuid, cancellationToken),
             "Organization" => DeleteRoleAssignmentAsync(organizationRepository, targetId, accessValidator, roleAssignmentGuid, cancellationToken),
+            "PlanningRealm" => DeleteRoleAssignmentAsync(planningRealmRepository, targetId, accessValidator, roleAssignmentGuid, cancellationToken),
             "Tournament" => DeleteRoleAssignmentAsync(tournamentRepository, targetId, accessValidator, roleAssignmentGuid, cancellationToken),
             "Venue" => DeleteRoleAssignmentAsync(venueRepository, targetId, accessValidator, roleAssignmentGuid, cancellationToken),
             _ => null

@@ -22,6 +22,7 @@ public interface IOrganizationRepository : IRepositoryWithPublicId<Organization,
         Tournaments = 2,
         Venues = 4,
         Images = 8,
-        ApiKeys = 16
+        ApiKeys = 16,
+        PlanningRealms = 32
     }
 }

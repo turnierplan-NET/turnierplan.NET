@@ -43,6 +43,11 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
             query = query.Include(x => x.ApiKeys);
         }
 
+        if (include.HasFlag(IOrganizationRepository.Include.PlanningRealms))
+        {
+            query = query.Include(x => x.PlanningRealms);
+        }
+
         query = query
             .Include(x => x.RoleAssignments)
             .AsSplitQuery();
@@ -58,7 +63,7 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
     /// <inheritdoc />
     public Task<List<Organization>> GetByPrincipalAsync(Principal principal)
     {
-        // TODO: Try to optimize this query directly within EF
+        // IDEA: Try to optimize this query directly within EF
 
         return context.OrganizationRoleAssignments
             .Where(r => r.Principal.Equals(principal))

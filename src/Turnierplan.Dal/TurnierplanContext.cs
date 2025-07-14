@@ -6,6 +6,7 @@ using Turnierplan.Core.Document;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
+using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament;
@@ -35,6 +36,10 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<ApiKeyRequest> ApiKeyRequests { get; set; } = null!;
 
+    public DbSet<Application> Applications { get; set; } = null!;
+
+    public DbSet<ApplicationTeam> ApplicationTeams { get; set; } = null!;
+
     public DbSet<Document> Documents { get; set; } = null!;
 
     public DbSet<Folder> Folders { get; set; } = null!;
@@ -47,6 +52,10 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<Image> Images { get; set; } = null!;
 
+    public DbSet<InvitationLink> InvitationLinks { get; set; } = null!;
+
+    public DbSet<InvitationLinkEntry> InvitationLinkEntries { get; set; } = null!;
+
     public DbSet<RoleAssignment<Image>> ImageRoleAssignments { get; set; } = null!;
 
     public DbSet<Match> Matches { get; set; } = null!;
@@ -55,11 +64,17 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<RoleAssignment<Organization>> OrganizationRoleAssignments { get; set; } = null!;
 
+    public DbSet<PlanningRealm> PlanningRealms { get; set; } = null!;
+
+    public DbSet<RoleAssignment<PlanningRealm>> PlanningRealmRoleAssignments { get; set; } = null!;
+
     public DbSet<Team> Teams { get; set; } = null!;
 
     public DbSet<Tournament> Tournaments { get; set; } = null!;
 
     public DbSet<RoleAssignment<Tournament>> TournamentRoleAssignments { get; set; } = null!;
+
+    public DbSet<TournamentClass> TournamentClasses { get; set; } = null!;
 
     public DbSet<User> Users { get; set; } = null!;
 
@@ -134,15 +149,21 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
         modelBuilder.ApplyConfiguration(new ApiKeyEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ApiKeyRequestEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ApplicationEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ApplicationTeamEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new DocumentEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new FolderEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new GroupEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new GroupParticipantEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ImageEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new InvitationLinkEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new InvitationLinkEntryEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new MatchEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OrganizationEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new PlanningRealmEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TeamEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TournamentEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new TournamentClassEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new VenueEntityTypeConfiguration());
 
@@ -150,6 +171,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Folder>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Image>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Organization>());
+        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<PlanningRealm>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Tournament>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Venue>());
     }

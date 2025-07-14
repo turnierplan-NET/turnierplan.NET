@@ -10,6 +10,7 @@ using Turnierplan.Core.Document;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
+using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.User;
@@ -55,6 +56,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IFolderRepository, FolderRepository>();
         services.AddScoped<IImageRepository, ImageRepository>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+        services.AddScoped<IPlanningRealmRepository, PlanningRealmRepository>();
         services.AddScoped<ITournamentRepository, TournamentRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IVenueRepository, VenueRepository>();
@@ -63,6 +65,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRoleAssignmentRepository<Folder>, FolderRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Image>, ImageRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Organization>, OrganizationRoleAssignmentRepository>();
+        services.AddScoped<IRoleAssignmentRepository<PlanningRealm>, PlanningRealmRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Tournament>, TournamentRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Venue>, VenueRoleAssignmentRepository>();
 
