@@ -1,1 +1,39 @@
-<p>view-planning-realm works!</p>
+<ng-container *tpLoadingState="loadingState">
+  <tp-page-frame
+    *ngIf="planningRealm"
+    [title]="planningRealm.name"
+    [backLink]="'../../organization/' + planningRealm.organizationId"
+    [navigationTabs]="pages"
+    [contextEntityId]="planningRealm.id"
+    [rememberNavigationTab]="true"
+    (navigationTabSelected)="togglePage($event.id)">
+    <ng-template #content>
+      <div class="card">
+        @switch (currentPage) {
+          @case (0) {
+            <!-- Home page -->
+            <div>TODO</div>
+          }
+          @case (1) {
+            <!-- Settings page -->
+            <ng-container *tpIsActionAllowed="[planningRealm.id, Actions.ReadOrWriteRoleAssignments]">
+              <div class="card-body">
+                <tp-rbac-widget
+                  [translationKey]="'Portal.ViewPlanningRealm.RbacWidget'"
+                  [target]="planningRealm"
+                  (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+              </div>
+              <hr class="m-0" />
+            </ng-container>
+            <div class="card-body">
+              <tp-delete-widget
+                [translationKey]="'Portal.ViewPlanningRealm.DeleteWidget'"
+                [targetObjectName]="planningRealm.name"
+                (deleteClick)="deletePlanningRealm()" />
+            </div>
+          }
+        }
+      </div>
+    </ng-template>
+  </tp-page-frame>
+</ng-container>

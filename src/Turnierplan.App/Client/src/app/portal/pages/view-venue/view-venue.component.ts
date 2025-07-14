@@ -18,6 +18,8 @@ import { Actions } from '../../../generated/actions';
   templateUrl: './view-venue.component.html'
 })
 export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDetector {
+  protected readonly Actions = Actions;
+
   protected loadingState: LoadingState = { isLoading: true };
   protected venue?: VenueDto;
   protected isDirty: boolean = false;
@@ -38,7 +40,8 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
     }
   ];
 
-  private destroyed$ = new Subject<void>();
+  private readonly destroyed$ = new Subject<void>();
+
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
@@ -202,6 +205,4 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
       }
     });
   }
-
-  protected readonly Actions = Actions;
 }

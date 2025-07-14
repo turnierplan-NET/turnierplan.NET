@@ -868,6 +868,23 @@ export const de = {
       OrganizationNotice: 'Es wird ein neuer Turnierplaner in der Organisation <span class="fw-bold">{{organizationName}}</span> angelegt.',
       Submit: 'Erstellen'
     },
+    ViewPlanningRealm: {
+      Pages: {
+        Home: 'Startseite',
+        Settings: 'Einstellungen'
+      },
+      RbacWidget: {
+        Info: 'Verwalten Sie, welche Nutzer auf diesen Turnierplaner zugreifen können und welche Aktionen sie durchführen können.'
+      },
+      DeleteWidget: {
+        Title: 'Turnierplaner löschen',
+        Info: 'Wenn Sie einen Turnierplaner löschen, werden alle verbundenen Turnierklassen, Anmeldelinks und alle Anmeldungen gelöscht. Alle verknüpften Turniere und Mannschaften bleiben bestehen, aber die Verknüpfung wird entfernt.',
+        SuccessToast: {
+          Title: 'Turnierplaner wurde gelöscht',
+          Message: 'Ihr Turnierplaner wurde gelöscht.'
+        }
+      }
+    },
     CreateApiKey: {
       Title: 'Neuen API-Schlüssel erstellen',
       Form: {
@@ -964,6 +981,10 @@ export const de = {
         Organization: {
           Tooltip: 'Organisation',
           NotInherited: 'Zuweisung liegt auf dieser Organisation'
+        },
+        PlanningRealm: {
+          Tooltip: 'Turnierplaner',
+          NotInherited: 'Zuweisung liegt auf diesem Turnierplaner'
         },
         Tournament: {
           Tooltip: 'Turnier',

@@ -4,6 +4,7 @@ using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
+using Turnierplan.Core.Planning;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament;
@@ -40,6 +41,8 @@ internal sealed class FolderRoleAssignmentMappingRule : RoleAssignmentMappingRul
 internal sealed class ImageRoleAssignmentMappingRule : RoleAssignmentMappingRuleBase<Image>;
 
 internal sealed class OrganizationRoleAssignmentMappingRule : RoleAssignmentMappingRuleBase<Organization>;
+
+internal sealed class PlanningRealmRoleAssignmentMappingRule : RoleAssignmentMappingRuleBase<PlanningRealm>;
 
 internal sealed class TournamentRoleAssignmentMappingRule : RoleAssignmentMappingRuleBase<Tournament>;
 
