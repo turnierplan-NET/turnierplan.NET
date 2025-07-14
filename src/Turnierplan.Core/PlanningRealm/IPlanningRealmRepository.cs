@@ -1,6 +1,6 @@
 using Turnierplan.Core.SeedWork;
 
-namespace Turnierplan.Core.Planning;
+namespace Turnierplan.Core.PlanningRealm;
 
 public interface IPlanningRealmRepository : IRepositoryWithPublicId<PlanningRealm, long>
 {

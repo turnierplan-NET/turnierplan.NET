@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Turnierplan.Core.Image;
-using Turnierplan.Core.Planning;
+using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Dal.Converters;
 
 namespace Turnierplan.Dal.EntityConfigurations;

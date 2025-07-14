@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Turnierplan.Core.Planning;
+using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Dal.Converters;
 
 namespace Turnierplan.Dal.EntityConfigurations;
 
-public sealed class RealmEntityTypeConfiguration : IEntityTypeConfiguration<PlanningRealm>
+public sealed class PlanningRealmEntityTypeConfiguration : IEntityTypeConfiguration<PlanningRealm>
 {
     public void Configure(EntityTypeBuilder<PlanningRealm> builder)
     {

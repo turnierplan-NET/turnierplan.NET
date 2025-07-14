@@ -1,5 +1,5 @@
 using Turnierplan.App.Models;
-using Turnierplan.Core.Planning;
+using Turnierplan.Core.PlanningRealm;
 
 namespace Turnierplan.App.Mapping.Rules;
 

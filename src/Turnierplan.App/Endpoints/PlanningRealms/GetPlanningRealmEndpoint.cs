@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
-using Turnierplan.Core.Planning;
+using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.App.Endpoints.PlanningRealms;

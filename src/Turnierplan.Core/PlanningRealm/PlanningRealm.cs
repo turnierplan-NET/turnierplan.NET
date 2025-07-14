@@ -1,7 +1,7 @@
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 
-namespace Turnierplan.Core.Planning;
+namespace Turnierplan.Core.PlanningRealm;
 
 public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<PlanningRealm>, IEntityWithOrganization
 {

@@ -6,7 +6,7 @@ using Turnierplan.Core.Document;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
-using Turnierplan.Core.Planning;
+using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament;
@@ -160,7 +160,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new InvitationLinkEntryEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new MatchEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OrganizationEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new RealmEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new PlanningRealmEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TeamEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TournamentEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TournamentClassEntityTypeConfiguration());

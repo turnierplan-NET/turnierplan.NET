@@ -5,7 +5,7 @@ using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
-using Turnierplan.Core.Planning;
+using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
