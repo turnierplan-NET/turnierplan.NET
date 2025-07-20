@@ -875,6 +875,10 @@ export const de = {
         Applications: 'Anmeldungen',
         Settings: 'Einstellungen'
       },
+      Badges: {
+        TournamentClassesCount: 'Turnierklassen',
+        InvitationLinksCount: 'Anmeldelinks'
+      },
       Settings: {
         Rename: {
           Button: 'Umbenennen',

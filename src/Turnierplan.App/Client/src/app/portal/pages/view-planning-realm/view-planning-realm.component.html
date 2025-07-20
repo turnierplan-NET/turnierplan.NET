@@ -34,11 +34,21 @@
         @switch (currentPage) {
           @case (0) {
             <!-- Tournament classes page -->
-            <div>TODO</div>
+            <div class="card-header d-flex flex-row align-items-center">
+              <tp-badge context="ViewPlanningRealm" label="TournamentClassesCount" [value]="planningRealm.tournamentClasses.length" />
+            </div>
+            <div class="card-body p-0">
+              <tp-tournament-classes-manager />
+            </div>
           }
           @case (1) {
             <!-- Invitation links page -->
-            <div>TODO</div>
+            <div class="card-header d-flex flex-row align-items-center">
+              <tp-badge context="ViewPlanningRealm" label="InvitationLinksCount" [value]="planningRealm.invitationLinks.length" />
+            </div>
+            <div class="card-body p-0">
+              <tp-invitation-links-manager />
+            </div>
           }
           @case (2) {
             <!-- Invitations page -->
