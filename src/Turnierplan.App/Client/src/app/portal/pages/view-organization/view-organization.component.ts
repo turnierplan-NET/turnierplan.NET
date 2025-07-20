@@ -60,7 +60,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     {
       id: ViewOrganizationComponent.planningRealmsPageId,
       title: 'Portal.ViewOrganization.Pages.PlanningRealms',
-      icon: 'bi-kanban'
+      icon: 'bi-ticket-perforated'
     },
     {
       id: ViewOrganizationComponent.apiKeysPageId,
