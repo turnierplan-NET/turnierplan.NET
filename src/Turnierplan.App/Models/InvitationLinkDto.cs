@@ -8,6 +8,8 @@ public sealed record InvitationLinkDto
 
     public required PublicId PublicId { get; init; }
 
+    public required string Name { get; init; }
+
     public required string? Title { get; init; }
 
     public required string? Description { get; init; }

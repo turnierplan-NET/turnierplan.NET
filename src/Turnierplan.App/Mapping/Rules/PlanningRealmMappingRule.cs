@@ -24,6 +24,7 @@ internal sealed class PlanningRealmMappingRule : MappingRuleBase<PlanningRealm, 
             {
                 Id = x.Id,
                 PublicId = x.PublicId,
+                Name = x.Name,
                 Title = x.Title,
                 Description = x.Description,
                 ColorCode = x.ColorCode,

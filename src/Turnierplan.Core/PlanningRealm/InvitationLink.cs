@@ -6,10 +6,11 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 {
     internal readonly List<InvitationLinkEntry> _entries = new();
 
-    internal InvitationLink(long id, PublicId.PublicId publicId, string? title, string? description, string colorCode, DateTime? validUntil, string? contactPerson, string? contactEmail, string? contactTelephone)
+    internal InvitationLink(long id, PublicId.PublicId publicId, string name, string? title, string? description, string colorCode, DateTime? validUntil, string? contactPerson, string? contactEmail, string? contactTelephone)
     {
         Id = id;
         PublicId = publicId;
+        Name = name;
         Title = title;
         Description = description;
         ColorCode = colorCode;
@@ -19,9 +20,19 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
         ContactTelephone = contactTelephone;
     }
 
+    internal InvitationLink(string name)
+    {
+        Id = 0;
+        PublicId = new PublicId.PublicId();
+        Name = name;
+        ColorCode = GenerateRandomColorCode();
+    }
+
     public override long Id { get; protected set; }
 
     public PublicId.PublicId PublicId { get; }
+
+    public string Name { get; set; }
 
     public string? Title { get; set; }
 
@@ -46,4 +57,18 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
     public IReadOnlyList<InvitationLinkEntry> Entries => _entries.AsReadOnly();
 
     public sealed record ExternalLink(string Name, string Url);
+
+    private static string GenerateRandomColorCode()
+    {
+        string[] parts =
+        [
+            Random.Shared.Next(2) == 0 ? "ff" : "bb",
+            Random.Shared.Next(2) == 0 ? "55" : "99",
+            "00"
+        ];
+
+        Random.Shared.Shuffle(parts);
+
+        return string.Join(string.Empty, parts);
+    }
 }
