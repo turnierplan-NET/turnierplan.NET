@@ -9,6 +9,8 @@ public interface IPlanningRealmRepository : IRepositoryWithPublicId<PlanningReal
     [Flags]
     public enum Include
     {
-        None = 0
+        None = 0,
+        TournamentClasses = 1,
+        InvitationLinks = 2
     }
 }

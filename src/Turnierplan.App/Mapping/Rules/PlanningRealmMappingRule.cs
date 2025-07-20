@@ -4,7 +4,7 @@ using Turnierplan.Core.PlanningRealm;
 
 namespace Turnierplan.App.Mapping.Rules;
 
-internal sealed class PlanningRealmMappingRule: MappingRuleBase<PlanningRealm, PlanningRealmDto>
+internal sealed class PlanningRealmMappingRule : MappingRuleBase<PlanningRealm, PlanningRealmDto>
 {
     protected override PlanningRealmDto Map(IMapper mapper, MappingContext context, PlanningRealm source)
     {
@@ -13,7 +13,33 @@ internal sealed class PlanningRealmMappingRule: MappingRuleBase<PlanningRealm, P
             Id = source.PublicId,
             OrganizationId = source.Organization.PublicId,
             RbacScopeId = source.GetScopeId(),
-            Name = source.Name
+            Name = source.Name,
+            TournamentClasses = source.TournamentClasses.Select(x => new TournamentClassDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                MaxTeamCount = x.MaxTeamCount
+            }).ToArray(),
+            InvitationLinks = source.InvitationLinks.Select(x => new InvitationLinkDto
+            {
+                Id = x.Id,
+                PublicId = x.PublicId,
+                Title = x.Title,
+                Description = x.Description,
+                ColorCode = x.ColorCode,
+                ValidUntil = x.ValidUntil,
+                ContactPerson = x.ContactPerson,
+                ContactEmail = x.ContactEmail,
+                ContactTelephone = x.ContactTelephone,
+                PrimaryLogo = mapper.MapNullable<ImageDto>(x.PrimaryLogo),
+                SecondaryLogo = mapper.MapNullable<ImageDto>(x.SecondaryLogo),
+                Entries = x.Entries.Select(y => new InvitationLinkDto.Entry
+                {
+                    TournamentClassId = y.Class.Id,
+                    MaxTeamsPerRegistration = y.MaxTeamsPerRegistration,
+                    AllowNewRegistrations = y.AllowNewRegistrations
+                }).ToArray()
+            }).ToArray()
         };
     }
 }

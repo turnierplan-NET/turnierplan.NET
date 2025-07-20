@@ -12,5 +12,7 @@ public sealed record PlanningRealmDto
 
     public required string Name { get; init; }
 
-    // TODO: Add remaining properties
+    public required TournamentClassDto[] TournamentClasses { get; init; }
+
+    public required InvitationLinkDto[] InvitationLinks { get; init; }
 }
