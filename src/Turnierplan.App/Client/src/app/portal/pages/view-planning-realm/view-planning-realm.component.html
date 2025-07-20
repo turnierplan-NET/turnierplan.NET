@@ -50,7 +50,7 @@
               <tp-badge context="ViewPlanningRealm" label="TournamentClassesCount" [value]="planningRealm.tournamentClasses.length" />
             </div>
             <div class="card-body p-0">
-              <tp-tournament-classes-manager />
+              <tp-tournament-classes-manager [planningRealmId]="planningRealm.id" [tournamentClasses]="planningRealm.tournamentClasses" />
             </div>
           }
           @case (1) {
@@ -59,7 +59,7 @@
               <tp-badge context="ViewPlanningRealm" label="InvitationLinksCount" [value]="planningRealm.invitationLinks.length" />
             </div>
             <div class="card-body p-0">
-              <tp-invitation-links-manager />
+              <tp-invitation-links-manager [planningRealmId]="planningRealm.id" [invitationLinks]="planningRealm.invitationLinks" />
             </div>
           }
           <!-- The "invitations" page (id 2) utilizes the entire page width and the HTML template is located at the end of this file outside of the <tp-page-frame> -->

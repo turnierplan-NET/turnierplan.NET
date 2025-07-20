@@ -86,8 +86,8 @@ import { RbacAddAssignmentComponent } from './components/rbac-add-assignment/rba
 import { IsActionAllowedDirective } from './directives/is-action-allowed/is-action-allowed.directive';
 import { CreatePlanningRealmComponent } from './pages/create-planning-realm/create-planning-realm.component';
 import { ViewPlanningRealmComponent } from './pages/view-planning-realm/view-planning-realm.component';
-import { TournamentClassesManagerComponent } from './components/tournament-classes-manager/tournament-classes-manager.component';
-import { InvitationLinksManagerComponent } from './components/invitation-links-manager/invitation-links-manager.component';
+import { TournamentClassManagerComponent } from './components/tournament-class-manager/tournament-class-manager.component';
+import { InvitationLinkManagerComponent } from './components/invitation-link-manager/invitation-link-manager.component';
 
 const routes: Routes = [
   {
@@ -244,8 +244,8 @@ const routes: Routes = [
     IsActionAllowedDirective,
     CreatePlanningRealmComponent,
     ViewPlanningRealmComponent,
-    TournamentClassesManagerComponent,
-    InvitationLinksManagerComponent
+    TournamentClassManagerComponent,
+    InvitationLinkManagerComponent
   ],
   imports: [
     CommonModule,

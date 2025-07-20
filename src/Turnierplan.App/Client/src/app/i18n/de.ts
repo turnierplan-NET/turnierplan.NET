@@ -893,6 +893,18 @@ export const de = {
         RequiredFeedback: 'Der Name darf nicht leer sein',
         Confirm: 'Erstellen'
       },
+      TournamentClasses: {
+        Name: 'Name',
+        ApplicationCount: 'Anzahl Anmeldungen',
+        MaxTeamCount: 'max. Mannschaften',
+        Edit: 'Bearbeiten',
+        Delete: 'Löschen',
+        DeleteNotPossible: 'Diese Turnierklasse kann nicht gelöscht werden, da es bereits Anmeldungen für diese Turnierklasse gibt.',
+        NoTournamentClasses: 'Es sind aktuell keine Turnierklassen vorhanden.'
+      },
+      InvitationLinks: {
+        NoInvitationLinks: 'Es sind aktuell keine Anmeldelinks vorhanden.'
+      },
       Settings: {
         Rename: {
           Button: 'Umbenennen',

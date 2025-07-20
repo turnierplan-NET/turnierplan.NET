@@ -1,0 +1,13 @@
+<table class="table">
+  <tbody>
+    @for (link of invitationLinks; track link.id) {
+      <tr>
+        <!-- TODO: Implement UI for invitation links -->
+      </tr>
+    } @empty {
+      <tr>
+        <td translate="Portal.ViewPlanningRealm.InvitationLinks.NoInvitationLinks"></td>
+      </tr>
+    }
+  </tbody>
+</table>
