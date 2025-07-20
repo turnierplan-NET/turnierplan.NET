@@ -7,6 +7,22 @@
     [contextEntityId]="planningRealm.id"
     [rememberNavigationTab]="true"
     (navigationTabSelected)="togglePage($event.id)">
+    <ng-template #buttons>
+      @switch (currentPage) {
+        @case (0) {
+          <!-- Tournament classes page -->
+          <div>TODO</div>
+        }
+        @case (1) {
+          <!-- Invitation links page -->
+          <div>TODO</div>
+        }
+        @case (3) {
+          <!-- Settings page -->
+          <div>TODO</div>
+        }
+      }
+    </ng-template>
     <ng-template #content>
       <div class="card">
         @switch (currentPage) {
