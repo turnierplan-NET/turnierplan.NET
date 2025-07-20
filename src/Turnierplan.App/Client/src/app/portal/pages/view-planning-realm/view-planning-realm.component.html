@@ -11,13 +11,24 @@
       @switch (currentPage) {
         @case (0) {
           <!-- Tournament classes page -->
-          <div>TODO</div>
+          <tp-action-button
+            *tpIsActionAllowed="[planningRealm.id, Actions.GenericWrite]"
+            [title]="'Portal.ViewPlanningRealm.NewTournamentClass'"
+            [type]="'outline-success'"
+            [icon]="'plus-circle'" />
+          <!-- TODO: Implement logic -->
         }
         @case (1) {
           <!-- Invitation links page -->
-          <div>TODO</div>
+          <tp-action-button
+            *tpIsActionAllowed="[planningRealm.id, Actions.GenericWrite]"
+            [title]="'Portal.ViewPlanningRealm.NewInvitationLink'"
+            [type]="'outline-success'"
+            [icon]="'plus-circle'" />
+          <!-- TODO: Implement logic -->
         }
         @case (3) {
+          <!-- Settings page -->
           @if (isUpdatingName) {
             <tp-small-spinner />
           }

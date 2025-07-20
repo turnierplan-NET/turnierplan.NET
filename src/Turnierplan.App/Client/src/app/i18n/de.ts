@@ -879,6 +879,8 @@ export const de = {
         TournamentClassesCount: 'Turnierklassen',
         InvitationLinksCount: 'Anmeldelinks'
       },
+      NewTournamentClass: 'Neue Turnierklasse',
+      NewInvitationLink: 'Neuer Anmeldelink',
       Settings: {
         Rename: {
           Button: 'Umbenennen',
