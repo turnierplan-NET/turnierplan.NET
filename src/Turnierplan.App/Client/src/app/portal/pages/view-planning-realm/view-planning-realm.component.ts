@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoadingState } from '../../directives/loading-state/loading-state.directive';
-import { PlanningRealmDto, PlanningRealmsService } from '../../../api';
+import { InvitationLinksService, PlanningRealmDto, PlanningRealmsService, TournamentClassesService } from '../../../api';
 import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
-import { Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
+import { Observable, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TitleService } from '../../services/title.service';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -54,6 +54,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly planningRealmService: PlanningRealmsService,
+    private readonly tournamentClassService: TournamentClassesService,
+    private readonly invitationLinkService: InvitationLinksService,
     private readonly notificationService: NotificationService,
     private readonly titleService: TitleService,
     private readonly modalService: NgbModal
@@ -94,11 +96,51 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
   }
 
   protected addTournamentClass(): void {
-    this.openModalForEnteringName('NewTournamentClass'); // TODO: Send request
+    if (!this.planningRealm) {
+      return;
+    }
+
+    const planningRealmId = this.planningRealm.id;
+
+    this.openModalForEnteringName('NewTournamentClass')
+      .pipe(
+        tap(() => (this.loadingState = { isLoading: true })),
+        switchMap((name) => this.tournamentClassService.createTournamentClass({ id: planningRealmId, body: { name: name } })),
+        switchMap(() => this.planningRealmService.getPlanningRealm({ id: planningRealmId }))
+      )
+      .subscribe({
+        next: (planningRealm) => {
+          this.planningRealm = planningRealm;
+          this.loadingState = { isLoading: false };
+        },
+        error: (error) => {
+          this.loadingState = { isLoading: false, error: error };
+        }
+      });
   }
 
   protected addInvitationLink(): void {
-    this.openModalForEnteringName('NewInvitationLink'); // TODO: Send request
+    if (!this.planningRealm) {
+      return;
+    }
+
+    const planningRealmId = this.planningRealm.id;
+
+    this.openModalForEnteringName('NewInvitationLink')
+      .pipe(
+        tap(() => (this.loadingState = { isLoading: true })),
+        switchMap((name) => this.invitationLinkService.createInvitationLink({ id: planningRealmId, body: { name: name } })),
+        switchMap(() => this.planningRealmService.getPlanningRealm({ id: planningRealmId }))
+      )
+      .subscribe({
+        next: (planningRealm) => {
+          this.planningRealm = planningRealm;
+          this.loadingState = { isLoading: false };
+        },
+        error: (error) => {
+          this.loadingState = { isLoading: false, error: error };
+        }
+      });
   }
 
   protected renamePlanningRealm(name: string): void {
@@ -112,6 +154,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
       next: () => {
         if (this.planningRealm) {
           this.planningRealm.name = name;
+          this.titleService.setTitleFrom(this.planningRealm);
         }
         this.isUpdatingName = false;
       },

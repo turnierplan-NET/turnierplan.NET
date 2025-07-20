@@ -882,13 +882,14 @@ export const de = {
       },
       NewTournamentClass: {
         Title: 'Neue Turnierklasse',
-        InfoText: 'Geben Sie den Namen für die neue Turnierklasse ein:',
+        InfoText: 'Geben Sie den Namen für die neue Turnierklasse ein.',
         RequiredFeedback: 'Der Name darf nicht leer sein',
         Confirm: 'Erstellen'
       },
       NewInvitationLink: {
         Title: 'Neuer Anmeldelink',
-        InfoText: 'Geben Sie den Namen für den neuen Anmeldelink ein:',
+        InfoText:
+          'Geben Sie den Namen für den neuen Anmeldelink ein. Der angegebene Name wird nicht auf dem Anmeldeformular sichtbar sein.',
         RequiredFeedback: 'Der Name darf nicht leer sein',
         Confirm: 'Erstellen'
       },
