@@ -18,6 +18,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
   protected loadingState: LoadingState = { isLoading: true };
   protected planningRealm?: PlanningRealmDto;
 
+  protected isUpdatingName = false;
+
   protected currentPage = 0;
   protected pages: PageFrameNavigationTab[] = [
     {
@@ -85,6 +87,26 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
 
   protected togglePage(number: number): void {
     this.currentPage = number;
+  }
+
+  protected renamePlanningRealm(name: string): void {
+    if (!this.planningRealm || name === this.planningRealm.name || this.isUpdatingName) {
+      return;
+    }
+
+    this.isUpdatingName = true;
+
+    this.planningRealmService.setPlanningRealmName({ id: this.planningRealm.id, body: { name: name } }).subscribe({
+      next: () => {
+        if (this.planningRealm) {
+          this.planningRealm.name = name;
+        }
+        this.isUpdatingName = false;
+      },
+      error: (error) => {
+        this.loadingState = { isLoading: false, error: error };
+      }
+    });
   }
 
   protected deletePlanningRealm(): void {

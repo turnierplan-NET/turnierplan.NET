@@ -875,6 +875,13 @@ export const de = {
         Applications: 'Anmeldungen',
         Settings: 'Einstellungen'
       },
+      Settings: {
+        Rename: {
+          Button: 'Umbenennen',
+          Title: 'Turnierplaner umbenennen',
+          EnterNewName: 'Geben Sie den neuen Namen für den Turnierplaner ein:'
+        }
+      },
       RbacWidget: {
         Info: 'Verwalten Sie, welche Nutzer auf diesen Turnierplaner zugreifen können und welche Aktionen sie durchführen können.'
       },

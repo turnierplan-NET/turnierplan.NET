@@ -18,8 +18,14 @@
           <div>TODO</div>
         }
         @case (3) {
-          <!-- Settings page -->
-          <div>TODO</div>
+          @if (isUpdatingName) {
+            <tp-small-spinner />
+          }
+          <tp-rename-button
+            translationKey="Portal.ViewPlanningRealm.Settings.Rename"
+            [current]="planningRealm.name"
+            [disabled]="isUpdatingName"
+            (renamed)="renamePlanningRealm($event)" />
         }
       }
     </ng-template>
