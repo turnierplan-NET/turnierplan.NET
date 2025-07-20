@@ -7,7 +7,7 @@ import { VenueDto, VenuesService } from '../../../api';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 import { NotificationService } from '../../../core/services/notification.service';
 import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
-import { TextAreaDialogComponent } from '../../components/text-area-dialog/text-area-dialog.component';
+import { TextInputDialogComponent } from '../../components/text-input-dialog/text-input-dialog.component';
 import { TextListDialogComponent } from '../../components/text-list-dialog/text-list-dialog.component';
 import { LoadingState } from '../../directives/loading-state/loading-state.directive';
 import { TitleService } from '../../services/title.service';
@@ -95,15 +95,15 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
       return;
     }
 
-    const ref = this.modalService.open(TextAreaDialogComponent, {
+    const ref = this.modalService.open(TextInputDialogComponent, {
       centered: true,
       size: 'lg',
       fullscreen: 'lg',
       backdrop: 'static'
     });
 
-    const component = ref.componentInstance as TextAreaDialogComponent;
-    component.init('Portal.ViewVenue.Details.EditDescription', this.venue.description);
+    const component = ref.componentInstance as TextInputDialogComponent;
+    component.init('Portal.ViewVenue.Details.EditDescription', this.venue.description, true, false);
 
     ref.closed.subscribe({
       next: (value: string) => {

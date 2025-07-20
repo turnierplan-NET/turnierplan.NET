@@ -2,6 +2,7 @@ using Turnierplan.App.Extensions;
 using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
+using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament;
@@ -82,6 +83,7 @@ internal sealed class AccessValidator : IAccessValidator
             ApiKey apiKey => IsActionAllowed(apiKey.Organization, action, principal),
             Image image => IsActionAllowed(image.Organization, action, principal),
             Folder folder => IsActionAllowed(folder.Organization, action, principal),
+            PlanningRealm planningRealm => IsActionAllowed(planningRealm.Organization, action, principal),
             Tournament tournament => (tournament.Folder is not null && IsActionAllowed(tournament.Folder, action, principal)) || IsActionAllowed(tournament.Organization, action, principal),
             Venue venue => IsActionAllowed(venue.Organization, action, principal),
             _ => false
@@ -103,6 +105,9 @@ internal sealed class AccessValidator : IAccessValidator
                 break;
             case Folder folder:
                 AddAvailableRoles(folder.Organization, rolesList, principal);
+                break;
+            case PlanningRealm planningRealm:
+                AddAvailableRoles(planningRealm.Organization, rolesList, principal);
                 break;
             case Tournament tournament:
                 AddAvailableRoles(tournament.Organization, rolesList, principal);

@@ -55,7 +55,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
         this.targetIcon = 'boxes';
         break;
       case 'PlanningRealm':
-        this.targetIcon = 'kanban';
+        this.targetIcon = 'ticket-perforated';
         break;
       case 'Tournament':
         this.targetIcon = 'trophy';

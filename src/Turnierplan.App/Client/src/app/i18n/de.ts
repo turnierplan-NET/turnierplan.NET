@@ -780,7 +780,8 @@ export const de = {
         NoDescription: 'Keine Beschreibung vorhanden',
         EditDescription: {
           Title: 'Beschreibung bearbeiten',
-          EnterNewName: 'Geben Sie die Beschreibung für die Spielstätte ein (kann leer gelassen werden):'
+          InfoText: 'Geben Sie die Beschreibung für die Spielstätte ein (kann leer gelassen werden):',
+          Confirm: 'Speichern'
         },
         AddressDetails: 'Adressdetails',
         AddressDetailsTooltip: 'Adressdetails sind z.B. Anschrift, Hausnummer oder Stadt.',
@@ -870,8 +871,57 @@ export const de = {
     },
     ViewPlanningRealm: {
       Pages: {
-        Home: 'Startseite',
+        TournamentClasses: 'Turnierklassen',
+        InvitationLinks: 'Anmeldelinks',
+        Applications: 'Anmeldungen',
         Settings: 'Einstellungen'
+      },
+      Badges: {
+        TournamentClassesCount: 'Turnierklassen',
+        InvitationLinksCount: 'Anmeldelinks'
+      },
+      NewTournamentClass: {
+        Title: 'Neue Turnierklasse',
+        InfoText: 'Geben Sie den Namen für die neue Turnierklasse ein.',
+        RequiredFeedback: 'Der Name darf nicht leer sein',
+        Confirm: 'Erstellen'
+      },
+      NewInvitationLink: {
+        Title: 'Neuer Anmeldelink',
+        InfoText:
+          'Geben Sie den Namen für den neuen Anmeldelink ein. Der angegebene Name wird nicht auf dem Anmeldeformular sichtbar sein.',
+        RequiredFeedback: 'Der Name darf nicht leer sein',
+        Confirm: 'Erstellen'
+      },
+      TournamentClasses: {
+        Name: 'Name',
+        ApplicationCount: 'Anzahl Mannschaften',
+        MaxTeamCount: 'max. Anzahl Mannschaften',
+        Edit: 'Bearbeiten',
+        EditDialog: {
+          Title: 'Turnierklasse bearbeiten',
+          Name: 'Name:',
+          NameInvalid: 'Der Name darf nicht leer sein',
+          NameAlert: 'Eine Änderung des Namens wird sofort auf allen Anmeldelinks, wo diese Turnierklasse verfügbar ist, sichtbar',
+          LimitMaxTeamCount: 'Anzahl der Mannschaften limitieren',
+          MaxTeamCount: 'Max. Anzahl an Mannschaften:',
+          MaxTeamCountInvalid: 'Die Anzahl muss mindestens 2 sein.',
+          MaxTeamCountAlert:
+            'Es haben sich bereits mehr Mannschaften für diese Turnierklasse angemeldet ({{actual}}) als das angegebene Limit von {{limit}}.'
+        },
+        Delete: 'Löschen',
+        DeleteNotPossible: 'Diese Turnierklasse kann nicht gelöscht werden, da es bereits Anmeldungen für diese Turnierklasse gibt.',
+        NoTournamentClasses: 'Es sind aktuell keine Turnierklassen vorhanden.'
+      },
+      InvitationLinks: {
+        NoInvitationLinks: 'Es sind aktuell keine Anmeldelinks vorhanden.'
+      },
+      Settings: {
+        Rename: {
+          Button: 'Umbenennen',
+          Title: 'Turnierplaner umbenennen',
+          EnterNewName: 'Geben Sie den neuen Namen für den Turnierplaner ein:'
+        }
       },
       RbacWidget: {
         Info: 'Verwalten Sie, welche Nutzer auf diesen Turnierplaner zugreifen können und welche Aktionen sie durchführen können.'

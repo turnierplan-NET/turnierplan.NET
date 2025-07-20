@@ -45,7 +45,7 @@ import { RenameButtonComponent } from './components/rename-button/rename-button.
 import { RenameDialogComponent } from './components/rename-dialog/rename-dialog.component';
 import { ShareWidgetComponent } from './components/share-widget/share-widget.component';
 import { TeamListComponent } from './components/team-list/team-list.component';
-import { TextAreaDialogComponent } from './components/text-area-dialog/text-area-dialog.component';
+import { TextInputDialogComponent } from './components/text-input-dialog/text-input-dialog.component';
 import { TextListDialogComponent } from './components/text-list-dialog/text-list-dialog.component';
 import { TooltipIconComponent } from './components/tooltip-icon/tooltip-icon.component';
 import { TournamentEditWarningComponent } from './components/tournament-edit-warning/tournament-edit-warning.component';
@@ -86,6 +86,9 @@ import { RbacAddAssignmentComponent } from './components/rbac-add-assignment/rba
 import { IsActionAllowedDirective } from './directives/is-action-allowed/is-action-allowed.directive';
 import { CreatePlanningRealmComponent } from './pages/create-planning-realm/create-planning-realm.component';
 import { ViewPlanningRealmComponent } from './pages/view-planning-realm/view-planning-realm.component';
+import { TournamentClassManagerComponent } from './components/tournament-class-manager/tournament-class-manager.component';
+import { InvitationLinkManagerComponent } from './components/invitation-link-manager/invitation-link-manager.component';
+import { TournamentClassDialogComponent } from './components/tournament-class-dialog/tournament-class-dialog.component';
 
 const routes: Routes = [
   {
@@ -217,7 +220,7 @@ const routes: Routes = [
     LiveIndicatorComponent,
     ImageWidgetComponent,
     ImageChooserComponent,
-    TextAreaDialogComponent,
+    TextInputDialogComponent,
     TextListDialogComponent,
     EditMatchPlanComponent,
     TournamentEditWarningComponent,
@@ -241,7 +244,10 @@ const routes: Routes = [
     RbacPrincipalComponent,
     IsActionAllowedDirective,
     CreatePlanningRealmComponent,
-    ViewPlanningRealmComponent
+    ViewPlanningRealmComponent,
+    TournamentClassManagerComponent,
+    InvitationLinkManagerComponent,
+    TournamentClassDialogComponent
   ],
   imports: [
     CommonModule,

@@ -258,7 +258,7 @@ namespace Turnierplan.Dal.Migrations
                     b.ToTable("Organizations", "turnierplan");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.Application", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.Application", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -304,7 +304,7 @@ namespace Turnierplan.Dal.Migrations
                     b.ToTable("Applications", "turnierplan");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.ApplicationTeam", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.ApplicationTeam", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -331,7 +331,7 @@ namespace Turnierplan.Dal.Migrations
                     b.ToTable("ApplicationTeams", "turnierplan");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.InvitationLink", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.InvitationLink", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -353,6 +353,10 @@ namespace Turnierplan.Dal.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<long>("PlanningRealmId")
@@ -387,7 +391,7 @@ namespace Turnierplan.Dal.Migrations
                     b.ToTable("InvitationLinks", "turnierplan");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.InvitationLinkEntry", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.InvitationLinkEntry", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -416,7 +420,7 @@ namespace Turnierplan.Dal.Migrations
                     b.ToTable("InvitationLinkEntries", "turnierplan");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.PlanningRealm", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.PlanningRealm", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -447,7 +451,7 @@ namespace Turnierplan.Dal.Migrations
                     b.ToTable("PlanningRealms", "turnierplan");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.TournamentClass", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TournamentClass", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -576,7 +580,7 @@ namespace Turnierplan.Dal.Migrations
                     b.ToTable("IAM_Organization", "turnierplan");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Planning.PlanningRealm>", b =>
+            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.PlanningRealm.PlanningRealm>", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -984,15 +988,15 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.Application", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.Application", b =>
                 {
-                    b.HasOne("Turnierplan.Core.Planning.PlanningRealm", null)
+                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", null)
                         .WithMany("Applications")
                         .HasForeignKey("PlanningRealmId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Turnierplan.Core.Planning.InvitationLink", "SourceLink")
+                    b.HasOne("Turnierplan.Core.PlanningRealm.InvitationLink", "SourceLink")
                         .WithMany()
                         .HasForeignKey("SourceLinkId")
                         .OnDelete(DeleteBehavior.SetNull);
@@ -1000,15 +1004,15 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("SourceLink");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.ApplicationTeam", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.ApplicationTeam", b =>
                 {
-                    b.HasOne("Turnierplan.Core.Planning.Application", null)
+                    b.HasOne("Turnierplan.Core.PlanningRealm.Application", null)
                         .WithMany("Teams")
                         .HasForeignKey("ApplicationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Turnierplan.Core.Planning.TournamentClass", "Class")
+                    b.HasOne("Turnierplan.Core.PlanningRealm.TournamentClass", "Class")
                         .WithMany()
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1017,9 +1021,9 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Class");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.InvitationLink", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.InvitationLink", b =>
                 {
-                    b.HasOne("Turnierplan.Core.Planning.PlanningRealm", null)
+                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", null)
                         .WithMany("InvitationLinks")
                         .HasForeignKey("PlanningRealmId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1035,7 +1039,7 @@ namespace Turnierplan.Dal.Migrations
                         .HasForeignKey("SecondaryLogoId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.OwnsMany("Turnierplan.Core.Planning.InvitationLink+ExternalLink", "ExternalLinks", b1 =>
+                    b.OwnsMany("Turnierplan.Core.PlanningRealm.InvitationLink+ExternalLink", "ExternalLinks", b1 =>
                         {
                             b1.Property<long>("InvitationLinkId")
                                 .HasColumnType("bigint");
@@ -1069,15 +1073,15 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("SecondaryLogo");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.InvitationLinkEntry", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.InvitationLinkEntry", b =>
                 {
-                    b.HasOne("Turnierplan.Core.Planning.TournamentClass", "Class")
+                    b.HasOne("Turnierplan.Core.PlanningRealm.TournamentClass", "Class")
                         .WithMany()
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Turnierplan.Core.Planning.InvitationLink", null)
+                    b.HasOne("Turnierplan.Core.PlanningRealm.InvitationLink", null)
                         .WithMany("Entries")
                         .HasForeignKey("InvitationLinkId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1086,7 +1090,7 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Class");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.PlanningRealm", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.PlanningRealm", b =>
                 {
                     b.HasOne("Turnierplan.Core.Organization.Organization", "Organization")
                         .WithMany("PlanningRealms")
@@ -1097,9 +1101,9 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.TournamentClass", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TournamentClass", b =>
                 {
-                    b.HasOne("Turnierplan.Core.Planning.PlanningRealm", null)
+                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", null)
                         .WithMany("TournamentClasses")
                         .HasForeignKey("PlanningRealmId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1150,9 +1154,9 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Scope");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Planning.PlanningRealm>", b =>
+            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.PlanningRealm.PlanningRealm>", b =>
                 {
-                    b.HasOne("Turnierplan.Core.Planning.PlanningRealm", "Scope")
+                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", "Scope")
                         .WithMany("RoleAssignments")
                         .HasForeignKey("PlanningRealmId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1605,17 +1609,17 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Venues");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.Application", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.Application", b =>
                 {
                     b.Navigation("Teams");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.InvitationLink", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.InvitationLink", b =>
                 {
                     b.Navigation("Entries");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.Planning.PlanningRealm", b =>
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.PlanningRealm", b =>
                 {
                     b.Navigation("Applications");
 

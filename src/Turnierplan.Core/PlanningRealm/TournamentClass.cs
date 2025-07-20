@@ -11,6 +11,13 @@ public sealed class TournamentClass : Entity<long>
         MaxTeamCount = maxTeamCount;
     }
 
+    internal TournamentClass(string name)
+    {
+        Id = 0;
+        Name = name;
+        MaxTeamCount = null;
+    }
+
     public override long Id { get; protected set; }
 
     public string Name { get; set; }

@@ -1,0 +1,60 @@
+@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
+
+<table class="table">
+  <thead>
+    <tr>
+      <th translate="Portal.ViewPlanningRealm.TournamentClasses.Name"></th>
+      <th translate="Portal.ViewPlanningRealm.TournamentClasses.ApplicationCount"></th>
+      <th translate="Portal.ViewPlanningRealm.TournamentClasses.MaxTeamCount"></th>
+      @if (writeAllowed) {
+        <th>
+          <span class="d-none d-md-block" translate="Portal.ViewPlanningRealm.TournamentClasses.Edit"></span>
+        </th>
+        <th>
+          <span class="d-none d-md-block" translate="Portal.ViewPlanningRealm.TournamentClasses.Delete"></span>
+        </th>
+      }
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (tournamentClass of planningRealm.tournamentClasses; track tournamentClass.id) {
+      <tr>
+        <td class="align-middle">{{ tournamentClass.name }}</td>
+        <td class="align-middle">{{ tournamentClass.numberOfTeams }}</td>
+        <td class="align-middle">
+          @if (tournamentClass.maxTeamCount) {
+            {{ tournamentClass.maxTeamCount }}
+          } @else {
+            <span>&infin;</span>
+          }
+        </td>
+        @if (writeAllowed) {
+          <td class="align-middle">
+            <tp-action-button
+              [type]="'outline-secondary'"
+              [icon]="'gear'"
+              [mode]="'IconOnly'"
+              [disabled]="currentlyUpdatingId === tournamentClass.id"
+              (click)="editTournamentClass(tournamentClass.id)" />
+            @if (currentlyUpdatingId === tournamentClass.id) {
+              <tp-small-spinner class="mx-2" />
+            }
+          </td>
+          @let canDelete = tournamentClass.numberOfTeams === 0;
+          <td class="align-middle" [ngClass]="{ 'ps-1': !canDelete }">
+            @if (canDelete) {
+              <tp-delete-button (confirmed)="deleteTournamentClass(tournamentClass.id)" />
+            } @else {
+              <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.TournamentClasses.DeleteNotPossible'" />
+            }
+          </td>
+        }
+      </tr>
+    } @empty {
+      <tr>
+        <td translate="Portal.ViewPlanningRealm.TournamentClasses.NoTournamentClasses"></td>
+      </tr>
+    }
+  </tbody>
+</table>

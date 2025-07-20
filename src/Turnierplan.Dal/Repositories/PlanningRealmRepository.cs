@@ -19,7 +19,20 @@ internal sealed class PlanningRealmRepository(TurnierplanContext context) : Repo
     {
         var query = DbSet.Where(x => x.PublicId == id);
 
-        // TODO: Add includes
+        if (include.HasFlag(IPlanningRealmRepository.Include.TournamentClasses))
+        {
+            query = query.Include(x => x.TournamentClasses);
+        }
+
+        if (include.HasFlag(IPlanningRealmRepository.Include.InvitationLinks))
+        {
+            query = query.Include(x => x.InvitationLinks).ThenInclude(x => x.Entries);
+        }
+
+        if (include.HasFlag(IPlanningRealmRepository.Include.ApplicationsWithTeams))
+        {
+            query = query.Include(x => x.Applications).ThenInclude(x => x.Teams);
+        }
 
         query = query.Include(x => x.Organization).ThenInclude(x => x.RoleAssignments);
         query = query.Include(x => x.RoleAssignments);

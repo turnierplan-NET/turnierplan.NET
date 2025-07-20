@@ -6,15 +6,66 @@
     [navigationTabs]="pages"
     [contextEntityId]="planningRealm.id"
     [rememberNavigationTab]="true"
+    [enableBottomPadding]="!isApplicationsPage"
     (navigationTabSelected)="togglePage($event.id)">
+    <ng-template #buttons>
+      @switch (currentPage) {
+        @case (0) {
+          <!-- Tournament classes page -->
+          <tp-action-button
+            *tpIsActionAllowed="[planningRealm.id, Actions.GenericWrite]"
+            [title]="'Portal.ViewPlanningRealm.NewTournamentClass.Title'"
+            [type]="'outline-success'"
+            [icon]="'plus-circle'"
+            (click)="addTournamentClass()" />
+        }
+        @case (1) {
+          <!-- Invitation links page -->
+          <tp-action-button
+            *tpIsActionAllowed="[planningRealm.id, Actions.GenericWrite]"
+            [title]="'Portal.ViewPlanningRealm.NewInvitationLink.Title'"
+            [type]="'outline-success'"
+            [icon]="'plus-circle'"
+            (click)="addInvitationLink()" />
+        }
+        @case (3) {
+          <!-- Settings page -->
+          @if (isUpdatingName) {
+            <tp-small-spinner />
+          }
+          <tp-rename-button
+            translationKey="Portal.ViewPlanningRealm.Settings.Rename"
+            [current]="planningRealm.name"
+            [disabled]="isUpdatingName"
+            (renamed)="renamePlanningRealm($event)" />
+        }
+      }
+    </ng-template>
     <ng-template #content>
-      <div class="card">
+      <div class="card" [ngClass]="{ 'd-none': isApplicationsPage }">
         @switch (currentPage) {
           @case (0) {
-            <!-- Home page -->
-            <div>TODO</div>
+            <!-- Tournament classes page -->
+            <div class="card-header d-flex flex-row align-items-center">
+              <tp-badge context="ViewPlanningRealm" label="TournamentClassesCount" [value]="planningRealm.tournamentClasses.length" />
+            </div>
+            <div class="card-body p-0">
+              <tp-tournament-classes-manager
+                [planningRealm]="planningRealm"
+                (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+            </div>
           }
           @case (1) {
+            <!-- Invitation links page -->
+            <div class="card-header d-flex flex-row align-items-center">
+              <tp-badge context="ViewPlanningRealm" label="InvitationLinksCount" [value]="planningRealm.invitationLinks.length" />
+            </div>
+            <div class="card-body p-0">
+              <tp-invitation-links-manager [planningRealmId]="planningRealm.id" [invitationLinks]="planningRealm.invitationLinks" />
+            </div>
+          }
+          <!-- The "invitations" page (id 2) utilizes the entire page width and the HTML template is located at the end of this file outside of the <tp-page-frame> -->
+          @case (3) {
             <!-- Settings page -->
             <ng-container *tpIsActionAllowed="[planningRealm.id, Actions.ReadOrWriteRoleAssignments]">
               <div class="card-body">
@@ -36,4 +87,12 @@
       </div>
     </ng-template>
   </tp-page-frame>
+
+  @if (isApplicationsPage) {
+    <!-- TODO: Implement the applications page -->
+    <div class="mx-5 bg-secondary-subtle">TODO: Applications panel</div>
+
+    <!-- Normally, this padding is added by the page frame. In case of the applications page, that padding is disabled. -->
+    <div style="height: 5em"></div>
+  }
 </ng-container>

@@ -5,7 +5,7 @@
     <i class="bi bi-{{ icon }}"></i>
   }
   @if (text !== undefined) {
-    <span [translate]="text"></span>
+    <span [translate]="text" [translateParams]="textParams ?? {}"></span>
   } @else {
     <ng-content></ng-content>
   }

@@ -23,6 +23,9 @@ public sealed class InvitationLinkEntityTypeConfiguration : IEntityTypeConfigura
         builder.HasIndex(x => x.PublicId)
             .IsUnique();
 
+        builder.Property(x => x.Name)
+            .IsRequired();
+
         builder.Property(x => x.Title);
 
         builder.Property(x => x.Description);
