@@ -61,6 +61,10 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
     private readonly modalService: NgbModal
   ) {}
 
+  protected get isApplicationsPage(): boolean {
+    return this.currentPage === 2;
+  }
+
   public ngOnInit(): void {
     this.route.paramMap
       .pipe(
