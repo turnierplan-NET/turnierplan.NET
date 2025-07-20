@@ -69,6 +69,6 @@ export class TournamentClassManagerComponent {
   }
 
   protected deleteTournamentClass(id: number): void {
-    // TODO: Implement delete logic
+    // TODO: Implement delete logic -> the endpoint should only allow delete under the same condition that no applications for this tournament class have been made yet
   }
 }
