@@ -50,7 +50,10 @@
               <tp-badge context="ViewPlanningRealm" label="TournamentClassesCount" [value]="planningRealm.tournamentClasses.length" />
             </div>
             <div class="card-body p-0">
-              <tp-tournament-classes-manager [planningRealmId]="planningRealm.id" [tournamentClasses]="planningRealm.tournamentClasses" />
+              <tp-tournament-classes-manager
+                [planningRealmId]="planningRealm.id"
+                [tournamentClasses]="planningRealm.tournamentClasses"
+                (errorOccured)="loadingState = { isLoading: false, error: $event }" />
             </div>
           }
           @case (1) {

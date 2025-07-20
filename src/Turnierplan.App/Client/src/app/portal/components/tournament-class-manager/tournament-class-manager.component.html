@@ -31,17 +31,15 @@
           }
         </td>
         @if (writeAllowed) {
-          <td class="align-middle" [ngClass]="{ 'pe-0': currentlyUpdatingId !== tournamentClass.id }">
-            <!-- 'pe-0' of the table cell is removed while the spinner is shown to prevent "jumping" of the right hand columns -->
+          <td class="align-middle">
+            <tp-action-button
+              [type]="'outline-secondary'"
+              [icon]="'gear'"
+              [mode]="'IconOnly'"
+              [disabled]="currentlyUpdatingId === tournamentClass.id"
+              (click)="editTournamentClass(tournamentClass.id)" />
             @if (currentlyUpdatingId === tournamentClass.id) {
               <tp-small-spinner class="mx-2" />
-            } @else {
-              <tp-action-button
-                [type]="'outline-secondary'"
-                [icon]="'gear'"
-                [mode]="'IconOnly'"
-                [disabled]="currentlyUpdatingId === tournamentClass.id"
-                (click)="editTournamentClass(tournamentClass.id)" />
             }
           </td>
           <td class="align-middle" [ngClass]="{ 'ps-0': true }">
