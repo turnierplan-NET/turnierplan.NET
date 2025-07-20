@@ -88,6 +88,7 @@ import { CreatePlanningRealmComponent } from './pages/create-planning-realm/crea
 import { ViewPlanningRealmComponent } from './pages/view-planning-realm/view-planning-realm.component';
 import { TournamentClassManagerComponent } from './components/tournament-class-manager/tournament-class-manager.component';
 import { InvitationLinkManagerComponent } from './components/invitation-link-manager/invitation-link-manager.component';
+import { TournamentClassDialogComponent } from './components/tournament-class-dialog/tournament-class-dialog.component';
 
 const routes: Routes = [
   {
@@ -245,7 +246,8 @@ const routes: Routes = [
     CreatePlanningRealmComponent,
     ViewPlanningRealmComponent,
     TournamentClassManagerComponent,
-    InvitationLinkManagerComponent
+    InvitationLinkManagerComponent,
+    TournamentClassDialogComponent
   ],
   imports: [
     CommonModule,

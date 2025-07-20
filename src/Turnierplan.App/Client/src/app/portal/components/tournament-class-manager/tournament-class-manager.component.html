@@ -40,7 +40,8 @@
                 [type]="'outline-secondary'"
                 [icon]="'gear'"
                 [mode]="'IconOnly'"
-                [disabled]="currentlyUpdatingId === tournamentClass.id" />
+                [disabled]="currentlyUpdatingId === tournamentClass.id"
+                (click)="editTournamentClass(tournamentClass.id)" />
             }
           </td>
           <td class="align-middle" [ngClass]="{ 'ps-0': true }">
