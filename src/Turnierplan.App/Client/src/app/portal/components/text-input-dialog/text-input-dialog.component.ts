@@ -3,24 +3,26 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   standalone: false,
-  templateUrl: './text-area-dialog.component.html'
+  templateUrl: './text-input-dialog.component.html'
 })
-export class TextAreaDialogComponent {
+export class TextInputDialogComponent {
   protected isInitialized = false;
   protected translationKey: string = '';
   protected initialValue: string = '';
+  protected textArea: boolean = false;
   protected currentValue: string = '';
   protected wasChanged = false;
 
   constructor(protected readonly modal: NgbActiveModal) {}
 
-  public init(translationKey: string, initialValue: string): void {
+  public init(translationKey: string, initialValue: string, textArea: boolean): void {
     if (this.isInitialized) {
       return;
     }
 
     this.translationKey = translationKey;
     this.initialValue = initialValue;
+    this.textArea = textArea;
     this.currentValue = initialValue;
     this.wasChanged = false;
 

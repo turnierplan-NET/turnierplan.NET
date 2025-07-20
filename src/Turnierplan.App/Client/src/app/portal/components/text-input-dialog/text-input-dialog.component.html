@@ -1,0 +1,32 @@
+@if (isInitialized) {
+  <div class="modal-header">
+    <h4 class="modal-title" [translate]="translationKey + '.Title'"></h4>
+    <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
+  </div>
+  <div class="modal-body d-flex flex-column">
+    <div class="form-group">
+      <label class="form-label" for="content" [translate]="translationKey + '.InfoText'"></label>
+      @if (textArea) {
+        <textarea
+          id="content"
+          class="form-control"
+          [rows]="10"
+          [(ngModel)]="currentValue"
+          (keyup.enter)="save(true)"
+          (change)="wasChanged = true"></textarea>
+      } @else {
+        <input
+          class="form-control"
+          type="text"
+          id="content"
+          [(ngModel)]="currentValue"
+          (keyup.enter)="save(true)"
+          (change)="wasChanged = true" />
+      }
+    </div>
+  </div>
+  <div class="modal-footer">
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
+    <tp-action-button [type]="'success'" [title]="translationKey + '.Confirm'" (click)="save()" />
+  </div>
+}

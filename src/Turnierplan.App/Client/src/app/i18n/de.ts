@@ -780,7 +780,8 @@ export const de = {
         NoDescription: 'Keine Beschreibung vorhanden',
         EditDescription: {
           Title: 'Beschreibung bearbeiten',
-          EnterNewName: 'Geben Sie die Beschreibung für die Spielstätte ein (kann leer gelassen werden):'
+          InfoText: 'Geben Sie die Beschreibung für die Spielstätte ein (kann leer gelassen werden):',
+          Confirm: 'Speichern'
         },
         AddressDetails: 'Adressdetails',
         AddressDetailsTooltip: 'Adressdetails sind z.B. Anschrift, Hausnummer oder Stadt.',
