@@ -22,11 +22,21 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
   protected pages: PageFrameNavigationTab[] = [
     {
       id: 0,
-      title: 'Portal.ViewPlanningRealm.Pages.Home',
-      icon: 'bi-house'
+      title: 'Portal.ViewPlanningRealm.Pages.TournamentClasses',
+      icon: 'bi-x-diamond'
     },
     {
       id: 1,
+      title: 'Portal.ViewPlanningRealm.Pages.InvitationLinks',
+      icon: 'bi-link-45deg'
+    },
+    {
+      id: 2,
+      title: 'Portal.ViewPlanningRealm.Pages.Applications',
+      icon: 'bi-card-checklist'
+    },
+    {
+      id: 3,
       title: 'Portal.ViewPlanningRealm.Pages.Settings',
       icon: 'bi-gear',
       authorization: Actions.GenericWrite

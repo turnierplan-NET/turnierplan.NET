@@ -11,10 +11,18 @@
       <div class="card">
         @switch (currentPage) {
           @case (0) {
-            <!-- Home page -->
+            <!-- Tournament classes page -->
             <div>TODO</div>
           }
           @case (1) {
+            <!-- Invitation links page -->
+            <div>TODO</div>
+          }
+          @case (2) {
+            <!-- Invitations page -->
+            <div>TODO</div>
+          }
+          @case (4) {
             <!-- Settings page -->
             <ng-container *tpIsActionAllowed="[planningRealm.id, Actions.ReadOrWriteRoleAssignments]">
               <div class="card-body">

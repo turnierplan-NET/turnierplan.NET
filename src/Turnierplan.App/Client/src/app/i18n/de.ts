@@ -870,7 +870,9 @@ export const de = {
     },
     ViewPlanningRealm: {
       Pages: {
-        Home: 'Startseite',
+        TournamentClasses: 'Turnierklassen',
+        InvitationLinks: 'Anmeldelinks',
+        Applications: 'Anmeldungen',
         Settings: 'Einstellungen'
       },
       RbacWidget: {
