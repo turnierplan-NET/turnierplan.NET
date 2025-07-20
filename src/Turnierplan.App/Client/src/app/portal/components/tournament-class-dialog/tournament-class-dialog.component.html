@@ -11,8 +11,7 @@
         <div class="invalid-feedback" [translate]="'Portal.ViewPlanningRealm.TournamentClasses.EditDialog.NameInvalid'"></div>
       }
     </div>
-    @if (name !== initialName) {
-      <!-- TODO: Only show this alert when there actually are invitation links which reference this tournament class -->
+    @if (name !== initialName && isClassReferencedByInvitationLink) {
       <tp-alert
         [margin]="'mb-0 mt-3'"
         [type]="'warning'"
@@ -47,8 +46,16 @@
           <div class="invalid-feedback" [translate]="'Portal.ViewPlanningRealm.TournamentClasses.EditDialog.MaxTeamCountInvalid'"></div>
         }
       </div>
+
+      @if (maxTeamCount < currentNumberOfTeams) {
+        <tp-alert
+          [margin]="'mb-0 mt-3'"
+          [type]="'info'"
+          [icon]="'info-circle'"
+          [text]="'Portal.ViewPlanningRealm.TournamentClasses.EditDialog.MaxTeamCountAlert'"
+          [textParams]="{ actual: currentNumberOfTeams, limit: maxTeamCount }" />
+      }
     }
-    <!-- TODO: Display info alert if the new limit is smaller than the current number of existing applications -->
   </div>
   <div class="modal-footer">
     <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />

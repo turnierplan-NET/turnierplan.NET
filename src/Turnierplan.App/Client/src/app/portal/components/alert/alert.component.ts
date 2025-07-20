@@ -16,5 +16,8 @@ export class AlertComponent {
   public text?: string;
 
   @Input()
+  public textParams?: { [key: string]: unknown };
+
+  @Input()
   public margin: string = 'm-0';
 }

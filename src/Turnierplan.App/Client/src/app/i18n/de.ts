@@ -895,8 +895,8 @@ export const de = {
       },
       TournamentClasses: {
         Name: 'Name',
-        ApplicationCount: 'Anzahl Anmeldungen',
-        MaxTeamCount: 'max. Mannschaften',
+        ApplicationCount: 'Anzahl Mannschaften',
+        MaxTeamCount: 'max. Anzahl Mannschaften',
         Edit: 'Bearbeiten',
         EditDialog: {
           Title: 'Turnierklasse bearbeiten',
@@ -905,7 +905,9 @@ export const de = {
           NameAlert: 'Eine Änderung des Namens wird sofort auf allen Anmeldelinks, wo diese Turnierklasse verfügbar ist, sichtbar',
           LimitMaxTeamCount: 'Anzahl der Mannschaften limitieren',
           MaxTeamCount: 'Max. Anzahl an Mannschaften:',
-          MaxTeamCountInvalid: 'Die Anzahl muss mindestens 2 sein.'
+          MaxTeamCountInvalid: 'Die Anzahl muss mindestens 2 sein.',
+          MaxTeamCountAlert:
+            'Es haben sich bereits mehr Mannschaften für diese Turnierklasse angemeldet ({{actual}}) als das angegebene Limit von {{limit}}.'
         },
         Delete: 'Löschen',
         DeleteNotPossible: 'Diese Turnierklasse kann nicht gelöscht werden, da es bereits Anmeldungen für diese Turnierklasse gibt.',

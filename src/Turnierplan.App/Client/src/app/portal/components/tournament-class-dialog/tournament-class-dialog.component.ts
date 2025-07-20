@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { TournamentClassDto } from '../../../api';
+import { PlanningRealmDto, TournamentClassDto } from '../../../api';
 import { max } from 'rxjs';
 
 @Component({
@@ -11,6 +11,8 @@ export class TournamentClassDialogComponent {
   protected isInitialized = false;
   protected initialName: string = '';
   protected initialMaxTeamCount?: number;
+  protected currentNumberOfTeams: number = 0;
+  protected isClassReferencedByInvitationLink: boolean = false;
   protected nameInvalid = false;
 
   protected name: string = '';
@@ -18,12 +20,23 @@ export class TournamentClassDialogComponent {
 
   constructor(protected readonly modal: NgbActiveModal) {}
 
-  public init(tournamentClass: TournamentClassDto): void {
+  public init(planningRealm: PlanningRealmDto, tournamentClassId: number): void {
+    const tournamentClass = planningRealm.tournamentClasses.find((x) => x.id === tournamentClassId);
+
+    if (!tournamentClass) {
+      throw new Error(`Tournament class id ${tournamentClassId} does not exist in planning realm.`);
+    }
+
     this.name = tournamentClass.name;
     this.maxTeamCount = tournamentClass.maxTeamCount ?? undefined;
 
     this.initialName = tournamentClass.name;
     this.initialMaxTeamCount = tournamentClass.maxTeamCount ?? undefined;
+    this.currentNumberOfTeams = tournamentClass.numberOfTeams;
+    this.isClassReferencedByInvitationLink = planningRealm.invitationLinks.some((link) =>
+      link.entries.some((entry) => entry.tournamentClassId === tournamentClassId)
+    );
+
     this.isInitialized = true;
   }
 

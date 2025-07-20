@@ -51,8 +51,7 @@
             </div>
             <div class="card-body p-0">
               <tp-tournament-classes-manager
-                [planningRealmId]="planningRealm.id"
-                [tournamentClasses]="planningRealm.tournamentClasses"
+                [planningRealm]="planningRealm"
                 (errorOccured)="loadingState = { isLoading: false, error: $event }" />
             </div>
           }

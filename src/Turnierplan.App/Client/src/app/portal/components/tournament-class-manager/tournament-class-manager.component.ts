@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TournamentClassDto } from '../../../api';
+import { PlanningRealmDto } from '../../../api';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,10 +15,7 @@ import { map } from 'rxjs/operators';
 })
 export class TournamentClassManagerComponent {
   @Input()
-  public planningRealmId!: string;
-
-  @Input()
-  public tournamentClasses: TournamentClassDto[] = [];
+  public planningRealm!: PlanningRealmDto;
 
   @Output()
   public errorOccured = new EventEmitter<unknown>();
@@ -33,19 +30,13 @@ export class TournamentClassManagerComponent {
   ) {}
 
   protected editTournamentClass(id: number): void {
-    const tournamentClass = this.tournamentClasses.find((x) => x.id === id);
-
-    if (!tournamentClass) {
-      return;
-    }
-
     const ref = this.modalService.open(TournamentClassDialogComponent, {
       size: 'md',
       fullscreen: 'md',
       centered: true
     });
 
-    (ref.componentInstance as TournamentClassDialogComponent).init(tournamentClass);
+    (ref.componentInstance as TournamentClassDialogComponent).init(this.planningRealm, id);
 
     ref.closed
       .pipe(
@@ -53,7 +44,7 @@ export class TournamentClassManagerComponent {
         switchMap((result) =>
           this.tournamentClassService
             .updateTournamentClass({
-              planningRealmId: this.planningRealmId,
+              planningRealmId: this.planningRealm.id,
               id: id,
               body: { name: result.name, maxTeamCount: result.maxTeamCount }
             })
@@ -64,12 +55,20 @@ export class TournamentClassManagerComponent {
         next: (result) => {
           this.currentlyUpdatingId = undefined;
 
-          tournamentClass.name = result.name;
-          tournamentClass.maxTeamCount = result.maxTeamCount;
+          const tournamentClass = this.planningRealm.tournamentClasses.find((x) => x.id === id);
+
+          if (tournamentClass) {
+            tournamentClass.name = result.name;
+            tournamentClass.maxTeamCount = result.maxTeamCount;
+          }
         },
         error: (error) => {
           this.errorOccured.emit(error);
         }
       });
+  }
+
+  protected deleteTournamentClass(id: number): void {
+    // TODO: Implement delete logic
   }
 }

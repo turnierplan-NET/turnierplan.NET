@@ -30,6 +30,8 @@ public sealed record InvitationLinkDto
 
     public required Entry[] Entries { get; init; }
 
+    public required int NumberOfApplications { get; init; }
+
     public sealed record Entry
     {
         public required long TournamentClassId { get; init; }

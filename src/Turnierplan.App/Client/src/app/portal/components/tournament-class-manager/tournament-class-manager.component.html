@@ -1,4 +1,4 @@
-@let writeAllowed = (authorizationService.isActionAllowed$(planningRealmId, Actions.GenericWrite) | async) ?? false;
+@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
 
 <table class="table">
   <thead>
@@ -16,13 +16,10 @@
   </thead>
 
   <tbody>
-    @for (tournamentClass of tournamentClasses; track tournamentClass.id) {
+    @for (tournamentClass of planningRealm.tournamentClasses; track tournamentClass.id) {
       <tr>
         <td class="align-middle">{{ tournamentClass.name }}</td>
-        <td class="align-middle">
-          <!-- TODO: Load & display applications count from backend -->
-          <div class="badge rounded-pill text-bg-danger">TODO</div>
-        </td>
+        <td class="align-middle">{{ tournamentClass.numberOfTeams }}</td>
         <td class="align-middle">
           @if (tournamentClass.maxTeamCount) {
             {{ tournamentClass.maxTeamCount }}
@@ -42,10 +39,13 @@
               <tp-small-spinner class="mx-2" />
             }
           </td>
-          <td class="align-middle" [ngClass]="{ 'ps-1': true }">
-            <!-- TODO: Disable padding based on delete logic below -->
-            <!-- TODO: Show delete button if number of applications for this class = 0 + implement delete logic -->
-            <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.TournamentClasses.DeleteNotPossible'" />
+          @let canDelete = tournamentClass.numberOfTeams === 0;
+          <td class="align-middle" [ngClass]="{ 'ps-1': !canDelete }">
+            @if (canDelete) {
+              <tp-delete-button (confirmed)="deleteTournamentClass(tournamentClass.id)" />
+            } @else {
+              <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.TournamentClasses.DeleteNotPossible'" />
+            }
           </td>
         }
       </tr>

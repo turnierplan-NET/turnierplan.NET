@@ -29,6 +29,11 @@ internal sealed class PlanningRealmRepository(TurnierplanContext context) : Repo
             query = query.Include(x => x.InvitationLinks).ThenInclude(x => x.Entries);
         }
 
+        if (include.HasFlag(IPlanningRealmRepository.Include.ApplicationsWithTeams))
+        {
+            query = query.Include(x => x.Applications).ThenInclude(x => x.Teams);
+        }
+
         query = query.Include(x => x.Organization).ThenInclude(x => x.RoleAssignments);
         query = query.Include(x => x.RoleAssignments);
 
