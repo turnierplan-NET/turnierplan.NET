@@ -12,6 +12,7 @@
           class="form-control"
           [rows]="10"
           [(ngModel)]="currentValue"
+          [ngClass]="{ 'is-invalid': showError }"
           (keyup.enter)="save(true)"
           (change)="wasChanged = true"></textarea>
       } @else {
@@ -20,8 +21,13 @@
           type="text"
           id="content"
           [(ngModel)]="currentValue"
+          [ngClass]="{ 'is-invalid': showError }"
           (keyup.enter)="save(true)"
           (change)="wasChanged = true" />
+      }
+
+      @if (showError) {
+        <div class="invalid-feedback" [translate]="translationKey + '.' + showError"></div>
       }
     </div>
   </div>

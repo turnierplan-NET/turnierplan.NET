@@ -103,7 +103,7 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
     });
 
     const component = ref.componentInstance as TextInputDialogComponent;
-    component.init('Portal.ViewVenue.Details.EditDescription', this.venue.description, true);
+    component.init('Portal.ViewVenue.Details.EditDescription', this.venue.description, true, false);
 
     ref.closed.subscribe({
       next: (value: string) => {

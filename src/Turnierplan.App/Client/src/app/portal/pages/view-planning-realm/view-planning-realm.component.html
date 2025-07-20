@@ -13,19 +13,19 @@
           <!-- Tournament classes page -->
           <tp-action-button
             *tpIsActionAllowed="[planningRealm.id, Actions.GenericWrite]"
-            [title]="'Portal.ViewPlanningRealm.NewTournamentClass'"
+            [title]="'Portal.ViewPlanningRealm.NewTournamentClass.Title'"
             [type]="'outline-success'"
-            [icon]="'plus-circle'" />
-          <!-- TODO: Implement logic -->
+            [icon]="'plus-circle'"
+            (click)="addTournamentClass()" />
         }
         @case (1) {
           <!-- Invitation links page -->
           <tp-action-button
             *tpIsActionAllowed="[planningRealm.id, Actions.GenericWrite]"
-            [title]="'Portal.ViewPlanningRealm.NewInvitationLink'"
+            [title]="'Portal.ViewPlanningRealm.NewInvitationLink.Title'"
             [type]="'outline-success'"
-            [icon]="'plus-circle'" />
-          <!-- TODO: Implement logic -->
+            [icon]="'plus-circle'"
+            (click)="addInvitationLink()" />
         }
         @case (3) {
           <!-- Settings page -->

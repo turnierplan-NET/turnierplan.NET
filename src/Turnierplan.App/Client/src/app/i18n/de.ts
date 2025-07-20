@@ -880,8 +880,18 @@ export const de = {
         TournamentClassesCount: 'Turnierklassen',
         InvitationLinksCount: 'Anmeldelinks'
       },
-      NewTournamentClass: 'Neue Turnierklasse',
-      NewInvitationLink: 'Neuer Anmeldelink',
+      NewTournamentClass: {
+        Title: 'Neue Turnierklasse',
+        InfoText: 'Geben Sie den Namen für die neue Turnierklasse ein:',
+        RequiredFeedback: 'Der Name darf nicht leer sein',
+        Confirm: 'Erstellen'
+      },
+      NewInvitationLink: {
+        Title: 'Neuer Anmeldelink',
+        InfoText: 'Geben Sie den Namen für den neuen Anmeldelink ein:',
+        RequiredFeedback: 'Der Name darf nicht leer sein',
+        Confirm: 'Erstellen'
+      },
       Settings: {
         Rename: {
           Button: 'Umbenennen',

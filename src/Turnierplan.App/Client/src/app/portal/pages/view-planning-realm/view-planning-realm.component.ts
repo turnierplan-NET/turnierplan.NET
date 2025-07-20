@@ -3,10 +3,13 @@ import { LoadingState } from '../../directives/loading-state/loading-state.direc
 import { PlanningRealmDto, PlanningRealmsService } from '../../../api';
 import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
-import { of, Subject, switchMap, takeUntil } from 'rxjs';
+import { Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TitleService } from '../../services/title.service';
 import { NotificationService } from '../../../core/services/notification.service';
+import { TextInputDialogComponent } from '../../components/text-input-dialog/text-input-dialog.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { map } from 'rxjs/operators';
 
 @Component({
   standalone: false,
@@ -52,7 +55,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly planningRealmService: PlanningRealmsService,
     private readonly notificationService: NotificationService,
-    private readonly titleService: TitleService
+    private readonly titleService: TitleService,
+    private readonly modalService: NgbModal
   ) {}
 
   public ngOnInit(): void {
@@ -87,6 +91,14 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
 
   protected togglePage(number: number): void {
     this.currentPage = number;
+  }
+
+  protected addTournamentClass(): void {
+    this.openModalForEnteringName('NewTournamentClass'); // TODO: Send request
+  }
+
+  protected addInvitationLink(): void {
+    this.openModalForEnteringName('NewInvitationLink'); // TODO: Send request
   }
 
   protected renamePlanningRealm(name: string): void {
@@ -129,5 +141,18 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
         this.loadingState = { isLoading: false, error: error };
       }
     });
+  }
+
+  private openModalForEnteringName(key: string): Observable<string> {
+    const ref = this.modalService.open(TextInputDialogComponent, {
+      centered: true,
+      size: 'md',
+      fullscreen: 'md'
+    });
+
+    const component = ref.componentInstance as TextInputDialogComponent;
+    component.init(`Portal.ViewPlanningRealm.${key}`, '', false, true);
+
+    return ref.closed.pipe(map((x) => x as string));
   }
 }
