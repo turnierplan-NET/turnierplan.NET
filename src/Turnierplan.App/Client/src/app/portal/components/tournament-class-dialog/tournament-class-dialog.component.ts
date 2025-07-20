@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { PlanningRealmDto, TournamentClassDto } from '../../../api';
-import { max } from 'rxjs';
+import { PlanningRealmDto } from '../../../api';
 
 @Component({
   standalone: false,
