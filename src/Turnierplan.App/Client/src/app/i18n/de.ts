@@ -898,7 +898,6 @@ export const de = {
         InvitationLinkCount: 'Anmeldelinks',
         ApplicationCount: 'Anzahl Mannschaften',
         MaxTeamCount: 'max. Anzahl Mannschaften',
-        Edit: 'Bearbeiten',
         EditDialog: {
           Title: 'Turnierklasse bearbeiten',
           Name: 'Name:',
@@ -910,7 +909,6 @@ export const de = {
           MaxTeamCountAlert:
             'Es haben sich bereits mehr Mannschaften für diese Turnierklasse angemeldet ({{actual}}) als das angegebene Limit von {{limit}}.'
         },
-        Delete: 'Löschen',
         DeleteNotPossible: 'Diese Turnierklasse kann nicht gelöscht werden, da es bereits Anmeldungen für diese Turnierklasse gibt.',
         NoTournamentClasses: 'Es sind aktuell keine Turnierklassen vorhanden.'
       },
