@@ -909,7 +909,8 @@ export const de = {
       },
       NoInvitationLinks: 'Es sind aktuell keine Anmeldelinks vorhanden.',
       InvitationLink: {
-        // TODO Add required props
+        DeleteNotPossible:
+          'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.'
       },
       Settings: {
         Rename: {

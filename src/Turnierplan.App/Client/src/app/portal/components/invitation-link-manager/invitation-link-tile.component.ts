@@ -16,6 +16,9 @@ export class InvitationLinkTileComponent {
   @Output()
   public errorOccured = new EventEmitter<unknown>();
 
+  @Output()
+  public deleteRequest = new EventEmitter<number>(); // TODO: Emit delete delete event necessary?
+
   protected readonly ImageType = ImageType;
 
   protected findEntryForClass(id: number): InvitationLinkEntryDto | undefined {

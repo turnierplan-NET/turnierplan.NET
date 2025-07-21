@@ -86,6 +86,11 @@
     </div>
   </div>
   <div class="card-footer text-end pe-2">
-    <!-- TODO footer required? -->
+    @let canDelete = invitationLink.numberOfApplications === 0;
+    @if (canDelete) {
+      <tp-delete-button (confirmed)="deleteRequest.emit(invitationLink.id)" />
+    } @else {
+      <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.DeleteNotPossible'" />
+    }
   </div>
 </div>
