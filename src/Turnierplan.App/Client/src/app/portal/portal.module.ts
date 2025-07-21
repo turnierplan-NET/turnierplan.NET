@@ -87,7 +87,7 @@ import { IsActionAllowedDirective } from './directives/is-action-allowed/is-acti
 import { CreatePlanningRealmComponent } from './pages/create-planning-realm/create-planning-realm.component';
 import { ViewPlanningRealmComponent } from './pages/view-planning-realm/view-planning-realm.component';
 import { TournamentClassManagerComponent } from './components/tournament-class-manager/tournament-class-manager.component';
-import { InvitationLinkManagerComponent } from './components/invitation-link-manager/invitation-link-manager.component';
+import { InvitationLinkTileComponent } from './components/invitation-link-manager/invitation-link-tile.component';
 import { TournamentClassDialogComponent } from './components/tournament-class-dialog/tournament-class-dialog.component';
 
 const routes: Routes = [
@@ -246,7 +246,7 @@ const routes: Routes = [
     CreatePlanningRealmComponent,
     ViewPlanningRealmComponent,
     TournamentClassManagerComponent,
-    InvitationLinkManagerComponent,
+    InvitationLinkTileComponent,
     TournamentClassDialogComponent
   ],
   imports: [

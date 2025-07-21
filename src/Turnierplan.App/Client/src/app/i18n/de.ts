@@ -70,6 +70,7 @@ export const de = {
       Cancel: 'Abbrechen',
       Save: 'Speichern',
       Done: 'Fertig',
+      Change: 'Ändern',
       BackToLandingPage: 'Startseite',
       IllustrationAlt: 'Eine Illustration, welche "{{description}}" symbolisiert.',
       CopyToClipboard: 'In die Zwischenablage kopieren',
@@ -536,12 +537,6 @@ export const de = {
         },
         EditImages: {
           Title: 'Logos & Bilddateien',
-          ImageAlt: {
-            OrganizerLogo: 'Veranstalter-Logo',
-            SponsorLogo: 'Sponsor-Logo',
-            SponsorBanner: 'Sponsor-Banner'
-          },
-          Change: 'Ändern',
           Chooser: {
             Title: 'Bild hochladen oder auswählen',
             Remove: 'Bild entfernen',
@@ -895,9 +890,9 @@ export const de = {
       },
       TournamentClasses: {
         Name: 'Name',
+        InvitationLinkCount: 'Anmeldelinks',
         ApplicationCount: 'Anzahl Mannschaften',
         MaxTeamCount: 'max. Anzahl Mannschaften',
-        Edit: 'Bearbeiten',
         EditDialog: {
           Title: 'Turnierklasse bearbeiten',
           Name: 'Name:',
@@ -909,12 +904,13 @@ export const de = {
           MaxTeamCountAlert:
             'Es haben sich bereits mehr Mannschaften für diese Turnierklasse angemeldet ({{actual}}) als das angegebene Limit von {{limit}}.'
         },
-        Delete: 'Löschen',
         DeleteNotPossible: 'Diese Turnierklasse kann nicht gelöscht werden, da es bereits Anmeldungen für diese Turnierklasse gibt.',
         NoTournamentClasses: 'Es sind aktuell keine Turnierklassen vorhanden.'
       },
-      InvitationLinks: {
-        NoInvitationLinks: 'Es sind aktuell keine Anmeldelinks vorhanden.'
+      NoInvitationLinks: 'Es sind aktuell keine Anmeldelinks vorhanden.',
+      InvitationLink: {
+        DeleteNotPossible:
+          'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.'
       },
       Settings: {
         Rename: {
@@ -986,6 +982,13 @@ export const de = {
     VisibilitySelector: {
       Private: 'Privat',
       Public: 'Öffentlich'
+    },
+    ImageAlt: {
+      OrganizerLogo: 'Veranstalter-Logo',
+      SponsorLogo: 'Sponsor-Logo',
+      SponsorBanner: 'Sponsor-Banner',
+      PrimaryLogo: 'Hauptlogo',
+      SecondaryLogo: 'zweites Logo'
     },
     ErrorPage: {
       Title: 'Fehler',
