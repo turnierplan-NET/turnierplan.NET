@@ -60,8 +60,18 @@
             <div class="card-header d-flex flex-row align-items-center">
               <tp-badge context="ViewPlanningRealm" label="InvitationLinksCount" [value]="planningRealm.invitationLinks.length" />
             </div>
-            <div class="card-body p-0">
-              <tp-invitation-links-manager [planningRealmId]="planningRealm.id" [invitationLinks]="planningRealm.invitationLinks" />
+            <div class="card-body">
+              @if (planningRealm.invitationLinks.length === 0) {
+                <div class="d-flex flex-row justify-content-center py-4 text-center">
+                  <span class="tp-text-pre-wrap" translate="Portal.ViewPlanningRealm.NoInvitationLinks"></span>
+                </div>
+              } @else {
+                <div class="d-flex flex-column gap-3">
+                  @for (invitationLink of planningRealm.invitationLinks; track invitationLink.id) {
+                    <tp-invitation-link-tile [planningRealmId]="planningRealm.id" [invitationLink]="invitationLink" />
+                  }
+                </div>
+              }
             </div>
           }
           <!-- The "invitations" page (id 2) utilizes the entire page width and the HTML template is located at the end of this file outside of the <tp-page-frame> -->

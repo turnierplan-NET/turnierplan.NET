@@ -912,8 +912,9 @@ export const de = {
         DeleteNotPossible: 'Diese Turnierklasse kann nicht gelöscht werden, da es bereits Anmeldungen für diese Turnierklasse gibt.',
         NoTournamentClasses: 'Es sind aktuell keine Turnierklassen vorhanden.'
       },
-      InvitationLinks: {
-        NoInvitationLinks: 'Es sind aktuell keine Anmeldelinks vorhanden.'
+      NoInvitationLinks: 'Es sind aktuell keine Anmeldelinks vorhanden.',
+      InvitationLink: {
+        // TODO Add required props
       },
       Settings: {
         Rename: {
