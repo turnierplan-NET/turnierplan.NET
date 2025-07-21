@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PlanningRealmDto } from '../../../api';
+import { PlanningRealmDto, TournamentClassesService } from '../../../api';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TournamentClassDialogComponent } from '../tournament-class-dialog/tournament-class-dialog.component';
-import { TournamentClassesService } from '../../../api/services/tournament-classes.service';
 import { switchMap, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -28,6 +27,10 @@ export class TournamentClassManagerComponent {
     private readonly tournamentClassService: TournamentClassesService,
     private readonly modalService: NgbModal
   ) {}
+
+  protected getNumberOfReferencingLinks(id: number): number {
+    return this.planningRealm.invitationLinks.filter((link) => link.entries.some((entry) => entry.tournamentClassId == id)).length;
+  }
 
   protected editTournamentClass(id: number): void {
     const ref = this.modalService.open(TournamentClassDialogComponent, {

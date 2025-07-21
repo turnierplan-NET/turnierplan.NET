@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.Name"></th>
+      <th translate="Portal.ViewPlanningRealm.TournamentClasses.InvitationLinkCount"></th>
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.ApplicationCount"></th>
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.MaxTeamCount"></th>
       @if (writeAllowed) {
@@ -21,6 +22,7 @@
     @for (tournamentClass of planningRealm.tournamentClasses; track tournamentClass.id) {
       <tr>
         <td class="align-middle">{{ tournamentClass.name }}</td>
+        <td class="align-middle">{{ getNumberOfReferencingLinks(tournamentClass.id) }}</td>
         <td class="align-middle">{{ tournamentClass.numberOfTeams }}</td>
         <td class="align-middle">
           @if (tournamentClass.maxTeamCount) {

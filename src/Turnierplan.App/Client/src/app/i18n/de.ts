@@ -895,6 +895,7 @@ export const de = {
       },
       TournamentClasses: {
         Name: 'Name',
+        InvitationLinkCount: 'Anmeldelinks',
         ApplicationCount: 'Anzahl Mannschaften',
         MaxTeamCount: 'max. Anzahl Mannschaften',
         Edit: 'Bearbeiten',
