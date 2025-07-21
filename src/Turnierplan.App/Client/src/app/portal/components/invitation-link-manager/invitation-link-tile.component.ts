@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { InvitationLinkDto } from '../../../api';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ImageType, InvitationLinkDto, PlanningRealmDto, InvitationLinkEntryDto } from '../../../api';
 
 @Component({
   standalone: false,
@@ -8,8 +8,21 @@ import { InvitationLinkDto } from '../../../api';
 })
 export class InvitationLinkTileComponent {
   @Input()
-  public planningRealmId!: string;
+  public planningRealm!: PlanningRealmDto;
 
   @Input()
   public invitationLink!: InvitationLinkDto;
+
+  @Output()
+  public errorOccured = new EventEmitter<unknown>();
+
+  protected readonly ImageType = ImageType;
+
+  protected findEntryForClass(id: number): InvitationLinkEntryDto | undefined {
+    return this.invitationLink.entries.find((x) => x.tournamentClassId === id);
+  }
+
+  protected setImage(which: 'primaryLogo' | 'secondaryLogo', imageId?: string): void {
+    // TODO: Implement
+  }
 }

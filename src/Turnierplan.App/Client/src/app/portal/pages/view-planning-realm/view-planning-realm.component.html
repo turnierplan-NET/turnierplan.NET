@@ -68,7 +68,10 @@
               } @else {
                 <div class="d-flex flex-column gap-3">
                   @for (invitationLink of planningRealm.invitationLinks; track invitationLink.id) {
-                    <tp-invitation-link-tile [planningRealmId]="planningRealm.id" [invitationLink]="invitationLink" />
+                    <tp-invitation-link-tile
+                      [planningRealm]="planningRealm"
+                      [invitationLink]="invitationLink"
+                      (errorOccured)="loadingState = { isLoading: false, error: $event }" />
                   }
                 </div>
               }

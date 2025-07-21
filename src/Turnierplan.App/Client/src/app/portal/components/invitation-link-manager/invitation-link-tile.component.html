@@ -1,11 +1,84 @@
 <div class="card shadow-sm">
-  <div class="card-body d-flex flex-column gap-2">
+  <div class="card-body d-flex flex-column gap-3">
     <div class="fs-5 fw-bold card-title mb-0">
-      <i class="bi bi-link-45deg"></i>
+      <span
+        class="me-2 d-inline-block text-center text-white"
+        style="width: 1.3em; border-radius: 0.4em"
+        [ngStyle]="{ 'background-color': '#' + invitationLink.colorCode }">
+        <i class="bi bi-link-45deg"></i>
+      </span>
+
       <span>{{ invitationLink.name }}</span>
     </div>
 
-    <!-- TODO Add other props -->
+    <div class="row">
+      <div class="col-4 d-flex flex-column">
+        <div class="fw-bold">Titel:</div>
+        <div class="mb-2">{{ invitationLink.title ?? '-' }}</div>
+        <div class="fw-bold">Beschreibung:</div>
+        <div class="mb-2">{{ invitationLink.description ?? '-' }}</div>
+        <div class="fw-bold">Anmeldeschluss:</div>
+        @if (invitationLink.validUntil) {
+          <div class="mb-2">{{ invitationLink.validUntil | translateDate: 'medium' }}</div>
+        } @else {
+          <div class="mb-2">-</div>
+        }
+      </div>
+      <div class="col-3 d-flex flex-column">
+        <div class="fw-bold">Kontaktperson:</div>
+        <div class="mb-2">{{ invitationLink.contactPerson ?? '-' }}</div>
+        <div class="fw-bold">Kontakt E-Mail:</div>
+        <div class="mb-2">{{ invitationLink.contactEmail ?? '-' }}</div>
+        <div class="fw-bold">Kontakt-Telefon:</div>
+        <div class="mb-2">{{ invitationLink.contactTelephone ?? '-' }}</div>
+      </div>
+      <div class="col-5 d-flex flex-column">
+        <div class="fw-bold">Turniere:</div>
+
+        @for (tournamentClass of planningRealm.tournamentClasses; track tournamentClass.id) {
+          @let entry = findEntryForClass(tournamentClass.id);
+          @let inputId = 'invitationLink_' + invitationLink.id + '_class_' + tournamentClass.id;
+          <div class="mt-2 shadow-sm border p-1 d-flex flex-column">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" [id]="inputId" [ngModel]="entry !== undefined" />
+              <label class="form-check-label" [for]="inputId">{{ tournamentClass.name }}</label>
+            </div>
+            @if (entry) {
+              <div class="small">
+                <span>Neue Anmeldungen zulassen:</span>
+                <span class="ms-1 fw-bold">{{ entry.allowNewRegistrations ? 'ja' : 'nein' }}</span>
+              </div>
+              <div class="small">
+                <span>Max. Mannschaften pro Anmeldung:</span>
+                @if (entry.maxTeamsPerRegistration) {
+                  <span class="ms-1 fw-bold">{{ entry.maxTeamsPerRegistration }}</span>
+                } @else {
+                  <span class="ms-1 fw-bold">&infin;</span>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="fw-bold">Logos:</div>
+    <div class="d-flex flex-column flex-md-row gap-2 gap-md-5 ps-md-2">
+      <tp-image-widget
+        [currentImage]="invitationLink.primaryLogo"
+        [imageAlt]="'PrimaryLogo'"
+        [imageType]="ImageType.SquareLargeLogo"
+        [organizationId]="planningRealm.organizationId"
+        (imageChange)="setImage('primaryLogo', $event)"
+        (apiError)="errorOccured.emit($event)" />
+      <tp-image-widget
+        [currentImage]="invitationLink.secondaryLogo"
+        [imageAlt]="'SecondaryLogo'"
+        [imageType]="ImageType.SquareLargeLogo"
+        [organizationId]="planningRealm.organizationId"
+        (imageChange)="setImage('secondaryLogo', $event)"
+        (apiError)="errorOccured.emit($event)" />
+    </div>
   </div>
   <div class="card-footer text-end pe-2">
     <!-- TODO footer required? -->

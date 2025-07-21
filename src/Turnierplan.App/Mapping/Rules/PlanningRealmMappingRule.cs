@@ -35,7 +35,7 @@ internal sealed class PlanningRealmMappingRule : MappingRuleBase<PlanningRealm, 
                 ContactTelephone = x.ContactTelephone,
                 PrimaryLogo = mapper.MapNullable<ImageDto>(x.PrimaryLogo),
                 SecondaryLogo = mapper.MapNullable<ImageDto>(x.SecondaryLogo),
-                Entries = x.Entries.Select(y => new InvitationLinkDto.Entry
+                Entries = x.Entries.Select(y => new InvitationLinkEntryDto
                 {
                     TournamentClassId = y.Class.Id,
                     MaxTeamsPerRegistration = y.MaxTeamsPerRegistration,

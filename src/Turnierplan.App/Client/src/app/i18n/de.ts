@@ -70,6 +70,7 @@ export const de = {
       Cancel: 'Abbrechen',
       Save: 'Speichern',
       Done: 'Fertig',
+      Change: 'Ändern',
       BackToLandingPage: 'Startseite',
       IllustrationAlt: 'Eine Illustration, welche "{{description}}" symbolisiert.',
       CopyToClipboard: 'In die Zwischenablage kopieren',
@@ -536,12 +537,6 @@ export const de = {
         },
         EditImages: {
           Title: 'Logos & Bilddateien',
-          ImageAlt: {
-            OrganizerLogo: 'Veranstalter-Logo',
-            SponsorLogo: 'Sponsor-Logo',
-            SponsorBanner: 'Sponsor-Banner'
-          },
-          Change: 'Ändern',
           Chooser: {
             Title: 'Bild hochladen oder auswählen',
             Remove: 'Bild entfernen',
@@ -986,6 +981,13 @@ export const de = {
     VisibilitySelector: {
       Private: 'Privat',
       Public: 'Öffentlich'
+    },
+    ImageAlt: {
+      OrganizerLogo: 'Veranstalter-Logo',
+      SponsorLogo: 'Sponsor-Logo',
+      SponsorBanner: 'Sponsor-Banner',
+      PrimaryLogo: 'Hauptlogo',
+      SecondaryLogo: 'zweites Logo'
     },
     ErrorPage: {
       Title: 'Fehler',

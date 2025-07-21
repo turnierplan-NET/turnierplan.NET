@@ -28,16 +28,7 @@ public sealed record InvitationLinkDto
 
     public required ImageDto? SecondaryLogo { get; init; }
 
-    public required Entry[] Entries { get; init; }
+    public required InvitationLinkEntryDto[] Entries { get; init; }
 
     public required int NumberOfApplications { get; init; }
-
-    public sealed record Entry
-    {
-        public required long TournamentClassId { get; init; }
-
-        public required int? MaxTeamsPerRegistration { get; init; }
-
-        public required bool AllowNewRegistrations { get; init; }
-    }
 }
