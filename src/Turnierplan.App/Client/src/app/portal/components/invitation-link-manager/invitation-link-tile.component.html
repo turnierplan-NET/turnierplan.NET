@@ -15,11 +15,11 @@
       <div class="col-12 col-lg-7 d-flex flex-column">
         <div class="row">
           <div class="col-12 col-md-6 d-flex flex-column">
-            <div class="fw-bold">Titel:</div>
+            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Title"></div>
             <div class="mb-2">{{ invitationLink.title ?? '-' }}</div>
-            <div class="fw-bold">Beschreibung:</div>
+            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Description"></div>
             <div class="mb-2">{{ invitationLink.description ?? '-' }}</div>
-            <div class="fw-bold">Anmeldeschluss:</div>
+            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ValidUntil"></div>
             @if (invitationLink.validUntil) {
               <div class="mb-2">{{ invitationLink.validUntil | translateDate: 'medium' }}</div>
             } @else {
@@ -27,17 +27,17 @@
             }
           </div>
           <div class="col-12 col-md-6 d-flex flex-column">
-            <div class="fw-bold">Kontaktperson:</div>
+            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactPerson"></div>
             <div class="mb-2">{{ invitationLink.contactPerson ?? '-' }}</div>
-            <div class="fw-bold">Kontakt E-Mail:</div>
+            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactEmail"></div>
             <div class="mb-2">{{ invitationLink.contactEmail ?? '-' }}</div>
-            <div class="fw-bold">Kontakt-Telefon:</div>
+            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactTelephone"></div>
             <div class="mb-2">{{ invitationLink.contactTelephone ?? '-' }}</div>
           </div>
           <div class="col-5 d-flex flex-column"></div>
         </div>
 
-        <div class="fw-bold">Logos:</div>
+        <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Logos"></div>
         <div class="d-flex flex-column flex-md-row gap-2 gap-md-5 ps-md-2">
           <tp-image-widget
             [currentImage]="invitationLink.primaryLogo"
@@ -57,19 +57,23 @@
       </div>
       <div class="col-12 col-lg-5 d-flex flex-column">
         @if (invitationLink.entries.length === 0) {
-          <div class="fst-italic">Diesem Einladungslink sind aktuell keine Turniere zugeordnet.</div>
+          <div class="fst-italic" translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NoTournaments"></div>
         } @else {
           <table class="table table-sm table-bordered">
             <thead>
               <tr>
-                <th>Turnier</th>
+                <th translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.Tournament"></th>
                 <th>
-                  <span>Aktiv</span>
-                  <tp-tooltip-icon [tooltipText]="'bla'" />
+                  <span translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.AllowNewRegistrations"></span>
+                  <tp-tooltip-icon
+                    [icon]="'question-circle'"
+                    [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.AllowNewRegistrationsTooltip'" />
                 </th>
                 <th>
-                  <span>Limit pro Anmeldung</span>
-                  <tp-tooltip-icon [tooltipText]="'bla'" />
+                  <span translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.MaxTeamsPerRegistration"></span>
+                  <tp-tooltip-icon
+                    [icon]="'question-circle'"
+                    [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.MaxTeamsPerRegistrationTooltip'" />
                 </th>
               </tr>
             </thead>
@@ -80,7 +84,7 @@
                   <td>{{ tournamentClass.name }}</td>
                   <td>
                     @if (entry.allowNewRegistrations) {
-                      <i class="text-success bi bi-check-circle"></i>
+                      <i class="text-success bi bi-check-circle-fill"></i>
                     } @else {
                       <i class="text-secondary bi bi-pause-circle"></i>
                     }

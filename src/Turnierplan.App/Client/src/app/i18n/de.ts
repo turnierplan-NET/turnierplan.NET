@@ -909,6 +909,23 @@ export const de = {
       },
       NoInvitationLinks: 'Es sind aktuell keine Anmeldelinks vorhanden.',
       InvitationLink: {
+        Properties: {
+          Title: 'Titel:',
+          Description: 'Beschreibung:',
+          ValidUntil: 'Anmeldeschluss:',
+          ContactPerson: 'Kontaktperson:',
+          ContactEmail: 'Kontakt E-Mail:',
+          ContactTelephone: 'Kontakt-Telefon:',
+          Logos: 'Logos:'
+        },
+        Tournaments: {
+          NoTournaments: 'Diesem Einladungslink sind aktuell keine Turniere zugeordnet.',
+          Tournament: 'Turnier',
+          AllowNewRegistrations: 'Aktiv',
+          AllowNewRegistrationsTooltip: 'Sind aktuell weitere Anmeldungen möglich?',
+          MaxTeamsPerRegistration: 'Limit pro Anmeldung',
+          MaxTeamsPerRegistrationTooltip: 'Wie viele Mannschaften können mit einer Anmeldung angemeldet werden?'
+        },
         DeleteNotPossible:
           'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.'
       },
