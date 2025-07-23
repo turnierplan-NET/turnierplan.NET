@@ -56,30 +56,46 @@
         </div>
       </div>
       <div class="col-12 col-lg-5 d-flex flex-column">
-        <div class="mt-4 mt-lg-0 fw-bold">Turniere:</div>
-
-        @for (entry of invitationLink.entries; track entry.tournamentClassId) {
-          @let tournamentClass = findTournamentClassById(entry.tournamentClassId);
-
-          <div class="mt-2 shadow-sm border p-1 d-flex flex-column">
-            <div class="fw-bold">{{ tournamentClass.name }}</div>
-            @if (entry) {
-              <div class="small">
-                <span>Neue Anmeldungen zulassen:</span>
-                <span class="ms-1 fw-bold">{{ entry.allowNewRegistrations ? 'ja' : 'nein' }}</span>
-              </div>
-              <div class="small">
-                <span>Max. Mannschaften pro Anmeldung:</span>
-                @if (entry.maxTeamsPerRegistration) {
-                  <span class="ms-1 fw-bold">{{ entry.maxTeamsPerRegistration }}</span>
-                } @else {
-                  <span class="ms-1 fw-bold">&infin;</span>
-                }
-              </div>
-            }
-          </div>
-        } @empty {
-          <div>-</div>
+        @if (invitationLink.entries.length === 0) {
+          <div class="fst-italic">Diesem Einladungslink sind aktuell keine Turniere zugeordnet.</div>
+        } @else {
+          <table class="table table-sm table-bordered">
+            <thead>
+              <tr>
+                <th>Turnier</th>
+                <th>
+                  <span>Aktiv</span>
+                  <tp-tooltip-icon [tooltipText]="'bla'" />
+                </th>
+                <th>
+                  <span>Limit pro Anmeldung</span>
+                  <tp-tooltip-icon [tooltipText]="'bla'" />
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (entry of invitationLink.entries; track entry.tournamentClassId) {
+                @let tournamentClass = findTournamentClassById(entry.tournamentClassId);
+                <tr>
+                  <td>{{ tournamentClass.name }}</td>
+                  <td>
+                    @if (entry.allowNewRegistrations) {
+                      <i class="text-success bi bi-check-circle"></i>
+                    } @else {
+                      <i class="text-secondary bi bi-pause-circle"></i>
+                    }
+                  </td>
+                  <td>
+                    @if (entry.maxTeamsPerRegistration) {
+                      {{ entry.maxTeamsPerRegistration }}
+                    } @else {
+                      &infin;
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
         }
       </div>
     </div>
