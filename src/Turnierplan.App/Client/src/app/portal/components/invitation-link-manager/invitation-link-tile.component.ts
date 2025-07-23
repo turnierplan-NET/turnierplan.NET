@@ -1,5 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ImageType, InvitationLinkDto, PlanningRealmDto, InvitationLinkEntryDto } from '../../../api';
+import {
+  ImageType,
+  InvitationLinkDto,
+  PlanningRealmDto,
+  InvitationLinkEntryDto,
+  TournamentsService,
+  TournamentClassDto
+} from '../../../api';
 
 @Component({
   standalone: false,
@@ -21,8 +28,14 @@ export class InvitationLinkTileComponent {
 
   protected readonly ImageType = ImageType;
 
-  protected findEntryForClass(id: number): InvitationLinkEntryDto | undefined {
-    return this.invitationLink.entries.find((x) => x.tournamentClassId === id);
+  protected findTournamentClassById(id: number): TournamentClassDto {
+    const tournamentClass = this.planningRealm.tournamentClasses.find((x) => x.id === id);
+
+    if (!tournamentClass) {
+      throw new Error(`Tournament class id ${id} does not exist in planning realm.`);
+    }
+
+    return tournamentClass;
   }
 
   protected setImage(which: 'primaryLogo' | 'secondaryLogo', imageId?: string): void {
