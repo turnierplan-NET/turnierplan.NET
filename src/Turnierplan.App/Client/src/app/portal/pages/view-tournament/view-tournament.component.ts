@@ -15,7 +15,7 @@ import {
   MatchState,
   MatchType,
   NullableOfMatchOutcomeType,
-  TargetImage,
+  SetTournamentImageEndpointRequestTarget,
   TeamsService,
   TournamentDto,
   TournamentImagesDto,
@@ -685,9 +685,9 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     const tournamentId = this.tournament.id;
 
     const mappedTarget = {
-      organizerLogo: TargetImage.OrganizerLogo,
-      sponsorLogo: TargetImage.SponsorLogo,
-      sponsorBanner: TargetImage.SponsorBanner
+      organizerLogo: SetTournamentImageEndpointRequestTarget.OrganizerLogo,
+      sponsorLogo: SetTournamentImageEndpointRequestTarget.SponsorLogo,
+      sponsorBanner: SetTournamentImageEndpointRequestTarget.SponsorBanner
     }[whichImage];
 
     this.tournamentService
