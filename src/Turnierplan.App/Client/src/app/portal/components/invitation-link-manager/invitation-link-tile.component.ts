@@ -3,9 +3,9 @@ import {
   ImageType,
   InvitationLinkDto,
   PlanningRealmDto,
-  InvitationLinkEntryDto,
-  TournamentsService,
-  TournamentClassDto
+  TournamentClassDto,
+  SetInvitationLinkImageEndpointRequestTarget,
+  InvitationLinksService
 } from '../../../api';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
@@ -26,11 +26,18 @@ export class InvitationLinkTileComponent {
   public errorOccured = new EventEmitter<unknown>();
 
   @Output()
+  public reloadRequest = new EventEmitter<void>();
+
+  @Output()
   public deleteRequest = new EventEmitter<number>(); // TODO: Emit delete delete event necessary?
 
   protected readonly ImageType = ImageType;
+  protected isUpdatingImage = false;
 
-  constructor(protected readonly authorizationService: AuthorizationService) {}
+  constructor(
+    protected readonly authorizationService: AuthorizationService,
+    private readonly invitationLinkService: InvitationLinksService
+  ) {}
 
   protected findTournamentClassById(id: number): TournamentClassDto {
     const tournamentClass = this.planningRealm.tournamentClasses.find((x) => x.id === id);
@@ -42,8 +49,32 @@ export class InvitationLinkTileComponent {
     return tournamentClass;
   }
 
-  protected setImage(which: 'primaryLogo' | 'secondaryLogo', imageId?: string): void {
-    // TODO: Implement
+  protected setImage(whichImage: 'primaryLogo' | 'secondaryLogo', imageId?: string): void {
+    if (this.invitationLink[whichImage]?.id === imageId) {
+      return;
+    }
+
+    this.isUpdatingImage = true;
+
+    const mappedTarget = {
+      primaryLogo: SetInvitationLinkImageEndpointRequestTarget.PrimaryLogo,
+      secondaryLogo: SetInvitationLinkImageEndpointRequestTarget.SecondaryLogo
+    }[whichImage];
+
+    this.invitationLinkService
+      .setInvitationLinkImage({
+        id: this.invitationLink.id,
+        planningRealmId: this.planningRealm.id,
+        body: { imageId: imageId, target: mappedTarget }
+      })
+      .subscribe({
+        next: () => {
+          this.reloadRequest.emit();
+        },
+        error: (error) => {
+          this.errorOccured.emit(error);
+        }
+      });
   }
 
   protected readonly Actions = Actions;

@@ -71,6 +71,7 @@
                     <tp-invitation-link-tile
                       [planningRealm]="planningRealm"
                       [invitationLink]="invitationLink"
+                      (reloadRequest)="reloadPlanningRealm()"
                       (errorOccured)="loadingState = { isLoading: false, error: $event }" />
                   }
                 </div>

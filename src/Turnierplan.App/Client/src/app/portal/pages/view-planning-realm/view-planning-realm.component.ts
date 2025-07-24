@@ -190,6 +190,22 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
     });
   }
 
+  protected reloadPlanningRealm(): void {
+    if (!this.planningRealm) {
+      return;
+    }
+
+    this.planningRealmService.getPlanningRealm({ id: this.planningRealm.id }).subscribe({
+      next: (planningRealm) => {
+        this.planningRealm = planningRealm;
+        this.loadingState = { isLoading: false };
+      },
+      error: (error) => {
+        this.loadingState = { isLoading: false, error: error };
+      }
+    });
+  }
+
   private openModalForEnteringName(key: string): Observable<string> {
     const ref = this.modalService.open(TextInputDialogComponent, {
       centered: true,
