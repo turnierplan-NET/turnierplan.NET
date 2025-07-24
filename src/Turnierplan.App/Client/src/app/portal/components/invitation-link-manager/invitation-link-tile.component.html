@@ -12,7 +12,7 @@
     </div>
 
     <div class="row">
-      <div class="col-12 col-lg-7 d-flex flex-column">
+      <div class="col-12 col-lg-6 d-flex flex-column">
         <div class="row">
           <div class="col-12 col-md-6 d-flex flex-column">
             <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Title"></div>
@@ -55,7 +55,7 @@
             (apiError)="errorOccured.emit($event)" />
         </div>
       </div>
-      <div class="col-12 col-lg-5 d-flex flex-column">
+      <div class="col-12 col-lg-6 d-flex flex-column">
         @if (invitationLink.entries.length === 0) {
           <div class="fst-italic" translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NoTournaments"></div>
         } @else {
@@ -75,6 +75,7 @@
                     [icon]="'question-circle'"
                     [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.MaxTeamsPerRegistrationTooltip'" />
                 </th>
+                <th translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NumberOfTeams"></th>
               </tr>
             </thead>
             <tbody>
@@ -96,6 +97,7 @@
                       &infin;
                     }
                   </td>
+                  <td>{{ entry.numberOfTeams }}</td>
                 </tr>
               }
             </tbody>

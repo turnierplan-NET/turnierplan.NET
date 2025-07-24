@@ -924,7 +924,8 @@ export const de = {
           AllowNewRegistrations: 'Aktiv',
           AllowNewRegistrationsTooltip: 'Sind aktuell weitere Anmeldungen möglich?',
           MaxTeamsPerRegistration: 'Limit pro Anmeldung',
-          MaxTeamsPerRegistrationTooltip: 'Wie viele Mannschaften können mit einer Anmeldung angemeldet werden?'
+          MaxTeamsPerRegistrationTooltip: 'Wie viele Mannschaften können mit einer Anmeldung angemeldet werden?',
+          NumberOfTeams: 'Mannschaften'
         },
         DeleteNotPossible:
           'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.'

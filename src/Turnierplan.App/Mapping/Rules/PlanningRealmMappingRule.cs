@@ -38,8 +38,9 @@ internal sealed class PlanningRealmMappingRule : MappingRuleBase<PlanningRealm, 
                 Entries = x.Entries.Select(y => new InvitationLinkEntryDto
                 {
                     TournamentClassId = y.Class.Id,
+                    AllowNewRegistrations = y.AllowNewRegistrations,
                     MaxTeamsPerRegistration = y.MaxTeamsPerRegistration,
-                    AllowNewRegistrations = y.AllowNewRegistrations
+                    NumberOfTeams = source.Applications.Where(z => z.SourceLink == x).SelectMany(z => z.Teams).Count(z => z.Class == y.Class)
                 }).ToArray(),
                 NumberOfApplications = source.Applications.Count(y => y.SourceLink == x)
             }).ToArray()
