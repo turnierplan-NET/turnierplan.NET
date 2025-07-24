@@ -918,6 +918,7 @@ export const de = {
           ContactTelephone: 'Kontakt-Telefon:',
           Logos: 'Logos:'
         },
+        EditProperties: 'Bearbeiten',
         Tournaments: {
           NoTournaments: 'Diesem Einladungslink sind aktuell keine Turniere zugeordnet.',
           Tournament: 'Turnier',
