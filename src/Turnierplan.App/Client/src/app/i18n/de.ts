@@ -918,7 +918,7 @@ export const de = {
           ContactTelephone: 'Kontakt-Telefon:',
           Logos: 'Logos:'
         },
-        EditProperties: 'Bearbeiten',
+        EditProperties: 'Informationen Bearbeiten',
         Tournaments: {
           NoTournaments: 'Diesem Einladungslink sind aktuell keine Turniere zugeordnet.',
           Tournament: 'Turnier',
@@ -928,6 +928,7 @@ export const de = {
           MaxTeamsPerRegistrationTooltip: 'Wie viele Mannschaften können mit einer Anmeldung angemeldet werden?',
           NumberOfTeams: 'aktuelle Mannschaften'
         },
+        AddTournament: 'Turnier hinzufügen',
         DeleteNotPossible:
           'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.'
       },

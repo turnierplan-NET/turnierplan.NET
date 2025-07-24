@@ -1,3 +1,5 @@
+@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
+
 <div class="card shadow-sm">
   <div class="card-body d-flex flex-column gap-3">
     <div class="fs-5 fw-bold card-title mb-0">
@@ -21,9 +23,16 @@
             <div class="mb-2">{{ invitationLink.description ?? '-' }}</div>
             <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ValidUntil"></div>
             @if (invitationLink.validUntil) {
-              <div>{{ invitationLink.validUntil | translateDate: 'medium' }}</div>
+              <div class="mb-2">{{ invitationLink.validUntil | translateDate: 'medium' }}</div>
             } @else {
-              <div>-</div>
+              <div class="mb-2">-</div>
+            }
+            @if (writeAllowed) {
+              <tp-action-button
+                class="mt-3"
+                [type]="'outline-secondary'"
+                [title]="'Portal.ViewPlanningRealm.InvitationLink.EditProperties'"
+                [icon]="'pencil'" />
             }
           </div>
           <div class="col-12 col-md-6 d-flex flex-column">
@@ -33,12 +42,6 @@
             <div class="mb-2">{{ invitationLink.contactEmail ?? '-' }}</div>
             <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactTelephone"></div>
             <div class="mb-2">{{ invitationLink.contactTelephone ?? '-' }}</div>
-            <div class="flex-grow-1 d-flex flex-row justify-content-start align-items-end">
-              <tp-action-button
-                [type]="'outline-secondary'"
-                [title]="'Portal.ViewPlanningRealm.InvitationLink.EditProperties'"
-                [icon]="'pencil'" />
-            </div>
           </div>
         </div>
       </div>
@@ -49,6 +52,7 @@
           [imageAlt]="'PrimaryLogo'"
           [imageType]="ImageType.SquareLargeLogo"
           [organizationId]="planningRealm.organizationId"
+          [allowChanging]="writeAllowed"
           (imageChange)="setImage('primaryLogo', $event)"
           (apiError)="errorOccured.emit($event)" />
         <tp-image-widget
@@ -56,6 +60,7 @@
           [imageAlt]="'SecondaryLogo'"
           [imageType]="ImageType.SquareLargeLogo"
           [organizationId]="planningRealm.organizationId"
+          [allowChanging]="writeAllowed"
           (imageChange)="setImage('secondaryLogo', $event)"
           (apiError)="errorOccured.emit($event)" />
       </div>
@@ -68,7 +73,7 @@
       </div>
     } @else {
       <div class="fw-bold mt-3">Turniere:</div>
-      <table class="mb-0 table table-sm table-bordered">
+      <table class="mb-0 table table-bordered">
         <thead>
           <tr>
             <th translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.Tournament"></th>
@@ -87,21 +92,24 @@
             <th translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NumberOfTeams">
               <!-- TODO: Add button which switches to applications page with correct filter -->
             </th>
+            @if (writeAllowed) {
+              <th style="width: 1px"></th>
+            }
           </tr>
         </thead>
         <tbody>
           @for (entry of invitationLink.entries; track entry.tournamentClassId) {
             @let tournamentClass = findTournamentClassById(entry.tournamentClassId);
             <tr>
-              <td>{{ tournamentClass.name }}</td>
-              <td>
+              <td class="align-middle">{{ tournamentClass.name }}</td>
+              <td class="align-middle">
                 @if (entry.allowNewRegistrations) {
                   <i class="text-success bi bi-check-circle-fill"></i>
                 } @else {
                   <i class="text-secondary bi bi-pause-circle"></i>
                 }
               </td>
-              <td>
+              <td class="align-middle">
                 @if (entry.maxTeamsPerRegistration) {
                   {{ entry.maxTeamsPerRegistration }}
                 } @else {
@@ -109,18 +117,33 @@
                 }
               </td>
               <td>{{ entry.numberOfTeams }}</td>
+              @if (writeAllowed) {
+                <td class="text-nowrap">
+                  <tp-action-button [type]="'outline-secondary'" [icon]="'pencil'" [mode]="'IconOnly'" />
+                  <tp-delete-button class="ms-1" />
+                </td>
+              }
             </tr>
           }
         </tbody>
       </table>
     }
+    @if (writeAllowed) {
+      <tp-action-button
+        [type]="'outline-secondary'"
+        [icon]="'plus-circle'"
+        [title]="'Portal.ViewPlanningRealm.InvitationLink.AddTournament'" />
+    }
   </div>
   <div class="card-footer text-end pe-2">
-    @let canDelete = invitationLink.numberOfApplications === 0;
-    @if (canDelete) {
-      <tp-delete-button (confirmed)="deleteRequest.emit(invitationLink.id)" />
-    } @else {
-      <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.DeleteNotPossible'" />
+    @if (writeAllowed) {
+      @let canDelete = invitationLink.numberOfApplications === 0;
+      @if (canDelete) {
+        <!-- TODO: Bleibt dieser Button so? -->
+        <tp-delete-button (confirmed)="deleteRequest.emit(invitationLink.id)" />
+      } @else {
+        <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.DeleteNotPossible'" />
+      }
     }
   </div>
 </div>

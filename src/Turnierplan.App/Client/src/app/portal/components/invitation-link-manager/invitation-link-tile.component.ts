@@ -7,6 +7,8 @@ import {
   TournamentsService,
   TournamentClassDto
 } from '../../../api';
+import { Actions } from '../../../generated/actions';
+import { AuthorizationService } from '../../../core/services/authorization.service';
 
 @Component({
   standalone: false,
@@ -28,6 +30,8 @@ export class InvitationLinkTileComponent {
 
   protected readonly ImageType = ImageType;
 
+  constructor(protected readonly authorizationService: AuthorizationService) {}
+
   protected findTournamentClassById(id: number): TournamentClassDto {
     const tournamentClass = this.planningRealm.tournamentClasses.find((x) => x.id === id);
 
@@ -41,4 +45,6 @@ export class InvitationLinkTileComponent {
   protected setImage(which: 'primaryLogo' | 'secondaryLogo', imageId?: string): void {
     // TODO: Implement
   }
+
+  protected readonly Actions = Actions;
 }

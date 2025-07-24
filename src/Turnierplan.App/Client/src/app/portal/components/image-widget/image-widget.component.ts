@@ -22,6 +22,9 @@ export class ImageWidgetComponent {
   @Input()
   public organizationId!: string;
 
+  @Input()
+  public allowChanging = true;
+
   @Output()
   public imageChange = new EventEmitter<string>();
 
