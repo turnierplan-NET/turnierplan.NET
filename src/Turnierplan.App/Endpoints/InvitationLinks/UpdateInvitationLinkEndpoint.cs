@@ -47,7 +47,14 @@ internal sealed class UpdateInvitationLinkEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        // TODO Set properties
+        invitationLink.Name = request.Name;
+        invitationLink.Title = request.Title;
+        invitationLink.Description = request.Description;
+        invitationLink.ColorCode = request.ColorCode;
+        invitationLink.ValidUntil = request.ValidUntil;
+        invitationLink.ContactPerson = request.ContactPerson;
+        invitationLink.ContactEmail = request.ContactEmail;
+        invitationLink.ContactTelephone = request.ContactTelephone;
 
         await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
@@ -71,21 +78,6 @@ internal sealed class UpdateInvitationLinkEndpoint : EndpointBase
         public string? ContactEmail { get; init; }
 
         public string? ContactTelephone { get; init; }
-
-        public string? PrimaryLogoImageId { get; init; }
-
-        public string? SecondaryLogoImageId { get; init; }
-
-        public required UpdateInvitationLinkEndpointRequestEntry[] Entries { get; init; }
-
-        public record UpdateInvitationLinkEndpointRequestEntry
-        {
-            public required long TournamentClassId { get; init; }
-
-            public required bool AllowNewRegistrations { get; init; }
-
-            public int? MaxTeamsPerRegistration { get; init; }
-        }
     }
 
     internal sealed class Validator : AbstractValidator<UpdateInvitationLinkEndpointRequest>
@@ -95,6 +87,11 @@ internal sealed class UpdateInvitationLinkEndpoint : EndpointBase
         private Validator()
         {
             RuleFor(x => x.Name)
+                .NotEmpty();
+
+            RuleFor(x => x.ColorCode)
+                .Length(6)
+                .Must(x => x.All(char.IsAsciiHexDigit))
                 .NotEmpty();
         }
     }

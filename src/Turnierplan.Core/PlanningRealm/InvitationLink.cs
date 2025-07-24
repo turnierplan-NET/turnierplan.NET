@@ -1,3 +1,5 @@
+using Turnierplan.Core.Exceptions;
+using Turnierplan.Core.Image;
 using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.PlanningRealm;
@@ -32,6 +34,8 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 
     public PublicId.PublicId PublicId { get; }
 
+    public PlanningRealm PlanningRealm { get; internal set; } = null!;
+
     public string Name { get; set; }
 
     public string? Title { get; set; }
@@ -40,7 +44,7 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 
     public string ColorCode { get; set; }
 
-    public DateTime? ValidUntil { get; }
+    public DateTime? ValidUntil { get; set; }
 
     public string? ContactPerson { get; set; }
 
@@ -56,7 +60,36 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 
     public IReadOnlyList<InvitationLinkEntry> Entries => _entries.AsReadOnly();
 
-    public sealed record ExternalLink(string Name, string Url);
+    public void SetPrimaryLogo(Image.Image? primaryLogo)
+    {
+        CheckImageTypeAndSetImage(primaryLogo, () => PrimaryLogo = primaryLogo);
+    }
+
+    public void SetSecondaryLogo(Image.Image? secondaryLogo)
+    {
+        CheckImageTypeAndSetImage(secondaryLogo, () => SecondaryLogo = secondaryLogo);
+    }
+
+    private void CheckImageTypeAndSetImage(Image.Image? provided, Action apply)
+    {
+        if (provided is null)
+        {
+            apply();
+            return;
+        }
+
+        if (provided.Organization != PlanningRealm.Organization)
+        {
+            throw new TurnierplanException("Cannot assign an image from another organization.");
+        }
+
+        if (provided.Type != ImageType.SquareLargeLogo)
+        {
+            throw new TurnierplanException($"Cannot assign image because the image's type is not the expected type '{ImageType.SquareLargeLogo}'.");
+        }
+
+        apply();
+    }
 
     private static string GenerateRandomColorCode()
     {
@@ -71,4 +104,6 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 
         return string.Join(string.Empty, parts);
     }
+
+    public sealed record ExternalLink(string Name, string Url);
 }
