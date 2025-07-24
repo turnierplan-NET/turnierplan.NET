@@ -36,9 +36,10 @@
           </div>
           <div class="col-5 d-flex flex-column"></div>
         </div>
-
+      </div>
+      <div class="col-12 col-lg-6 d-flex flex-column">
         <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Logos"></div>
-        <div class="d-flex flex-column flex-md-row gap-2 gap-md-5 ps-md-2">
+        <div class="d-flex flex-column flex-md-row gap-2 gap-md-5">
           <tp-image-widget
             [currentImage]="invitationLink.primaryLogo"
             [imageAlt]="'PrimaryLogo'"
@@ -55,56 +56,61 @@
             (apiError)="errorOccured.emit($event)" />
         </div>
       </div>
-      <div class="col-12 col-lg-6 d-flex flex-column">
-        @if (invitationLink.entries.length === 0) {
-          <div class="fst-italic" translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NoTournaments"></div>
-        } @else {
-          <table class="table table-sm table-bordered">
-            <thead>
-              <tr>
-                <th translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.Tournament"></th>
-                <th>
-                  <span translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.AllowNewRegistrations"></span>
-                  <tp-tooltip-icon
-                    [icon]="'question-circle'"
-                    [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.AllowNewRegistrationsTooltip'" />
-                </th>
-                <th>
-                  <span translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.MaxTeamsPerRegistration"></span>
-                  <tp-tooltip-icon
-                    [icon]="'question-circle'"
-                    [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.MaxTeamsPerRegistrationTooltip'" />
-                </th>
-                <th translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NumberOfTeams"></th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (entry of invitationLink.entries; track entry.tournamentClassId) {
-                @let tournamentClass = findTournamentClassById(entry.tournamentClassId);
-                <tr>
-                  <td>{{ tournamentClass.name }}</td>
-                  <td>
-                    @if (entry.allowNewRegistrations) {
-                      <i class="text-success bi bi-check-circle-fill"></i>
-                    } @else {
-                      <i class="text-secondary bi bi-pause-circle"></i>
-                    }
-                  </td>
-                  <td>
-                    @if (entry.maxTeamsPerRegistration) {
-                      {{ entry.maxTeamsPerRegistration }}
-                    } @else {
-                      &infin;
-                    }
-                  </td>
-                  <td>{{ entry.numberOfTeams }}</td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        }
-      </div>
     </div>
+
+    @if (invitationLink.entries.length === 0) {
+      <div>
+        <div class="fw-bold">Turniere:</div>
+        <div class="fst-italic" translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NoTournaments"></div>
+      </div>
+    } @else {
+      <div class="fw-bold mt-3">Turniere:</div>
+      <table class="mb-0 table table-sm table-bordered">
+        <thead>
+          <tr>
+            <th translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.Tournament"></th>
+            <th>
+              <span translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.AllowNewRegistrations"></span>
+              <tp-tooltip-icon
+                [icon]="'question-circle'"
+                [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.AllowNewRegistrationsTooltip'" />
+            </th>
+            <th>
+              <span translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.MaxTeamsPerRegistration"></span>
+              <tp-tooltip-icon
+                [icon]="'question-circle'"
+                [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.MaxTeamsPerRegistrationTooltip'" />
+            </th>
+            <th translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NumberOfTeams">
+              <!-- TODO: Add button which switches to applications page with correct filter -->
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (entry of invitationLink.entries; track entry.tournamentClassId) {
+            @let tournamentClass = findTournamentClassById(entry.tournamentClassId);
+            <tr>
+              <td>{{ tournamentClass.name }}</td>
+              <td>
+                @if (entry.allowNewRegistrations) {
+                  <i class="text-success bi bi-check-circle-fill"></i>
+                } @else {
+                  <i class="text-secondary bi bi-pause-circle"></i>
+                }
+              </td>
+              <td>
+                @if (entry.maxTeamsPerRegistration) {
+                  {{ entry.maxTeamsPerRegistration }}
+                } @else {
+                  &infin;
+                }
+              </td>
+              <td>{{ entry.numberOfTeams }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
   </div>
   <div class="card-footer text-end pe-2">
     @let canDelete = invitationLink.numberOfApplications === 0;

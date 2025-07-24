@@ -19,7 +19,10 @@
       <tr>
         <td class="align-middle">{{ tournamentClass.name }}</td>
         <td class="align-middle">{{ getNumberOfReferencingLinks(tournamentClass.id) }}</td>
-        <td class="align-middle">{{ tournamentClass.numberOfTeams }}</td>
+        <td class="align-middle">
+          {{ tournamentClass.numberOfTeams }}
+          <!-- TODO: Add button which switches to applications page with correct filter -->
+        </td>
         <td class="align-middle">
           @if (tournamentClass.maxTeamCount) {
             {{ tournamentClass.maxTeamCount }}
