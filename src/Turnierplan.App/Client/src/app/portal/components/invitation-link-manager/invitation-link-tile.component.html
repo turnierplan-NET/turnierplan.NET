@@ -136,11 +136,11 @@
         [title]="'Portal.ViewPlanningRealm.InvitationLink.AddTournament'" />
     }
   </div>
-  <div class="card-footer text-end pe-2">
+  <div class="card-footer">
     @if (writeAllowed) {
       @let canDelete = invitationLink.numberOfApplications === 0;
       @if (canDelete) {
-        <tp-delete-button (confirmed)="deleteInvitationLink()" />
+        <tp-delete-button [showLabel]="true" (confirmed)="deleteInvitationLink()" />
       } @else {
         <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.DeleteNotPossible'" />
       }

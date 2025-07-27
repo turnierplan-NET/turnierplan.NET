@@ -71,6 +71,7 @@ export const de = {
       Save: 'Speichern',
       Done: 'Fertig',
       Change: 'Ändern',
+      Delete: 'Löschen',
       BackToLandingPage: 'Startseite',
       IllustrationAlt: 'Eine Illustration, welche "{{description}}" symbolisiert.',
       CopyToClipboard: 'In die Zwischenablage kopieren',
