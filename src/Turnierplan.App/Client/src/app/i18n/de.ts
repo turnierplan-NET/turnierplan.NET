@@ -538,27 +538,7 @@ export const de = {
           }
         },
         EditImages: {
-          Title: 'Logos & Bilddateien',
-          Chooser: {
-            Title: 'Bild hochladen oder auswählen',
-            Remove: 'Bild entfernen',
-            NoImages: 'Laden Sie Ihr erstes Bild hoch...',
-            Upload: 'Hochladen',
-            UploadFailed: 'Das Bild konnte nicht hochgeladen werden. Prüfen Sie die Maße und die maximale Dateigröße.',
-            Constraints: {
-              SquareLargeLogo:
-                'Das Bild muss quadratisch sein mit einer Auflösung zwischen 50x50 und 3000x3000 Pixel. Die maximale Dateigröße beträgt 8 MB.',
-              SponsorBanner:
-                'Das Bild muss mindestens 50px hoch sein und darf maximal 3000px breit sein. Das Seitenverhältnis muss zwischen 3:1 und 5:1 liegen. Die maximale Dateigröße beträgt 8 MB.'
-            },
-            DetailView: {
-              Title: 'Hier sehen Sie die Detailinformationen zu folgendem Bild:',
-              Name: 'Dateiname: {{value}}',
-              CreatedAt: 'Hochgeladen am: {{value}}',
-              FileSize: 'Dateigröße: {{value}} KB',
-              Resolution: 'Auflösung: {{width}}x{{height}} px'
-            }
-          }
+          Title: 'Logos & Bilddateien'
         },
         MoveToAnotherFolder: {
           Title: 'Turnier verschieben',
@@ -1012,6 +992,26 @@ export const de = {
       SponsorBanner: 'Sponsor-Banner',
       PrimaryLogo: 'Hauptlogo',
       SecondaryLogo: 'zweites Logo'
+    },
+    ImageChooser: {
+      Title: 'Bild hochladen oder auswählen',
+      Remove: 'Bild entfernen',
+      NoImages: 'Laden Sie Ihr erstes Bild hoch...',
+      Upload: 'Hochladen',
+      UploadFailed: 'Das Bild konnte nicht hochgeladen werden. Prüfen Sie die Maße und die maximale Dateigröße.',
+      Constraints: {
+        SquareLargeLogo:
+          'Das Bild muss quadratisch sein mit einer Auflösung zwischen 50x50 und 3000x3000 Pixel. Die maximale Dateigröße beträgt 8 MB.',
+        SponsorBanner:
+          'Das Bild muss mindestens 50px hoch sein und darf maximal 3000px breit sein. Das Seitenverhältnis muss zwischen 3:1 und 5:1 liegen. Die maximale Dateigröße beträgt 8 MB.'
+      },
+      DetailView: {
+        Title: 'Hier sehen Sie die Detailinformationen zu folgendem Bild:',
+        Name: 'Dateiname: {{value}}',
+        CreatedAt: 'Hochgeladen am: {{value}}',
+        FileSize: 'Dateigröße: {{value}} KB',
+        Resolution: 'Auflösung: {{width}}x{{height}} px'
+      }
     },
     ErrorPage: {
       Title: 'Fehler',
