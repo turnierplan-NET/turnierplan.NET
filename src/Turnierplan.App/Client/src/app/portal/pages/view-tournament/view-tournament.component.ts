@@ -196,18 +196,26 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (number === ViewTournamentComponent.settingsPageId && this.tournament && !this.images && !this.isLoadingImages) {
-      this.isLoadingImages = true;
-      this.tournamentService.getTournamentImages({ id: this.tournament.id }).subscribe({
-        next: (images) => {
-          this.images = images;
-          this.isLoadingImages = false;
-        },
-        error: (error) => {
-          this.loadingState = { isLoading: false, error: error };
-        }
-      });
+    if (number === ViewTournamentComponent.settingsPageId && !this.images) {
+      this.loadTournamentImages();
     }
+  }
+
+  protected loadTournamentImages(): void {
+    if (!this.tournament || this.isLoadingImages) {
+      return;
+    }
+
+    this.isLoadingImages = true;
+    this.tournamentService.getTournamentImages({ id: this.tournament.id }).subscribe({
+      next: (images) => {
+        this.images = images;
+        this.isLoadingImages = false;
+      },
+      error: (error) => {
+        this.loadingState = { isLoading: false, error: error };
+      }
+    });
   }
 
   protected saveAccumulatedScoreSetting(newValue: boolean): void {

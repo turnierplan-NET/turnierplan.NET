@@ -1,8 +1,14 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ImageDto2, ImageType, ImagesService } from '../../../api';
+import { ImageDto2, ImageType, ImagesService, ImageDto } from '../../../api';
 import { Actions } from '../../../generated/actions';
+
+export interface ImageChooserResult {
+  type: 'ImageDeleted' | 'ImageSelected' | 'ImageUploaded';
+  image?: ImageDto;
+  deletedImageId?: string;
+}
 
 @Component({
   standalone: false,
@@ -83,7 +89,7 @@ export class ImageChooserComponent {
               })
               .subscribe({
                 next: (result) => {
-                  this.modal.close(result);
+                  this.modal.close({ type: 'ImageUploaded', image: result } as ImageChooserResult);
                 },
                 error: () => {
                   this.isUploadingImage = false;
@@ -117,8 +123,7 @@ export class ImageChooserComponent {
     this.imageService.deleteImage({ id: deleteImageId }).subscribe({
       next: () => {
         if (deleteImageId === this.currentImageId) {
-          // Close modal with undefined to trigger re-load of tournament page
-          this.modal.close();
+          this.modal.close({ type: 'ImageDeleted', deletedImageId: deleteImageId } as ImageChooserResult);
         } else {
           this.loadImages();
         }

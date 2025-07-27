@@ -293,6 +293,7 @@
                     [imageType]="ImageType.SquareLargeLogo"
                     [organizationId]="tournament.organizationId"
                     (imageChange)="setImage('organizerLogo', $event?.id)"
+                    (imageDelete)="loadTournamentImages()"
                     (apiError)="loadingState = { isLoading: false, error: $event }" />
                   <tp-image-widget
                     class="flex-md-grow-1"
@@ -301,6 +302,7 @@
                     [imageType]="ImageType.SquareLargeLogo"
                     [organizationId]="tournament.organizationId"
                     (imageChange)="setImage('sponsorLogo', $event?.id)"
+                    (imageDelete)="loadTournamentImages()"
                     (apiError)="loadingState = { isLoading: false, error: $event }" />
                   <tp-image-widget
                     class="flex-md-grow-1"
@@ -309,6 +311,7 @@
                     [imageType]="ImageType.SponsorBanner"
                     [organizationId]="tournament.organizationId"
                     (imageChange)="setImage('sponsorBanner', $event?.id)"
+                    (imageDelete)="loadTournamentImages()"
                     (apiError)="loadingState = { isLoading: false, error: $event }" />
                 </div>
               }

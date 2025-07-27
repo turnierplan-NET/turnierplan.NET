@@ -55,6 +55,7 @@
           [organizationId]="planningRealm.organizationId"
           [allowChanging]="writeAllowed"
           (imageChange)="setImage('primaryLogo', $event)"
+          (imageDelete)="onImageDeleted($event)"
           (apiError)="errorOccured.emit($event)" />
         <tp-image-widget
           [currentImage]="invitationLink.secondaryLogo"
@@ -63,6 +64,7 @@
           [organizationId]="planningRealm.organizationId"
           [allowChanging]="writeAllowed"
           (imageChange)="setImage('secondaryLogo', $event)"
+          (imageDelete)="onImageDeleted($event)"
           (apiError)="errorOccured.emit($event)" />
       </div>
     </div>

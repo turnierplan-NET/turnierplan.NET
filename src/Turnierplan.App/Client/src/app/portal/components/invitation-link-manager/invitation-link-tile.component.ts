@@ -45,6 +45,21 @@ export class InvitationLinkTileComponent {
     this.updateInvitationLink((invitationLink) => (invitationLink[whichImage] = image ?? null));
   }
 
+  protected onImageDeleted(imageId: string): void {
+    // If an image is deleted, make sure to remove it from all invitation links that refer to it
+    this.updatePlanningRealm((planningRealm) => {
+      for (const invitationLink of planningRealm.invitationLinks) {
+        if (invitationLink.primaryLogo?.id === imageId) {
+          invitationLink.primaryLogo = null;
+        }
+        if (invitationLink.secondaryLogo?.id === imageId) {
+          invitationLink.secondaryLogo = null;
+        }
+      }
+      return true;
+    });
+  }
+
   protected deleteInvitationLink(): void {
     this.updatePlanningRealm((planningRealm) => {
       const index = planningRealm.invitationLinks.findIndex((x) => x.id === this.invitationLink.id);

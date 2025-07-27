@@ -75,7 +75,7 @@
                   [type]="'success'"
                   [mode]="'IconOnly'"
                   [icon]="'check-lg'"
-                  (click)="image.id !== currentImageId && modal.close(image)" />
+                  (click)="image.id !== currentImageId && modal.close({ type: 'ImageSelected', image: image })" />
               }
             </div>
             <div class="image-wrapper d-flex flex-column align-items-center justify-content-center">
@@ -102,7 +102,7 @@
           <tp-action-button
             [type]="'outline-secondary'"
             [title]="'Portal.ViewTournament.Settings.EditImages.Chooser.Remove'"
-            (click)="modal.close(undefined)" />
+            (click)="modal.close({ type: 'ImageSelected', image: undefined })" />
         }
         <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
       }
