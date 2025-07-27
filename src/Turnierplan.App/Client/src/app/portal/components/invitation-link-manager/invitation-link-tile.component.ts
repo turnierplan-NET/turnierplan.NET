@@ -1,12 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  ImageType,
-  InvitationLinkDto,
-  PlanningRealmDto,
-  TournamentClassDto,
-  SetInvitationLinkImageEndpointRequestTarget,
-  InvitationLinksService
-} from '../../../api';
+import { ImageType, InvitationLinkDto, PlanningRealmDto, TournamentClassDto } from '../../../api';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 
@@ -34,10 +27,7 @@ export class InvitationLinkTileComponent {
   protected readonly ImageType = ImageType;
   protected isUpdatingImage = false;
 
-  constructor(
-    protected readonly authorizationService: AuthorizationService,
-    private readonly invitationLinkService: InvitationLinksService
-  ) {}
+  constructor(protected readonly authorizationService: AuthorizationService) {}
 
   protected findTournamentClassById(id: number): TournamentClassDto {
     const tournamentClass = this.planningRealm.tournamentClasses.find((x) => x.id === id);
@@ -56,25 +46,26 @@ export class InvitationLinkTileComponent {
 
     this.isUpdatingImage = true;
 
-    const mappedTarget = {
-      primaryLogo: SetInvitationLinkImageEndpointRequestTarget.PrimaryLogo,
-      secondaryLogo: SetInvitationLinkImageEndpointRequestTarget.SecondaryLogo
-    }[whichImage];
-
-    this.invitationLinkService
-      .setInvitationLinkImage({
-        id: this.invitationLink.id,
-        planningRealmId: this.planningRealm.id,
-        body: { imageId: imageId, target: mappedTarget }
-      })
-      .subscribe({
-        next: () => {
-          this.reloadRequest.emit();
-        },
-        error: (error) => {
-          this.errorOccured.emit(error);
-        }
-      });
+    // TODO: Re-implement for new endpoint
+    // const mappedTarget = {
+    //   primaryLogo: SetInvitationLinkImageEndpointRequestTarget.PrimaryLogo,
+    //   secondaryLogo: SetInvitationLinkImageEndpointRequestTarget.SecondaryLogo
+    // }[whichImage];
+    //
+    // this.invitationLinkService
+    //   .setInvitationLinkImage({
+    //     id: this.invitationLink.id,
+    //     planningRealmId: this.planningRealm.id,
+    //     body: { imageId: imageId, target: mappedTarget }
+    //   })
+    //   .subscribe({
+    //     next: () => {
+    //       this.reloadRequest.emit();
+    //     },
+    //     error: (error) => {
+    //       this.errorOccured.emit(error);
+    //     }
+    //   });
   }
 
   protected readonly Actions = Actions;

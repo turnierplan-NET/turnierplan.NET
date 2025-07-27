@@ -45,6 +45,9 @@ export class PageFrameComponent implements OnInit, OnChanges {
   @ContentChild('buttons')
   public buttons?: TemplateRef<unknown>;
 
+  @ContentChild('preContent')
+  public preContent?: TemplateRef<unknown>;
+
   @ContentChild('content')
   public content?: TemplateRef<unknown>;
 

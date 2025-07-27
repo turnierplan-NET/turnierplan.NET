@@ -27,7 +27,7 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
         Id = 0;
         PublicId = new PublicId.PublicId();
         Name = name;
-        ColorCode = GenerateRandomColorCode();
+        ColorCode = "aaaaaa";
     }
 
     public override long Id { get; protected set; }
@@ -89,20 +89,6 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
         }
 
         apply();
-    }
-
-    private static string GenerateRandomColorCode()
-    {
-        string[] parts =
-        [
-            Random.Shared.Next(2) == 0 ? "ff" : "bb",
-            Random.Shared.Next(2) == 0 ? "55" : "99",
-            "00"
-        ];
-
-        Random.Shared.Shuffle(parts);
-
-        return string.Join(string.Empty, parts);
     }
 
     public sealed record ExternalLink(string Name, string Url);

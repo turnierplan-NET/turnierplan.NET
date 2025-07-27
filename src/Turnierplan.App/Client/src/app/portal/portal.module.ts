@@ -135,7 +135,8 @@ const routes: Routes = [
       },
       {
         path: 'planning-realm/:id',
-        component: ViewPlanningRealmComponent
+        component: ViewPlanningRealmComponent,
+        canDeactivate: [discardChangesGuard]
       },
       {
         path: 'statistics/:id',

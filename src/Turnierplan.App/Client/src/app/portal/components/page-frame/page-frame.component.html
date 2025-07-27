@@ -23,7 +23,11 @@
 </div>
 
 <div class="my-5" [ngClass]="{ 'tp-ultra-slim-container': ultraSlim, container: !ultraSlim }">
-  <div class="d-flex flex-row flex-wrap align-items-center gap-2">
+  @if (preContent) {
+    <ng-container [ngTemplateOutlet]="preContent"></ng-container>
+  }
+
+  <div class="d-flex flex-row flex-wrap align-items-center gap-2" [ngClass]="{ 'mt-4': preContent !== undefined }">
     @if (backLink) {
       <i
         class="fs-5 bi bi-arrow-left-circle me-2 tp-cursor-pointer"

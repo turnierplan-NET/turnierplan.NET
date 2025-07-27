@@ -75,6 +75,7 @@ export const de = {
       IllustrationAlt: 'Eine Illustration, welche "{{description}}" symbolisiert.',
       CopyToClipboard: 'In die Zwischenablage kopieren',
       OpenInNewTab: 'In neuem Tab öffnen',
+      UnsavedChanges: 'Sie haben ungespeicherte Änderungen.',
       ApplyChanges: 'Änderungen übernehmen'
     },
     UserInfoPopover: {

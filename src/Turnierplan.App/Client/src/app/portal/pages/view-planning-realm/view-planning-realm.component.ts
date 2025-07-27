@@ -1,27 +1,50 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoadingState } from '../../directives/loading-state/loading-state.directive';
-import { InvitationLinksService, PlanningRealmDto, PlanningRealmsService, TournamentClassesService } from '../../../api';
+import { PlanningRealmDto, PlanningRealmsService } from '../../../api';
 import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
-import { Observable, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TitleService } from '../../services/title.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { TextInputDialogComponent } from '../../components/text-input-dialog/text-input-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs/operators';
+import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
+
+export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => void) => void;
 
 @Component({
   standalone: false,
   templateUrl: './view-planning-realm.component.html'
 })
-export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
+export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardChangesDetector {
+  private static DefaultInvitationLinkColorCodes: string[] = [
+    'ff9900',
+    'ff5500',
+    'bb5500',
+    '55bb00',
+    'ff0055',
+    'bb0055',
+    '5500ff',
+    '9900bb',
+    '00bb99',
+    '0099ff',
+    '0099bb',
+    '0055bb'
+  ];
+
   protected readonly Actions = Actions;
 
   protected loadingState: LoadingState = { isLoading: true };
+  protected updateFunction: UpdatePlanningRealmFunc;
   protected planningRealm?: PlanningRealmDto;
+  protected _hasUnsavedChanges = false;
 
-  protected isUpdatingName = false;
+  // When creating tournament classes or invitation links, we use negative IDs until saving
+  // the changes to the backend. When saving, all negative IDs are replaced with 'null',
+  // prompting the backend to create new objects instead of replacing existing ones.
+  protected nextId = -1;
 
   protected currentPage = 0;
   protected pages: PageFrameNavigationTab[] = [
@@ -49,17 +72,23 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
   ];
 
   private readonly destroyed$ = new Subject<void>();
+  private originalPlanningRealm?: PlanningRealmDto;
 
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly planningRealmService: PlanningRealmsService,
-    private readonly tournamentClassService: TournamentClassesService,
-    private readonly invitationLinkService: InvitationLinksService,
     private readonly notificationService: NotificationService,
     private readonly titleService: TitleService,
     private readonly modalService: NgbModal
-  ) {}
+  ) {
+    this.updateFunction = (modifyFunc: (planningRealm: PlanningRealmDto) => void) => {
+      if (this.planningRealm) {
+        modifyFunc(this.planningRealm);
+        this._hasUnsavedChanges = true;
+      }
+    };
+  }
 
   protected get isApplicationsPage(): boolean {
     return this.currentPage === 2;
@@ -81,8 +110,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (planningRealm) => {
-          this.planningRealm = planningRealm;
-          this.titleService.setTitleFrom(planningRealm);
+          this.setPlanningRealm(planningRealm);
           this.loadingState = { isLoading: false };
         },
         error: (error) => {
@@ -95,77 +123,68 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
     this.destroyed$.complete();
   }
 
+  public hasUnsavedChanges(): boolean {
+    return this._hasUnsavedChanges;
+  }
+
   protected togglePage(number: number): void {
     this.currentPage = number;
   }
 
   protected addTournamentClass(): void {
-    if (!this.planningRealm) {
-      return;
-    }
-
-    const planningRealmId = this.planningRealm.id;
-
-    this.openModalForEnteringName('NewTournamentClass')
-      .pipe(
-        tap(() => (this.loadingState = { isLoading: true })),
-        switchMap((name) => this.tournamentClassService.createTournamentClass({ id: planningRealmId, body: { name: name } })),
-        switchMap(() => this.planningRealmService.getPlanningRealm({ id: planningRealmId }))
-      )
-      .subscribe({
-        next: (planningRealm) => {
-          this.planningRealm = planningRealm;
-          this.loadingState = { isLoading: false };
-        },
-        error: (error) => {
-          this.loadingState = { isLoading: false, error: error };
-        }
-      });
+    this.openModalForEnteringName('NewTournamentClass').subscribe({
+      next: (name) => {
+        this.updateFunction((planningRealm) => {
+          planningRealm.tournamentClasses.push({
+            id: this.nextId--,
+            name: name.trim(),
+            maxTeamCount: null,
+            numberOfTeams: 0
+          });
+        });
+      }
+    });
   }
 
   protected addInvitationLink(): void {
+    this.openModalForEnteringName('NewInvitationLink').subscribe({
+      next: (name) => {
+        this.updateFunction((planningRealm) => {
+          planningRealm.invitationLinks.push({
+            colorCode: this.getColorCode(),
+            contactEmail: null,
+            contactPerson: null,
+            contactTelephone: null,
+            description: null,
+            entries: [],
+            id: this.nextId--,
+            name: name.trim(),
+            numberOfApplications: 0,
+            primaryLogo: null,
+            publicId: '',
+            secondaryLogo: null,
+            title: null,
+            validUntil: null
+          });
+        });
+      }
+    });
+  }
+
+  protected renamePlanningRealm(name: string): void {
     if (!this.planningRealm) {
       return;
     }
 
-    const planningRealmId = this.planningRealm.id;
+    this.updateFunction((planningRealm) => {
+      planningRealm.name = name;
+    });
 
-    this.openModalForEnteringName('NewInvitationLink')
-      .pipe(
-        tap(() => (this.loadingState = { isLoading: true })),
-        switchMap((name) => this.invitationLinkService.createInvitationLink({ id: planningRealmId, body: { name: name } })),
-        switchMap(() => this.planningRealmService.getPlanningRealm({ id: planningRealmId }))
-      )
-      .subscribe({
-        next: (planningRealm) => {
-          this.planningRealm = planningRealm;
-          this.loadingState = { isLoading: false };
-        },
-        error: (error) => {
-          this.loadingState = { isLoading: false, error: error };
-        }
-      });
+    this.titleService.setTitleFrom(this.planningRealm);
   }
 
-  protected renamePlanningRealm(name: string): void {
-    if (!this.planningRealm || name === this.planningRealm.name || this.isUpdatingName) {
-      return;
-    }
-
-    this.isUpdatingName = true;
-
-    this.planningRealmService.setPlanningRealmName({ id: this.planningRealm.id, body: { name: name } }).subscribe({
-      next: () => {
-        if (this.planningRealm) {
-          this.planningRealm.name = name;
-          this.titleService.setTitleFrom(this.planningRealm);
-        }
-        this.isUpdatingName = false;
-      },
-      error: (error) => {
-        this.loadingState = { isLoading: false, error: error };
-      }
-    });
+  protected savePlanningRealm(): void {
+    // TODO: Implement
   }
 
   protected deletePlanningRealm(): void {
@@ -197,13 +216,23 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
 
     this.planningRealmService.getPlanningRealm({ id: this.planningRealm.id }).subscribe({
       next: (planningRealm) => {
-        this.planningRealm = planningRealm;
+        this.setPlanningRealm(planningRealm);
         this.loadingState = { isLoading: false };
       },
       error: (error) => {
         this.loadingState = { isLoading: false, error: error };
       }
     });
+  }
+
+  private setPlanningRealm(planningRealm: PlanningRealmDto): void {
+    this.originalPlanningRealm = planningRealm;
+
+    // Create a working copy which can be modified and saved/discarded
+    this.planningRealm = JSON.parse(JSON.stringify(this.originalPlanningRealm)) as PlanningRealmDto;
+    this._hasUnsavedChanges = false;
+
+    this.titleService.setTitleFrom(this.planningRealm);
   }
 
   private openModalForEnteringName(key: string): Observable<string> {
@@ -217,5 +246,22 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy {
     component.init(`Portal.ViewPlanningRealm.${key}`, '', false, true);
 
     return ref.closed.pipe(map((x) => x as string));
+  }
+
+  private getColorCode(): string {
+    if (!this.planningRealm) {
+      return 'aaaaaa';
+    }
+
+    const planningRealm = this.planningRealm;
+    let availableColorCodes = ViewPlanningRealmComponent.DefaultInvitationLinkColorCodes.filter(
+      (color) => !planningRealm.invitationLinks.some((x) => x.colorCode === color)
+    );
+
+    if (availableColorCodes.length === 0) {
+      availableColorCodes = ViewPlanningRealmComponent.DefaultInvitationLinkColorCodes;
+    }
+
+    return availableColorCodes[Math.floor(Math.random() * availableColorCodes.length)];
   }
 }
