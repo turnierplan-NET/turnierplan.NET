@@ -47,12 +47,13 @@
       </div>
 
       @if (isUpdatingImage) {
-        <div class="col-12 col-lg-5 d-flex flex-column align-items-center justify-content-center">
+        <div class="col-12 col-lg-5 d-flex flex-column align-items-center justify-content-center" style="min-height: 240px">
           <tp-loading-indicator [marginY]="false" />
         </div>
       } @else {
         <div
-          class="col-12 col-lg-5 pt-5 pb-3 d-flex flex-column flex-md-row justify-content-center justify-content-lg-end pt-lg-0 pb-lg-0 gap-3">
+          class="col-12 col-lg-5 pt-5 pb-3 d-flex flex-column flex-md-row justify-content-center justify-content-lg-end pt-lg-0 pb-lg-0 gap-3"
+          style="min-height: 240px">
           <tp-image-widget
             [currentImage]="invitationLink.primaryLogo"
             [imageAlt]="'PrimaryLogo'"
