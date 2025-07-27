@@ -38,6 +38,6 @@
   </div>
 </header>
 
-<router-outlet></router-outlet>
+<router-outlet (activate)="currentComponent = $event"></router-outlet>
 
 <tp-footer [footerStyle]="footerStyle" />

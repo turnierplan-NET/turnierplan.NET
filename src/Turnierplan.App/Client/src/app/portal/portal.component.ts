@@ -4,6 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 
 import { AuthenticatedUser } from '../core/models/identity';
 import { AuthenticationService } from '../core/services/authentication.service';
+import { DiscardChangesDetector, hasUnsavedChangesFunctionName } from '../core/guards/discard-changes.guard';
 
 type UserInfoAction = 'EditUserInfo' | 'ChangePassword' | 'Logout';
 
@@ -13,10 +14,20 @@ type UserInfoAction = 'EditUserInfo' | 'ChangePassword' | 'Logout';
   styleUrls: ['./portal.component.scss']
 })
 export class PortalComponent implements OnInit, OnDestroy {
+  protected currentComponent?: Object;
   protected currentUser?: AuthenticatedUser;
   protected footerStyle = '';
 
   private readonly destroyed$ = new Subject<void>();
+
+  private readonly beforeUnloadListener = (event: BeforeUnloadEvent) => {
+    if (this.currentComponent && hasUnsavedChangesFunctionName in this.currentComponent) {
+      const hasUnsavedChanges = (this.currentComponent as DiscardChangesDetector).hasUnsavedChanges();
+      if (hasUnsavedChanges) {
+        event.preventDefault();
+      }
+    }
+  };
 
   constructor(
     private readonly authenticationService: AuthenticationService,
@@ -27,6 +38,8 @@ export class PortalComponent implements OnInit, OnDestroy {
     this.authenticationService.authentication$.pipe(takeUntil(this.destroyed$)).subscribe((user) => {
       this.currentUser = user;
     });
+
+    window.addEventListener('beforeunload', this.beforeUnloadListener);
 
     // Listen for changes to the style attribute of the <body> caused by modals appearing/disappearing to compensate for
     // the loss of the scroll bar when a modal is open. The <body> style change need to be manually applied to the footer
@@ -39,6 +52,8 @@ export class PortalComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroyed$.next();
     this.destroyed$.complete();
+
+    window.removeEventListener('beforeunload', this.beforeUnloadListener);
   }
 
   protected getUserInfoActionIcon(action: UserInfoAction): string {

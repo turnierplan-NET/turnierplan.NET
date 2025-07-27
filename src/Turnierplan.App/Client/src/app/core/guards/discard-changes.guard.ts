@@ -3,6 +3,8 @@ import { CanDeactivateFn } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { map, take } from 'rxjs';
 
+export const hasUnsavedChangesFunctionName = 'hasUnsavedChanges';
+
 export interface DiscardChangesDetector {
   hasUnsavedChanges(): boolean;
 }
