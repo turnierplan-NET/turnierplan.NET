@@ -83,7 +83,7 @@ export class ImageChooserComponent {
               })
               .subscribe({
                 next: (result) => {
-                  this.modal.close(result.id);
+                  this.modal.close(result);
                 },
                 error: () => {
                   this.isUploadingImage = false;

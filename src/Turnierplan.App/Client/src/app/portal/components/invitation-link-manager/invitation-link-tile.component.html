@@ -46,32 +46,25 @@
         </div>
       </div>
 
-      @if (isUpdatingImage) {
-        <div class="col-12 col-lg-5 d-flex flex-column align-items-center justify-content-center" style="min-height: 240px">
-          <tp-loading-indicator [marginY]="false" />
-        </div>
-      } @else {
-        <div
-          class="col-12 col-lg-5 pt-5 pb-3 d-flex flex-column flex-md-row justify-content-center justify-content-lg-end pt-lg-0 pb-lg-0 gap-3"
-          style="min-height: 240px">
-          <tp-image-widget
-            [currentImage]="invitationLink.primaryLogo"
-            [imageAlt]="'PrimaryLogo'"
-            [imageType]="ImageType.SquareLargeLogo"
-            [organizationId]="planningRealm.organizationId"
-            [allowChanging]="writeAllowed"
-            (imageChange)="setImage('primaryLogo', $event)"
-            (apiError)="errorOccured.emit($event)" />
-          <tp-image-widget
-            [currentImage]="invitationLink.secondaryLogo"
-            [imageAlt]="'SecondaryLogo'"
-            [imageType]="ImageType.SquareLargeLogo"
-            [organizationId]="planningRealm.organizationId"
-            [allowChanging]="writeAllowed"
-            (imageChange)="setImage('secondaryLogo', $event)"
-            (apiError)="errorOccured.emit($event)" />
-        </div>
-      }
+      <div
+        class="col-12 col-lg-5 pt-5 pb-3 d-flex flex-column flex-md-row justify-content-center justify-content-lg-end pt-lg-0 pb-lg-0 gap-3">
+        <tp-image-widget
+          [currentImage]="invitationLink.primaryLogo"
+          [imageAlt]="'PrimaryLogo'"
+          [imageType]="ImageType.SquareLargeLogo"
+          [organizationId]="planningRealm.organizationId"
+          [allowChanging]="writeAllowed"
+          (imageChange)="setImage('primaryLogo', $event)"
+          (apiError)="errorOccured.emit($event)" />
+        <tp-image-widget
+          [currentImage]="invitationLink.secondaryLogo"
+          [imageAlt]="'SecondaryLogo'"
+          [imageType]="ImageType.SquareLargeLogo"
+          [organizationId]="planningRealm.organizationId"
+          [allowChanging]="writeAllowed"
+          (imageChange)="setImage('secondaryLogo', $event)"
+          (apiError)="errorOccured.emit($event)" />
+      </div>
     </div>
 
     @if (invitationLink.entries.length === 0) {
@@ -147,8 +140,7 @@
     @if (writeAllowed) {
       @let canDelete = invitationLink.numberOfApplications === 0;
       @if (canDelete) {
-        <!-- TODO: Bleibt dieser Button so? -->
-        <tp-delete-button (confirmed)="deleteRequest.emit(invitationLink.id)" />
+        <tp-delete-button (confirmed)="deleteInvitationLink()" />
       } @else {
         <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.DeleteNotPossible'" />
       }

@@ -42,6 +42,7 @@ export class TournamentClassManagerComponent {
       next: (result) => {
         this.updatePlanningRealm((planningRealm) => {
           const tournamentClass = planningRealm.tournamentClasses.find((x) => x.id == id);
+
           if (!tournamentClass) {
             return false;
           }
@@ -58,6 +59,7 @@ export class TournamentClassManagerComponent {
   protected deleteTournamentClass(id: number): void {
     this.updatePlanningRealm((planningRealm) => {
       const index = planningRealm.tournamentClasses.findIndex((x) => x.id === id);
+
       if (index === -1) {
         return false;
       }

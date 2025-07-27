@@ -61,6 +61,8 @@ internal sealed class AccessValidator : IAccessValidator
         var rolesList = string.Join('+', availableRoles.Select(x => x.ToString()));
         var rolesHeaderValue = $"{targetPublicId}={rolesList}";
 
+        // TODO: If target is a Tournament, for example, role assignments for parent Organization should also be added
+
         _httpContext.Response.Headers.Append(RolesHeaderName, rolesHeaderValue);
     }
 

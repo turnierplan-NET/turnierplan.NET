@@ -215,22 +215,6 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     });
   }
 
-  protected reloadPlanningRealm(): void {
-    if (!this.planningRealm) {
-      return;
-    }
-
-    this.planningRealmService.getPlanningRealm({ id: this.planningRealm.id }).subscribe({
-      next: (planningRealm) => {
-        this.setPlanningRealm(planningRealm);
-        this.loadingState = { isLoading: false };
-      },
-      error: (error) => {
-        this.loadingState = { isLoading: false, error: error };
-      }
-    });
-  }
-
   private setPlanningRealm(planningRealm: PlanningRealmDto): void {
     this.originalPlanningRealm = planningRealm;
 

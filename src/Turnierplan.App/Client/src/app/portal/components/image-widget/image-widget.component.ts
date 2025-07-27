@@ -26,7 +26,10 @@ export class ImageWidgetComponent {
   public allowChanging = true;
 
   @Output()
-  public imageChange = new EventEmitter<string>();
+  public imageChange = new EventEmitter<ImageDto | undefined>();
+
+  @Input()
+  public imageDelete = new EventEmitter<string>(); // TODO: Emit this event and handle it appropriately in view-tournament & invitation-link-tile components
 
   @Output()
   public apiError = new EventEmitter<unknown>();
@@ -48,7 +51,7 @@ export class ImageWidgetComponent {
     component.init(this.organizationId, this.imageType, this.currentImage?.id);
 
     ref.closed.subscribe({
-      next: (value: string) => {
+      next: (value: ImageDto | undefined) => {
         this.imageChange.emit(value);
       }
     });

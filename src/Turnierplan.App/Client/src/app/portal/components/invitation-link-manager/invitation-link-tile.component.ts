@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ImageType, InvitationLinkDto, PlanningRealmDto, TournamentClassDto } from '../../../api';
+import { ImageDto, ImageType, InvitationLinkDto, PlanningRealmDto, TournamentClassDto } from '../../../api';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
+import { UpdatePlanningRealmFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
 
 @Component({
   standalone: false,
@@ -15,17 +16,14 @@ export class InvitationLinkTileComponent {
   @Input()
   public invitationLink!: InvitationLinkDto;
 
+  @Input()
+  public updatePlanningRealm!: UpdatePlanningRealmFunc;
+
   @Output()
   public errorOccured = new EventEmitter<unknown>();
 
-  @Output()
-  public reloadRequest = new EventEmitter<void>();
-
-  @Output()
-  public deleteRequest = new EventEmitter<number>(); // TODO: Emit delete delete event necessary?
-
+  protected readonly Actions = Actions;
   protected readonly ImageType = ImageType;
-  protected isUpdatingImage = false;
 
   constructor(protected readonly authorizationService: AuthorizationService) {}
 
@@ -39,34 +37,37 @@ export class InvitationLinkTileComponent {
     return tournamentClass;
   }
 
-  protected setImage(whichImage: 'primaryLogo' | 'secondaryLogo', imageId?: string): void {
-    if (this.invitationLink[whichImage]?.id === imageId) {
+  protected setImage(whichImage: 'primaryLogo' | 'secondaryLogo', image?: ImageDto): void {
+    if (this.invitationLink[whichImage]?.id === image?.id) {
       return;
     }
 
-    this.isUpdatingImage = true;
-
-    // TODO: Re-implement for new endpoint
-    // const mappedTarget = {
-    //   primaryLogo: SetInvitationLinkImageEndpointRequestTarget.PrimaryLogo,
-    //   secondaryLogo: SetInvitationLinkImageEndpointRequestTarget.SecondaryLogo
-    // }[whichImage];
-    //
-    // this.invitationLinkService
-    //   .setInvitationLinkImage({
-    //     id: this.invitationLink.id,
-    //     planningRealmId: this.planningRealm.id,
-    //     body: { imageId: imageId, target: mappedTarget }
-    //   })
-    //   .subscribe({
-    //     next: () => {
-    //       this.reloadRequest.emit();
-    //     },
-    //     error: (error) => {
-    //       this.errorOccured.emit(error);
-    //     }
-    //   });
+    this.updateInvitationLink((invitationLink) => (invitationLink[whichImage] = image ?? null));
   }
 
-  protected readonly Actions = Actions;
+  protected deleteInvitationLink(): void {
+    this.updatePlanningRealm((planningRealm) => {
+      const index = planningRealm.invitationLinks.findIndex((x) => x.id === this.invitationLink.id);
+
+      if (index === -1) {
+        return false;
+      }
+
+      planningRealm.invitationLinks.splice(index, 1);
+      return true;
+    });
+  }
+
+  private updateInvitationLink(updateFunc: (invitationLink: InvitationLinkDto) => void): void {
+    this.updatePlanningRealm((planningRealm) => {
+      const invitationLink = planningRealm.invitationLinks.find((x) => x.id === this.invitationLink.id);
+
+      if (!invitationLink) {
+        return false;
+      }
+
+      updateFunc(invitationLink);
+      return true;
+    });
+  }
 }
