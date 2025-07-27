@@ -485,6 +485,7 @@ export const de = {
           },
           ShowOrganizerLogo: 'Veranstalter-Logo darstellen',
           ShowSponsorLogo: 'Sponsoren-Logo darstellen',
+          SaveForbidden: 'Sie dürfen keine Änderungen an den Einstellungen machen.',
           SuccessToast: {
             Title: 'Einstellungen gespeichert',
             Message: 'Ihre Änderungen an der Konfiguration wurden erfolgreich gespeichert'
@@ -779,11 +780,6 @@ export const de = {
           InvalidEntry: 'Ein bestehender Eintrag darf nicht leer sein und es muss sich um einen gültigen HTTPS-Link handeln.',
           NoEntries: 'Keine Links vorhanden',
           AddEntry: 'Link hinzufügen'
-        },
-        UnsavedChanges: 'Sie haben ungespeicherte Änderungen, welche noch übernommen werden müssen.',
-        SuccessToast: {
-          Title: 'Spielstätte gespeichert',
-          Message: 'Ihre Änderungen an dieser Spielstätte wurden gespeichert'
         }
       },
       RbacWidget: {

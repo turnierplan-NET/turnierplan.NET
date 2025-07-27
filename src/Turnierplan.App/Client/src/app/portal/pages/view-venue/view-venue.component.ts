@@ -23,7 +23,6 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
   protected loadingState: LoadingState = { isLoading: true };
   protected venue?: VenueDto;
   protected isDirty: boolean = false;
-  protected isSaving: boolean = false;
 
   protected currentPage = 0;
   protected pages: PageFrameNavigationTab[] = [
@@ -161,22 +160,16 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
   }
 
   protected saveChanges(): void {
-    if (!this.venue || !this.isDirty || this.isSaving) {
+    if (!this.venue || !this.isDirty || this.loadingState.isLoading) {
       return;
     }
 
-    this.isSaving = true;
+    this.loadingState = { isLoading: true };
 
     this.venueService.updateVenue({ id: this.venue.id, body: this.venue }).subscribe({
       next: () => {
-        this.isSaving = false;
+        this.loadingState = { isLoading: false };
         this.isDirty = false;
-
-        this.notificationService.showNotification(
-          'success',
-          'Portal.ViewVenue.Details.SuccessToast.Title',
-          'Portal.ViewVenue.Details.SuccessToast.Message'
-        );
       },
       error: (error) => {
         this.loadingState = { isLoading: false, error: error };

@@ -89,6 +89,7 @@ import { ViewPlanningRealmComponent } from './pages/view-planning-realm/view-pla
 import { TournamentClassManagerComponent } from './components/tournament-class-manager/tournament-class-manager.component';
 import { InvitationLinkTileComponent } from './components/invitation-link-manager/invitation-link-tile.component';
 import { TournamentClassDialogComponent } from './components/tournament-class-dialog/tournament-class-dialog.component';
+import { UnsavedChangesAlertComponent } from './components/unsaved-changes-alert/unsaved-changes-alert.component';
 
 const routes: Routes = [
   {
@@ -248,7 +249,8 @@ const routes: Routes = [
     ViewPlanningRealmComponent,
     TournamentClassManagerComponent,
     InvitationLinkTileComponent,
-    TournamentClassDialogComponent
+    TournamentClassDialogComponent,
+    UnsavedChangesAlertComponent
   ],
   imports: [
     CommonModule,

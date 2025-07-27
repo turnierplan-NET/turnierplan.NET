@@ -38,17 +38,7 @@
     </ng-template>
     <ng-template #preContent>
       @if (_hasUnsavedChanges) {
-        <tp-alert [type]="'primary'" [icon]="'exclamation-circle'">
-          <!-- TODO: Move alert with content to separate component when using this for venue page also -->
-          <!-- TODO: Maybe also use for presentation-config widget? -->
-          <span class="flex-grow-1" translate="Portal.General.UnsavedChanges"></span>
-          <tp-action-button
-            class="m-2"
-            [type]="'outline-primary'"
-            [title]="'Portal.General.Save'"
-            [icon]="'floppy'"
-            (click)="savePlanningRealm()" />
-        </tp-alert>
+        <tp-unsaved-changes-alert (save)="savePlanningRealm()" />
       }
     </ng-template>
     <ng-template #content>

@@ -12,7 +12,7 @@
   }
 </div>
 
-<div class="row">
+<div class="row" [ngClass]="{ 'mb-4': this.hasUnsavedChanges }">
   <div class="col-12 col-md-6 d-flex flex-column gap-3">
     <div class="form-group">
       <label class="form-label" for="headerLine1" translate="Portal.ViewTournament.Share.PresentationConfig.Header1"></label>
@@ -121,17 +121,9 @@
 </div>
 
 @if (this.hasUnsavedChanges) {
-  <div class="mt-3 d-flex flex-row justify-content-end align-items-center gap-2">
-    @if (isSaving) {
-      <tp-small-spinner />
-    }
-    <div [ngClass]="{ 'tp-cursor-not-allowed': !canSaveChanges }">
-      <tp-action-button
-        [type]="'success'"
-        [icon]="'floppy'"
-        [title]="'Portal.General.ApplyChanges'"
-        [disabled]="!canSaveChanges || isSaving"
-        (click)="canSaveChanges && saveChanges()" />
-    </div>
-  </div>
+  @if (canSaveChanges) {
+    <tp-unsaved-changes-alert [inProgress]="isSaving" (save)="saveChanges()" />
+  } @else {
+    <tp-alert [type]="'danger'" [icon]="'ban'" [text]="'Portal.ViewTournament.Share.PresentationConfig.SaveForbidden'" />
+  }
 }
