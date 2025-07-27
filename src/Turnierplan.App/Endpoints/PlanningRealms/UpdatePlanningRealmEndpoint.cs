@@ -84,7 +84,7 @@ internal sealed class UpdatePlanningRealmEndpoint : EndpointBase
 
     private static bool TryDeleteNoLongerNeededTournamentClasses(PlanningRealm planningRealm, UpdatePlanningRealmEndpointRequest request, [NotNullWhen(false)] out string? error)
     {
-        foreach (var tournamentClass in planningRealm.TournamentClasses)
+        foreach (var tournamentClass in planningRealm.TournamentClasses.ToList())
         {
             var shouldDelete = request.TournamentClasses.None(x => x.Id == tournamentClass.Id);
 
@@ -112,7 +112,7 @@ internal sealed class UpdatePlanningRealmEndpoint : EndpointBase
 
     private static bool TryDeleteNoLongerNeededInvitationLinks(PlanningRealm planningRealm, UpdatePlanningRealmEndpointRequest request, [NotNullWhen(false)] out string? error)
     {
-        foreach (var invitationLink in planningRealm.InvitationLinks)
+        foreach (var invitationLink in planningRealm.InvitationLinks.ToList())
         {
             var shouldDelete = request.InvitationLinks.None(x => x.Id == invitationLink.Id);
 
@@ -153,11 +153,11 @@ internal sealed class UpdatePlanningRealmEndpoint : EndpointBase
                 }
 
                 tournamentClass = result;
-                tournamentClass.Name = request.Name.Trim();
+                tournamentClass.Name = requestTournamentClass.Name.Trim();
             }
             else
             {
-                tournamentClass = planningRealm.AddTournamentClass(request.Name.Trim());
+                tournamentClass = planningRealm.AddTournamentClass(requestTournamentClass.Name.Trim());
             }
 
             tournamentClass.MaxTeamCount = requestTournamentClass.MaxTeamCount;
@@ -184,7 +184,7 @@ internal sealed class UpdatePlanningRealmEndpoint : EndpointBase
                 }
 
                 invitationLink = result;
-                invitationLink.Name = request.Name.Trim();
+                invitationLink.Name = requestInvitationLink.Name.Trim();
             }
             else
             {

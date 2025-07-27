@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoadingState } from '../../directives/loading-state/loading-state.directive';
-import { PlanningRealmDto, PlanningRealmsService } from '../../../api';
+import { PlanningRealmDto, PlanningRealmsService, UpdatePlanningRealmEndpointRequest } from '../../../api';
 import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
 import { Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
@@ -190,7 +190,47 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   }
 
   protected savePlanningRealm(): void {
-    // TODO: Implement
+    if (!this.planningRealm || this.loadingState.isLoading) {
+      return;
+    }
+
+    const planningRealmId = this.planningRealm.id;
+    this.loadingState = { isLoading: true };
+
+    const request: UpdatePlanningRealmEndpointRequest = {
+      name: this.planningRealm.name,
+      tournamentClasses: this.planningRealm.tournamentClasses.map((x) => ({
+        id: x.id < 0 ? null : x.id,
+        name: x.name,
+        maxTeamCount: x.maxTeamCount === null ? undefined : x.maxTeamCount
+      })),
+      invitationLinks: this.planningRealm.invitationLinks.map((x) => ({
+        id: x.id < 0 ? null : x.id,
+        name: x.name,
+        colorCode: x.colorCode,
+        contactEmail: x.contactEmail,
+        contactPerson: x.contactPerson,
+        contactTelephone: x.contactTelephone,
+        description: x.description,
+        primaryLogoId: x.primaryLogo?.id,
+        secondaryLogoId: x.secondaryLogo?.id,
+        title: x.title,
+        validUntil: x.validUntil
+      }))
+    };
+
+    this.planningRealmService
+      .updatePlanningRealm({ id: planningRealmId, body: request })
+      .pipe(switchMap(() => this.planningRealmService.getPlanningRealm({ id: planningRealmId })))
+      .subscribe({
+        next: (planningRealm) => {
+          this.setPlanningRealm(planningRealm);
+          this.loadingState = { isLoading: false };
+        },
+        error: (error) => {
+          this.loadingState = { isLoading: false, error: error };
+        }
+      });
   }
 
   protected deletePlanningRealm(): void {
