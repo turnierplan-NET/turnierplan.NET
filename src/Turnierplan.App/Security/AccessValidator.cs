@@ -61,9 +61,15 @@ internal sealed class AccessValidator : IAccessValidator
         var rolesList = string.Join('+', availableRoles.Select(x => x.ToString()));
         var rolesHeaderValue = $"{targetPublicId}={rolesList}";
 
-        // TODO: If target is a Tournament, for example, role assignments for parent Organization should also be added
-
         _httpContext.Response.Headers.Append(RolesHeaderName, rolesHeaderValue);
+
+        if (target is IEntityWithOrganization entityWithOrganization)
+        {
+            // Always add the organization-level roles, too. This is necessary because for example, the tournament
+            // page allows the user to upload images. But for uploading images, the authorization check is done
+            // against the organization.
+            AddRolesToResponseHeader(entityWithOrganization.Organization);
+        }
     }
 
     internal static bool IsActionAllowed<T>(IEntityWithRoleAssignments<T> target, Actions.Action action, Principal principal)
