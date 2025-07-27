@@ -12,7 +12,7 @@ using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.App.Endpoints.PlanningRealms;
 
-internal sealed class UpdatePlanningRealmEndpoint : EndpointBase<PlanningRealmDto>
+internal sealed class UpdatePlanningRealmEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Put;
 
