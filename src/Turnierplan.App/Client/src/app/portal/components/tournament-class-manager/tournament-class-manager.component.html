@@ -36,11 +36,7 @@
               [type]="'outline-secondary'"
               [icon]="'gear'"
               [mode]="'IconOnly'"
-              [disabled]="currentlyUpdatingId === tournamentClass.id"
               (click)="editTournamentClass(tournamentClass.id)" />
-            @if (currentlyUpdatingId === tournamentClass.id) {
-              <tp-small-spinner class="mx-2" />
-            }
           </td>
           @let canDelete = tournamentClass.numberOfTeams === 0;
           <td class="align-middle" [ngClass]="{ 'ps-1': !canDelete }">

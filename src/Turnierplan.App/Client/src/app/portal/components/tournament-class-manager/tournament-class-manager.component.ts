@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { PlanningRealmDto } from '../../../api';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TournamentClassDialogComponent } from '../tournament-class-dialog/tournament-class-dialog.component';
+import { UpdatePlanningRealmFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
 
 @Component({
   standalone: false,
@@ -14,11 +15,10 @@ export class TournamentClassManagerComponent {
   @Input()
   public planningRealm!: PlanningRealmDto;
 
-  @Output()
-  public errorOccured = new EventEmitter<unknown>();
+  @Input()
+  public updatePlanningRealm!: UpdatePlanningRealmFunc;
 
   protected readonly Actions = Actions;
-  protected currentlyUpdatingId?: number;
 
   constructor(
     protected readonly authorizationService: AuthorizationService,
@@ -38,38 +38,32 @@ export class TournamentClassManagerComponent {
 
     (ref.componentInstance as TournamentClassDialogComponent).init(this.planningRealm, id);
 
-    // TODO: Re-implement for new endpoint
-    // ref.closed
-    //   .pipe(
-    //     tap(() => (this.currentlyUpdatingId = id)),
-    //     switchMap((result) =>
-    //       this.tournamentClassService
-    //         .updateTournamentClass({
-    //           planningRealmId: this.planningRealm.id,
-    //           id: id,
-    //           body: { name: result.name, maxTeamCount: result.maxTeamCount }
-    //         })
-    //         .pipe(map(() => result))
-    //     )
-    //   )
-    //   .subscribe({
-    //     next: (result) => {
-    //       this.currentlyUpdatingId = undefined;
-    //
-    //       const tournamentClass = this.planningRealm.tournamentClasses.find((x) => x.id === id);
-    //
-    //       if (tournamentClass) {
-    //         tournamentClass.name = result.name;
-    //         tournamentClass.maxTeamCount = result.maxTeamCount;
-    //       }
-    //     },
-    //     error: (error) => {
-    //       this.errorOccured.emit(error);
-    //     }
-    //   });
+    ref.closed.subscribe({
+      next: (result) => {
+        this.updatePlanningRealm((planningRealm) => {
+          const tournamentClass = planningRealm.tournamentClasses.find((x) => x.id == id);
+          if (!tournamentClass) {
+            return false;
+          }
+
+          tournamentClass.name = result.name.trim();
+          tournamentClass.maxTeamCount = result.maxTeamCount;
+
+          return true;
+        });
+      }
+    });
   }
 
   protected deleteTournamentClass(id: number): void {
-    // TODO: Implement delete logic -> the endpoint should only allow delete under the same condition that no applications for this tournament class have been made yet
+    this.updatePlanningRealm((planningRealm) => {
+      const index = planningRealm.tournamentClasses.findIndex((x) => x.id === id);
+      if (index === -1) {
+        return false;
+      }
+
+      planningRealm.tournamentClasses.splice(index, 1);
+      return true;
+    });
   }
 }

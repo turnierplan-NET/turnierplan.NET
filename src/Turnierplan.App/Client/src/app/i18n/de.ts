@@ -898,7 +898,8 @@ export const de = {
           Title: 'Turnierklasse bearbeiten',
           Name: 'Name:',
           NameInvalid: 'Der Name darf nicht leer sein',
-          NameAlert: 'Eine Änderung des Namens wird sofort auf allen Anmeldelinks, wo diese Turnierklasse verfügbar ist, sichtbar',
+          NameAlert:
+            'Eine Änderung des Namens wird nach dem Speichern sofort auf allen Anmeldelinks, wo diese Turnierklasse verfügbar ist, sichtbar',
           LimitMaxTeamCount: 'Anzahl der Mannschaften limitieren',
           MaxTeamCount: 'Max. Anzahl an Mannschaften:',
           MaxTeamCountInvalid: 'Die Anzahl muss mindestens 2 sein.',

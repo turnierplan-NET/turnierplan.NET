@@ -12,7 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs/operators';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 
-export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => void) => void;
+export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
 
 @Component({
   standalone: false,
@@ -82,10 +82,11 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     private readonly titleService: TitleService,
     private readonly modalService: NgbModal
   ) {
-    this.updateFunction = (modifyFunc: (planningRealm: PlanningRealmDto) => void) => {
+    this.updateFunction = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => {
       if (this.planningRealm) {
-        modifyFunc(this.planningRealm);
-        this._hasUnsavedChanges = true;
+        if (modifyFunc(this.planningRealm)) {
+          this._hasUnsavedChanges = true;
+        }
       }
     };
   }
@@ -141,6 +142,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
             maxTeamCount: null,
             numberOfTeams: 0
           });
+
+          return true;
         });
       }
     });
@@ -166,6 +169,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
             title: null,
             validUntil: null
           });
+
+          return true;
         });
       }
     });
@@ -178,6 +183,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
 
     this.updateFunction((planningRealm) => {
       planningRealm.name = name;
+      return true;
     });
 
     this.titleService.setTitleFrom(this.planningRealm);
