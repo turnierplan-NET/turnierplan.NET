@@ -1,10 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Mapping;
-using Turnierplan.App.Models;
 using Turnierplan.App.Security;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.PlanningRealm;
@@ -12,7 +12,7 @@ using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.App.Endpoints.PlanningRealms;
 
-internal sealed class UpdatePlanningRealmEndpoint : EndpointBase
+internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Put;
 
@@ -202,6 +202,40 @@ internal sealed class UpdatePlanningRealmEndpoint : EndpointBase
             invitationLink.ContactPerson = requestInvitationLink.ContactPerson;
             invitationLink.ContactEmail = requestInvitationLink.ContactEmail;
             invitationLink.ContactTelephone = requestInvitationLink.ContactTelephone;
+
+            invitationLink.ExternalLinks = requestInvitationLink.ExternalLinks
+                .Select(requestExternalLink => new InvitationLink.ExternalLink(requestExternalLink.Name, requestExternalLink.Url))
+                .ToList();
+
+            var entriesToRemove = invitationLink.Entries
+                .Where(existingEntry => requestInvitationLink.Entries.None(requestEntry => requestEntry.TournamentClassId == existingEntry.Class.Id))
+                .ToList();
+
+            foreach (var entry in entriesToRemove)
+            {
+                invitationLink.RemoveEntry(entry);
+            }
+
+            foreach (var requestEntry in requestInvitationLink.Entries)
+            {
+                var entry = invitationLink.Entries.FirstOrDefault(x => x.Class.Id == requestEntry.TournamentClassId);
+
+                if (entry is null)
+                {
+                    var @class = planningRealm.TournamentClasses.FirstOrDefault(x => x.Id == requestEntry.TournamentClassId);
+
+                    if (@class is null)
+                    {
+                        error = $"There exists no tournament class with id {requestEntry.TournamentClassId}.";
+                        return false;
+                    }
+
+                    entry = invitationLink.AddEntry(@class);
+                }
+
+                entry.MaxTeamsPerRegistration = requestEntry.MaxTeamsPerRegistration;
+                entry.AllowNewRegistrations = requestEntry.AllowNewRegistrations;
+            }
         }
 
         error = null;
@@ -344,8 +378,25 @@ internal sealed class UpdatePlanningRealmEndpoint : EndpointBase
 
         public PublicId? SecondaryLogoId { get; init; }
 
-        // TODO: Invitation link entries
-        // TODO: External links
+        public required UpdatePlanningRealmEndpointRequestInvitationLinkExternalLink[] ExternalLinks { get; init; }
+
+        public required UpdatePlanningRealmEndpointRequestInvitationLinkEntry[] Entries { get; init; }
+    }
+
+    public sealed record UpdatePlanningRealmEndpointRequestInvitationLinkEntry
+    {
+        public required long TournamentClassId { get; init; }
+
+        public required bool AllowNewRegistrations { get; init; }
+
+        public int? MaxTeamsPerRegistration { get; init; }
+    }
+
+    public sealed record UpdatePlanningRealmEndpointRequestInvitationLinkExternalLink
+    {
+        public required string Name { get; init; }
+
+        public required string Url { get; init; }
     }
 
     internal sealed class Validator : AbstractValidator<UpdatePlanningRealmEndpointRequest>
@@ -382,7 +433,29 @@ internal sealed class UpdatePlanningRealmEndpoint : EndpointBase
                         .Length(6)
                         .Must(x => x.All(char.IsAsciiHexDigit))
                         .NotEmpty();
+
+                    link.RuleFor(x => x.Entries)
+                        .Must(entries =>
+                        {
+                            var unique = entries.Select(x => x.TournamentClassId).Distinct();
+                            return unique.Count() == entries.Length;
+                        })
+                        .WithMessage("Invitation link entries must only contain unique tournament classes.");
+
+                    link.RuleForEach(x => x.ExternalLinks)
+                        .ChildRules(externalLink =>
+                        {
+                            externalLink.RuleFor(x => x.Name)
+                                .NotEmpty();
+
+                            externalLink.RuleFor(x => x.Url)
+                                .NotEmpty()
+                                .Matches(ExternalLinkRegex());
+                        });
                 });
         }
     }
+
+    [GeneratedRegex(@"^https:\/\/(?:[A-Za-z0-9-]+\.)+[a-z]+(?:\/.*)?$")]
+    private static partial Regex ExternalLinkRegex();
 }

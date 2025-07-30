@@ -28,6 +28,8 @@ public sealed record InvitationLinkDto
 
     public required ImageDto? SecondaryLogo { get; init; }
 
+    public required InvitationLinkExternalLinkDto[] ExternalLinks { get; init; }
+
     public required InvitationLinkEntryDto[] Entries { get; init; }
 
     public required int NumberOfApplications { get; init; }

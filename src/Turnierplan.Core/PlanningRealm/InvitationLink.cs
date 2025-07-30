@@ -60,6 +60,24 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 
     public IReadOnlyList<InvitationLinkEntry> Entries => _entries.AsReadOnly();
 
+    public InvitationLinkEntry AddEntry(TournamentClass tournamentClass)
+    {
+        if (!PlanningRealm._tournamentClasses.Contains(tournamentClass))
+        {
+            throw new TurnierplanException("Cannot add entry with a tournament class from another planning realm.");
+        }
+
+        var invitationLinkEntry = new InvitationLinkEntry(tournamentClass);
+        _entries.Add(invitationLinkEntry);
+
+        return invitationLinkEntry;
+    }
+
+    public void RemoveEntry(InvitationLinkEntry entry)
+    {
+        _entries.Remove(entry);
+    }
+
     public void SetPrimaryLogo(Image.Image? primaryLogo)
     {
         CheckImageTypeAndSetImage(primaryLogo, () => PrimaryLogo = primaryLogo);

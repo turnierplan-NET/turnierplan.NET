@@ -160,6 +160,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
             contactTelephone: null,
             description: null,
             entries: [],
+            externalLinks: [],
             id: this.nextId--,
             name: name.trim(),
             numberOfApplications: 0,
@@ -215,7 +216,13 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
         primaryLogoId: x.primaryLogo?.id,
         secondaryLogoId: x.secondaryLogo?.id,
         title: x.title,
-        validUntil: x.validUntil
+        validUntil: x.validUntil,
+        externalLinks: x.externalLinks.map((y) => ({ name: y.name, url: y.url })),
+        entries: x.entries.map((y) => ({
+          tournamentClassId: y.tournamentClassId,
+          maxTeamsPerRegistration: y.maxTeamsPerRegistration,
+          allowNewRegistrations: y.allowNewRegistrations
+        }))
       }))
     };
 

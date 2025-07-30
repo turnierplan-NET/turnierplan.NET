@@ -85,6 +85,19 @@ export class InvitationLinkTileComponent {
     this.determineTournamentClassesToAdd();
   }
 
+  protected removeTournamentClass(id: number): void {
+    this.updateInvitationLink((invitationLink) => {
+      const index = invitationLink.entries.findIndex((x) => x.tournamentClassId === id);
+
+      if (index === -1) {
+        return false;
+      }
+
+      invitationLink.entries.splice(index, 1);
+      return true;
+    });
+  }
+
   protected deleteInvitationLink(): void {
     this.updatePlanningRealm((planningRealm) => {
       const index = planningRealm.invitationLinks.findIndex((x) => x.id === this.invitationLink.id);
@@ -114,7 +127,7 @@ export class InvitationLinkTileComponent {
   private determineTournamentClassesToAdd(): void {
     if (this.planningRealm && this.invitationLink) {
       this.tournamentClassesToAdd = this.planningRealm.tournamentClasses.filter(
-        (tc) => !this.invitationLink.entries.some((entry) => entry.tournamentClassId === tc.id)
+        (tc) => tc.id > 0 && !this.invitationLink.entries.some((entry) => entry.tournamentClassId === tc.id)
       );
     } else {
       this.tournamentClassesToAdd = [];

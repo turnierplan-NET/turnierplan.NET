@@ -123,7 +123,7 @@
               @if (writeAllowed) {
                 <td class="text-nowrap">
                   <tp-action-button [type]="'outline-secondary'" [icon]="'pencil'" [mode]="'IconOnly'" />
-                  <tp-delete-button class="ms-1" />
+                  <tp-delete-button class="ms-1" (confirmed)="removeTournamentClass(entry.tournamentClassId)" />
                 </td>
               }
             </tr>
