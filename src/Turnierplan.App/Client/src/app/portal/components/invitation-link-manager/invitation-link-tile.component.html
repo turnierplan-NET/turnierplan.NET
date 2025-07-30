@@ -132,10 +132,31 @@
       </table>
     }
     @if (writeAllowed) {
-      <tp-action-button
-        [type]="'outline-secondary'"
-        [icon]="'plus-circle'"
-        [title]="'Portal.ViewPlanningRealm.InvitationLink.AddTournament'" />
+      <div class="d-flex flex-row gap-1 align-items-center">
+        @let addButtonId = 'add_tournament_dropdown_' + invitationLink.id;
+        @let addButtonDisabled = tournamentClassesToAdd.length === 0;
+
+        <div ngbDropdown>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-primary"
+            [id]="addButtonId"
+            ngbDropdownToggle
+            [ngClass]="{ disabled: addButtonDisabled }">
+            <i class="bi bi-plus-circle" aria-hidden="true"></i>
+            <span class="ms-2 me-1" translate="Portal.ViewPlanningRealm.InvitationLink.AddTournament"></span>
+          </button>
+          <div ngbDropdownMenu [attr.aria-labelledby]="addButtonId" class="shadow-sm">
+            @for (tournamentClass of tournamentClassesToAdd; track tournamentClass) {
+              <button ngbDropdownItem (click)="addTournamentClass(tournamentClass.id)">{{ tournamentClass.name }}</button>
+            }
+          </div>
+        </div>
+
+        @if (addButtonDisabled) {
+          <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.AllClassesAdded'" />
+        }
+      </div>
     }
   </div>
   <div class="card-footer">

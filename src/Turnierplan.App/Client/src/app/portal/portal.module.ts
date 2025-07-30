@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { NgbPopover, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownModule, NgbDropdownToggle, NgbPopover, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { DndDraggableDirective, DndDropzoneDirective, DndHandleDirective, DndPlaceholderRefDirective } from 'ngx-drag-drop';
@@ -268,7 +268,11 @@ const routes: Routes = [
     TranslateModule,
     DndHandleDirective,
     BaseChartDirective,
-    QRCodeComponent
+    QRCodeComponent,
+    NgbDropdown,
+    NgbDropdownItem,
+    NgbDropdownMenu,
+    NgbDropdownToggle
   ],
   providers: [LocalStorageService, TitleService, provideCharts(withDefaultRegisterables())]
 })

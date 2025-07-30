@@ -343,6 +343,9 @@ internal sealed class UpdatePlanningRealmEndpoint : EndpointBase
         public PublicId? PrimaryLogoId { get; init; }
 
         public PublicId? SecondaryLogoId { get; init; }
+
+        // TODO: Invitation link entries
+        // TODO: External links
     }
 
     internal sealed class Validator : AbstractValidator<UpdatePlanningRealmEndpointRequest>

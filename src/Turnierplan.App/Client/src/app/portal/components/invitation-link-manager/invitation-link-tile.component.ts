@@ -10,11 +10,8 @@ import { UpdatePlanningRealmFunc } from '../../pages/view-planning-realm/view-pl
   templateUrl: './invitation-link-tile.component.html'
 })
 export class InvitationLinkTileComponent {
-  @Input()
-  public planningRealm!: PlanningRealmDto;
-
-  @Input()
-  public invitationLink!: InvitationLinkDto;
+  private _planningRealm!: PlanningRealmDto;
+  private _invitationLink!: InvitationLinkDto;
 
   @Input()
   public updatePlanningRealm!: UpdatePlanningRealmFunc;
@@ -24,8 +21,29 @@ export class InvitationLinkTileComponent {
 
   protected readonly Actions = Actions;
   protected readonly ImageType = ImageType;
+  protected tournamentClassesToAdd: TournamentClassDto[] = [];
 
   constructor(protected readonly authorizationService: AuthorizationService) {}
+
+  @Input()
+  public set invitationLink(value: InvitationLinkDto) {
+    this._invitationLink = value;
+    this.determineTournamentClassesToAdd();
+  }
+
+  @Input()
+  public set planningRealm(value: PlanningRealmDto) {
+    this._planningRealm = value;
+    this.determineTournamentClassesToAdd();
+  }
+
+  public get invitationLink(): InvitationLinkDto {
+    return this._invitationLink;
+  }
+
+  public get planningRealm(): PlanningRealmDto {
+    return this._planningRealm;
+  }
 
   protected findTournamentClassById(id: number): TournamentClassDto {
     const tournamentClass = this.planningRealm.tournamentClasses.find((x) => x.id === id);
@@ -60,6 +78,13 @@ export class InvitationLinkTileComponent {
     });
   }
 
+  protected addTournamentClass(id: number): void {
+    this.updateInvitationLink((invitationLink) => {
+      invitationLink.entries.push({ tournamentClassId: id, allowNewRegistrations: true, maxTeamsPerRegistration: null, numberOfTeams: 0 });
+    });
+    this.determineTournamentClassesToAdd();
+  }
+
   protected deleteInvitationLink(): void {
     this.updatePlanningRealm((planningRealm) => {
       const index = planningRealm.invitationLinks.findIndex((x) => x.id === this.invitationLink.id);
@@ -84,5 +109,15 @@ export class InvitationLinkTileComponent {
       updateFunc(invitationLink);
       return true;
     });
+  }
+
+  private determineTournamentClassesToAdd(): void {
+    if (this.planningRealm && this.invitationLink) {
+      this.tournamentClassesToAdd = this.planningRealm.tournamentClasses.filter(
+        (tc) => !this.invitationLink.entries.some((entry) => entry.tournamentClassId === tc.id)
+      );
+    } else {
+      this.tournamentClassesToAdd = [];
+    }
   }
 }

@@ -909,6 +909,7 @@ export const de = {
           NumberOfTeams: 'aktuelle Mannschaften'
         },
         AddTournament: 'Turnier hinzufügen',
+        AllClassesAdded: 'In diesem Link sind alle Turnierklassen enthalten',
         DeleteNotPossible:
           'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.'
       },
