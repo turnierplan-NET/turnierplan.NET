@@ -12,7 +12,7 @@
         id="name"
         [(ngModel)]="name"
         [ngClass]="{ 'is-invalid': nameInvalid }"
-        (keyup.enter)="save()" />
+        (keyup.enter)="applyChanges()" />
       @if (nameInvalid) {
         <div class="invalid-feedback" [translate]="'Portal.ViewPlanningRealm.TournamentClasses.EditDialog.NameInvalid'"></div>
       }
@@ -48,7 +48,7 @@
           [(ngModel)]="maxTeamCount"
           [ngClass]="{ 'is-invalid': maxTeamCount < 2 }"
           [attr.aria-label]="'Portal.ViewPlanningRealm.TournamentClasses.EditDialog.MaxTeamCount' | translate"
-          (keyup.enter)="save()" />
+          (keyup.enter)="applyChanges()" />
         @if (maxTeamCount < 2) {
           <div class="invalid-feedback" [translate]="'Portal.ViewPlanningRealm.TournamentClasses.EditDialog.MaxTeamCountInvalid'"></div>
         }
@@ -66,6 +66,6 @@
   </div>
   <div class="modal-footer">
     <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
-    <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" (click)="save()" />
+    <tp-action-button [type]="'success'" [title]="'Portal.General.Apply'" (click)="applyChanges()" />
   </div>
 }

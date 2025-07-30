@@ -39,7 +39,7 @@ export class TournamentClassDialogComponent {
     this.isInitialized = true;
   }
 
-  protected save(): void {
+  protected applyChanges(): void {
     this.nameInvalid = false;
 
     const trimmedName = this.name.trim();

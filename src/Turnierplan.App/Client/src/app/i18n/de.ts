@@ -72,6 +72,7 @@ export const de = {
       Done: 'Fertig',
       Change: 'Ändern',
       Delete: 'Löschen',
+      Apply: 'Übernehmen',
       BackToLandingPage: 'Startseite',
       IllustrationAlt: 'Eine Illustration, welche "{{description}}" symbolisiert.',
       CopyToClipboard: 'In die Zwischenablage kopieren',
