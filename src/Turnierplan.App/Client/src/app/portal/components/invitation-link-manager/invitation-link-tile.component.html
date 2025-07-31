@@ -201,7 +201,9 @@
     <h4 class="modal-title" [translate]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.Title'"></h4>
     <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
   </div>
-  <div class="modal-body d-flex flex-column">todo</div>
+  <div class="modal-body d-flex flex-column">
+    <form [formGroup]="editPropertiesForm">TODO</form>
+  </div>
   <div class="modal-footer">
     <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
     <tp-action-button [type]="'success'" [title]="'Portal.General.Apply'" (click)="modal.close()" />
@@ -213,7 +215,53 @@
     <h4 class="modal-title" [translate]="'Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.Title'"></h4>
     <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
   </div>
-  <div class="modal-body d-flex flex-column">todo</div>
+  <div class="modal-body d-flex flex-column">
+    <form [formGroup]="editEntryForm">
+      <div>
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="allowNewRegistrations"
+            formControlName="allowNewRegistrations" />
+          <label
+            class="form-check-label"
+            for="allowNewRegistrations"
+            translate="Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.AllowNewRegistrations"></label>
+        </div>
+      </div>
+      <hr class="my-3" />
+      @let limitTeamsPerRegistrationControl = editEntryForm.get('limitTeamsPerRegistration')!;
+      <div>
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="limitTeamsPerRegistration"
+            formControlName="limitTeamsPerRegistration" />
+          <label
+            class="form-check-label"
+            for="limitTeamsPerRegistration"
+            translate="Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.LimitTeamsPerRegistration"></label>
+        </div>
+      </div>
+      @if (limitTeamsPerRegistrationControl.value) {
+        <div class="mt-3">
+          @let control = editEntryForm.get('maxTeamsPerRegistration')!;
+          <input
+            id="maxTeamsPerRegistration"
+            type="number"
+            class="form-control"
+            [required]="true"
+            formControlName="maxTeamsPerRegistration"
+            [ngClass]="control.invalid ? 'is-invalid' : ''"
+            [attr.aria-labelledby]="'Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.MaxTeamsPerRegistration' | translate" />
+        </div>
+      }
+    </form>
+  </div>
   <div class="modal-footer">
     <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
     <tp-action-button [type]="'success'" [title]="'Portal.General.Apply'" (click)="modal.close()" />

@@ -915,7 +915,10 @@ export const de = {
           NumberOfTeams: 'aktuelle Mannschaften'
         },
         EditEntryDialog: {
-          Title: 'Turnier-Eintrag bearbeiten'
+          Title: 'Turnier-Eintrag bearbeiten',
+          AllowNewRegistrations: 'Neue Anmeldungen erlauben',
+          LimitTeamsPerRegistration: 'max. Anzahl Mannschaften pro Anmeldung begrenzen',
+          MaxTeamsPerRegistration: 'Anzahl:'
         },
         AddTournament: 'Turnier hinzufügen',
         AllClassesAdded: 'In diesem Link sind alle Turnierklassen enthalten',

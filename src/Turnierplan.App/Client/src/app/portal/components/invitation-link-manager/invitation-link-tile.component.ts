@@ -45,7 +45,7 @@ export class InvitationLinkTileComponent {
   protected editEntryForm = new FormGroup({
     allowNewRegistrations: new FormControl<boolean>(false, { nonNullable: true }),
     limitTeamsPerRegistration: new FormControl<boolean>(false, { nonNullable: true }),
-    maxTeamsPerRegistration: new FormControl<number>(0, { nonNullable: true })
+    maxTeamsPerRegistration: new FormControl<number>(0, { nonNullable: true, validators: Validators.min(1) })
   });
 
   constructor(
@@ -147,7 +147,7 @@ export class InvitationLinkTileComponent {
     this.editEntryForm.patchValue({
       allowNewRegistrations: entry.allowNewRegistrations,
       limitTeamsPerRegistration: !!entry.maxTeamsPerRegistration,
-      maxTeamsPerRegistration: entry.maxTeamsPerRegistration ?? 0
+      maxTeamsPerRegistration: entry.maxTeamsPerRegistration ?? 1
     });
 
     this.editEntryForm.markAsPristine({ onlySelf: false });
