@@ -202,7 +202,70 @@
     <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
   </div>
   <div class="modal-body d-flex flex-column">
-    <form [formGroup]="editPropertiesForm">TODO</form>
+    <form [formGroup]="editPropertiesForm">
+      <div class="mb-3">
+        <div>
+          <label for="name" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Name"></label>
+          <tp-tooltip-icon
+            [icon]="'info-circle'"
+            [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.InternalInformation'" />
+        </div>
+        <input id="name" type="text" class="form-control" formControlName="name" />
+      </div>
+
+      <div class="mb-3">
+        <div>
+          <label for="name" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ColorCode"></label>
+          <tp-tooltip-icon
+            [icon]="'info-circle'"
+            [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.InternalInformation'" />
+        </div>
+        <input id="colorCode" type="color" class="form-control form-control-color" formControlName="colorCode" />
+      </div>
+
+      <!-- TODO hasValidUntilDate -->
+      <!-- TODO validUntil -->
+
+      <hr class="my-3" />
+
+      <tp-alert
+        [icon]="'info-circle'"
+        [type]="'primary'"
+        [text]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.PublicInformation'" />
+
+      <div class="my-3">
+        <label for="title" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Title"></label>
+        <input id="title" type="text" class="form-control" formControlName="title" />
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Description"></label>
+        <textarea id="description" rows="4" class="form-control" formControlName="description"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="contactEmail" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactEmail"></label>
+        <input id="contactEmail" type="text" class="form-control" formControlName="contactEmail" />
+      </div>
+
+      <div class="mb-3">
+        <label for="contactPerson" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactPerson"></label>
+        <input id="contactPerson" type="text" class="form-control" formControlName="contactPerson" />
+      </div>
+
+      <div class="mb-3">
+        <label
+          for="contactTelephone"
+          class="form-label"
+          translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactTelephone"></label>
+        <input id="contactTelephone" type="text" class="form-control" formControlName="contactTelephone" />
+      </div>
+
+      <div>
+        <!-- TODO externalLinks -->
+        TODO (ext. links)
+      </div>
+    </form>
   </div>
   <div class="modal-footer">
     <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
@@ -231,8 +294,11 @@
             translate="Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.AllowNewRegistrations"></label>
         </div>
       </div>
+
       <hr class="my-3" />
+
       @let limitTeamsPerRegistrationControl = editEntryForm.get('limitTeamsPerRegistration')!;
+
       <div>
         <div class="form-check form-switch">
           <input
@@ -247,6 +313,7 @@
             translate="Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.LimitTeamsPerRegistration"></label>
         </div>
       </div>
+
       @if (limitTeamsPerRegistrationControl.value) {
         <div class="mt-3">
           @let control = editEntryForm.get('maxTeamsPerRegistration')!;

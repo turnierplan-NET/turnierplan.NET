@@ -29,7 +29,7 @@ export class InvitationLinkTileComponent {
     name: new FormControl<string>('', { nonNullable: true, validators: Validators.required }),
     colorCode: new FormControl<string>('', {
       nonNullable: true,
-      validators: Validators.compose([Validators.required, Validators.pattern(/^[0-9A-Fa-f]{6}$/)])
+      validators: Validators.compose([Validators.required, Validators.pattern(/^#[0-9A-Fa-f]{6}$/)])
     }),
     title: new FormControl<string>(''),
     description: new FormControl<string>(''),
@@ -85,7 +85,7 @@ export class InvitationLinkTileComponent {
 
   protected showEditPropertiesDialog(template: TemplateRef<unknown>): void {
     this.editPropertiesForm.patchValue({
-      colorCode: this._invitationLink.colorCode,
+      colorCode: `#${this._invitationLink.colorCode}`,
       name: this._invitationLink.name,
       title: this._invitationLink.title ?? '',
       description: this._invitationLink.description ?? '',
@@ -123,7 +123,7 @@ export class InvitationLinkTileComponent {
           };
 
           invitationLink.name = value.name;
-          invitationLink.colorCode = value.colorCode;
+          invitationLink.colorCode = value.colorCode.substring(1); // skip the '#' character
 
           invitationLink.title = toNullIfEmpty(value.title);
           invitationLink.description = toNullIfEmpty(value.description);

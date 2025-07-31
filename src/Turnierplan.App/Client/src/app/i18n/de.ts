@@ -890,6 +890,8 @@ export const de = {
       NoInvitationLinks: 'Es sind aktuell keine Anmeldelinks vorhanden.',
       InvitationLink: {
         Properties: {
+          Name: 'Name:',
+          ColorCode: 'Farbcode:',
           Title: 'Titel:',
           Description: 'Beschreibung:',
           ValidUntil: 'Anmeldeschluss:',
@@ -901,7 +903,9 @@ export const de = {
         },
         EditProperties: 'Informationen ändern',
         EditPropertiesDialog: {
-          Title: 'Anmeldelink bearbeiten'
+          Title: 'Anmeldelink bearbeiten',
+          InternalInformation: 'Nur für angemeldete Benutzer sichtbar',
+          PublicInformation: 'Die nachfolgenden Textfelder sind öffentlich sichtbar'
         },
         Tournaments: {
           NoTournaments: 'Diesem Einladungslink sind aktuell keine Turniere zugeordnet.',
