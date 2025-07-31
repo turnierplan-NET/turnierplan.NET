@@ -261,6 +261,4 @@ export class InvitationLinkTileComponent {
       this.tournamentClassesToAdd = [];
     }
   }
-
-  protected readonly TemplateRef = TemplateRef;
 }
