@@ -893,6 +893,7 @@ export const de = {
           Title: 'Titel:',
           Description: 'Beschreibung:',
           ValidUntil: 'Anmeldeschluss:',
+          ExternalLinks: 'Weitere Links:',
           ContactPerson: 'Kontaktperson:',
           ContactEmail: 'Kontakt E-Mail:',
           ContactTelephone: 'Kontakt-Telefon:',

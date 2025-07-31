@@ -27,6 +27,15 @@
             } @else {
               <div class="mb-2">-</div>
             }
+            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ExternalLinks"></div>
+            @for (ext of invitationLink.externalLinks; track ext; let isLast = $last) {
+              <div [ngClass]="{ 'mb-2': isLast }" class="d-flex flex-row align-items-center gap-1">
+                <i class="bi bi-box-arrow-up-right" style="font-size: 0.9em"></i>
+                <a href="{{ ext.url }}" class="tp-text-ellipsis" target="_blank" [title]="ext.name">{{ ext.name }}</a>
+              </div>
+            } @empty {
+              <div class="mb-2">-</div>
+            }
             @if (writeAllowed) {
               <tp-action-button
                 class="mt-3"

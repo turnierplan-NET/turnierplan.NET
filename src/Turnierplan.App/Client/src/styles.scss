@@ -21,6 +21,12 @@ body {
   white-space: pre-wrap;
 }
 
+.tp-text-ellipsis {
+  white-space:nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .tp-cursor-default {
   cursor: default;
 }
