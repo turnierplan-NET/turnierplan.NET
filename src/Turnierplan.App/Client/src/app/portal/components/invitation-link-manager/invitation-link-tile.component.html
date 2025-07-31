@@ -197,29 +197,25 @@
 </div>
 
 <ng-template #editPropertiesDialog let-modal>
-  @if (editPropertiesDialogState) {
-    <div class="modal-header">
-      <h4 class="modal-title" [translate]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.Title'"></h4>
-      <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
-    </div>
-    <div class="modal-body d-flex flex-column">todo</div>
-    <div class="modal-footer">
-      <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
-      <tp-action-button [type]="'success'" [title]="'Portal.General.Apply'" (click)="modal.close()" />
-    </div>
-  }
+  <div class="modal-header">
+    <h4 class="modal-title" [translate]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.Title'"></h4>
+    <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
+  </div>
+  <div class="modal-body d-flex flex-column">todo</div>
+  <div class="modal-footer">
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
+    <tp-action-button [type]="'success'" [title]="'Portal.General.Apply'" (click)="modal.close()" />
+  </div>
 </ng-template>
 
 <ng-template #editEntryDialog let-modal>
-  @if (editEntryDialogState) {
-    <div class="modal-header">
-      <h4 class="modal-title" [translate]="'Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.Title'"></h4>
-      <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
-    </div>
-    <div class="modal-body d-flex flex-column">todo</div>
-    <div class="modal-footer">
-      <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
-      <tp-action-button [type]="'success'" [title]="'Portal.General.Apply'" (click)="modal.close()" />
-    </div>
-  }
+  <div class="modal-header">
+    <h4 class="modal-title" [translate]="'Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.Title'"></h4>
+    <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
+  </div>
+  <div class="modal-body d-flex flex-column">todo</div>
+  <div class="modal-footer">
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
+    <tp-action-button [type]="'success'" [title]="'Portal.General.Apply'" (click)="modal.close()" />
+  </div>
 </ng-template>

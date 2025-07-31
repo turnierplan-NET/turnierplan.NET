@@ -4,28 +4,7 @@ import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { UpdatePlanningRealmFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-type EditPropertiesDialogState = {
-  colorCode: string;
-  contactEmail: string;
-  contactPerson: string;
-  contactTelephone: string;
-  description: string;
-  externalLinks: { name: string; url: string }[];
-  name: string;
-  title: string;
-  hasValidUntilDate: boolean;
-  validUntil: string;
-};
-
-type EditEntryDialogState = {
-  // Cannot be changed using dialog but is required for saving changes
-  tournamentClassId: number;
-
-  allowNewRegistrations: boolean;
-  limitTeamsPerRegistration: boolean;
-  maxTeamsPerRegistration: number;
-};
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   standalone: false,
@@ -46,8 +25,28 @@ export class InvitationLinkTileComponent {
   protected readonly ImageType = ImageType;
 
   protected tournamentClassesToAdd: TournamentClassDto[] = [];
-  protected editPropertiesDialogState?: EditPropertiesDialogState;
-  protected editEntryDialogState?: EditEntryDialogState;
+  protected editPropertiesForm = new FormGroup({
+    name: new FormControl<string>('', { nonNullable: true, validators: Validators.required }),
+    colorCode: new FormControl<string>('', {
+      nonNullable: true,
+      validators: Validators.compose([Validators.required, Validators.pattern(/^[0-9A-Fa-f]{6}$/)])
+    }),
+    title: new FormControl<string>(''),
+    description: new FormControl<string>(''),
+    contactEmail: new FormControl<string>(''),
+    contactPerson: new FormControl<string>(''),
+    contactTelephone: new FormControl<string>(''),
+    externalLinks: new FormArray<FormGroup<{ name: FormControl<string>; url: FormControl<string> }>>([]),
+    hasValidUntilDate: new FormControl<boolean>(false),
+    validUntil: new FormControl<string>('')
+  });
+
+  protected editEntryTournamentClassId: number = 0;
+  protected editEntryForm = new FormGroup({
+    allowNewRegistrations: new FormControl<boolean>(false, { nonNullable: true }),
+    limitTeamsPerRegistration: new FormControl<boolean>(false, { nonNullable: true }),
+    maxTeamsPerRegistration: new FormControl<number>(0, { nonNullable: true })
+  });
 
   constructor(
     protected readonly authorizationService: AuthorizationService,
@@ -85,7 +84,7 @@ export class InvitationLinkTileComponent {
   }
 
   protected showEditPropertiesDialog(template: TemplateRef<unknown>): void {
-    this.editPropertiesDialogState = {
+    this.editPropertiesForm.patchValue({
       colorCode: this._invitationLink.colorCode,
       name: this._invitationLink.name,
       title: this._invitationLink.title ?? '',
@@ -96,7 +95,9 @@ export class InvitationLinkTileComponent {
       externalLinks: this._invitationLink.externalLinks,
       hasValidUntilDate: !!this._invitationLink.validUntil,
       validUntil: this._invitationLink.validUntil ?? ''
-    };
+    });
+
+    this.editPropertiesForm.markAsPristine({ onlySelf: false });
 
     const ref = this.modalService.open(template, {
       size: 'md',
@@ -107,25 +108,30 @@ export class InvitationLinkTileComponent {
     ref.closed.subscribe({
       next: () => {
         this.updateInvitationLink((invitationLink) => {
-          if (!this.editPropertiesDialogState || this.editPropertiesDialogState.name.trim().length === 0) {
+          if (this.editPropertiesForm.invalid || this.editPropertiesForm.pristine) {
             return false;
           }
 
-          const toNullIfEmpty = (input: string): string | null => {
+          const value = this.editPropertiesForm.getRawValue();
+
+          const toNullIfEmpty = (input: string | null): string | null => {
+            if (input === null) {
+              return null;
+            }
             input = input.trim();
             return input.length === 0 ? null : input;
           };
 
-          invitationLink.name = this.editPropertiesDialogState.name;
-          invitationLink.colorCode = this.editPropertiesDialogState.colorCode;
+          invitationLink.name = value.name;
+          invitationLink.colorCode = value.colorCode;
 
-          invitationLink.title = toNullIfEmpty(this.editPropertiesDialogState.title);
-          invitationLink.description = toNullIfEmpty(this.editPropertiesDialogState.description);
-          invitationLink.contactEmail = toNullIfEmpty(this.editPropertiesDialogState.contactEmail);
-          invitationLink.contactPerson = toNullIfEmpty(this.editPropertiesDialogState.contactPerson);
-          invitationLink.contactTelephone = toNullIfEmpty(this.editPropertiesDialogState.contactTelephone);
+          invitationLink.title = toNullIfEmpty(value.title);
+          invitationLink.description = toNullIfEmpty(value.description);
+          invitationLink.contactEmail = toNullIfEmpty(value.contactEmail);
+          invitationLink.contactPerson = toNullIfEmpty(value.contactPerson);
+          invitationLink.contactTelephone = toNullIfEmpty(value.contactTelephone);
 
-          invitationLink.externalLinks = this.editPropertiesDialogState.externalLinks
+          invitationLink.externalLinks = value.externalLinks
             .filter((ext) => ext.name.trim().length > 0 && ext.url.trim().length > 0)
             .map((ext) => ({ ...ext }));
 
@@ -136,12 +142,15 @@ export class InvitationLinkTileComponent {
   }
 
   protected showEditEntryDialog(entry: InvitationLinkEntryDto, template: TemplateRef<unknown>): void {
-    this.editEntryDialogState = {
-      tournamentClassId: entry.tournamentClassId,
+    this.editEntryTournamentClassId = entry.tournamentClassId;
+
+    this.editEntryForm.patchValue({
       allowNewRegistrations: entry.allowNewRegistrations,
       limitTeamsPerRegistration: !!entry.maxTeamsPerRegistration,
       maxTeamsPerRegistration: entry.maxTeamsPerRegistration ?? 0
-    };
+    });
+
+    this.editEntryForm.markAsPristine({ onlySelf: false });
 
     const ref = this.modalService.open(template, {
       size: 'md',
@@ -152,21 +161,20 @@ export class InvitationLinkTileComponent {
     ref.closed.subscribe({
       next: () => {
         this.updateInvitationLink((invitationLink) => {
-          if (!this.editEntryDialogState) {
+          if (this.editEntryForm.invalid || this.editEntryForm.pristine) {
             return false;
           }
 
-          const classId = this.editEntryDialogState.tournamentClassId;
-          const entry = invitationLink.entries.find((x) => x.tournamentClassId === classId);
+          const entry = invitationLink.entries.find((x) => x.tournamentClassId === this.editEntryTournamentClassId);
 
           if (!entry) {
             return false;
           }
 
-          entry.allowNewRegistrations = this.editEntryDialogState.allowNewRegistrations;
-          entry.maxTeamsPerRegistration = this.editEntryDialogState.limitTeamsPerRegistration
-            ? this.editEntryDialogState.maxTeamsPerRegistration
-            : null;
+          const value = this.editEntryForm.getRawValue();
+
+          entry.allowNewRegistrations = value.allowNewRegistrations;
+          entry.maxTeamsPerRegistration = value.limitTeamsPerRegistration ? value.maxTeamsPerRegistration : null;
 
           return true;
         });
