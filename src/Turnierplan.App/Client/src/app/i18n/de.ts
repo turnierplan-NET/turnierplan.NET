@@ -899,7 +899,10 @@ export const de = {
           ContactTelephone: 'Kontakt-Telefon:',
           Logos: 'Logos:'
         },
-        EditProperties: 'Informationen Bearbeiten',
+        EditProperties: 'Informationen ändern',
+        EditPropertiesDialog: {
+          Title: 'Anmeldelink bearbeiten'
+        },
         Tournaments: {
           NoTournaments: 'Diesem Einladungslink sind aktuell keine Turniere zugeordnet.',
           Tournament: 'Turnier',
@@ -910,6 +913,9 @@ export const de = {
           MaxTeamsPerRegistration: 'Limit pro Anmeldung',
           MaxTeamsPerRegistrationTooltip: 'Wie viele Mannschaften können mit einer Anmeldung angemeldet werden?',
           NumberOfTeams: 'aktuelle Mannschaften'
+        },
+        EditEntryDialog: {
+          Title: 'Turnier-Eintrag bearbeiten'
         },
         AddTournament: 'Turnier hinzufügen',
         AllClassesAdded: 'In diesem Link sind alle Turnierklassen enthalten',

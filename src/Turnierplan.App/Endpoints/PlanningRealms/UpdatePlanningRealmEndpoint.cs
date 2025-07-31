@@ -429,6 +429,26 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
                     link.RuleFor(x => x.Name)
                         .NotEmpty();
 
+                    link.RuleFor(x => x.Title)
+                        .NotEmpty()
+                        .When(x => x.Title is not null);
+
+                    link.RuleFor(x => x.Description)
+                        .NotEmpty()
+                        .When(x => x.Description is not null);
+
+                    link.RuleFor(x => x.ContactPerson)
+                        .NotEmpty()
+                        .When(x => x.ContactPerson is not null);
+
+                    link.RuleFor(x => x.ContactEmail)
+                        .NotEmpty()
+                        .When(x => x.ContactEmail is not null);
+
+                    link.RuleFor(x => x.ContactTelephone)
+                        .NotEmpty()
+                        .When(x => x.ContactTelephone is not null);
+
                     link.RuleFor(x => x.ColorCode)
                         .Length(6)
                         .Must(x => x.All(char.IsAsciiHexDigit))
@@ -441,6 +461,14 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
                             return unique.Count() == entries.Length;
                         })
                         .WithMessage("Invitation link entries must only contain unique tournament classes.");
+
+                    link.RuleForEach(x => x.Entries)
+                        .ChildRules(entry =>
+                        {
+                            entry.RuleFor(x => x.MaxTeamsPerRegistration)
+                                .GreaterThanOrEqualTo(1)
+                                .When(x => x.MaxTeamsPerRegistration.HasValue);
+                        });
 
                     link.RuleForEach(x => x.ExternalLinks)
                         .ChildRules(externalLink =>
