@@ -26,7 +26,6 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         IPlanningRealmRepository planningRealmRepository,
         IAccessValidator accessValidator,
         IImageRepository imageRepository,
-        IMapper mapper,
         CancellationToken cancellationToken)
     {
         if (!Validator.Instance.ValidateAndGetResult(request, out var result))

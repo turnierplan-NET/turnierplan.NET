@@ -19,7 +19,7 @@ export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealm
   templateUrl: './view-planning-realm.component.html'
 })
 export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardChangesDetector {
-  private static DefaultInvitationLinkColorCodes: string[] = [
+  private static readonly DefaultInvitationLinkColorCodes: string[] = [
     'ff9900',
     'ff5500',
     'bb5500',
@@ -203,7 +203,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       tournamentClasses: this.planningRealm.tournamentClasses.map((x) => ({
         id: x.id < 0 ? null : x.id,
         name: x.name,
-        maxTeamCount: x.maxTeamCount === null ? undefined : x.maxTeamCount
+        maxTeamCount: x.maxTeamCount ?? undefined
       })),
       invitationLinks: this.planningRealm.invitationLinks.map((x) => ({
         id: x.id < 0 ? null : x.id,
