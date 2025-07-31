@@ -5,6 +5,7 @@ import { AuthorizationService } from '../../../core/services/authorization.servi
 import { UpdatePlanningRealmFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { formatDate } from '@angular/common';
 
 @Component({
   standalone: false,
@@ -23,6 +24,7 @@ export class InvitationLinkTileComponent {
 
   protected readonly Actions = Actions;
   protected readonly ImageType = ImageType;
+  protected invitationLinkExpired = false;
 
   protected tournamentClassesToAdd: TournamentClassDto[] = [];
   protected editPropertiesForm = new FormGroup({
@@ -37,8 +39,8 @@ export class InvitationLinkTileComponent {
     contactPerson: new FormControl<string>(''),
     contactTelephone: new FormControl<string>(''),
     externalLinks: new FormArray<FormGroup<{ name: FormControl<string>; url: FormControl<string> }>>([]),
-    hasValidUntilDate: new FormControl<boolean>(false),
-    validUntil: new FormControl<string>('')
+    hasValidUntilDate: new FormControl<boolean>(false, { nonNullable: true }),
+    validUntil: new FormControl<string>('', { nonNullable: true })
   });
 
   protected editEntryTournamentClassId: number = 0;
@@ -56,6 +58,7 @@ export class InvitationLinkTileComponent {
   @Input()
   public set invitationLink(value: InvitationLinkDto) {
     this._invitationLink = value;
+    this.determineExpired();
     this.determineTournamentClassesToAdd();
   }
 
@@ -93,8 +96,8 @@ export class InvitationLinkTileComponent {
       contactPerson: this._invitationLink.contactPerson ?? '',
       contactTelephone: this._invitationLink.contactTelephone ?? '',
       externalLinks: this._invitationLink.externalLinks,
-      hasValidUntilDate: !!this._invitationLink.validUntil,
-      validUntil: this._invitationLink.validUntil ?? ''
+      hasValidUntilDate: this._invitationLink.validUntil !== null,
+      validUntil: formatDate(this._invitationLink.validUntil ? this._invitationLink.validUntil : new Date(), 'yyyy-MM-ddTHH:mm', 'de')
     });
 
     this.editPropertiesForm.markAsPristine({ onlySelf: false });
@@ -131,12 +134,16 @@ export class InvitationLinkTileComponent {
           invitationLink.contactPerson = toNullIfEmpty(value.contactPerson);
           invitationLink.contactTelephone = toNullIfEmpty(value.contactTelephone);
 
+          invitationLink.validUntil = value.hasValidUntilDate ? new Date(value.validUntil).toISOString() : null;
+
           invitationLink.externalLinks = value.externalLinks
             .filter((ext) => ext.name.trim().length > 0 && ext.url.trim().length > 0)
             .map((ext) => ({ ...ext }));
 
           return true;
         });
+
+        this.determineExpired();
       }
     });
   }
@@ -258,6 +265,10 @@ export class InvitationLinkTileComponent {
 
       return updateFunc(invitationLink);
     });
+  }
+
+  private determineExpired(): void {
+    this.invitationLinkExpired = this._invitationLink.validUntil !== null && new Date(this._invitationLink.validUntil) < new Date();
   }
 
   private determineTournamentClassesToAdd(): void {

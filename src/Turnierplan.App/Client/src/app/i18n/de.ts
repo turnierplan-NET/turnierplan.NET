@@ -901,11 +901,13 @@ export const de = {
           ContactTelephone: 'Kontakt-Telefon:',
           Logos: 'Logos:'
         },
+        ExpiredTooltip: 'Der Anmeldeschluss liegt in der Vergangenheit. Es sind aktuell keine Neuanmeldungen möglich.',
         EditProperties: 'Informationen ändern',
         EditPropertiesDialog: {
           Title: 'Anmeldelink bearbeiten',
           InternalInformation: 'Nur für angemeldete Benutzer sichtbar',
-          PublicInformation: 'Die nachfolgenden Textfelder sind öffentlich sichtbar'
+          PublicInformation: 'Die nachfolgenden Textfelder sind öffentlich sichtbar',
+          HasValidUntilDate: 'Anmeldeschluss festlegen'
         },
         Tournaments: {
           NoTournaments: 'Diesem Einladungslink sind aktuell keine Turniere zugeordnet.',

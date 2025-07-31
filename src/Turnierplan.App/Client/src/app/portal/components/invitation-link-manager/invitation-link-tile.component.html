@@ -23,7 +23,15 @@
             <div class="mb-2">{{ invitationLink.description ?? '-' }}</div>
             <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ValidUntil"></div>
             @if (invitationLink.validUntil) {
-              <div class="mb-2">{{ invitationLink.validUntil | translateDate: 'medium' }}</div>
+              <div class="mb-2">
+                <span>{{ invitationLink.validUntil | translateDate: 'medium' }}</span>
+                @if (invitationLinkExpired) {
+                  <tp-tooltip-icon
+                    [icon]="'clock-fill'"
+                    [iconClass]="'text-danger'"
+                    [ngbTooltip]="'Portal.ViewPlanningRealm.InvitationLink.ExpiredTooltip' | translate" />
+                }
+              </div>
             } @else {
               <div class="mb-2">-</div>
             }
@@ -213,7 +221,7 @@
         <input id="name" type="text" class="form-control" formControlName="name" />
       </div>
 
-      <div class="mb-3">
+      <div>
         <div>
           <label for="name" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ColorCode"></label>
           <tp-tooltip-icon
@@ -223,8 +231,32 @@
         <input id="colorCode" type="color" class="form-control form-control-color" formControlName="colorCode" />
       </div>
 
-      <!-- TODO hasValidUntilDate -->
-      <!-- TODO validUntil -->
+      <hr class="my-3" />
+
+      @let hasValidUntilDateControl = editPropertiesForm.get('hasValidUntilDate')!;
+
+      <div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="hasValidUntilDate" formControlName="hasValidUntilDate" />
+          <label
+            class="form-check-label"
+            for="hasValidUntilDate"
+            translate="Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.HasValidUntilDate"></label>
+        </div>
+      </div>
+
+      @if (hasValidUntilDateControl.value) {
+        <div class="mt-3">
+          @let control = editPropertiesForm.get('validUntil')!;
+          <input
+            id="maxTeamsPerRegistration"
+            type="datetime-local"
+            class="form-control"
+            formControlName="validUntil"
+            [ngClass]="control.invalid ? 'is-invalid' : ''"
+            [attr.aria-labelledby]="'Portal.ViewPlanningRealm.InvitationLink.Properties.ValidUntil' | translate" />
+        </div>
+      }
 
       <hr class="my-3" />
 
