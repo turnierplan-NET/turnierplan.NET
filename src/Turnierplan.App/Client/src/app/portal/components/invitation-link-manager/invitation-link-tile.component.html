@@ -116,9 +116,13 @@
               <td class="align-middle">{{ tournamentClass.name }}</td>
               <td class="align-middle">
                 @if (entry.allowNewRegistrations) {
-                  <i class="text-success bi bi-check-circle-fill"></i>
+                  <i
+                    class="text-success bi bi-check-circle-fill"
+                    [ngbTooltip]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.ActiveTooltip' | translate"></i>
                 } @else {
-                  <i class="text-secondary bi bi-pause-circle"></i>
+                  <i
+                    class="text-secondary bi bi-pause-circle"
+                    [ngbTooltip]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.InactiveTooltip' | translate"></i>
                 }
               </td>
               <td class="align-middle">

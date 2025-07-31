@@ -904,6 +904,8 @@ export const de = {
           NoTournaments: 'Diesem Einladungslink sind aktuell keine Turniere zugeordnet.',
           Tournament: 'Turnier',
           AllowNewRegistrations: 'Aktiv',
+          ActiveTooltip: 'Es können Mannschaften für dieses Turnier angemeldet werden.',
+          InactiveTooltip: 'Es können derzeit keine weiteren Mannschaften für dieses Turnier angemeldet werden.',
           AllowNewRegistrationsTooltip: 'Sind aktuell weitere Anmeldungen möglich?',
           MaxTeamsPerRegistration: 'Limit pro Anmeldung',
           MaxTeamsPerRegistrationTooltip: 'Wie viele Mannschaften können mit einer Anmeldung angemeldet werden?',
