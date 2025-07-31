@@ -80,7 +80,12 @@ export class InvitationLinkTileComponent {
 
   protected addTournamentClass(id: number): void {
     this.updateInvitationLink((invitationLink) => {
-      invitationLink.entries.push({ tournamentClassId: id, allowNewRegistrations: true, maxTeamsPerRegistration: null, numberOfTeams: 0 });
+      invitationLink.entries.push({
+        tournamentClassId: id,
+        allowNewRegistrations: true,
+        maxTeamsPerRegistration: null,
+        numberOfTeams: -1 // This is displayed in the HTML as a '?'
+      });
     });
     this.determineTournamentClassesToAdd();
   }

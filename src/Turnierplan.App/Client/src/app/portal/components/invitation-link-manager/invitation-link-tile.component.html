@@ -132,7 +132,14 @@
                   &infin;
                 }
               </td>
-              <td>{{ entry.numberOfTeams }}</td>
+              <td>
+                @if (entry.numberOfTeams === -1) {
+                  <!-- This is the case for newly added tournament classes which have not been saved yet -->
+                  <span>-</span>
+                } @else {
+                  <span>{{ entry.numberOfTeams }}</span>
+                }
+              </td>
               @if (writeAllowed) {
                 <td class="text-nowrap">
                   <tp-action-button [type]="'outline-secondary'" [icon]="'pencil'" [mode]="'IconOnly'" />
