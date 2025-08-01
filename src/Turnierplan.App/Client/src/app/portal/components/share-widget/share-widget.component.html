@@ -3,7 +3,7 @@
 <div class="mb-3" [translate]="translationKey + '.Link'"></div>
 
 <div [ngClass]="{ 'mb-3': showQrCode || viewsCounter !== undefined }">
-  <tp-share-link [resourceUrl]="resourceUrl" />
+  <tp-share-link [resourcePath]="resourcePath" #shareLink />
 </div>
 
 @if (showQrCode || viewsCounter !== undefined) {
@@ -15,7 +15,7 @@
         <div class="d-flex flex-row">
           <div class="d-flex flex-column align-items-center">
             <qrcode
-              [qrdata]="resourceUrl"
+              [qrdata]="shareLink.resourceUrl"
               [elementType]="'canvas'"
               [errorCorrectionLevel]="'M'"
               [margin]="1"
