@@ -907,7 +907,10 @@ export const de = {
           Title: 'Anmeldelink bearbeiten',
           InternalInformation: 'Nur für angemeldete Benutzer sichtbar',
           PublicInformation: 'Die nachfolgenden Textfelder sind öffentlich sichtbar',
-          HasValidUntilDate: 'Anmeldeschluss festlegen'
+          HasValidUntilDate: 'Anmeldeschluss festlegen',
+          NoExternalLinks: 'Keine Links vorhanden',
+          ExternalLinkName: 'Anzeigename',
+          ExternalLinkUrl: 'URL'
         },
         Tournaments: {
           NoTournaments: 'Diesem Einladungslink sind aktuell keine Turniere zugeordnet.',

@@ -218,7 +218,8 @@
             [icon]="'info-circle'"
             [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.InternalInformation'" />
         </div>
-        <input id="name" type="text" class="form-control" formControlName="name" />
+        @let nameControl = editPropertiesForm.get('name')!;
+        <input id="name" type="text" class="form-control" [ngClass]="nameControl.invalid ? 'is-invalid' : ''" formControlName="name" />
       </div>
 
       <div>
@@ -293,15 +294,55 @@
         <input id="contactTelephone" type="text" class="form-control" formControlName="contactTelephone" />
       </div>
 
-      <div>
-        <!-- TODO externalLinks -->
-        TODO (ext. links)
+      <hr class="my-3" />
+
+      <div class="d-flex flex-row align-items-center mb-2">
+        <span class="flex-grow-1" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ExternalLinks"></span>
+        <tp-action-button [type]="'outline-primary'" [icon]="'plus-circle'" [mode]="'IconOnly'" (click)="addExternalLinkToForm()" />
       </div>
+
+      <ng-container formArrayName="externalLinks">
+        @for (externalLink of editPropertiesFormExternalLinks.controls; track externalLink; let i = $index) {
+          <div [formGroupName]="i" class="mt-1 d-flex flex-row align-items-center gap-2">
+            <div class="flex-grow-1 row g-1">
+              <div class="col-6">
+                @let linkNameControl = editPropertiesFormExternalLinks.get('' + i)!.get('name')!;
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  [ngClass]="linkNameControl.invalid && linkNameControl.touched ? 'is-invalid' : ''"
+                  formControlName="name"
+                  [placeholder]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.ExternalLinkName' | translate"
+                  [attr.aria-labelledby]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.ExternalLinkName' | translate" />
+              </div>
+              <div class="col-6">
+                @let linkUrlControl = editPropertiesFormExternalLinks.get('' + i)!.get('url')!;
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  [ngClass]="linkUrlControl.invalid && linkUrlControl.touched ? 'is-invalid' : ''"
+                  formControlName="url"
+                  [placeholder]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.ExternalLinkUrl' | translate"
+                  [attr.aria-labelledby]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.ExternalLinkUrl' | translate" />
+              </div>
+            </div>
+            <tp-delete-button [reducedFootprint]="true" (confirmed)="editPropertiesFormExternalLinks.removeAt(i)" />
+          </div>
+        } @empty {
+          <div
+            class="mt-1 text-secondary fst-italic"
+            translate="Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.NoExternalLinks"></div>
+        }
+      </ng-container>
     </form>
   </div>
   <div class="modal-footer">
     <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
-    <tp-action-button [type]="'success'" [title]="'Portal.General.Apply'" (click)="modal.close()" />
+    <tp-action-button
+      [type]="'success'"
+      [title]="'Portal.General.Apply'"
+      [disabled]="editPropertiesForm.invalid"
+      (click)="editPropertiesForm.valid && modal.close()" />
   </div>
 </ng-template>
 
@@ -363,6 +404,10 @@
   </div>
   <div class="modal-footer">
     <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
-    <tp-action-button [type]="'success'" [title]="'Portal.General.Apply'" (click)="modal.close()" />
+    <tp-action-button
+      [type]="'success'"
+      [title]="'Portal.General.Apply'"
+      [disabled]="editEntryForm.invalid"
+      (click)="editEntryForm.valid && modal.close()" />
   </div>
 </ng-template>

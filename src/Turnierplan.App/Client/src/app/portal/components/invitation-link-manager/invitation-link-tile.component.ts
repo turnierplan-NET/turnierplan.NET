@@ -76,6 +76,10 @@ export class InvitationLinkTileComponent {
     return this._planningRealm;
   }
 
+  protected get editPropertiesFormExternalLinks(): FormArray {
+    return this.editPropertiesForm.get('externalLinks')! as FormArray;
+  }
+
   protected findTournamentClassById(id: number): TournamentClassDto {
     const tournamentClass = this.planningRealm.tournamentClasses.find((x) => x.id === id);
 
@@ -95,10 +99,15 @@ export class InvitationLinkTileComponent {
       contactEmail: this._invitationLink.contactEmail ?? '',
       contactPerson: this._invitationLink.contactPerson ?? '',
       contactTelephone: this._invitationLink.contactTelephone ?? '',
-      externalLinks: this._invitationLink.externalLinks,
+      externalLinks: [],
       hasValidUntilDate: this._invitationLink.validUntil !== null,
       validUntil: formatDate(this._invitationLink.validUntil ? this._invitationLink.validUntil : new Date(), 'yyyy-MM-ddTHH:mm', 'de')
     });
+
+    this.editPropertiesFormExternalLinks.clear();
+    for (const externalLink of this._invitationLink.externalLinks) {
+      this.addExternalLinkToForm(externalLink.name, externalLink.url);
+    }
 
     this.editPropertiesForm.markAsPristine({ onlySelf: false });
 
@@ -146,6 +155,18 @@ export class InvitationLinkTileComponent {
         this.determineExpired();
       }
     });
+  }
+
+  protected addExternalLinkToForm(name: string = '', url: string = ''): void {
+    this.editPropertiesFormExternalLinks.push(
+      new FormGroup({
+        name: new FormControl<string>(name, { nonNullable: false, validators: Validators.required }),
+        url: new FormControl<string>(url, {
+          nonNullable: false,
+          validators: Validators.compose([Validators.required, Validators.pattern(/^https:\/\/(?:[A-Za-z0-9-]+\.)+[a-z]+(?:\/.*)?$/)])
+        })
+      })
+    );
   }
 
   protected showEditEntryDialog(entry: InvitationLinkEntryDto, template: TemplateRef<unknown>): void {
