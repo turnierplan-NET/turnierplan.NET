@@ -25,7 +25,7 @@ else
             <div style="background: #3c3c3c" class="py-2 text-center text-white fw-bold fs-5">
                 @invitationLink.Title
             </div>
-            <div class="bg-white pt-4 p-3 d-flex flex-column gap-2">
+            <div class="bg-white pt-4 p-3 d-flex flex-column gap-3">
                 @{
                     var hasAtLeastOneLogo = invitationLink.PrimaryLogo is not null || invitationLink.SecondaryLogo is not null;
                     var hasDescription = !string.IsNullOrWhiteSpace(invitationLink.Description);
@@ -58,7 +58,7 @@ else
                 
                 @if (hasAtLeastOneLogo || hasDescription)
                 {
-                    <hr class="my-3" />
+                    <hr class="my-0" />
                 }
 
                 @if (hasContactPerson || hasContactEmail || hasContactTelephone)
@@ -85,7 +85,7 @@ else
                         }
                     </div>
 
-                    <hr class="my-3" />
+                    <hr class="my-0" />
                 }
 
                 <div>
