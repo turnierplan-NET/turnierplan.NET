@@ -13,14 +13,14 @@
 @if (invitationLink is null)
 {
     <div class="container px-2 px-lg-5">
-        <div class="text-danger">
+        <div class="fw-bold text-danger">
             Der Link ist ungültig oder das gesuchte Formular existiert nicht.
         </div>
     </div>
 }
 else
 {
-    <div class="container px-0" style="max-width: 650px;">
+    <div class="container px-0" style="max-width: 650px;" id="mainContainer">
         <div class="mt-5 border shadow d-flex flex-column">
             <div style="background: #3c3c3c" class="py-2 text-center text-white fw-bold fs-5">
                 @invitationLink.Title
@@ -34,7 +34,7 @@ else
                     var hasContactEmail = !string.IsNullOrWhiteSpace(invitationLink.ContactEmail);
                     var hasContactTelephone = !string.IsNullOrWhiteSpace(invitationLink.ContactTelephone);
                 }
-                
+
                 @if (hasAtLeastOneLogo)
                 {
                     <div class="d-flex flex-row justify-content-evenly">
@@ -55,10 +55,10 @@ else
                         @invitationLink.Description
                     </div>
                 }
-                
+
                 @if (hasAtLeastOneLogo || hasDescription)
                 {
-                    <hr class="my-0" />
+                    <hr class="my-0"/>
                 }
 
                 @if (hasContactPerson || hasContactEmail || hasContactTelephone)
@@ -72,20 +72,20 @@ else
                         @if (hasContactEmail)
                         {
                             <div>
-                                <img src="./assets/envelope.svg" alt="EMail-Icon" class="me-1" />
+                                <img src="./assets/envelope.svg" alt="EMail-Icon" class="me-1"/>
                                 <span>@invitationLink.ContactEmail</span>
                             </div>
                         }
                         @if (hasContactTelephone)
                         {
                             <div>
-                                <img src="./assets/telephone.svg" alt="Telefon-Icon" class="me-1" />
+                                <img src="./assets/telephone.svg" alt="Telefon-Icon" class="me-1"/>
                                 <span>@invitationLink.ContactTelephone</span>
                             </div>
                         }
                     </div>
 
-                    <hr class="my-0" />
+                    <hr class="my-0"/>
                 }
 
                 <div>
@@ -94,4 +94,10 @@ else
             </div>
         </div>
     </div>
+
+    <script>
+        if (!('fetch' in window)) {
+            document.getElementById('mainContainer').innerHTML = '<div class="fw-bold text-danger">Bitte verwenden Sie einen modernen Browser, um das Formular auszufüllen.</div>';
+        }
+    </script>
 }
