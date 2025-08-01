@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { NgbPopover, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbPopover, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { DndDraggableDirective, DndDropzoneDirective, DndHandleDirective, DndPlaceholderRefDirective } from 'ngx-drag-drop';
@@ -87,8 +87,9 @@ import { IsActionAllowedDirective } from './directives/is-action-allowed/is-acti
 import { CreatePlanningRealmComponent } from './pages/create-planning-realm/create-planning-realm.component';
 import { ViewPlanningRealmComponent } from './pages/view-planning-realm/view-planning-realm.component';
 import { TournamentClassManagerComponent } from './components/tournament-class-manager/tournament-class-manager.component';
-import { InvitationLinkManagerComponent } from './components/invitation-link-manager/invitation-link-manager.component';
+import { InvitationLinkTileComponent } from './components/invitation-link-manager/invitation-link-tile.component';
 import { TournamentClassDialogComponent } from './components/tournament-class-dialog/tournament-class-dialog.component';
+import { UnsavedChangesAlertComponent } from './components/unsaved-changes-alert/unsaved-changes-alert.component';
 
 const routes: Routes = [
   {
@@ -135,7 +136,8 @@ const routes: Routes = [
       },
       {
         path: 'planning-realm/:id',
-        component: ViewPlanningRealmComponent
+        component: ViewPlanningRealmComponent,
+        canDeactivate: [discardChangesGuard]
       },
       {
         path: 'statistics/:id',
@@ -246,8 +248,9 @@ const routes: Routes = [
     CreatePlanningRealmComponent,
     ViewPlanningRealmComponent,
     TournamentClassManagerComponent,
-    InvitationLinkManagerComponent,
-    TournamentClassDialogComponent
+    InvitationLinkTileComponent,
+    TournamentClassDialogComponent,
+    UnsavedChangesAlertComponent
   ],
   imports: [
     CommonModule,
@@ -265,7 +268,11 @@ const routes: Routes = [
     TranslateModule,
     DndHandleDirective,
     BaseChartDirective,
-    QRCodeComponent
+    QRCodeComponent,
+    NgbDropdown,
+    NgbDropdownItem,
+    NgbDropdownMenu,
+    NgbDropdownToggle
   ],
   providers: [LocalStorageService, TitleService, provideCharts(withDefaultRegisterables())]
 })

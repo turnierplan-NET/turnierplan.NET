@@ -50,7 +50,7 @@
       <div class="d-flex flex-row align-items-center">
         <div class="flex-grow-1" style="line-height: 1.2em">
           @if (match.teamA.length > 0) {
-            <div [title]="match.teamA" style="max-width: 230px; text-overflow: ellipsis" class="text-nowrap overflow-hidden">
+            <div [title]="match.teamA" style="max-width: 230px" class="tp-text-ellipsis">
               {{ match.teamA }}
             </div>
           }
@@ -75,7 +75,7 @@
       <div class="d-flex flex-row align-items-center">
         <div class="flex-grow-1" style="line-height: 1.2em">
           @if (match.teamB.length > 0) {
-            <div [title]="match.teamB" style="max-width: 230px; text-overflow: ellipsis" class="text-nowrap overflow-hidden">
+            <div [title]="match.teamB" style="max-width: 230px" class="tp-text-ellipsis">
               {{ match.teamB }}
             </div>
           }

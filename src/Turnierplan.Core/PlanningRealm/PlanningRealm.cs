@@ -60,17 +60,29 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
         _roleAssignments.Remove(roleAssignment);
     }
 
-    public void AddTournamentClass(string name)
+    public TournamentClass AddTournamentClass(string name)
     {
         var tournamentClass = new TournamentClass(name);
-
         _tournamentClasses.Add(tournamentClass);
+
+        return tournamentClass;
     }
 
-    public void AddInvitationLink(string name)
+    public InvitationLink AddInvitationLink(string name)
     {
         var invitationLink = new InvitationLink(name);
-
         _invitationLinks.Add(invitationLink);
+
+        return invitationLink;
+    }
+
+    public void RemoveTournamentClass(TournamentClass tournamentClass)
+    {
+        _tournamentClasses.Remove(tournamentClass);
+    }
+
+    public void RemoveInvitationLink(InvitationLink invitationLink)
+    {
+        _invitationLinks.Remove(invitationLink);
     }
 }

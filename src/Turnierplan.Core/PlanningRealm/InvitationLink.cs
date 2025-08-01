@@ -1,3 +1,5 @@
+using Turnierplan.Core.Exceptions;
+using Turnierplan.Core.Image;
 using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.PlanningRealm;
@@ -25,12 +27,14 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
         Id = 0;
         PublicId = new PublicId.PublicId();
         Name = name;
-        ColorCode = GenerateRandomColorCode();
+        ColorCode = "aaaaaa";
     }
 
     public override long Id { get; protected set; }
 
     public PublicId.PublicId PublicId { get; }
+
+    public PlanningRealm PlanningRealm { get; internal set; } = null!;
 
     public string Name { get; set; }
 
@@ -40,7 +44,7 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 
     public string ColorCode { get; set; }
 
-    public DateTime? ValidUntil { get; }
+    public DateTime? ValidUntil { get; set; }
 
     public string? ContactPerson { get; set; }
 
@@ -56,19 +60,54 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 
     public IReadOnlyList<InvitationLinkEntry> Entries => _entries.AsReadOnly();
 
-    public sealed record ExternalLink(string Name, string Url);
-
-    private static string GenerateRandomColorCode()
+    public InvitationLinkEntry AddEntry(TournamentClass tournamentClass)
     {
-        string[] parts =
-        [
-            Random.Shared.Next(2) == 0 ? "ff" : "bb",
-            Random.Shared.Next(2) == 0 ? "55" : "99",
-            "00"
-        ];
+        if (!PlanningRealm._tournamentClasses.Contains(tournamentClass))
+        {
+            throw new TurnierplanException("Cannot add entry with a tournament class from another planning realm.");
+        }
 
-        Random.Shared.Shuffle(parts);
+        var invitationLinkEntry = new InvitationLinkEntry(tournamentClass);
+        _entries.Add(invitationLinkEntry);
 
-        return string.Join(string.Empty, parts);
+        return invitationLinkEntry;
     }
+
+    public void RemoveEntry(InvitationLinkEntry entry)
+    {
+        _entries.Remove(entry);
+    }
+
+    public void SetPrimaryLogo(Image.Image? primaryLogo)
+    {
+        CheckImageTypeAndSetImage(primaryLogo, () => PrimaryLogo = primaryLogo);
+    }
+
+    public void SetSecondaryLogo(Image.Image? secondaryLogo)
+    {
+        CheckImageTypeAndSetImage(secondaryLogo, () => SecondaryLogo = secondaryLogo);
+    }
+
+    private void CheckImageTypeAndSetImage(Image.Image? provided, Action apply)
+    {
+        if (provided is null)
+        {
+            apply();
+            return;
+        }
+
+        if (provided.Organization != PlanningRealm.Organization)
+        {
+            throw new TurnierplanException("Cannot assign an image from another organization.");
+        }
+
+        if (provided.Type != ImageType.SquareLargeLogo)
+        {
+            throw new TurnierplanException($"Cannot assign image because the image's type is not the expected type '{ImageType.SquareLargeLogo}'.");
+        }
+
+        apply();
+    }
+
+    public sealed record ExternalLink(string Name, string Url);
 }

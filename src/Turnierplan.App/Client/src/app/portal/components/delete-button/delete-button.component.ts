@@ -9,6 +9,9 @@ export class DeleteButtonComponent {
   @Input()
   public reducedFootprint: boolean = false;
 
+  @Input()
+  public showLabel: boolean = false;
+
   @Output()
   public confirmed = new EventEmitter<void>();
 }

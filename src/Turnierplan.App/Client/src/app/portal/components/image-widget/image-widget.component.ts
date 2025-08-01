@@ -2,7 +2,7 @@ import { Component, EventEmitter, Injector, Input, Output } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ImageDto, ImageType } from '../../../api';
-import { ImageChooserComponent } from '../image-chooser/image-chooser.component';
+import { ImageChooserComponent, ImageChooserResult } from '../image-chooser/image-chooser.component';
 
 @Component({
   standalone: false,
@@ -22,8 +22,14 @@ export class ImageWidgetComponent {
   @Input()
   public organizationId!: string;
 
+  @Input()
+  public allowChanging = true;
+
   @Output()
-  public imageChange = new EventEmitter<string>();
+  public imageChange = new EventEmitter<ImageDto | undefined>();
+
+  @Output()
+  public imageDelete = new EventEmitter<string>();
 
   @Output()
   public apiError = new EventEmitter<unknown>();
@@ -45,8 +51,12 @@ export class ImageWidgetComponent {
     component.init(this.organizationId, this.imageType, this.currentImage?.id);
 
     ref.closed.subscribe({
-      next: (value: string) => {
-        this.imageChange.emit(value);
+      next: (result: ImageChooserResult) => {
+        if (result.type === 'ImageUploaded' || result.type === 'ImageSelected') {
+          this.imageChange.emit(result.image);
+        } else if (result.type === 'ImageDeleted') {
+          this.imageDelete.emit(result.deletedImageId);
+        }
       }
     });
 

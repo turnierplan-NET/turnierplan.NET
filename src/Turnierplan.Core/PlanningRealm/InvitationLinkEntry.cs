@@ -11,6 +11,14 @@ public sealed class InvitationLinkEntry : Entity<long>
         AllowNewRegistrations = allowNewRegistrations;
     }
 
+    internal InvitationLinkEntry(TournamentClass tournamentClass)
+    {
+        Id = 0;
+        Class = tournamentClass;
+        MaxTeamsPerRegistration = null;
+        AllowNewRegistrations = true;
+    }
+
     public override long Id { get; protected set; }
 
     public TournamentClass Class { get; internal set; } = null!;

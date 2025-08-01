@@ -26,6 +26,8 @@ internal sealed class PlanningRealmRepository(TurnierplanContext context) : Repo
 
         if (include.HasFlag(IPlanningRealmRepository.Include.InvitationLinks))
         {
+            query = query.Include(x => x.InvitationLinks).ThenInclude(x => x.PrimaryLogo);
+            query = query.Include(x => x.InvitationLinks).ThenInclude(x => x.SecondaryLogo);
             query = query.Include(x => x.InvitationLinks).ThenInclude(x => x.Entries);
         }
 

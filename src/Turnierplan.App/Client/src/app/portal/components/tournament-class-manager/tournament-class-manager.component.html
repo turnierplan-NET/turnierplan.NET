@@ -4,15 +4,12 @@
   <thead>
     <tr>
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.Name"></th>
+      <th translate="Portal.ViewPlanningRealm.TournamentClasses.InvitationLinkCount"></th>
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.ApplicationCount"></th>
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.MaxTeamCount"></th>
       @if (writeAllowed) {
-        <th>
-          <span class="d-none d-md-block" translate="Portal.ViewPlanningRealm.TournamentClasses.Edit"></span>
-        </th>
-        <th>
-          <span class="d-none d-md-block" translate="Portal.ViewPlanningRealm.TournamentClasses.Delete"></span>
-        </th>
+        <th style="width: 1px"></th>
+        <th style="width: 1px"></th>
       }
     </tr>
   </thead>
@@ -21,7 +18,11 @@
     @for (tournamentClass of planningRealm.tournamentClasses; track tournamentClass.id) {
       <tr>
         <td class="align-middle">{{ tournamentClass.name }}</td>
-        <td class="align-middle">{{ tournamentClass.numberOfTeams }}</td>
+        <td class="align-middle">{{ getNumberOfReferencingLinks(tournamentClass.id) }}</td>
+        <td class="align-middle">
+          {{ tournamentClass.numberOfTeams }}
+          <!-- TODO: Add button which switches to applications page with correct filter -->
+        </td>
         <td class="align-middle">
           @if (tournamentClass.maxTeamCount) {
             {{ tournamentClass.maxTeamCount }}
@@ -30,16 +31,12 @@
           }
         </td>
         @if (writeAllowed) {
-          <td class="align-middle">
+          <td class="align-middle pe-0">
             <tp-action-button
               [type]="'outline-secondary'"
               [icon]="'gear'"
               [mode]="'IconOnly'"
-              [disabled]="currentlyUpdatingId === tournamentClass.id"
               (click)="editTournamentClass(tournamentClass.id)" />
-            @if (currentlyUpdatingId === tournamentClass.id) {
-              <tp-small-spinner class="mx-2" />
-            }
           </td>
           @let canDelete = tournamentClass.numberOfTeams === 0;
           <td class="align-middle" [ngClass]="{ 'ps-1': !canDelete }">

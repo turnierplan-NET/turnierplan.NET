@@ -7,6 +7,11 @@
     [contextEntityId]="venue.id"
     [rememberNavigationTab]="true"
     (navigationTabSelected)="togglePage($event.id)">
+    <ng-template #preContent>
+      @if (isDirty) {
+        <tp-unsaved-changes-alert (save)="saveChanges()" />
+      }
+    </ng-template>
     <ng-template #content>
       <div class="card">
         @switch (currentPage) {
@@ -14,9 +19,6 @@
             <!-- Information page -->
             <div class="card-body d-flex flex-column gap-2">
               <tp-alert [type]="'secondary'" [icon]="'info-circle'" [text]="'Portal.ViewVenue.Details.PublicInformationAlert'" />
-              @if (isDirty) {
-                <tp-alert [type]="'warning'" [icon]="'exclamation-triangle'" [text]="'Portal.ViewVenue.Details.UnsavedChanges'" />
-              }
             </div>
             <hr class="m-0" />
             <div class="card-body d-flex flex-column gap-2">
@@ -96,21 +98,6 @@
                 [title]="'Portal.ViewVenue.Details.Edit'"
                 (click)="editTextList('externalLinks')" />
             </div>
-
-            @if (isDirty) {
-              <hr class="m-0" />
-              <div class="card-body d-flex flex-row justify-content-end align-items-center gap-2">
-                @if (isSaving) {
-                  <tp-small-spinner />
-                }
-                <tp-action-button
-                  [type]="'success'"
-                  [icon]="'floppy'"
-                  [title]="'Portal.General.ApplyChanges'"
-                  [disabled]="isSaving"
-                  (click)="saveChanges()" />
-              </div>
-            }
           }
           @case (1) {
             <!-- Settings page -->

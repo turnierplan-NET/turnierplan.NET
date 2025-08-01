@@ -65,13 +65,13 @@ internal sealed class SetTournamentImageEndpoint : EndpointBase
 
         switch (request.Target)
         {
-            case SetTournamentImageEndpointRequest.TargetImage.OrganizerLogo:
+            case SetTournamentImageEndpointRequest.SetTournamentImageEndpointRequestTarget.OrganizerLogo:
                 tournament.SetOrganizerLogo(image);
                 break;
-            case SetTournamentImageEndpointRequest.TargetImage.SponsorLogo:
+            case SetTournamentImageEndpointRequest.SetTournamentImageEndpointRequestTarget.SponsorLogo:
                 tournament.SetSponsorLogo(image);
                 break;
-            case SetTournamentImageEndpointRequest.TargetImage.SponsorBanner:
+            case SetTournamentImageEndpointRequest.SetTournamentImageEndpointRequestTarget.SponsorBanner:
                 tournament.SetSponsorBanner(image);
                 break;
             default:
@@ -88,9 +88,9 @@ internal sealed class SetTournamentImageEndpoint : EndpointBase
     {
         public PublicId? ImageId { get; init; }
 
-        public TargetImage Target { get; init; }
+        public SetTournamentImageEndpointRequestTarget Target { get; init; }
 
-        public enum TargetImage
+        public enum SetTournamentImageEndpointRequestTarget
         {
             OrganizerLogo,
             SponsorLogo,

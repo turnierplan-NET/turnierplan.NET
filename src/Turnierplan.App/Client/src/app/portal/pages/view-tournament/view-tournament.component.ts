@@ -15,7 +15,7 @@ import {
   MatchState,
   MatchType,
   NullableOfMatchOutcomeType,
-  TargetImage,
+  SetTournamentImageEndpointRequestTarget,
   TeamsService,
   TournamentDto,
   TournamentImagesDto,
@@ -196,18 +196,26 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (number === ViewTournamentComponent.settingsPageId && this.tournament && !this.images && !this.isLoadingImages) {
-      this.isLoadingImages = true;
-      this.tournamentService.getTournamentImages({ id: this.tournament.id }).subscribe({
-        next: (images) => {
-          this.images = images;
-          this.isLoadingImages = false;
-        },
-        error: (error) => {
-          this.loadingState = { isLoading: false, error: error };
-        }
-      });
+    if (number === ViewTournamentComponent.settingsPageId && !this.images) {
+      this.loadTournamentImages();
     }
+  }
+
+  protected loadTournamentImages(): void {
+    if (!this.tournament || this.isLoadingImages) {
+      return;
+    }
+
+    this.isLoadingImages = true;
+    this.tournamentService.getTournamentImages({ id: this.tournament.id }).subscribe({
+      next: (images) => {
+        this.images = images;
+        this.isLoadingImages = false;
+      },
+      error: (error) => {
+        this.loadingState = { isLoading: false, error: error };
+      }
+    });
   }
 
   protected saveAccumulatedScoreSetting(newValue: boolean): void {
@@ -685,9 +693,9 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     const tournamentId = this.tournament.id;
 
     const mappedTarget = {
-      organizerLogo: TargetImage.OrganizerLogo,
-      sponsorLogo: TargetImage.SponsorLogo,
-      sponsorBanner: TargetImage.SponsorBanner
+      organizerLogo: SetTournamentImageEndpointRequestTarget.OrganizerLogo,
+      sponsorLogo: SetTournamentImageEndpointRequestTarget.SponsorLogo,
+      sponsorBanner: SetTournamentImageEndpointRequestTarget.SponsorBanner
     }[whichImage];
 
     this.tournamentService

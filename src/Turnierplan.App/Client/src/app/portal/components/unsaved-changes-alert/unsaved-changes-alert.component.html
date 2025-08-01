@@ -1,0 +1,13 @@
+<tp-alert [type]="'primary'" [icon]="'exclamation-circle'">
+  <span class="flex-grow-1" translate="Portal.General.UnsavedChanges"></span>
+  @if (inProgress) {
+    <tp-small-spinner />
+  }
+  <tp-action-button
+    class="ms-0 m-2"
+    [type]="'outline-primary'"
+    [title]="'Portal.General.Save'"
+    [icon]="'floppy'"
+    [disabled]="inProgress"
+    (click)="save.emit()" />
+</tp-alert>

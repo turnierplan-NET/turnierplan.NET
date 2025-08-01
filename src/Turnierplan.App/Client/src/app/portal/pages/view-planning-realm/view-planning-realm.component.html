@@ -29,16 +29,16 @@
             (click)="addInvitationLink()" />
         }
         @case (3) {
-          <!-- Settings page -->
-          @if (isUpdatingName) {
-            <tp-small-spinner />
-          }
           <tp-rename-button
             translationKey="Portal.ViewPlanningRealm.Settings.Rename"
             [current]="planningRealm.name"
-            [disabled]="isUpdatingName"
             (renamed)="renamePlanningRealm($event)" />
         }
+      }
+    </ng-template>
+    <ng-template #preContent>
+      @if (_hasUnsavedChanges) {
+        <tp-unsaved-changes-alert (save)="savePlanningRealm()" />
       }
     </ng-template>
     <ng-template #content>
@@ -50,9 +50,7 @@
               <tp-badge context="ViewPlanningRealm" label="TournamentClassesCount" [value]="planningRealm.tournamentClasses.length" />
             </div>
             <div class="card-body p-0">
-              <tp-tournament-classes-manager
-                [planningRealm]="planningRealm"
-                (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+              <tp-tournament-classes-manager [planningRealm]="planningRealm" [updatePlanningRealm]="updateFunction" />
             </div>
           }
           @case (1) {
@@ -60,8 +58,22 @@
             <div class="card-header d-flex flex-row align-items-center">
               <tp-badge context="ViewPlanningRealm" label="InvitationLinksCount" [value]="planningRealm.invitationLinks.length" />
             </div>
-            <div class="card-body p-0">
-              <tp-invitation-links-manager [planningRealmId]="planningRealm.id" [invitationLinks]="planningRealm.invitationLinks" />
+            <div class="card-body">
+              @if (planningRealm.invitationLinks.length === 0) {
+                <div class="d-flex flex-row justify-content-center py-4 text-center">
+                  <span class="tp-text-pre-wrap" translate="Portal.ViewPlanningRealm.NoInvitationLinks"></span>
+                </div>
+              } @else {
+                <div class="d-flex flex-column gap-3">
+                  @for (invitationLink of planningRealm.invitationLinks; track invitationLink.id) {
+                    <tp-invitation-link-tile
+                      [planningRealm]="planningRealm"
+                      [invitationLink]="invitationLink"
+                      [updatePlanningRealm]="updateFunction"
+                      (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+                  }
+                </div>
+              }
             </div>
           }
           <!-- The "invitations" page (id 2) utilizes the entire page width and the HTML template is located at the end of this file outside of the <tp-page-frame> -->

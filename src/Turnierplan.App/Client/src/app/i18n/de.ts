@@ -70,10 +70,14 @@ export const de = {
       Cancel: 'Abbrechen',
       Save: 'Speichern',
       Done: 'Fertig',
+      Change: 'Ändern',
+      Delete: 'Löschen',
+      Apply: 'Übernehmen',
       BackToLandingPage: 'Startseite',
       IllustrationAlt: 'Eine Illustration, welche "{{description}}" symbolisiert.',
       CopyToClipboard: 'In die Zwischenablage kopieren',
       OpenInNewTab: 'In neuem Tab öffnen',
+      UnsavedChanges: 'Sie haben ungespeicherte Änderungen.',
       ApplyChanges: 'Änderungen übernehmen'
     },
     UserInfoPopover: {
@@ -482,6 +486,7 @@ export const de = {
           },
           ShowOrganizerLogo: 'Veranstalter-Logo darstellen',
           ShowSponsorLogo: 'Sponsoren-Logo darstellen',
+          SaveForbidden: 'Sie dürfen keine Änderungen an den Einstellungen machen.',
           SuccessToast: {
             Title: 'Einstellungen gespeichert',
             Message: 'Ihre Änderungen an der Konfiguration wurden erfolgreich gespeichert'
@@ -535,33 +540,7 @@ export const de = {
           }
         },
         EditImages: {
-          Title: 'Logos & Bilddateien',
-          ImageAlt: {
-            OrganizerLogo: 'Veranstalter-Logo',
-            SponsorLogo: 'Sponsor-Logo',
-            SponsorBanner: 'Sponsor-Banner'
-          },
-          Change: 'Ändern',
-          Chooser: {
-            Title: 'Bild hochladen oder auswählen',
-            Remove: 'Bild entfernen',
-            NoImages: 'Laden Sie Ihr erstes Bild hoch...',
-            Upload: 'Hochladen',
-            UploadFailed: 'Das Bild konnte nicht hochgeladen werden. Prüfen Sie die Maße und die maximale Dateigröße.',
-            Constraints: {
-              SquareLargeLogo:
-                'Das Bild muss quadratisch sein mit einer Auflösung zwischen 50x50 und 3000x3000 Pixel. Die maximale Dateigröße beträgt 8 MB.',
-              SponsorBanner:
-                'Das Bild muss mindestens 50px hoch sein und darf maximal 3000px breit sein. Das Seitenverhältnis muss zwischen 3:1 und 5:1 liegen. Die maximale Dateigröße beträgt 8 MB.'
-            },
-            DetailView: {
-              Title: 'Hier sehen Sie die Detailinformationen zu folgendem Bild:',
-              Name: 'Dateiname: {{value}}',
-              CreatedAt: 'Hochgeladen am: {{value}}',
-              FileSize: 'Dateigröße: {{value}} KB',
-              Resolution: 'Auflösung: {{width}}x{{height}} px'
-            }
-          }
+          Title: 'Logos & Bilddateien'
         },
         MoveToAnotherFolder: {
           Title: 'Turnier verschieben',
@@ -802,11 +781,6 @@ export const de = {
           InvalidEntry: 'Ein bestehender Eintrag darf nicht leer sein und es muss sich um einen gültigen HTTPS-Link handeln.',
           NoEntries: 'Keine Links vorhanden',
           AddEntry: 'Link hinzufügen'
-        },
-        UnsavedChanges: 'Sie haben ungespeicherte Änderungen, welche noch übernommen werden müssen.',
-        SuccessToast: {
-          Title: 'Spielstätte gespeichert',
-          Message: 'Ihre Änderungen an dieser Spielstätte wurden gespeichert'
         }
       },
       RbacWidget: {
@@ -895,26 +869,70 @@ export const de = {
       },
       TournamentClasses: {
         Name: 'Name',
-        ApplicationCount: 'Anzahl Mannschaften',
+        InvitationLinkCount: 'Anmeldelinks',
+        ApplicationCount: 'aktuelle Mannschaften',
         MaxTeamCount: 'max. Anzahl Mannschaften',
-        Edit: 'Bearbeiten',
         EditDialog: {
           Title: 'Turnierklasse bearbeiten',
           Name: 'Name:',
           NameInvalid: 'Der Name darf nicht leer sein',
-          NameAlert: 'Eine Änderung des Namens wird sofort auf allen Anmeldelinks, wo diese Turnierklasse verfügbar ist, sichtbar',
+          NameAlert:
+            'Eine Änderung des Namens wird nach dem Speichern sofort auf allen Anmeldelinks, wo diese Turnierklasse verfügbar ist, sichtbar',
           LimitMaxTeamCount: 'Anzahl der Mannschaften limitieren',
           MaxTeamCount: 'Max. Anzahl an Mannschaften:',
           MaxTeamCountInvalid: 'Die Anzahl muss mindestens 2 sein.',
           MaxTeamCountAlert:
             'Es haben sich bereits mehr Mannschaften für diese Turnierklasse angemeldet ({{actual}}) als das angegebene Limit von {{limit}}.'
         },
-        Delete: 'Löschen',
         DeleteNotPossible: 'Diese Turnierklasse kann nicht gelöscht werden, da es bereits Anmeldungen für diese Turnierklasse gibt.',
         NoTournamentClasses: 'Es sind aktuell keine Turnierklassen vorhanden.'
       },
-      InvitationLinks: {
-        NoInvitationLinks: 'Es sind aktuell keine Anmeldelinks vorhanden.'
+      NoInvitationLinks: 'Es sind aktuell keine Anmeldelinks vorhanden.',
+      InvitationLink: {
+        Properties: {
+          Name: 'Name:',
+          ColorCode: 'Farbcode:',
+          Title: 'Titel:',
+          Description: 'Beschreibung:',
+          ValidUntil: 'Anmeldeschluss:',
+          ExternalLinks: 'Externe Links:',
+          ContactPerson: 'Kontaktperson:',
+          ContactEmail: 'Kontakt E-Mail:',
+          ContactTelephone: 'Kontakt-Telefon:',
+          Logos: 'Logos:'
+        },
+        ExpiredTooltip: 'Der Anmeldeschluss liegt in der Vergangenheit. Es sind aktuell keine Neuanmeldungen möglich.',
+        EditProperties: 'Informationen ändern',
+        EditPropertiesDialog: {
+          Title: 'Anmeldelink bearbeiten',
+          InternalInformation: 'Nur für angemeldete Benutzer sichtbar',
+          PublicInformation: 'Die nachfolgenden Textfelder sind öffentlich sichtbar',
+          HasValidUntilDate: 'Anmeldeschluss festlegen',
+          NoExternalLinks: 'Keine Links vorhanden',
+          ExternalLinkName: 'Anzeigename',
+          ExternalLinkUrl: 'URL'
+        },
+        Tournaments: {
+          NoTournaments: 'Diesem Einladungslink sind aktuell keine Turniere zugeordnet.',
+          Tournament: 'Turnier',
+          AllowNewRegistrations: 'Aktiv',
+          ActiveTooltip: 'Es können Mannschaften für dieses Turnier angemeldet werden.',
+          InactiveTooltip: 'Es können derzeit keine weiteren Mannschaften für dieses Turnier angemeldet werden.',
+          AllowNewRegistrationsTooltip: 'Sind aktuell weitere Anmeldungen möglich?',
+          MaxTeamsPerRegistration: 'Limit pro Anmeldung',
+          MaxTeamsPerRegistrationTooltip: 'Wie viele Mannschaften können mit einer Anmeldung angemeldet werden?',
+          NumberOfTeams: 'aktuelle Mannschaften'
+        },
+        EditEntryDialog: {
+          Title: 'Turnier-Eintrag bearbeiten',
+          AllowNewRegistrations: 'Neue Anmeldungen erlauben',
+          LimitTeamsPerRegistration: 'max. Anzahl Mannschaften pro Anmeldung begrenzen',
+          MaxTeamsPerRegistration: 'Anzahl:'
+        },
+        AddTournament: 'Turnier hinzufügen',
+        AllClassesAdded: 'In diesem Link sind alle Turnierklassen enthalten',
+        DeleteNotPossible:
+          'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.'
       },
       Settings: {
         Rename: {
@@ -986,6 +1004,33 @@ export const de = {
     VisibilitySelector: {
       Private: 'Privat',
       Public: 'Öffentlich'
+    },
+    ImageAlt: {
+      OrganizerLogo: 'Veranstalter-Logo',
+      SponsorLogo: 'Sponsor-Logo',
+      SponsorBanner: 'Sponsor-Banner',
+      PrimaryLogo: 'Hauptlogo',
+      SecondaryLogo: 'zweites Logo'
+    },
+    ImageChooser: {
+      Title: 'Bild hochladen oder auswählen',
+      Remove: 'Bild entfernen',
+      NoImages: 'Laden Sie Ihr erstes Bild hoch...',
+      Upload: 'Hochladen',
+      UploadFailed: 'Das Bild konnte nicht hochgeladen werden. Prüfen Sie die Maße und die maximale Dateigröße.',
+      Constraints: {
+        SquareLargeLogo:
+          'Das Bild muss quadratisch sein mit einer Auflösung zwischen 50x50 und 3000x3000 Pixel. Die maximale Dateigröße beträgt 8 MB.',
+        SponsorBanner:
+          'Das Bild muss mindestens 50px hoch sein und darf maximal 3000px breit sein. Das Seitenverhältnis muss zwischen 3:1 und 5:1 liegen. Die maximale Dateigröße beträgt 8 MB.'
+      },
+      DetailView: {
+        Title: 'Hier sehen Sie die Detailinformationen zu folgendem Bild:',
+        Name: 'Dateiname: {{value}}',
+        CreatedAt: 'Hochgeladen am: {{value}}',
+        FileSize: 'Dateigröße: {{value}} KB',
+        Resolution: 'Auflösung: {{width}}x{{height}} px'
+      }
     },
     ErrorPage: {
       Title: 'Fehler',

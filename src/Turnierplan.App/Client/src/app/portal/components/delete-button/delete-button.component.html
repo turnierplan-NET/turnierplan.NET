@@ -8,6 +8,9 @@
   (keydown)="popover.isOpen() && confirmed.emit()"
   [ngClass]="reducedFootprint ? 'tp-cursor-pointer' : 'btn btn-sm btn-outline-danger'">
   <i class="bi bi-trash"></i>
+  @if (showLabel) {
+    <span class="ms-2" translate="Portal.General.Delete"></span>
+  }
 </div>
 
 <ng-template #popoverContent>

@@ -1,0 +1,413 @@
+@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
+
+<div class="card shadow-sm">
+  <div class="card-body d-flex flex-column gap-3">
+    <div class="fs-5 fw-bold card-title mb-0">
+      <span
+        class="me-2 d-inline-block text-center text-white"
+        style="width: 1.5em; border-radius: 0.4em"
+        [ngStyle]="{ 'background-color': '#' + invitationLink.colorCode }">
+        <i class="bi bi-link-45deg"></i>
+      </span>
+
+      <span>{{ invitationLink.name }}</span>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-lg-7 d-flex flex-column">
+        <div class="row">
+          <div class="col-12 col-md-6 d-flex flex-column">
+            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Title"></div>
+            <div class="mb-2">{{ invitationLink.title ?? '-' }}</div>
+            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Description"></div>
+            <div class="mb-2">{{ invitationLink.description ?? '-' }}</div>
+            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ValidUntil"></div>
+            @if (invitationLink.validUntil) {
+              <div class="mb-2">
+                <span>{{ invitationLink.validUntil | translateDate: 'medium' }}</span>
+                @if (invitationLinkExpired) {
+                  <tp-tooltip-icon
+                    [icon]="'clock-fill'"
+                    [iconClass]="'text-danger'"
+                    [ngbTooltip]="'Portal.ViewPlanningRealm.InvitationLink.ExpiredTooltip' | translate" />
+                }
+              </div>
+            } @else {
+              <div class="mb-2">-</div>
+            }
+            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ExternalLinks"></div>
+            @for (ext of invitationLink.externalLinks; track ext; let isLast = $last) {
+              <div [ngClass]="{ 'mb-2': isLast }" class="d-flex flex-row align-items-center gap-1">
+                <i class="bi bi-box-arrow-up-right" style="font-size: 0.9em"></i>
+                <a href="{{ ext.url }}" class="tp-text-ellipsis" target="_blank" [title]="ext.name">{{ ext.name }}</a>
+              </div>
+            } @empty {
+              <div class="mb-2">-</div>
+            }
+            @if (writeAllowed) {
+              <tp-action-button
+                class="mt-3"
+                [type]="'outline-secondary'"
+                [title]="'Portal.ViewPlanningRealm.InvitationLink.EditProperties'"
+                [icon]="'pencil'"
+                (click)="showEditPropertiesDialog(editPropertiesDialog)" />
+            }
+          </div>
+          <div class="col-12 col-md-6 d-flex flex-column">
+            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactPerson"></div>
+            <div class="mb-2">{{ invitationLink.contactPerson ?? '-' }}</div>
+            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactEmail"></div>
+            <div class="mb-2">{{ invitationLink.contactEmail ?? '-' }}</div>
+            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactTelephone"></div>
+            <div class="mb-2">{{ invitationLink.contactTelephone ?? '-' }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="col-12 col-lg-5 pt-5 pb-3 d-flex flex-column flex-md-row justify-content-center justify-content-lg-end pt-lg-0 pb-lg-0 gap-3">
+        <tp-image-widget
+          [currentImage]="invitationLink.primaryLogo"
+          [imageAlt]="'PrimaryLogo'"
+          [imageType]="ImageType.SquareLargeLogo"
+          [organizationId]="planningRealm.organizationId"
+          [allowChanging]="writeAllowed"
+          (imageChange)="setImage('primaryLogo', $event)"
+          (imageDelete)="onImageDeleted($event)"
+          (apiError)="errorOccured.emit($event)" />
+        <tp-image-widget
+          [currentImage]="invitationLink.secondaryLogo"
+          [imageAlt]="'SecondaryLogo'"
+          [imageType]="ImageType.SquareLargeLogo"
+          [organizationId]="planningRealm.organizationId"
+          [allowChanging]="writeAllowed"
+          (imageChange)="setImage('secondaryLogo', $event)"
+          (imageDelete)="onImageDeleted($event)"
+          (apiError)="errorOccured.emit($event)" />
+      </div>
+    </div>
+
+    @if (invitationLink.entries.length === 0) {
+      <div>
+        <div class="fw-bold">Turniere:</div>
+        <div class="fst-italic" translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NoTournaments"></div>
+      </div>
+    } @else {
+      <div class="fw-bold mt-3">Turniere:</div>
+      <table class="mb-0 table table-bordered">
+        <thead>
+          <tr>
+            <th translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.Tournament"></th>
+            <th>
+              <span translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.AllowNewRegistrations"></span>
+              <tp-tooltip-icon
+                [icon]="'question-circle'"
+                [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.AllowNewRegistrationsTooltip'" />
+            </th>
+            <th>
+              <span translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.MaxTeamsPerRegistration"></span>
+              <tp-tooltip-icon
+                [icon]="'question-circle'"
+                [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.MaxTeamsPerRegistrationTooltip'" />
+            </th>
+            <th translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NumberOfTeams">
+              <!-- TODO: Add button which switches to applications page with correct filter -->
+            </th>
+            @if (writeAllowed) {
+              <th style="width: 1px"></th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (entry of invitationLink.entries; track entry.tournamentClassId) {
+            @let tournamentClass = findTournamentClassById(entry.tournamentClassId);
+            <tr>
+              <td class="align-middle">{{ tournamentClass.name }}</td>
+              <td class="align-middle">
+                @if (entry.allowNewRegistrations) {
+                  <i
+                    class="text-success bi bi-check-circle-fill"
+                    [ngbTooltip]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.ActiveTooltip' | translate"></i>
+                } @else {
+                  <i
+                    class="text-secondary bi bi-pause-circle"
+                    [ngbTooltip]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.InactiveTooltip' | translate"></i>
+                }
+              </td>
+              <td class="align-middle">
+                @if (entry.maxTeamsPerRegistration) {
+                  {{ entry.maxTeamsPerRegistration }}
+                } @else {
+                  &infin;
+                }
+              </td>
+              <td>
+                @if (entry.numberOfTeams === -1) {
+                  <!-- This is the case for newly added tournament classes which have not been saved yet -->
+                  <span>-</span>
+                } @else {
+                  <span>{{ entry.numberOfTeams }}</span>
+                }
+              </td>
+              @if (writeAllowed) {
+                <td class="text-nowrap">
+                  <tp-action-button
+                    [type]="'outline-secondary'"
+                    [icon]="'pencil'"
+                    [mode]="'IconOnly'"
+                    (click)="showEditEntryDialog(entry, editEntryDialog)" />
+                  <tp-delete-button class="ms-1" (confirmed)="removeTournamentClass(entry.tournamentClassId)" />
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+    @if (writeAllowed) {
+      <div class="d-flex flex-row gap-1 align-items-center">
+        @let addButtonId = 'add_tournament_dropdown_' + invitationLink.id;
+        @let addButtonDisabled = tournamentClassesToAdd.length === 0;
+
+        <div ngbDropdown>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-primary"
+            [id]="addButtonId"
+            ngbDropdownToggle
+            [ngClass]="{ disabled: addButtonDisabled }">
+            <i class="bi bi-plus-circle" aria-hidden="true"></i>
+            <span class="ms-2 me-1" translate="Portal.ViewPlanningRealm.InvitationLink.AddTournament"></span>
+          </button>
+          <div ngbDropdownMenu [attr.aria-labelledby]="addButtonId" class="shadow-sm">
+            @for (tournamentClass of tournamentClassesToAdd; track tournamentClass) {
+              <button ngbDropdownItem (click)="addTournamentClass(tournamentClass.id)">{{ tournamentClass.name }}</button>
+            }
+          </div>
+        </div>
+
+        @if (addButtonDisabled) {
+          <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.AllClassesAdded'" />
+        }
+      </div>
+    }
+  </div>
+  <div class="card-footer">
+    @if (writeAllowed) {
+      @let canDelete = invitationLink.numberOfApplications === 0;
+      @if (canDelete) {
+        <tp-delete-button [showLabel]="true" (confirmed)="deleteInvitationLink()" />
+      } @else {
+        <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.DeleteNotPossible'" />
+      }
+    }
+  </div>
+</div>
+
+<ng-template #editPropertiesDialog let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" [translate]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.Title'"></h4>
+    <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
+  </div>
+  <div class="modal-body d-flex flex-column">
+    <form [formGroup]="editPropertiesForm">
+      <div class="mb-3">
+        <div>
+          <label for="name" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Name"></label>
+          <tp-tooltip-icon
+            [icon]="'info-circle'"
+            [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.InternalInformation'" />
+        </div>
+        @let nameControl = editPropertiesForm.get('name')!;
+        <input id="name" type="text" class="form-control" [ngClass]="nameControl.invalid ? 'is-invalid' : ''" formControlName="name" />
+      </div>
+
+      <div>
+        <div>
+          <label for="name" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ColorCode"></label>
+          <tp-tooltip-icon
+            [icon]="'info-circle'"
+            [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.InternalInformation'" />
+        </div>
+        <input id="colorCode" type="color" class="form-control form-control-color" formControlName="colorCode" />
+      </div>
+
+      <hr class="my-3" />
+
+      @let hasValidUntilDateControl = editPropertiesForm.get('hasValidUntilDate')!;
+
+      <div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="hasValidUntilDate" formControlName="hasValidUntilDate" />
+          <label
+            class="form-check-label"
+            for="hasValidUntilDate"
+            translate="Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.HasValidUntilDate"></label>
+        </div>
+      </div>
+
+      @if (hasValidUntilDateControl.value) {
+        <div class="mt-3">
+          @let control = editPropertiesForm.get('validUntil')!;
+          <input
+            id="maxTeamsPerRegistration"
+            type="datetime-local"
+            class="form-control"
+            formControlName="validUntil"
+            [ngClass]="control.invalid ? 'is-invalid' : ''"
+            [attr.aria-labelledby]="'Portal.ViewPlanningRealm.InvitationLink.Properties.ValidUntil' | translate" />
+        </div>
+      }
+
+      <hr class="my-3" />
+
+      <tp-alert
+        [icon]="'info-circle'"
+        [type]="'primary'"
+        [text]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.PublicInformation'" />
+
+      <div class="my-3">
+        <label for="title" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Title"></label>
+        <input id="title" type="text" class="form-control" formControlName="title" />
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Description"></label>
+        <textarea id="description" rows="4" class="form-control" formControlName="description"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="contactEmail" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactEmail"></label>
+        <input id="contactEmail" type="text" class="form-control" formControlName="contactEmail" />
+      </div>
+
+      <div class="mb-3">
+        <label for="contactPerson" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactPerson"></label>
+        <input id="contactPerson" type="text" class="form-control" formControlName="contactPerson" />
+      </div>
+
+      <div class="mb-3">
+        <label
+          for="contactTelephone"
+          class="form-label"
+          translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactTelephone"></label>
+        <input id="contactTelephone" type="text" class="form-control" formControlName="contactTelephone" />
+      </div>
+
+      <hr class="my-3" />
+
+      <div class="d-flex flex-row align-items-center mb-2">
+        <span class="flex-grow-1" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ExternalLinks"></span>
+        <tp-action-button [type]="'outline-primary'" [icon]="'plus-circle'" [mode]="'IconOnly'" (click)="addExternalLinkToForm()" />
+      </div>
+
+      <ng-container formArrayName="externalLinks">
+        @for (externalLink of editPropertiesFormExternalLinks.controls; track externalLink; let i = $index) {
+          <div [formGroupName]="i" class="mt-1 d-flex flex-row align-items-center gap-2">
+            <div class="flex-grow-1 row g-1">
+              <div class="col-6">
+                @let linkNameControl = editPropertiesFormExternalLinks.get('' + i)!.get('name')!;
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  [ngClass]="linkNameControl.invalid && linkNameControl.touched ? 'is-invalid' : ''"
+                  formControlName="name"
+                  [placeholder]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.ExternalLinkName' | translate"
+                  [attr.aria-labelledby]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.ExternalLinkName' | translate" />
+              </div>
+              <div class="col-6">
+                @let linkUrlControl = editPropertiesFormExternalLinks.get('' + i)!.get('url')!;
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  [ngClass]="linkUrlControl.invalid && linkUrlControl.touched ? 'is-invalid' : ''"
+                  formControlName="url"
+                  [placeholder]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.ExternalLinkUrl' | translate"
+                  [attr.aria-labelledby]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.ExternalLinkUrl' | translate" />
+              </div>
+            </div>
+            <tp-delete-button [reducedFootprint]="true" (confirmed)="editPropertiesFormExternalLinks.removeAt(i)" />
+          </div>
+        } @empty {
+          <div
+            class="mt-1 text-secondary fst-italic"
+            translate="Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.NoExternalLinks"></div>
+        }
+      </ng-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
+    <tp-action-button
+      [type]="'success'"
+      [title]="'Portal.General.Apply'"
+      [disabled]="editPropertiesForm.invalid"
+      (click)="editPropertiesForm.valid && modal.close()" />
+  </div>
+</ng-template>
+
+<ng-template #editEntryDialog let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" [translate]="'Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.Title'"></h4>
+    <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
+  </div>
+  <div class="modal-body d-flex flex-column">
+    <form [formGroup]="editEntryForm">
+      <div>
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="allowNewRegistrations"
+            formControlName="allowNewRegistrations" />
+          <label
+            class="form-check-label"
+            for="allowNewRegistrations"
+            translate="Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.AllowNewRegistrations"></label>
+        </div>
+      </div>
+
+      <hr class="my-3" />
+
+      @let limitTeamsPerRegistrationControl = editEntryForm.get('limitTeamsPerRegistration')!;
+
+      <div>
+        <div class="form-check form-switch">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            id="limitTeamsPerRegistration"
+            formControlName="limitTeamsPerRegistration" />
+          <label
+            class="form-check-label"
+            for="limitTeamsPerRegistration"
+            translate="Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.LimitTeamsPerRegistration"></label>
+        </div>
+      </div>
+
+      @if (limitTeamsPerRegistrationControl.value) {
+        <div class="mt-3">
+          @let control = editEntryForm.get('maxTeamsPerRegistration')!;
+          <input
+            id="maxTeamsPerRegistration"
+            type="number"
+            class="form-control"
+            [required]="true"
+            formControlName="maxTeamsPerRegistration"
+            [ngClass]="control.invalid ? 'is-invalid' : ''"
+            [attr.aria-labelledby]="'Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.MaxTeamsPerRegistration' | translate" />
+        </div>
+      }
+    </form>
+  </div>
+  <div class="modal-footer">
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
+    <tp-action-button
+      [type]="'success'"
+      [title]="'Portal.General.Apply'"
+      [disabled]="editEntryForm.invalid"
+      (click)="editEntryForm.valid && modal.close()" />
+  </div>
+</ng-template>
