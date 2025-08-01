@@ -1,0 +1,13 @@
+@page
+@model Turnierplan.App.Pages.InvitationForm
+
+@{
+    Layout = "_Layout";
+
+    var invitationLink = Model.Data;
+    ViewData["Title"] = invitationLink is null ? "Formular nicht gefunden" : invitationLink.Title ?? "Anmeldeformular";
+}
+
+<div>
+    Hello World
+</div>
