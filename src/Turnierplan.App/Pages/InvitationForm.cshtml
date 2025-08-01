@@ -21,12 +21,21 @@
 else
 {
     <div class="container px-0" style="max-width: 650px;">
-        <div class="mt-5 border shadow-sm d-flex flex-column">
-            <div style="background: #3c3c3c" class="py-2 text-center text-white fw-bold">
+        <div class="mt-5 border shadow d-flex flex-column">
+            <div style="background: #3c3c3c" class="py-2 text-center text-white fw-bold fs-5">
                 @invitationLink.Title
             </div>
             <div class="bg-white pt-4 p-3 d-flex flex-column gap-2">
-                @if (invitationLink.PrimaryLogo is not null || invitationLink.SecondaryLogo is not null)
+                @{
+                    var hasAtLeastOneLogo = invitationLink.PrimaryLogo is not null || invitationLink.SecondaryLogo is not null;
+                    var hasDescription = !string.IsNullOrWhiteSpace(invitationLink.Description);
+
+                    var hasContactPerson = !string.IsNullOrWhiteSpace(invitationLink.ContactPerson);
+                    var hasContactEmail = !string.IsNullOrWhiteSpace(invitationLink.ContactEmail);
+                    var hasContactTelephone = !string.IsNullOrWhiteSpace(invitationLink.ContactTelephone);
+                }
+                
+                @if (hasAtLeastOneLogo)
                 {
                     <div class="d-flex flex-row justify-content-evenly">
                         @if (invitationLink.PrimaryLogo is not null)
@@ -39,13 +48,46 @@ else
                         }
                     </div>
                 }
+
+                @if (hasDescription)
+                {
+                    <div>
+                        @invitationLink.Description
+                    </div>
+                }
                 
-                <div>
-                    TODO
-                </div>
-                <div>
-                    TODO
-                </div>
+                @if (hasAtLeastOneLogo || hasDescription)
+                {
+                    <hr class="my-3" />
+                }
+
+                @if (hasContactPerson || hasContactEmail || hasContactTelephone)
+                {
+                    <div class="d-flex flex-column gap-1">
+                        <div class="fw-bold mb-2">Kontakt zum Veranstalter:</div>
+                        @if (hasContactPerson)
+                        {
+                            <div>@invitationLink.ContactPerson</div>
+                        }
+                        @if (hasContactEmail)
+                        {
+                            <div>
+                                <img src="./assets/envelope.svg" alt="EMail-Icon" class="me-1" />
+                                <span>@invitationLink.ContactEmail</span>
+                            </div>
+                        }
+                        @if (hasContactTelephone)
+                        {
+                            <div>
+                                <img src="./assets/telephone.svg" alt="Telefon-Icon" class="me-1" />
+                                <span>@invitationLink.ContactTelephone</span>
+                            </div>
+                        }
+                    </div>
+
+                    <hr class="my-3" />
+                }
+
                 <div>
                     TODO
                 </div>
