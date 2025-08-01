@@ -25,6 +25,7 @@ export class InvitationLinkTileComponent {
   protected readonly Actions = Actions;
   protected readonly ImageType = ImageType;
   protected invitationLinkExpired = false;
+  protected pathForPublicForm = '';
 
   protected tournamentClassesToAdd: TournamentClassDto[] = [];
   protected editPropertiesForm = new FormGroup({
