@@ -1,5 +1,7 @@
 @page
+@using Turnierplan.ImageStorage
 @model Turnierplan.App.Pages.InvitationForm
+@inject IImageStorage ImageStorage
 
 @{
     Layout = "_Layout";
@@ -8,6 +10,46 @@
     ViewData["Title"] = invitationLink is null ? "Formular nicht gefunden" : invitationLink.Title ?? "Anmeldeformular";
 }
 
-<div>
-    Hello World
-</div>
+@if (invitationLink is null)
+{
+    <div class="container px-2 px-lg-5">
+        <div class="text-danger">
+            Der Link ist ungültig oder das gesuchte Formular existiert nicht.
+        </div>
+    </div>
+}
+else
+{
+    <div class="container px-0" style="max-width: 650px;">
+        <div class="mt-5 border shadow-sm d-flex flex-column">
+            <div style="background: #3c3c3c" class="py-2 text-center text-white fw-bold">
+                @invitationLink.Title
+            </div>
+            <div class="bg-white pt-4 p-3 d-flex flex-column gap-2">
+                @if (invitationLink.PrimaryLogo is not null || invitationLink.SecondaryLogo is not null)
+                {
+                    <div class="d-flex flex-row justify-content-evenly">
+                        @if (invitationLink.PrimaryLogo is not null)
+                        {
+                            <img style="width: 9em;" src="@ImageStorage.GetFullImageUrl(invitationLink.PrimaryLogo)" alt="@invitationLink.PrimaryLogo.Name"/>
+                        }
+                        @if (invitationLink.SecondaryLogo is not null)
+                        {
+                            <img style="width: 9em;" src="@ImageStorage.GetFullImageUrl(invitationLink.SecondaryLogo)" alt="@invitationLink.SecondaryLogo.Name"/>
+                        }
+                    </div>
+                }
+                
+                <div>
+                    TODO
+                </div>
+                <div>
+                    TODO
+                </div>
+                <div>
+                    TODO
+                </div>
+            </div>
+        </div>
+    </div>
+}
