@@ -23,7 +23,7 @@ else
     <div class="container px-0" style="max-width: 650px;" id="mainContainer">
         <div class="mt-5 border shadow d-flex flex-column">
             <div style="background: #3c3c3c" class="py-2 text-center text-white fw-bold fs-5">
-                @invitationLink.Title
+                @(string.IsNullOrWhiteSpace(invitationLink.Title) ? "Anmeldeformular" : invitationLink.Title)
             </div>
             <div class="bg-white pt-4 p-3 d-flex flex-column gap-3">
                 @{
