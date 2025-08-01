@@ -2,14 +2,8 @@
 
 <div class="mb-3" [translate]="translationKey + '.Link'"></div>
 
-<div class="d-flex flex-row gap-3 align-items-center" [ngClass]="{ 'mb-3': showQrCode || viewsCounter !== undefined }">
-  <input class="form-control" style="max-width: 500px" type="text" [value]="resourceUrl" readonly />
-  <tp-copy-to-clipboard [value]="resourceUrl" />
-  <a
-    class="bi bi-box-arrow-up-right tp-cursor-pointer"
-    [title]="'Portal.General.OpenInNewTab' | translate"
-    [href]="resourceUrl"
-    target="_blank"></a>
+<div [ngClass]="{ 'mb-3': showQrCode || viewsCounter !== undefined }">
+  <tp-share-link [resourceUrl]="resourceUrl" />
 </div>
 
 @if (showQrCode || viewsCounter !== undefined) {
