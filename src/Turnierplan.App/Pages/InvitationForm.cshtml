@@ -1,7 +1,10 @@
 @page
+@using Microsoft.Extensions.Options
+@using Turnierplan.App.Options
 @using Turnierplan.ImageStorage
 @model Turnierplan.App.Pages.InvitationForm
 @inject IImageStorage ImageStorage
+@inject IOptions<TurnierplanOptions> TurnierplanOptions
 
 @{
     Layout = "_Layout";
@@ -88,8 +91,17 @@ else
                     <hr class="my-0"/>
                 }
 
-                <div>
-                    TODO
+                <div class="d-flex flex-row align-items-center">
+                    @if (!string.IsNullOrWhiteSpace(TurnierplanOptions.Value.PrivacyUrl))
+                    {
+                        <a class="text-secondary small" href="@TurnierplanOptions.Value.PrivacyUrl" target="_blank" rel="noopener">
+                            Datenschutzerklärung
+                        </a>
+                    }
+                    <span class="flex-grow-1"></span>
+                    <div class="btn btn-primary">
+                        Absenden
+                    </div>
                 </div>
             </div>
         </div>
