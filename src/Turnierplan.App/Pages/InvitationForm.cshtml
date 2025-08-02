@@ -26,9 +26,8 @@ else
 {
     <div class="container px-0" style="max-width: 650px;" id="mainContainer">
         <div class="mt-5 border shadow d-flex flex-column">
-            <div style="background: #3c3c3c" class="py-2 text-center text-white fw-bold fs-5">
-                @(string.IsNullOrWhiteSpace(invitationLink.Title) ? "Anmeldeformular" : invitationLink.Title)
-            </div>
+            <div style="background: #3c3c3c" class="py-2 text-center text-white fw-bold fs-5">@(string.IsNullOrWhiteSpace(invitationLink.Title) ? "Anmeldeformular" : invitationLink.Title)</div>
+
             <div class="bg-white pt-4 p-3 d-flex flex-column gap-3">
                 @{
                     var isValidUntilSurpassed = invitationLink.ValidUntil.HasValue && invitationLink.ValidUntil.Value < DateTime.UtcNow;
@@ -57,9 +56,7 @@ else
 
                 @if (hasDescription)
                 {
-                    <div>
-                        @invitationLink.Description
-                    </div>
+                    <div>@invitationLink.Description</div>
                 }
 
                 @if (hasAtLeastOneLogo || hasDescription)
@@ -80,9 +77,30 @@ else
                 }
                 else
                 {
-                    <div>
-                        TURNIERE HIER :)
-                    </div>
+                    @foreach (var entry in invitationLink.Entries)
+                    {
+                        <div class="d-flex flex-column gap-1">
+                            <div class="fw-bold">@entry.Class.Name</div>
+
+                            @if (entry.AllowNewRegistrations)
+                            {
+                                var limit = entry.MaxTeamsPerRegistration ?? 9999;
+
+                                <div class="d-flex flex-row gap-2">
+                                    <div style="flex-basis: 25%">
+                                        <input class="form-control" type="number" value="0" min="0" max="@limit" placeholder="Anzahl Teams" id="team_count_@entry.Id" aria-label="Anzahl der Mannschaften"/>
+                                    </div>
+                                    <div style="flex-basis: 75%">
+                                        <input class="form-control" placeholder="Name" id="team_name_@entry.Id" aria-label="Name der Mannschaft"/>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="small text-secondary">Zur Zeit sind keine Neuen Anmeldungen für dieses Turnier möglich</div>
+                            }
+                        </div>
+                    }
                 }
 
                 <hr class="my-0"/>

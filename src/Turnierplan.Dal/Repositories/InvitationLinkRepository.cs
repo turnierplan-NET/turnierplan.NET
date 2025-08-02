@@ -11,7 +11,7 @@ internal sealed class InvitationLinkRepository(TurnierplanContext context) : Rep
         return DbSet.Where(x => x.PublicId == id)
             .Include(x => x.PrimaryLogo)
             .Include(x => x.SecondaryLogo)
-            .Include(x => x.Entries)
+            .Include(x => x.Entries).ThenInclude(x => x.Class)
             .AsSplitQuery()
             .FirstOrDefaultAsync();
     }
