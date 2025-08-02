@@ -112,10 +112,8 @@
                 @foreach (var link in tournament.Venue.ExternalLinks)
                 {
                     <div>
-                        <a href="@link" target="_blank" class="text-decoration-none">
-                            <span class="text-decoration-underline me-1">@link</span>
-                            <img src="./assets/box-arrow-up-right.svg" alt="Dieses Icon symbolisiert einen Link zu einer anderen Webseite" />
-                        </a>
+                        <img src="./assets/box-arrow-up-right.svg" alt="symbolisiert einen Link zu einer anderen Webseite" class="me-1" />
+                        <a href="@link" target="_blank">@link</a>
                     </div>
                 }
             </div>

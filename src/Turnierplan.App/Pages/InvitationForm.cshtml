@@ -75,19 +75,35 @@ else
                         @if (hasContactEmail)
                         {
                             <div>
-                                <img src="./assets/envelope.svg" alt="EMail-Icon" class="me-1"/>
+                                <img src="./assets/envelope.svg" alt="symbolisiert eine E-Mail" class="me-1"/>
                                 <span>@invitationLink.ContactEmail</span>
                             </div>
                         }
                         @if (hasContactTelephone)
                         {
                             <div>
-                                <img src="./assets/telephone.svg" alt="Telefon-Icon" class="me-1"/>
+                                <img src="./assets/telephone.svg" alt="symbolisiert ein Telefon" class="me-1"/>
                                 <span>@invitationLink.ContactTelephone</span>
                             </div>
                         }
                     </div>
 
+                    <hr class="my-0"/>
+                }
+                
+                @if (invitationLink.ExternalLinks.Count > 0)
+                {
+                    <div class="d-flex flex-column gap-1">
+                        <div class="fw-bold mb-2">Wichtige Links:</div>
+                        @foreach (var externalLink in invitationLink.ExternalLinks)
+                        {
+                            <div>
+                                <img src="./assets/box-arrow-up-right.svg" alt="symbolisiert einen Link zu einer anderen Webseite" class="me-1" />
+                                <a href="@externalLink.Url" target="_blank">@externalLink.Name</a>
+                            </div>
+                        }
+                    </div>
+                    
                     <hr class="my-0"/>
                 }
 
