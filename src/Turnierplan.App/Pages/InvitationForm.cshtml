@@ -1,5 +1,6 @@
 @page
 @using Microsoft.Extensions.Options
+@using Turnierplan.App.Extensions
 @using Turnierplan.App.Options
 @using Turnierplan.ImageStorage
 @model Turnierplan.App.Pages.InvitationForm
@@ -30,6 +31,8 @@ else
             </div>
             <div class="bg-white pt-4 p-3 d-flex flex-column gap-3">
                 @{
+                    var isValidUntilSurpassed = invitationLink.ValidUntil.HasValue && invitationLink.ValidUntil.Value < DateTime.UtcNow;
+
                     var hasAtLeastOneLogo = invitationLink.PrimaryLogo is not null || invitationLink.SecondaryLogo is not null;
                     var hasDescription = !string.IsNullOrWhiteSpace(invitationLink.Description);
 
@@ -64,6 +67,37 @@ else
                     <hr class="my-0"/>
                 }
 
+                @if (isValidUntilSurpassed)
+                {
+                    <div class="fw-bold text-danger">
+                        <span>Der Anmeldeschluss ist leider überschritten. Es sind somit keine weiteren Anmeldungen mehr möglich.</span>
+
+                        @if (hasContactEmail || hasContactTelephone)
+                        {
+                            <span>Bitte wenden Sie sich bei Fragen an die untenstehenden Kontaktdaten.</span>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        TURNIERE HIER :)
+                    </div>
+                }
+
+                <hr class="my-0"/>
+
+                @if (invitationLink.ValidUntil.HasValue)
+                {
+                    <div class="d-flex flex-column gap-1">
+                        <div class="fw-bold mb-2">Anmeldeschluss:</div>
+                        <div id="validUntilDate"></div>
+                        <script>displayFormattedDate('validUntilDate', @(invitationLink.ValidUntil.Value.GetMillisecondsSinceUtc()));</script>
+                    </div>
+
+                    <hr class="my-0"/>
+                }
+
                 @if (hasContactPerson || hasContactEmail || hasContactTelephone)
                 {
                     <div class="d-flex flex-column gap-1">
@@ -90,7 +124,7 @@ else
 
                     <hr class="my-0"/>
                 }
-                
+
                 @if (invitationLink.ExternalLinks.Count > 0)
                 {
                     <div class="d-flex flex-column gap-1">
@@ -114,10 +148,19 @@ else
                             Datenschutzerklärung
                         </a>
                     }
+
                     <span class="flex-grow-1"></span>
-                    <div class="btn btn-primary">
-                        Absenden
-                    </div>
+
+                    @if (isValidUntilSurpassed)
+                    {
+                        <span class="text-center small">Keine Anmeldung<br />mehr möglich</span>
+                    }
+                    else
+                    {
+                        <div class="btn btn-primary">
+                            Absenden
+                        </div>
+                    }
                 </div>
             </div>
         </div>
