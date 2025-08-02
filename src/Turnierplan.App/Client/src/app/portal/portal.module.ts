@@ -90,6 +90,7 @@ import { TournamentClassManagerComponent } from './components/tournament-class-m
 import { InvitationLinkTileComponent } from './components/invitation-link-manager/invitation-link-tile.component';
 import { TournamentClassDialogComponent } from './components/tournament-class-dialog/tournament-class-dialog.component';
 import { UnsavedChangesAlertComponent } from './components/unsaved-changes-alert/unsaved-changes-alert.component';
+import { ShareLinkComponent } from './components/share-link/share-link.component';
 
 const routes: Routes = [
   {
@@ -250,7 +251,8 @@ const routes: Routes = [
     TournamentClassManagerComponent,
     InvitationLinkTileComponent,
     TournamentClassDialogComponent,
-    UnsavedChangesAlertComponent
+    UnsavedChangesAlertComponent,
+    ShareLinkComponent
   ],
   imports: [
     CommonModule,

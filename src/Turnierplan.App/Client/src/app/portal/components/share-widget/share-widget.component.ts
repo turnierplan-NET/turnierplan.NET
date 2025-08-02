@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
 
-import { environment } from '../../../../environments/environment';
-
 @Component({
   standalone: false,
   selector: 'tp-share-widget',
@@ -18,14 +16,11 @@ export class ShareWidgetComponent {
   @Input()
   public viewsCounter?: number;
 
-  protected resourceUrl: string = '';
+  @Input()
+  public resourcePath: string = '';
+
   protected downloadName?: string;
   protected qrCodeUrl?: SafeUrl;
-
-  @Input()
-  public set resourcePath(value: string) {
-    this.resourceUrl = `${environment.originOverwrite ?? window.location.origin}${value}`;
-  }
 
   @Input()
   public set resourceName(value: string) {

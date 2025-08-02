@@ -92,6 +92,8 @@ internal sealed class DeletionHelper : IDeletionHelper
 
         await _venueRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
+        // TODO: Delete planning realms
+
         cancellationToken.ThrowIfCancellationRequested();
 
         // Note that ApiKeys and Folders need not be deleted explicitly, because the corresponding

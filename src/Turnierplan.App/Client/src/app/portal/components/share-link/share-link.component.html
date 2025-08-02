@@ -1,0 +1,9 @@
+<div class="d-flex flex-row gap-3 align-items-center">
+  <input class="form-control" style="max-width: 500px" type="text" [value]="resourceUrl" readonly />
+  <tp-copy-to-clipboard [value]="resourceUrl" />
+  <a
+    class="bi bi-box-arrow-up-right tp-cursor-pointer"
+    [ngbTooltip]="'Portal.General.OpenInNewTab' | translate"
+    [href]="resourceUrl"
+    target="_blank"></a>
+</div>
