@@ -723,6 +723,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       next: () => {
         if (this.tournament) {
           this.tournament.name = name;
+          this.titleService.setTitleFrom(this.tournament);
         }
         this.isUpdatingName = false;
       },

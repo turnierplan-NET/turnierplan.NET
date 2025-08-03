@@ -207,6 +207,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       next: () => {
         if (this.organization) {
           this.organization.name = name;
+          this.titleService.setTitleFrom(this.organization);
         }
         this.isUpdatingName = false;
       },
