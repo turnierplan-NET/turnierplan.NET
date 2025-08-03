@@ -71,7 +71,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       id: 3,
       title: 'Portal.ViewOrganization.Pages.Settings',
       icon: 'bi-gear',
-      authorization: Actions.GenericWrite
+      authorization: Actions.PrivilegedWrite
     }
   ];
 

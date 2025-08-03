@@ -20,6 +20,11 @@ internal static class Actions
     public static readonly Action PrivilegedDelete = new(Role.Owner);
 
     /// <summary>
+    /// A special kind of write action which shall require the <see cref="Role.Owner"/> role on the target entity.
+    /// </summary>
+    public static readonly Action PrivilegedWrite = new(Role.Owner);
+
+    /// <summary>
     /// Any action that modifies some entity.
     /// </summary>
     public static readonly Action GenericWrite = new(Role.Owner, Role.Contributor);
