@@ -1,5 +1,6 @@
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
+using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.Venue;
 using Turnierplan.ImageStorage;
@@ -16,6 +17,7 @@ internal sealed class DeletionHelper : IDeletionHelper
     private readonly IOrganizationRepository _organizationRepository;
     private readonly ITournamentRepository _tournamentRepository;
     private readonly IVenueRepository _venueRepository;
+    private readonly IPlanningRealmRepository _planningRealmRepository;
     private readonly IImageRepository _imageRepository;
     private readonly IImageStorage _imageStorage;
     private readonly ILogger<DeletionHelper> _logger;
@@ -24,6 +26,7 @@ internal sealed class DeletionHelper : IDeletionHelper
         IOrganizationRepository organizationRepository,
         ITournamentRepository tournamentRepository,
         IVenueRepository venueRepository,
+        IPlanningRealmRepository planningRealmRepository,
         IImageRepository imageRepository,
         IImageStorage imageStorage,
         ILogger<DeletionHelper> logger)
@@ -31,6 +34,7 @@ internal sealed class DeletionHelper : IDeletionHelper
         _organizationRepository = organizationRepository;
         _tournamentRepository = tournamentRepository;
         _venueRepository = venueRepository;
+        _planningRealmRepository = planningRealmRepository;
         _imageRepository = imageRepository;
         _imageStorage = imageStorage;
         _logger = logger;
@@ -93,6 +97,13 @@ internal sealed class DeletionHelper : IDeletionHelper
         await _venueRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         cancellationToken.ThrowIfCancellationRequested();
+
+        foreach (var planningRealm in organization.PlanningRealms.ToList()) // ToList() to avoid invalid operation exception
+        {
+            _planningRealmRepository.Remove(planningRealm);
+        }
+
+        await _planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
         // Note that ApiKeys and Folders need not be deleted explicitly, because the corresponding
         // foreign keys in the database are configured with the 'Cascade' deletion behaviour.
