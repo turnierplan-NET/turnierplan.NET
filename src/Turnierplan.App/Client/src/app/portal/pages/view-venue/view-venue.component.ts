@@ -89,6 +89,14 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
     this.currentPage = number;
   }
 
+  protected renameVenue(name: string): void {
+    if (this.venue) {
+      this.venue.name = name;
+      this.isDirty = true;
+      this.titleService.setTitleFrom(this.venue);
+    }
+  }
+
   protected editDescription(): void {
     if (!this.venue) {
       return;
