@@ -49,11 +49,8 @@
             {
                 <div class="mt-2">
                     <span id="tournament-kickoff"></span>
+                     <script>displayFormattedDate('tournament-kickoff', @(startTimestamp.Value.GetMillisecondsSinceUtc()));</script>
                 </div>
-                <script>
-                    const date = new Date(@(startTimestamp.Value.GetMillisecondsSinceUtc()));
-                    document.getElementById('tournament-kickoff').innerHTML = `${twoDigit(date.getDate())}.${twoDigit(date.getMonth() + 1)}.${date.getFullYear()} um ${twoDigit(date.getHours())}:${twoDigit(date.getMinutes())}`;
-                </script>
             }
 
             @if (Model.Tournament.Venue is not null)

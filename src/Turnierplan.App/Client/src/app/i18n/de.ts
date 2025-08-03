@@ -889,6 +889,7 @@ export const de = {
       },
       NoInvitationLinks: 'Es sind aktuell keine Anmeldelinks vorhanden.',
       InvitationLink: {
+        PublicUrl: 'Link zum Anmeldeformular:',
         Properties: {
           Name: 'Name:',
           ColorCode: 'Farbcode:',

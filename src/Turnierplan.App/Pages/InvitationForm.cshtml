@@ -1,0 +1,228 @@
+@page
+@using Microsoft.Extensions.Options
+@using Turnierplan.App.Extensions
+@using Turnierplan.App.Options
+@using Turnierplan.ImageStorage
+@model Turnierplan.App.Pages.InvitationForm
+@inject IImageStorage ImageStorage
+@inject IOptions<TurnierplanOptions> TurnierplanOptions
+
+@{
+    Layout = "_Layout";
+
+    var invitationLink = Model.Data;
+    ViewData["Title"] = invitationLink is null ? "Formular nicht gefunden" : invitationLink.Title ?? "Anmeldeformular";
+}
+
+@if (invitationLink is null)
+{
+    <div class="container px-2 px-lg-5">
+        <div class="fw-bold text-danger">
+            Der Link ist ungültig oder das gesuchte Formular existiert nicht.
+        </div>
+    </div>
+}
+else
+{
+    <div class="container px-0" style="max-width: 650px;" id="mainContainer">
+        <div class="mt-5 border shadow d-flex flex-column">
+            <div style="background: #3c3c3c" class="py-2 text-center text-white fw-bold fs-5">@(string.IsNullOrWhiteSpace(invitationLink.Title) ? "Anmeldeformular" : invitationLink.Title)</div>
+
+            <div class="bg-white pt-4 p-3 d-flex flex-column gap-3">
+                @{
+                    var isValidUntilSurpassed = invitationLink.ValidUntil.HasValue && invitationLink.ValidUntil.Value < DateTime.UtcNow;
+
+                    var hasAtLeastOneLogo = invitationLink.PrimaryLogo is not null || invitationLink.SecondaryLogo is not null;
+                    var hasDescription = !string.IsNullOrWhiteSpace(invitationLink.Description);
+
+                    var hasContactPerson = !string.IsNullOrWhiteSpace(invitationLink.ContactPerson);
+                    var hasContactEmail = !string.IsNullOrWhiteSpace(invitationLink.ContactEmail);
+                    var hasContactTelephone = !string.IsNullOrWhiteSpace(invitationLink.ContactTelephone);
+                }
+
+                @if (hasAtLeastOneLogo)
+                {
+                    <div class="d-flex flex-row justify-content-evenly">
+                        @if (invitationLink.PrimaryLogo is not null)
+                        {
+                            <img style="width: 9em;" src="@ImageStorage.GetFullImageUrl(invitationLink.PrimaryLogo)" alt="@invitationLink.PrimaryLogo.Name"/>
+                        }
+                        @if (invitationLink.SecondaryLogo is not null)
+                        {
+                            <img style="width: 9em;" src="@ImageStorage.GetFullImageUrl(invitationLink.SecondaryLogo)" alt="@invitationLink.SecondaryLogo.Name"/>
+                        }
+                    </div>
+                }
+
+                @if (hasDescription)
+                {
+                    <div>@invitationLink.Description</div>
+                }
+
+                @if (hasAtLeastOneLogo || hasDescription)
+                {
+                    <hr class="my-0"/>
+                }
+
+                @if (isValidUntilSurpassed)
+                {
+                    <div class="fw-bold text-danger">
+                        <span>Der Anmeldeschluss ist leider überschritten. Es sind somit keine weiteren Anmeldungen mehr möglich.</span>
+
+                        @if (hasContactEmail || hasContactTelephone)
+                        {
+                            <span>Bitte wenden Sie sich bei Fragen an die untenstehenden Kontaktdaten.</span>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-decoration-underline">Ihre Kontaktdaten</div>
+
+                    <div class="d-flex flex-column gap-1">
+                        <label class="fw-bold" for="name">Name:</label>
+                        <input class="form-control" type="text" id="name"/>
+                    </div>
+
+                    <div class="d-flex flex-column gap-1">
+                        <label class="fw-bold" for="name">E-Mail:</label>
+                        <input class="form-control" type="email" id="email"/>
+                    </div>
+
+                    <div class="d-flex flex-column gap-1">
+                        <label for="name">
+                            <span class="fw-bold">Telefon-Nr.:</span>
+                            <span class="small">(optional)</span>
+                        </label>
+                        <input class="form-control" type="tel" id="telephone_nr"/>
+                    </div>
+
+                    <hr class="my-0"/>
+
+                    <div class="text-decoration-underline">Mannschaften</div>
+
+                    @foreach (var entry in invitationLink.Entries)
+                    {
+                        <div class="d-flex flex-column gap-1">
+                            <div class="fw-bold">@entry.Class.Name</div>
+
+                            @if (entry.AllowNewRegistrations)
+                            {
+                                var limit = entry.MaxTeamsPerRegistration ?? 9999;
+
+                                <div class="d-flex flex-row gap-2">
+                                    <div style="flex-basis: 25%">
+                                        <input class="form-control" type="number" id="team_count_@entry.Id" value="0" min="0" max="@limit" placeholder="Anzahl Teams" aria-label="Anzahl der Mannschaften"/>
+                                    </div>
+                                    <div style="flex-basis: 75%">
+                                        <input class="form-control" type="text" id="team_name_@entry.Id" placeholder="Name" aria-label="Name der Mannschaft"/>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="small text-secondary">Zur Zeit sind keine Neuen Anmeldungen für dieses Turnier möglich</div>
+                            }
+                        </div>
+                    }
+
+                    <hr class="my-0"/>
+
+                    <div class="d-flex flex-column gap-1">
+                        <label for="name">
+                            <span class="fw-bold">Weitere Anmerkungen:</span>
+                            <span class="small">(optional)</span>
+                        </label>
+                        <textarea class="form-control" rows="3" id="comment"></textarea>
+                    </div>
+                }
+
+                <hr class="my-0"/>
+
+                @if (invitationLink.ValidUntil.HasValue)
+                {
+                    <div class="d-flex flex-column gap-1">
+                        <div class="fw-bold mb-2">Anmeldeschluss:</div>
+                        <div id="validUntilDate"></div>
+                        <script>displayFormattedDate('validUntilDate', @(invitationLink.ValidUntil.Value.GetMillisecondsSinceUtc()));</script>
+                    </div>
+
+                    <hr class="my-0"/>
+                }
+
+                @if (hasContactPerson || hasContactEmail || hasContactTelephone)
+                {
+                    <div class="d-flex flex-column gap-1">
+                        <div class="fw-bold mb-2">Kontakt zum Veranstalter:</div>
+                        @if (hasContactPerson)
+                        {
+                            <div>@invitationLink.ContactPerson</div>
+                        }
+                        @if (hasContactEmail)
+                        {
+                            <div>
+                                <img src="./assets/envelope.svg" alt="symbolisiert eine E-Mail" class="me-1"/>
+                                <span>@invitationLink.ContactEmail</span>
+                            </div>
+                        }
+                        @if (hasContactTelephone)
+                        {
+                            <div>
+                                <img src="./assets/telephone.svg" alt="symbolisiert ein Telefon" class="me-1"/>
+                                <span>@invitationLink.ContactTelephone</span>
+                            </div>
+                        }
+                    </div>
+
+                    <hr class="my-0"/>
+                }
+
+                @if (invitationLink.ExternalLinks.Count > 0)
+                {
+                    <div class="d-flex flex-column gap-1">
+                        <div class="fw-bold mb-2">Wichtige Links:</div>
+                        @foreach (var externalLink in invitationLink.ExternalLinks)
+                        {
+                            <div>
+                                <img src="./assets/box-arrow-up-right.svg" alt="symbolisiert einen Link zu einer anderen Webseite" class="me-1" />
+                                <a href="@externalLink.Url" target="_blank">@externalLink.Name</a>
+                            </div>
+                        }
+                    </div>
+
+                    <hr class="my-0"/>
+                }
+
+                <div class="d-flex flex-row align-items-center">
+                    @if (!string.IsNullOrWhiteSpace(TurnierplanOptions.Value.PrivacyUrl))
+                    {
+                        <a class="text-secondary small" href="@TurnierplanOptions.Value.PrivacyUrl" target="_blank" rel="noopener">
+                            Datenschutzerklärung
+                        </a>
+                    }
+
+                    <span class="flex-grow-1"></span>
+
+                    @if (isValidUntilSurpassed)
+                    {
+                        <span class="text-center small">Keine Anmeldung<br />mehr möglich</span>
+                    }
+                    else
+                    {
+                        <div class="shadow-sm btn btn-primary">
+                            Absenden
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        @{ /* TODO: Before merging, check if this is still required */ }
+        if (!('fetch' in window)) {
+            document.getElementById('mainContainer').innerHTML = '<div class="fw-bold text-danger">Bitte verwenden Sie einen modernen Browser, um das Formular auszufüllen.</div>';
+        }
+    </script>
+}

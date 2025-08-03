@@ -28,3 +28,7 @@ html, body, .overlay-background {
     align-items: end;
   }
 }
+
+.btn {
+  border-radius: 0 !important;
+}

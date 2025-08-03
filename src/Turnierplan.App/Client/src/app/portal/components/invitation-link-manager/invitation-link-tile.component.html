@@ -2,7 +2,7 @@
 
 <div class="card shadow-sm">
   <div class="card-body d-flex flex-column gap-3">
-    <div class="fs-5 fw-bold card-title mb-0">
+    <div class="fs-5 fw-bold card-title mb-2">
       <span
         class="me-2 d-inline-block text-center text-white"
         style="width: 1.5em; border-radius: 0.4em"
@@ -13,7 +13,14 @@
       <span>{{ invitationLink.name }}</span>
     </div>
 
-    <div class="row">
+    @if (invitationLink.publicId) {
+      <div>
+        <div class="mb-2 fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.PublicUrl"></div>
+        <tp-share-link [resourcePath]="'/invitationForm?id=' + invitationLink.publicId" />
+      </div>
+    }
+
+    <div class="mt-2 row">
       <div class="col-12 col-lg-7 d-flex flex-column">
         <div class="row">
           <div class="col-12 col-md-6 d-flex flex-column">
@@ -277,13 +284,13 @@
       </div>
 
       <div class="mb-3">
-        <label for="contactEmail" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactEmail"></label>
-        <input id="contactEmail" type="text" class="form-control" formControlName="contactEmail" />
+        <label for="contactPerson" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactPerson"></label>
+        <input id="contactPerson" type="text" class="form-control" formControlName="contactPerson" />
       </div>
 
       <div class="mb-3">
-        <label for="contactPerson" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactPerson"></label>
-        <input id="contactPerson" type="text" class="form-control" formControlName="contactPerson" />
+        <label for="contactEmail" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactEmail"></label>
+        <input id="contactEmail" type="text" class="form-control" formControlName="contactEmail" />
       </div>
 
       <div class="mb-3">
