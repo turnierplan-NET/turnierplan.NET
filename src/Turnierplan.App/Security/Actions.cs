@@ -39,6 +39,11 @@ internal static class Actions
     /// </summary>
     public static readonly Action TournamentConduct = new(Role.Owner, Role.Contributor, Role.Reporter);
 
+    /// <summary>
+    /// Any action that queries, adds or modifies applications in a planning realm.
+    /// </summary>
+    public static readonly Action ManageApplications = new(Role.Owner, Role.Contributor, Role.ApplicationOfficer);
+
     internal sealed class Action(params Role[] requiredRoles)
     {
         public bool IsAllowed(IEnumerable<Role> availableRoles)
