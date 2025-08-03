@@ -31,7 +31,17 @@ public enum Role
     /// This role grants the permission to perform all actions in a tournament which
     /// are necessary while the tournament is played.
     /// </summary>
-    Reporter = 2000
+    Reporter = 2000,
+
+    #endregion
+
+    #region Planning Realm Roles
+
+    /// <summary>
+    /// This role grants the permission to view and modify applications in a planning realm. These actions
+    /// are not allowed by the standard <see cref="Reader"/> role because applications may contain PII.
+    /// </summary>
+    ApplicationOfficer = 3000
 
     #endregion
 }
