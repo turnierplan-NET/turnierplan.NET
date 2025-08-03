@@ -77,6 +77,30 @@ else
                 }
                 else
                 {
+                    <div class="text-decoration-underline">Ihre Kontaktdaten</div>
+
+                    <div class="d-flex flex-column gap-1">
+                        <label class="fw-bold" for="name">Name:</label>
+                        <input class="form-control" type="text" id="name"/>
+                    </div>
+
+                    <div class="d-flex flex-column gap-1">
+                        <label class="fw-bold" for="name">E-Mail:</label>
+                        <input class="form-control" type="email" id="email"/>
+                    </div>
+
+                    <div class="d-flex flex-column gap-1">
+                        <label for="name">
+                            <span class="fw-bold">Telefon-Nr.:</span>
+                            <span class="small">(optional)</span>
+                        </label>
+                        <input class="form-control" type="tel" id="telephone_nr"/>
+                    </div>
+
+                    <hr class="my-0"/>
+
+                    <div class="text-decoration-underline">Mannschaften</div>
+
                     @foreach (var entry in invitationLink.Entries)
                     {
                         <div class="d-flex flex-column gap-1">
@@ -88,10 +112,10 @@ else
 
                                 <div class="d-flex flex-row gap-2">
                                     <div style="flex-basis: 25%">
-                                        <input class="form-control" type="number" value="0" min="0" max="@limit" placeholder="Anzahl Teams" id="team_count_@entry.Id" aria-label="Anzahl der Mannschaften"/>
+                                        <input class="form-control" type="number" id="team_count_@entry.Id" value="0" min="0" max="@limit" placeholder="Anzahl Teams" aria-label="Anzahl der Mannschaften"/>
                                     </div>
                                     <div style="flex-basis: 75%">
-                                        <input class="form-control" placeholder="Name" id="team_name_@entry.Id" aria-label="Name der Mannschaft"/>
+                                        <input class="form-control" type="text" id="team_name_@entry.Id" placeholder="Name" aria-label="Name der Mannschaft"/>
                                     </div>
                                 </div>
                             }
@@ -101,6 +125,16 @@ else
                             }
                         </div>
                     }
+
+                    <hr class="my-0"/>
+
+                    <div class="d-flex flex-column gap-1">
+                        <label for="name">
+                            <span class="fw-bold">Weitere Anmerkungen:</span>
+                            <span class="small">(optional)</span>
+                        </label>
+                        <textarea class="form-control" rows="3" id="comment"></textarea>
+                    </div>
                 }
 
                 <hr class="my-0"/>
@@ -155,7 +189,7 @@ else
                             </div>
                         }
                     </div>
-                    
+
                     <hr class="my-0"/>
                 }
 
@@ -184,7 +218,9 @@ else
         </div>
     </div>
 
+
     <script>
+        @{ /* TODO: Before merging, check if this is still required */ }
         if (!('fetch' in window)) {
             document.getElementById('mainContainer').innerHTML = '<div class="fw-bold text-danger">Bitte verwenden Sie einen modernen Browser, um das Formular auszufüllen.</div>';
         }
