@@ -76,10 +76,10 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
         return invitationLink;
     }
 
-    public Application AddApplication(InvitationLink? sourceLink, string name, string contact)
+    public Application AddApplication(InvitationLink? sourceLink, string contact)
     {
         var tag = GenerateApplicationTag();
-        var application = new Application(sourceLink, tag, name, contact);
+        var application = new Application(sourceLink, tag, contact);
         _applications.Add(application);
 
         return application;

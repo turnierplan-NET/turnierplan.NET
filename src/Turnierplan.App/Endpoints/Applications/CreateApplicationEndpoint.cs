@@ -39,7 +39,7 @@ internal sealed class CreateApplicationEndpoint : EndpointBase
             return Results.Forbid();
         }
 
-        var application = planningRealm.AddApplication(null, request.Name, request.Contact);
+        var application = planningRealm.AddApplication(null, request.Contact);
 
         application.Notes = request.Notes;
         application.ContactEmail = request.ContactEmail;
@@ -56,8 +56,8 @@ internal sealed class CreateApplicationEndpoint : EndpointBase
 
             for (var i = 0; i < entry.NumberOfTeams; i++)
             {
-                // TODO: Set team names using incrementing IDs 
-                application.AddTeam(tournamentClass);
+                var name = $"{request.Name} {i + 1}";
+                application.AddTeam(tournamentClass, name);
             }
         }
 

@@ -26,9 +26,6 @@ public sealed class ApplicationEntityTypeConfiguration : IEntityTypeConfiguratio
         builder.Property(x => x.CreatedAt)
             .IsRequired();
 
-        builder.Property(x => x.Name)
-            .IsRequired();
-
         builder.Property(x => x.Notes)
             .IsRequired();
 
