@@ -4,9 +4,10 @@ namespace Turnierplan.Core.PlanningRealm;
 
 public sealed class ApplicationTeam : Entity<long>
 {
-    internal ApplicationTeam(long id)
+    internal ApplicationTeam(long id, string name)
     {
         Id = id;
+        Name = name;
     }
 
     internal ApplicationTeam(TournamentClass @class)
@@ -16,6 +17,8 @@ public sealed class ApplicationTeam : Entity<long>
     }
 
     public override long Id { get; protected set; }
+
+    public string Name { get; set; }
 
     public TournamentClass Class { get; internal set; } = null!;
 

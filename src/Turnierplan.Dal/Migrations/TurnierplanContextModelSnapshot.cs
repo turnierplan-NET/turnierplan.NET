@@ -322,6 +322,10 @@ namespace Turnierplan.Dal.Migrations
                     b.Property<long>("ClassId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationId");

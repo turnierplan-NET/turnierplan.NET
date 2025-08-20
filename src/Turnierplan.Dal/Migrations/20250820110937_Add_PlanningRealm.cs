@@ -204,6 +204,7 @@ namespace Turnierplan.Dal.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
                     ClassId = table.Column<long>(type: "bigint", nullable: false),
                     ApplicationId = table.Column<long>(type: "bigint", nullable: false)
                 },
