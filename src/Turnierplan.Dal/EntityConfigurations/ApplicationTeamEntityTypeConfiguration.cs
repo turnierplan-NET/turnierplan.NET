@@ -19,8 +19,5 @@ public sealed class ApplicationTeamEntityTypeConfiguration : IEntityTypeConfigur
             .WithMany()
             .OnDelete(DeleteBehavior.Restrict)
             .IsRequired();
-
-        builder.Property(x => x.Name)
-            .IsRequired();
     }
 }
