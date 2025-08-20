@@ -51,4 +51,10 @@ public sealed class Application : Entity<long>
     public string? Comment { get; set; }
 
     public IReadOnlyList<ApplicationTeam> Teams => _teams.AsReadOnly();
+
+    public void AddTeam(TournamentClass tournamentClass)
+    {
+        var team = new ApplicationTeam(tournamentClass);
+        _teams.Add(team);
+    }
 }

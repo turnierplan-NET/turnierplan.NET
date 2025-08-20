@@ -9,6 +9,12 @@ public sealed class ApplicationTeam : Entity<long>
         Id = id;
     }
 
+    internal ApplicationTeam(TournamentClass @class)
+    {
+        Id = 0;
+        Class = @class;
+    }
+
     public override long Id { get; protected set; }
 
     public TournamentClass Class { get; internal set; } = null!;

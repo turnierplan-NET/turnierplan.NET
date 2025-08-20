@@ -39,7 +39,27 @@ internal sealed class CreateApplicationEndpoint : EndpointBase
             return Results.Forbid();
         }
 
-        // TODO: Add application based on request body
+        var application = planningRealm.AddApplication(null, request.Name, request.Contact);
+
+        application.Notes = request.Notes;
+        application.ContactEmail = request.ContactEmail;
+        application.ContactTelephone = request.ContactTelephone;
+
+        foreach (var entry in request.Entries)
+        {
+            var tournamentClass = planningRealm.TournamentClasses.FirstOrDefault(x => x.Id == entry.TournamentClassId);
+
+            if (tournamentClass is null)
+            {
+                return Results.NotFound();
+            }
+
+            for (var i = 0; i < entry.NumberOfTeams; i++)
+            {
+                // TODO: Set team names using incrementing IDs 
+                application.AddTeam(tournamentClass);
+            }
+        }
 
         await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
@@ -48,7 +68,24 @@ internal sealed class CreateApplicationEndpoint : EndpointBase
 
     public sealed record CreateApplicationEndpointRequest
     {
-        // TODO: Add required properties
+        public required string Name { get; init; }
+
+        public required string Notes { get; init; }
+
+        public required string Contact { get; init; }
+
+        public string? ContactEmail { get; init; }
+
+        public string? ContactTelephone { get; init; }
+
+        public required CreateApplicationEndpointRequestEntry[] Entries { get; init; }
+    }
+
+    public sealed record CreateApplicationEndpointRequestEntry
+    {
+        public required long TournamentClassId { get; init; }
+
+        public required int NumberOfTeams { get; init; }
     }
 
     internal sealed class Validator : AbstractValidator<CreateApplicationEndpointRequest>
@@ -57,6 +94,42 @@ internal sealed class CreateApplicationEndpoint : EndpointBase
 
         private Validator()
         {
+            RuleFor(x => x.Name)
+                .NotEmpty();
+
+            RuleFor(x => x.Notes)
+                .NotEmpty();
+
+            RuleFor(x => x.Contact)
+                .NotEmpty();
+
+            RuleFor(x => x.ContactEmail)
+                .NotEmpty()
+                .When(x => x.ContactEmail is not null);
+
+            RuleFor(x => x.ContactTelephone)
+                .NotEmpty()
+                .When(x => x.ContactTelephone is not null);
+
+            RuleFor(x => x.Entries)
+                .NotEmpty();
+
+            RuleFor(x => x.Entries)
+                .Must(entries =>
+                {
+                    return entries.Length == entries.DistinctBy(x => x.TournamentClassId).Count();
+                })
+                .WithMessage("There may only be one entry for each tournament class id.");
+
+            RuleForEach(x => x.Entries)
+                .ChildRules(entry =>
+                {
+                    entry.RuleFor(x => x.TournamentClassId)
+                        .GreaterThan(0);
+
+                    entry.RuleFor(x => x.NumberOfTeams)
+                        .GreaterThanOrEqualTo(1);
+                });
         }
     }
 }
