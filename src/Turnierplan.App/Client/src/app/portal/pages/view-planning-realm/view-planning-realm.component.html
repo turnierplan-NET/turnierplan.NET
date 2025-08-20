@@ -6,7 +6,7 @@
     [navigationTabs]="pages"
     [contextEntityId]="planningRealm.id"
     [rememberNavigationTab]="true"
-    [enableBottomPadding]="!isApplicationsPage"
+    [enableBottomPadding]="!showApplicationManager"
     (navigationTabSelected)="togglePage($event.id)">
     <ng-template #buttons>
       @switch (currentPage) {
@@ -42,7 +42,7 @@
       }
     </ng-template>
     <ng-template #content>
-      <div class="card" [ngClass]="{ 'd-none': isApplicationsPage }">
+      <div class="card" [ngClass]="{ 'd-none': showApplicationManager }">
         @switch (currentPage) {
           @case (0) {
             <!-- Tournament classes page -->
@@ -76,7 +76,14 @@
               }
             </div>
           }
-          <!-- The "invitations" page (id 2) utilizes the entire page width and the HTML template is located at the end of this file outside of the <tp-page-frame> -->
+          @case (2) {
+            <!-- If there are no unsaved changes, the application manager is displayed at the bottom of this template, outside of the <tp-page-frame> -->
+            @if (hasUnsavedChanges()) {
+              <div class="card-body">
+                <tp-alert [type]="'warning'" [icon]="'exclamation-triangle'" [text]="'Portal.ViewPlanningRealm.SaveToViewApplications'" />
+              </div>
+            }
+          }
           @case (3) {
             <!-- Settings page -->
             <ng-container *tpIsActionAllowed="[planningRealm.id, Actions.ReadOrWriteRoleAssignments]">
@@ -100,9 +107,8 @@
     </ng-template>
   </tp-page-frame>
 
-  @if (isApplicationsPage) {
-    <!-- TODO: Implement the applications page -->
-    <div class="mx-5 bg-secondary-subtle">TODO: Applications panel</div>
+  @if (showApplicationManager) {
+    <tp-manage-applications />
 
     <!-- Normally, this padding is added by the page frame. In case of the applications page, that padding is disabled. -->
     <div style="height: 5em"></div>

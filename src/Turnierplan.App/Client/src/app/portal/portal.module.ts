@@ -91,6 +91,7 @@ import { InvitationLinkTileComponent } from './components/invitation-link-manage
 import { TournamentClassDialogComponent } from './components/tournament-class-dialog/tournament-class-dialog.component';
 import { UnsavedChangesAlertComponent } from './components/unsaved-changes-alert/unsaved-changes-alert.component';
 import { ShareLinkComponent } from './components/share-link/share-link.component';
+import { ManageApplicationsComponent } from './components/manage-applications/manage-applications.component';
 
 const routes: Routes = [
   {
@@ -252,7 +253,8 @@ const routes: Routes = [
     InvitationLinkTileComponent,
     TournamentClassDialogComponent,
     UnsavedChangesAlertComponent,
-    ShareLinkComponent
+    ShareLinkComponent,
+    ManageApplicationsComponent
   ],
   imports: [
     CommonModule,
