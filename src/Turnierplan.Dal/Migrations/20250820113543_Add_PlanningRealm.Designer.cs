@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20250820110937_Add_PlanningRealm")]
+    [Migration("20250820113543_Add_PlanningRealm")]
     partial class Add_PlanningRealm
     {
         /// <inheritdoc />
@@ -284,10 +284,6 @@ namespace Turnierplan.Dal.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<string>("Notes")
                         .IsRequired()

@@ -139,7 +139,6 @@ namespace Turnierplan.Dal.Migrations
                     SourceLinkId = table.Column<long>(type: "bigint", nullable: true),
                     Tag = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
                     Notes = table.Column<string>(type: "text", nullable: false),
                     Contact = table.Column<string>(type: "text", nullable: false),
                     ContactEmail = table.Column<string>(type: "text", nullable: true),
