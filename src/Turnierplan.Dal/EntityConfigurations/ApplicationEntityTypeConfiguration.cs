@@ -29,14 +29,17 @@ public sealed class ApplicationEntityTypeConfiguration : IEntityTypeConfiguratio
         builder.Property(x => x.Name)
             .IsRequired();
 
-        builder.Property(x => x.Email);
-
-        builder.Property(x => x.Telephone);
-
-        builder.Property(x => x.CommentFromSender);
-
         builder.Property(x => x.Notes)
             .IsRequired();
+
+        builder.Property(x => x.Contact)
+            .IsRequired();
+
+        builder.Property(x => x.ContactEmail);
+
+        builder.Property(x => x.ContactTelephone);
+
+        builder.Property(x => x.Comment);
 
         builder.HasMany(x => x.Teams)
             .WithOne()
