@@ -22,7 +22,7 @@
   </div>
 </div>
 
-<div class="my-5" [ngClass]="{ 'tp-ultra-slim-container': ultraSlim, container: !ultraSlim }">
+<div class="mt-5" [ngClass]="{ 'tp-ultra-slim-container': ultraSlim, container: !ultraSlim }">
   @if (preContent) {
     <ng-container [ngTemplateOutlet]="preContent"></ng-container>
   }
@@ -39,16 +39,20 @@
     <ng-container *ngIf="buttons" [ngTemplateOutlet]="buttons"></ng-container>
   </div>
 
-  <div class="mt-4">
-    @if (content) {
-      <ng-container [ngTemplateOutlet]="content"></ng-container>
-    } @else {
-      <ng-content></ng-content>
-    }
-  </div>
+  @if (!hideMainContent) {
+    <div class="mt-4">
+      @if (mainContent) {
+        <ng-container [ngTemplateOutlet]="mainContent"></ng-container>
+      } @else {
+        <ng-content></ng-content>
+      }
+    </div>
+  }
 </div>
 
-@if (enableBottomPadding) {
-  <!-- Add some "padding" so that the user can scroll further down than originally. -->
-  <div style="height: 5em"></div>
+@if (fullWidthContent) {
+  <ng-container [ngTemplateOutlet]="fullWidthContent"></ng-container>
 }
+
+<!-- Add some "padding" so that the user can scroll further down than originally. -->
+<div style="height: 7em"></div>

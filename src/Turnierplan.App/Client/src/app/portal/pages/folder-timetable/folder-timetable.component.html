@@ -11,7 +11,7 @@
         (click)="reloadTimetable()" />
     }
   </ng-template>
-  <ng-template #content>
+  <ng-template #mainContent>
     @if (view) {
       @if (missingTournaments.length > 0) {
         <tp-alert [type]="'warning'" [icon]="'exclamation-triangle'">
