@@ -45,7 +45,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
 
     private sealed class QueryLogic
     {
-        private const int DefaultLimit = 20;
+        private const int DefaultPageSize = 20;
 
         private readonly int _page;
         private readonly int _pageSize;
@@ -53,7 +53,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
         public QueryLogic(int? page, int? pageSize)
         {
             _page = page ?? 0;
-            _pageSize = pageSize ?? DefaultLimit;
+            _pageSize = pageSize ?? DefaultPageSize;
         }
 
         public PaginationResultDto<ApplicationDto> Process(PlanningRealm planningRealm, IMapper mapper)
