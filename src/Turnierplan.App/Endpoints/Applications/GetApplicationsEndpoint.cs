@@ -20,6 +20,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
         [FromRoute] PublicId planningRealmId,
         [FromQuery] int? page,
         [FromQuery] int? pageSize,
+        [FromQuery] string? searchTerm,
         IPlanningRealmRepository planningRealmRepository,
         IAccessValidator accessValidator,
         IMapper mapper,
@@ -37,7 +38,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
             return Results.Forbid();
         }
 
-        var queryLogic = new QueryLogic(page, pageSize);
+        var queryLogic = new QueryLogic(page, pageSize, searchTerm);
         var result = queryLogic.Process(planningRealm, mapper);
 
         return Results.Ok(result);
@@ -49,18 +50,31 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
 
         private readonly int _page;
         private readonly int _pageSize;
+        private readonly string? _searchTerm;
 
-        public QueryLogic(int? page, int? pageSize)
+        public QueryLogic(int? page, int? pageSize, string? searchTerm)
         {
             _page = page ?? 0;
             _pageSize = pageSize ?? DefaultPageSize;
+            _searchTerm = searchTerm?.Trim();
         }
 
         public PaginationResultDto<ApplicationDto> Process(PlanningRealm planningRealm, IMapper mapper)
         {
             var applications = planningRealm.Applications.AsEnumerable();
 
-            // TODO: Filter
+            if (!string.IsNullOrWhiteSpace(_searchTerm))
+            {
+                applications = applications.Where(x =>
+                {
+                    return x.Notes.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase)
+                        || x.Contact.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase)
+                        || x.ContactEmail?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) == true
+                        || x.ContactTelephone?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) == true
+                        || x.Comment?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) == true
+                        || x.Teams.Any(team => team.Name.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+                });
+            }
 
             return PaginationHelper.Process<Application, ApplicationDto>(applications, _page, _pageSize, mapper);
         }

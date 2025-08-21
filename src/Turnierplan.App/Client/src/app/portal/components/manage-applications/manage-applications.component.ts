@@ -23,7 +23,14 @@ export class ManageApplicationsComponent implements OnDestroy {
   constructor(private readonly applicationsService: ApplicationsService) {
     this.filter$
       .pipe(
-        switchMap((filter) => this.applicationsService.getApplications({ planningRealmId: this.planningRealm.id, page: 0, pageSize: 20 }))
+        switchMap((filter) =>
+          this.applicationsService.getApplications({
+            planningRealmId: this.planningRealm.id,
+            page: 0,
+            pageSize: 20,
+            searchTerm: filter.searchTerm
+          })
+        )
       )
       .subscribe({
         next: (result) => {

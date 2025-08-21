@@ -1,5 +1,10 @@
 <div class="d-flex flex-row gap-2">
-  <input style="width: 300px" class="form-control form-control-sm" placeholder="Suchbegriff" [(ngModel)]="searchTerm" />
+  <input
+    style="width: 300px"
+    class="form-control form-control-sm"
+    placeholder="Suchbegriff"
+    [(ngModel)]="searchTerm"
+    (keyup.enter)="emitFilter()" />
   <span class="flex-grow-1"></span>
   <tp-action-button
     [type]="'outline-primary'"
