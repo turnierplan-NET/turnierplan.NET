@@ -6,7 +6,6 @@
     [navigationTabs]="pages"
     [contextEntityId]="planningRealm.id"
     [rememberNavigationTab]="true"
-    [enableBottomPadding]="!showApplicationManager"
     (navigationTabSelected)="togglePage($event.id)">
     <ng-template #buttons>
       @switch (currentPage) {
@@ -41,7 +40,7 @@
         <tp-unsaved-changes-alert (save)="savePlanningRealm()" />
       }
     </ng-template>
-    <ng-template #content>
+    <ng-template #mainContent>
       <div class="card">
         @switch (currentPage) {
           @case (0) {
@@ -109,16 +108,14 @@
         }
       </div>
     </ng-template>
+    <ng-template #fullWidthContent>
+      @if (currentPage === 2) {
+        <div class="mt-3 d-flex flex-row justify-content-center px-3">
+          <div style="max-width: 1800px" class="flex-grow-1">
+            <tp-manage-applications [filter]="applicationsFilter" />
+          </div>
+        </div>
+      }
+    </ng-template>
   </tp-page-frame>
-
-  @if (showApplicationManager) {
-    <div class="d-flex flex-row justify-content-center px-3">
-      <div style="max-width: 1800px" class="flex-grow-1">
-        <tp-manage-applications [filter]="applicationsFilter" />
-      </div>
-    </div>
-
-    <!-- Normally, this padding is added by the page frame. In case of the applications manager, that padding is disabled. -->
-    <div style="height: 5em"></div>
-  }
 </ng-container>

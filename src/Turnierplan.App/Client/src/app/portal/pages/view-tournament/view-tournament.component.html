@@ -6,7 +6,7 @@
     [navigationTabs]="pages"
     [contextEntityId]="tournament.id"
     [rememberNavigationTab]="true"
-    [enableBottomPadding]="!isTournamentTreeVisible"
+    [hideMainContent]="isTournamentTreeVisible"
     (navigationTabSelected)="togglePage($event.id)">
     <ng-template #buttons>
       @switch (currentPage) {
@@ -53,7 +53,7 @@
         }
       }
     </ng-template>
-    <ng-template #content>
+    <ng-template #mainContent>
       <div class="card" [ngClass]="{ 'd-none': isTournamentTreeVisible }">
         @switch (currentPage) {
           @case (0) {
@@ -353,16 +353,14 @@
         }
       </div>
     </ng-template>
+    <ng-template #fullWidthContent>
+      @if (tournament && isTournamentTreeVisible) {
+        <tp-match-tree
+          [allowReporting]="(authorizationService.isActionAllowed$(tournament.id, Actions.TournamentConduct) | async) ?? false"
+          [matches]="processedMatches"
+          [groups]="processedGroups"
+          (matchClick)="matchClicked($event)" />
+      }
+    </ng-template>
   </tp-page-frame>
-
-  @if (tournament && isTournamentTreeVisible) {
-    <tp-match-tree
-      [allowReporting]="(authorizationService.isActionAllowed$(tournament.id, Actions.TournamentConduct) | async) ?? false"
-      [matches]="processedMatches"
-      [groups]="processedGroups"
-      (matchClick)="matchClicked($event)" />
-
-    <!-- Normally, this padding is added by the page frame. In case of the tournament tree, that padding is disabled. -->
-    <div style="height: 5em"></div>
-  }
 </ng-container>

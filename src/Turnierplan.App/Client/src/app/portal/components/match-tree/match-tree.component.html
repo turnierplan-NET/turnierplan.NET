@@ -1,4 +1,4 @@
-<div class="overflow-x-scroll p-3 position-relative overflow-y-hidden" (window:resize)="recalculate()" #containerDiv>
+<div class="overflow-x-scroll pt-5 px-3 position-relative overflow-y-hidden" (window:resize)="recalculate()" #containerDiv>
   <div class="d-flex flex-row gap-5" [ngClass]="containerClass" #layoutedDiv>
     @for (column of columns; track column.index) {
       <div class="d-flex flex-column justify-content-around gap-3">
