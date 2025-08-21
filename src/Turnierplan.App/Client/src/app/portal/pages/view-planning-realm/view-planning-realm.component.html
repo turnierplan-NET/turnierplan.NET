@@ -6,7 +6,6 @@
     [navigationTabs]="pages"
     [contextEntityId]="planningRealm.id"
     [rememberNavigationTab]="true"
-    [enableBottomPadding]="!isApplicationsPage"
     (navigationTabSelected)="togglePage($event.id)">
     <ng-template #buttons>
       @switch (currentPage) {
@@ -41,8 +40,8 @@
         <tp-unsaved-changes-alert (save)="savePlanningRealm()" />
       }
     </ng-template>
-    <ng-template #content>
-      <div class="card" [ngClass]="{ 'd-none': isApplicationsPage }">
+    <ng-template #mainContent>
+      <div class="card">
         @switch (currentPage) {
           @case (0) {
             <!-- Tournament classes page -->
@@ -98,13 +97,11 @@
         }
       </div>
     </ng-template>
+    <ng-template #fullWidthContent>
+      @if (isApplicationsPage) {
+        <!-- TODO: Implement the applications page -->
+        <div class="mx-5 bg-secondary-subtle">TODO: Applications panel</div>
+      }
+    </ng-template>
   </tp-page-frame>
-
-  @if (isApplicationsPage) {
-    <!-- TODO: Implement the applications page -->
-    <div class="mx-5 bg-secondary-subtle">TODO: Applications panel</div>
-
-    <!-- Normally, this padding is added by the page frame. In case of the applications page, that padding is disabled. -->
-    <div style="height: 5em"></div>
-  }
 </ng-container>

@@ -37,7 +37,7 @@ export class PageFrameComponent implements OnInit, OnChanges {
   public rememberNavigationTab: boolean = false;
 
   @Input()
-  public enableBottomPadding = true;
+  public hideMainContent: boolean = false;
 
   @Output()
   public navigationTabSelected = new EventEmitter<PageFrameNavigationTab>();
@@ -48,8 +48,11 @@ export class PageFrameComponent implements OnInit, OnChanges {
   @ContentChild('preContent')
   public preContent?: TemplateRef<unknown>;
 
-  @ContentChild('content')
-  public content?: TemplateRef<unknown>;
+  @ContentChild('mainContent')
+  public mainContent?: TemplateRef<unknown>;
+
+  @ContentChild('fullWidthContent')
+  public fullWidthContent?: TemplateRef<unknown>;
 
   protected readonly history = history;
   protected currentTabId?: number;
