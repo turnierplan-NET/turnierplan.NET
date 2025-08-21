@@ -108,7 +108,11 @@
   </tp-page-frame>
 
   @if (showApplicationManager) {
-    <tp-manage-applications />
+    <div class="d-flex flex-row justify-content-center px-3">
+      <div style="max-width: 1800px" class="flex-grow-1">
+        <tp-manage-applications />
+      </div>
+    </div>
 
     <!-- Normally, this padding is added by the page frame. In case of the applications page, that padding is disabled. -->
     <div style="height: 5em"></div>
