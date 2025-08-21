@@ -935,6 +935,11 @@ export const de = {
           'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.'
       },
       SaveToViewApplications: 'Speichern Sie die offenen Änderungen, um die Anmeldungen zu sehen und neue Anmeldungen hinzuzufügen.',
+      Applications: {
+        FilterPanel: {
+          Search: 'Suchen'
+        }
+      },
       Settings: {
         Rename: {
           Button: 'Umbenennen',

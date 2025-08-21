@@ -1,0 +1,9 @@
+<div class="d-flex flex-row gap-2">
+  <input style="width: 300px" class="form-control form-control-sm" placeholder="Suchbegriff" [(ngModel)]="searchTerm" />
+  <span class="flex-grow-1"></span>
+  <tp-action-button
+    [type]="'outline-primary'"
+    [icon]="'search'"
+    [title]="'Portal.ViewPlanningRealm.Applications.FilterPanel.Search'"
+    (click)="emitFilter()" />
+</div>

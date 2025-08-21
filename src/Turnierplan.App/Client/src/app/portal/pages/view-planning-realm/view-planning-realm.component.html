@@ -42,7 +42,7 @@
       }
     </ng-template>
     <ng-template #content>
-      <div class="card" [ngClass]="{ 'd-none': showApplicationManager }">
+      <div class="card">
         @switch (currentPage) {
           @case (0) {
             <!-- Tournament classes page -->
@@ -82,6 +82,10 @@
               <div class="card-body">
                 <tp-alert [type]="'warning'" [icon]="'exclamation-triangle'" [text]="'Portal.ViewPlanningRealm.SaveToViewApplications'" />
               </div>
+            } @else {
+              <div class="card-body p-2">
+                <tp-manage-applications-filter [filter]="applicationsFilter" (filterChange)="onApplicationsFilterChange($event)" />
+              </div>
             }
           }
           @case (3) {
@@ -110,7 +114,7 @@
   @if (showApplicationManager) {
     <div class="d-flex flex-row justify-content-center px-3">
       <div style="max-width: 1800px" class="flex-grow-1">
-        <tp-manage-applications />
+        <tp-manage-applications [filter]="applicationsFilter" />
       </div>
     </div>
 

@@ -92,6 +92,7 @@ import { TournamentClassDialogComponent } from './components/tournament-class-di
 import { UnsavedChangesAlertComponent } from './components/unsaved-changes-alert/unsaved-changes-alert.component';
 import { ShareLinkComponent } from './components/share-link/share-link.component';
 import { ManageApplicationsComponent } from './components/manage-applications/manage-applications.component';
+import { ManageApplicationsFilterComponent } from './components/manage-applications-filter/manage-applications-filter.component';
 
 const routes: Routes = [
   {
@@ -254,7 +255,8 @@ const routes: Routes = [
     TournamentClassDialogComponent,
     UnsavedChangesAlertComponent,
     ShareLinkComponent,
-    ManageApplicationsComponent
+    ManageApplicationsComponent,
+    ManageApplicationsFilterComponent
   ],
   imports: [
     CommonModule,

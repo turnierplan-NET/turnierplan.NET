@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ApplicationsFilter } from '../models/applications-filter';
 
 @Injectable()
 export class LocalStorageService {
@@ -32,6 +33,16 @@ export class LocalStorageService {
 
   public isOpenTournamentInNewTabEnabled(): boolean {
     return this.getValueFromLocalStorage('tp_openTournamentInNewTab', (x) => x === 'true') ?? true;
+  }
+
+  public setPlanningRealmApplicationsFilter(planningRealmId: string, filter: ApplicationsFilter): void {
+    localStorage.setItem(`tp_applicationsFilter_${planningRealmId}`, JSON.stringify(filter));
+  }
+
+  public getPlanningRealmApplicationsFilter(planningRealmId: string): ApplicationsFilter | undefined {
+    return this.getValueFromLocalStorage(`tp_applicationsFilter_${planningRealmId}`, (x) =>
+      x === undefined ? undefined : (JSON.parse(x) as ApplicationsFilter)
+    );
   }
 
   private getValueFromLocalStorage<T>(key: string, parser: (value: string) => T): T | undefined {
