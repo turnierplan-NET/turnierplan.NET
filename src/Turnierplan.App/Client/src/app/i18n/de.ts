@@ -938,7 +938,9 @@ export const de = {
       Applications: {
         FilterPanel: {
           Search: 'Suchen'
-        }
+        },
+        NoResults: 'Es gibt keine Anmeldungen, welche den angegebenen Filterkriterien entsprechen.',
+        PaginationRange: 'Zeige {{start}} - {{end}} von {{total}}'
       },
       Settings: {
         Rename: {

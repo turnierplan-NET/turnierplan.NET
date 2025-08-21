@@ -11,16 +11,18 @@ internal static class PaginationHelper
     {
         var itemsList = source.ToList();
         var pageOffset = page * pageSize;
-        var totalPages = (int)Math.Ceiling(itemsList.Count / (float)pageSize);
+        var totalItems = itemsList.Count;
+        var totalPages = (int)Math.Ceiling(totalItems / (float)pageSize);
 
-        if (pageOffset >= itemsList.Count)
+        if (pageOffset >= totalItems)
         {
             return new PaginationResultDto<TDto>
             {
                 Items = [],
                 CurrentPage = page,
                 ItemsPerPage = pageSize,
-                NumberOfPages = totalPages,
+                TotalItems = totalItems,
+                TotalPages = totalPages,
                 HasNextPage = false
             };
         }
@@ -42,7 +44,8 @@ internal static class PaginationHelper
             Items = mapper.MapCollection<TDto>(itemsList, languageCode).ToArray(),
             CurrentPage = page,
             ItemsPerPage = pageSize,
-            NumberOfPages = totalPages,
+            TotalItems = totalItems,
+            TotalPages = totalPages,
             HasNextPage = hasNextPage
         };
     }
