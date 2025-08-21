@@ -2,7 +2,8 @@
   <input
     style="width: 300px"
     class="form-control form-control-sm"
-    placeholder="Suchbegriff"
+    [placeholder]="'Portal.ViewPlanningRealm.Applications.FilterPanel.SearchTerm' | translate"
+    [attr.aria-label]="'Portal.ViewPlanningRealm.Applications.FilterPanel.SearchTerm' | translate"
     [(ngModel)]="searchTerm"
     (keyup.enter)="emitFilter()" />
   <span class="flex-grow-1"></span>
