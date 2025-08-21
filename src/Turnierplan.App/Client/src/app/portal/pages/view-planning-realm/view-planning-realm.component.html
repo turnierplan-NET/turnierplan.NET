@@ -76,12 +76,12 @@
             </div>
           }
           @case (2) {
-            <!-- If there are no unsaved changes, the application manager is displayed at the bottom of this template, outside of the <tp-page-frame> -->
             @if (hasUnsavedChanges()) {
               <div class="card-body">
                 <tp-alert [type]="'warning'" [icon]="'exclamation-triangle'" [text]="'Portal.ViewPlanningRealm.SaveToViewApplications'" />
               </div>
             } @else {
+              <!-- The actual applications manager is displayed as fullWidthContent below -->
               <div class="card-body p-2">
                 <tp-manage-applications-filter [filter]="applicationsFilter" (filterChange)="onApplicationsFilterChange($event)" />
               </div>
