@@ -1,25 +1,28 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
+using Turnierplan.App.Mapping;
+using Turnierplan.App.Models;
 using Turnierplan.App.Security;
 using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.App.Endpoints.Applications;
 
-internal sealed class CreateApplicationEndpoint : EndpointBase
+internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
 {
     protected override HttpMethod Method => HttpMethod.Post;
 
-    protected override string Route => "/api/planning-realms/{id}/applications";
+    protected override string Route => "/api/planning-realms/{planningRealmId}/applications";
 
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
-        [FromRoute] PublicId id,
+        [FromRoute] PublicId planningRealmId,
         [FromBody] CreateApplicationEndpointRequest request,
         IPlanningRealmRepository planningRealmRepository,
         IAccessValidator accessValidator,
+        IMapper mapper,
         CancellationToken cancellationToken)
     {
         if (!Validator.Instance.ValidateAndGetResult(request, out var result))
@@ -27,7 +30,7 @@ internal sealed class CreateApplicationEndpoint : EndpointBase
             return result;
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(id, IPlanningRealmRepository.Include.TournamentClasses).ConfigureAwait(false);
+        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Include.TournamentClasses).ConfigureAwait(false);
 
         if (planningRealm is null)
         {
@@ -63,7 +66,7 @@ internal sealed class CreateApplicationEndpoint : EndpointBase
 
         await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
-        return Results.NoContent();
+        return Results.Ok(mapper.Map<ApplicationDto>(application));
     }
 
     public sealed record CreateApplicationEndpointRequest
@@ -98,7 +101,7 @@ internal sealed class CreateApplicationEndpoint : EndpointBase
                 .NotEmpty();
 
             RuleFor(x => x.Notes)
-                .NotEmpty();
+                .NotNull(); // notes can be empty
 
             RuleFor(x => x.Contact)
                 .NotEmpty();

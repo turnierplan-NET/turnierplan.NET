@@ -106,7 +106,7 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
         do
         {
             // create a random 6-digit tag
-            tag = 1_000_000 + Random.Shared.Next(9_000_000);
+            tag = 100_000 + Random.Shared.Next(900_000);
 
             isDuplicate = _applications.Any(x => x.Tag == tag);
         } while (isDuplicate && attempt++ < maxAttempts);
