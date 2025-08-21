@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
-using Turnierplan.App.Mapping;
 using Turnierplan.App.Security;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.PlanningRealm;

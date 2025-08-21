@@ -6,16 +6,26 @@ public sealed class Application : Entity<long>
 {
     internal readonly List<ApplicationTeam> _teams = new();
 
-    internal Application(long id, int tag, DateTime createdAt, string name, string? email, string? telephone, string? commentFromSender, string notes)
+    internal Application(long id, int tag, DateTime createdAt, string notes, string contact, string? contactEmail, string? contactTelephone, string? comment)
     {
         Id = id;
         Tag = tag;
         CreatedAt = createdAt;
-        Name = name;
-        Email = email;
-        Telephone = telephone;
-        CommentFromSender = commentFromSender;
         Notes = notes;
+        Contact = contact;
+        ContactEmail = contactEmail;
+        ContactTelephone = contactTelephone;
+        Comment = comment;
+    }
+
+    internal Application(InvitationLink? sourceLink, int tag, string contact)
+    {
+        Id = 0;
+        SourceLink = sourceLink;
+        Tag = tag;
+        CreatedAt = DateTime.UtcNow;
+        Notes = string.Empty;
+        Contact = contact;
     }
 
     public override long Id { get; protected set; }
@@ -26,15 +36,21 @@ public sealed class Application : Entity<long>
 
     public DateTime CreatedAt { get; set; }
 
-    public string Name { get; set; }
-
-    public string? Email { get; set; }
-
-    public string? Telephone { get; set; }
-
-    public string? CommentFromSender { get; set; }
-
     public string Notes { get; set; }
 
+    public string Contact { get; set; }
+
+    public string? ContactEmail { get; set; }
+
+    public string? ContactTelephone { get; set; }
+
+    public string? Comment { get; set; }
+
     public IReadOnlyList<ApplicationTeam> Teams => _teams.AsReadOnly();
+
+    public void AddTeam(TournamentClass tournamentClass, string name)
+    {
+        var team = new ApplicationTeam(tournamentClass, name);
+        _teams.Add(team);
+    }
 }

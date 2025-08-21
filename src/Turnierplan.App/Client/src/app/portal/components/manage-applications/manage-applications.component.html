@@ -1,0 +1,33 @@
+@if (isLoading) {
+  <div class="mt-4">
+    <tp-loading-indicator [marginY]="false" />
+  </div>
+} @else if (result) {
+  @if (result.totalItems === 0) {
+    <div class="mt-5 fst-italic text-center" translate="Portal.ViewPlanningRealm.Applications.NoResults"></div>
+  } @else {
+    <div class="card">
+      <!-- TODO: Display applications in a visually pleasing way :) -->
+      {{ result | json }}
+    </div>
+
+    <div class="mt-4 d-flex flex-column align-items-center gap-2">
+      <div
+        class="small"
+        translate="Portal.ViewPlanningRealm.Applications.PaginationRange"
+        [translateParams]="{
+          start: result.currentPage * result.itemsPerPage + 1,
+          end: result.currentPage * result.itemsPerPage + result.items.length,
+          total: result.totalItems
+        }"></div>
+      <ngb-pagination
+        [collectionSize]="result.totalItems"
+        [page]="currentPage"
+        [pageSize]="pageSize"
+        [maxSize]="5"
+        [rotate]="true"
+        [ellipses]="false"
+        (pageChange)="switchPage($event)" />
+    </div>
+  }
+}

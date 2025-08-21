@@ -934,6 +934,15 @@ export const de = {
         DeleteNotPossible:
           'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.'
       },
+      SaveToViewApplications: 'Speichern Sie die offenen Änderungen, um die Anmeldungen zu sehen und neue Anmeldungen hinzuzufügen.',
+      Applications: {
+        FilterPanel: {
+          SearchTerm: 'Suchbegriff',
+          Search: 'Suchen'
+        },
+        NoResults: 'Es gibt keine Anmeldungen, welche den angegebenen Filterkriterien entsprechen.',
+        PaginationRange: 'Zeige {{start}} - {{end}} von {{total}}'
+      },
       Settings: {
         Rename: {
           Button: 'Umbenennen',
@@ -1049,14 +1058,16 @@ export const de = {
         Owner: 'Besitzer',
         Contributor: 'Mitwirkender',
         Reader: 'Leser',
-        Reporter: 'Turnierdurchführung'
+        Reporter: 'Turnierdurchführung',
+        ApplicationOfficer: 'ApplicationOfficer' // TODO: Add translated name
       },
       RoleDescription: {
         Owner: 'Der Benutzer kann sämtliche Änderungen durchführen inkl. Änderungen an Zugriffsrechten.',
         Contributor: 'Der Benutzer kann sämtliche Änderungen durchführen ausgenommen Änderungen an Zugriffsrechten.',
         Reader: 'Der Benutzer kann sämtliche Informationen lesen aber keine Änderungen durchführen.',
         Reporter:
-          'Der Benutzer kann Spielergebnisse melden und löschen sowie Änderungen an der Startgebühr und Priorität der Mannschaften durchführen.'
+          'Der Benutzer kann Spielergebnisse melden und löschen sowie Änderungen an der Startgebühr und Priorität der Mannschaften durchführen.',
+        ApplicationOfficer: 'Der Benutzer kann Anmeldungen im Turnierplaner anschauen, hinzufügen und bearbeiten.'
       },
       PrincipalKind: {
         ApiKey: 'API-Schlüssel',

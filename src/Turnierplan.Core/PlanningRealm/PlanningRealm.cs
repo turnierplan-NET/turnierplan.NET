@@ -76,6 +76,15 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
         return invitationLink;
     }
 
+    public Application AddApplication(InvitationLink? sourceLink, string contact)
+    {
+        var tag = GenerateApplicationTag();
+        var application = new Application(sourceLink, tag, contact);
+        _applications.Add(application);
+
+        return application;
+    }
+
     public void RemoveTournamentClass(TournamentClass tournamentClass)
     {
         _tournamentClasses.Remove(tournamentClass);
@@ -84,5 +93,24 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
     public void RemoveInvitationLink(InvitationLink invitationLink)
     {
         _invitationLinks.Remove(invitationLink);
+    }
+
+    private int GenerateApplicationTag()
+    {
+        var attempt = 1;
+        const int maxAttempts = 10;
+
+        int tag;
+        bool isDuplicate;
+
+        do
+        {
+            // create a random 6-digit tag
+            tag = 100_000 + Random.Shared.Next(900_000);
+
+            isDuplicate = _applications.Any(x => x.Tag == tag);
+        } while (isDuplicate && attempt++ < maxAttempts);
+
+        return tag;
     }
 }
