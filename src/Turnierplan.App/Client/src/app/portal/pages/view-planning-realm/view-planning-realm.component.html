@@ -109,7 +109,7 @@
       </div>
     </ng-template>
     <ng-template #fullWidthContent>
-      @if (currentPage === 2) {
+      @if (currentPage === 2 && !hasUnsavedChanges()) {
         <div class="mt-3 d-flex flex-row justify-content-center px-3">
           <div style="max-width: 1800px" class="flex-grow-1">
             <tp-manage-applications

@@ -96,10 +96,6 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     };
   }
 
-  protected get showApplicationManager(): boolean {
-    return this.currentPage === 2 && !this._hasUnsavedChanges;
-  }
-
   public ngOnInit(): void {
     this.route.paramMap
       .pipe(
