@@ -157,8 +157,6 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
             {
                 tournamentClass = planningRealm.AddTournamentClass(requestTournamentClass.Name.Trim());
             }
-
-            tournamentClass.MaxTeamCount = requestTournamentClass.MaxTeamCount;
         }
 
         error = null;
@@ -343,8 +341,6 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         public long? Id { get; init; }
 
         public required string Name { get; init; }
-
-        public int? MaxTeamCount { get; init; }
     }
 
     public sealed record UpdatePlanningRealmEndpointRequestInvitationLink
@@ -415,10 +411,6 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
 
                     @class.RuleFor(x => x.Name)
                         .NotEmpty();
-
-                    @class.RuleFor(x => x.MaxTeamCount)
-                        .GreaterThanOrEqualTo(2)
-                        .When(x => x.MaxTeamCount.HasValue);
                 });
 
             RuleForEach(x => x.InvitationLinks)

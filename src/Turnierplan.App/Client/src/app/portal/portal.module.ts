@@ -96,7 +96,6 @@ import { CreatePlanningRealmComponent } from './pages/create-planning-realm/crea
 import { ViewPlanningRealmComponent } from './pages/view-planning-realm/view-planning-realm.component';
 import { TournamentClassManagerComponent } from './components/tournament-class-manager/tournament-class-manager.component';
 import { InvitationLinkTileComponent } from './components/invitation-link-manager/invitation-link-tile.component';
-import { TournamentClassDialogComponent } from './components/tournament-class-dialog/tournament-class-dialog.component';
 import { UnsavedChangesAlertComponent } from './components/unsaved-changes-alert/unsaved-changes-alert.component';
 import { ShareLinkComponent } from './components/share-link/share-link.component';
 import { ManageApplicationsComponent } from './components/manage-applications/manage-applications.component';
@@ -260,7 +259,6 @@ const routes: Routes = [
     ViewPlanningRealmComponent,
     TournamentClassManagerComponent,
     InvitationLinkTileComponent,
-    TournamentClassDialogComponent,
     UnsavedChangesAlertComponent,
     ShareLinkComponent,
     ManageApplicationsComponent,

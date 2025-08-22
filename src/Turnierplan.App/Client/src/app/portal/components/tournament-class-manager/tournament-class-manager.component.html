@@ -6,7 +6,6 @@
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.Name"></th>
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.InvitationLinkCount"></th>
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.ApplicationCount"></th>
-      <th translate="Portal.ViewPlanningRealm.TournamentClasses.MaxTeamCount"></th>
       @if (writeAllowed) {
         <th style="width: 1px"></th>
         <th style="width: 1px"></th>
@@ -23,20 +22,13 @@
           {{ tournamentClass.numberOfTeams }}
           <!-- TODO: Add button which switches to applications page with correct filter -->
         </td>
-        <td class="align-middle">
-          @if (tournamentClass.maxTeamCount) {
-            {{ tournamentClass.maxTeamCount }}
-          } @else {
-            <span>&infin;</span>
-          }
-        </td>
         @if (writeAllowed) {
           <td class="align-middle pe-0">
-            <tp-action-button
-              [type]="'outline-secondary'"
-              [icon]="'gear'"
-              [mode]="'IconOnly'"
-              (click)="editTournamentClass(tournamentClass.id)" />
+            <tp-rename-button
+              translationKey="Portal.ViewPlanningRealm.TournamentClasses.Rename"
+              [displayLabel]="false"
+              [current]="tournamentClass.name"
+              (renamed)="renameTournamentClass(tournamentClass.id, $event)" />
           </td>
           @let canDelete = tournamentClass.numberOfTeams === 0;
           <td class="align-middle" [ngClass]="{ 'ps-1': !canDelete }">
@@ -50,7 +42,7 @@
       </tr>
     } @empty {
       <tr>
-        <td colspan="4" translate="Portal.ViewPlanningRealm.TournamentClasses.NoTournamentClasses"></td>
+        <td colspan="3" translate="Portal.ViewPlanningRealm.TournamentClasses.NoTournamentClasses"></td>
       </tr>
     }
   </tbody>
