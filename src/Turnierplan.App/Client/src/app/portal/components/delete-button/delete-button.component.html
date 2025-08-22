@@ -1,12 +1,17 @@
 <div
-  [ngbPopover]="popoverContent"
+  [ngbPopover]="disabled ? undefined : popoverContent"
   [autoClose]="'outside'"
   #popover="ngbPopover"
   container="body"
   popoverClass="tp-popover-slim"
   [tabindex]="popover.isOpen() ? 0 : -1"
   (keydown)="popover.isOpen() && confirmed.emit()"
-  [ngClass]="reducedFootprint ? 'tp-cursor-pointer' : 'btn btn-sm btn-outline-danger'">
+  [ngClass]="{
+    'tp-cursor-pointer': reducedFootprint,
+    'btn btn-sm btn-outline-danger': !reducedFootprint,
+    'text-secondary tp-cursor-not-allowed': reducedFootprint && disabled,
+    disabled: !reducedFootprint && disabled
+  }">
   <i class="bi bi-trash"></i>
   @if (showLabel) {
     <span class="ms-2" translate="Portal.General.Delete"></span>
@@ -15,10 +20,12 @@
 
 <ng-template #popoverContent>
   <div class="px-3 py-2 d-flex flex-row align-items-center gap-3">
-    <i
-      class="tp-cursor-pointer bi bi-trash text-danger fs-5"
-      (click)="confirmed.emit()"
-      [title]="'Portal.DeleteButton.ConfirmTooltip' | translate"></i>
+    @if (!disabled) {
+      <i
+        class="tp-cursor-pointer bi bi-trash text-danger fs-5"
+        (click)="confirmed.emit()"
+        [title]="'Portal.DeleteButton.ConfirmTooltip' | translate"></i>
+    }
     <span
       class="tp-cursor-pointer text-decoration-underline text-secondary"
       (click)="popover.close()"
