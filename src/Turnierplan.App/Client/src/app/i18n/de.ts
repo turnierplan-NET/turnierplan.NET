@@ -871,12 +871,11 @@ export const de = {
         Name: 'Name',
         InvitationLinkCount: 'Anmeldelinks',
         ApplicationCount: 'aktuelle Mannschaften',
-        EditDialog: {
-          Title: 'Turnierklasse bearbeiten',
-          Name: 'Name:',
-          NameInvalid: 'Der Name darf nicht leer sein',
-          NameAlert:
-            'Eine Änderung des Namens wird nach dem Speichern sofort auf allen Anmeldelinks, wo diese Turnierklasse verfügbar ist, sichtbar'
+        Rename: {
+          Title: 'Turnierklasse umbenennen',
+          EnterNewName:
+            'Geben Sie den neuen Namen ein. Eine Änderung des Namens wird nach dem Speichern sofort auf allen Anmeldelinks, wo diese Turnierklasse verfügbar ist, sichtbar',
+          RequiredFeedback: 'Der Name darf nicht leer sein'
         },
         DeleteNotPossible: 'Diese Turnierklasse kann nicht gelöscht werden, da es bereits Anmeldungen für diese Turnierklasse gibt.',
         NoTournamentClasses: 'Es sind aktuell keine Turnierklassen vorhanden.'

@@ -24,11 +24,11 @@
         </td>
         @if (writeAllowed) {
           <td class="align-middle pe-0">
-            <tp-action-button
-              [type]="'outline-secondary'"
-              [icon]="'gear'"
-              [mode]="'IconOnly'"
-              (click)="editTournamentClass(tournamentClass.id)" />
+            <tp-rename-button
+              translationKey="Portal.ViewPlanningRealm.TournamentClasses.Rename"
+              [displayLabel]="false"
+              [current]="tournamentClass.name"
+              (renamed)="renameTournamentClass(tournamentClass.id, $event)" />
           </td>
           @let canDelete = tournamentClass.numberOfTeams === 0;
           <td class="align-middle" [ngClass]="{ 'ps-1': !canDelete }">
