@@ -88,6 +88,11 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
         CheckImageTypeAndSetImage(secondaryLogo, () => SecondaryLogo = secondaryLogo);
     }
 
+    public bool IsValidUntilSurpassed()
+    {
+        return ValidUntil.HasValue && ValidUntil.Value < DateTime.UtcNow;
+    }
+
     private void CheckImageTypeAndSetImage(Image.Image? provided, Action apply)
     {
         if (provided is null)

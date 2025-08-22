@@ -35,8 +35,8 @@ export class InvitationLinkTileComponent {
     }),
     title: new FormControl<string>(''),
     description: new FormControl<string>(''),
-    contactEmail: new FormControl<string>(''),
     contactPerson: new FormControl<string>(''),
+    contactEmail: new FormControl<string>(''),
     contactTelephone: new FormControl<string>(''),
     externalLinks: new FormArray<FormGroup<{ name: FormControl<string>; url: FormControl<string> }>>([]),
     hasValidUntilDate: new FormControl<boolean>(false, { nonNullable: true }),
@@ -96,8 +96,8 @@ export class InvitationLinkTileComponent {
       name: this._invitationLink.name,
       title: this._invitationLink.title ?? '',
       description: this._invitationLink.description ?? '',
-      contactEmail: this._invitationLink.contactEmail ?? '',
       contactPerson: this._invitationLink.contactPerson ?? '',
+      contactEmail: this._invitationLink.contactEmail ?? '',
       contactTelephone: this._invitationLink.contactTelephone ?? '',
       externalLinks: [],
       hasValidUntilDate: this._invitationLink.validUntil !== null,
@@ -139,8 +139,8 @@ export class InvitationLinkTileComponent {
 
           invitationLink.title = toNullIfEmpty(value.title);
           invitationLink.description = toNullIfEmpty(value.description);
-          invitationLink.contactEmail = toNullIfEmpty(value.contactEmail);
           invitationLink.contactPerson = toNullIfEmpty(value.contactPerson);
+          invitationLink.contactEmail = toNullIfEmpty(value.contactEmail);
           invitationLink.contactTelephone = toNullIfEmpty(value.contactTelephone);
 
           invitationLink.validUntil = value.hasValidUntilDate ? new Date(value.validUntil).toISOString() : null;

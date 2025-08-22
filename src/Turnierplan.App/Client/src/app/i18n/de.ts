@@ -864,6 +864,7 @@ export const de = {
         Title: 'Neuer Anmeldelink',
         InfoText:
           'Geben Sie den Namen für den neuen Anmeldelink ein. Der angegebene Name wird nicht auf dem Anmeldeformular sichtbar sein.',
+        Alert: 'Das Anmeldeformular ist noch eine frühe Version und sollte noch nicht für den produktiven Einsatz verwendet werden!',
         RequiredFeedback: 'Der Name darf nicht leer sein',
         Confirm: 'Erstellen'
       },
@@ -882,6 +883,7 @@ export const de = {
       },
       NoInvitationLinks: 'Es sind aktuell keine Anmeldelinks vorhanden.',
       InvitationLink: {
+        PublicUrl: 'Link zum Anmeldeformular:',
         Properties: {
           Name: 'Name:',
           ColorCode: 'Farbcode:',

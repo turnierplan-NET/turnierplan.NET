@@ -54,6 +54,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
         services.AddScoped<IDocumentRepository, DocumentRepository>();
         services.AddScoped<IFolderRepository, FolderRepository>();
+        services.AddScoped<IInvitationLinkRepository, InvitationLinkRepository>();
         services.AddScoped<IImageRepository, ImageRepository>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
         services.AddScoped<IPlanningRealmRepository, PlanningRealmRepository>();
