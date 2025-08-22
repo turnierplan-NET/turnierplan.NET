@@ -23,6 +23,10 @@
     <script>
         document.title = `@ViewData["Title"] \u00b7 turnierplan.NET`;
         const twoDigit = (x) => { return x < 10 ? `0${x}` : `${x}`; }
+        const displayFormattedDate = (elementId, milliseconds) => {
+            const date = new Date(milliseconds);
+            document.getElementById(elementId).innerHTML = `${twoDigit(date.getDate())}.${twoDigit(date.getMonth() + 1)}.${date.getFullYear()} um ${twoDigit(date.getHours())}:${twoDigit(date.getMinutes())}`;
+        }
     </script>
 </head>
 <body>

@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 
+export type AlertType = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
+
 @Component({
   standalone: false,
   selector: 'tp-alert',
@@ -7,7 +9,7 @@ import { Component, Input } from '@angular/core';
 })
 export class AlertComponent {
   @Input()
-  public type: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' = 'info';
+  public type: AlertType = 'info';
 
   @Input()
   public icon?: string;

@@ -30,6 +30,11 @@
         <div class="invalid-feedback" [translate]="translationKey + '.' + showError"></div>
       }
     </div>
+
+    @if (alert) {
+      <hr />
+      <tp-alert [icon]="alert.icon" [type]="alert.type" [text]="translationKey + '.Alert'" />
+    }
   </div>
   <div class="modal-footer">
     <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />

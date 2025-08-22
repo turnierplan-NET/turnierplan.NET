@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AlertType } from '../alert/alert.component';
+
+export interface TextInputDialogAlert {
+  type: AlertType;
+  icon: string;
+}
 
 @Component({
   standalone: false,
@@ -8,6 +14,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class TextInputDialogComponent {
   protected isInitialized = false;
   protected translationKey: string = '';
+  protected alert?: TextInputDialogAlert;
   protected initialValue: string = '';
   protected textArea: boolean = false;
   protected isRequired: boolean = false;
@@ -17,12 +24,13 @@ export class TextInputDialogComponent {
 
   constructor(protected readonly modal: NgbActiveModal) {}
 
-  public init(translationKey: string, initialValue: string, textArea: boolean, isRequired: boolean): void {
+  public init(translationKey: string, initialValue: string, textArea: boolean, isRequired: boolean, alert?: TextInputDialogAlert): void {
     if (this.isInitialized) {
       return;
     }
 
     this.translationKey = translationKey;
+    this.alert = alert;
     this.initialValue = initialValue;
     this.textArea = textArea;
     this.isRequired = isRequired;
