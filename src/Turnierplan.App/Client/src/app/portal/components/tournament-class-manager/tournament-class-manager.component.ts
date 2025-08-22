@@ -48,7 +48,6 @@ export class TournamentClassManagerComponent {
           }
 
           tournamentClass.name = result.name.trim();
-          tournamentClass.maxTeamCount = result.maxTeamCount;
 
           return true;
         });

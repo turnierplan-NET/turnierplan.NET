@@ -9,13 +9,11 @@ import { PlanningRealmDto } from '../../../api';
 export class TournamentClassDialogComponent {
   protected isInitialized = false;
   protected initialName: string = '';
-  protected initialMaxTeamCount?: number;
   protected currentNumberOfTeams: number = 0;
   protected isClassReferencedByInvitationLink: boolean = false;
   protected nameInvalid = false;
 
   protected name: string = '';
-  protected maxTeamCount?: number;
 
   constructor(protected readonly modal: NgbActiveModal) {}
 
@@ -27,10 +25,8 @@ export class TournamentClassDialogComponent {
     }
 
     this.name = tournamentClass.name;
-    this.maxTeamCount = tournamentClass.maxTeamCount ?? undefined;
 
     this.initialName = tournamentClass.name;
-    this.initialMaxTeamCount = tournamentClass.maxTeamCount ?? undefined;
     this.currentNumberOfTeams = tournamentClass.numberOfTeams;
     this.isClassReferencedByInvitationLink = planningRealm.invitationLinks.some((link) =>
       link.entries.some((entry) => entry.tournamentClassId === tournamentClassId)
@@ -48,21 +44,12 @@ export class TournamentClassDialogComponent {
       return;
     }
 
-    if (this.maxTeamCount !== undefined && this.maxTeamCount < 2) {
-      return;
-    }
-
-    if (trimmedName === this.initialName.trim() && this.maxTeamCount === this.initialMaxTeamCount) {
+    if (trimmedName === this.initialName.trim()) {
       this.modal.dismiss();
     } else {
       this.modal.close({
-        name: trimmedName,
-        maxTeamCount: this.maxTeamCount
+        name: trimmedName
       });
     }
-  }
-
-  protected limitMaxTeamCountChanged(limitMaxTeamCount: boolean): void {
-    this.maxTeamCount = limitMaxTeamCount ? 10 : undefined;
   }
 }
