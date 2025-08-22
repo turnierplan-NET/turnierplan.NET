@@ -150,7 +150,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   }
 
   protected addInvitationLink(): void {
-    this.openModalForEnteringName('NewInvitationLink').subscribe({
+    this.openModalForEnteringName('NewInvitationLink', true).subscribe({
       next: (name) => {
         this.updateFunction((planningRealm) => {
           planningRealm.invitationLinks.push({
@@ -281,7 +281,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     this.applicationsFilter = this.localStorageService.getPlanningRealmApplicationsFilter(planningRealm.id) ?? defaultApplicationsFilter;
   }
 
-  private openModalForEnteringName(key: string): Observable<string> {
+  private openModalForEnteringName(key: string, showAlert: boolean = false): Observable<string> {
     const ref = this.modalService.open(TextInputDialogComponent, {
       centered: true,
       size: 'md',
@@ -289,7 +289,13 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     });
 
     const component = ref.componentInstance as TextInputDialogComponent;
-    component.init(`Portal.ViewPlanningRealm.${key}`, '', false, true, { type: 'danger', icon: 'exclamation-octagon' });
+    component.init(
+      `Portal.ViewPlanningRealm.${key}`,
+      '',
+      false,
+      true,
+      showAlert ? { type: 'danger', icon: 'exclamation-octagon' } : undefined
+    );
 
     return ref.closed.pipe(map((x) => x as string));
   }

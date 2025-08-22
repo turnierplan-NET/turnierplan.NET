@@ -12,9 +12,53 @@
 
     var invitationLink = Model.Data;
     ViewData["Title"] = invitationLink is null ? "Formular nicht gefunden" : invitationLink.Title ?? "Anmeldeformular";
+
+    var submissionState = Model.State;
+    var formSessionId = Guid.NewGuid().ToString();
 }
 
-@if (invitationLink is null)
+@if (submissionState is not null)
+{
+    <div class="container px-0 pt-5 d-flex flex-column align-items-center" style="max-width: 650px">
+        @if (submissionState == InvitationForm.SubmissionState.SubmissionSuccessful)
+        {
+            <img src="assets/illustration/success.svg" style="width: 300px;" alt="Das Formular wurde erfolgreich abgesendet"/>
+            <div class="fw-bold text-success text-center mt-5 fs-5">
+                Ihre Anmeldung wurde erfolgreich abgesendet
+            </div>
+        }
+        else
+        {
+            <div class="fw-bold text-danger text-center fs-5">
+                Beim Absenden des Formulars ist ein Fehler aufgetreten:
+            </div>
+            <div class="text-danger text-center mt-2">
+                @switch (submissionState)
+                {
+                    case InvitationForm.SubmissionState.SubmissionFailedBecauseLinkNotFound:
+                        <span>Der Link ist ungültig oder das gesuchte Formular existiert nicht.</span>
+                        break;
+                    case InvitationForm.SubmissionState.SubmissionFailedBecauseLinkExpired:
+                        <span>Der Anmeldeschluss ist überschritten.</span>
+                        break;
+                    case InvitationForm.SubmissionState.SubmissionFailedBecauseFormIncomplete:
+                        <span>Das Formular wurde unvollständig ausgefüllt.</span>
+                        break;
+                    case InvitationForm.SubmissionState.SubmissionFailedBecauseFormTeamsInvalid:
+                        <span>Für eine Mannschaftsklasse wurde eine ungültige oder zu hohe Anzahl Mannschaften angegeben.</span>
+                        break;
+                    case InvitationForm.SubmissionState.SubmissionFailedBecauseFormTeamsEmpty:
+                        <span>Es wurden keine Mannschaften angegeben.</span>
+                        break;
+                    default:
+                        <span>Ein unbekannter Fehler ist aufgetreten.</span>
+                        break;
+                }
+            </div>
+        }
+    </div>
+}
+else if (invitationLink is null)
 {
     <div class="container px-2 px-lg-5">
         <div class="fw-bold text-danger">
@@ -24,13 +68,15 @@
 }
 else
 {
-    <div class="container px-0" style="max-width: 650px;" id="mainContainer">
+    <div class="container px-0" style="max-width: 650px;">
         <div class="mt-5 border shadow d-flex flex-column">
             <div style="background: #3c3c3c" class="py-2 text-center text-white fw-bold fs-5">@(string.IsNullOrWhiteSpace(invitationLink.Title) ? "Anmeldeformular" : invitationLink.Title)</div>
 
-            <div class="bg-white pt-4 p-3 d-flex flex-column gap-3">
+            <form class="bg-white pt-4 p-3 d-flex flex-column gap-3" method="post">
+                <input type="hidden" name="form_session_id" value="@formSessionId"/>
+                
                 @{
-                    var isValidUntilSurpassed = invitationLink.ValidUntil.HasValue && invitationLink.ValidUntil.Value < DateTime.UtcNow;
+                    var isValidUntilSurpassed = invitationLink.IsValidUntilSurpassed();
 
                     var hasAtLeastOneLogo = invitationLink.PrimaryLogo is not null || invitationLink.SecondaryLogo is not null;
                     var hasDescription = !string.IsNullOrWhiteSpace(invitationLink.Description);
@@ -77,58 +123,78 @@ else
                 }
                 else
                 {
-                    <div class="text-decoration-underline">Ihre Kontaktdaten</div>
+                    <div class="text-decoration-underline">Allgemeine Informationen</div>
 
                     <div class="d-flex flex-column gap-1">
-                        <label class="fw-bold" for="name">Name:</label>
-                        <input class="form-control" type="text" id="name"/>
+                        <label class="fw-bold" for="name">Anmeldeperson:</label>
+                        <input class="form-control" type="text" id="name" name="contact_person" required/>
                     </div>
 
                     <div class="d-flex flex-column gap-1">
-                        <label class="fw-bold" for="name">E-Mail:</label>
-                        <input class="form-control" type="email" id="email"/>
+                        <label class="fw-bold" for="name">Kontakt E-Mail:</label>
+                        <input class="form-control" type="email" id="email" name="contact_email" required/>
                     </div>
 
                     <div class="d-flex flex-column gap-1">
                         <label for="name">
-                            <span class="fw-bold">Telefon-Nr.:</span>
+                            <span class="fw-bold">Kontakt Telefon-Nr.:</span>
                             <span class="small">(optional)</span>
                         </label>
-                        <input class="form-control" type="tel" id="telephone_nr"/>
+                        <input class="form-control" type="tel" id="telephone_nr" name="contact_tel"/>
                     </div>
 
-                    <hr class="my-0"/>
+                    <div class="d-flex flex-column gap-1">
+                        <label for="name">
+                            <span class="fw-bold">Verein / Mannschaftsname:</span>
+                        </label>
+                        <input class="form-control" type="text" id="team_name" name="team_name" required/>
+                    </div>
 
-                    <div class="text-decoration-underline">Mannschaften</div>
+                    var numberOfEntries = invitationLink.Entries.Count;
 
-                    @foreach (var entry in invitationLink.Entries)
+                    if (numberOfEntries == 1 && invitationLink.Entries[0].MaxTeamsPerRegistration == 1)
                     {
-                        <div class="d-flex flex-column gap-1">
-                            <div class="fw-bold">@entry.Class.Name</div>
+                        // If there is only one entry with a max. count of 1, the form can be simplified
+                        // by not showing the entries at all and assuming the number of teams to be 1.
+                        var entry = invitationLink.Entries[0];
 
-                            @if (entry.AllowNewRegistrations)
-                            {
-                                var limit = entry.MaxTeamsPerRegistration ?? 9999;
+                        <input class="d-none" type="hidden" name="team_count_@entry.Id" value="1"/>
+                    }
+                    else
+                    {
+                        <hr class="my-0"/>
 
-                                if (entry.MaxTeamsPerRegistration.HasValue)
+                        <div class="text-decoration-underline">Mannschaften</div>
+
+                        foreach (var entry in invitationLink.Entries)
+                        {
+                            <div class="d-flex flex-column gap-1">
+                                <div class="fw-bold">@entry.Class.Name</div>
+
+                                @if (entry.AllowNewRegistrations)
                                 {
-                                    <div class="small text-secondary">Max. Mannschaften pro Anmeldung: @limit</div>
-                                }
+                                    var limit = entry.MaxTeamsPerRegistration ?? 9999;
 
-                                <div class="d-flex flex-row gap-2">
-                                    <div style="flex-basis: 25%">
-                                        <input class="form-control" type="number" id="team_count_@entry.Id" value="0" min="0" max="@limit" placeholder="Anzahl Teams" aria-label="Anzahl der Mannschaften"/>
+                                    // If there is only one entry in the form, we set the number of teams initially to one instead of zero.
+                                    var initialValue = numberOfEntries == 1 ? 1 : 0;
+
+                                    if (entry.MaxTeamsPerRegistration.HasValue)
+                                    {
+                                        <div class="small text-secondary">Max. Mannschaften pro Anmeldung: @limit</div>
+                                    }
+
+                                    <div class="d-flex flex-row gap-2">
+                                        <div style="flex-basis: 25%">
+                                            <input class="form-control" type="number" id="team_count_@entry.Id" name="team_count_@entry.Id" value="@initialValue" min="0" max="@limit" placeholder="Anzahl Teams" aria-label="Anzahl der Mannschaften"/>
+                                        </div>
                                     </div>
-                                    <div style="flex-basis: 75%">
-                                        <input class="form-control" type="text" id="team_name_@entry.Id" placeholder="Name" aria-label="Name der Mannschaft"/>
-                                    </div>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="small text-secondary">Zur Zeit sind keine Neuen Anmeldungen für dieses Turnier möglich</div>
-                            }
-                        </div>
+                                }
+                                else
+                                {
+                                    <div class="small text-secondary">Zur Zeit sind keine neuen Anmeldungen für dieses Turnier möglich</div>
+                                }
+                            </div>
+                        }
                     }
 
                     <hr class="my-0"/>
@@ -138,7 +204,7 @@ else
                             <span class="fw-bold">Weitere Anmerkungen:</span>
                             <span class="small">(optional)</span>
                         </label>
-                        <textarea class="form-control" rows="3" id="comment"></textarea>
+                        <textarea class="form-control" rows="3" id="comment" name="comment"></textarea>
                     </div>
                 }
 
@@ -189,7 +255,7 @@ else
                         @foreach (var externalLink in invitationLink.ExternalLinks)
                         {
                             <div>
-                                <img src="./assets/box-arrow-up-right.svg" alt="symbolisiert einen Link zu einer anderen Webseite" class="me-1" />
+                                <img src="./assets/box-arrow-up-right.svg" alt="symbolisiert einen Link zu einer anderen Webseite" class="me-1"/>
                                 <a href="@externalLink.Url" target="_blank">@externalLink.Name</a>
                             </div>
                         }
@@ -210,24 +276,16 @@ else
 
                     @if (isValidUntilSurpassed)
                     {
-                        <span class="text-center small">Keine Anmeldung<br />mehr möglich</span>
+                        <span class="text-center small">Keine Anmeldung<br/>mehr möglich</span>
                     }
                     else
                     {
-                        <div class="shadow-sm btn btn-primary">
+                        <button class="shadow-sm btn btn-primary" type="submit">
                             Absenden
-                        </div>
+                        </button>
                     }
                 </div>
-            </div>
+            </form>
         </div>
     </div>
-
-
-    <script>
-        @{ /* TODO: Before merging, check if this is still required */ }
-        if (!('fetch' in window)) {
-            document.getElementById('mainContainer').innerHTML = '<div class="fw-bold text-danger">Bitte verwenden Sie einen modernen Browser, um das Formular auszufüllen.</div>';
-        }
-    </script>
 }
