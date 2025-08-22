@@ -17,7 +17,5 @@ public sealed class TournamentClassEntityTypeConfiguration : IEntityTypeConfigur
 
         builder.Property(x => x.Name)
             .IsRequired();
-
-        builder.Property(x => x.MaxTeamCount);
     }
 }

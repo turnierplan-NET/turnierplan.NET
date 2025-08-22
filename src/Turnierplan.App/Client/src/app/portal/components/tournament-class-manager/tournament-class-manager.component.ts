@@ -3,7 +3,6 @@ import { PlanningRealmDto } from '../../../api';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TournamentClassDialogComponent } from '../tournament-class-dialog/tournament-class-dialog.component';
 import { UpdatePlanningRealmFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
 
 @Component({
@@ -29,30 +28,17 @@ export class TournamentClassManagerComponent {
     return this.planningRealm.invitationLinks.filter((link) => link.entries.some((entry) => entry.tournamentClassId == id)).length;
   }
 
-  protected editTournamentClass(id: number): void {
-    const ref = this.modalService.open(TournamentClassDialogComponent, {
-      size: 'md',
-      fullscreen: 'md',
-      centered: true
-    });
+  protected renameTournamentClass(id: number, name: string): void {
+    this.updatePlanningRealm((planningRealm) => {
+      const tournamentClass = planningRealm.tournamentClasses.find((x) => x.id == id);
 
-    (ref.componentInstance as TournamentClassDialogComponent).init(this.planningRealm, id);
-
-    ref.closed.subscribe({
-      next: (result) => {
-        this.updatePlanningRealm((planningRealm) => {
-          const tournamentClass = planningRealm.tournamentClasses.find((x) => x.id == id);
-
-          if (!tournamentClass) {
-            return false;
-          }
-
-          tournamentClass.name = result.name.trim();
-          tournamentClass.maxTeamCount = result.maxTeamCount;
-
-          return true;
-        });
+      if (!tournamentClass) {
+        return false;
       }
+
+      tournamentClass.name = name;
+
+      return true;
     });
   }
 
@@ -65,6 +51,7 @@ export class TournamentClassManagerComponent {
       }
 
       planningRealm.tournamentClasses.splice(index, 1);
+
       return true;
     });
   }
