@@ -18,16 +18,7 @@ public sealed class TournamentClass : Entity<long>
 
     public override long Id { get; protected set; }
 
-    public PlanningRealm PlanningRealm { get; internal set; } = null!;
-
     public string Name { get; set; }
 
     // TODO: At some point, this entity will need to reference Tournaments
-
-    public int CountNumberOfAppliedTeams()
-    {
-        return PlanningRealm._applications
-            .SelectMany(y => y.Teams)
-            .Count(y => y.Class == this);
-    }
 }

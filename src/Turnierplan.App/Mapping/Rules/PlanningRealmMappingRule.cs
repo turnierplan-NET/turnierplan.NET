@@ -18,7 +18,7 @@ internal sealed class PlanningRealmMappingRule : MappingRuleBase<PlanningRealm, 
             {
                 Id = x.Id,
                 Name = x.Name,
-                NumberOfTeams = x.CountNumberOfAppliedTeams()
+                NumberOfTeams = source.Applications.SelectMany(y => y.Teams).Count(y => y.Class == x)
             }).ToArray(),
             InvitationLinks = source.InvitationLinks.Select(x => new InvitationLinkDto
             {
