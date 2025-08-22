@@ -73,6 +73,8 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
         var invitationLink = new InvitationLink(name);
         _invitationLinks.Add(invitationLink);
 
+        invitationLink.PlanningRealm = this;
+
         return invitationLink;
     }
 
