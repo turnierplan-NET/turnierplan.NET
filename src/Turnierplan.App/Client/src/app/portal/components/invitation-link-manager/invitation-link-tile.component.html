@@ -199,12 +199,11 @@
       </div>
     }
   </div>
-  <div class="card-footer">
+  <div class="card-footer d-flex flex-row align-items-center gap-1">
     @if (writeAllowed) {
       @let canDelete = invitationLink.numberOfApplications === 0;
-      @if (canDelete) {
-        <tp-delete-button [showLabel]="true" (confirmed)="deleteInvitationLink()" />
-      } @else {
+      <tp-delete-button [showLabel]="true" [disabled]="!canDelete" (confirmed)="deleteInvitationLink()" />
+      @if (!canDelete) {
         <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.DeleteNotPossible'" />
       }
     }

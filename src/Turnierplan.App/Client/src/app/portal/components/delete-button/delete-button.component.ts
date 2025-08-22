@@ -12,6 +12,9 @@ export class DeleteButtonComponent {
   @Input()
   public showLabel: boolean = false;
 
+  @Input()
+  public disabled: boolean = false;
+
   @Output()
   public confirmed = new EventEmitter<void>();
 }
