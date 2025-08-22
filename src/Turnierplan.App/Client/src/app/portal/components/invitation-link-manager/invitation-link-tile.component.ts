@@ -247,6 +247,7 @@ export class InvitationLinkTileComponent {
 
       return true;
     });
+
     this.determineTournamentClassesToAdd();
   }
 
@@ -261,6 +262,8 @@ export class InvitationLinkTileComponent {
       invitationLink.entries.splice(index, 1);
       return true;
     });
+
+    this.determineTournamentClassesToAdd();
   }
 
   protected deleteInvitationLink(): void {

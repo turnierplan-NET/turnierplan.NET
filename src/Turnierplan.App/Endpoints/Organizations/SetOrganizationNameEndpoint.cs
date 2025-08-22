@@ -34,7 +34,7 @@ internal sealed class SetOrganizationNameEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(organization, Actions.GenericWrite))
+        if (!accessValidator.IsActionAllowed(organization, Actions.PrivilegedWrite))
         {
             return Results.Forbid();
         }

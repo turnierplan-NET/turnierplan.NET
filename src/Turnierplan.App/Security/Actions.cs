@@ -20,6 +20,11 @@ internal static class Actions
     public static readonly Action PrivilegedDelete = new(Role.Owner);
 
     /// <summary>
+    /// A special kind of write action which shall require the <see cref="Role.Owner"/> role on the target entity.
+    /// </summary>
+    public static readonly Action PrivilegedWrite = new(Role.Owner);
+
+    /// <summary>
     /// Any action that modifies some entity.
     /// </summary>
     public static readonly Action GenericWrite = new(Role.Owner, Role.Contributor);
@@ -33,6 +38,11 @@ internal static class Actions
     /// Any action that modifies a tournament in a way that is required during "playtime".
     /// </summary>
     public static readonly Action TournamentConduct = new(Role.Owner, Role.Contributor, Role.Reporter);
+
+    /// <summary>
+    /// Any action that queries, adds or modifies applications in a planning realm.
+    /// </summary>
+    public static readonly Action ManageApplications = new(Role.Owner, Role.Contributor, Role.ApplicationOfficer);
 
     internal sealed class Action(params Role[] requiredRoles)
     {

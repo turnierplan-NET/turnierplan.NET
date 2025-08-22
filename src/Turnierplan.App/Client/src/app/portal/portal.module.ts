@@ -2,7 +2,15 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { NgbDropdown, NgbDropdownItem, NgbDropdownMenu, NgbDropdownToggle, NgbPopover, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbDropdown,
+  NgbDropdownItem,
+  NgbDropdownMenu,
+  NgbDropdownToggle,
+  NgbPagination,
+  NgbPopover,
+  NgbTooltip
+} from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { DndDraggableDirective, DndDropzoneDirective, DndHandleDirective, DndPlaceholderRefDirective } from 'ngx-drag-drop';
@@ -91,6 +99,8 @@ import { InvitationLinkTileComponent } from './components/invitation-link-manage
 import { TournamentClassDialogComponent } from './components/tournament-class-dialog/tournament-class-dialog.component';
 import { UnsavedChangesAlertComponent } from './components/unsaved-changes-alert/unsaved-changes-alert.component';
 import { ShareLinkComponent } from './components/share-link/share-link.component';
+import { ManageApplicationsComponent } from './components/manage-applications/manage-applications.component';
+import { ManageApplicationsFilterComponent } from './components/manage-applications-filter/manage-applications-filter.component';
 
 const routes: Routes = [
   {
@@ -252,7 +262,9 @@ const routes: Routes = [
     InvitationLinkTileComponent,
     TournamentClassDialogComponent,
     UnsavedChangesAlertComponent,
-    ShareLinkComponent
+    ShareLinkComponent,
+    ManageApplicationsComponent,
+    ManageApplicationsFilterComponent
   ],
   imports: [
     CommonModule,
@@ -274,7 +286,8 @@ const routes: Routes = [
     NgbDropdown,
     NgbDropdownItem,
     NgbDropdownMenu,
-    NgbDropdownToggle
+    NgbDropdownToggle,
+    NgbPagination
   ],
   providers: [LocalStorageService, TitleService, provideCharts(withDefaultRegisterables())]
 })

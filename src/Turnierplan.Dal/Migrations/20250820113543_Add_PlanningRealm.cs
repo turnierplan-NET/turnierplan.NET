@@ -67,6 +67,7 @@ namespace Turnierplan.Dal.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     PublicId = table.Column<long>(type: "bigint", nullable: false),
+                    PlanningRealmId = table.Column<long>(type: "bigint", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Title = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
@@ -77,7 +78,6 @@ namespace Turnierplan.Dal.Migrations
                     ContactTelephone = table.Column<string>(type: "text", nullable: true),
                     PrimaryLogoId = table.Column<long>(type: "bigint", nullable: true),
                     SecondaryLogoId = table.Column<long>(type: "bigint", nullable: true),
-                    PlanningRealmId = table.Column<long>(type: "bigint", nullable: false),
                     ExternalLinks = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
@@ -139,11 +139,11 @@ namespace Turnierplan.Dal.Migrations
                     SourceLinkId = table.Column<long>(type: "bigint", nullable: true),
                     Tag = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: true),
-                    Telephone = table.Column<string>(type: "text", nullable: true),
-                    CommentFromSender = table.Column<string>(type: "text", nullable: true),
                     Notes = table.Column<string>(type: "text", nullable: false),
+                    Contact = table.Column<string>(type: "text", nullable: false),
+                    ContactEmail = table.Column<string>(type: "text", nullable: true),
+                    ContactTelephone = table.Column<string>(type: "text", nullable: true),
+                    Comment = table.Column<string>(type: "text", nullable: true),
                     PlanningRealmId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>

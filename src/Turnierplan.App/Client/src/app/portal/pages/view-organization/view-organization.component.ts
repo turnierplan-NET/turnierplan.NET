@@ -71,7 +71,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       id: 3,
       title: 'Portal.ViewOrganization.Pages.Settings',
       icon: 'bi-gear',
-      authorization: Actions.GenericWrite
+      authorization: Actions.PrivilegedWrite
     }
   ];
 
@@ -207,6 +207,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       next: () => {
         if (this.organization) {
           this.organization.name = name;
+          this.titleService.setTitleFrom(this.organization);
         }
         this.isUpdatingName = false;
       },

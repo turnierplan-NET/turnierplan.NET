@@ -11,6 +11,8 @@ import { TextInputDialogComponent } from '../../components/text-input-dialog/tex
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs/operators';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { ApplicationsFilter, defaultApplicationsFilter } from '../../models/applications-filter';
 
 export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
 
@@ -39,6 +41,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   protected loadingState: LoadingState = { isLoading: true };
   protected updateFunction: UpdatePlanningRealmFunc;
   protected planningRealm?: PlanningRealmDto;
+  protected applicationsFilter: ApplicationsFilter = defaultApplicationsFilter;
   protected _hasUnsavedChanges = false;
 
   // When creating tournament classes or invitation links, we use negative IDs until saving
@@ -61,7 +64,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     {
       id: 2,
       title: 'Portal.ViewPlanningRealm.Pages.Applications',
-      icon: 'bi-card-checklist'
+      icon: 'bi-card-checklist',
+      authorization: Actions.ManageApplications
     },
     {
       id: 3,
@@ -80,7 +84,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     private readonly planningRealmService: PlanningRealmsService,
     private readonly notificationService: NotificationService,
     private readonly titleService: TitleService,
-    private readonly modalService: NgbModal
+    private readonly modalService: NgbModal,
+    private readonly localStorageService: LocalStorageService
   ) {
     this.updateFunction = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => {
       if (this.planningRealm) {
@@ -89,10 +94,6 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
         }
       }
     };
-  }
-
-  protected get isApplicationsPage(): boolean {
-    return this.currentPage === 2;
   }
 
   public ngOnInit(): void {
@@ -262,6 +263,14 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     });
   }
 
+  protected onApplicationsFilterChange(filter: ApplicationsFilter): void {
+    this.applicationsFilter = filter;
+
+    if (this.planningRealm) {
+      this.localStorageService.setPlanningRealmApplicationsFilter(this.planningRealm.id, filter);
+    }
+  }
+
   private setPlanningRealm(planningRealm: PlanningRealmDto): void {
     this.originalPlanningRealm = planningRealm;
 
@@ -270,6 +279,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     this._hasUnsavedChanges = false;
 
     this.titleService.setTitleFrom(this.planningRealm);
+
+    this.applicationsFilter = this.localStorageService.getPlanningRealmApplicationsFilter(planningRealm.id) ?? defaultApplicationsFilter;
   }
 
   private openModalForEnteringName(key: string): Observable<string> {

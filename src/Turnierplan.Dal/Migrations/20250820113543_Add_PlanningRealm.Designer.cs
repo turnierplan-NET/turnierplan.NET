@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20250720083755_Add_PlanningRealm")]
+    [Migration("20250820113543_Add_PlanningRealm")]
     partial class Add_PlanningRealm
     {
         /// <inheritdoc />
@@ -269,18 +269,21 @@ namespace Turnierplan.Dal.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("CommentFromSender")
+                    b.Property<string>("Comment")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Contact")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactEmail")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactTelephone")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<string>("Notes")
                         .IsRequired()
@@ -294,9 +297,6 @@ namespace Turnierplan.Dal.Migrations
 
                     b.Property<int>("Tag")
                         .HasColumnType("integer");
-
-                    b.Property<string>("Telephone")
-                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -1026,7 +1026,7 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("Turnierplan.Core.PlanningRealm.InvitationLink", b =>
                 {
-                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", null)
+                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", "PlanningRealm")
                         .WithMany("InvitationLinks")
                         .HasForeignKey("PlanningRealmId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1070,6 +1070,8 @@ namespace Turnierplan.Dal.Migrations
                         });
 
                     b.Navigation("ExternalLinks");
+
+                    b.Navigation("PlanningRealm");
 
                     b.Navigation("PrimaryLogo");
 
