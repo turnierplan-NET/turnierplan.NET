@@ -140,7 +140,6 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
           planningRealm.tournamentClasses.push({
             id: this.nextId--,
             name: name.trim(),
-            maxTeamCount: null,
             numberOfTeams: 0
           });
 
@@ -203,8 +202,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       name: this.planningRealm.name,
       tournamentClasses: this.planningRealm.tournamentClasses.map((x) => ({
         id: x.id < 0 ? null : x.id,
-        name: x.name,
-        maxTeamCount: x.maxTeamCount ?? undefined
+        name: x.name
       })),
       invitationLinks: this.planningRealm.invitationLinks.map((x) => ({
         id: x.id < 0 ? null : x.id,

@@ -114,7 +114,6 @@ namespace Turnierplan.Dal.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    MaxTeamCount = table.Column<int>(type: "integer", nullable: true),
                     PlanningRealmId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
