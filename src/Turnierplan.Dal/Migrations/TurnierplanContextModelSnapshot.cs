@@ -1105,11 +1105,13 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TournamentClass", b =>
                 {
-                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", null)
+                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", "PlanningRealm")
                         .WithMany("TournamentClasses")
                         .HasForeignKey("PlanningRealmId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("PlanningRealm");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.ApiKey.ApiKey>", b =>

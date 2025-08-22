@@ -35,7 +35,7 @@ public sealed class PlanningRealmEntityTypeConfiguration : IEntityTypeConfigurat
             .IsRequired();
 
         builder.HasMany(x => x.TournamentClasses)
-            .WithOne()
+            .WithOne(x => x.PlanningRealm)
             .HasForeignKey("PlanningRealmId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();

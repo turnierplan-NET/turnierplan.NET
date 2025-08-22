@@ -110,6 +110,11 @@ else
                             {
                                 var limit = entry.MaxTeamsPerRegistration ?? 9999;
 
+                                if (entry.MaxTeamsPerRegistration.HasValue)
+                                {
+                                    <div class="small text-secondary">Max. Mannschaften pro Anmeldung: @limit</div>
+                                }
+
                                 <div class="d-flex flex-row gap-2">
                                     <div style="flex-basis: 25%">
                                         <input class="form-control" type="number" id="team_count_@entry.Id" value="0" min="0" max="@limit" placeholder="Anzahl Teams" aria-label="Anzahl der Mannschaften"/>
