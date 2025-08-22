@@ -291,7 +291,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     });
 
     const component = ref.componentInstance as TextInputDialogComponent;
-    component.init(`Portal.ViewPlanningRealm.${key}`, '', false, true);
+    component.init(`Portal.ViewPlanningRealm.${key}`, '', false, true, { type: 'danger', icon: 'exclamation-octagon' });
 
     return ref.closed.pipe(map((x) => x as string));
   }
