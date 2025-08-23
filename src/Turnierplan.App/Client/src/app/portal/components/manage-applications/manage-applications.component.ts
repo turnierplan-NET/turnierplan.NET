@@ -20,6 +20,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   protected pageSize = 15;
   protected isLoading = false;
   protected result?: PaginationResultDtoOfApplicationDto;
+  protected showTeamsApplicationId?: number;
 
   private readonly filter$ = new ReplaySubject<ApplicationsFilter>();
   private readonly reload$ = new BehaviorSubject<undefined>(undefined);
@@ -46,6 +47,7 @@ export class ManageApplicationsComponent implements OnDestroy {
         next: (result) => {
           this.result = result;
           this.isLoading = false;
+          this.showTeamsApplicationId = undefined;
         },
         error: (error) => {
           this.errorOccured.emit(error);
@@ -70,5 +72,9 @@ export class ManageApplicationsComponent implements OnDestroy {
 
     this.currentPage = page;
     this.reload$.next(undefined);
+  }
+
+  protected getTournamentClassName(id: number): string {
+    return this.planningRealm.tournamentClasses.find((x) => x.id === id)?.name ?? '?';
   }
 }

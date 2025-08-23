@@ -947,7 +947,9 @@ export const de = {
           Comment: 'Bemerkung',
           CommentTooltip: 'Die Bemerkung wurde bei der Anmeldung mitgeschickt und kann nicht bearbeitet werden.',
           Notes: 'Notizen',
-          NotesTooltip: 'In dieser Spalte können Sie eigene Notizen hinzufügen.'
+          NotesTooltip: 'In dieser Spalte können Sie eigene Notizen hinzufügen.',
+          TournamentClass: 'Turnierklasse',
+          TeamName: 'Mannschaftsname'
         },
         NoResults: 'Es gibt keine Anmeldungen, welche den angegebenen Filterkriterien entsprechen.',
         PaginationRange: 'Zeige {{start}} - {{end}} von {{total}}'

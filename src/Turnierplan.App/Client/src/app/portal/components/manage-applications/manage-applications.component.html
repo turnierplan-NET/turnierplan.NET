@@ -9,6 +9,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th></th>
           <th class="text-center" style="width: 1px" translate="Portal.ViewPlanningRealm.Applications.TableHeader.Index"></th>
           <th style="width: 1px">
             <span translate="Portal.ViewPlanningRealm.Applications.TableHeader.Tag"></span>
@@ -30,23 +31,54 @@
       </thead>
       <tbody>
         @for (application of result.items; track application; let i = $index) {
+          @let showApplicationTeams = application.id === showTeamsApplicationId;
           <tr>
-            <td class="text-center">{{ result.currentPage * result.itemsPerPage + i + 1 }}</td>
-            <td class="text-nowrap">
+            <td class="text-center align-middle" [rowSpan]="showApplicationTeams ? 2 : 1">
+              <tp-action-button
+                [mode]="'IconOnly'"
+                [icon]="showApplicationTeams ? 'chevron-bar-contract' : 'chevron-bar-expand'"
+                [type]="'outline-secondary'"
+                (click)="showTeamsApplicationId = showApplicationTeams ? undefined : application.id" />
+            </td>
+            <td class="text-center align-middle">{{ result.currentPage * result.itemsPerPage + i + 1 }}</td>
+            <td class="text-nowrap align-middle">
               <span class="me-2">{{ application.tag }}</span>
               <tp-copy-to-clipboard [value]="application.tag" />
             </td>
-            <td class="text-nowrap">{{ application.createdAt | translateDate: 'short' }}</td>
-            <td>{{ application.contact }}</td>
-            <td>
+            <td class="text-nowrap align-middle">{{ application.createdAt | translateDate: 'short' }}</td>
+            <td class="align-middle">{{ application.contact }}</td>
+            <td class="align-middle">
               @if (application.contactEmail) {
                 <a href="mailto:{{ application.contactEmail }}">{{ application.contactEmail }}</a>
               }
             </td>
-            <td>{{ application.contactTelephone ?? '' }}</td>
-            <td>{{ application.comment ?? '' }}</td>
-            <td>{{ application.notes }}</td>
+            <td class="align-middle">{{ application.contactTelephone ?? '' }}</td>
+            <td class="align-middle">{{ application.comment ?? '' }}</td>
+            <td class="align-middle">{{ application.notes }}</td>
           </tr>
+
+          @if (showApplicationTeams) {
+            <tr>
+              <td colspan="8">
+                <table style="max-width: 800px" class="mb-0 table table-sm table-bordered">
+                  <thead>
+                    <tr>
+                      <th translate="Portal.ViewPlanningRealm.Applications.TableHeader.TournamentClass"></th>
+                      <th translate="Portal.ViewPlanningRealm.Applications.TableHeader.TeamName"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (team of application.teams; track team) {
+                      <tr>
+                        <td>{{ getTournamentClassName(team.tournamentClassId) }}</td>
+                        <td>{{ team.name }}</td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          }
         }
       </tbody>
     </table>
