@@ -6,10 +6,50 @@
   @if (result.totalItems === 0) {
     <div class="mt-5 fst-italic text-center" translate="Portal.ViewPlanningRealm.Applications.NoResults"></div>
   } @else {
-    <div class="card">
-      <!-- TODO: Display applications in a visually pleasing way :) -->
-      {{ result | json }}
-    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center" style="width: 1px" translate="Portal.ViewPlanningRealm.Applications.TableHeader.Index"></th>
+          <th style="width: 1px">
+            <span translate="Portal.ViewPlanningRealm.Applications.TableHeader.Tag"></span>
+            <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.Applications.TableHeader.TagTooltip'" />
+          </th>
+          <th style="width: 1px" translate="Portal.ViewPlanningRealm.Applications.TableHeader.CreatedAt"></th>
+          <th style="width: 15%" translate="Portal.ViewPlanningRealm.Applications.TableHeader.Contact"></th>
+          <th style="width: 20%" translate="Portal.ViewPlanningRealm.Applications.TableHeader.ContactEmail"></th>
+          <th style="width: 15%" translate="Portal.ViewPlanningRealm.Applications.TableHeader.ContactTelephone"></th>
+          <th style="width: 20%">
+            <span translate="Portal.ViewPlanningRealm.Applications.TableHeader.Comment"></span>
+            <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.Applications.TableHeader.CommentTooltip'" />
+          </th>
+          <th style="width: 20%">
+            <span translate="Portal.ViewPlanningRealm.Applications.TableHeader.Notes"></span>
+            <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.Applications.TableHeader.NotesTooltip'" />
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (application of result.items; track application; let i = $index) {
+          <tr>
+            <td class="text-center">{{ result.currentPage * result.itemsPerPage + i + 1 }}</td>
+            <td class="text-nowrap">
+              <span class="me-2">{{ application.tag }}</span>
+              <tp-copy-to-clipboard [value]="application.tag" />
+            </td>
+            <td class="text-nowrap">{{ application.createdAt | translateDate: 'short' }}</td>
+            <td>{{ application.contact }}</td>
+            <td>
+              @if (application.contactEmail) {
+                <a href="mailto:{{ application.contactEmail }}">{{ application.contactEmail }}</a>
+              }
+            </td>
+            <td>{{ application.contactTelephone ?? '' }}</td>
+            <td>{{ application.comment ?? '' }}</td>
+            <td>{{ application.notes }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
 
     <div class="mt-4 d-flex flex-column align-items-center gap-2">
       <div
@@ -25,8 +65,6 @@
         [page]="currentPage"
         [pageSize]="pageSize"
         [maxSize]="5"
-        [rotate]="true"
-        [ellipses]="false"
         (pageChange)="switchPage($event)" />
     </div>
   }

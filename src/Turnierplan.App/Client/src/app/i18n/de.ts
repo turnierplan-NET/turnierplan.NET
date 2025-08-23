@@ -935,6 +935,19 @@ export const de = {
           SearchTerm: 'Suchbegriff',
           Search: 'Suchen'
         },
+        TableHeader: {
+          Index: '#',
+          Tag: 'Tag',
+          TagTooltip: 'Der Tag kann z.B. im E-Mailverkehr genutzt werden um eine eindeutige Referenz zu dieser Anmeldung zu haben.',
+          CreatedAt: 'Erstellt am',
+          Contact: 'Kontaktperson',
+          ContactEmail: 'E-Mail',
+          ContactTelephone: 'Telefon-Nr.',
+          Comment: 'Bemerkung',
+          CommentTooltip: 'Die Bemerkung wurde bei der Anmeldung mitgeschickt und kann nicht bearbeitet werden.',
+          Notes: 'Notizen',
+          NotesTooltip: 'In dieser Spalte können Sie eigene Notizen hinzufügen.'
+        },
         NoResults: 'Es gibt keine Anmeldungen, welche den angegebenen Filterkriterien entsprechen.',
         PaginationRange: 'Zeige {{start}} - {{end}} von {{total}}'
       },

@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class CopyToClipboardComponent {
   @Input()
-  public value: string = '';
+  public value: string | number = '';
 
   protected copyToClipboardPressed = false;
 
@@ -16,7 +16,7 @@ export class CopyToClipboardComponent {
       return;
     }
 
-    void navigator.clipboard.writeText(this.value).then(() => {
+    void navigator.clipboard.writeText(`${this.value}`).then(() => {
       this.copyToClipboardPressed = true;
       setTimeout(() => {
         this.copyToClipboardPressed = false;
