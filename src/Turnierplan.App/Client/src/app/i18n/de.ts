@@ -933,7 +933,8 @@ export const de = {
       Applications: {
         FilterPanel: {
           SearchTerm: 'Suchbegriff',
-          Search: 'Suchen'
+          Search: 'Suchen',
+          Reset: 'Filter zurücksetzen'
         },
         TableHeader: {
           Index: '#',

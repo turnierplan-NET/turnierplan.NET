@@ -8,6 +8,12 @@
     (keyup.enter)="emitFilter()" />
   <span class="flex-grow-1"></span>
   <tp-action-button
+    [type]="'outline-secondary'"
+    [icon]="'x-circle'"
+    [mode]="'IconOnly'"
+    [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.FilterPanel.Reset' | translate"
+    (click)="resetAndEmitFilter()" />
+  <tp-action-button
     [type]="'outline-primary'"
     [icon]="'search'"
     [title]="'Portal.ViewPlanningRealm.Applications.FilterPanel.Search'"

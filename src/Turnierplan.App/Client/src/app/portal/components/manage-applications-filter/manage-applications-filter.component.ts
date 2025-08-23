@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ApplicationsFilter } from '../../models/applications-filter';
+import { ApplicationsFilter, defaultApplicationsFilter } from '../../models/applications-filter';
 
 @Component({
   standalone: false,
@@ -21,5 +21,10 @@ export class ManageApplicationsFilterComponent {
     this.filterChange.emit({
       searchTerm: this.searchTerm
     });
+  }
+
+  protected resetAndEmitFilter(): void {
+    this.filter = defaultApplicationsFilter;
+    this.emitFilter();
   }
 }
