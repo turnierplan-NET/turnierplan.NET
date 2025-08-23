@@ -941,6 +941,7 @@ export const de = {
           Tag: 'Tag',
           TagTooltip: 'Der Tag kann z.B. im E-Mailverkehr genutzt werden um eine eindeutige Referenz zu dieser Anmeldung zu haben.',
           CreatedAt: 'Erstellt am',
+          TeamCount: 'Teams',
           Contact: 'Kontaktperson',
           ContactEmail: 'E-Mail',
           ContactTelephone: 'Telefon-Nr.',

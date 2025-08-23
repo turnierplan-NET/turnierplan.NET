@@ -16,6 +16,7 @@
             <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.Applications.TableHeader.TagTooltip'" />
           </th>
           <th style="width: 1px" translate="Portal.ViewPlanningRealm.Applications.TableHeader.CreatedAt"></th>
+          <th style="width: 1px" translate="Portal.ViewPlanningRealm.Applications.TableHeader.TeamCount"></th>
           <th style="width: 15%" translate="Portal.ViewPlanningRealm.Applications.TableHeader.Contact"></th>
           <th style="width: 20%" translate="Portal.ViewPlanningRealm.Applications.TableHeader.ContactEmail"></th>
           <th style="width: 15%" translate="Portal.ViewPlanningRealm.Applications.TableHeader.ContactTelephone"></th>
@@ -47,6 +48,7 @@
               <tp-copy-to-clipboard [value]="application.tag" />
             </td>
             <td class="text-nowrap align-middle">{{ application.createdAt | translateDate: 'short' }}</td>
+            <td class="align-middle">{{ application.teams.length }}</td>
             <td class="align-middle">{{ application.contact }}</td>
             <td class="align-middle">
               @if (application.contactEmail) {
