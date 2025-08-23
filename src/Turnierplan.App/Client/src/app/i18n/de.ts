@@ -932,7 +932,7 @@ export const de = {
       SaveToViewApplications: 'Speichern Sie die offenen Änderungen, um die Anmeldungen zu sehen und neue Anmeldungen hinzuzufügen.',
       Applications: {
         FilterPanel: {
-          SearchTerm: 'Suchbegriff',
+          SearchTerm: 'Suchbegriff (Tag, Name, E-Mail, ...)',
           Search: 'Suchen',
           Reset: 'Filter zurücksetzen'
         },

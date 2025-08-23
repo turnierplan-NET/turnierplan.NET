@@ -1,12 +1,10 @@
 <div class="d-flex flex-row gap-2">
   <input
-    style="width: 300px"
-    class="form-control form-control-sm"
+    class="form-control form-control-sm flex-grow-1"
     [placeholder]="'Portal.ViewPlanningRealm.Applications.FilterPanel.SearchTerm' | translate"
     [attr.aria-label]="'Portal.ViewPlanningRealm.Applications.FilterPanel.SearchTerm' | translate"
     [(ngModel)]="searchTerm"
     (keyup.enter)="emitFilter()" />
-  <span class="flex-grow-1"></span>
   <tp-action-button
     [type]="'outline-secondary'"
     [icon]="'x-circle'"
