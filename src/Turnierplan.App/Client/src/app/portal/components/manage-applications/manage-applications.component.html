@@ -32,8 +32,9 @@
       <tbody>
         @for (application of result.items; track application; let i = $index) {
           @let showApplicationTeams = application.id === showTeamsApplicationId;
-          <tr>
-            <td class="text-center align-middle" [rowSpan]="showApplicationTeams ? 2 : 1">
+          <tr style="height: 48px">
+            <!-- height is set to 48px to prevent "jumping" when expanding/collapsing the teams list -->
+            <td class="text-center" [rowSpan]="showApplicationTeams ? 2 : 1">
               <tp-action-button
                 [mode]="'IconOnly'"
                 [icon]="showApplicationTeams ? 'chevron-bar-contract' : 'chevron-bar-expand'"
