@@ -31,12 +31,13 @@
               (renamed)="renameTournamentClass(tournamentClass.id, $event)" />
           </td>
           @let canDelete = tournamentClass.numberOfTeams === 0;
-          <td class="align-middle" [ngClass]="{ 'ps-1': !canDelete }">
-            @if (canDelete) {
-              <tp-delete-button (confirmed)="deleteTournamentClass(tournamentClass.id)" />
-            } @else {
-              <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.TournamentClasses.DeleteNotPossible'" />
-            }
+          <td class="align-middle">
+            <div class="d-flex flex-row align-items-center">
+              <tp-delete-button [disabled]="!canDelete" (confirmed)="deleteTournamentClass(tournamentClass.id)" />
+              @if (!canDelete) {
+                <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.TournamentClasses.DeleteNotPossible'" />
+              }
+            </div>
           </td>
         }
       </tr>
