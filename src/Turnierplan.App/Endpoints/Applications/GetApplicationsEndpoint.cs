@@ -81,11 +81,11 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
                     }
 
                     return x.Notes.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase)
-                           || x.Contact.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase)
-                           || x.ContactEmail?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) == true
-                           || x.ContactTelephone?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) == true
-                           || x.Comment?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) == true
-                           || x.Teams.Any(team => team.Name.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
+                        || x.Contact.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase)
+                        || x.ContactEmail?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) == true
+                        || x.ContactTelephone?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) == true
+                        || x.Comment?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) == true
+                        || x.Teams.Any(team => team.Name.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
                 });
             }
 
