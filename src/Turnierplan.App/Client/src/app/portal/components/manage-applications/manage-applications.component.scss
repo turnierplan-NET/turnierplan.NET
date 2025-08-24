@@ -1,3 +1,7 @@
 .align-correctly {
+  // When the textual information of an application fits in a single line of text in all table cells, the text should be
+  // aligned vertically with the button in the first column which is slightly higher than a single line of text. However,
+  // if the application info takes more vertical space (for example, due to a line break in the comment), the single-line
+  // text should stay where it is. This value is defined empirically such that is looks "correct" in all situations.
   padding-top: 0.7rem;
 }
