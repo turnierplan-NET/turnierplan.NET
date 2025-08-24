@@ -123,7 +123,8 @@
             <tp-manage-applications
               [planningRealm]="planningRealm"
               [filter]="applicationsFilter"
-              (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+              (errorOccured)="loadingState = { isLoading: false, error: $event }"
+              (filterRequested)="navigateToApplicationsWithFilter($event)" />
           </div>
         </div>
       }

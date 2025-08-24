@@ -21,6 +21,9 @@ export class ManageApplicationsComponent implements OnDestroy {
   @Output()
   public errorOccured = new EventEmitter<unknown>();
 
+  @Output()
+  public filterRequested = new EventEmitter<ApplicationsFilter>();
+
   protected currentPage = 1;
   protected pageSize = 15;
   protected isLoading = false;
@@ -58,7 +61,10 @@ export class ManageApplicationsComponent implements OnDestroy {
         next: (result) => {
           this.result = result;
           this.isLoading = false;
-          this.showTeamsApplicationId = undefined;
+
+          if (this.showTeamsApplicationId !== undefined && !result.items.some((x) => x.id === this.showTeamsApplicationId)) {
+            this.showTeamsApplicationId = undefined;
+          }
         },
         error: (error) => {
           this.errorOccured.emit(error);
@@ -99,5 +105,13 @@ export class ManageApplicationsComponent implements OnDestroy {
 
   protected getNumberOfHiddenTeams(application: ApplicationDto): number {
     return application.teams.filter((team) => !this.isTeamVisible(team)).length;
+  }
+
+  protected setFilterToApplicationTag(applicationTag: number): void {
+    this.filterRequested.emit({
+      searchTerm: `${applicationTag}`,
+      tournamentClass: [],
+      invitationLink: []
+    });
   }
 }

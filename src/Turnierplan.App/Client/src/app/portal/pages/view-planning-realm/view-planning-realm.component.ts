@@ -36,7 +36,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     '0055bb'
   ];
 
-  private static readonly applicationsManagerPageId = 2;
+  private static readonly ApplicationsManagerPageId = 2;
 
   protected readonly Actions = Actions;
 
@@ -67,7 +67,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       icon: 'bi-link-45deg'
     },
     {
-      id: ViewPlanningRealmComponent.applicationsManagerPageId,
+      id: ViewPlanningRealmComponent.ApplicationsManagerPageId,
       title: 'Portal.ViewPlanningRealm.Pages.Applications',
       icon: 'bi-card-checklist',
       authorization: Actions.ManageApplications
@@ -276,7 +276,10 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
 
   protected navigateToApplicationsWithFilter(filter: ApplicationsFilter): void {
     this.onApplicationsFilterChange(filter);
-    this.pageFrame.toggleNavigationTab(ViewPlanningRealmComponent.applicationsManagerPageId);
+
+    if (this.currentPage !== ViewPlanningRealmComponent.ApplicationsManagerPageId) {
+      this.pageFrame.toggleNavigationTab(ViewPlanningRealmComponent.ApplicationsManagerPageId);
+    }
   }
 
   private setPlanningRealm(planningRealm: PlanningRealmDto): void {

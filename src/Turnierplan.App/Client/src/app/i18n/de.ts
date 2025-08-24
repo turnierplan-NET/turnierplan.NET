@@ -957,6 +957,7 @@ export const de = {
         },
         HiddenTeamsTooltip: 'Diese Anmeldung beinhaltet weitere Mannschaften, welche nicht den Filterkriterien entsprechen',
         HiddenTeams: '{{count}} weitere Mannschaft(en) werden aufgrund Ihrer Filterkriterien nicht angezeigt.',
+        HiddenTeamsShowAll: 'alle anzeigen',
         NoResults: 'Es gibt keine Anmeldungen, welche den angegebenen Filterkriterien entsprechen.',
         PaginationRange: 'Zeige {{start}} - {{end}} von {{total}}'
       },
