@@ -100,6 +100,7 @@ import { UnsavedChangesAlertComponent } from './components/unsaved-changes-alert
 import { ShareLinkComponent } from './components/share-link/share-link.component';
 import { ManageApplicationsComponent } from './components/manage-applications/manage-applications.component';
 import { ManageApplicationsFilterComponent } from './components/manage-applications-filter/manage-applications-filter.component';
+import { MultiSelectFilterComponent } from './components/multi-select-filter/multi-select-filter.component';
 
 const routes: Routes = [
   {
@@ -262,7 +263,8 @@ const routes: Routes = [
     UnsavedChangesAlertComponent,
     ShareLinkComponent,
     ManageApplicationsComponent,
-    ManageApplicationsFilterComponent
+    ManageApplicationsFilterComponent,
+    MultiSelectFilterComponent
   ],
   imports: [
     CommonModule,

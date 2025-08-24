@@ -72,9 +72,22 @@
                   </thead>
                   <tbody>
                     @for (team of application.teams; track team) {
+                      @if (isTeamVisible(team)) {
+                        <tr>
+                          <td>{{ getTournamentClassName(team.tournamentClassId) }}</td>
+                          <td>{{ team.name }}</td>
+                        </tr>
+                      }
+                    }
+                    @let hiddenTeamsCount = getNumberOfHiddenTeams(application);
+                    @if (hiddenTeamsCount > 0) {
                       <tr>
-                        <td>{{ getTournamentClassName(team.tournamentClassId) }}</td>
-                        <td>{{ team.name }}</td>
+                        <td colspan="2">
+                          <span
+                            class="fst-italic small text-secondary"
+                            translate="Portal.ViewPlanningRealm.Applications.HiddenTeams"
+                            [translateParams]="{ count: hiddenTeamsCount }"></span>
+                        </td>
                       </tr>
                     }
                   </tbody>

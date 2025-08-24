@@ -83,7 +83,10 @@
             } @else {
               <!-- The actual applications manager is displayed as fullWidthContent below -->
               <div class="card-body p-2">
-                <tp-manage-applications-filter [filter]="applicationsFilter" (filterChange)="onApplicationsFilterChange($event)" />
+                <tp-manage-applications-filter
+                  [planningRealm]="planningRealm"
+                  [filter]="applicationsFilter"
+                  (filterChange)="onApplicationsFilterChange($event)" />
               </div>
             }
           }

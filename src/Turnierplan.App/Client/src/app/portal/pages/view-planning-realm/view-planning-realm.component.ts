@@ -278,7 +278,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
 
     this.titleService.setTitleFrom(this.planningRealm);
 
-    this.applicationsFilter = this.localStorageService.getPlanningRealmApplicationsFilter(planningRealm.id) ?? defaultApplicationsFilter;
+    this.applicationsFilter = this.localStorageService.getPlanningRealmApplicationsFilter(planningRealm.id);
   }
 
   private openModalForEnteringName(key: string, showAlert: boolean = false): Observable<string> {

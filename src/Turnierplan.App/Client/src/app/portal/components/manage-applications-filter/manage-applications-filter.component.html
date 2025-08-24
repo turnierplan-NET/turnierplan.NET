@@ -1,19 +1,41 @@
-<div class="d-flex flex-row gap-2">
-  <input
-    class="form-control form-control-sm flex-grow-1"
-    [placeholder]="'Portal.ViewPlanningRealm.Applications.FilterPanel.SearchTerm' | translate"
-    [attr.aria-label]="'Portal.ViewPlanningRealm.Applications.FilterPanel.SearchTerm' | translate"
-    [(ngModel)]="searchTerm"
-    (keyup.enter)="emitFilter()" />
-  <tp-action-button
-    [type]="'outline-secondary'"
-    [icon]="'x-circle'"
-    [mode]="'IconOnly'"
-    [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.FilterPanel.Reset' | translate"
-    (click)="resetAndEmitFilter()" />
-  <tp-action-button
-    [type]="'outline-primary'"
-    [icon]="'search'"
-    [title]="'Portal.ViewPlanningRealm.Applications.FilterPanel.Search'"
-    (click)="emitFilter()" />
+<div class="d-flex flex-row align-items-stretch gap-2">
+  <div class="flex-grow-1 d-flex flex-column align-items-stretch gap-2">
+    <input
+      class="form-control form-control-sm flex-grow-1"
+      [placeholder]="'Portal.ViewPlanningRealm.Applications.FilterPanel.SearchTerm' | translate"
+      [attr.aria-label]="'Portal.ViewPlanningRealm.Applications.FilterPanel.SearchTerm' | translate"
+      [(ngModel)]="searchTerm"
+      (keyup.enter)="emitFilter()" />
+
+    <div class="d-flex flex-row gap-2">
+      <tp-multi-select-filter
+        [title]="'Portal.ViewPlanningRealm.Applications.FilterPanel.TournamentClasses'"
+        [idPrefix]="'tournament_class'"
+        [options]="tournamentClassFilterOptions"
+        [(selected)]="tournamentClass" />
+
+      <tp-multi-select-filter
+        [title]="'Portal.ViewPlanningRealm.Applications.FilterPanel.InvitationLinks'"
+        [idPrefix]="'invitation_link'"
+        [options]="invitationLinkFilterOptions"
+        [specialOption]="{ value: invitationLinkSpecialValue, label: 'ohne Anmeldelink' }"
+        [(selected)]="invitationLink" />
+    </div>
+  </div>
+
+  <div class="mx-2 my-1 border-end border-secondary-subtle"></div>
+
+  <div class="pe-2 d-flex flex-row align-items-center gap-1">
+    <tp-action-button
+      [type]="'outline-secondary'"
+      [icon]="'x-circle'"
+      [mode]="'IconOnly'"
+      [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.FilterPanel.Reset' | translate"
+      (click)="resetAndEmitFilter()" />
+    <tp-action-button
+      [type]="'outline-primary'"
+      [icon]="'search'"
+      [title]="'Portal.ViewPlanningRealm.Applications.FilterPanel.Search'"
+      (click)="emitFilter()" />
+  </div>
 </div>

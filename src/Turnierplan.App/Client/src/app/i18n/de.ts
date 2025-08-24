@@ -933,6 +933,8 @@ export const de = {
       Applications: {
         FilterPanel: {
           SearchTerm: 'Suchbegriff (Tag, Name, E-Mail, ...)',
+          TournamentClasses: 'Turnierklassen',
+          InvitationLinks: 'Anmeldelinks',
           Search: 'Suchen',
           Reset: 'Filter zurücksetzen'
         },
@@ -952,6 +954,7 @@ export const de = {
           TournamentClass: 'Turnierklasse',
           TeamName: 'Mannschaftsname'
         },
+        HiddenTeams: '{{count}} weitere Mannschaften werden aufgrund Ihrer Filterkriterien nicht angezeigt.',
         NoResults: 'Es gibt keine Anmeldungen, welche den angegebenen Filterkriterien entsprechen.',
         PaginationRange: 'Zeige {{start}} - {{end}} von {{total}}'
       },
@@ -1052,6 +1055,10 @@ export const de = {
         FileSize: 'Dateigröße: {{value}} KB',
         Resolution: 'Auflösung: {{width}}x{{height}} px'
       }
+    },
+    MultiSelectFilter: {
+      All: 'alle',
+      Reset: 'Filter zurücksetzen'
     },
     ErrorPage: {
       Title: 'Fehler',

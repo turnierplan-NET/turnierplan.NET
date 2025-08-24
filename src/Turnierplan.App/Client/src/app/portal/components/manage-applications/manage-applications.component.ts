@@ -1,8 +1,13 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { ApplicationsFilter } from '../../models/applications-filter';
+import { ApplicationsFilter, TournamentClassFilterValue } from '../../models/applications-filter';
 import { BehaviorSubject, combineLatestWith, ReplaySubject, switchMap, tap } from 'rxjs';
-import { ApplicationsService, PlanningRealmDto } from '../../../api';
-import { PaginationResultDtoOfApplicationDto } from '../../../api/models/pagination-result-dto-of-application-dto';
+import {
+  ApplicationsService,
+  PlanningRealmDto,
+  PaginationResultDtoOfApplicationDto,
+  ApplicationTeamDto,
+  ApplicationDto
+} from '../../../api';
 
 @Component({
   standalone: false,
@@ -25,23 +30,29 @@ export class ManageApplicationsComponent implements OnDestroy {
   private readonly filter$ = new ReplaySubject<ApplicationsFilter>();
   private readonly reload$ = new BehaviorSubject<undefined>(undefined);
 
+  private tournamentClassFilter: TournamentClassFilterValue[] = [];
+
   constructor(private readonly applicationsService: ApplicationsService) {
     this.filter$
       .pipe(
-        tap(() => {
+        tap((filter) => {
           // Always reset to the first page when the filter changes
           this.currentPage = 1;
+
+          this.tournamentClassFilter = filter.tournamentClass;
         }),
         combineLatestWith(this.reload$),
         tap(() => (this.isLoading = true)),
-        switchMap(([filter, _]) =>
-          this.applicationsService.getApplications({
+        switchMap(([filter, _]) => {
+          return this.applicationsService.getApplications({
             planningRealmId: this.planningRealm.id,
             page: this.currentPage - 1,
             pageSize: this.pageSize,
-            searchTerm: filter.searchTerm
-          })
-        )
+            searchTerm: filter.searchTerm.trim() === '' ? undefined : filter.searchTerm,
+            tournamentClass: filter.tournamentClass.map((x) => `${x}`),
+            invitationLink: filter.invitationLink.map((x) => `${x}`)
+          });
+        })
       )
       .subscribe({
         next: (result) => {
@@ -76,5 +87,13 @@ export class ManageApplicationsComponent implements OnDestroy {
 
   protected getTournamentClassName(id: number): string {
     return this.planningRealm.tournamentClasses.find((x) => x.id === id)?.name ?? '?';
+  }
+
+  protected isTeamVisible(team: ApplicationTeamDto): boolean {
+    return this.tournamentClassFilter.length === 0 || this.tournamentClassFilter.some((x) => x === team.tournamentClassId);
+  }
+
+  protected getNumberOfHiddenTeams(application: ApplicationDto): number {
+    return application.teams.filter((team) => !this.isTeamVisible(team)).length;
   }
 }

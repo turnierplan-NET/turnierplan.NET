@@ -1,0 +1,45 @@
+<div ngbDropdown>
+  <button type="button" class="btn btn-sm" [ngClass]="allSelected ? 'btn-outline-secondary' : 'btn-success'" ngbDropdownToggle>
+    <span [translate]="title"></span>
+    <span>: </span>
+    @if (allSelected) {
+      <span translate="Portal.MultiSelectFilter.All"></span>
+    } @else {
+      <span>{{ selectedCount }} / {{ totalCount }}</span>
+    }
+  </button>
+  <div ngbDropdownMenu>
+    @if (specialOption) {
+      <div class="form-check mx-3 mb-0">
+        @let id = idPrefix + '_' + specialOption.value;
+        <input
+          type="checkbox"
+          class="form-check-input"
+          [id]="id"
+          [ngModel]="isValueSelected(specialOption.value)"
+          (ngModelChange)="setValueSelected(specialOption.value, $event)" />
+        <label class="form-check-label" [for]="id">{{ specialOption.label }}</label>
+      </div>
+      <div class="dropdown-divider"></div>
+    }
+    @for (option of options; track option.value; let isLast = $last) {
+      @let id = idPrefix + '_' + option.value;
+      <div class="form-check mx-3" [ngClass]="{ 'mb-0': isLast }">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          [id]="id"
+          [ngModel]="isValueSelected(option.value)"
+          (ngModelChange)="setValueSelected(option.value, $event)" />
+        <label class="form-check-label" [for]="id">{{ option.label }}</label>
+      </div>
+    }
+    @if (selectedCount > 0) {
+      <div class="dropdown-divider"></div>
+      <button type="button" ngbDropdownItem (click)="unsetAllValues()">
+        <i class="bi bi-arrow-counterclockwise"></i>
+        <span class="ms-2" translate="Portal.MultiSelectFilter.Reset"></span>
+      </button>
+    }
+  </div>
+</div>
