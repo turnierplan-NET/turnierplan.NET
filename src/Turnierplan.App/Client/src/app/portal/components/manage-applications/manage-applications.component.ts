@@ -15,7 +15,8 @@ import { map } from 'rxjs/operators';
 @Component({
   standalone: false,
   selector: 'tp-manage-applications',
-  templateUrl: './manage-applications.component.html'
+  templateUrl: './manage-applications.component.html',
+  styleUrl: './manage-applications.component.scss'
 })
 export class ManageApplicationsComponent implements OnDestroy {
   @Input()
