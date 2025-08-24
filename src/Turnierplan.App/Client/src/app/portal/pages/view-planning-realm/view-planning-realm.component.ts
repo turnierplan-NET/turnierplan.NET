@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LoadingState } from '../../directives/loading-state/loading-state.directive';
 import { PlanningRealmDto, PlanningRealmsService, UpdatePlanningRealmEndpointRequest } from '../../../api';
-import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
+import { PageFrameComponent, PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
 import { Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -36,7 +36,12 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     '0055bb'
   ];
 
+  private static readonly ApplicationsManagerPageId = 2;
+
   protected readonly Actions = Actions;
+
+  @ViewChild('pageFrame')
+  protected pageFrame!: PageFrameComponent;
 
   protected loadingState: LoadingState = { isLoading: true };
   protected updateFunction: UpdatePlanningRealmFunc;
@@ -62,7 +67,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       icon: 'bi-link-45deg'
     },
     {
-      id: 2,
+      id: ViewPlanningRealmComponent.ApplicationsManagerPageId,
       title: 'Portal.ViewPlanningRealm.Pages.Applications',
       icon: 'bi-card-checklist',
       authorization: Actions.ManageApplications
@@ -269,6 +274,14 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     }
   }
 
+  protected navigateToApplicationsWithFilter(filter: ApplicationsFilter): void {
+    this.onApplicationsFilterChange(filter);
+
+    if (this.currentPage !== ViewPlanningRealmComponent.ApplicationsManagerPageId) {
+      this.pageFrame.toggleNavigationTab(ViewPlanningRealmComponent.ApplicationsManagerPageId);
+    }
+  }
+
   private setPlanningRealm(planningRealm: PlanningRealmDto): void {
     this.originalPlanningRealm = planningRealm;
 
@@ -278,7 +291,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
 
     this.titleService.setTitleFrom(this.planningRealm);
 
-    this.applicationsFilter = this.localStorageService.getPlanningRealmApplicationsFilter(planningRealm.id) ?? defaultApplicationsFilter;
+    this.applicationsFilter = this.localStorageService.getPlanningRealmApplicationsFilter(planningRealm.id);
   }
 
   private openModalForEnteringName(key: string, showAlert: boolean = false): Observable<string> {

@@ -1,5 +1,6 @@
 <ng-container *tpLoadingState="loadingState">
   <tp-page-frame
+    #pageFrame
     *ngIf="planningRealm"
     [title]="planningRealm.name"
     [backLink]="'../../organization/' + planningRealm.organizationId"
@@ -49,7 +50,10 @@
               <tp-badge context="ViewPlanningRealm" label="TournamentClassesCount" [value]="planningRealm.tournamentClasses.length" />
             </div>
             <div class="card-body p-0">
-              <tp-tournament-classes-manager [planningRealm]="planningRealm" [updatePlanningRealm]="updateFunction" />
+              <tp-tournament-classes-manager
+                [planningRealm]="planningRealm"
+                [updatePlanningRealm]="updateFunction"
+                (filterRequested)="navigateToApplicationsWithFilter($event)" />
             </div>
           }
           @case (1) {
@@ -69,7 +73,8 @@
                       [planningRealm]="planningRealm"
                       [invitationLink]="invitationLink"
                       [updatePlanningRealm]="updateFunction"
-                      (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+                      (errorOccured)="loadingState = { isLoading: false, error: $event }"
+                      (filterRequested)="navigateToApplicationsWithFilter($event)" />
                   }
                 </div>
               }
@@ -83,7 +88,10 @@
             } @else {
               <!-- The actual applications manager is displayed as fullWidthContent below -->
               <div class="card-body p-2">
-                <tp-manage-applications-filter [filter]="applicationsFilter" (filterChange)="onApplicationsFilterChange($event)" />
+                <tp-manage-applications-filter
+                  [planningRealm]="planningRealm"
+                  [filter]="applicationsFilter"
+                  (filterChange)="onApplicationsFilterChange($event)" />
               </div>
             }
           }
@@ -111,11 +119,12 @@
     <ng-template #fullWidthContent>
       @if (currentPage === 2 && !hasUnsavedChanges()) {
         <div class="mt-3 d-flex flex-row justify-content-center px-3">
-          <div style="max-width: 1800px" class="flex-grow-1">
+          <div style="max-width: 2400px" class="flex-grow-1">
             <tp-manage-applications
               [planningRealm]="planningRealm"
               [filter]="applicationsFilter"
-              (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+              (errorOccured)="loadingState = { isLoading: false, error: $event }"
+              (filterRequested)="navigateToApplicationsWithFilter($event)" />
           </div>
         </div>
       }

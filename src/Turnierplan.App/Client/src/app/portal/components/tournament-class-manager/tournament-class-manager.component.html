@@ -6,6 +6,7 @@
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.Name"></th>
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.InvitationLinkCount"></th>
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.ApplicationCount"></th>
+      <th></th>
       @if (writeAllowed) {
         <th style="width: 1px"></th>
         <th style="width: 1px"></th>
@@ -18,9 +19,17 @@
       <tr>
         <td class="align-middle">{{ tournamentClass.name }}</td>
         <td class="align-middle">{{ getNumberOfReferencingLinks(tournamentClass.id) }}</td>
-        <td class="align-middle">
-          {{ tournamentClass.numberOfTeams }}
-          <!-- TODO: Add button which switches to applications page with correct filter -->
+        <td class="align-middle">{{ tournamentClass.numberOfTeams }}</td>
+        <td>
+          @if (tournamentClass.id > 0) {
+            <!-- Navigation to search is not possible if this tournament class has not been saved yet -->
+            <tp-action-button
+              *tpIsActionAllowed="[planningRealm.id, Actions.ManageApplications]"
+              [type]="'light'"
+              [icon]="'search'"
+              [mode]="'IconOnly'"
+              (click)="searchApplicationsClicked(tournamentClass.id)" />
+          }
         </td>
         @if (writeAllowed) {
           <td class="align-middle pe-0">
@@ -31,12 +40,13 @@
               (renamed)="renameTournamentClass(tournamentClass.id, $event)" />
           </td>
           @let canDelete = tournamentClass.numberOfTeams === 0;
-          <td class="align-middle" [ngClass]="{ 'ps-1': !canDelete }">
-            @if (canDelete) {
-              <tp-delete-button (confirmed)="deleteTournamentClass(tournamentClass.id)" />
-            } @else {
-              <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.TournamentClasses.DeleteNotPossible'" />
-            }
+          <td class="align-middle">
+            <div class="d-flex flex-row align-items-center">
+              <tp-delete-button [disabled]="!canDelete" (confirmed)="deleteTournamentClass(tournamentClass.id)" />
+              @if (!canDelete) {
+                <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.TournamentClasses.DeleteNotPossible'" />
+              }
+            </div>
           </td>
         }
       </tr>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApplicationsFilter } from '../models/applications-filter';
+import { ApplicationsFilter, defaultApplicationsFilter } from '../models/applications-filter';
 
 @Injectable()
 export class LocalStorageService {
@@ -39,10 +39,14 @@ export class LocalStorageService {
     localStorage.setItem(`tp_applicationsFilter_${planningRealmId}`, JSON.stringify(filter));
   }
 
-  public getPlanningRealmApplicationsFilter(planningRealmId: string): ApplicationsFilter | undefined {
-    return this.getValueFromLocalStorage(`tp_applicationsFilter_${planningRealmId}`, (x) =>
-      x === undefined ? undefined : (JSON.parse(x) as ApplicationsFilter)
-    );
+  public getPlanningRealmApplicationsFilter(planningRealmId: string): ApplicationsFilter {
+    const value = this.getValueFromLocalStorage(`tp_applicationsFilter_${planningRealmId}`, (x) => x);
+
+    if (!value) {
+      return defaultApplicationsFilter;
+    }
+
+    return { ...defaultApplicationsFilter, ...(JSON.parse(value) as ApplicationsFilter) };
   }
 
   private getValueFromLocalStorage<T>(key: string, parser: (value: string) => T): T | undefined {

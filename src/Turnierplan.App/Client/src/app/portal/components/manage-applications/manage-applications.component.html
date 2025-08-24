@@ -6,10 +6,111 @@
   @if (result.totalItems === 0) {
     <div class="mt-5 fst-italic text-center" translate="Portal.ViewPlanningRealm.Applications.NoResults"></div>
   } @else {
-    <div class="card">
-      <!-- TODO: Display applications in a visually pleasing way :) -->
-      {{ result | json }}
-    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="text-center" style="width: 1px" translate="Portal.ViewPlanningRealm.Applications.TableHeader.Index"></th>
+          <th style="width: 1px">
+            <span translate="Portal.ViewPlanningRealm.Applications.TableHeader.Tag"></span>
+            <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.Applications.TableHeader.TagTooltip'" />
+          </th>
+          <th style="width: 1px" translate="Portal.ViewPlanningRealm.Applications.TableHeader.CreatedAt"></th>
+          <th style="width: 1px" translate="Portal.ViewPlanningRealm.Applications.TableHeader.TeamCount"></th>
+          <th style="width: 15%" translate="Portal.ViewPlanningRealm.Applications.TableHeader.Contact"></th>
+          <th style="width: 20%" translate="Portal.ViewPlanningRealm.Applications.TableHeader.ContactEmail"></th>
+          <th style="width: 15%" translate="Portal.ViewPlanningRealm.Applications.TableHeader.ContactTelephone"></th>
+          <th style="width: 20%">
+            <span translate="Portal.ViewPlanningRealm.Applications.TableHeader.Comment"></span>
+            <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.Applications.TableHeader.CommentTooltip'" />
+          </th>
+          <th style="width: 20%">
+            <span translate="Portal.ViewPlanningRealm.Applications.TableHeader.Notes"></span>
+            <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.Applications.TableHeader.NotesTooltip'" />
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (application of result.items; track application; let i = $index) {
+          @let showApplicationTeams = application.id === showTeamsApplicationId;
+          @let visibleTeamsCount = getNumberOfVisibleTeams(application);
+          @let hiddenTeamsCount = getNumberOfHiddenTeams(application);
+
+          <tr style="height: 48px">
+            <!-- height is set to 48px to prevent "jumping" when expanding/collapsing the teams list -->
+            <td class="text-center" [rowSpan]="showApplicationTeams ? 2 : 1">
+              <tp-action-button
+                [mode]="'IconOnly'"
+                [icon]="showApplicationTeams ? 'chevron-bar-contract' : 'chevron-bar-expand'"
+                [type]="'outline-secondary'"
+                (click)="showTeamsApplicationId = showApplicationTeams ? undefined : application.id" />
+            </td>
+            <td class="text-center align-middle">{{ result.currentPage * result.itemsPerPage + i + 1 }}</td>
+            <td class="text-nowrap align-middle">
+              <span class="me-2">{{ application.tag }}</span>
+              <tp-copy-to-clipboard [value]="application.tag" />
+            </td>
+            <td class="text-nowrap align-middle">{{ application.createdAt | translateDate: 'short' }}</td>
+            <td class="align-middle">
+              <span>{{ visibleTeamsCount }}</span>
+              @if (visibleTeamsCount !== application.teams.length) {
+                <tp-tooltip-icon
+                  [icon]="'exclamation-diamond'"
+                  [tooltipText]="'Portal.ViewPlanningRealm.Applications.HiddenTeamsTooltip'" />
+              }
+            </td>
+            <td class="align-middle">{{ application.contact }}</td>
+            <td class="align-middle">
+              @if (application.contactEmail) {
+                <a href="mailto:{{ application.contactEmail }}">{{ application.contactEmail }}</a>
+              }
+            </td>
+            <td class="align-middle">{{ application.contactTelephone ?? '' }}</td>
+            <td class="align-middle">{{ application.comment ?? '' }}</td>
+            <td class="align-middle">{{ application.notes }}</td>
+          </tr>
+
+          @if (showApplicationTeams) {
+            <tr>
+              <td colspan="9">
+                <table style="max-width: 800px" class="mb-0 table table-sm table-bordered">
+                  <thead>
+                    <tr>
+                      <th translate="Portal.ViewPlanningRealm.Applications.TableHeader.TournamentClass"></th>
+                      <th translate="Portal.ViewPlanningRealm.Applications.TableHeader.TeamName"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (team of application.teams; track team) {
+                      @if (isTeamVisible(team)) {
+                        <tr>
+                          <td>{{ getTournamentClassName(team.tournamentClassId) }}</td>
+                          <td>{{ team.name }}</td>
+                        </tr>
+                      }
+                    }
+                    @if (hiddenTeamsCount > 0) {
+                      <tr>
+                        <td colspan="2">
+                          <span
+                            class="fst-italic small text-secondary"
+                            translate="Portal.ViewPlanningRealm.Applications.HiddenTeams"
+                            [translateParams]="{ count: hiddenTeamsCount }"></span>
+                          <span
+                            class="ms-2 small text-secondary text-decoration-underline tp-cursor-pointer"
+                            translate="Portal.ViewPlanningRealm.Applications.HiddenTeamsShowAll"
+                            (click)="setFilterToApplicationTag(application.tag)"></span>
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
 
     <div class="mt-4 d-flex flex-column align-items-center gap-2">
       <div
@@ -25,8 +126,6 @@
         [page]="currentPage"
         [pageSize]="pageSize"
         [maxSize]="5"
-        [rotate]="true"
-        [ellipses]="false"
         (pageChange)="switchPage($event)" />
     </div>
   }

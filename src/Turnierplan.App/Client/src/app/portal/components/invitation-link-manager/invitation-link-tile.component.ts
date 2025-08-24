@@ -6,6 +6,7 @@ import { UpdatePlanningRealmFunc } from '../../pages/view-planning-realm/view-pl
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
+import { ApplicationsFilter } from '../../models/applications-filter';
 
 @Component({
   standalone: false,
@@ -21,6 +22,9 @@ export class InvitationLinkTileComponent {
 
   @Output()
   public errorOccured = new EventEmitter<unknown>();
+
+  @Output()
+  public filterRequested = new EventEmitter<ApplicationsFilter>();
 
   protected readonly Actions = Actions;
   protected readonly ImageType = ImageType;
@@ -276,6 +280,18 @@ export class InvitationLinkTileComponent {
 
       planningRealm.invitationLinks.splice(index, 1);
       return true;
+    });
+  }
+
+  protected searchApplicationsClicked(tournamentClassId?: number): void {
+    if (this.invitationLink.id < 0) {
+      return;
+    }
+
+    this.filterRequested.emit({
+      searchTerm: '',
+      invitationLink: [this.invitationLink.id],
+      tournamentClass: tournamentClassId === undefined ? [] : [tournamentClassId]
     });
   }
 

@@ -927,14 +927,37 @@ export const de = {
         AddTournament: 'Turnier hinzufügen',
         AllClassesAdded: 'In diesem Link sind alle Turnierklassen enthalten',
         DeleteNotPossible:
-          'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.'
+          'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.',
+        ShowApplications: 'Anmeldungen anzeigen'
       },
       SaveToViewApplications: 'Speichern Sie die offenen Änderungen, um die Anmeldungen zu sehen und neue Anmeldungen hinzuzufügen.',
       Applications: {
         FilterPanel: {
-          SearchTerm: 'Suchbegriff',
-          Search: 'Suchen'
+          SearchTerm: 'Suchbegriff (Tag, Name, E-Mail, ...)',
+          TournamentClasses: 'Turnierklassen',
+          InvitationLinks: 'Anmeldelinks',
+          Search: 'Suchen',
+          Reset: 'Filter zurücksetzen'
         },
+        TableHeader: {
+          Index: '#',
+          Tag: 'Tag',
+          TagTooltip: 'Der Tag kann z.B. im E-Mailverkehr genutzt werden um eine eindeutige Referenz zu dieser Anmeldung zu haben.',
+          CreatedAt: 'Erstellt am',
+          TeamCount: 'Teams',
+          Contact: 'Kontaktperson',
+          ContactEmail: 'E-Mail',
+          ContactTelephone: 'Telefon-Nr.',
+          Comment: 'Bemerkung',
+          CommentTooltip: 'Die Bemerkung wurde bei der Anmeldung mitgeschickt und kann nicht bearbeitet werden.',
+          Notes: 'Notizen',
+          NotesTooltip: 'In dieser Spalte können Sie eigene Notizen hinzufügen.',
+          TournamentClass: 'Turnierklasse',
+          TeamName: 'Mannschaftsname'
+        },
+        HiddenTeamsTooltip: 'Diese Anmeldung beinhaltet weitere Mannschaften, welche nicht den Filterkriterien entsprechen',
+        HiddenTeams: '{{count}} weitere Mannschaft(en) werden aufgrund Ihrer Filterkriterien nicht angezeigt.',
+        HiddenTeamsShowAll: 'alle anzeigen',
         NoResults: 'Es gibt keine Anmeldungen, welche den angegebenen Filterkriterien entsprechen.',
         PaginationRange: 'Zeige {{start}} - {{end}} von {{total}}'
       },
@@ -1035,6 +1058,10 @@ export const de = {
         FileSize: 'Dateigröße: {{value}} KB',
         Resolution: 'Auflösung: {{width}}x{{height}} px'
       }
+    },
+    MultiSelectFilter: {
+      All: 'alle',
+      Reset: 'Filter zurücksetzen'
     },
     ErrorPage: {
       Title: 'Fehler',
