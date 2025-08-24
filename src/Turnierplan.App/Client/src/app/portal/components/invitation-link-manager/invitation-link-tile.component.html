@@ -117,9 +117,7 @@
                 [icon]="'question-circle'"
                 [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.MaxTeamsPerRegistrationTooltip'" />
             </th>
-            <th translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NumberOfTeams">
-              <!-- TODO: Add button which switches to applications page with correct filter -->
-            </th>
+            <th translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NumberOfTeams"></th>
             @if (writeAllowed) {
               <th style="width: 1px"></th>
             }
@@ -153,7 +151,17 @@
                   <!-- This is the case for newly added tournament classes which have not been saved yet -->
                   <span>-</span>
                 } @else {
-                  <span>{{ entry.numberOfTeams }}</span>
+                  <div class="d-flex flex-row align-items-center">
+                    <span class="flex-grow-1">{{ entry.numberOfTeams }}</span>
+                    @if (invitationLink.id > 0) {
+                      <!-- Navigation to search is not possible if this invitation link has not been saved yet -->
+                      <tp-action-button
+                        [type]="'light'"
+                        [icon]="'search'"
+                        [mode]="'IconOnly'"
+                        (click)="searchApplicationsClicked(entry.tournamentClassId)" />
+                    }
+                  </div>
                 }
               </td>
               @if (writeAllowed) {
@@ -206,6 +214,15 @@
       @if (!canDelete) {
         <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.DeleteNotPossible'" />
       }
+    }
+    @if (invitationLink.id > 0) {
+      <!-- Navigation to search is not possible if this invitation link has not been saved yet -->
+      <span class="flex-grow-1"></span>
+      <tp-action-button
+        [type]="'outline-secondary'"
+        [icon]="'search'"
+        [title]="'Portal.ViewPlanningRealm.InvitationLink.ShowApplications'"
+        (click)="searchApplicationsClicked()" />
     }
   </div>
 </div>

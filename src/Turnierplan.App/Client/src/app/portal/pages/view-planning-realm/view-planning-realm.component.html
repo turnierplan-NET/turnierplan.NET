@@ -1,5 +1,6 @@
 <ng-container *tpLoadingState="loadingState">
   <tp-page-frame
+    #pageFrame
     *ngIf="planningRealm"
     [title]="planningRealm.name"
     [backLink]="'../../organization/' + planningRealm.organizationId"
@@ -49,7 +50,10 @@
               <tp-badge context="ViewPlanningRealm" label="TournamentClassesCount" [value]="planningRealm.tournamentClasses.length" />
             </div>
             <div class="card-body p-0">
-              <tp-tournament-classes-manager [planningRealm]="planningRealm" [updatePlanningRealm]="updateFunction" />
+              <tp-tournament-classes-manager
+                [planningRealm]="planningRealm"
+                [updatePlanningRealm]="updateFunction"
+                (filterRequested)="navigateToApplicationsWithFilter($event)" />
             </div>
           }
           @case (1) {
@@ -69,7 +73,8 @@
                       [planningRealm]="planningRealm"
                       [invitationLink]="invitationLink"
                       [updatePlanningRealm]="updateFunction"
-                      (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+                      (errorOccured)="loadingState = { isLoading: false, error: $event }"
+                      (filterRequested)="navigateToApplicationsWithFilter($event)" />
                   }
                 </div>
               }

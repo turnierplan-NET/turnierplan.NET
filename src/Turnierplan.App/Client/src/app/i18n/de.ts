@@ -927,7 +927,8 @@ export const de = {
         AddTournament: 'Turnier hinzufügen',
         AllClassesAdded: 'In diesem Link sind alle Turnierklassen enthalten',
         DeleteNotPossible:
-          'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.'
+          'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.',
+        ShowApplications: 'Anmeldungen anzeigen'
       },
       SaveToViewApplications: 'Speichern Sie die offenen Änderungen, um die Anmeldungen zu sehen und neue Anmeldungen hinzuzufügen.',
       Applications: {
@@ -954,7 +955,8 @@ export const de = {
           TournamentClass: 'Turnierklasse',
           TeamName: 'Mannschaftsname'
         },
-        HiddenTeams: '{{count}} weitere Mannschaften werden aufgrund Ihrer Filterkriterien nicht angezeigt.',
+        HiddenTeamsTooltip: 'Diese Anmeldung beinhaltet weitere Mannschaften, welche nicht den Filterkriterien entsprechen',
+        HiddenTeams: '{{count}} weitere Mannschaft(en) werden aufgrund Ihrer Filterkriterien nicht angezeigt.',
         NoResults: 'Es gibt keine Anmeldungen, welche den angegebenen Filterkriterien entsprechen.',
         PaginationRange: 'Zeige {{start}} - {{end}} von {{total}}'
       },

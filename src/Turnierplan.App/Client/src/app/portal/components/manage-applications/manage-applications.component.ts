@@ -93,6 +93,10 @@ export class ManageApplicationsComponent implements OnDestroy {
     return this.tournamentClassFilter.length === 0 || this.tournamentClassFilter.some((x) => x === team.tournamentClassId);
   }
 
+  protected getNumberOfVisibleTeams(application: ApplicationDto): number {
+    return application.teams.filter((team) => this.isTeamVisible(team)).length;
+  }
+
   protected getNumberOfHiddenTeams(application: ApplicationDto): number {
     return application.teams.filter((team) => !this.isTeamVisible(team)).length;
   }

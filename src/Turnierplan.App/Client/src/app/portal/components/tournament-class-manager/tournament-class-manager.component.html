@@ -6,6 +6,7 @@
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.Name"></th>
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.InvitationLinkCount"></th>
       <th translate="Portal.ViewPlanningRealm.TournamentClasses.ApplicationCount"></th>
+      <th></th>
       @if (writeAllowed) {
         <th style="width: 1px"></th>
         <th style="width: 1px"></th>
@@ -19,6 +20,17 @@
         <td class="align-middle">{{ tournamentClass.name }}</td>
         <td class="align-middle">{{ getNumberOfReferencingLinks(tournamentClass.id) }}</td>
         <td class="align-middle">{{ tournamentClass.numberOfTeams }}</td>
+        <td>
+          <!-- TODO: PERMISSION CHECK -->
+          @if (tournamentClass.id > 0) {
+            <!-- Navigation to search is not possible if this tournament class has not been saved yet -->
+            <tp-action-button
+              [type]="'light'"
+              [icon]="'search'"
+              [mode]="'IconOnly'"
+              (click)="searchApplicationsClicked(tournamentClass.id)" />
+          }
+        </td>
         @if (writeAllowed) {
           <td class="align-middle pe-0">
             <tp-rename-button

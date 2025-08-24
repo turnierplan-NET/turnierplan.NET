@@ -33,6 +33,9 @@
       <tbody>
         @for (application of result.items; track application; let i = $index) {
           @let showApplicationTeams = application.id === showTeamsApplicationId;
+          @let visibleTeamsCount = getNumberOfVisibleTeams(application);
+          @let hiddenTeamsCount = getNumberOfHiddenTeams(application);
+
           <tr style="height: 48px">
             <!-- height is set to 48px to prevent "jumping" when expanding/collapsing the teams list -->
             <td class="text-center" [rowSpan]="showApplicationTeams ? 2 : 1">
@@ -48,7 +51,14 @@
               <tp-copy-to-clipboard [value]="application.tag" />
             </td>
             <td class="text-nowrap align-middle">{{ application.createdAt | translateDate: 'short' }}</td>
-            <td class="align-middle">{{ application.teams.length }}</td>
+            <td class="align-middle">
+              <span>{{ visibleTeamsCount }}</span>
+              @if (visibleTeamsCount !== application.teams.length) {
+                <tp-tooltip-icon
+                  [icon]="'exclamation-diamond'"
+                  [tooltipText]="'Portal.ViewPlanningRealm.Applications.HiddenTeamsTooltip'" />
+              }
+            </td>
             <td class="align-middle">{{ application.contact }}</td>
             <td class="align-middle">
               @if (application.contactEmail) {
@@ -79,7 +89,6 @@
                         </tr>
                       }
                     }
-                    @let hiddenTeamsCount = getNumberOfHiddenTeams(application);
                     @if (hiddenTeamsCount > 0) {
                       <tr>
                         <td colspan="2">

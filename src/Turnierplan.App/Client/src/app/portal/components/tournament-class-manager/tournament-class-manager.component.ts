@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PlanningRealmDto } from '../../../api';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdatePlanningRealmFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
+import { ApplicationsFilter } from '../../models/applications-filter';
 
 @Component({
   standalone: false,
@@ -16,6 +17,9 @@ export class TournamentClassManagerComponent {
 
   @Input()
   public updatePlanningRealm!: UpdatePlanningRealmFunc;
+
+  @Output()
+  public filterRequested = new EventEmitter<ApplicationsFilter>();
 
   protected readonly Actions = Actions;
 
@@ -53,6 +57,18 @@ export class TournamentClassManagerComponent {
       planningRealm.tournamentClasses.splice(index, 1);
 
       return true;
+    });
+  }
+
+  protected searchApplicationsClicked(id: number): void {
+    if (id < 0) {
+      return;
+    }
+
+    this.filterRequested.emit({
+      searchTerm: '',
+      invitationLink: [],
+      tournamentClass: [id]
     });
   }
 }

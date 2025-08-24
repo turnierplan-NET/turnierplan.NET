@@ -92,7 +92,7 @@ export class PageFrameComponent implements OnInit, OnChanges {
     }
   }
 
-  protected toggleNavigationTab(id: number): void {
+  public toggleNavigationTab(id: number): void {
     const navigationTab = this.navigationTabs?.find((x) => x.id === id);
     if (!navigationTab) {
       return;
