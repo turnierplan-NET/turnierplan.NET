@@ -8,6 +8,9 @@ import {
   ApplicationTeamDto,
   ApplicationDto
 } from '../../../api';
+import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { map } from 'rxjs/operators';
 
 @Component({
   standalone: false,
@@ -17,6 +20,11 @@ import {
 export class ManageApplicationsComponent implements OnDestroy {
   @Input()
   public planningRealm!: PlanningRealmDto;
+
+  @Input()
+  public set filter(value: ApplicationsFilter) {
+    this.filter$.next(value);
+  }
 
   @Output()
   public errorOccured = new EventEmitter<unknown>();
@@ -29,13 +37,17 @@ export class ManageApplicationsComponent implements OnDestroy {
   protected isLoading = false;
   protected result?: PaginationResultDtoOfApplicationDto;
   protected showTeamsApplicationId?: number;
+  protected updatingNotesOfApplicationId?: number;
 
   private readonly filter$ = new ReplaySubject<ApplicationsFilter>();
   private readonly reload$ = new BehaviorSubject<undefined>(undefined);
 
   private tournamentClassFilter: TournamentClassFilterValue[] = [];
 
-  constructor(private readonly applicationsService: ApplicationsService) {
+  constructor(
+    private readonly applicationsService: ApplicationsService,
+    private readonly modalService: NgbModal
+  ) {
     this.filter$
       .pipe(
         tap((filter) => {
@@ -70,11 +82,6 @@ export class ManageApplicationsComponent implements OnDestroy {
           this.errorOccured.emit(error);
         }
       });
-  }
-
-  @Input()
-  public set filter(value: ApplicationsFilter) {
-    this.filter$.next(value);
   }
 
   public ngOnDestroy(): void {
@@ -113,5 +120,46 @@ export class ManageApplicationsComponent implements OnDestroy {
       tournamentClass: [],
       invitationLink: []
     });
+  }
+
+  protected editApplicationNotes(application: ApplicationDto): void {
+    if (this.updatingNotesOfApplicationId !== undefined) {
+      return;
+    }
+
+    const ref = this.modalService.open(TextInputDialogComponent, {
+      centered: true,
+      size: 'lg',
+      fullscreen: 'lg',
+      backdrop: 'static'
+    });
+
+    const component = ref.componentInstance as TextInputDialogComponent;
+    component.init('Portal.ViewPlanningRealm.Applications.EditNotes', application.notes, true, false);
+
+    ref.closed
+      .pipe(
+        tap(() => (this.updatingNotesOfApplicationId = application.id)),
+        switchMap((notes) =>
+          this.applicationsService
+            .setApplicationNotes({
+              planningRealmId: this.planningRealm.id,
+              applicationId: application.id,
+              body: {
+                notes: notes
+              }
+            })
+            .pipe(map(() => notes))
+        )
+      )
+      .subscribe({
+        next: (notes: string) => {
+          application.notes = notes;
+          this.updatingNotesOfApplicationId = undefined;
+        },
+        error: (error) => {
+          this.errorOccured.emit(error);
+        }
+      });
   }
 }

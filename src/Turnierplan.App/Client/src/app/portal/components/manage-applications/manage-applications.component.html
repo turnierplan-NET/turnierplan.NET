@@ -67,7 +67,25 @@
             </td>
             <td class="align-middle">{{ application.contactTelephone ?? '' }}</td>
             <td class="align-middle">{{ application.comment ?? '' }}</td>
-            <td class="align-middle">{{ application.notes }}</td>
+            <td class="align-middle">
+              @if (application.notes.length > 0) {
+                <div style="white-space: preserve" class="mb-1">
+                  {{ application.notes }}
+                </div>
+              }
+              <div>
+                @if (updatingNotesOfApplicationId === application.id) {
+                  <tp-small-spinner />
+                } @else {
+                  @let isCurrentlyUpdating = updatingNotesOfApplicationId !== undefined;
+                  <i
+                    class="bi bi-pencil"
+                    [ngClass]="{ 'tp-cursor-not-allowed': isCurrentlyUpdating, 'tp-cursor-pointer': !isCurrentlyUpdating }"
+                    [ngbTooltip]="isCurrentlyUpdating ? undefined : ('Portal.ViewPlanningRealm.Applications.EditNotes.Title' | translate)"
+                    (click)="editApplicationNotes(application)"></i>
+                }
+              </div>
+            </td>
           </tr>
 
           @if (showApplicationTeams) {

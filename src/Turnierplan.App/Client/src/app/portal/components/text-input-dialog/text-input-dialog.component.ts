@@ -40,12 +40,28 @@ export class TextInputDialogComponent {
     this.isInitialized = true;
   }
 
-  protected save(isKeyupEvent: boolean = false): void {
-    if (isKeyupEvent && !this.wasChanged) {
-      // When the dialog is opened by pressing Enter, the release event should not immediately trigger saving.
+  protected onKeyUp(event: Event): void {
+    const keyboardEvent = event as KeyboardEvent;
+
+    if (keyboardEvent.key !== 'Enter') {
+      // When the save is event-triggered, we only listen to the ENTER key (code 13)
       return;
     }
 
+    if (!this.wasChanged) {
+      // When the dialog is opened by pressing ENTER, the release event should not immediately trigger saving.
+      return;
+    }
+
+    if (this.textArea && !keyboardEvent.shiftKey) {
+      // When the dialog is in "text area" mode, ENTER should only save when SHIFT is also held down
+      return;
+    }
+
+    this.save();
+  }
+
+  protected save(): void {
     const sanitized = this.currentValue.trim();
     const sanitizedInitial = (this.initialValue ?? '').trim();
 
