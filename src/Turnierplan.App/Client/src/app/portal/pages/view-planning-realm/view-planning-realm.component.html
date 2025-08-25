@@ -138,6 +138,7 @@
         <div class="mt-3 d-flex flex-row justify-content-center px-3">
           <div style="max-width: 2400px" class="flex-grow-1">
             <tp-manage-applications
+              #applicationsManager
               [planningRealm]="planningRealm"
               [filter]="applicationsFilter"
               (errorOccured)="loadingState = { isLoading: false, error: $event }"

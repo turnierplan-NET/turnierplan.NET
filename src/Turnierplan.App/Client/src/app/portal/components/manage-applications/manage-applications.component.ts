@@ -90,6 +90,10 @@ export class ManageApplicationsComponent implements OnDestroy {
     this.reload$.complete();
   }
 
+  public reload(): void {
+    this.reload$.next(undefined);
+  }
+
   protected switchPage(page: number): void {
     if (!this.result || page <= 0 || page > this.result.totalPages) {
       return;
