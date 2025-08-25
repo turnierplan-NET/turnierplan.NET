@@ -1,1 +1,97 @@
-<p>new-application-dialog works!</p>
+<div class="modal-header">
+  <h4 class="modal-title" translate="Portal.ViewPlanningRealm.AddApplication.DialogTitle"></h4>
+  <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form" class="row">
+    <div class="col-6">
+      <div class="text-decoration-underline mb-4" translate="Portal.ViewPlanningRealm.AddApplication.General"></div>
+
+      <div class="form-group mb-2">
+        <label class="form-label" for="contact" translate="Portal.ViewPlanningRealm.AddApplication.Contact"></label>
+        <input
+          class="form-control"
+          id="contact"
+          type="text"
+          formControlName="contact"
+          [ngClass]="contact.touched ? (contact.invalid ? 'is-invalid' : 'is-valid') : ''" />
+        @if (contact.touched && !contact.valid) {
+          <div class="invalid-feedback" translate="Portal.ViewPlanningRealm.AddApplication.ContactInvalid"></div>
+        }
+      </div>
+
+      <div class="form-group mb-2">
+        <label class="form-label" for="contactEmail" translate="Portal.ViewPlanningRealm.AddApplication.ContactEmail"></label>
+        <input
+          class="form-control"
+          id="contactEmail"
+          type="email"
+          formControlName="contactEmail"
+          [ngClass]="contactEmail.touched && contactEmail.value.length > 0 ? (contactEmail.invalid ? 'is-invalid' : 'is-valid') : ''" />
+        @if (contactEmail.touched && !contactEmail.valid) {
+          <div class="invalid-feedback" translate="Portal.ViewPlanningRealm.AddApplication.ContactEmailInvalid"></div>
+        }
+      </div>
+
+      <div class="form-group mb-2">
+        <label class="form-label" for="contactTelephone" translate="Portal.ViewPlanningRealm.AddApplication.ContactTelephone"></label>
+        <input
+          class="form-control"
+          id="contactTelephone"
+          type="tel"
+          formControlName="contactTelephone"
+          [ngClass]="contactTelephone.value.length > 0 ? 'is-valid' : ''" />
+      </div>
+
+      <div class="form-group mb-2">
+        <label class="form-label" for="contact" translate="Portal.ViewPlanningRealm.AddApplication.Name"></label>
+        <input
+          class="form-control"
+          id="contact"
+          type="text"
+          formControlName="name"
+          [ngClass]="name.touched ? (name.invalid ? 'is-invalid' : 'is-valid') : ''" />
+        @if (name.touched && !name.valid) {
+          <div class="invalid-feedback" translate="Portal.ViewPlanningRealm.AddApplication.NameInvalid"></div>
+        }
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="text-decoration-underline mb-4" translate="Portal.ViewPlanningRealm.AddApplication.Teams"></div>
+
+      <ng-container formArrayName="entries">
+        @for (entryGroup of entries.controls; track entryGroup; let i = $index) {
+          @let tournamentClassControl = entryGroup.get('tournamentClassId')!;
+          @let numberOfTeamsControl = entryGroup.get('numberOfTeams')!;
+          @let tournamentClassId = tournamentClassControl.value;
+          @let inputId = 'teamCount_' + tournamentClassId;
+          @let isInvalid = (numberOfTeamsControl.touched || numberOfTeamsControl.dirty) && !numberOfTeamsControl.valid;
+
+          <div class="form-group mb-2" [formGroupName]="i">
+            <label class="form-label" [for]="inputId">{{ tournamentClassNames[tournamentClassId] }}</label>
+            <input
+              class="form-control form-control-sm"
+              [id]="inputId"
+              type="number"
+              min="0"
+              formControlName="numberOfTeams"
+              [ngClass]="isInvalid ? 'is-invalid' : ''" />
+            @if (isInvalid) {
+              <div class="invalid-feedback" translate="Portal.ViewPlanningRealm.AddApplication.TeamCountInvalid"></div>
+            }
+          </div>
+        }
+      </ng-container>
+
+      @if (entries.touched && entries.invalid) {
+        <div class="mt-4">
+          <tp-alert [type]="'danger'" [icon]="'exclamation-triangle'" [text]="'Portal.ViewPlanningRealm.AddApplication.NoTeamsAlert'" />
+        </div>
+      }
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
+  <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" (click)="submit()" />
+</div>

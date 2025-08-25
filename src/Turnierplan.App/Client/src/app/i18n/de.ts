@@ -871,7 +871,19 @@ export const de = {
       },
       AddApplication: {
         Title: 'Neue Anmeldung',
-        TournamentClassRequired: 'Um eine Anmeldung zu erstellen, muss zunächst mindestens eine Turnierklasse vorhanden sein.'
+        TournamentClassRequired: 'Um eine Anmeldung zu erstellen, muss zunächst mindestens eine Turnierklasse vorhanden sein.',
+        DialogTitle: 'Neue Anmeldung erstellen',
+        General: 'Allgemeine Informationen',
+        Contact: 'Kontaktperson:',
+        ContactInvalid: 'Eine Kontaktperson muss angegeben werden',
+        ContactEmail: 'Kontakt E-Mail:',
+        ContactEmailInvalid: 'Es muss sich um eine gültige E-Mailadresse handeln',
+        ContactTelephone: 'Kontakt Telefon-Nr.:',
+        Name: 'Verein / Mannschaftsname:',
+        NameInvalid: 'Der Mannschaftsname muss angegeben werden',
+        Teams: 'Mannschaften:',
+        TeamCountInvalid: 'Die Mannschaftszahl muss mindestens 0 sein',
+        NoTeamsAlert: 'Es muss mindestens eine Mannschaft in einer Turnierklasse angegeben werden'
       },
       TournamentClasses: {
         Name: 'Name',

@@ -51,9 +51,6 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   @ViewChild('pageFrame')
   protected pageFrame!: PageFrameComponent;
 
-  @ViewChild('applicationsManager')
-  protected applicationsManager!: ManageApplicationsComponent;
-
   protected loadingState: LoadingState = { isLoading: true };
   protected updateFunction: UpdatePlanningRealmFunc;
   protected planningRealm?: PlanningRealmDto;
@@ -220,7 +217,6 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       .subscribe({
         next: () => {
           this.loadingState = { isLoading: false };
-          this.applicationsManager.reload();
         },
         error: (error) => {
           this.loadingState = { isLoading: false, error: error };
