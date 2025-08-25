@@ -873,7 +873,6 @@ export const de = {
         Title: 'Neue Anmeldung',
         TournamentClassRequired: 'Um eine Anmeldung zu erstellen, muss zunächst mindestens eine Turnierklasse vorhanden sein.',
         DialogTitle: 'Neue Anmeldung erstellen',
-        General: 'Allgemeine Informationen',
         Contact: 'Kontaktperson:',
         ContactInvalid: 'Eine Kontaktperson muss angegeben werden',
         ContactEmail: 'Kontakt E-Mail:',
