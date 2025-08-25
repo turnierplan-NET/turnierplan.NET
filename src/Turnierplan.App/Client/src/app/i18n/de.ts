@@ -78,7 +78,8 @@ export const de = {
       CopyToClipboard: 'In die Zwischenablage kopieren',
       OpenInNewTab: 'In neuem Tab öffnen',
       UnsavedChanges: 'Sie haben ungespeicherte Änderungen.',
-      ApplyChanges: 'Änderungen übernehmen'
+      ApplyChanges: 'Änderungen übernehmen',
+      ShiftEnter: 'Umschalt. + Enter zum Speichern'
     },
     UserInfoPopover: {
       Text: 'Sie sind angemeldet als:\n<strong>{{userName}}</strong>',
@@ -954,6 +955,11 @@ export const de = {
           NotesTooltip: 'In dieser Spalte können Sie eigene Notizen hinzufügen.',
           TournamentClass: 'Turnierklasse',
           TeamName: 'Mannschaftsname'
+        },
+        EditNotes: {
+          Title: 'Notizen bearbeiten',
+          InfoText: 'Geben Sie Ihre Notizen für die Anmeldung ein:',
+          Confirm: 'Speichern'
         },
         HiddenTeamsTooltip: 'Diese Anmeldung beinhaltet weitere Mannschaften, welche nicht den Filterkriterien entsprechen',
         HiddenTeams: '{{count}} weitere Mannschaft(en) werden aufgrund Ihrer Filterkriterien nicht angezeigt.',

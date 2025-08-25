@@ -13,8 +13,8 @@
           [rows]="10"
           [(ngModel)]="currentValue"
           [ngClass]="{ 'is-invalid': showError }"
-          (keyup.enter)="save(true)"
-          (change)="wasChanged = true"></textarea>
+          (keyup)="onKeyUp($event)"
+          (ngModelChange)="wasChanged = true"></textarea>
       } @else {
         <input
           class="form-control"
@@ -22,8 +22,8 @@
           id="content"
           [(ngModel)]="currentValue"
           [ngClass]="{ 'is-invalid': showError }"
-          (keyup.enter)="save(true)"
-          (change)="wasChanged = true" />
+          (keyup)="onKeyUp($event)"
+          (ngModelChange)="wasChanged = true" />
       }
 
       @if (showError) {
@@ -37,6 +37,9 @@
     }
   </div>
   <div class="modal-footer">
+    @if (textArea) {
+      <span class="flex-grow-1 small text-secondary" translate="Portal.General.ShiftEnter"></span>
+    }
     <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
     <tp-action-button [type]="'success'" [title]="translationKey + '.Confirm'" (click)="save()" />
   </div>

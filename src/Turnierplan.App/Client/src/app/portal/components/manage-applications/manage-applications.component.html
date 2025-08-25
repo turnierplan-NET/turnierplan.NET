@@ -45,13 +45,13 @@
                 [type]="'outline-secondary'"
                 (click)="showTeamsApplicationId = showApplicationTeams ? undefined : application.id" />
             </td>
-            <td class="text-center align-middle">{{ result.currentPage * result.itemsPerPage + i + 1 }}</td>
-            <td class="text-nowrap align-middle">
+            <td class="text-center align-correctly">{{ result.currentPage * result.itemsPerPage + i + 1 }}</td>
+            <td class="text-nowrap align-correctly">
               <span class="me-2">{{ application.tag }}</span>
               <tp-copy-to-clipboard [value]="application.tag" />
             </td>
-            <td class="text-nowrap align-middle">{{ application.createdAt | translateDate: 'short' }}</td>
-            <td class="align-middle">
+            <td class="text-nowrap align-correctly">{{ application.createdAt | translateDate: 'short' }}</td>
+            <td class="align-correctly">
               <span>{{ visibleTeamsCount }}</span>
               @if (visibleTeamsCount !== application.teams.length) {
                 <tp-tooltip-icon
@@ -59,15 +59,33 @@
                   [tooltipText]="'Portal.ViewPlanningRealm.Applications.HiddenTeamsTooltip'" />
               }
             </td>
-            <td class="align-middle">{{ application.contact }}</td>
-            <td class="align-middle">
+            <td class="align-correctly">{{ application.contact }}</td>
+            <td class="align-correctly">
               @if (application.contactEmail) {
                 <a href="mailto:{{ application.contactEmail }}">{{ application.contactEmail }}</a>
               }
             </td>
-            <td class="align-middle">{{ application.contactTelephone ?? '' }}</td>
-            <td class="align-middle">{{ application.comment ?? '' }}</td>
-            <td class="align-middle">{{ application.notes }}</td>
+            <td class="align-correctly">{{ application.contactTelephone ?? '' }}</td>
+            <td class="align-correctly">{{ application.comment ?? '' }}</td>
+            <td class="align-correctly">
+              @if (application.notes.length > 0) {
+                <div style="white-space: preserve" class="mb-1">
+                  {{ application.notes }}
+                </div>
+              }
+              <div>
+                @if (updatingNotesOfApplicationId === application.id) {
+                  <tp-small-spinner />
+                } @else {
+                  @let isCurrentlyUpdating = updatingNotesOfApplicationId !== undefined;
+                  <i
+                    class="bi bi-pencil"
+                    [ngClass]="{ 'tp-cursor-not-allowed': isCurrentlyUpdating, 'tp-cursor-pointer': !isCurrentlyUpdating }"
+                    [ngbTooltip]="isCurrentlyUpdating ? undefined : ('Portal.ViewPlanningRealm.Applications.EditNotes.Title' | translate)"
+                    (click)="editApplicationNotes(application)"></i>
+                }
+              </div>
+            </td>
           </tr>
 
           @if (showApplicationTeams) {
