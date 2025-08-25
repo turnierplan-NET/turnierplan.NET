@@ -79,7 +79,7 @@ export const de = {
       OpenInNewTab: 'In neuem Tab öffnen',
       UnsavedChanges: 'Sie haben ungespeicherte Änderungen.',
       ApplyChanges: 'Änderungen übernehmen',
-      ShiftEnter: 'Strg. + Enter zum Speichern'
+      CtrlEnter: 'Strg. + Enter zum Speichern'
     },
     UserInfoPopover: {
       Text: 'Sie sind angemeldet als:\n<strong>{{userName}}</strong>',
