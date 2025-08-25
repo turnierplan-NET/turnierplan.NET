@@ -1,10 +1,10 @@
-.background {
-  background-color: #001a25;
-  height: 100vh;
-  margin: 0;
-}
-
 @media (width >= 900px) {
+  .background {
+    background-color: #001a25;
+    height: 100vh;
+    margin: 0;
+  }
+  
   .identity-image {
     background: url('/assets/identity-image.jpg') center;
     background-size: cover;
@@ -27,8 +27,20 @@
 }
 
 @media (width <= 900px) {
+  .background {
+    background: url('/assets/identity-image.jpg') center;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+  }
+  
   .identity-image {
     display: none;
+  }
+
+  .identity-content {
+    margin: 0 1em;
+    border-radius: 0.75em;
   }
 
   .footer-links {
