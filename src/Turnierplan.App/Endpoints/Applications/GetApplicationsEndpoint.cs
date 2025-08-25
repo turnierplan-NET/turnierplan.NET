@@ -118,6 +118,8 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
                 });
             }
 
+            applications = applications.OrderByDescending(x => x.CreatedAt);
+
             return PaginationHelper.Process<Application, ApplicationDto>(applications, _page, _pageSize, mapper);
         }
     }
