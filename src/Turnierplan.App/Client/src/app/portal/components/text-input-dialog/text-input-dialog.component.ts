@@ -53,8 +53,8 @@ export class TextInputDialogComponent {
       return;
     }
 
-    if (this.textArea && !keyboardEvent.shiftKey) {
-      // When the dialog is in "text area" mode, ENTER should only save when SHIFT is also held down
+    if (this.textArea && !keyboardEvent.ctrlKey) {
+      // When the dialog is in "text area" mode, ENTER should only save when CTRL is also held down
       return;
     }
 
