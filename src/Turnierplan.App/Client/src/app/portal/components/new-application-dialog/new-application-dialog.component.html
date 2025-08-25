@@ -67,18 +67,16 @@
           @let inputId = 'teamCount_' + tournamentClassId;
           @let isInvalid = (numberOfTeamsControl.touched || numberOfTeamsControl.dirty) && !numberOfTeamsControl.valid;
 
-          <div class="form-group mb-2" [formGroupName]="i">
-            <label class="form-label" [for]="inputId">{{ tournamentClassNames[tournamentClassId] }}</label>
+          <div class="d-flex flex-row align-items-center gap-2 mb-1" [formGroupName]="i">
             <input
+              style="flex-basis: 6em"
               class="form-control form-control-sm"
               [id]="inputId"
               type="number"
               min="0"
               formControlName="numberOfTeams"
               [ngClass]="isInvalid ? 'is-invalid' : ''" />
-            @if (isInvalid) {
-              <div class="invalid-feedback" translate="Portal.ViewPlanningRealm.AddApplication.TeamCountInvalid"></div>
-            }
+            <label class="form-label flex-grow-1 mb-0" [for]="inputId">{{ tournamentClassNames[tournamentClassId] }}</label>
           </div>
         }
       </ng-container>

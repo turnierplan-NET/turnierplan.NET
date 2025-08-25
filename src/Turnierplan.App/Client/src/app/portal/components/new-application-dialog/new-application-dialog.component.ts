@@ -58,10 +58,9 @@ export class NewApplicationDialogComponent {
   }
 
   public init(planningRealm: PlanningRealmDto): void {
-    const classes = [...planningRealm.tournamentClasses].sort((a, b) => a.name.localeCompare(b.name));
     const entriesFormArray = this.form.get('entries') as FormArray;
 
-    for (const tournamentClass of classes) {
+    for (const tournamentClass of planningRealm.tournamentClasses) {
       this.tournamentClassNames[tournamentClass.id] = tournamentClass.name;
       entriesFormArray.push(
         new FormGroup({

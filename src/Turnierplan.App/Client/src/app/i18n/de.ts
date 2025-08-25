@@ -882,7 +882,6 @@ export const de = {
         Name: 'Verein / Mannschaftsname:',
         NameInvalid: 'Der Mannschaftsname muss angegeben werden',
         Teams: 'Mannschaften:',
-        TeamCountInvalid: 'Die Mannschaftszahl muss mindestens 0 sein',
         NoTeamsAlert: 'Es muss mindestens eine Mannschaft in einer Turnierklasse angegeben werden'
       },
       TournamentClasses: {
