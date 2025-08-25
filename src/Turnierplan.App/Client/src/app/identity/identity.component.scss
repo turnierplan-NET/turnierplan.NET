@@ -1,12 +1,12 @@
 .background {
-  background-color: #003147;
+  background-color: #001a25;
   height: 100vh;
   margin: 0;
 }
 
 @media (width >= 900px) {
   .identity-image {
-    background: url('/assets/identity-background.jpg') center;
+    background: url('/assets/identity-image.jpg') center;
     background-size: cover;
     width: 300px;
     border-top-left-radius: 1em;
