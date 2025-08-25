@@ -182,6 +182,13 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     });
   }
 
+  protected addApplication(): void {
+    if (!this.planningRealm || this._hasUnsavedChanges || this.planningRealm.tournamentClasses.length === 0) {
+      return;
+    }
+    alert('Hi');
+  }
+
   protected renamePlanningRealm(name: string): void {
     if (!this.planningRealm) {
       return;

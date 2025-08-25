@@ -869,6 +869,10 @@ export const de = {
         RequiredFeedback: 'Der Name darf nicht leer sein',
         Confirm: 'Erstellen'
       },
+      AddApplication: {
+        Title: 'Neue Anmeldung',
+        TournamentClassRequired: 'Um eine Anmeldung zu erstellen, muss zunächst mindestens eine Turnierklasse vorhanden sein.'
+      },
       TournamentClasses: {
         Name: 'Name',
         InvitationLinkCount: 'Anmeldelinks',
