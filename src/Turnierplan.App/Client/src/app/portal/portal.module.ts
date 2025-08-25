@@ -101,6 +101,7 @@ import { ShareLinkComponent } from './components/share-link/share-link.component
 import { ManageApplicationsComponent } from './components/manage-applications/manage-applications.component';
 import { ManageApplicationsFilterComponent } from './components/manage-applications-filter/manage-applications-filter.component';
 import { MultiSelectFilterComponent } from './components/multi-select-filter/multi-select-filter.component';
+import { NewApplicationDialogComponent } from './components/new-application-dialog/new-application-dialog.component';
 
 const routes: Routes = [
   {
@@ -264,7 +265,8 @@ const routes: Routes = [
     ShareLinkComponent,
     ManageApplicationsComponent,
     ManageApplicationsFilterComponent,
-    MultiSelectFilterComponent
+    MultiSelectFilterComponent,
+    NewApplicationDialogComponent
   ],
   imports: [
     CommonModule,

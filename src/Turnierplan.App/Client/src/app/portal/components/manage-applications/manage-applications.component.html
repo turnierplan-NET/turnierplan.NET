@@ -69,9 +69,7 @@
             <td class="align-correctly">{{ application.comment ?? '' }}</td>
             <td class="align-correctly">
               @if (application.notes.length > 0) {
-                <div style="white-space: preserve" class="mb-1">
-                  {{ application.notes }}
-                </div>
+                <div style="white-space: preserve" class="mb-1">{{ application.notes }}</div>
               }
               <div>
                 @if (updatingNotesOfApplicationId === application.id) {

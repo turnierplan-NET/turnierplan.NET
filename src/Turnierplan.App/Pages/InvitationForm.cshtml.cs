@@ -96,7 +96,7 @@ public sealed class InvitationForm : PageModel
         {
             for (var i = 0; i < count; i++)
             {
-                var name = $"{teamName} {i + 1}";
+                var name = count == 1 ? teamName : $"{teamName} {i + 1}";
                 application.AddTeam(entry.Class, name);
             }
         }

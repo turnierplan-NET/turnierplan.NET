@@ -1,9 +1,15 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LoadingState } from '../../directives/loading-state/loading-state.directive';
-import { PlanningRealmDto, PlanningRealmsService, UpdatePlanningRealmEndpointRequest } from '../../../api';
+import {
+  ApplicationsService,
+  CreateApplicationEndpointRequest,
+  PlanningRealmDto,
+  PlanningRealmsService,
+  UpdatePlanningRealmEndpointRequest
+} from '../../../api';
 import { PageFrameComponent, PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
-import { Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
+import { Observable, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TitleService } from '../../services/title.service';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -13,6 +19,8 @@ import { map } from 'rxjs/operators';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { ApplicationsFilter, defaultApplicationsFilter } from '../../models/applications-filter';
+import { NewApplicationDialogComponent } from '../../components/new-application-dialog/new-application-dialog.component';
+import { ManageApplicationsComponent } from '../../components/manage-applications/manage-applications.component';
 
 export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
 
@@ -87,6 +95,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly planningRealmService: PlanningRealmsService,
+    private readonly applicationService: ApplicationsService,
     private readonly notificationService: NotificationService,
     private readonly titleService: TitleService,
     private readonly modalService: NgbModal,
@@ -180,6 +189,39 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
         });
       }
     });
+  }
+
+  protected addApplication(): void {
+    if (!this.planningRealm || this._hasUnsavedChanges || this.planningRealm.tournamentClasses.length === 0) {
+      return;
+    }
+
+    const planningRealmId = this.planningRealm.id;
+
+    const ref = this.modalService.open(NewApplicationDialogComponent, {
+      centered: true,
+      size: 'lg',
+      fullscreen: 'lg'
+    });
+
+    const component = ref.componentInstance as NewApplicationDialogComponent;
+    component.init(this.planningRealm);
+
+    ref.closed
+      .pipe(
+        tap(() => (this.loadingState = { isLoading: true })),
+        switchMap((request: CreateApplicationEndpointRequest) =>
+          this.applicationService.createApplication({ planningRealmId: planningRealmId, body: request })
+        )
+      )
+      .subscribe({
+        next: () => {
+          this.loadingState = { isLoading: false };
+        },
+        error: (error) => {
+          this.loadingState = { isLoading: false, error: error };
+        }
+      });
   }
 
   protected renamePlanningRealm(name: string): void {

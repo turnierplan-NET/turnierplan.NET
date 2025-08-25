@@ -44,7 +44,6 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
 
         var application = planningRealm.AddApplication(null, request.Contact);
 
-        application.Notes = request.Notes;
         application.ContactEmail = request.ContactEmail;
         application.ContactTelephone = request.ContactTelephone;
 
@@ -59,7 +58,7 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
 
             for (var i = 0; i < entry.NumberOfTeams; i++)
             {
-                var name = $"{request.Name} {i + 1}";
+                var name = entry.NumberOfTeams == 1 ? request.Name : $"{request.Name} {i + 1}";
                 application.AddTeam(tournamentClass, name);
             }
         }
@@ -72,8 +71,6 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
     public sealed record CreateApplicationEndpointRequest
     {
         public required string Name { get; init; }
-
-        public required string Notes { get; init; }
 
         public required string Contact { get; init; }
 
@@ -99,9 +96,6 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
         {
             RuleFor(x => x.Name)
                 .NotEmpty();
-
-            RuleFor(x => x.Notes)
-                .NotNull(); // notes can be empty
 
             RuleFor(x => x.Contact)
                 .NotEmpty();
