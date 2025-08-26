@@ -899,6 +899,8 @@ export const de = {
       NoInvitationLinks: 'Es sind aktuell keine Anmeldelinks vorhanden.',
       InvitationLink: {
         PublicUrl: 'Link zum Anmeldeformular:',
+        PublicUrlWarning:
+          'Das Anmeldeformular kann nicht verwendet werden, weil das Formular deaktiviert ist oder weil keine Turniere hinzugefügt wurden.',
         Properties: {
           Name: 'Name:',
           ColorCode: 'Farbcode:',

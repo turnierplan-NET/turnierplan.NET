@@ -15,7 +15,15 @@
 
     @if (invitationLink.publicId) {
       <div>
-        <div class="mb-2 fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.PublicUrl"></div>
+        <div class="mb-2 d-flex flex-row align-items-center">
+          <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.PublicUrl"></div>
+          @if (!invitationLink.isActive || invitationLink.entries.length === 0) {
+            <tp-tooltip-icon
+              [icon]="'question-circle'"
+              [iconClass]="'text-danger'"
+              [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.PublicUrlWarning'" />
+          }
+        </div>
         <tp-share-link [resourcePath]="'/invitationForm?id=' + invitationLink.publicId" />
       </div>
     }
