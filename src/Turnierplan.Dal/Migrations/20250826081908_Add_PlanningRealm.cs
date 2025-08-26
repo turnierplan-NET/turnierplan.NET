@@ -72,6 +72,7 @@ namespace Turnierplan.Dal.Migrations
                     Title = table.Column<string>(type: "text", nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
                     ColorCode = table.Column<string>(type: "text", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     ValidUntil = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ContactPerson = table.Column<string>(type: "text", nullable: true),
                     ContactEmail = table.Column<string>(type: "text", nullable: true),

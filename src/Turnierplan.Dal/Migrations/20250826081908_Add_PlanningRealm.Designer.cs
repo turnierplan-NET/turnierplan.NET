@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20250826080854_Add_PlanningRealm")]
+    [Migration("20250826081908_Add_PlanningRealm")]
     partial class Add_PlanningRealm
     {
         /// <inheritdoc />
@@ -357,6 +357,9 @@ namespace Turnierplan.Dal.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
