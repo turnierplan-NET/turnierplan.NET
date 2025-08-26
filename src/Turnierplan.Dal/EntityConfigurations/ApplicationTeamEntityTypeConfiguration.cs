@@ -17,7 +17,7 @@ public sealed class ApplicationTeamEntityTypeConfiguration : IEntityTypeConfigur
 
         builder.HasOne<TournamentClass>(x => x.Class)
             .WithMany()
-            .OnDelete(DeleteBehavior.Restrict)
+            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         builder.Property(x => x.Name)

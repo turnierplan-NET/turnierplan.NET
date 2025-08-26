@@ -1012,7 +1012,7 @@ namespace Turnierplan.Dal.Migrations
                     b.HasOne("Turnierplan.Core.PlanningRealm.TournamentClass", "Class")
                         .WithMany()
                         .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Class");

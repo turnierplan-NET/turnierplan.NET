@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20250822075242_Add_PlanningRealm")]
+    [Migration("20250826080854_Add_PlanningRealm")]
     partial class Add_PlanningRealm
     {
         /// <inheritdoc />
@@ -1015,7 +1015,7 @@ namespace Turnierplan.Dal.Migrations
                     b.HasOne("Turnierplan.Core.PlanningRealm.TournamentClass", "Class")
                         .WithMany()
                         .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Class");

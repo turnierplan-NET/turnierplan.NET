@@ -222,7 +222,7 @@ namespace Turnierplan.Dal.Migrations
                         principalSchema: "turnierplan",
                         principalTable: "TournamentClasses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
