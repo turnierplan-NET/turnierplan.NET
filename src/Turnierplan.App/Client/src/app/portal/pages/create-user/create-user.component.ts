@@ -40,7 +40,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.titleService.setTitleTranslated('Portal.CreateOrganization.Title');
+    this.titleService.setTitleTranslated('Portal.CreateUser.Title');
   }
 
   protected confirmButtonClicked(): void {
