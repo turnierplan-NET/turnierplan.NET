@@ -923,6 +923,7 @@ export const de = {
           ExternalLinkUrl: 'URL'
         },
         Tournaments: {
+          Title: 'Turniere:',
           NoTournaments: 'Diesem Einladungslink sind aktuell keine Turniere zugeordnet.',
           Tournament: 'Turnier',
           AllowNewRegistrations: 'Aktiv',
@@ -940,6 +941,11 @@ export const de = {
           MaxTeamsPerRegistration: 'Anzahl:'
         },
         AddTournament: 'Turnier hinzufügen',
+        IsActive: {
+          Title: 'Anmeldeformular:',
+          Subtitle: 'Wenn das Anmeldeformular deaktiviert ist, kann es nicht mit dem obenstehenden Link aufgerufen werden.',
+          Label: 'Anmeldeformular aktivieren'
+        },
         AllClassesAdded: 'In diesem Link sind alle Turnierklassen enthalten',
         DeleteNotPossible:
           'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.',

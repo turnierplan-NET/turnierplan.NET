@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LoadingState } from '../../directives/loading-state/loading-state.directive';
 import {
   ApplicationsService,
@@ -20,7 +20,6 @@ import { DiscardChangesDetector } from '../../../core/guards/discard-changes.gua
 import { LocalStorageService } from '../../services/local-storage.service';
 import { ApplicationsFilter, defaultApplicationsFilter } from '../../models/applications-filter';
 import { NewApplicationDialogComponent } from '../../components/new-application-dialog/new-application-dialog.component';
-import { ManageApplicationsComponent } from '../../components/manage-applications/manage-applications.component';
 
 export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
 
@@ -169,6 +168,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
         this.updateFunction((planningRealm) => {
           planningRealm.invitationLinks.push({
             colorCode: this.getColorCode(),
+            isActive: true,
             contactEmail: null,
             contactPerson: null,
             contactTelephone: null,
@@ -255,6 +255,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
         id: x.id < 0 ? null : x.id,
         name: x.name,
         colorCode: x.colorCode,
+        isActive: x.isActive,
         contactEmail: x.contactEmail,
         contactPerson: x.contactPerson,
         contactTelephone: x.contactTelephone,
