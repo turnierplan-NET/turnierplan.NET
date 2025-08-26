@@ -15,7 +15,15 @@
 
     @if (invitationLink.publicId) {
       <div>
-        <div class="mb-2 fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.PublicUrl"></div>
+        <div class="mb-2 d-flex flex-row align-items-center">
+          <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.PublicUrl"></div>
+          @if (!invitationLink.isActive || invitationLink.entries.length === 0) {
+            <tp-tooltip-icon
+              [icon]="'question-circle'"
+              [iconClass]="'text-danger'"
+              [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.PublicUrlWarning'" />
+          }
+        </div>
         <tp-share-link [resourcePath]="'/invitationForm?id=' + invitationLink.publicId" />
       </div>
     }
@@ -96,11 +104,11 @@
 
     @if (invitationLink.entries.length === 0) {
       <div>
-        <div class="fw-bold">Turniere:</div>
+        <div class="fw-bold mt-3" translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.Title"></div>
         <div class="fst-italic" translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NoTournaments"></div>
       </div>
     } @else {
-      <div class="fw-bold mt-3">Turniere:</div>
+      <div class="fw-bold mt-3" translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.Title"></div>
       <table class="mb-0 table table-bordered">
         <thead>
           <tr>
@@ -207,6 +215,27 @@
         }
       </div>
     }
+
+    <div>
+      <div class="fw-bold mt-3" translate="Portal.ViewPlanningRealm.InvitationLink.IsActive.Title"></div>
+      <div class="fst-italic" translate="Portal.ViewPlanningRealm.InvitationLink.IsActive.Subtitle"></div>
+
+      @let activeFormInputId = 'invitationLink_' + invitationLink.id + '_isActive';
+      <div class="form-check form-switch mt-2">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          [id]="activeFormInputId"
+          [disabled]="!writeAllowed"
+          [ngModel]="invitationLink.isActive"
+          (ngModelChange)="setInvitationLinkActive($event)" />
+        <label
+          class="form-check-label"
+          [for]="activeFormInputId"
+          translate="Portal.ViewPlanningRealm.InvitationLink.IsActive.Label"></label>
+      </div>
+    </div>
   </div>
   <div class="card-footer d-flex flex-row align-items-center gap-1">
     @if (writeAllowed) {

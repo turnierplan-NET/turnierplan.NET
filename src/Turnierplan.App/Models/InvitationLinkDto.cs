@@ -16,6 +16,8 @@ public sealed record InvitationLinkDto
 
     public required string ColorCode { get; init; }
 
+    public required bool IsActive { get; init; }
+
     public required DateTime? ValidUntil { get; init; }
 
     public required string? ContactPerson { get; init; }

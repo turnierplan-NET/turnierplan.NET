@@ -8,13 +8,14 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 {
     internal readonly List<InvitationLinkEntry> _entries = new();
 
-    internal InvitationLink(long id, PublicId.PublicId publicId, string name, string? title, string? description, string colorCode, DateTime? validUntil, string? contactPerson, string? contactEmail, string? contactTelephone)
+    internal InvitationLink(long id, PublicId.PublicId publicId, string name, string? title, string? description, string colorCode, bool isActive, DateTime? validUntil, string? contactPerson, string? contactEmail, string? contactTelephone)
     {
         Id = id;
         PublicId = publicId;
         Name = name;
         Title = title;
         Description = description;
+        IsActive = isActive;
         ColorCode = colorCode;
         ValidUntil = validUntil;
         ContactPerson = contactPerson;
@@ -28,6 +29,7 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
         PublicId = new PublicId.PublicId();
         Name = name;
         ColorCode = "aaaaaa";
+        IsActive = true;
     }
 
     public override long Id { get; protected set; }
@@ -43,6 +45,8 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
     public string? Description { get; set; }
 
     public string ColorCode { get; set; }
+
+    public bool IsActive { get; set; }
 
     public DateTime? ValidUntil { get; set; }
 

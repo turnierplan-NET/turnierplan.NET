@@ -214,6 +214,17 @@ export class InvitationLinkTileComponent {
     });
   }
 
+  protected setInvitationLinkActive(isActive: boolean): void {
+    if (this.invitationLink.isActive === isActive) {
+      return;
+    }
+
+    this.updateInvitationLink((invitationLink) => {
+      invitationLink.isActive = isActive;
+      return true;
+    });
+  }
+
   protected setImage(whichImage: 'primaryLogo' | 'secondaryLogo', image?: ImageDto): void {
     if (this.invitationLink[whichImage]?.id === image?.id) {
       return;
