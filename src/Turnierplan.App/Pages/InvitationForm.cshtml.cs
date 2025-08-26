@@ -126,12 +126,11 @@ public sealed class InvitationForm : PageModel
 
         var invitationLink = await _repository.GetByPublicIdAsync(publicId).ConfigureAwait(false);
 
-        if (invitationLink is null)
+        if (invitationLink is null || !invitationLink.IsActive)
         {
+            // An "inactive" invitation link shall be treated the same as a non-existent inactive link
             return;
         }
-
-        // TODO Add condition that checks whether invitationLink is "deactivated" (refer to issue #3)
 
         Data = invitationLink;
     }

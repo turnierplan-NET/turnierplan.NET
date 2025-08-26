@@ -194,6 +194,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
             invitationLink.Title = requestInvitationLink.Title;
             invitationLink.Description = requestInvitationLink.Description;
             invitationLink.ColorCode = requestInvitationLink.ColorCode;
+            invitationLink.IsActive = requestInvitationLink.IsActive;
             invitationLink.ValidUntil = requestInvitationLink.ValidUntil;
             invitationLink.ContactPerson = requestInvitationLink.ContactPerson;
             invitationLink.ContactEmail = requestInvitationLink.ContactEmail;
@@ -359,6 +360,8 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         public string? Description { get; init; }
 
         public required string ColorCode { get; init; }
+
+        public required bool IsActive { get; init; }
 
         public DateTime? ValidUntil { get; init; }
 
