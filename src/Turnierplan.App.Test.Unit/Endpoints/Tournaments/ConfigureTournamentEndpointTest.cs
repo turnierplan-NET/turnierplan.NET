@@ -8,24 +8,70 @@ namespace Turnierplan.App.Test.Unit.Endpoints.Tournaments;
 
 public sealed class ConfigureTournamentEndpointTest
 {
-    private static readonly ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestGroupEntry[] __validGroups =
+    private static readonly ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestGroupEntry[] __validGroups =
     [
-        new(null, 'A', null, [
-            new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 1"),
-            new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 2")
-        ])
+        new()
+        {
+            Id = null,
+            AlphabeticalId = 'A',
+            DisplayName = null,
+            Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
+            {
+                new()
+                {
+                    Id = null,
+                    Name = "Test 1"
+                },
+                new()
+                {
+                    Id = null,
+                    Name = "Test 2"
+                }
+            }
+        }
     ];
 
-    private static readonly ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestGroupEntry[] __validGroupsWith6Teams =
+    private static readonly ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestGroupEntry[] __validGroupsWith6Teams =
     [
-        new(null, 'A', null, [
-            new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 1"),
-            new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 2"),
-            new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 3"),
-            new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 4"),
-            new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 5"),
-            new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 6")
-        ])
+        new()
+        {
+            Id = null,
+            AlphabeticalId = 'A',
+            DisplayName = null,
+            Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
+            {
+                new()
+                {
+                    Id = null,
+                    Name = "Test 1"
+                },
+                new()
+                {
+                    Id = null,
+                    Name = "Test 2"
+                },
+                new()
+                {
+                    Id = null,
+                    Name = "Test 3"
+                },
+                new()
+                {
+                    Id = null,
+                    Name = "Test 4"
+                },
+                new()
+                {
+                    Id = null,
+                    Name = "Test 5"
+                },
+                new()
+                {
+                    Id = null,
+                    Name = "Test 6"
+                }
+            }
+        }
     ];
 
     private static readonly ScheduleConfigurationDto __validSchedule = new() { PlayTime = 10.Minutes(), PauseTime = 2.Minutes() };
@@ -58,16 +104,46 @@ public sealed class ConfigureTournamentEndpointTest
     [Fact]
     public void ConfigureTournamentEndpointRequest___With_Non_Unique_Alphabetical_Ids___Is_Invalid()
     {
-        var groups = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestGroupEntry[]
+        var groups = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestGroupEntry[]
         {
-            new(null, 'A', null, [
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 1"),
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 2")
-            ]),
-            new(null, 'A', null, [
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 3"),
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 4")
-            ])
+            new()
+            {
+                Id = null,
+                AlphabeticalId = 'A',
+                DisplayName = null,
+                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
+                {
+                    new()
+                    {
+                        Id = null,
+                        Name = "Test 1"
+                    },
+                    new()
+                    {
+                        Id = null,
+                        Name = "Test 2"
+                    }
+                }
+            },
+            new()
+            {
+                Id = null,
+                AlphabeticalId = 'A',
+                DisplayName = null,
+                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
+                {
+                    new()
+                    {
+                        Id = null,
+                        Name = "Test 3"
+                    },
+                    new()
+                    {
+                        Id = null,
+                        Name = "Test 4"
+                    }
+                }
+            }
         };
 
         var command = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest
@@ -88,16 +164,46 @@ public sealed class ConfigureTournamentEndpointTest
     [Fact]
     public void ConfigureTournamentEndpointRequest___With_Non_Unique_Existing_Group_Ids___Is_Invalid()
     {
-        var groups = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestGroupEntry[]
+        var groups = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestGroupEntry[]
         {
-            new(1, 'A', null, [
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 1"),
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 2")
-            ]),
-            new(1, 'B', null, [
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 3"),
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 4")
-            ])
+            new()
+            {
+                Id = 1,
+                AlphabeticalId = 'A',
+                DisplayName = null,
+                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
+                {
+                    new()
+                    {
+                        Id = null,
+                        Name = "Test 1"
+                    },
+                    new()
+                    {
+                        Id = null,
+                        Name = "Test 2"
+                    }
+                }
+            },
+            new()
+            {
+                Id = 1,
+                AlphabeticalId = 'B',
+                DisplayName = null,
+                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
+                {
+                    new()
+                    {
+                        Id = null,
+                        Name = "Test 3"
+                    },
+                    new()
+                    {
+                        Id = null,
+                        Name = "Test 4"
+                    }
+                }
+            }
         };
 
         var command = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest
@@ -118,16 +224,46 @@ public sealed class ConfigureTournamentEndpointTest
     [Fact]
     public void ConfigureTournamentEndpointRequest___With_Non_Unique_Existing_Team_Ids___Is_Invalid()
     {
-        var groups = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestGroupEntry[]
+        var groups = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestGroupEntry[]
         {
-            new(1, 'A', null, [
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 1"),
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(1, "Test 2")
-            ]),
-            new(2, 'B', null, [
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(1, "Test 3"),
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(3, "Test 4")
-            ])
+            new()
+            {
+                Id = 1,
+                AlphabeticalId = 'A',
+                DisplayName = null,
+                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
+                {
+                    new()
+                    {
+                        Id = null,
+                        Name = "Test 1"
+                    },
+                    new()
+                    {
+                        Id = 1,
+                        Name = "Test 2"
+                    }
+                }
+            },
+            new()
+            {
+                Id = 2,
+                AlphabeticalId = 'B',
+                DisplayName = null,
+                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
+                {
+                    new()
+                    {
+                        Id = 1,
+                        Name = "Test 1"
+                    },
+                    new()
+                    {
+                        Id = 3,
+                        Name = "Test 2"
+                    }
+                }
+            }
         };
 
         var command = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest
@@ -152,12 +288,27 @@ public sealed class ConfigureTournamentEndpointTest
     [InlineData('z')] // must be upper case
     public void ConfigureTournamentEndpointRequest___With_Invalid_Group_Alphabetical_Id___Is_Invalid(char alphabeticalId)
     {
-        var groups = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestGroupEntry[]
+        var groups = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestGroupEntry[]
         {
-            new(null, alphabeticalId, null, [
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 1"),
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 2")
-            ])
+            new()
+            {
+                Id = null,
+                AlphabeticalId = alphabeticalId,
+                DisplayName = null,
+                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
+                {
+                    new()
+                    {
+                        Id = null,
+                        Name = "Test 1"
+                    },
+                    new()
+                    {
+                        Id = null,
+                        Name = "Test 2"
+                    }
+                }
+            }
         };
 
         var command = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest
@@ -182,12 +333,27 @@ public sealed class ConfigureTournamentEndpointTest
     [InlineData(true, "Test group 123")]
     public void ConfigureTournamentEndpointRequest___With_Invalid_Group_DisplayName___Is_Invalid(bool isValid, string? displayName)
     {
-        var groups = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestGroupEntry[]
+        var groups = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestGroupEntry[]
         {
-            new(null, 'A', displayName, [
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 1"),
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test 2")
-            ])
+            new()
+            {
+                Id = null,
+                AlphabeticalId = 'A',
+                DisplayName = displayName,
+                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
+                {
+                    new()
+                    {
+                        Id = null,
+                        Name = "Test 1"
+                    },
+                    new()
+                    {
+                        Id = null,
+                        Name = "Test 2"
+                    }
+                }
+            }
         };
 
         var command = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest
@@ -224,8 +390,17 @@ public sealed class ConfigureTournamentEndpointTest
     {
         var groups = teamsPerGroup.Select((x, index) =>
         {
-            var teams = Enumerable.Range(0, x).Select(_ => new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Test")).ToArray();
-            return new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestGroupEntry(null, (char)('A' + index), null, teams);
+            return new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestGroupEntry()
+            {
+                Id = null,
+                AlphabeticalId = (char)('A' + index),
+                DisplayName = null,
+                Teams = Enumerable.Range(0, x).Select(_ => new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
+                {
+                    Id = null,
+                    Name = "Test"
+                }).ToArray()
+            };
         }).ToArray();
 
         var command = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest
@@ -259,12 +434,27 @@ public sealed class ConfigureTournamentEndpointTest
     [InlineData(" ")]
     public void ConfigureTournamentEndpointRequest___With_Invalid_Team_Name___Is_Invalid(string teamName)
     {
-        var groups = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestGroupEntry[]
+        var groups = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestGroupEntry[]
         {
-            new(null, 'A', null, [
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, teamName),
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest.ConfigureTournamentEndpointRequestTeamEntry(null, "Other")
-            ])
+            new()
+            {
+                Id = null,
+                AlphabeticalId = 'A',
+                DisplayName = null,
+                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
+                {
+                    new()
+                    {
+                        Id = null,
+                        Name = teamName
+                    },
+                    new()
+                    {
+                        Id = null,
+                        Name = "Other"
+                    }
+                }
+            }
         };
 
         var command = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest

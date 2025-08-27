@@ -227,10 +227,24 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
         public TimeSpan? PauseBetweenGroupAndFinalsPhase { get; init; }
 
         public FinalsPhaseConfigurationDto? FinalsPhase { get; init; }
+    }
 
-        public sealed record ConfigureTournamentEndpointRequestGroupEntry(int? Id, char AlphabeticalId, string? DisplayName, ConfigureTournamentEndpointRequestTeamEntry[] Teams);
+    public sealed record ConfigureTournamentEndpointRequestGroupEntry
+    {
+        public int? Id { get; init; }
 
-        public sealed record ConfigureTournamentEndpointRequestTeamEntry(int? Id, string Name);
+        public required char AlphabeticalId { get; init; }
+
+        public string? DisplayName { get; init; }
+
+        public required ConfigureTournamentEndpointRequestTeamEntry[] Teams { get; init; }
+    }
+
+    public sealed record ConfigureTournamentEndpointRequestTeamEntry
+    {
+        public int? Id { get; init; }
+
+        public required string Name { get; init; }
     }
 
     internal sealed class Validator : AbstractValidator<ConfigureTournamentEndpointRequest>
