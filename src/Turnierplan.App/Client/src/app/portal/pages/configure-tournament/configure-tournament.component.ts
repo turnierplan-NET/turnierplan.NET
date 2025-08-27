@@ -620,20 +620,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
           id: group.id ?? null,
           alphabeticalId: group.alphabeticalId,
           displayName: group.displayName.length === 0 ? null : group.displayName,
-          // TODO: Revert this debugging change
-          teams: group.teams.map(
-            (team): ConfigureTournamentEndpointRequestTeamEntry => ({
-              id: team.id ?? null,
-              name: team.name === 'A' || team.name === 'B' ? null : team.name,
-              teamLink:
-                team.name === 'A' || team.name === 'B'
-                  ? {
-                      planningRealmId: 'Kp39FNRxqyV',
-                      applicationTeamId: team.name === 'A' ? 395 : 398
-                    }
-                  : null
-            })
-          )
+          teams: group.teams.map((team): ConfigureTournamentEndpointRequestTeamEntry => ({ id: team.id ?? null, name: team.name }))
         })
       ),
       firstMatchKickoff: this.firstMatchKickoff.toISOString(),
