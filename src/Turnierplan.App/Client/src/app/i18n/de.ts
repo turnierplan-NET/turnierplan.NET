@@ -335,6 +335,7 @@ export const de = {
           Pay: 'Bezahlen',
           ResetConfirm: 'Zurücksetzen auf\n"nicht bezahlt"?'
         },
+        RenameDisabledTooltip: 'Diese Mannschaft stammt aus einen Turnierplaner und kann daher nur dort umbenannt werden',
         Rename: {
           Button: 'Name ändern',
           Title: 'Mannschaft umbenennen',
