@@ -49,6 +49,16 @@ public sealed class Team : Entity<int>
 
     public void LinkWithApplicationTeam(ApplicationTeam applicationTeam)
     {
+        if (applicationTeam.TeamLink is not null)
+        {
+            if (applicationTeam.TeamLink.Team == this)
+            {
+                return;
+            }
+
+            throw new TurnierplanException("Cannot link with application team because it already has a link to a different team.");
+        }
+
         TeamLink = new TeamLink(applicationTeam, this);
         Name = applicationTeam.Name;
 
