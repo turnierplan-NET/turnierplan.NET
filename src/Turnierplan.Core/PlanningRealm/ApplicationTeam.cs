@@ -22,6 +22,4 @@ public sealed class ApplicationTeam : Entity<long>
     public string Name { get; set; }
 
     public TournamentClass Class { get; internal set; } = null!;
-
-    // TODO: At some point, this entity will need to reference a Team
 }

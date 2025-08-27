@@ -70,6 +70,8 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<Team> Teams { get; set; } = null!;
 
+    public DbSet<TeamLink> TeamLinks { get; set; } = null!;
+
     public DbSet<Tournament> Tournaments { get; set; } = null!;
 
     public DbSet<RoleAssignment<Tournament>> TournamentRoleAssignments { get; set; } = null!;
@@ -162,6 +164,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new OrganizationEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new PlanningRealmEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TeamEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new TeamLinkEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TournamentEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TournamentClassEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());

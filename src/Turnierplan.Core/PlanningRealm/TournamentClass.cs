@@ -19,6 +19,4 @@ public sealed class TournamentClass : Entity<long>
     public override long Id { get; protected set; }
 
     public string Name { get; set; }
-
-    // TODO: At some point, this entity will need to reference Tournaments
 }
