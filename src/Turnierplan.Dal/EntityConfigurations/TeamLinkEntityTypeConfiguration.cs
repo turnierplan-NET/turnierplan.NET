@@ -15,6 +15,9 @@ public sealed class TeamLinkEntityTypeConfiguration : IEntityTypeConfiguration<T
         builder.Property(x => x.Id)
             .IsRequired();
 
+        builder.Property(x => x.CreatedAt)
+            .IsRequired();
+
         builder.HasOne(x => x.PlanningRealm)
             .WithMany()
             .OnDelete(DeleteBehavior.Cascade)
