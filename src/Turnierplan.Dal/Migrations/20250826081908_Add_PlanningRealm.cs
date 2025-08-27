@@ -226,53 +226,6 @@ namespace Turnierplan.Dal.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "TeamLinks",
-                schema: "turnierplan",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    PlanningRealmId = table.Column<long>(type: "bigint", nullable: false),
-                    ApplicationTeamId = table.Column<long>(type: "bigint", nullable: false),
-                    TournamentId = table.Column<long>(type: "bigint", nullable: false),
-                    TeamTournamentId = table.Column<long>(type: "bigint", nullable: false),
-                    TeamId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TeamLinks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TeamLinks_ApplicationTeams_ApplicationTeamId",
-                        column: x => x.ApplicationTeamId,
-                        principalSchema: "turnierplan",
-                        principalTable: "ApplicationTeams",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TeamLinks_PlanningRealms_PlanningRealmId",
-                        column: x => x.PlanningRealmId,
-                        principalSchema: "turnierplan",
-                        principalTable: "PlanningRealms",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TeamLinks_Teams_TeamTournamentId_TeamId",
-                        columns: x => new { x.TeamTournamentId, x.TeamId },
-                        principalSchema: "turnierplan",
-                        principalTable: "Teams",
-                        principalColumns: new[] { "TournamentId", "Id" },
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TeamLinks_Tournaments_TournamentId",
-                        column: x => x.TournamentId,
-                        principalSchema: "turnierplan",
-                        principalTable: "Tournaments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_PlanningRealmId",
                 schema: "turnierplan",
@@ -354,30 +307,6 @@ namespace Turnierplan.Dal.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TeamLinks_ApplicationTeamId",
-                schema: "turnierplan",
-                table: "TeamLinks",
-                column: "ApplicationTeamId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TeamLinks_PlanningRealmId",
-                schema: "turnierplan",
-                table: "TeamLinks",
-                column: "PlanningRealmId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TeamLinks_TeamTournamentId_TeamId",
-                schema: "turnierplan",
-                table: "TeamLinks",
-                columns: new[] { "TeamTournamentId", "TeamId" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TeamLinks_TournamentId",
-                schema: "turnierplan",
-                table: "TeamLinks",
-                column: "TournamentId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TournamentClasses_PlanningRealmId",
                 schema: "turnierplan",
                 table: "TournamentClasses",
@@ -388,19 +317,15 @@ namespace Turnierplan.Dal.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ApplicationTeams",
+                schema: "turnierplan");
+
+            migrationBuilder.DropTable(
                 name: "IAM_PlanningRealm",
                 schema: "turnierplan");
 
             migrationBuilder.DropTable(
                 name: "InvitationLinkEntries",
-                schema: "turnierplan");
-
-            migrationBuilder.DropTable(
-                name: "TeamLinks",
-                schema: "turnierplan");
-
-            migrationBuilder.DropTable(
-                name: "ApplicationTeams",
                 schema: "turnierplan");
 
             migrationBuilder.DropTable(

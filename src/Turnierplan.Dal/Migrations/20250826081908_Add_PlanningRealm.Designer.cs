@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20250827072943_Add_PlanningRealm")]
+    [Migration("20250826081908_Add_PlanningRealm")]
     partial class Add_PlanningRealm
     {
         /// <inheritdoc />
@@ -455,45 +455,6 @@ namespace Turnierplan.Dal.Migrations
                         .IsUnique();
 
                     b.ToTable("PlanningRealms", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TeamLink", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("ApplicationTeamId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long>("PlanningRealmId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("TeamId")
-                        .HasColumnType("integer");
-
-                    b.Property<long>("TeamTournamentId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TournamentId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationTeamId");
-
-                    b.HasIndex("PlanningRealmId");
-
-                    b.HasIndex("TournamentId");
-
-                    b.HasIndex("TeamTournamentId", "TeamId");
-
-                    b.ToTable("TeamLinks", "turnierplan");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TournamentClass", b =>
@@ -1143,41 +1104,6 @@ namespace Turnierplan.Dal.Migrations
                         .IsRequired();
 
                     b.Navigation("Organization");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TeamLink", b =>
-                {
-                    b.HasOne("Turnierplan.Core.PlanningRealm.ApplicationTeam", "ApplicationTeam")
-                        .WithMany()
-                        .HasForeignKey("ApplicationTeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", "PlanningRealm")
-                        .WithMany()
-                        .HasForeignKey("PlanningRealmId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turnierplan.Core.Tournament.Tournament", "Tournament")
-                        .WithMany()
-                        .HasForeignKey("TournamentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turnierplan.Core.Tournament.Team", "Team")
-                        .WithMany()
-                        .HasForeignKey("TeamTournamentId", "TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationTeam");
-
-                    b.Navigation("PlanningRealm");
-
-                    b.Navigation("Team");
-
-                    b.Navigation("Tournament");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TournamentClass", b =>
