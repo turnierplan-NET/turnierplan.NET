@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
+using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.Tournament.Definitions;
@@ -21,7 +22,8 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
     private static async Task<IResult> Handle(
         [FromRoute] PublicId id,
         [FromBody] ConfigureTournamentEndpointRequest request,
-        ITournamentRepository repository,
+        ITournamentRepository tournamentRepository,
+        IPlanningRealmRepository planningRealmRepository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
@@ -30,7 +32,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
             return result;
         }
 
-        var tournament = await repository.GetByPublicIdAsync(id, ITournamentRepository.Include.GameRelevant).ConfigureAwait(false);
+        var tournament = await tournamentRepository.GetByPublicIdAsync(id, ITournamentRepository.Include.GameRelevant | ITournamentRepository.Include.TeamsWithLinks).ConfigureAwait(false);
 
         if (tournament is null)
         {
@@ -40,6 +42,42 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
         if (!accessValidator.IsActionAllowed(tournament, Actions.GenericWrite))
         {
             return Results.Forbid();
+        }
+
+        var planningRealms = new Dictionary<PublicId, PlanningRealm>();
+
+        var planningRealmIds = request.Groups
+            .SelectMany(x => x.Teams)
+            .Where(x => x.TeamLink is not null)
+            .Select(x => x.TeamLink!.PlanningRealmId)
+            .Distinct()
+            .ToList();
+
+        if (planningRealmIds.Count > 3)
+        {
+            return Results.BadRequest("Cannot use more than 3 distinct planning realms across all team links.");
+        }
+
+        foreach (var planningRealmId in planningRealmIds)
+        {
+            var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Include.ApplicationsWithTeams).ConfigureAwait(false);
+
+            if (planningRealm is null)
+            {
+                return Results.NotFound();
+            }
+
+            if (planningRealm.Organization != tournament.Organization)
+            {
+                return Results.BadRequest("Planning realm must belong to the same organization as the tournament.");
+            }
+
+            if (!accessValidator.IsActionAllowed(planningRealm, Actions.ManageApplications))
+            {
+                return Results.Forbid();
+            }
+
+            planningRealms[planningRealmId] = planningRealm;
         }
 
         DeleteNoLongerNeededTeams(tournament, request);
@@ -75,7 +113,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
                 group.DisplayName = groupDisplayName;
             }
 
-            // Always re-generate all participations but store all existing priorities to re-use later
+            // Always re-generate all participants but store all existing priorities to re-use later
             foreach (var participant in group.Participants)
             {
                 existingTeamPriorities[(GroupId: group.Id, TeamId: participant.Team.Id)] = participant.Priority;
@@ -95,7 +133,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
                 var requestTeam = requestGroup.Teams[j];
 
                 var team = requestTeam.Id is null
-                    ? tournament.AddTeam(requestTeam.Name)
+                    ? tournament.AddTeam(string.Empty)
                     : tournament.Teams.FirstOrDefault(x => x.Id == requestTeam.Id);
 
                 if (team is null)
@@ -103,9 +141,30 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
                     return Results.BadRequest($"Missing team with id {requestTeam.Id}");
                 }
 
-                if (requestTeam.Id is not null)
+                if (requestTeam.Name is not null)
                 {
-                    team.Name = requestTeam.Name;
+                    team.UnlinkApplicationTeam();
+                    team.SetName(requestTeam.Name);
+                }
+                else if (requestTeam.TeamLink is not null)
+                {
+                    var planningRealm = planningRealms[requestTeam.TeamLink.PlanningRealmId];
+
+                    var applicationTeam = planningRealm.Applications
+                        .SelectMany(x => x.Teams)
+                        .FirstOrDefault(x => x.Id == requestTeam.TeamLink.ApplicationTeamId);
+
+                    if (applicationTeam is null)
+                    {
+                        return Results.BadRequest($"No application team with id {requestTeam.TeamLink.ApplicationTeamId} exists in planning realm '{planningRealm.PublicId}'.");
+                    }
+
+                    team.LinkWithApplicationTeam(applicationTeam);
+                }
+                else
+                {
+                    // Validation ensures that either 'Name' or 'TeamLink' is set but never both
+                    throw new InvalidOperationException();
                 }
 
                 teamMappings[(GroupIndex: i, TeamIndex: j)] = team;
@@ -115,10 +174,10 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
         // Wrap the code below in a transaction such that the modifications to the tournament are only
         // stored to the database if no exception occurs between the two SaveChangesAsync() calls.
 
-        await using (var transaction = await repository.UnitOfWork.WrapTransactionAsync().ConfigureAwait(false))
+        await using (var transaction = await tournamentRepository.UnitOfWork.WrapTransactionAsync().ConfigureAwait(false))
         {
             // Save changes to generate IDs for all new groups and teams
-            await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
             for (var i = 0; i < request.Groups.Length; i++)
             {
@@ -137,7 +196,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
             var configuration = ConvertMatchPlanConfiguration(request);
             tournament.GenerateMatchPlan(configuration, clearMatches: true);
 
-            await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
             transaction.ShouldCommit = true;
         }
@@ -244,7 +303,16 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
     {
         public int? Id { get; init; }
 
-        public required string Name { get; init; }
+        public string? Name { get; init; }
+
+        public ConfigureTournamentEndpointRequestTeamLink? TeamLink { get; init; }
+    }
+
+    public sealed record ConfigureTournamentEndpointRequestTeamLink
+    {
+        public required PublicId PlanningRealmId { get; init; }
+
+        public required int ApplicationTeamId { get; init; }
     }
 
     internal sealed class Validator : AbstractValidator<ConfigureTournamentEndpointRequest>
@@ -276,6 +344,11 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
                 .WithMessage("Configuration may not contain more than 1 entry per existing team ID.")
                 .OverridePropertyName(nameof(ConfigureTournamentEndpointRequest.Groups));
 
+            RuleFor(x => x.Groups.SelectMany(y => y.Teams).Select(y => y.TeamLink).Where(y => y != null).Select(y => y!.ApplicationTeamId).ToList())
+                .Must(x => x.Count == x.Distinct().Count())
+                .WithMessage("Configuration may not contain more than 1 team link reference to each unique application team.")
+                .OverridePropertyName(nameof(ConfigureTournamentEndpointRequest.Groups));
+
             RuleForEach(x => x.Groups).ChildRules(group =>
             {
                 group.RuleFor(x => x.AlphabeticalId)
@@ -297,9 +370,22 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
 
                 group.RuleForEach(x => x.Teams).ChildRules(team =>
                 {
+                    team.RuleFor(x => x)
+                        .Must(x => x.Name is null ^ x.TeamLink is null)
+                        .WithMessage($"Exactly one of {nameof(ConfigureTournamentEndpointRequestTeamEntry.Name)} or {nameof(ConfigureTournamentEndpointRequestTeamEntry.TeamLink)} must be specified.");
+
                     team.RuleFor(x => x.Name)
                         .NotEmpty()
-                        .WithMessage($"Team name must be a non-empty string.");
+                        .WithMessage("If specified, the team name must be a non-empty string.")
+                        .When(x => x.Name is not null);
+
+                    team.RuleFor(x => x.TeamLink)
+                        .ChildRules(x =>
+                        {
+                            x.RuleFor(y => y!.ApplicationTeamId)
+                                .GreaterThan(0);
+                        })
+                        .When(x => x.TeamLink is not null);
                 });
             });
 

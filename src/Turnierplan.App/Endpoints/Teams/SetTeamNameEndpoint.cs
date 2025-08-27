@@ -47,7 +47,7 @@ internal sealed class SetTeamNameEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        team.Name = request.Name.Trim();
+        team.SetName(request.Name);
 
         await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 

@@ -1,3 +1,4 @@
+using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.SeedWork;
 
@@ -26,13 +27,34 @@ public sealed class Team : Entity<int>
 
     public Tournament Tournament { get; internal set; } = null!;
 
-    public TeamLink? TeamLink { get; set; }
+    public TeamLink? TeamLink { get; internal set; }
 
-    public string Name { get; set; }
+    public string Name { get; private set; }
 
     public bool OutOfCompetition { get; set; }
 
     public DateTime? EntryFeePaidAt { get; set; }
 
     public int? Ranking { get; internal set; }
+
+    public void SetName(string name)
+    {
+        if (TeamLink is not null)
+        {
+            throw new TurnierplanException("Cannot update team name if there is a link to an application team.");
+        }
+
+        Name = name.Trim();
+    }
+
+    public void LinkWithApplicationTeam(ApplicationTeam applicationTeam)
+    {
+        TeamLink = new TeamLink(applicationTeam, this);
+        Name = applicationTeam.Name;
+    }
+
+    public void UnlinkApplicationTeam()
+    {
+        TeamLink = null;
+    }
 }
