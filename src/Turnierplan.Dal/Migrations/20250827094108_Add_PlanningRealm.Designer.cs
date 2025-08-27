@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20250827075534_Add_PlanningRealm")]
+    [Migration("20250827094108_Add_PlanningRealm")]
     partial class Add_PlanningRealm
     {
         /// <inheritdoc />
