@@ -24,7 +24,7 @@
     @for (team of teams; track team.id) {
       <tr>
         <td class="align-middle">
-          @if (genericWriteAllowed) {
+          @if (genericWriteAllowed && !team.hasTeamLink) {
             <tp-rename-button
               translationKey="Portal.ViewTournament.Teams.Rename"
               [displayLabel]="false"

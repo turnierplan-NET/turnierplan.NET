@@ -874,6 +874,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
         entryFeePaidAt: team.entryFeePaidAt ? new Date(team.entryFeePaidAt) : undefined,
         groupId: undefined,
         priority: undefined,
+        hasTeamLink: team.link !== undefined,
         showLoadingIndicator: {
           name: false,
           priority: false,
