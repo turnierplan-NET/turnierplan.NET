@@ -158,7 +158,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     public Team AddTeam(string name)
     {
-        var team = new Team(GetNextId(), name);
+        var team = new Team(GetNextId(), this, name);
         _teams.Add(team);
 
         return team;

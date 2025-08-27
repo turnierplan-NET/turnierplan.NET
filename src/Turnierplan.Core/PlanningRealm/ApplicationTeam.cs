@@ -10,9 +10,10 @@ public sealed class ApplicationTeam : Entity<long>
         Name = name;
     }
 
-    internal ApplicationTeam(TournamentClass @class, string name)
+    internal ApplicationTeam(Application application, TournamentClass @class, string name)
     {
         Id = 0;
+        Application = application;
         Class = @class;
         Name = name;
     }
@@ -21,5 +22,9 @@ public sealed class ApplicationTeam : Entity<long>
 
     public string Name { get; set; }
 
+    public Application Application { get; internal set; } = null!;
+
     public TournamentClass Class { get; internal set; } = null!;
+
+    public TeamLink? TeamLink { get; set; }
 }

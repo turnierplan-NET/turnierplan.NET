@@ -18,9 +18,10 @@ public sealed class Application : Entity<long>
         Comment = comment;
     }
 
-    internal Application(InvitationLink? sourceLink, int tag, string contact)
+    internal Application(PlanningRealm planningRealm, InvitationLink? sourceLink, int tag, string contact)
     {
         Id = 0;
+        PlanningRealm = planningRealm;
         SourceLink = sourceLink;
         Tag = tag;
         CreatedAt = DateTime.UtcNow;
@@ -29,6 +30,8 @@ public sealed class Application : Entity<long>
     }
 
     public override long Id { get; protected set; }
+
+    public PlanningRealm PlanningRealm { get; internal set; } = null!;
 
     public InvitationLink? SourceLink { get; internal set; }
 
@@ -50,7 +53,7 @@ public sealed class Application : Entity<long>
 
     public void AddTeam(TournamentClass tournamentClass, string name)
     {
-        var team = new ApplicationTeam(tournamentClass, name);
+        var team = new ApplicationTeam(this, tournamentClass, name);
         _teams.Add(team);
     }
 }

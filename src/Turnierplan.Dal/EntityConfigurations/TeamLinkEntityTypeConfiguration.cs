@@ -15,23 +15,16 @@ public sealed class TeamLinkEntityTypeConfiguration : IEntityTypeConfiguration<T
         builder.Property(x => x.Id)
             .IsRequired();
 
-        builder.HasOne(x => x.PlanningRealm)
-            .WithMany()
-            .OnDelete(DeleteBehavior.Cascade)
+        builder.Property(x => x.CreatedAt)
             .IsRequired();
 
         builder.HasOne(x => x.ApplicationTeam)
-            .WithMany()
-            .OnDelete(DeleteBehavior.Cascade)
-            .IsRequired();
-
-        builder.HasOne(x => x.Tournament)
-            .WithMany()
+            .WithOne(x => x.TeamLink)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         builder.HasOne(x => x.Team)
-            .WithMany()
+            .WithOne(x => x.TeamLink)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
     }

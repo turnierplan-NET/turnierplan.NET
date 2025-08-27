@@ -16,7 +16,7 @@ public abstract class TeamSelectorTestBase
         var teams = new Dictionary<int, Team>();
         foreach (var id in Enumerable.Range(4, 12))
         {
-            teams[id] = new Team(id, string.Empty);
+            teams[id] = new Team(id, null!, string.Empty);
         }
 
         var groupA = new Group(100, 'A');

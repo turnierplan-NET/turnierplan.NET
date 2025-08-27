@@ -39,7 +39,7 @@ public sealed class ApplicationEntityTypeConfiguration : IEntityTypeConfiguratio
         builder.Property(x => x.Comment);
 
         builder.HasMany(x => x.Teams)
-            .WithOne()
+            .WithOne(x => x.Application)
             .HasForeignKey("ApplicationId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
