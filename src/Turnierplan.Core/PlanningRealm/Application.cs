@@ -34,7 +34,7 @@ public sealed class Application : Entity<long>
 
     public int Tag { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; }
 
     public string Notes { get; set; }
 
