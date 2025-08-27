@@ -11,6 +11,11 @@ using Turnierplan.Dal.Extensions;
 
 namespace Turnierplan.App.Endpoints.Tournaments;
 
+// TODO: Endpoint + UI for removing the connection between team & application team
+// TODO: Endpoint + UI for renaming an application team (should also rename Team if a link is active)
+// TODO: UI for inserting teams from planning realm when configuring tournament
+// TODO: Display linked teams in applications page incl. link to navigate to the corresponding tournament
+
 internal sealed class ConfigureTournamentEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Post;
