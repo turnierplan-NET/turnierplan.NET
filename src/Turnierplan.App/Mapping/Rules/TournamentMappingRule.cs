@@ -32,7 +32,12 @@ internal sealed class TournamentMappingRule : MappingRuleBase<Tournament, Tourna
                     Name = team.Name,
                     OutOfCompetition = team.OutOfCompetition,
                     HasPaidEntryFee = team.EntryFeePaidAt is not null,
-                    EntryFeePaidAt = team.EntryFeePaidAt
+                    EntryFeePaidAt = team.EntryFeePaidAt,
+                    Link = team.TeamLink is null ? null : new TeamLinkDto
+                    {
+                        PlanningRealmId = team.TeamLink.ApplicationTeam.Application.PlanningRealm.PublicId,
+                        ApplicationTeamId = team.TeamLink.ApplicationTeam.Id
+                    }
                 };
             }).OrderBy(x => x.Name).ToArray(),
             Groups = source.Groups.Select(group =>

@@ -13,7 +13,7 @@ public sealed class MatchTest
         var group = new Group(1, 'A');
 
         __testMatches = new Match[5];
-        __testTeams = Enumerable.Range(1, 10).Select(x => new Team(x, "Test")).ToArray();
+        __testTeams = Enumerable.Range(1, 10).Select(x => new Team(x, null!, "Test")).ToArray();
 
         __testMatches[0] = new Match(1, 1, new NullSelector(), new NullSelector(), group)
         {

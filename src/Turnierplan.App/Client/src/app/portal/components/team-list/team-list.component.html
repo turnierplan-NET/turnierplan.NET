@@ -23,14 +23,21 @@
   <tbody>
     @for (team of teams; track team.id) {
       <tr>
-        <td class="align-middle">
+        <td class="align-middle text-center">
           @if (genericWriteAllowed) {
-            <tp-rename-button
-              translationKey="Portal.ViewTournament.Teams.Rename"
-              [displayLabel]="false"
-              [allowReset]="false"
-              [current]="team.name"
-              (renamed)="renameTeam(team.id, $event)" />
+            @if (team.hasTeamLink) {
+              <tp-tooltip-icon
+                [margin]="false"
+                [iconClass]="'text-secondary'"
+                [tooltipText]="'Portal.ViewTournament.Teams.RenameDisabledTooltip'" />
+            } @else {
+              <tp-rename-button
+                translationKey="Portal.ViewTournament.Teams.Rename"
+                [displayLabel]="false"
+                [allowReset]="false"
+                [current]="team.name"
+                (renamed)="renameTeam(team.id, $event)" />
+            }
           }
         </td>
         <td class="align-middle">

@@ -88,7 +88,7 @@ public sealed class TournamentEntityTypeConfiguration : IEntityTypeConfiguration
         builder.Ignore(x => x.EndTimestamp);
 
         builder.HasMany(x => x.Teams)
-            .WithOne()
+            .WithOne(x => x.Tournament)
             .HasForeignKey("TournamentId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();

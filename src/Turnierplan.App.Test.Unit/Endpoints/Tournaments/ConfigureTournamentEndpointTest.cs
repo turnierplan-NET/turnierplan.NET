@@ -468,7 +468,7 @@ public sealed class ConfigureTournamentEndpointTest
         var result = ConfigureTournamentEndpoint.Validator.Instance.TestValidate(command);
 
         result.ShouldHaveValidationErrorFor("Groups[0].Teams[0].Name")
-            .WithErrorMessage("Team name must be a non-empty string.")
+            .WithErrorMessage("If specified, the team name must be a non-empty string.")
             .Only();
     }
 

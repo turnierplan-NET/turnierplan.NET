@@ -8,7 +8,7 @@ public sealed class GroupParticipantComparerTest
 {
     private static Team DummyTeam(int teamId, bool outOfCompetition = false)
     {
-        return new Team(teamId, "Team")
+        return new Team(teamId, null!, "Team")
         {
             OutOfCompetition = outOfCompetition
         };

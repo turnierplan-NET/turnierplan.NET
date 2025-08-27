@@ -831,7 +831,7 @@ public sealed class TournamentGenerateMatchPlanTest
             var numberOfTeams = -teamsPerGroup[0];
             for (var i = 0; i < numberOfTeams; i++)
             {
-                tournament._teams.Add(new Team(__teamIds[teamIndex], $"Team {++teamIndex}"));
+                tournament._teams.Add(new Team(__teamIds[teamIndex], null!, $"Team {++teamIndex}"));
             }
         }
         else
@@ -846,7 +846,7 @@ public sealed class TournamentGenerateMatchPlanTest
 
                 for (var j = 0; j < teamCount; j++)
                 {
-                    var team = new Team(__teamIds[teamIndex], $"Team {++teamIndex}");
+                    var team = new Team(__teamIds[teamIndex], null!, $"Team {++teamIndex}");
                     tournament._teams.Add(team);
 
                     group._participants.Add(new GroupParticipant(group, team, 0, 0));

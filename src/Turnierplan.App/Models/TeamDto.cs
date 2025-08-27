@@ -11,4 +11,6 @@ public sealed record TeamDto
     public required bool HasPaidEntryFee { get; init; }
 
     public DateTime? EntryFeePaidAt { get; init; }
+
+    public TeamLinkDto? Link { get; init; }
 }

@@ -64,7 +64,7 @@ public sealed class TournamentGenerateTeamSelectorsTest
 
         for (var i = 0; i < 7; i++)
         {
-            tournament._teams.Add(new Team(i, $"Team {i}"));
+            tournament._teams.Add(new Team(i, null!, $"Team {i}"));
         }
 
         var groupA = new Group(7, 'A');

@@ -23,7 +23,7 @@ internal sealed class GetTournamentEndpoint : EndpointBase<TournamentDto>
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        var tournament = await repository.GetByPublicIdAsync(id, ITournamentRepository.Include.GameRelevant | ITournamentRepository.Include.Venue).ConfigureAwait(false);
+        var tournament = await repository.GetByPublicIdAsync(id, ITournamentRepository.Include.GameRelevant | ITournamentRepository.Include.Venue | ITournamentRepository.Include.TeamsWithLinks).ConfigureAwait(false);
 
         if (tournament is null)
         {
