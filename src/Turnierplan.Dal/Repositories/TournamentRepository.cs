@@ -22,7 +22,7 @@ internal sealed class TournamentRepository(TurnierplanContext context) : Reposit
 
         if (include.HasFlag(ITournamentRepository.Include.Teams))
         {
-            query = query.Include(x => x.Teams);
+            query = query.Include(x => x.Teams).ThenInclude(x => x.TeamLink);
         }
 
         if (include.HasFlag(ITournamentRepository.Include.TeamsWithLinks))
