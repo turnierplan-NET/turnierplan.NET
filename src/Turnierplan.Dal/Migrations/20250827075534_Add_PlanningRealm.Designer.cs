@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20250826081908_Add_PlanningRealm")]
+    [Migration("20250827075534_Add_PlanningRealm")]
     partial class Add_PlanningRealm
     {
         /// <inheritdoc />
@@ -455,6 +455,37 @@ namespace Turnierplan.Dal.Migrations
                         .IsUnique();
 
                     b.ToTable("PlanningRealms", "turnierplan");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TeamLink", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ApplicationTeamId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("integer");
+
+                    b.Property<long>("TeamTournamentId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationTeamId")
+                        .IsUnique();
+
+                    b.HasIndex("TeamTournamentId", "TeamId")
+                        .IsUnique();
+
+                    b.ToTable("TeamLinks", "turnierplan");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TournamentClass", b =>
@@ -993,7 +1024,7 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("Turnierplan.Core.PlanningRealm.Application", b =>
                 {
-                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", null)
+                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", "PlanningRealm")
                         .WithMany("Applications")
                         .HasForeignKey("PlanningRealmId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1004,12 +1035,14 @@ namespace Turnierplan.Dal.Migrations
                         .HasForeignKey("SourceLinkId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.Navigation("PlanningRealm");
+
                     b.Navigation("SourceLink");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.PlanningRealm.ApplicationTeam", b =>
                 {
-                    b.HasOne("Turnierplan.Core.PlanningRealm.Application", null)
+                    b.HasOne("Turnierplan.Core.PlanningRealm.Application", "Application")
                         .WithMany("Teams")
                         .HasForeignKey("ApplicationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1020,6 +1053,8 @@ namespace Turnierplan.Dal.Migrations
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Application");
 
                     b.Navigation("Class");
                 });
@@ -1104,6 +1139,25 @@ namespace Turnierplan.Dal.Migrations
                         .IsRequired();
 
                     b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TeamLink", b =>
+                {
+                    b.HasOne("Turnierplan.Core.PlanningRealm.ApplicationTeam", "ApplicationTeam")
+                        .WithOne("TeamLink")
+                        .HasForeignKey("Turnierplan.Core.PlanningRealm.TeamLink", "ApplicationTeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Turnierplan.Core.Tournament.Team", "Team")
+                        .WithOne("TeamLink")
+                        .HasForeignKey("Turnierplan.Core.PlanningRealm.TeamLink", "TeamTournamentId", "TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationTeam");
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TournamentClass", b =>
@@ -1238,11 +1292,13 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("Turnierplan.Core.Tournament.Team", b =>
                 {
-                    b.HasOne("Turnierplan.Core.Tournament.Tournament", null)
+                    b.HasOne("Turnierplan.Core.Tournament.Tournament", "Tournament")
                         .WithMany("Teams")
                         .HasForeignKey("TournamentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Tournament");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.Tournament.Tournament", b =>
@@ -1619,6 +1675,11 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Teams");
                 });
 
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.ApplicationTeam", b =>
+                {
+                    b.Navigation("TeamLink");
+                });
+
             modelBuilder.Entity("Turnierplan.Core.PlanningRealm.InvitationLink", b =>
                 {
                     b.Navigation("Entries");
@@ -1638,6 +1699,11 @@ namespace Turnierplan.Dal.Migrations
             modelBuilder.Entity("Turnierplan.Core.Tournament.Group", b =>
                 {
                     b.Navigation("Participants");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.Tournament.Team", b =>
+                {
+                    b.Navigation("TeamLink");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.Tournament.Tournament", b =>

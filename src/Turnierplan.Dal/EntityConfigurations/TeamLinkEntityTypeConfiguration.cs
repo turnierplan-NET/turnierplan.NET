@@ -20,11 +20,13 @@ public sealed class TeamLinkEntityTypeConfiguration : IEntityTypeConfiguration<T
 
         builder.HasOne(x => x.ApplicationTeam)
             .WithOne(x => x.TeamLink)
+            .HasForeignKey<TeamLink>("ApplicationTeamId") // explicitly sets the dependant entity
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         builder.HasOne(x => x.Team)
             .WithOne(x => x.TeamLink)
+            .HasForeignKey<TeamLink>() // explicitly sets the dependant entity
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
     }
