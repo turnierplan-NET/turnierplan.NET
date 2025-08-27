@@ -26,5 +26,5 @@ public sealed class ApplicationTeam : Entity<long>
 
     public TournamentClass Class { get; internal set; } = null!;
 
-    public TeamLink? TeamLink { get; set; }
+    public TeamLink? TeamLink { get; internal set; }
 }

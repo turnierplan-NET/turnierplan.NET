@@ -51,10 +51,17 @@ public sealed class Team : Entity<int>
     {
         TeamLink = new TeamLink(applicationTeam, this);
         Name = applicationTeam.Name;
+
+        applicationTeam.TeamLink = TeamLink;
     }
 
     public void UnlinkApplicationTeam()
     {
+        if (TeamLink is not null)
+        {
+            TeamLink.ApplicationTeam.TeamLink = null;
+        }
+
         TeamLink = null;
     }
 }
