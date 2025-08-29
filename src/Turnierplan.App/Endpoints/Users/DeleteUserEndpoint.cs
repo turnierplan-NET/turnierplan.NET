@@ -19,7 +19,6 @@ internal sealed class DeleteUserEndpoint : EndpointBase
         [FromRoute] Guid id,
         HttpContext context,
         IUserRepository repository,
-        IDeletionHelper deletionHelper,
         CancellationToken cancellationToken)
     {
         if (id == context.GetCurrentUserIdOrThrow())
