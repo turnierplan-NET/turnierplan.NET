@@ -73,7 +73,7 @@ internal sealed class GetApiKeyUsageEndpoint : EndpointBase<ApiKeyUsageDto>
             <= 7 => (TimeSpan.FromHours(2), rangeDays * 24 / 2),
             <= 14 => (TimeSpan.FromHours(4), rangeDays * 24 / 4),
             <= 30 => (TimeSpan.FromHours(8), rangeDays * 24 / 8),
-            > 30 => throw new ArgumentOutOfRangeException(nameof(rangeDays))
+            _ => throw new ArgumentOutOfRangeException(nameof(rangeDays))
         };
     }
 }

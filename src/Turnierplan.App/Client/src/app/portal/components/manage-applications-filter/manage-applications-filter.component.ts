@@ -1,10 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  ApplicationsFilter,
-  defaultApplicationsFilter,
-  InvitationLinkFilterValue,
-  TournamentClassFilterValue
-} from '../../models/applications-filter';
+import { ApplicationsFilter, defaultApplicationsFilter, InvitationLinkFilterValue } from '../../models/applications-filter';
 import { PlanningRealmDto } from '../../../api';
 import { MultiSelectFilterOption } from '../multi-select-filter/multi-select-filter.component';
 
@@ -15,7 +10,7 @@ import { MultiSelectFilterOption } from '../multi-select-filter/multi-select-fil
 })
 export class ManageApplicationsFilterComponent {
   protected searchTerm: string = '';
-  protected tournamentClass: TournamentClassFilterValue[] = [];
+  protected tournamentClass: number[] = [];
   protected invitationLink: InvitationLinkFilterValue[] = [];
 
   protected tournamentClassFilterOptions: MultiSelectFilterOption[] = [];

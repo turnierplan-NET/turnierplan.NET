@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { ApplicationsFilter, TournamentClassFilterValue } from '../../models/applications-filter';
+import { ApplicationsFilter } from '../../models/applications-filter';
 import { BehaviorSubject, combineLatestWith, ReplaySubject, switchMap, tap } from 'rxjs';
 import {
   ApplicationsService,
@@ -11,6 +11,10 @@ import {
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs/operators';
+
+// TODO: Endpoint + UI for removing the connection between team & application team (here and in the team-list component)
+// TODO: Endpoint + UI for renaming an application team (should also rename Team if a link is active)
+// TODO: Display linked teams in applications page incl. link to navigate to the corresponding tournament
 
 @Component({
   standalone: false,
@@ -43,7 +47,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   private readonly filter$ = new ReplaySubject<ApplicationsFilter>();
   private readonly reload$ = new BehaviorSubject<undefined>(undefined);
 
-  private tournamentClassFilter: TournamentClassFilterValue[] = [];
+  private tournamentClassFilter: number[] = [];
 
   constructor(
     private readonly applicationsService: ApplicationsService,

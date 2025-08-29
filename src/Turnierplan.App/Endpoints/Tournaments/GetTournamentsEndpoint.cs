@@ -27,14 +27,9 @@ internal sealed class GetTournamentsEndpoint : EndpointBase<IEnumerable<Tourname
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        if (organizationId.HasValue == folderId.HasValue)
-        {
-            return Results.BadRequest("Specify either organizationId or folderId");
-        }
-
         IReadOnlyCollection<Tournament>? tournaments;
 
-        if (organizationId.HasValue)
+        if (organizationId.HasValue && !folderId.HasValue)
         {
             var organization = await organizationRepository.GetByPublicIdAsync(organizationId.Value, IOrganizationRepository.Include.Tournaments).ConfigureAwait(false);
 
@@ -50,7 +45,7 @@ internal sealed class GetTournamentsEndpoint : EndpointBase<IEnumerable<Tourname
 
             tournaments = organization.Tournaments;
         }
-        else
+        else if (!organizationId.HasValue && folderId.HasValue)
         {
             var folder = await folderRepository.GetByPublicIdAsync(folderId.Value, IFolderRepository.Include.Tournaments).ConfigureAwait(false);
 
@@ -65,6 +60,10 @@ internal sealed class GetTournamentsEndpoint : EndpointBase<IEnumerable<Tourname
             }
 
             tournaments = folder.Tournaments;
+        }
+        else
+        {
+            return Results.BadRequest("Specify either organizationId or folderId");
         }
 
         foreach (var folder in tournaments.Where(x => x.Folder is not null).Select(x => x.Folder!).Distinct())

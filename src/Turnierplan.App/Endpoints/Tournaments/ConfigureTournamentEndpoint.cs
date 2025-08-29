@@ -11,11 +11,6 @@ using Turnierplan.Dal.Extensions;
 
 namespace Turnierplan.App.Endpoints.Tournaments;
 
-// TODO: Endpoint + UI for removing the connection between team & application team
-// TODO: Endpoint + UI for renaming an application team (should also rename Team if a link is active)
-// TODO: UI for inserting teams from planning realm when configuring tournament
-// TODO: Display linked teams in applications page incl. link to navigate to the corresponding tournament
-
 internal sealed class ConfigureTournamentEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Post;
@@ -242,21 +237,31 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
     {
         return new MatchPlanConfiguration
         {
-            GroupRoundConfig = request.GroupPhase is null ? null : new GroupRoundConfig
-            {
-                GroupMatchOrder = request.GroupPhase.UseAlternatingOrder ? GroupMatchOrder.Alternating : GroupMatchOrder.Sequential,
-                GroupPhaseRounds = request.GroupPhase.NumberOfGroupRounds
-            },
-            FinalsRoundConfig = request.FinalsPhase is null ? null : new FinalsRoundConfig
-            {
-                FirstFinalsRoundOrder = (FinalsRoundOrder)request.FinalsPhase.FirstFinalsRound,
-                TeamSelectors = null,
-                EnableThirdPlacePlayoff = request.FinalsPhase.ThirdPlacePlayoff,
-                AdditionalPlayoffs = request.FinalsPhase.AdditionalPlayoffs.Length > 0
-                    ? request.FinalsPhase.AdditionalPlayoffs.Select(x => new AdditionalPlayoffConfig(x.PlayoffPosition, x.TeamSelectorA, x.TeamSelectorB)).ToList()
-                    : null
-            },
+            GroupRoundConfig = request.GroupPhase is null ? null : ConvertGroupRoundConfig(request.GroupPhase),
+            FinalsRoundConfig = request.FinalsPhase is null ? null : ConvertFinalsRoundConfig(request.FinalsPhase),
             ScheduleConfig = ConvertScheduleConfig(request)
+        };
+    }
+
+    private static GroupRoundConfig ConvertGroupRoundConfig(GroupPhaseConfigurationDto groupPhase)
+    {
+        return new GroupRoundConfig
+        {
+            GroupMatchOrder = groupPhase.UseAlternatingOrder ? GroupMatchOrder.Alternating : GroupMatchOrder.Sequential,
+            GroupPhaseRounds = groupPhase.NumberOfGroupRounds
+        };
+    }
+
+    private static FinalsRoundConfig ConvertFinalsRoundConfig(FinalsPhaseConfigurationDto finalsPhase)
+    {
+        return new FinalsRoundConfig
+        {
+            FirstFinalsRoundOrder = (FinalsRoundOrder)finalsPhase.FirstFinalsRound,
+            TeamSelectors = null,
+            EnableThirdPlacePlayoff = finalsPhase.ThirdPlacePlayoff,
+            AdditionalPlayoffs = finalsPhase.AdditionalPlayoffs.Length > 0
+                ? finalsPhase.AdditionalPlayoffs.Select(x => new AdditionalPlayoffConfig(x.PlayoffPosition, x.TeamSelectorA, x.TeamSelectorB)).ToList()
+                : null
         };
     }
 
@@ -462,17 +467,19 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
                     finalsPhase.RuleForEach(x => x.AdditionalPlayoffs)
                         .ChildRules(playoff =>
                         {
+                            const string invalidTeamSelectorErrorMessage = "Additional playoff definition must contain only valid team selectors.";
+
                             playoff.RuleFor(x => x.TeamSelectorA)
                                 .NotEmpty()
-                                .WithMessage("Additional playoff definition must contain only valid team selectors.")
+                                .WithMessage(invalidTeamSelectorErrorMessage)
                                 .Must(x => AbstractTeamSelectorParser.TryParseAbstractTeamSelector(x, out _))
-                                .WithMessage("Additional playoff definition must contain only valid team selectors.");
+                                .WithMessage(invalidTeamSelectorErrorMessage);
 
                             playoff.RuleFor(x => x.TeamSelectorB)
                                 .NotEmpty()
-                                .WithMessage("Additional playoff definition must contain only valid team selectors.")
+                                .WithMessage(invalidTeamSelectorErrorMessage)
                                 .Must(x => AbstractTeamSelectorParser.TryParseAbstractTeamSelector(x, out _))
-                                .WithMessage("Additional playoff definition must contain only valid team selectors.");
+                                .WithMessage(invalidTeamSelectorErrorMessage);
                         });
                 })
                 .When(x => x.FinalsPhase is not null);
