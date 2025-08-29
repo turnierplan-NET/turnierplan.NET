@@ -12,6 +12,10 @@ import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs/operators';
 
+// TODO: Endpoint + UI for removing the connection between team & application team (here and in the team-list component)
+// TODO: Endpoint + UI for renaming an application team (should also rename Team if a link is active)
+// TODO: Display linked teams in applications page incl. link to navigate to the corresponding tournament
+
 @Component({
   standalone: false,
   selector: 'tp-manage-applications',

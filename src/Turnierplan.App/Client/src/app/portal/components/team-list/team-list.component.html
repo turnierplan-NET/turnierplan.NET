@@ -1,6 +1,8 @@
 @let genericWriteAllowed = (authorizationService.isActionAllowed$(tournamentId, Actions.GenericWrite) | async) ?? false;
 @let tournamentConductAllowed = (authorizationService.isActionAllowed$(tournamentId, Actions.TournamentConduct) | async) ?? false;
 
+<!-- TODO: For linked teams, add a link to jump to the applications page with the correct filter pre-set -->
+
 <table class="table table-hover" [attr.aria-label]="'Portal.ViewTournament.Teams.TableLabelTableLabel' | translate">
   <thead>
     <tr>
