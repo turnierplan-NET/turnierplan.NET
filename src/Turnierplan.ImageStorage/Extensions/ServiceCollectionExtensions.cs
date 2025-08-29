@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Turnierplan.ImageStorage.Azure;
 using Turnierplan.ImageStorage.Local;
 using Turnierplan.ImageStorage.S3;
 
@@ -13,6 +14,10 @@ public static class ServiceCollectionExtensions
 
         switch (type)
         {
+            case "Azure":
+                services.Configure<AzureImageStorageOptions>(configuration);
+                services.AddSingleton<IImageStorage, AzureImageStorage>();
+                break;
             case "Local":
                 services.Configure<LocalImageStorageOptions>(configuration);
                 services.AddSingleton<IImageStorage, LocalImageStorage>();
