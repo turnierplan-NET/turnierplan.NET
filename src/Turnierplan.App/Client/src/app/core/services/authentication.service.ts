@@ -28,7 +28,7 @@ export class AuthenticationService implements OnDestroy {
   private static readonly localStorageAccessTokenExpiryKey = 'tp_id_accTokenExp';
   private static readonly localStorageRefreshTokenExpiryKey = 'tp_id_rfsTokenExp';
   private static readonly refreshAccessTokenIfExpiresInLessThanSeconds = 300;
-  private static readonly tokenExpiryCheckClockSkewSeconds = 300;
+  private static readonly tokenExpiryCheckClockSkewSeconds = 15;
 
   public readonly authentication$ = new ReplaySubject<AuthenticatedUser>(1);
 
@@ -115,8 +115,7 @@ export class AuthenticationService implements OnDestroy {
   }
 
   public isLoggedIn(): boolean {
-    const expiry = this.readAccessTokenExpiryFromLocalStorage();
-    return expiry !== undefined && expiry * 1000 > new Date().getTime();
+    return !this.isAccessTokenExpired() || !this.isRefreshTokenExpired();
   }
 
   public checkIfUserIsAdministrator(): Observable<boolean> {
@@ -228,6 +227,12 @@ export class AuthenticationService implements OnDestroy {
     } else {
       return of(true);
     }
+  }
+
+  private isAccessTokenExpired(): boolean {
+    const expiry = this.readAccessTokenExpiryFromLocalStorage();
+
+    return expiry === undefined || expiry * 1000 < new Date().getTime();
   }
 
   private isRefreshTokenExpired(): boolean {
