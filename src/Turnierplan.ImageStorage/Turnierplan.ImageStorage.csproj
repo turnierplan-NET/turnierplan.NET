@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.S3" Version="4.0.4.1" />
-    <PackageReference Include="Azure.Identity" Version=".15.0" />
+    <PackageReference Include="Azure.Identity" Version="1.15.0" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.25.0" />
   </ItemGroup>
 
