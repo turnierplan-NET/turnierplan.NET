@@ -101,7 +101,7 @@ networks:
 > [!TIP]
 > It is recommended to *not* use the `latest` tag. Rather, pin your docker services to a specific image version.
 
-### Using AWS S3 for image storage
+### Storing images in AWS S3
 
 If you prefer to store uploaded images in an AWS S3 or S3-compatible bucket, add the following environment variables to your deployment:
 
@@ -118,6 +118,42 @@ The access key must have permissions to create, read and delete objects.
 
 > [!NOTE]
 > The `RegionEndpoint` and `ServiceUrl` variables are *mutually exclusive*. Use the former if you are using an AWS S3 bucket and use the latter if you use a S3-compatible bucket from a third party.
+
+### Storing images in Azure Blob Storage
+
+If you prefer to store uploaded images in Microsoft [Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs/), add the following environment variables to your deployment:
+
+| Environment Variable               | Description                                  |
+|------------------------------------|----------------------------------------------|
+| `ImageStorage__Type`               | The image storage type, **must** be `Azure`. |
+| `ImageStorage__StorageAccountName` | The name of the storage account.             |
+| `ImageStorage__ContainerName`      | The name of the blob container.              |
+
+By default, a [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) will be used. Therefore, if you use Azure Managed Identities, you won't have to do any further configuration. In addition, this implementation supports two additional means of authentication listed below.
+
+When using Entra ID based authentication, the managed identity / app registration must have permission to create/read/delete blobs in the storage account. This can be achieved by assigning the [Storage Blob Data Contributor](https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/storage#storage-blob-data-contributor) role.
+
+#### Authenticating using access key
+
+Refer to the [documentation](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage?tabs=azure-portal) on how to view and manage the access keys.
+
+The following environment variables must be set to enable access key authentication:
+
+| Environment Variable          | Description                                      |
+|-------------------------------|--------------------------------------------------|
+| `ImageStorage__UseAccountKey` | Set to `true` to use account key authentication. |
+| `ImageStorage__ContainerName` | The name of the blob container.                  |
+
+#### Authenticate using client secret
+
+If you have an Entra ID app registration with the necessary permissions on the storage account, you can set the following environment variables to enable client secret authentication:
+
+| Environment Variable            | Description                                             |
+|---------------------------------|---------------------------------------------------------|
+| `ImageStorage__UseClientSecret` | Set to `true` to use client credentials authentication. |
+| `ImageStorage__TenantId`        | The tenant id where the app registration resides.       |
+| `ImageStorage__ClientId`        | The client id of the *app registration*.                |
+| `ImageStorage__ClientSecret`    | The value of the client secret.                         |
 
 ## Documentation
 
