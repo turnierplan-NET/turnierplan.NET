@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { ApplicationsFilter, TournamentClassFilterValue } from '../../models/applications-filter';
+import { ApplicationsFilter } from '../../models/applications-filter';
 import { BehaviorSubject, combineLatestWith, ReplaySubject, switchMap, tap } from 'rxjs';
 import {
   ApplicationsService,
@@ -47,7 +47,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   private readonly filter$ = new ReplaySubject<ApplicationsFilter>();
   private readonly reload$ = new BehaviorSubject<undefined>(undefined);
 
-  private tournamentClassFilter: TournamentClassFilterValue[] = [];
+  private tournamentClassFilter: number[] = [];
 
   constructor(
     private readonly applicationsService: ApplicationsService,
