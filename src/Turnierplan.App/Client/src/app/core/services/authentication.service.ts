@@ -28,7 +28,7 @@ export class AuthenticationService implements OnDestroy {
   private static readonly localStorageAccessTokenExpiryKey = 'tp_id_accTokenExp';
   private static readonly localStorageRefreshTokenExpiryKey = 'tp_id_rfsTokenExp';
   private static readonly refreshAccessTokenIfExpiresInLessThanSeconds = 300;
-  private static readonly tokenExpiryCheckClockSkewSeconds = 300;
+  private static readonly tokenExpiryCheckClockSkewSeconds = 15;
 
   public readonly authentication$ = new ReplaySubject<AuthenticatedUser>(1);
 
