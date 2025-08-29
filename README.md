@@ -101,11 +101,7 @@ networks:
 > [!TIP]
 > It is recommended to *not* use the `latest` tag. Rather, pin your docker services to a specific image version.
 
-### Using Azure Blob Storage for image storage
-
-TODO: Write this section
-
-### Using AWS S3 for image storage
+### Storing images in AWS S3
 
 If you prefer to store uploaded images in an AWS S3 or S3-compatible bucket, add the following environment variables to your deployment:
 
@@ -122,6 +118,30 @@ The access key must have permissions to create, read and delete objects.
 
 > [!NOTE]
 > The `RegionEndpoint` and `ServiceUrl` variables are *mutually exclusive*. Use the former if you are using an AWS S3 bucket and use the latter if you use a S3-compatible bucket from a third party.
+
+### Storing images in Azure Blob Storage
+
+If you prefer to store uploaded images in Microsoft [Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs/), add the following environment variables to your deployment:
+
+| Environment Variable               | Description                                  |
+|------------------------------------|----------------------------------------------|
+| `ImageStorage__Type`               | The image storage type, **must** be `Azure`. |
+| `ImageStorage__StorageAccountName` | The name of the storage account.             |
+| `ImageStorage__ContainerName`      | The name of the blob container.              |
+
+By default, a [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) will be used. Therefore, if you use Azure Managed Identities, you won't have to add further configuration variables. The following tables show how to configure the image storage to use client secret or storage account key authentication:
+
+| Environment Variable          | Description                                      |
+|-------------------------------|--------------------------------------------------|
+| `ImageStorage__UseAccountKey` | Set to `true` to use account key authentication. |
+| `ImageStorage__ContainerName` | The name of the blob container.                  |
+
+| Environment Variable            | Description                                             |
+|---------------------------------|---------------------------------------------------------|
+| `ImageStorage__UseClientSecret` | Set to `true` to use client credentials authentication. |
+| `ImageStorage__TenantId`        | The tenant id where the app registration resides.       |
+| `ImageStorage__ClientId`        | The client id of the *app registration*.                |
+| `ImageStorage__ClientSecret`    | The value of the client secret.                         |
 
 ## Documentation
 
