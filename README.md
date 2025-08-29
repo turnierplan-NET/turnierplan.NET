@@ -129,12 +129,24 @@ If you prefer to store uploaded images in Microsoft [Azure Blob Storage](https:/
 | `ImageStorage__StorageAccountName` | The name of the storage account.             |
 | `ImageStorage__ContainerName`      | The name of the blob container.              |
 
-By default, a [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) will be used. Therefore, if you use Azure Managed Identities, you won't have to add further configuration variables. The following tables show how to configure the image storage to use client secret or storage account key authentication:
+By default, a [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) will be used. Therefore, if you use Azure Managed Identities, you won't have to do any further configuration. In addition, this implementation supports two additional means of authentication listed below.
+
+When using Entra ID based authentication, the managed identity / app registration must have permission to create/read/delete blobs in the storage account. This can be achieved by assigning the [Storage Blob Data Contributor](https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/storage#storage-blob-data-contributor) role.
+
+#### Authenticating using access key
+
+Refer to the [documentation](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage?tabs=azure-portal) on how to view and manage the access keys.
+
+The following environment variables must be set to enable access key authentication:
 
 | Environment Variable          | Description                                      |
 |-------------------------------|--------------------------------------------------|
 | `ImageStorage__UseAccountKey` | Set to `true` to use account key authentication. |
 | `ImageStorage__ContainerName` | The name of the blob container.                  |
+
+#### Authenticate using client secret
+
+If you have an Entra ID app registration with the necessary permissions on the storage account, you can set the following environment variables to enable client secret authentication:
 
 | Environment Variable            | Description                                             |
 |---------------------------------|---------------------------------------------------------|
