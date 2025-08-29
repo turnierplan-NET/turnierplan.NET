@@ -101,6 +101,10 @@ networks:
 > [!TIP]
 > It is recommended to *not* use the `latest` tag. Rather, pin your docker services to a specific image version.
 
+### Using Azure Blob Storage for image storage
+
+TODO: Write this section
+
 ### Using AWS S3 for image storage
 
 If you prefer to store uploaded images in an AWS S3 or S3-compatible bucket, add the following environment variables to your deployment:
