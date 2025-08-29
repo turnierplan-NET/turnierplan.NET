@@ -115,8 +115,7 @@ export class AuthenticationService implements OnDestroy {
   }
 
   public isLoggedIn(): boolean {
-    const expiry = this.readAccessTokenExpiryFromLocalStorage();
-    return expiry !== undefined && expiry * 1000 > new Date().getTime();
+    return !this.isAccessTokenExpired() || !this.isRefreshTokenExpired();
   }
 
   public checkIfUserIsAdministrator(): Observable<boolean> {
@@ -228,6 +227,12 @@ export class AuthenticationService implements OnDestroy {
     } else {
       return of(true);
     }
+  }
+
+  private isAccessTokenExpired(): boolean {
+    const expiry = this.readRefreshTokenExpiryFromLocalStorage();
+
+    return expiry === undefined || expiry * 1000 < new Date().getTime();
   }
 
   private isRefreshTokenExpired(): boolean {
