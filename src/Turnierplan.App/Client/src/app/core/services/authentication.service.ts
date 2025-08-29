@@ -230,7 +230,7 @@ export class AuthenticationService implements OnDestroy {
   }
 
   private isAccessTokenExpired(): boolean {
-    const expiry = this.readRefreshTokenExpiryFromLocalStorage();
+    const expiry = this.readAccessTokenExpiryFromLocalStorage();
 
     return expiry === undefined || expiry * 1000 < new Date().getTime();
   }
