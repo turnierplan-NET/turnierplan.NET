@@ -35,7 +35,7 @@ internal sealed class PdfResponseOperationTransformer : IOpenApiOperationTransfo
         return Task.CompletedTask;
     }
 
-    public sealed class PdfResponse;
+    public sealed record PdfResponse;
 }
 
 internal static class PdfResponseOperationTransformerExtensions

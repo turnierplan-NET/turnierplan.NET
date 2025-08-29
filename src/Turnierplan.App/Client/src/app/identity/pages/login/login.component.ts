@@ -22,17 +22,17 @@ export class LoginComponent implements OnInit, OnDestroy {
     private readonly authenticationService: AuthenticationService,
     private readonly router: Router,
     private readonly route: ActivatedRoute
-  ) {
-    if (authenticationService.isLoggedIn()) {
-      void this.router.navigate(['portal']);
-    }
-  }
+  ) {}
 
   public ngOnInit(): void {
-    this.route.queryParamMap.pipe(takeUntil(this.destroyed$)).subscribe((params) => {
-      this.redirectTarget = params.get('redirect_to') ?? '/portal';
-      this.email = params.get('email') ?? this.email;
-    });
+    if (this.authenticationService.isLoggedIn()) {
+      void this.router.navigate(['portal']);
+    } else {
+      this.route.queryParamMap.pipe(takeUntil(this.destroyed$)).subscribe((params) => {
+        this.redirectTarget = params.get('redirect_to') ?? '/portal';
+        this.email = params.get('email') ?? this.email;
+      });
+    }
   }
 
   public ngOnDestroy(): void {

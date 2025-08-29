@@ -1,10 +1,8 @@
-export type TournamentClassFilterValue = number;
-
 export type InvitationLinkFilterValue = 'none' | number;
 
 export interface ApplicationsFilter {
   searchTerm: string;
-  tournamentClass: TournamentClassFilterValue[];
+  tournamentClass: number[];
   invitationLink: InvitationLinkFilterValue[];
 }
 

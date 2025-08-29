@@ -49,6 +49,8 @@ interface TemporaryAdditionalPlayoff {
   teamSelectorB: string;
 }
 
+// TODO: UI for inserting teams from planning realm when configuring tournament
+
 @Component({
   standalone: false,
   templateUrl: './configure-tournament.component.html',

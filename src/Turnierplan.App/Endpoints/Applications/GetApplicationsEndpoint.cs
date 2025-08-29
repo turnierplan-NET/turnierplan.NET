@@ -25,8 +25,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
         [FromQuery] string[] invitationLink,
         IPlanningRealmRepository planningRealmRepository,
         IAccessValidator accessValidator,
-        IMapper mapper,
-        CancellationToken cancellationToken)
+        IMapper mapper)
     {
         if (!TournamentClassFilter.TryParseTournamentClassFilter(tournamentClass, out var tournamentClassFilter))
         {

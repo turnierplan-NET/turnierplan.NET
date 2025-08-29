@@ -54,7 +54,7 @@ internal sealed class Mapper : IMapper
         return (TDestination)rule.Map(this, context, source);
     }
 
-    public TDestination? MapNullable<TDestination>(object? source, string languageCode)
+    public TDestination? MapNullable<TDestination>(object? source, string languageCode = IMapper.DefaultLanguageCode)
         where TDestination : class
     {
         return source is null ? null : Map<TDestination>(source, languageCode);
