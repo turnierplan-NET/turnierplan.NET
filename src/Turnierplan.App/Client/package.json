@@ -18,7 +18,13 @@
     "lint": "npm run prettier -- --write",
     "lint:ci": "npm run prettier -- --check",
     "test": "ng test",
-    "test:ci": "ng test --watch=false --source-map=true --code-coverage --browsers ChromeHeadless"
+    "test:ci": "ng test --watch=false --source-map=true --code-coverage --browsers ChromeHeadless",
+    "e2e:set-version": "replace-in-file \"#{TOKEN_APPLICATION_VERSION}#\" \"9.9.9\" src/environments/environment.prod.ts",
+    "e2e:reset-version": "replace-in-file \"9.9.9\" \"#{TOKEN_APPLICATION_VERSION}#\" src/environments/environment.prod.ts",
+    "e2e:prepare": "npm run e2e:set-version && docker compose -f cypress/docker/docker-compose.yaml up --build -d && npm run e2e:reset-version",
+    "e2e:destroy": "docker compose -f cypress/docker/docker-compose.yaml down",
+    "e2e:start": "npx cypress open",
+    "e2e:run": "npx cypress run"
   },
   "dependencies": {
     "@angular/animations": "~20.2.3",
@@ -51,6 +57,7 @@
     "@angular/compiler-cli": "~20.2.3",
     "@types/jasmine": "~5.1.9",
     "@types/node": "~24.3.0",
+    "cypress": "~15.0.0",
     "jasmine-core": "~5.9.0",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.2.0",

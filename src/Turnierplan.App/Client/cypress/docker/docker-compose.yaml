@@ -10,7 +10,7 @@ services:
   turnierplan.e2e.application:
     build:
       dockerfile: 'Turnierplan.App/Dockerfile'
-      context: '../src'
+      context: '../../../../'
     networks:
       - turnierplan.e2e
     ports:
