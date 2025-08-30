@@ -21,7 +21,12 @@
   @if (isLoading) {
     <tp-small-spinner />
   }
-  <button class="btn btn-primary" [ngClass]="{ disabled: isLoading }" translate="Identity.Login.Submit" (click)="attemptLogin()"></button>
+  <button
+    class="btn btn-primary"
+    id="loginButton"
+    [ngClass]="{ disabled: isLoading }"
+    translate="Identity.Login.Submit"
+    (click)="attemptLogin()"></button>
 </div>
 
 @if (!isLoading && loginFailed) {
