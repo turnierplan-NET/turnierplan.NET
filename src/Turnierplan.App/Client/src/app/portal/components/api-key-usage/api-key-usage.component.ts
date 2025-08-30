@@ -1,7 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ChartConfiguration, ChartData } from 'chart.js';
 import { BehaviorSubject, combineLatestWith, delay, distinctUntilChanged, map, Subject, switchMap, tap } from 'rxjs';
 
 import { ApiKeysService } from '../../../api';
@@ -15,17 +14,18 @@ export class ApiKeyUsageComponent implements OnDestroy {
   @Output()
   public errorOccured = new EventEmitter<unknown>();
 
-  protected readonly chartOptions: ChartConfiguration<'bar'>['options'] = {};
+  // TODO: Re-implement charts with Apache echarts
+  // TODO | protected readonly chartOptions: ChartConfiguration<'bar'>['options'] = {};
   protected readonly reload$ = new BehaviorSubject<void>(undefined);
 
   protected isLoading = true;
   protected timeRange: number = 7;
   protected showNoRequestsNotification = false;
 
-  protected chartData: ChartData<'bar'> = {
-    labels: [],
-    datasets: []
-  };
+  // TODO | protected chartData: ChartData<'bar'> = {
+  //          labels: [],
+  //          datasets: []
+  //        };
 
   protected totalCount = 0;
 
@@ -58,18 +58,18 @@ export class ApiKeyUsageComponent implements OnDestroy {
           }
 
           this.isLoading = false;
-          this.chartData = {
-            labels: labels,
-            datasets: [
-              {
-                data: values,
-                backgroundColor: '#16811a',
-                borderColor: '#0e4210',
-                hoverBackgroundColor: '#279f2b',
-                label: translateService.instant('Portal.ApiKeyUsage.Legend') as string
-              }
-            ]
-          };
+          // TODO | this.chartData = {
+          //          labels: labels,
+          //          datasets: [
+          //            {
+          //              data: values,
+          //              backgroundColor: '#16811a',
+          //              borderColor: '#0e4210',
+          //              hoverBackgroundColor: '#279f2b',
+          //              label: translateService.instant('Portal.ApiKeyUsage.Legend') as string
+          //            }
+          //          ]
+          //        };
         },
         error: (error) => this.errorOccured.emit(error)
       });

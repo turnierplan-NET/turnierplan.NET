@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ChartConfiguration, ChartData } from 'chart.js';
 import { of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 import { FolderStatisticsDto, FoldersService } from '../../../api';
@@ -13,7 +12,7 @@ import { TitleService } from '../../services/title.service';
   templateUrl: './folder-statistics.component.html'
 })
 export class FolderStatisticsComponent implements OnInit, OnDestroy {
-  protected readonly barChartOptions: ChartConfiguration<'bar'>['options'] = {};
+  // TODO | protected readonly barChartOptions: ChartConfiguration<'bar'>['options'] = {};
 
   protected loadingState: LoadingState = { isLoading: true };
   protected folderName: string = '';
@@ -22,15 +21,15 @@ export class FolderStatisticsComponent implements OnInit, OnDestroy {
   protected locale: string;
   protected goalDistributionExcludedTournaments?: string;
 
-  protected outcomesBarChart: ChartData<'bar'> = {
-    labels: [],
-    datasets: []
-  };
+  // TODO | protected outcomesBarChart: ChartData<'bar'> = {
+  //         labels: [],
+  //         datasets: []
+  //       };
 
-  protected pageViewsBarChart: ChartData<'bar'> = {
-    labels: [],
-    datasets: []
-  };
+  //       protected pageViewsBarChart: ChartData<'bar'> = {
+  //         labels: [],
+  //         datasets: []
+  //       };
 
   private readonly destroyed$ = new Subject<void>();
 
@@ -99,30 +98,30 @@ export class FolderStatisticsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.outcomesBarChart = {
-      labels: this.statistics.outcomeDistribution.map((x) => `${x.outcome.scoreA}:${x.outcome.scoreB}`),
-      datasets: [
-        {
-          data: this.statistics.outcomeDistribution.map((x) => x.count),
-          backgroundColor: '#16811a',
-          borderColor: '#0e4210',
-          hoverBackgroundColor: '#279f2b',
-          label: this.translateService.instant('Portal.FolderStatistics.NumberOfMatches') as string
-        }
-      ]
-    };
+    // TODO | this.outcomesBarChart = {
+    //          labels: this.statistics.outcomeDistribution.map((x) => `${x.outcome.scoreA}:${x.outcome.scoreB}`),
+    //          datasets: [
+    //            {
+    //              data: this.statistics.outcomeDistribution.map((x) => x.count),
+    //              backgroundColor: '#16811a',
+    //              borderColor: '#0e4210',
+    //              hoverBackgroundColor: '#279f2b',
+    //              label: this.translateService.instant('Portal.FolderStatistics.NumberOfMatches') as string
+    //            }
+    //          ]
+    //        };
 
-    this.pageViewsBarChart = {
-      labels: this.statistics.tournamentPageViews.map((x) => x.tournamentName),
-      datasets: [
-        {
-          data: this.statistics.tournamentPageViews.map((x) => x.publicPageViews),
-          backgroundColor: '#16811a',
-          borderColor: '#0e4210',
-          hoverBackgroundColor: '#279f2b',
-          label: this.translateService.instant('Portal.FolderStatistics.NumberOfPageViews') as string
-        }
-      ]
-    };
+    //        this.pageViewsBarChart = {
+    //          labels: this.statistics.tournamentPageViews.map((x) => x.tournamentName),
+    //          datasets: [
+    //            {
+    //              data: this.statistics.tournamentPageViews.map((x) => x.publicPageViews),
+    //              backgroundColor: '#16811a',
+    //              borderColor: '#0e4210',
+    //              hoverBackgroundColor: '#279f2b',
+    //              label: this.translateService.instant('Portal.FolderStatistics.NumberOfPageViews') as string
+    //            }
+    //          ]
+    //        };
   }
 }
