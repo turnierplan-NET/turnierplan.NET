@@ -5,36 +5,38 @@
       <span class="text-white fw-bold fs-5 d-none d-md-block" translate="Application.Name"></span>
     </a>
     <span class="flex-grow-1"></span>
-    <div *ngIf="currentUser" class="tp-user-info px-2 d-flex flex-row align-items-center tp-cursor-pointer" [ngbPopover]="userInfoPopover">
-      <span class="tp-user-claims text-white d-flex flex-column align-items-end">
-        <span class="fw-bold">{{ currentUser.displayName }}</span>
-        <span>{{ currentUser.emailAddress }}</span>
-      </span>
-      <ng-template #userInfoPopover>
-        <div
-          class="tp-text-pre-wrap mb-3"
-          [innerHTML]="'Portal.UserInfoPopover.Text' | translate: { userName: currentUser.displayName }"></div>
-        <ng-container *tpIsAdministrator>
-          <div class="d-flex flex-row tp-cursor-pointer mt-1" [routerLink]="'/portal/administration'">
-            <i class="bi bi-gear me-2" aria-hidden="true"></i>
-            <span class="text-decoration-underline" [translate]="'Portal.UserInfoPopover.Administration'"></span>
+    @if (currentUser) {
+      <div class="tp-user-info px-2 d-flex flex-row align-items-center tp-cursor-pointer" [ngbPopover]="userInfoPopover">
+        <span class="tp-user-claims text-white d-flex flex-column align-items-end">
+          <span class="fw-bold">{{ currentUser.displayName }}</span>
+          <span>{{ currentUser.emailAddress }}</span>
+        </span>
+        <ng-template #userInfoPopover>
+          <div
+            class="tp-text-pre-wrap mb-3"
+            [innerHTML]="'Portal.UserInfoPopover.Text' | translate: { userName: currentUser.displayName }"></div>
+          <ng-container *tpIsAdministrator>
+            <div class="d-flex flex-row tp-cursor-pointer mt-1" [routerLink]="'/portal/administration'">
+              <i class="bi bi-gear me-2" aria-hidden="true"></i>
+              <span class="text-decoration-underline" [translate]="'Portal.UserInfoPopover.Administration'"></span>
+            </div>
+          </ng-container>
+          <ng-container
+            [ngTemplateOutlet]="userInfoAction"
+            [ngTemplateOutletContext]="{ isFirst: true, action: 'EditUserInfo' }"></ng-container>
+          <ng-container
+            [ngTemplateOutlet]="userInfoAction"
+            [ngTemplateOutletContext]="{ isFirst: false, action: 'ChangePassword' }"></ng-container>
+          <ng-container [ngTemplateOutlet]="userInfoAction" [ngTemplateOutletContext]="{ isFirst: false, action: 'Logout' }"></ng-container>
+        </ng-template>
+        <ng-template #userInfoAction let-action="action">
+          <div class="d-flex flex-row tp-cursor-pointer mt-1" (click)="userInfoActionClicked(action)">
+            <i class="bi me-2" [ngClass]="getUserInfoActionIcon(action)" aria-hidden="true"></i>
+            <span class="text-decoration-underline" [translate]="'Portal.UserInfoPopover.' + action"></span>
           </div>
-        </ng-container>
-        <ng-container
-          [ngTemplateOutlet]="userInfoAction"
-          [ngTemplateOutletContext]="{ isFirst: true, action: 'EditUserInfo' }"></ng-container>
-        <ng-container
-          [ngTemplateOutlet]="userInfoAction"
-          [ngTemplateOutletContext]="{ isFirst: false, action: 'ChangePassword' }"></ng-container>
-        <ng-container [ngTemplateOutlet]="userInfoAction" [ngTemplateOutletContext]="{ isFirst: false, action: 'Logout' }"></ng-container>
-      </ng-template>
-      <ng-template #userInfoAction let-action="action">
-        <div class="d-flex flex-row tp-cursor-pointer mt-1" (click)="userInfoActionClicked(action)">
-          <i class="bi me-2" [ngClass]="getUserInfoActionIcon(action)" aria-hidden="true"></i>
-          <span class="text-decoration-underline" [translate]="'Portal.UserInfoPopover.' + action"></span>
-        </div>
-      </ng-template>
-    </div>
+        </ng-template>
+      </div>
+    }
   </div>
 </header>
 

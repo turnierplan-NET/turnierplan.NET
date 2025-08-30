@@ -14,10 +14,9 @@
       id="organizerNameOverride"
       formControlName="organizerNameOverride"
       [ngClass]="{ 'is-invalid': organizerNameOverride.touched && !organizerNameOverride.valid }" />
-    <div
-      class="invalid-feedback"
-      *ngIf="organizerNameOverride.touched && !organizerNameOverride.valid"
-      translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.OrganizerNameOverrideInvalid"></div>
+    @if (organizerNameOverride.touched && !organizerNameOverride.valid) {
+      <div class="invalid-feedback" translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.OrganizerNameOverrideInvalid"></div>
+    }
   </div>
 
   <div class="form-group">
@@ -35,10 +34,11 @@
       id="tournamentNameOverride"
       formControlName="tournamentNameOverride"
       [ngClass]="{ 'is-invalid': tournamentNameOverride.touched && !tournamentNameOverride.valid }" />
-    <div
-      class="invalid-feedback"
-      *ngIf="tournamentNameOverride.touched && !tournamentNameOverride.valid"
-      translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.TournamentNameOverrideInvalid"></div>
+    @if (tournamentNameOverride.touched && !tournamentNameOverride.valid) {
+      <div
+        class="invalid-feedback"
+        translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.TournamentNameOverrideInvalid"></div>
+    }
   </div>
 
   <div class="form-group">
@@ -56,10 +56,9 @@
       id="venueOverride"
       formControlName="venueOverride"
       [ngClass]="{ 'is-invalid': venueOverride.touched && !venueOverride.valid }" />
-    <div
-      class="invalid-feedback"
-      *ngIf="venueOverride.touched && !venueOverride.valid"
-      translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.VenueOverrideInvalid"></div>
+    @if (venueOverride.touched && !venueOverride.valid) {
+      <div class="invalid-feedback" translate="Portal.ViewTournament.Documents.ConfigureModal.MatchPlan.VenueOverrideInvalid"></div>
+    }
   </div>
 
   <div class="form-group">

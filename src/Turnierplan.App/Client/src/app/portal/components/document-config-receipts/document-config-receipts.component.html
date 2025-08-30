@@ -10,10 +10,9 @@
             id="baseAmount"
             formControlName="amount"
             [ngClass]="{ 'is-invalid': baseAmount.touched && !baseAmount.valid }" />
-          <div
-            class="invalid-feedback"
-            *ngIf="baseAmount.touched && !baseAmount.valid"
-            translate="Portal.ViewTournament.Documents.ConfigureModal.Receipts.AmountInvalid"></div>
+          @if (baseAmount.touched && !baseAmount.valid) {
+            <div class="invalid-feedback" translate="Portal.ViewTournament.Documents.ConfigureModal.Receipts.AmountInvalid"></div>
+          }
         </div>
       </ng-container>
     </div>
@@ -26,10 +25,9 @@
         id="currency"
         formControlName="currency"
         [ngClass]="{ 'is-invalid': currency.touched && !currency.valid }" />
-      <div
-        class="invalid-feedback"
-        *ngIf="currency.touched && !currency.valid"
-        translate="Portal.ViewTournament.Documents.ConfigureModal.Receipts.CurrencyInvalid"></div>
+      @if (currency.touched && !currency.valid) {
+        <div class="invalid-feedback" translate="Portal.ViewTournament.Documents.ConfigureModal.Receipts.CurrencyInvalid"></div>
+      }
     </div>
   </div>
 
@@ -46,10 +44,9 @@
       id="headerInfo"
       formControlName="headerInfo"
       [ngClass]="{ 'is-invalid': headerInfo.touched && !headerInfo.valid }" />
-    <div
-      class="invalid-feedback"
-      *ngIf="headerInfo.touched && !headerInfo.valid"
-      translate="Portal.ViewTournament.Documents.ConfigureModal.Receipts.HeaderInfoInvalid"></div>
+    @if (headerInfo.touched && !headerInfo.valid) {
+      <div class="invalid-feedback" translate="Portal.ViewTournament.Documents.ConfigureModal.Receipts.HeaderInfoInvalid"></div>
+    }
   </div>
 
   <div class="form-group">
@@ -63,10 +60,9 @@
       id="signatureLocation"
       formControlName="signatureLocation"
       [ngClass]="{ 'is-invalid': signatureLocation.touched && !signatureLocation.valid }" />
-    <div
-      class="invalid-feedback"
-      *ngIf="signatureLocation.touched && !signatureLocation.valid"
-      translate="Portal.ViewTournament.Documents.ConfigureModal.Receipts.SignatureLocationInvalid"></div>
+    @if (signatureLocation.touched && !signatureLocation.valid) {
+      <div class="invalid-feedback" translate="Portal.ViewTournament.Documents.ConfigureModal.Receipts.SignatureLocationInvalid"></div>
+    }
   </div>
 
   <div class="form-group">
@@ -85,10 +81,9 @@
       id="signatureRecipient"
       formControlName="signatureRecipient"
       [ngClass]="{ 'is-invalid': signatureRecipient.touched && !signatureRecipient.valid }" />
-    <div
-      class="invalid-feedback"
-      *ngIf="signatureRecipient.touched && !signatureRecipient.valid"
-      translate="Portal.ViewTournament.Documents.ConfigureModal.Receipts.SignatureRecipientInvalid"></div>
+    @if (signatureRecipient.touched && !signatureRecipient.valid) {
+      <div class="invalid-feedback" translate="Portal.ViewTournament.Documents.ConfigureModal.Receipts.SignatureRecipientInvalid"></div>
+    }
   </div>
 
   <div class="form-check form-switch">
@@ -143,10 +138,9 @@
                     [attr.aria-label]="'Portal.ViewTournament.Documents.ConfigureModal.Receipts.RemoveReducedAmount' | translate"
                     (click)="removeReducedAmountEntry(amountKey)" />
                 </div>
-                <div
-                  class="invalid-feedback"
-                  *ngIf="amount(amountKey).touched && !amount(amountKey).valid"
-                  translate="Portal.ViewTournament.Documents.ConfigureModal.Receipts.AmountInvalid"></div>
+                @if (amount(amountKey).touched && !amount(amountKey).valid) {
+                  <div class="invalid-feedback" translate="Portal.ViewTournament.Documents.ConfigureModal.Receipts.AmountInvalid"></div>
+                }
               </div>
             </div>
           </div>

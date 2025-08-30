@@ -1,150 +1,151 @@
 <ng-container *tpLoadingState="loadingState">
-  <tp-page-frame
-    #pageFrame
-    *ngIf="planningRealm"
-    [title]="planningRealm.name"
-    [backLink]="'../../organization/' + planningRealm.organizationId"
-    [navigationTabs]="pages"
-    [contextEntityId]="planningRealm.id"
-    [rememberNavigationTab]="true"
-    (navigationTabSelected)="togglePage($event.id)">
-    <ng-template #buttons>
-      @switch (currentPage) {
-        @case (0) {
-          <!-- Tournament classes page -->
-          <tp-action-button
-            *tpIsActionAllowed="[planningRealm.id, Actions.GenericWrite]"
-            [title]="'Portal.ViewPlanningRealm.NewTournamentClass.Title'"
-            [type]="'outline-success'"
-            [icon]="'plus-circle'"
-            (click)="addTournamentClass()" />
-        }
-        @case (1) {
-          <!-- Invitation links page -->
-          <tp-action-button
-            *tpIsActionAllowed="[planningRealm.id, Actions.GenericWrite]"
-            [title]="'Portal.ViewPlanningRealm.NewInvitationLink.Title'"
-            [type]="'outline-success'"
-            [icon]="'plus-circle'"
-            (click)="addInvitationLink()" />
-        }
-        @case (2) {
-          <!-- Applications page -->
-          @let canAddApplications = !_hasUnsavedChanges && planningRealm.tournamentClasses.length > 0;
-          @if (!canAddApplications) {
-            <tp-tooltip-icon
-              [margin]="false"
-              [icon]="'question-circle'"
-              [tooltipText]="'Portal.ViewPlanningRealm.AddApplication.TournamentClassRequired'" />
-          }
-          <tp-action-button
-            [title]="'Portal.ViewPlanningRealm.AddApplication.Title'"
-            [disabled]="!canAddApplications"
-            [type]="'outline-success'"
-            [icon]="'plus-circle'"
-            (click)="addApplication()" />
-        }
-        @case (3) {
-          <tp-rename-button
-            translationKey="Portal.ViewPlanningRealm.Settings.Rename"
-            [current]="planningRealm.name"
-            (renamed)="renamePlanningRealm($event)" />
-        }
-      }
-    </ng-template>
-    <ng-template #preContent>
-      @if (_hasUnsavedChanges) {
-        <tp-unsaved-changes-alert (save)="savePlanningRealm()" />
-      }
-    </ng-template>
-    <ng-template #mainContent>
-      <div class="card">
+  @if (planningRealm) {
+    <tp-page-frame
+      #pageFrame
+      [title]="planningRealm.name"
+      [backLink]="'../../organization/' + planningRealm.organizationId"
+      [navigationTabs]="pages"
+      [contextEntityId]="planningRealm.id"
+      [rememberNavigationTab]="true"
+      (navigationTabSelected)="togglePage($event.id)">
+      <ng-template #buttons>
         @switch (currentPage) {
           @case (0) {
             <!-- Tournament classes page -->
-            <div class="card-header d-flex flex-row align-items-center">
-              <tp-badge context="ViewPlanningRealm" label="TournamentClassesCount" [value]="planningRealm.tournamentClasses.length" />
-            </div>
-            <div class="card-body p-0">
-              <tp-tournament-classes-manager
-                [planningRealm]="planningRealm"
-                [updatePlanningRealm]="updateFunction"
-                (filterRequested)="navigateToApplicationsWithFilter($event)" />
-            </div>
+            <tp-action-button
+              *tpIsActionAllowed="[planningRealm.id, Actions.GenericWrite]"
+              [title]="'Portal.ViewPlanningRealm.NewTournamentClass.Title'"
+              [type]="'outline-success'"
+              [icon]="'plus-circle'"
+              (click)="addTournamentClass()" />
           }
           @case (1) {
             <!-- Invitation links page -->
-            <div class="card-header d-flex flex-row align-items-center">
-              <tp-badge context="ViewPlanningRealm" label="InvitationLinksCount" [value]="planningRealm.invitationLinks.length" />
-            </div>
-            <div class="card-body">
-              @if (planningRealm.invitationLinks.length === 0) {
-                <div class="d-flex flex-row justify-content-center py-4 text-center">
-                  <span class="tp-text-pre-wrap" translate="Portal.ViewPlanningRealm.NoInvitationLinks"></span>
-                </div>
-              } @else {
-                <div class="d-flex flex-column gap-3">
-                  @for (invitationLink of planningRealm.invitationLinks; track invitationLink.id) {
-                    <tp-invitation-link-tile
-                      [planningRealm]="planningRealm"
-                      [invitationLink]="invitationLink"
-                      [updatePlanningRealm]="updateFunction"
-                      (errorOccured)="loadingState = { isLoading: false, error: $event }"
-                      (filterRequested)="navigateToApplicationsWithFilter($event)" />
-                  }
-                </div>
-              }
-            </div>
+            <tp-action-button
+              *tpIsActionAllowed="[planningRealm.id, Actions.GenericWrite]"
+              [title]="'Portal.ViewPlanningRealm.NewInvitationLink.Title'"
+              [type]="'outline-success'"
+              [icon]="'plus-circle'"
+              (click)="addInvitationLink()" />
           }
           @case (2) {
             <!-- Applications page -->
-            @if (hasUnsavedChanges()) {
-              <div class="card-body">
-                <tp-alert [type]="'warning'" [icon]="'exclamation-triangle'" [text]="'Portal.ViewPlanningRealm.SaveToViewApplications'" />
+            @let canAddApplications = !_hasUnsavedChanges && planningRealm.tournamentClasses.length > 0;
+            @if (!canAddApplications) {
+              <tp-tooltip-icon
+                [margin]="false"
+                [icon]="'question-circle'"
+                [tooltipText]="'Portal.ViewPlanningRealm.AddApplication.TournamentClassRequired'" />
+            }
+            <tp-action-button
+              [title]="'Portal.ViewPlanningRealm.AddApplication.Title'"
+              [disabled]="!canAddApplications"
+              [type]="'outline-success'"
+              [icon]="'plus-circle'"
+              (click)="addApplication()" />
+          }
+          @case (3) {
+            <tp-rename-button
+              translationKey="Portal.ViewPlanningRealm.Settings.Rename"
+              [current]="planningRealm.name"
+              (renamed)="renamePlanningRealm($event)" />
+          }
+        }
+      </ng-template>
+      <ng-template #preContent>
+        @if (_hasUnsavedChanges) {
+          <tp-unsaved-changes-alert (save)="savePlanningRealm()" />
+        }
+      </ng-template>
+      <ng-template #mainContent>
+        <div class="card">
+          @switch (currentPage) {
+            @case (0) {
+              <!-- Tournament classes page -->
+              <div class="card-header d-flex flex-row align-items-center">
+                <tp-badge context="ViewPlanningRealm" label="TournamentClassesCount" [value]="planningRealm.tournamentClasses.length" />
               </div>
-            } @else {
-              <!-- The actual applications manager is displayed as fullWidthContent below -->
-              <div class="card-body p-2">
-                <tp-manage-applications-filter
+              <div class="card-body p-0">
+                <tp-tournament-classes-manager
                   [planningRealm]="planningRealm"
-                  [filter]="applicationsFilter"
-                  (filterChange)="onApplicationsFilterChange($event)" />
+                  [updatePlanningRealm]="updateFunction"
+                  (filterRequested)="navigateToApplicationsWithFilter($event)" />
+              </div>
+            }
+            @case (1) {
+              <!-- Invitation links page -->
+              <div class="card-header d-flex flex-row align-items-center">
+                <tp-badge context="ViewPlanningRealm" label="InvitationLinksCount" [value]="planningRealm.invitationLinks.length" />
+              </div>
+              <div class="card-body">
+                @if (planningRealm.invitationLinks.length === 0) {
+                  <div class="d-flex flex-row justify-content-center py-4 text-center">
+                    <span class="tp-text-pre-wrap" translate="Portal.ViewPlanningRealm.NoInvitationLinks"></span>
+                  </div>
+                } @else {
+                  <div class="d-flex flex-column gap-3">
+                    @for (invitationLink of planningRealm.invitationLinks; track invitationLink.id) {
+                      <tp-invitation-link-tile
+                        [planningRealm]="planningRealm"
+                        [invitationLink]="invitationLink"
+                        [updatePlanningRealm]="updateFunction"
+                        (errorOccured)="loadingState = { isLoading: false, error: $event }"
+                        (filterRequested)="navigateToApplicationsWithFilter($event)" />
+                    }
+                  </div>
+                }
+              </div>
+            }
+            @case (2) {
+              <!-- Applications page -->
+              @if (hasUnsavedChanges()) {
+                <div class="card-body">
+                  <tp-alert [type]="'warning'" [icon]="'exclamation-triangle'" [text]="'Portal.ViewPlanningRealm.SaveToViewApplications'" />
+                </div>
+              } @else {
+                <!-- The actual applications manager is displayed as fullWidthContent below -->
+                <div class="card-body p-2">
+                  <tp-manage-applications-filter
+                    [planningRealm]="planningRealm"
+                    [filter]="applicationsFilter"
+                    (filterChange)="onApplicationsFilterChange($event)" />
+                </div>
+              }
+            }
+            @case (3) {
+              <!-- Settings page -->
+              <ng-container *tpIsActionAllowed="[planningRealm.id, Actions.ReadOrWriteRoleAssignments]">
+                <div class="card-body">
+                  <tp-rbac-widget
+                    [translationKey]="'Portal.ViewPlanningRealm.RbacWidget'"
+                    [target]="planningRealm"
+                    (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+                </div>
+                <hr class="m-0" />
+              </ng-container>
+              <div class="card-body">
+                <tp-delete-widget
+                  [translationKey]="'Portal.ViewPlanningRealm.DeleteWidget'"
+                  [targetObjectName]="planningRealm.name"
+                  (deleteClick)="deletePlanningRealm()" />
               </div>
             }
           }
-          @case (3) {
-            <!-- Settings page -->
-            <ng-container *tpIsActionAllowed="[planningRealm.id, Actions.ReadOrWriteRoleAssignments]">
-              <div class="card-body">
-                <tp-rbac-widget
-                  [translationKey]="'Portal.ViewPlanningRealm.RbacWidget'"
-                  [target]="planningRealm"
-                  (errorOccured)="loadingState = { isLoading: false, error: $event }" />
-              </div>
-              <hr class="m-0" />
-            </ng-container>
-            <div class="card-body">
-              <tp-delete-widget
-                [translationKey]="'Portal.ViewPlanningRealm.DeleteWidget'"
-                [targetObjectName]="planningRealm.name"
-                (deleteClick)="deletePlanningRealm()" />
-            </div>
-          }
-        }
-      </div>
-    </ng-template>
-    <ng-template #fullWidthContent>
-      @if (currentPage === 2 && !hasUnsavedChanges()) {
-        <div class="mt-3 d-flex flex-row justify-content-center px-3">
-          <div style="max-width: 2400px" class="flex-grow-1">
-            <tp-manage-applications
-              [planningRealm]="planningRealm"
-              [filter]="applicationsFilter"
-              (errorOccured)="loadingState = { isLoading: false, error: $event }"
-              (filterRequested)="navigateToApplicationsWithFilter($event)" />
-          </div>
         </div>
-      }
-    </ng-template>
-  </tp-page-frame>
+      </ng-template>
+      <ng-template #fullWidthContent>
+        @if (currentPage === 2 && !hasUnsavedChanges()) {
+          <div class="mt-3 d-flex flex-row justify-content-center px-3">
+            <div style="max-width: 2400px" class="flex-grow-1">
+              <tp-manage-applications
+                [planningRealm]="planningRealm"
+                [filter]="applicationsFilter"
+                (errorOccured)="loadingState = { isLoading: false, error: $event }"
+                (filterRequested)="navigateToApplicationsWithFilter($event)" />
+            </div>
+          </div>
+        }
+      </ng-template>
+    </tp-page-frame>
+  }
 </ng-container>

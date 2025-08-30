@@ -164,7 +164,7 @@ The developer documentation of **turnierplan.NET** is located in the `docs` dire
 First, you need to install the following tools:
 
 - .NET 9.0 SDK
-- node.js v22.x and npm
+- node.js v24.x and npm
 - your favourite IDE
 
 To run the application from source, follow these steps:

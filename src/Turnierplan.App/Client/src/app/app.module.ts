@@ -6,7 +6,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes, UrlSegment } from '@angular/router';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService, TranslationObject } from '@ngx-translate/core';
 import { ToastrModule } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
 
@@ -44,7 +44,7 @@ const routes: Routes = [
 ];
 
 class ImmediateTranslateLoader implements TranslateLoader {
-  public getTranslation(lang: string): Observable<object> {
+  public getTranslation(lang: string): Observable<TranslationObject> {
     if (lang !== 'de') {
       throw new Error(`Language ${lang} not supported.`);
     }

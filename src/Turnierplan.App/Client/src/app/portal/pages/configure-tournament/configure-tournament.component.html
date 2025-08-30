@@ -100,18 +100,19 @@
           dndPlaceholderRef
           translate="Portal.ConfigureTournament.Sections.Participants.DragDropPlaceholder"></div>
 
-        <div
-          *ngFor="let team of group.teams; let index = index"
-          [dndDraggable]="team"
-          (dndMoved)="removeTeam(group, index)"
-          dndEffectAllowed="move"
-          class="px-2 py-1 border rounded d-flex flex-row gap-2 tp-cursor-move">
-          <span
-            class="flex-grow-1"
-            translate="Portal.ConfigureTournament.Sections.Participants.TeamEntry"
-            [translateParams]="{ index: index + 1, name: team.name }"></span>
-          <tp-delete-button [reducedFootprint]="true" (confirmed)="removeTeam(group, index)" />
-        </div>
+        @for (team of group.teams; track team; let index = $index) {
+          <div
+            [dndDraggable]="team"
+            (dndMoved)="removeTeam(group, index)"
+            dndEffectAllowed="move"
+            class="px-2 py-1 border rounded d-flex flex-row gap-2 tp-cursor-move">
+            <span
+              class="flex-grow-1"
+              translate="Portal.ConfigureTournament.Sections.Participants.TeamEntry"
+              [translateParams]="{ index: index + 1, name: team.name }"></span>
+            <tp-delete-button [reducedFootprint]="true" (confirmed)="removeTeam(group, index)" />
+          </div>
+        }
 
         <!-- Use d-none here and set display to block using custom scss if the list is empty. We can't use an *ngIf and check if the teams
           array is empty because the resulting div would then be able to interfere with the drag&drop in a non-user-friendly manner. -->
@@ -202,10 +203,9 @@
           [(ngModel)]="groupPhaseRounds"
           (ngModelChange)="markDirty()"
           [ngClass]="{ 'is-invalid': isGroupPhaseRoundsInvalid }" />
-        <div
-          *ngIf="isGroupPhaseRoundsInvalid"
-          class="invalid-feedback"
-          translate="Portal.ConfigureTournament.Sections.GroupPhase.InvalidNumberOfRounds"></div>
+        @if (isGroupPhaseRoundsInvalid) {
+          <div class="invalid-feedback" translate="Portal.ConfigureTournament.Sections.GroupPhase.InvalidNumberOfRounds"></div>
+        }
       </div>
       <div class="mt-2" translate="Portal.ConfigureTournament.Sections.GroupPhase.NumberOfCourtsLabel"></div>
       <div class="d-flex flex-row gap-2">
@@ -219,10 +219,9 @@
           [(ngModel)]="groupPhaseCourts"
           (ngModelChange)="markDirty()"
           [ngClass]="{ 'is-invalid': isGroupPhaseCourtsInvalid }" />
-        <div
-          *ngIf="isGroupPhaseCourtsInvalid"
-          class="invalid-feedback"
-          translate="Portal.ConfigureTournament.Sections.GroupPhase.InvalidNumberOfCourts"></div>
+        @if (isGroupPhaseCourtsInvalid) {
+          <div class="invalid-feedback" translate="Portal.ConfigureTournament.Sections.GroupPhase.InvalidNumberOfCourts"></div>
+        }
       </div>
       <div class="mt-2" translate="Portal.ConfigureTournament.Sections.GroupPhase.PlayTimeLabel"></div>
       <tp-duration-picker [(duration)]="groupPhasePlayTime" />
@@ -258,9 +257,11 @@
             class="form-select"
             [(ngModel)]="currentFinalRound"
             (ngModelChange)="determineAvailableAdditionalPlayoffMatches(); markDirty()">
-            <option *ngFor="let option of availableFinalRounds" [value]="option">
-              {{ 'Portal.ConfigureTournament.Sections.FinalsPhase.FinalsRound.' + option | translate }}
-            </option>
+            @for (option of availableFinalRounds; track option) {
+              <option [value]="option">
+                {{ 'Portal.ConfigureTournament.Sections.FinalsPhase.FinalsRound.' + option | translate }}
+              </option>
+            }
           </select>
           @if ((currentFinalRound && currentFinalRound !== firstFinalRounds.Final) || additionalPlayoffPositions.length > 0) {
             <div class="mt-2" translate="Portal.ConfigureTournament.Sections.FinalsPhase.RankingMatchesLabel"></div>
@@ -307,10 +308,9 @@
               [(ngModel)]="finalsPhaseCourts"
               (ngModelChange)="markDirty()"
               [ngClass]="{ 'is-invalid': isFinalsPhaseCourtsInvalid }" />
-            <div
-              *ngIf="isFinalsPhaseCourtsInvalid"
-              class="invalid-feedback"
-              translate="Portal.ConfigureTournament.Sections.FinalsPhase.InvalidNumberOfCourts"></div>
+            @if (isFinalsPhaseCourtsInvalid) {
+              <div class="invalid-feedback" translate="Portal.ConfigureTournament.Sections.FinalsPhase.InvalidNumberOfCourts"></div>
+            }
           </div>
           <div class="mt-2" translate="Portal.ConfigureTournament.Sections.FinalsPhase.PlayTimeLabel"></div>
           <tp-duration-picker [(duration)]="finalsPhasePlayTime" />
