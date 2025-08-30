@@ -12,9 +12,9 @@ import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/
 type Step = 'SelectRole' | 'SelectPrincipal';
 
 @Component({
-    templateUrl: './rbac-add-assignment.component.html',
-    styleUrl: './rbac-add-assignment.component.scss',
-    imports: [TranslateDirective, NgClass, ActionButtonComponent, FormsModule, NgbTooltip, SmallSpinnerComponent, TranslatePipe]
+  templateUrl: './rbac-add-assignment.component.html',
+  styleUrl: './rbac-add-assignment.component.scss',
+  imports: [TranslateDirective, NgClass, ActionButtonComponent, FormsModule, NgbTooltip, SmallSpinnerComponent, TranslatePipe]
 })
 export class RbacAddAssignmentComponent implements OnDestroy {
   protected readonly PrincipalKind = PrincipalKind;

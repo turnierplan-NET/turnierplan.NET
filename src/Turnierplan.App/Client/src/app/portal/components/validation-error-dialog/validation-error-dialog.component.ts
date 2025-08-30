@@ -4,8 +4,8 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-    templateUrl: './validation-error-dialog.component.html',
-    imports: [TranslateDirective, ActionButtonComponent]
+  templateUrl: './validation-error-dialog.component.html',
+  imports: [TranslateDirective, ActionButtonComponent]
 })
 export class ValidationErrorDialogComponent {
   protected _errors: { [key: string]: string[] } = {};

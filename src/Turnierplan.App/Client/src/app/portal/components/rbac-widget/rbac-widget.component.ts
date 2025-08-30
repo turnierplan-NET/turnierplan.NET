@@ -13,9 +13,9 @@ interface IRbacWidgetTarget {
 }
 
 @Component({
-    selector: 'tp-rbac-widget',
-    templateUrl: './rbac-widget.component.html',
-    imports: [ActionButtonComponent, TranslateDirective]
+  selector: 'tp-rbac-widget',
+  templateUrl: './rbac-widget.component.html',
+  imports: [ActionButtonComponent, TranslateDirective]
 })
 export class RbacWidgetComponent {
   @Input()

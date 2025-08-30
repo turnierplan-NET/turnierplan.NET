@@ -10,8 +10,8 @@ import { ActionButtonComponent } from '../action-button/action-button.component'
 import { NgClass } from '@angular/common';
 
 @Component({
-    templateUrl: './venue-select.component.html',
-    imports: [TranslateDirective, SmallSpinnerComponent, FormsModule, ActionButtonComponent, NgClass]
+  templateUrl: './venue-select.component.html',
+  imports: [TranslateDirective, SmallSpinnerComponent, FormsModule, ActionButtonComponent, NgClass]
 })
 export class VenueSelectComponent {
   public selected$ = new Subject<{ id: string; name: string } | undefined>();

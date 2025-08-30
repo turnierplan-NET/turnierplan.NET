@@ -20,8 +20,8 @@ enum PasswordChangeFailedReason {
 }
 
 @Component({
-    templateUrl: './change-password.component.html',
-    imports: [TranslateDirective, FormsModule, SmallSpinnerComponent, NgClass, TranslatePipe]
+  templateUrl: './change-password.component.html',
+  imports: [TranslateDirective, FormsModule, SmallSpinnerComponent, NgClass, TranslatePipe]
 })
 export class ChangePasswordComponent implements OnInit, OnDestroy {
   protected oldPassword: string = '';

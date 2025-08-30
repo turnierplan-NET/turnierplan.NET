@@ -13,9 +13,9 @@ type DocumentTypeEntry = {
 };
 
 @Component({
-    templateUrl: './document-select.component.html',
-    styleUrl: './document-select.component.scss',
-    imports: [LoadingStateDirective, TranslateDirective]
+  templateUrl: './document-select.component.html',
+  styleUrl: './document-select.component.scss',
+  imports: [LoadingStateDirective, TranslateDirective]
 })
 export class DocumentSelectComponent implements OnInit {
   public selected$ = new Subject<DocumentType>();

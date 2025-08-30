@@ -8,9 +8,9 @@ import { NgClass, AsyncPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'tp-rbac-principal',
-    templateUrl: './rbac-principal.component.html',
-    imports: [NgbTooltip, NgClass, AsyncPipe, TranslatePipe]
+  selector: 'tp-rbac-principal',
+  templateUrl: './rbac-principal.component.html',
+  imports: [NgbTooltip, NgClass, AsyncPipe, TranslatePipe]
 })
 export class RbacPrincipalComponent implements OnInit {
   protected readonly PrincipalKind = PrincipalKind;

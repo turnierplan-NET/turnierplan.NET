@@ -10,8 +10,8 @@ import { NgClass } from '@angular/common';
 import { AlertComponent } from '../alert/alert.component';
 
 @Component({
-    templateUrl: './document-config-match-plan.component.html',
-    imports: [FormsModule, ReactiveFormsModule, TranslateDirective, TooltipIconComponent, NgClass, AlertComponent, TranslatePipe]
+  templateUrl: './document-config-match-plan.component.html',
+  imports: [FormsModule, ReactiveFormsModule, TranslateDirective, TooltipIconComponent, NgClass, AlertComponent, TranslatePipe]
 })
 export class DocumentConfigMatchPlanComponent extends DocumentConfigComponent<MatchPlanDocumentConfiguration> implements OnInit, OnDestroy {
   public submit = new Subject<void>();

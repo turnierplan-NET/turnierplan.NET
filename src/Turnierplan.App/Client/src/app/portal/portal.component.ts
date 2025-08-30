@@ -14,9 +14,19 @@ import { FooterComponent } from '../shared/components/footer/footer.component';
 type UserInfoAction = 'EditUserInfo' | 'ChangePassword' | 'Logout';
 
 @Component({
-    templateUrl: './portal.component.html',
-    styleUrls: ['./portal.component.scss'],
-    imports: [RouterLink, TranslateDirective, NgbPopover, IsAdministratorDirective, NgTemplateOutlet, NgClass, RouterOutlet, FooterComponent, TranslatePipe]
+  templateUrl: './portal.component.html',
+  styleUrls: ['./portal.component.scss'],
+  imports: [
+    RouterLink,
+    TranslateDirective,
+    NgbPopover,
+    IsAdministratorDirective,
+    NgTemplateOutlet,
+    NgClass,
+    RouterOutlet,
+    FooterComponent,
+    TranslatePipe
+  ]
 })
 export class PortalComponent implements OnInit, OnDestroy {
   protected currentComponent?: Object;

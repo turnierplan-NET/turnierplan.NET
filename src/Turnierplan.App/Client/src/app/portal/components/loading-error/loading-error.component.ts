@@ -3,9 +3,9 @@ import { ErrorPageComponent } from '../error-page/error-page.component';
 import { TranslateDirective } from '@ngx-translate/core';
 
 @Component({
-    templateUrl: './loading-error.component.html',
-    styleUrls: ['./loading-error.component.scss'],
-    imports: [ErrorPageComponent, TranslateDirective]
+  templateUrl: './loading-error.component.html',
+  styleUrls: ['./loading-error.component.scss'],
+  imports: [ErrorPageComponent, TranslateDirective]
 })
 export class LoadingErrorComponent {
   @Input()

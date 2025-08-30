@@ -9,8 +9,8 @@ import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/
 import { NgClass } from '@angular/common';
 
 @Component({
-    templateUrl: './login.component.html',
-    imports: [TranslateDirective, FormsModule, SmallSpinnerComponent, NgClass]
+  templateUrl: './login.component.html',
+  imports: [TranslateDirective, FormsModule, SmallSpinnerComponent, NgClass]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   protected email: string = '';

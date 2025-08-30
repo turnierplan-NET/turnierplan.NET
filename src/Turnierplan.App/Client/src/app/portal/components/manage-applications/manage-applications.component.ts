@@ -25,10 +25,22 @@ import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 // TODO: Display linked teams in applications page incl. link to navigate to the corresponding tournament
 
 @Component({
-    selector: 'tp-manage-applications',
-    templateUrl: './manage-applications.component.html',
-    styleUrl: './manage-applications.component.scss',
-    imports: [LoadingIndicatorComponent, TranslateDirective, TooltipIconComponent, ActionButtonComponent, CopyToClipboardComponent, SmallSpinnerComponent, NgClass, NgbTooltip, NgbPagination, TranslatePipe, TranslateDatePipe]
+  selector: 'tp-manage-applications',
+  templateUrl: './manage-applications.component.html',
+  styleUrl: './manage-applications.component.scss',
+  imports: [
+    LoadingIndicatorComponent,
+    TranslateDirective,
+    TooltipIconComponent,
+    ActionButtonComponent,
+    CopyToClipboardComponent,
+    SmallSpinnerComponent,
+    NgClass,
+    NgbTooltip,
+    NgbPagination,
+    TranslatePipe,
+    TranslateDatePipe
+  ]
 })
 export class ManageApplicationsComponent implements OnDestroy {
   @Input()

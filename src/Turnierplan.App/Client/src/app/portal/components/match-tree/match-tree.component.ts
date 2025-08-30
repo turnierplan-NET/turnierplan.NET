@@ -35,10 +35,10 @@ type ConnectingLine = {
 };
 
 @Component({
-    selector: 'tp-match-tree',
-    templateUrl: './match-tree.component.html',
-    styleUrl: './match-tree.component.scss',
-    imports: [NgClass, NgTemplateOutlet, NgStyle, SmallSpinnerComponent, LiveIndicatorComponent, TranslateDirective, TranslateDatePipe]
+  selector: 'tp-match-tree',
+  templateUrl: './match-tree.component.html',
+  styleUrl: './match-tree.component.scss',
+  imports: [NgClass, NgTemplateOutlet, NgStyle, SmallSpinnerComponent, LiveIndicatorComponent, TranslateDirective, TranslateDatePipe]
 })
 export class MatchTreeComponent implements OnChanges, AfterViewInit {
   @Input()

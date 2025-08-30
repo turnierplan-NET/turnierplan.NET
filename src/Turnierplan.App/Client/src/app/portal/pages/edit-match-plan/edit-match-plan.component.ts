@@ -33,8 +33,23 @@ type ExtendedMatchEntry = SetTournamentMatchPlanEndpointRequestEntry & {
 };
 
 @Component({
-    templateUrl: './edit-match-plan.component.html',
-    imports: [LoadingStateDirective, PageFrameComponent, TranslateDirective, TournamentEditWarningComponent, DndDropzoneDirective, DndDraggableDirective, DndHandleDirective, ActionButtonComponent, FormsModule, DndPlaceholderRefDirective, NgClass, DatePipe, TranslatePipe, TranslateDatePipe]
+  templateUrl: './edit-match-plan.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    TranslateDirective,
+    TournamentEditWarningComponent,
+    DndDropzoneDirective,
+    DndDraggableDirective,
+    DndHandleDirective,
+    ActionButtonComponent,
+    FormsModule,
+    DndPlaceholderRefDirective,
+    NgClass,
+    DatePipe,
+    TranslatePipe,
+    TranslateDatePipe
+  ]
 })
 export class EditMatchPlanComponent implements OnInit, OnDestroy, DiscardChangesDetector {
   // Loading & Dirty state

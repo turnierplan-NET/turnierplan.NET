@@ -7,9 +7,9 @@ export interface RankingView {
 }
 
 @Component({
-    selector: 'tp-ranking',
-    templateUrl: './ranking.component.html',
-    imports: [TranslateDirective, TranslatePipe]
+  selector: 'tp-ranking',
+  templateUrl: './ranking.component.html',
+  imports: [TranslateDirective, TranslatePipe]
 })
 export class RankingComponent {
   @Input()

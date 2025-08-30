@@ -17,8 +17,17 @@ interface IRbacOffcanvasTarget {
 }
 
 @Component({
-    templateUrl: './rbac-offcanvas.component.html',
-    imports: [TranslateDirective, SmallSpinnerComponent, NgbTooltip, ActionButtonComponent, RbacPrincipalComponent, DeleteButtonComponent, TranslatePipe, TranslateDatePipe]
+  templateUrl: './rbac-offcanvas.component.html',
+  imports: [
+    TranslateDirective,
+    SmallSpinnerComponent,
+    NgbTooltip,
+    ActionButtonComponent,
+    RbacPrincipalComponent,
+    DeleteButtonComponent,
+    TranslatePipe,
+    TranslateDatePipe
+  ]
 })
 export class RbacOffcanvasComponent implements OnDestroy {
   protected target!: IRbacOffcanvasTarget;

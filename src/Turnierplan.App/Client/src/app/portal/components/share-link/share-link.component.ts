@@ -5,9 +5,9 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'tp-share-link',
-    templateUrl: './share-link.component.html',
-    imports: [CopyToClipboardComponent, NgbTooltip, TranslatePipe]
+  selector: 'tp-share-link',
+  templateUrl: './share-link.component.html',
+  imports: [CopyToClipboardComponent, NgbTooltip, TranslatePipe]
 })
 export class ShareLinkComponent {
   private _resourceUrl: string = '';

@@ -12,8 +12,17 @@ import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 
 @Component({
-    templateUrl: './create-user.component.html',
-    imports: [LoadingStateDirective, PageFrameComponent, FormsModule, ReactiveFormsModule, TranslateDirective, NgClass, ActionButtonComponent, TranslatePipe]
+  templateUrl: './create-user.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateDirective,
+    NgClass,
+    ActionButtonComponent,
+    TranslatePipe
+  ]
 })
 export class CreateUserComponent implements OnInit {
   protected loadingState: LoadingState = { isLoading: false };

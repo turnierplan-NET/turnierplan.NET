@@ -5,25 +5,23 @@
 @if (match) {
   <div class="modal-body p-0 d-flex flex-column">
     <div class="border-bottom tp-border-card py-3 d-flex flex-row justify-content-center gap-4">
-      <ng-container *ngTemplateOutlet="
-          matchInfoColumn;
-          context: { name: 'Portal.ViewTournament.EditMatchDialog.Index', value: match.index }
-        " />
+      <ng-container
+        *ngTemplateOutlet="matchInfoColumn; context: { name: 'Portal.ViewTournament.EditMatchDialog.Index', value: match.index }" />
       @if (match.kickoff) {
-        <ng-container *ngTemplateOutlet="
+        <ng-container
+          *ngTemplateOutlet="
             matchInfoColumn;
             context: { name: 'Portal.ViewTournament.EditMatchDialog.Kickoff', value: (match.kickoff | translateDate: 'shortTime') }
           " />
       }
-      <ng-container *ngTemplateOutlet="
+      <ng-container
+        *ngTemplateOutlet="
           matchInfoColumn;
           context: { name: 'Portal.ViewTournament.EditMatchDialog.Type', value: match.type.displayName }
         " />
       @if (match.group.length > 0) {
-        <ng-container *ngTemplateOutlet="
-            matchInfoColumn;
-            context: { name: 'Portal.ViewTournament.EditMatchDialog.Group', value: match.group }
-          " />
+        <ng-container
+          *ngTemplateOutlet="matchInfoColumn; context: { name: 'Portal.ViewTournament.EditMatchDialog.Group', value: match.group }" />
       }
     </div>
 

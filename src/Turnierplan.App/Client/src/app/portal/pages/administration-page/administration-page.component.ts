@@ -18,8 +18,18 @@ import { DeleteWidgetComponent } from '../../components/delete-widget/delete-wid
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 @Component({
-    templateUrl: './administration-page.component.html',
-    imports: [LoadingStateDirective, PageFrameComponent, ActionButtonComponent, RouterLink, BadgeComponent, TranslateDirective, DeleteWidgetComponent, TranslatePipe, TranslateDatePipe]
+  templateUrl: './administration-page.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    ActionButtonComponent,
+    RouterLink,
+    BadgeComponent,
+    TranslateDirective,
+    DeleteWidgetComponent,
+    TranslatePipe,
+    TranslateDatePipe
+  ]
 })
 export class AdministrationPageComponent implements OnInit {
   protected loadingState: LoadingState = { isLoading: true };

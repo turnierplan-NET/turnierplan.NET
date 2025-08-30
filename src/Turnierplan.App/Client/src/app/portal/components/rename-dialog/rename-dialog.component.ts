@@ -6,8 +6,8 @@ import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-    templateUrl: './rename-dialog.component.html',
-    imports: [TranslateDirective, FormsModule, NgClass, ActionButtonComponent]
+  templateUrl: './rename-dialog.component.html',
+  imports: [TranslateDirective, FormsModule, NgClass, ActionButtonComponent]
 })
 export class RenameDialogComponent {
   protected isInitialized = false;

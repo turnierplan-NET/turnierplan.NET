@@ -19,10 +19,21 @@ import { DeleteButtonComponent } from '../delete-button/delete-button.component'
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 @Component({
-    selector: 'tp-document-manager',
-    templateUrl: './document-manager.component.html',
-    styleUrls: ['document-manager.component.scss'],
-    imports: [TranslateDirective, NgClass, SmallSpinnerComponent, RenameButtonComponent, ActionButtonComponent, DeleteButtonComponent, PdfJsViewerModule, AsyncPipe, TranslatePipe, TranslateDatePipe]
+  selector: 'tp-document-manager',
+  templateUrl: './document-manager.component.html',
+  styleUrls: ['document-manager.component.scss'],
+  imports: [
+    TranslateDirective,
+    NgClass,
+    SmallSpinnerComponent,
+    RenameButtonComponent,
+    ActionButtonComponent,
+    DeleteButtonComponent,
+    PdfJsViewerModule,
+    AsyncPipe,
+    TranslatePipe,
+    TranslateDatePipe
+  ]
 })
 export class DocumentManagerComponent {
   @Input()

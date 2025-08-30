@@ -14,32 +14,32 @@ import { TitleService } from '../../services/title.service';
 import { LoadingStateDirective } from './loading-state.directive';
 
 @Component({
-    selector: 'tp-is-loading-true-test-component',
-    template: `<ng-container *tpLoadingState="{ isLoading: true }">
+  selector: 'tp-is-loading-true-test-component',
+  template: `<ng-container *tpLoadingState="{ isLoading: true }">
     <p>Hello World</p>
   </ng-container>`
 })
 class IsLoadingTrueTestComponent {}
 
 @Component({
-    selector: 'tp-is-loading-false-test-component',
-    template: `<ng-container *tpLoadingState="{ isLoading: false }">
+  selector: 'tp-is-loading-false-test-component',
+  template: `<ng-container *tpLoadingState="{ isLoading: false }">
     <p>Hello World</p>
   </ng-container>`
 })
 class IsLoadingFalseTestComponent {}
 
 @Component({
-    selector: 'tp-is-loading-false-with-404-error-test-component',
-    template: `<ng-container *tpLoadingState="{ isLoading: false, error: { status: 404 } }">
+  selector: 'tp-is-loading-false-with-404-error-test-component',
+  template: `<ng-container *tpLoadingState="{ isLoading: false, error: { status: 404 } }">
     <p>Hello World</p>
   </ng-container>`
 })
 class IsLoadingFalseWith404ErrorTestComponent {}
 
 @Component({
-    selector: 'tp-is-loading-false-with-500-error-test-component',
-    template: `<ng-container *tpLoadingState="{ isLoading: false, error: { status: 500 } }">
+  selector: 'tp-is-loading-false-with-500-error-test-component',
+  template: `<ng-container *tpLoadingState="{ isLoading: false, error: { status: 500 } }">
     <p>Hello World</p>
   </ng-container>`
 })
@@ -48,8 +48,11 @@ class IsLoadingFalseWith500ErrorTestComponent {}
 describe('LoadingStateDirective', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    providers: [TitleService],
-    imports: [TranslateModule.forRoot(), RouterModule.forRoot([]), LoadingStateDirective,
+      providers: [TitleService],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterModule.forRoot([]),
+        LoadingStateDirective,
         LoadingErrorComponent,
         IsLoadingTrueTestComponent,
         IsLoadingFalseTestComponent,
@@ -57,8 +60,9 @@ describe('LoadingStateDirective', () => {
         IsLoadingFalseWith500ErrorTestComponent,
         ErrorPageComponent,
         ActionButtonComponent,
-        IllustrationComponent]
-}).compileComponents();
+        IllustrationComponent
+      ]
+    }).compileComponents();
   });
 
   it('should display loading indicator', () => {

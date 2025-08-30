@@ -4,10 +4,10 @@ import { ActionButtonComponent } from '../action-button/action-button.component'
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'tp-error-page',
-    templateUrl: './error-page.component.html',
-    styleUrls: ['./error-page.component.scss'],
-    imports: [IllustrationComponent, ActionButtonComponent, RouterLink]
+  selector: 'tp-error-page',
+  templateUrl: './error-page.component.html',
+  styleUrls: ['./error-page.component.scss'],
+  imports: [IllustrationComponent, ActionButtonComponent, RouterLink]
 })
 export class ErrorPageComponent {
   @Input()

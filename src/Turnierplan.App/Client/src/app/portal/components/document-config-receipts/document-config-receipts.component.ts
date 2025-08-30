@@ -10,8 +10,8 @@ import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-    templateUrl: './document-config-receipts.component.html',
-    imports: [FormsModule, ReactiveFormsModule, TranslateDirective, NgClass, TooltipIconComponent, ActionButtonComponent, TranslatePipe]
+  templateUrl: './document-config-receipts.component.html',
+  imports: [FormsModule, ReactiveFormsModule, TranslateDirective, NgClass, TooltipIconComponent, ActionButtonComponent, TranslatePipe]
 })
 export class DocumentConfigReceiptsComponent extends DocumentConfigComponent<ReceiptsDocumentConfiguration> implements OnDestroy {
   private static readonly maxNumberOfAmountEntries = 4;

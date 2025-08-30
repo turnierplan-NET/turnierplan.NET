@@ -4,9 +4,9 @@ import { NgClass } from '@angular/common';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'tp-delete-button',
-    templateUrl: './delete-button.component.html',
-    imports: [NgbPopover, NgClass, TranslateDirective, TranslatePipe]
+  selector: 'tp-delete-button',
+  templateUrl: './delete-button.component.html',
+  imports: [NgbPopover, NgClass, TranslateDirective, TranslatePipe]
 })
 export class DeleteButtonComponent {
   @Input()

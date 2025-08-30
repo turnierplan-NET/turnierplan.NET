@@ -8,9 +8,9 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'tp-manage-applications-filter',
-    templateUrl: './manage-applications-filter.component.html',
-    imports: [FormsModule, MultiSelectFilterComponent, ActionButtonComponent, NgbTooltip, TranslatePipe]
+  selector: 'tp-manage-applications-filter',
+  templateUrl: './manage-applications-filter.component.html',
+  imports: [FormsModule, MultiSelectFilterComponent, ActionButtonComponent, NgbTooltip, TranslatePipe]
 })
 export class ManageApplicationsFilterComponent {
   protected searchTerm: string = '';

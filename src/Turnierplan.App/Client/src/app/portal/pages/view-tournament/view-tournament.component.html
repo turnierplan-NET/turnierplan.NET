@@ -78,7 +78,8 @@
                 </div>
               </div>
               <div class="card-body p-0">
-                <tp-match-plan [allowReporting]="(authorizationService.isActionAllowed$(tournament.id, Actions.TournamentConduct) | async) ?? false"
+                <tp-match-plan
+                  [allowReporting]="(authorizationService.isActionAllowed$(tournament.id, Actions.TournamentConduct) | async) ?? false"
                   [showAccumulatedScore]="showAccumulatedScore"
                   [matches]="processedMatches"
                   [groups]="processedGroups"

@@ -35,6 +35,17 @@ const routes: Routes = [
 export const identityPages = routes[0].children!.map((x) => x.path);
 
 @NgModule({
-    imports: [CommonModule, RouterModule.forChild(routes), TranslateModule.forChild(), SharedModule, FormsModule, ReactiveFormsModule, IdentityComponent, ChangePasswordComponent, ChangeUserInfoComponent, LoginComponent]
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    TranslateModule.forChild(),
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule,
+    IdentityComponent,
+    ChangePasswordComponent,
+    ChangeUserInfoComponent,
+    LoginComponent
+  ]
 })
 export class IdentityModule {}

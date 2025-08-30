@@ -17,8 +17,19 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
 type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 
 @Component({
-    templateUrl: './create-tournament.component.html',
-    imports: [LoadingStateDirective, PageFrameComponent, TranslateDirective, FormsModule, ReactiveFormsModule, NgClass, TooltipIconComponent, VisibilitySelectorComponent, ActionButtonComponent, TranslatePipe]
+  templateUrl: './create-tournament.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    TranslateDirective,
+    FormsModule,
+    ReactiveFormsModule,
+    NgClass,
+    TooltipIconComponent,
+    VisibilitySelectorComponent,
+    ActionButtonComponent,
+    TranslatePipe
+  ]
 })
 export class CreateTournamentComponent implements OnDestroy {
   protected loadingState: LoadingState = { isLoading: false };

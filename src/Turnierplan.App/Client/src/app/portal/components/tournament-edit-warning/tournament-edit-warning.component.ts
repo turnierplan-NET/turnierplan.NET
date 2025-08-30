@@ -4,9 +4,9 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-    selector: 'tp-tournament-edit-warning',
-    templateUrl: './tournament-edit-warning.component.html',
-    imports: [AlertComponent, TranslateDirective, FormsModule]
+  selector: 'tp-tournament-edit-warning',
+  templateUrl: './tournament-edit-warning.component.html',
+  imports: [AlertComponent, TranslateDirective, FormsModule]
 })
 export class TournamentEditWarningComponent {
   @Input()

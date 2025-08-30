@@ -7,9 +7,9 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-    selector: 'tp-image-widget',
-    templateUrl: './image-widget.component.html',
-    imports: [TranslateDirective, ActionButtonComponent]
+  selector: 'tp-image-widget',
+  templateUrl: './image-widget.component.html',
+  imports: [TranslateDirective, ActionButtonComponent]
 })
 export class ImageWidgetComponent {
   @Input()

@@ -60,8 +60,37 @@ import { MatchTreeComponent } from '../../components/match-tree/match-tree.compo
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 @Component({
-    templateUrl: './view-tournament.component.html',
-    imports: [LoadingStateDirective, PageFrameComponent, ActionButtonComponent, IsActionAllowedDirective, SmallSpinnerComponent, RenameButtonComponent, NgClass, BadgeComponent, FormsModule, TranslateDirective, MatchPlanComponent, RouterLink, GroupsComponent, TeamListComponent, RankingComponent, LoadingIndicatorComponent, DocumentManagerComponent, VisibilitySelectorComponent, AlertComponent, ShareWidgetComponent, PresentationConfigWidgetComponent, ImageWidgetComponent, RbacWidgetComponent, DeleteWidgetComponent, MatchTreeComponent, AsyncPipe, TranslatePipe, TranslateDatePipe]
+  templateUrl: './view-tournament.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    ActionButtonComponent,
+    IsActionAllowedDirective,
+    SmallSpinnerComponent,
+    RenameButtonComponent,
+    NgClass,
+    BadgeComponent,
+    FormsModule,
+    TranslateDirective,
+    MatchPlanComponent,
+    RouterLink,
+    GroupsComponent,
+    TeamListComponent,
+    RankingComponent,
+    LoadingIndicatorComponent,
+    DocumentManagerComponent,
+    VisibilitySelectorComponent,
+    AlertComponent,
+    ShareWidgetComponent,
+    PresentationConfigWidgetComponent,
+    ImageWidgetComponent,
+    RbacWidgetComponent,
+    DeleteWidgetComponent,
+    MatchTreeComponent,
+    AsyncPipe,
+    TranslatePipe,
+    TranslateDatePipe
+  ]
 })
 export class ViewTournamentComponent implements OnInit, OnDestroy {
   private static readonly documentsPageId = 4;

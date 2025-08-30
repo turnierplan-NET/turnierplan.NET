@@ -12,8 +12,17 @@ import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 
 @Component({
-    templateUrl: './create-planning-realm.component.html',
-    imports: [LoadingStateDirective, PageFrameComponent, TranslateDirective, FormsModule, ReactiveFormsModule, NgClass, ActionButtonComponent, TranslatePipe]
+  templateUrl: './create-planning-realm.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    TranslateDirective,
+    FormsModule,
+    ReactiveFormsModule,
+    NgClass,
+    ActionButtonComponent,
+    TranslatePipe
+  ]
 })
 export class CreatePlanningRealmComponent implements OnDestroy {
   protected loadingState: LoadingState = { isLoading: false };

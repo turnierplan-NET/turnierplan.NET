@@ -15,8 +15,20 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
 import { NgClass } from '@angular/common';
 
 @Component({
-    templateUrl: './create-api-key.component.html',
-    imports: [PageFrameComponent, AlertComponent, TranslateDirective, CopyToClipboardComponent, ActionButtonComponent, RouterLink, LoadingStateDirective, FormsModule, ReactiveFormsModule, NgClass, TranslatePipe]
+  templateUrl: './create-api-key.component.html',
+  imports: [
+    PageFrameComponent,
+    AlertComponent,
+    TranslateDirective,
+    CopyToClipboardComponent,
+    ActionButtonComponent,
+    RouterLink,
+    LoadingStateDirective,
+    FormsModule,
+    ReactiveFormsModule,
+    NgClass,
+    TranslatePipe
+  ]
 })
 export class CreateApiKeyComponent {
   protected loadingState: LoadingState = { isLoading: false };

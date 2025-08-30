@@ -5,9 +5,9 @@ import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/
 import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-    selector: 'tp-unsaved-changes-alert',
-    templateUrl: './unsaved-changes-alert.component.html',
-    imports: [AlertComponent, TranslateDirective, SmallSpinnerComponent, ActionButtonComponent]
+  selector: 'tp-unsaved-changes-alert',
+  templateUrl: './unsaved-changes-alert.component.html',
+  imports: [AlertComponent, TranslateDirective, SmallSpinnerComponent, ActionButtonComponent]
 })
 export class UnsavedChangesAlertComponent implements OnInit, OnDestroy {
   @Input()

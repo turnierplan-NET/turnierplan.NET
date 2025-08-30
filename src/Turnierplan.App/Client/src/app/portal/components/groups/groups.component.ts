@@ -30,9 +30,9 @@ export interface GroupTeamView {
 }
 
 @Component({
-    selector: 'tp-groups',
-    templateUrl: './groups.component.html',
-    imports: [NgClass, SmallSpinnerComponent, IsActionAllowedDirective, RenameButtonComponent, TranslateDirective]
+  selector: 'tp-groups',
+  templateUrl: './groups.component.html',
+  imports: [NgClass, SmallSpinnerComponent, IsActionAllowedDirective, RenameButtonComponent, TranslateDirective]
 })
 export class GroupsComponent {
   protected readonly Actions = Actions;

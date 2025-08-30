@@ -12,8 +12,8 @@ import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/
 import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-    templateUrl: './computation-configuration.component.html',
-    imports: [TranslateDirective, FormsModule, NgClass, NgbTooltip, SmallSpinnerComponent, ActionButtonComponent, TranslatePipe]
+  templateUrl: './computation-configuration.component.html',
+  imports: [TranslateDirective, FormsModule, NgClass, NgbTooltip, SmallSpinnerComponent, ActionButtonComponent, TranslatePipe]
 })
 export class ComputationConfigurationComponent {
   public save$ = new Subject<ComputationConfigurationDto>();

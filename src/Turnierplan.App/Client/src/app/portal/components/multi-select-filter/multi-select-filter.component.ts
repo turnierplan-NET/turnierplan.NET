@@ -10,9 +10,9 @@ export type MultiSelectFilterOption = {
 };
 
 @Component({
-    selector: 'tp-multi-select-filter',
-    templateUrl: './multi-select-filter.component.html',
-    imports: [NgbDropdown, NgbDropdownToggle, NgClass, TranslateDirective, NgbDropdownMenu, FormsModule, NgbDropdownItem]
+  selector: 'tp-multi-select-filter',
+  templateUrl: './multi-select-filter.component.html',
+  imports: [NgbDropdown, NgbDropdownToggle, NgClass, TranslateDirective, NgbDropdownMenu, FormsModule, NgbDropdownItem]
 })
 export class MultiSelectFilterComponent {
   private _selected: unknown[] = [];

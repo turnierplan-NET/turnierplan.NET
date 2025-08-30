@@ -11,8 +11,18 @@ import { NgTemplateOutlet, NgStyle, DecimalPipe, PercentPipe } from '@angular/co
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 
 @Component({
-    templateUrl: './folder-statistics.component.html',
-    imports: [LoadingStateDirective, PageFrameComponent, TranslateDirective, NgTemplateOutlet, NgStyle, TooltipIconComponent, DecimalPipe, PercentPipe, TranslatePipe]
+  templateUrl: './folder-statistics.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    TranslateDirective,
+    NgTemplateOutlet,
+    NgStyle,
+    TooltipIconComponent,
+    DecimalPipe,
+    PercentPipe,
+    TranslatePipe
+  ]
 })
 export class FolderStatisticsComponent implements OnInit, OnDestroy {
   // TODO | protected readonly barChartOptions: ChartConfiguration<'bar'>['options'] = {};

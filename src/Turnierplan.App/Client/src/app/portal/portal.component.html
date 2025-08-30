@@ -21,10 +21,8 @@
               <span class="text-decoration-underline" [translate]="'Portal.UserInfoPopover.Administration'"></span>
             </div>
           </ng-container>
-          <ng-container [ngTemplateOutlet]="userInfoAction"
-            [ngTemplateOutletContext]="{ isFirst: true, action: 'EditUserInfo' }" />
-          <ng-container [ngTemplateOutlet]="userInfoAction"
-            [ngTemplateOutletContext]="{ isFirst: false, action: 'ChangePassword' }" />
+          <ng-container [ngTemplateOutlet]="userInfoAction" [ngTemplateOutletContext]="{ isFirst: true, action: 'EditUserInfo' }" />
+          <ng-container [ngTemplateOutlet]="userInfoAction" [ngTemplateOutletContext]="{ isFirst: false, action: 'ChangePassword' }" />
           <ng-container [ngTemplateOutlet]="userInfoAction" [ngTemplateOutletContext]="{ isFirst: false, action: 'Logout' }" />
         </ng-template>
         <ng-template #userInfoAction let-action="action">

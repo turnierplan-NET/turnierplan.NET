@@ -39,8 +39,31 @@ import { DeleteWidgetComponent } from '../../components/delete-widget/delete-wid
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 @Component({
-    templateUrl: './view-organization.component.html',
-    imports: [LoadingStateDirective, PageFrameComponent, IsActionAllowedDirective, ActionButtonComponent, RouterLink, SmallSpinnerComponent, RenameButtonComponent, BadgeComponent, TranslateDirective, TournamentExplorerComponent, LoadingIndicatorComponent, VenueTileComponent, NgClass, TooltipIconComponent, FormsModule, DeleteButtonComponent, ApiKeyUsageComponent, RbacWidgetComponent, DeleteWidgetComponent, AsyncPipe, TranslatePipe, TranslateDatePipe]
+  templateUrl: './view-organization.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    IsActionAllowedDirective,
+    ActionButtonComponent,
+    RouterLink,
+    SmallSpinnerComponent,
+    RenameButtonComponent,
+    BadgeComponent,
+    TranslateDirective,
+    TournamentExplorerComponent,
+    LoadingIndicatorComponent,
+    VenueTileComponent,
+    NgClass,
+    TooltipIconComponent,
+    FormsModule,
+    DeleteButtonComponent,
+    ApiKeyUsageComponent,
+    RbacWidgetComponent,
+    DeleteWidgetComponent,
+    AsyncPipe,
+    TranslatePipe,
+    TranslateDatePipe
+  ]
 })
 export class ViewOrganizationComponent implements OnInit, OnDestroy {
   private static readonly venuesPageId = 1;

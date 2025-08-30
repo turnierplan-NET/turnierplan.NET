@@ -5,9 +5,9 @@ import { RenameDialogComponent } from '../rename-dialog/rename-dialog.component'
 import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-    selector: 'tp-rename-button',
-    templateUrl: './rename-button.component.html',
-    imports: [ActionButtonComponent]
+  selector: 'tp-rename-button',
+  templateUrl: './rename-button.component.html',
+  imports: [ActionButtonComponent]
 })
 export class RenameButtonComponent {
   @Input()

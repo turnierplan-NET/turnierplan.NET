@@ -5,9 +5,9 @@ import { NgClass } from '@angular/common';
 import { TranslateDirective } from '@ngx-translate/core';
 
 @Component({
-    selector: 'tp-visibility-selector',
-    templateUrl: './visibility-selector.component.html',
-    imports: [NgClass, TranslateDirective]
+  selector: 'tp-visibility-selector',
+  templateUrl: './visibility-selector.component.html',
+  imports: [NgClass, TranslateDirective]
 })
 export class VisibilitySelectorComponent {
   @Input()

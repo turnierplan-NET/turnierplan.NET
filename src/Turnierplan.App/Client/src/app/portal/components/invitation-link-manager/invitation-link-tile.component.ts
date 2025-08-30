@@ -18,9 +18,30 @@ import { AlertComponent } from '../alert/alert.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 @Component({
-    selector: 'tp-invitation-link-tile',
-    templateUrl: './invitation-link-tile.component.html',
-    imports: [NgStyle, TranslateDirective, TooltipIconComponent, ShareLinkComponent, NgbTooltip, NgClass, ActionButtonComponent, ImageWidgetComponent, IsActionAllowedDirective, DeleteButtonComponent, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem, FormsModule, ReactiveFormsModule, AlertComponent, AsyncPipe, TranslatePipe, TranslateDatePipe]
+  selector: 'tp-invitation-link-tile',
+  templateUrl: './invitation-link-tile.component.html',
+  imports: [
+    NgStyle,
+    TranslateDirective,
+    TooltipIconComponent,
+    ShareLinkComponent,
+    NgbTooltip,
+    NgClass,
+    ActionButtonComponent,
+    ImageWidgetComponent,
+    IsActionAllowedDirective,
+    DeleteButtonComponent,
+    NgbDropdown,
+    NgbDropdownToggle,
+    NgbDropdownMenu,
+    NgbDropdownItem,
+    FormsModule,
+    ReactiveFormsModule,
+    AlertComponent,
+    AsyncPipe,
+    TranslatePipe,
+    TranslateDatePipe
+  ]
 })
 export class InvitationLinkTileComponent {
   private _planningRealm!: PlanningRealmDto;

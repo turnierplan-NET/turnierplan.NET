@@ -63,9 +63,28 @@ interface TemporaryAdditionalPlayoff {
 // TODO: UI for inserting teams from planning realm when configuring tournament
 
 @Component({
-    templateUrl: './configure-tournament.component.html',
-    styleUrls: ['./configure-tournament.component.scss'],
-    imports: [LoadingStateDirective, PageFrameComponent, TranslateDirective, TournamentEditWarningComponent, NgTemplateOutlet, NgClass, ActionButtonComponent, FormsModule, AlertComponent, DeleteButtonComponent, DndDropzoneDirective, DndPlaceholderRefDirective, DndDraggableDirective, DurationPickerComponent, TooltipIconComponent, DatePipe, TranslatePipe, AbstractTeamSelectorPipe]
+  templateUrl: './configure-tournament.component.html',
+  styleUrls: ['./configure-tournament.component.scss'],
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    TranslateDirective,
+    TournamentEditWarningComponent,
+    NgTemplateOutlet,
+    NgClass,
+    ActionButtonComponent,
+    FormsModule,
+    AlertComponent,
+    DeleteButtonComponent,
+    DndDropzoneDirective,
+    DndPlaceholderRefDirective,
+    DndDraggableDirective,
+    DurationPickerComponent,
+    TooltipIconComponent,
+    DatePipe,
+    TranslatePipe,
+    AbstractTeamSelectorPipe
+  ]
 })
 export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardChangesDetector {
   private static readonly allowedAlphabeticalIds = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');

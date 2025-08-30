@@ -38,8 +38,25 @@ import { ManageApplicationsComponent } from '../../components/manage-application
 export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
 
 @Component({
-    templateUrl: './view-planning-realm.component.html',
-    imports: [LoadingStateDirective, PageFrameComponent, IsActionAllowedDirective, ActionButtonComponent, TooltipIconComponent, RenameButtonComponent, UnsavedChangesAlertComponent, BadgeComponent, TournamentClassManagerComponent, TranslateDirective, InvitationLinkTileComponent, AlertComponent, ManageApplicationsFilterComponent, RbacWidgetComponent, DeleteWidgetComponent, ManageApplicationsComponent]
+  templateUrl: './view-planning-realm.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    IsActionAllowedDirective,
+    ActionButtonComponent,
+    TooltipIconComponent,
+    RenameButtonComponent,
+    UnsavedChangesAlertComponent,
+    BadgeComponent,
+    TournamentClassManagerComponent,
+    TranslateDirective,
+    InvitationLinkTileComponent,
+    AlertComponent,
+    ManageApplicationsFilterComponent,
+    RbacWidgetComponent,
+    DeleteWidgetComponent,
+    ManageApplicationsComponent
+  ]
 })
 export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardChangesDetector {
   private static readonly DefaultInvitationLinkColorCodes: string[] = [

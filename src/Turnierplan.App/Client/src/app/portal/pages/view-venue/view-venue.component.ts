@@ -23,8 +23,20 @@ import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.co
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 
 @Component({
-    templateUrl: './view-venue.component.html',
-    imports: [LoadingStateDirective, PageFrameComponent, UnsavedChangesAlertComponent, AlertComponent, TranslateDirective, IsActionAllowedDirective, RenameButtonComponent, ActionButtonComponent, TooltipIconComponent, RbacWidgetComponent, DeleteWidgetComponent]
+  templateUrl: './view-venue.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    UnsavedChangesAlertComponent,
+    AlertComponent,
+    TranslateDirective,
+    IsActionAllowedDirective,
+    RenameButtonComponent,
+    ActionButtonComponent,
+    TooltipIconComponent,
+    RbacWidgetComponent,
+    DeleteWidgetComponent
+  ]
 })
 export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDetector {
   protected readonly Actions = Actions;

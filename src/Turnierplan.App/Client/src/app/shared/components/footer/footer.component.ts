@@ -6,9 +6,9 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'tp-footer',
-    templateUrl: './footer.component.html',
-    imports: [NgTemplateOutlet, TranslateDirective, RouterLink, NgClass]
+  selector: 'tp-footer',
+  templateUrl: './footer.component.html',
+  imports: [NgTemplateOutlet, TranslateDirective, RouterLink, NgClass]
 })
 export class FooterComponent {
   @Input()

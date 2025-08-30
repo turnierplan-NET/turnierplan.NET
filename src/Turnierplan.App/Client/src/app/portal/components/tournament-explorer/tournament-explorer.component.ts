@@ -14,9 +14,19 @@ import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { TranslateDirective } from '@ngx-translate/core';
 
 @Component({
-    selector: 'tp-tournament-explorer',
-    templateUrl: './tournament-explorer.component.html',
-    imports: [FolderTreeComponent, SmallSpinnerComponent, IsActionAllowedDirective, RenameButtonComponent, RbacWidgetComponent, ActionButtonComponent, RouterLink, TooltipIconComponent, TranslateDirective]
+  selector: 'tp-tournament-explorer',
+  templateUrl: './tournament-explorer.component.html',
+  imports: [
+    FolderTreeComponent,
+    SmallSpinnerComponent,
+    IsActionAllowedDirective,
+    RenameButtonComponent,
+    RbacWidgetComponent,
+    ActionButtonComponent,
+    RouterLink,
+    TooltipIconComponent,
+    TranslateDirective
+  ]
 })
 export class TournamentExplorerComponent implements OnChanges {
   @Input()

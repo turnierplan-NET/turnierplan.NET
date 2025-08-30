@@ -13,8 +13,17 @@ import { ActionButtonComponent } from '../action-button/action-button.component'
 type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 
 @Component({
-    templateUrl: './move-tournament-to-folder.component.html',
-    imports: [TranslateDirective, FormsModule, TooltipIconComponent, SmallSpinnerComponent, ReactiveFormsModule, NgClass, ActionButtonComponent, TranslatePipe]
+  templateUrl: './move-tournament-to-folder.component.html',
+  imports: [
+    TranslateDirective,
+    FormsModule,
+    TooltipIconComponent,
+    SmallSpinnerComponent,
+    ReactiveFormsModule,
+    NgClass,
+    ActionButtonComponent,
+    TranslatePipe
+  ]
 })
 export class MoveTournamentToFolderComponent {
   public save$ = new Subject<SetTournamentFolderEndpointRequest>();

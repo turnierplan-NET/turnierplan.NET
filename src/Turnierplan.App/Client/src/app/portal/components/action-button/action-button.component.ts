@@ -3,9 +3,9 @@ import { NgClass } from '@angular/common';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-    selector: 'tp-action-button',
-    templateUrl: './action-button.component.html',
-    imports: [NgClass, TranslateDirective, TranslatePipe]
+  selector: 'tp-action-button',
+  templateUrl: './action-button.component.html',
+  imports: [NgClass, TranslateDirective, TranslatePipe]
 })
 export class ActionButtonComponent {
   @Input()

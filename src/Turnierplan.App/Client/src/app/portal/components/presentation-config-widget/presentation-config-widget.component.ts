@@ -13,9 +13,9 @@ import { UnsavedChangesAlertComponent } from '../unsaved-changes-alert/unsaved-c
 import { AlertComponent } from '../alert/alert.component';
 
 @Component({
-    selector: 'tp-presentation-config-widget',
-    templateUrl: './presentation-config-widget.component.html',
-    imports: [TranslateDirective, ActionButtonComponent, NgClass, FormsModule, UnsavedChangesAlertComponent, AlertComponent, TranslatePipe]
+  selector: 'tp-presentation-config-widget',
+  templateUrl: './presentation-config-widget.component.html',
+  imports: [TranslateDirective, ActionButtonComponent, NgClass, FormsModule, UnsavedChangesAlertComponent, AlertComponent, TranslatePipe]
 })
 export class PresentationConfigWidgetComponent {
   @Input()

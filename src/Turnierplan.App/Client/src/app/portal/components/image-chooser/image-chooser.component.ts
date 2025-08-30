@@ -20,9 +20,19 @@ export interface ImageChooserResult {
 }
 
 @Component({
-    templateUrl: './image-chooser.component.html',
-    styleUrls: ['./image-chooser.component.scss'],
-    imports: [TranslateDirective, LoadingIndicatorComponent, IsActionAllowedDirective, DeleteButtonComponent, SmallSpinnerComponent, ActionButtonComponent, AlertComponent, NgClass, TranslateDatePipe]
+  templateUrl: './image-chooser.component.html',
+  styleUrls: ['./image-chooser.component.scss'],
+  imports: [
+    TranslateDirective,
+    LoadingIndicatorComponent,
+    IsActionAllowedDirective,
+    DeleteButtonComponent,
+    SmallSpinnerComponent,
+    ActionButtonComponent,
+    AlertComponent,
+    NgClass,
+    TranslateDatePipe
+  ]
 })
 export class ImageChooserComponent {
   protected readonly Actions = Actions;

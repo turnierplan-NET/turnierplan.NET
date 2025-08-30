@@ -23,9 +23,20 @@ export interface TeamView {
 }
 
 @Component({
-    selector: 'tp-team-list',
-    templateUrl: './team-list.component.html',
-    imports: [TranslateDirective, TooltipIconComponent, RenameButtonComponent, SmallSpinnerComponent, NgClass, NgbPopover, ActionButtonComponent, AsyncPipe, TranslatePipe, TranslateDatePipe]
+  selector: 'tp-team-list',
+  templateUrl: './team-list.component.html',
+  imports: [
+    TranslateDirective,
+    TooltipIconComponent,
+    RenameButtonComponent,
+    SmallSpinnerComponent,
+    NgClass,
+    NgbPopover,
+    ActionButtonComponent,
+    AsyncPipe,
+    TranslatePipe,
+    TranslateDatePipe
+  ]
 })
 export class TeamListComponent {
   protected readonly Actions = Actions;

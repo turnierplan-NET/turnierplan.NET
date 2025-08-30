@@ -14,9 +14,17 @@ import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-    selector: 'tp-tournament-classes-manager',
-    templateUrl: './tournament-class-manager.component.html',
-    imports: [TranslateDirective, IsActionAllowedDirective, ActionButtonComponent, RenameButtonComponent, DeleteButtonComponent, TooltipIconComponent, AsyncPipe]
+  selector: 'tp-tournament-classes-manager',
+  templateUrl: './tournament-class-manager.component.html',
+  imports: [
+    TranslateDirective,
+    IsActionAllowedDirective,
+    ActionButtonComponent,
+    RenameButtonComponent,
+    DeleteButtonComponent,
+    TooltipIconComponent,
+    AsyncPipe
+  ]
 })
 export class TournamentClassManagerComponent {
   @Input()

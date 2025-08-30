@@ -15,10 +15,10 @@ export interface PageFrameNavigationTab {
 }
 
 @Component({
-    selector: 'tp-page-frame',
-    templateUrl: './page-frame.component.html',
-    styleUrls: ['./page-frame.component.scss'],
-    imports: [NgClass, NgTemplateOutlet, RouterLink, AsyncPipe, TranslatePipe]
+  selector: 'tp-page-frame',
+  templateUrl: './page-frame.component.html',
+  styleUrls: ['./page-frame.component.scss'],
+  imports: [NgClass, NgTemplateOutlet, RouterLink, AsyncPipe, TranslatePipe]
 })
 export class PageFrameComponent implements OnInit, OnChanges {
   @Input()

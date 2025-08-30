@@ -10,9 +10,9 @@ import { AlertComponent } from '../alert/alert.component';
 import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
 
 @Component({
-    selector: 'tp-api-key-usage',
-    templateUrl: './api-key-usage.component.html',
-    imports: [TranslateDirective, FormsModule, ActionButtonComponent, AlertComponent, SmallSpinnerComponent]
+  selector: 'tp-api-key-usage',
+  templateUrl: './api-key-usage.component.html',
+  imports: [TranslateDirective, FormsModule, ActionButtonComponent, AlertComponent, SmallSpinnerComponent]
 })
 export class ApiKeyUsageComponent implements OnDestroy {
   @Output()

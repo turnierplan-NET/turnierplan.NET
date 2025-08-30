@@ -5,9 +5,9 @@ import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-    selector: 'tp-delete-widget',
-    templateUrl: './delete-widget.component.html',
-    imports: [TranslateDirective, NgClass, FormsModule, ActionButtonComponent, TranslatePipe]
+  selector: 'tp-delete-widget',
+  templateUrl: './delete-widget.component.html',
+  imports: [TranslateDirective, NgClass, FormsModule, ActionButtonComponent, TranslatePipe]
 })
 export class DeleteWidgetComponent {
   @Input()

@@ -14,9 +14,9 @@ export type FolderTreeEntry = {
 };
 
 @Component({
-    selector: 'tp-folder-tree',
-    templateUrl: './folder-tree.component.html',
-    imports: [NgClass, NgStyle]
+  selector: 'tp-folder-tree',
+  templateUrl: './folder-tree.component.html',
+  imports: [NgClass, NgStyle]
 })
 export class FolderTreeComponent {
   @Input()

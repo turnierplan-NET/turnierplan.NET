@@ -14,8 +14,19 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { BadgeComponent } from '../../components/badge/badge.component';
 
 @Component({
-    templateUrl: './landing-page.component.html',
-    imports: [LoadingStateDirective, PageFrameComponent, IsAdministratorDirective, ActionButtonComponent, RouterLink, AlertComponent, IllustrationComponent, TranslateDirective, BadgeComponent, TranslatePipe]
+  templateUrl: './landing-page.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    IsAdministratorDirective,
+    ActionButtonComponent,
+    RouterLink,
+    AlertComponent,
+    IllustrationComponent,
+    TranslateDirective,
+    BadgeComponent,
+    TranslatePipe
+  ]
 })
 export class LandingPageComponent implements OnInit {
   protected loadingState: LoadingState = { isLoading: true };

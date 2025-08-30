@@ -14,9 +14,17 @@ import { LiveIndicatorComponent } from '../live-indicator/live-indicator.compone
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 @Component({
-    templateUrl: './edit-match.component.html',
-    styleUrls: ['./edit-match.component.scss'],
-    imports: [TranslateDirective, NgTemplateOutlet, FormsModule, AlertComponent, ActionButtonComponent, LiveIndicatorComponent, TranslateDatePipe]
+  templateUrl: './edit-match.component.html',
+  styleUrls: ['./edit-match.component.scss'],
+  imports: [
+    TranslateDirective,
+    NgTemplateOutlet,
+    FormsModule,
+    AlertComponent,
+    ActionButtonComponent,
+    LiveIndicatorComponent,
+    TranslateDatePipe
+  ]
 })
 export class EditMatchComponent implements OnDestroy, AfterViewInit {
   @ViewChild('inputScoreA')

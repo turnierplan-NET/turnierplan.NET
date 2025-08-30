@@ -23,8 +23,8 @@ const atLeastOneTeamValidator = () => {
 };
 
 @Component({
-    templateUrl: './new-application-dialog.component.html',
-    imports: [TranslateDirective, FormsModule, ReactiveFormsModule, NgClass, AlertComponent, ActionButtonComponent]
+  templateUrl: './new-application-dialog.component.html',
+  imports: [TranslateDirective, FormsModule, ReactiveFormsModule, NgClass, AlertComponent, ActionButtonComponent]
 })
 export class NewApplicationDialogComponent {
   protected readonly form = new FormGroup({

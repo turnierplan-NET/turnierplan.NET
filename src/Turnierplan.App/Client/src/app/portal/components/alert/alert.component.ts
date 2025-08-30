@@ -5,9 +5,9 @@ import { TranslateDirective } from '@ngx-translate/core';
 export type AlertType = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
 
 @Component({
-    selector: 'tp-alert',
-    templateUrl: './alert.component.html',
-    imports: [NgClass, TranslateDirective]
+  selector: 'tp-alert',
+  templateUrl: './alert.component.html',
+  imports: [NgClass, TranslateDirective]
 })
 export class AlertComponent {
   @Input()

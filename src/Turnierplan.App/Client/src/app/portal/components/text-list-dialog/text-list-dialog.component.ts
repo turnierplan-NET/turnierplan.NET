@@ -6,8 +6,8 @@ import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-    templateUrl: './text-list-dialog.component.html',
-    imports: [TranslateDirective, FormsModule, ReactiveFormsModule, NgClass, ActionButtonComponent]
+  templateUrl: './text-list-dialog.component.html',
+  imports: [TranslateDirective, FormsModule, ReactiveFormsModule, NgClass, ActionButtonComponent]
 })
 export class TextListDialogComponent {
   protected isInitialized = false;

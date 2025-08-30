@@ -26,8 +26,8 @@ export abstract class DocumentConfigComponent<T> {
 export const CURRENT_CONFIGURATION = new InjectionToken<string>('CURRENT_CONFIGURATION');
 
 @Component({
-    templateUrl: './document-config-frame.component.html',
-    imports: [TranslateDirective, ActionButtonComponent]
+  templateUrl: './document-config-frame.component.html',
+  imports: [TranslateDirective, ActionButtonComponent]
 })
 export class DocumentConfigFrameComponent implements AfterViewInit {
   @ViewChild('configContainer', { read: ViewContainerRef })

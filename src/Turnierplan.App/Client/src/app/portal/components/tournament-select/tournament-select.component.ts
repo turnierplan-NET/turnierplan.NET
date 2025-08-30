@@ -7,9 +7,9 @@ import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree
 import { TranslateDirective } from '@ngx-translate/core';
 
 @Component({
-    templateUrl: './tournament-select.component.html',
-    styleUrl: './tournament-select.component.scss',
-    imports: [LoadingStateDirective, TranslateDirective, FolderTreeComponent]
+  templateUrl: './tournament-select.component.html',
+  styleUrl: './tournament-select.component.scss',
+  imports: [LoadingStateDirective, TranslateDirective, FolderTreeComponent]
 })
 export class TournamentSelectComponent implements OnInit {
   protected loadingState: LoadingState = { isLoading: true };

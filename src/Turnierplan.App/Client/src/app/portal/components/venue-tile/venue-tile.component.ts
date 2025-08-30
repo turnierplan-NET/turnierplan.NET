@@ -5,9 +5,9 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'tp-venue-tile',
-    templateUrl: './venue-tile.component.html',
-    imports: [TranslateDirective, RouterLink]
+  selector: 'tp-venue-tile',
+  templateUrl: './venue-tile.component.html',
+  imports: [TranslateDirective, RouterLink]
 })
 export class VenueTileComponent {
   @Input()

@@ -10,9 +10,9 @@ import { NgClass } from '@angular/common';
 import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
 
 @Component({
-    templateUrl: './document-copy.component.html',
-    styleUrl: './document-copy.component.scss',
-    imports: [LoadingStateDirective, TranslateDirective, FolderTreeComponent, NgClass, SmallSpinnerComponent]
+  templateUrl: './document-copy.component.html',
+  styleUrl: './document-copy.component.scss',
+  imports: [LoadingStateDirective, TranslateDirective, FolderTreeComponent, NgClass, SmallSpinnerComponent]
 })
 export class DocumentCopyComponent implements OnInit, OnDestroy {
   public selected$ = new Subject<string>();

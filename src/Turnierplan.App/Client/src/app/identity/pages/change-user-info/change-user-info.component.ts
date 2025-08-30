@@ -10,8 +10,8 @@ import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/
 import { NgClass } from '@angular/common';
 
 @Component({
-    templateUrl: './change-user-info.component.html',
-    imports: [TranslateDirective, FormsModule, SmallSpinnerComponent, NgClass]
+  templateUrl: './change-user-info.component.html',
+  imports: [TranslateDirective, FormsModule, SmallSpinnerComponent, NgClass]
 })
 export class ChangeUserInfoComponent implements OnInit, OnDestroy {
   protected previousEmailAddress: string = '';

@@ -6,9 +6,9 @@ import { ShareLinkComponent } from '../share-link/share-link.component';
 import { QRCodeComponent } from 'angularx-qrcode';
 
 @Component({
-    selector: 'tp-share-widget',
-    templateUrl: './share-widget.component.html',
-    imports: [TranslateDirective, NgClass, ShareLinkComponent, QRCodeComponent]
+  selector: 'tp-share-widget',
+  templateUrl: './share-widget.component.html',
+  imports: [TranslateDirective, NgClass, ShareLinkComponent, QRCodeComponent]
 })
 export class ShareWidgetComponent {
   @Input()

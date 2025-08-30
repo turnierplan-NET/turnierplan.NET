@@ -45,10 +45,10 @@ interface MatchViewGrouping {
 }
 
 @Component({
-    selector: 'tp-match-plan',
-    templateUrl: './match-plan.component.html',
-    styleUrls: ['./match-plan.component.scss'],
-    imports: [NgClass, TranslateDirective, SmallSpinnerComponent, LiveIndicatorComponent, TranslatePipe, TranslateDatePipe]
+  selector: 'tp-match-plan',
+  templateUrl: './match-plan.component.html',
+  styleUrls: ['./match-plan.component.scss'],
+  imports: [NgClass, TranslateDirective, SmallSpinnerComponent, LiveIndicatorComponent, TranslatePipe, TranslateDatePipe]
 })
 export class MatchPlanComponent implements OnChanges {
   @Input()

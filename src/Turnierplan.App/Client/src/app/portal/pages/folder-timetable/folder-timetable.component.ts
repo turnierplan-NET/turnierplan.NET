@@ -41,9 +41,21 @@ type TimetableViewDayRowEntry = {
 };
 
 @Component({
-    templateUrl: './folder-timetable.component.html',
-    styleUrl: './folder-timetable.component.scss',
-    imports: [LoadingStateDirective, PageFrameComponent, ActionButtonComponent, AlertComponent, TranslateDirective, NgStyle, NgbTooltip, TooltipIconComponent, FormsModule, TranslatePipe, TranslateDatePipe]
+  templateUrl: './folder-timetable.component.html',
+  styleUrl: './folder-timetable.component.scss',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    ActionButtonComponent,
+    AlertComponent,
+    TranslateDirective,
+    NgStyle,
+    NgbTooltip,
+    TooltipIconComponent,
+    FormsModule,
+    TranslatePipe,
+    TranslateDatePipe
+  ]
 })
 export class FolderTimetableComponent implements OnInit, OnDestroy {
   private static readonly columnWidthMinutes = 1;

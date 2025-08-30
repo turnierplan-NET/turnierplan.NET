@@ -12,8 +12,8 @@ export interface TextInputDialogAlert {
 }
 
 @Component({
-    templateUrl: './text-input-dialog.component.html',
-    imports: [TranslateDirective, FormsModule, NgClass, AlertComponent, ActionButtonComponent]
+  templateUrl: './text-input-dialog.component.html',
+  imports: [TranslateDirective, FormsModule, NgClass, AlertComponent, ActionButtonComponent]
 })
 export class TextInputDialogComponent {
   protected isInitialized = false;
