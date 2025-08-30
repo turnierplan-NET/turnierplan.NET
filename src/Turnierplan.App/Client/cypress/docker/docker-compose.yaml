@@ -1,3 +1,5 @@
+# This docker compose file is used for running the E2E tests during the CI pipeline.
+
 services:
   turnierplan.e2e.database:
     image: postgres:17.0
