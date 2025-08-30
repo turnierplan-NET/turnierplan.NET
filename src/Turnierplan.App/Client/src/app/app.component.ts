@@ -8,10 +8,10 @@ import { TranslateService } from '@ngx-translate/core';
   imports: [RouterOutlet]
 })
 export class AppComponent {
-  private translateService = inject(TranslateService);
+  private readonly translateService = inject(TranslateService);
 
   constructor() {
-    this.translateService.setDefaultLang('de');
+    this.translateService.setFallbackLang('de');
     this.translateService.use('de');
   }
 }
