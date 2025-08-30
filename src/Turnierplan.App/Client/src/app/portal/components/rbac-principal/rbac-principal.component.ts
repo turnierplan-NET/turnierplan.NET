@@ -3,11 +3,14 @@ import { PrincipalDto, PrincipalKind } from '../../../api';
 import { PrincipalsService } from '../../../api/services/principals.service';
 import { catchError, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { NgClass, AsyncPipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tp-rbac-principal',
-  standalone: false,
-  templateUrl: './rbac-principal.component.html'
+    selector: 'tp-rbac-principal',
+    templateUrl: './rbac-principal.component.html',
+    imports: [NgbTooltip, NgClass, AsyncPipe, TranslatePipe]
 })
 export class RbacPrincipalComponent implements OnInit {
   protected readonly PrincipalKind = PrincipalKind;

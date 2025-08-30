@@ -5,11 +5,18 @@ import { Subject } from 'rxjs';
 import { MatchState, MatchType, NullableOfMatchOutcomeType, SetMatchOutcomeEndpointRequest } from '../../../api';
 import { GroupView } from '../groups/groups.component';
 import { MatchView } from '../match-plan/match-plan.component';
+import { TranslateDirective } from '@ngx-translate/core';
+import { NgTemplateOutlet } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { AlertComponent } from '../alert/alert.component';
+import { ActionButtonComponent } from '../action-button/action-button.component';
+import { LiveIndicatorComponent } from '../live-indicator/live-indicator.component';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 @Component({
-  standalone: false,
-  templateUrl: './edit-match.component.html',
-  styleUrls: ['./edit-match.component.scss']
+    templateUrl: './edit-match.component.html',
+    styleUrls: ['./edit-match.component.scss'],
+    imports: [TranslateDirective, NgTemplateOutlet, FormsModule, AlertComponent, ActionButtonComponent, LiveIndicatorComponent, TranslateDatePipe]
 })
 export class EditMatchComponent implements OnDestroy, AfterViewInit {
   @ViewChild('inputScoreA')

@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Actions } from '../../../generated/actions';
+import { NgClass } from '@angular/common';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { RenameButtonComponent } from '../rename-button/rename-button.component';
+import { TranslateDirective } from '@ngx-translate/core';
 
 export interface GroupView {
   id: number;
@@ -25,9 +30,9 @@ export interface GroupTeamView {
 }
 
 @Component({
-  standalone: false,
-  selector: 'tp-groups',
-  templateUrl: './groups.component.html'
+    selector: 'tp-groups',
+    templateUrl: './groups.component.html',
+    imports: [NgClass, SmallSpinnerComponent, IsActionAllowedDirective, RenameButtonComponent, TranslateDirective]
 })
 export class GroupsComponent {
   protected readonly Actions = Actions;

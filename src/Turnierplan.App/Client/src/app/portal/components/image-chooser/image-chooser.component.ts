@@ -3,6 +3,15 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ImageDto2, ImageType, ImagesService, ImageDto } from '../../../api';
 import { Actions } from '../../../generated/actions';
+import { TranslateDirective } from '@ngx-translate/core';
+import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicator.component';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { DeleteButtonComponent } from '../delete-button/delete-button.component';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { ActionButtonComponent } from '../action-button/action-button.component';
+import { AlertComponent } from '../alert/alert.component';
+import { NgClass } from '@angular/common';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 export interface ImageChooserResult {
   type: 'ImageDeleted' | 'ImageSelected' | 'ImageUploaded';
@@ -11,9 +20,9 @@ export interface ImageChooserResult {
 }
 
 @Component({
-  standalone: false,
-  templateUrl: './image-chooser.component.html',
-  styleUrls: ['./image-chooser.component.scss']
+    templateUrl: './image-chooser.component.html',
+    styleUrls: ['./image-chooser.component.scss'],
+    imports: [TranslateDirective, LoadingIndicatorComponent, IsActionAllowedDirective, DeleteButtonComponent, SmallSpinnerComponent, ActionButtonComponent, AlertComponent, NgClass, TranslateDatePipe]
 })
 export class ImageChooserComponent {
   protected readonly Actions = Actions;

@@ -1,13 +1,17 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 
 import { MatchPlanDateFormat, MatchPlanDocumentConfiguration, MatchPlanOutcomes } from '../../../api';
 import { CURRENT_CONFIGURATION, DocumentConfigComponent } from '../document-config-frame/document-config-frame.component';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
+import { NgClass } from '@angular/common';
+import { AlertComponent } from '../alert/alert.component';
 
 @Component({
-  standalone: false,
-  templateUrl: './document-config-match-plan.component.html'
+    templateUrl: './document-config-match-plan.component.html',
+    imports: [FormsModule, ReactiveFormsModule, TranslateDirective, TooltipIconComponent, NgClass, AlertComponent, TranslatePipe]
 })
 export class DocumentConfigMatchPlanComponent extends DocumentConfigComponent<MatchPlanDocumentConfiguration> implements OnInit, OnDestroy {
   public submit = new Subject<void>();

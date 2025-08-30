@@ -3,10 +3,15 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
 import { NullableOfPublicId, VenueDto, VenuesService } from '../../../api';
+import { TranslateDirective } from '@ngx-translate/core';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { FormsModule } from '@angular/forms';
+import { ActionButtonComponent } from '../action-button/action-button.component';
+import { NgClass } from '@angular/common';
 
 @Component({
-  standalone: false,
-  templateUrl: './venue-select.component.html'
+    templateUrl: './venue-select.component.html',
+    imports: [TranslateDirective, SmallSpinnerComponent, FormsModule, ActionButtonComponent, NgClass]
 })
 export class VenueSelectComponent {
   public selected$ = new Subject<{ id: string; name: string } | undefined>();

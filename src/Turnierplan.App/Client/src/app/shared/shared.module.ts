@@ -7,8 +7,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SmallSpinnerComponent } from './components/small-spinner/small-spinner.component';
 
 @NgModule({
-  declarations: [FooterComponent, SmallSpinnerComponent],
-  exports: [FooterComponent, SmallSpinnerComponent],
-  imports: [CommonModule, TranslateModule.forChild(), RouterModule]
+    exports: [FooterComponent, SmallSpinnerComponent],
+    imports: [CommonModule, TranslateModule.forChild(), RouterModule, FooterComponent, SmallSpinnerComponent]
 })
 export class SharedModule {}

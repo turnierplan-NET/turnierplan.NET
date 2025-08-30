@@ -5,11 +5,17 @@ import { switchMap } from 'rxjs';
 import { HeaderLineContent, PresentationConfigurationDto, ResultsMode, TournamentsService } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
 import { TournamentSelectComponent } from '../tournament-select/tournament-select.component';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { ActionButtonComponent } from '../action-button/action-button.component';
+import { NgClass } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { UnsavedChangesAlertComponent } from '../unsaved-changes-alert/unsaved-changes-alert.component';
+import { AlertComponent } from '../alert/alert.component';
 
 @Component({
-  standalone: false,
-  selector: 'tp-presentation-config-widget',
-  templateUrl: './presentation-config-widget.component.html'
+    selector: 'tp-presentation-config-widget',
+    templateUrl: './presentation-config-widget.component.html',
+    imports: [TranslateDirective, ActionButtonComponent, NgClass, FormsModule, UnsavedChangesAlertComponent, AlertComponent, TranslatePipe]
 })
 export class PresentationConfigWidgetComponent {
   @Input()

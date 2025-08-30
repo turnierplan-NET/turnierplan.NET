@@ -1,7 +1,7 @@
 ﻿import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { finalize, map, Observable, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 import {
@@ -27,23 +27,41 @@ import { ComputationConfigurationComponent } from '../../components/computation-
 import { DocumentCopyComponent } from '../../components/document-copy/document-copy.component';
 import { DocumentSelectComponent } from '../../components/document-select/document-select.component';
 import { EditMatchComponent } from '../../components/edit-match/edit-match.component';
-import { GroupTeamView, GroupView } from '../../components/groups/groups.component';
-import { MatchView, MatchViewType } from '../../components/match-plan/match-plan.component';
+import { GroupTeamView, GroupView, GroupsComponent } from '../../components/groups/groups.component';
+import { MatchView, MatchViewType, MatchPlanComponent } from '../../components/match-plan/match-plan.component';
 import { MoveTournamentToFolderComponent } from '../../components/move-tournament-to-folder/move-tournament-to-folder.component';
-import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
-import { RankingView } from '../../components/ranking/ranking.component';
-import { TeamView } from '../../components/team-list/team-list.component';
+import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
+import { RankingView, RankingComponent } from '../../components/ranking/ranking.component';
+import { TeamView, TeamListComponent } from '../../components/team-list/team-list.component';
 import { VenueSelectComponent } from '../../components/venue-select/venue-select.component';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { getDocumentName } from '../../helpers/document-name';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
+import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
+import { NgClass, AsyncPipe } from '@angular/common';
+import { BadgeComponent } from '../../components/badge/badge.component';
+import { FormsModule } from '@angular/forms';
+import { LoadingIndicatorComponent } from '../../components/loading-indicator/loading-indicator.component';
+import { DocumentManagerComponent } from '../../components/document-manager/document-manager.component';
+import { VisibilitySelectorComponent } from '../../components/visibility-selector/visibility-selector.component';
+import { AlertComponent } from '../../components/alert/alert.component';
+import { ShareWidgetComponent } from '../../components/share-widget/share-widget.component';
+import { PresentationConfigWidgetComponent } from '../../components/presentation-config-widget/presentation-config-widget.component';
+import { ImageWidgetComponent } from '../../components/image-widget/image-widget.component';
+import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
+import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
+import { MatchTreeComponent } from '../../components/match-tree/match-tree.component';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 @Component({
-  standalone: false,
-  templateUrl: './view-tournament.component.html'
+    templateUrl: './view-tournament.component.html',
+    imports: [LoadingStateDirective, PageFrameComponent, ActionButtonComponent, IsActionAllowedDirective, SmallSpinnerComponent, RenameButtonComponent, NgClass, BadgeComponent, FormsModule, TranslateDirective, MatchPlanComponent, RouterLink, GroupsComponent, TeamListComponent, RankingComponent, LoadingIndicatorComponent, DocumentManagerComponent, VisibilitySelectorComponent, AlertComponent, ShareWidgetComponent, PresentationConfigWidgetComponent, ImageWidgetComponent, RbacWidgetComponent, DeleteWidgetComponent, MatchTreeComponent, AsyncPipe, TranslatePipe, TranslateDatePipe]
 })
 export class ViewTournamentComponent implements OnInit, OnDestroy {
   private static readonly documentsPageId = 4;

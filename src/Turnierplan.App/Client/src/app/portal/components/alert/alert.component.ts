@@ -1,11 +1,13 @@
 import { Component, Input } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { TranslateDirective } from '@ngx-translate/core';
 
 export type AlertType = 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info';
 
 @Component({
-  standalone: false,
-  selector: 'tp-alert',
-  templateUrl: './alert.component.html'
+    selector: 'tp-alert',
+    templateUrl: './alert.component.html',
+    imports: [NgClass, TranslateDirective]
 })
 export class AlertComponent {
   @Input()

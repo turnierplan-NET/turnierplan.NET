@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { TournamentHeaderDto } from '../../../api';
+import { NgClass, NgStyle } from '@angular/common';
 
 export type FolderTreeEntry = {
   id: string;
@@ -13,9 +14,9 @@ export type FolderTreeEntry = {
 };
 
 @Component({
-  standalone: false,
-  selector: 'tp-folder-tree',
-  templateUrl: './folder-tree.component.html'
+    selector: 'tp-folder-tree',
+    templateUrl: './folder-tree.component.html',
+    imports: [NgClass, NgStyle]
 })
 export class FolderTreeComponent {
   @Input()

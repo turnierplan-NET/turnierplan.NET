@@ -3,11 +3,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ImageDto, ImageType } from '../../../api';
 import { ImageChooserComponent, ImageChooserResult } from '../image-chooser/image-chooser.component';
+import { TranslateDirective } from '@ngx-translate/core';
+import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-  standalone: false,
-  selector: 'tp-image-widget',
-  templateUrl: './image-widget.component.html'
+    selector: 'tp-image-widget',
+    templateUrl: './image-widget.component.html',
+    imports: [TranslateDirective, ActionButtonComponent]
 })
 export class ImageWidgetComponent {
   @Input()

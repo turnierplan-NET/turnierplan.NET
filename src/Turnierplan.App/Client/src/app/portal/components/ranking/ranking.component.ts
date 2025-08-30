@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 
 export interface RankingView {
   position: number;
@@ -6,9 +7,9 @@ export interface RankingView {
 }
 
 @Component({
-  standalone: false,
-  selector: 'tp-ranking',
-  templateUrl: './ranking.component.html'
+    selector: 'tp-ranking',
+    templateUrl: './ranking.component.html',
+    imports: [TranslateDirective, TranslatePipe]
 })
 export class RankingComponent {
   @Input()

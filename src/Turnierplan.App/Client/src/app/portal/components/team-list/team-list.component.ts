@@ -1,6 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { Actions } from '../../../generated/actions';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
+import { RenameButtonComponent } from '../rename-button/rename-button.component';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { NgClass, AsyncPipe } from '@angular/common';
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { ActionButtonComponent } from '../action-button/action-button.component';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 export interface TeamView {
   id: number;
@@ -15,9 +23,9 @@ export interface TeamView {
 }
 
 @Component({
-  standalone: false,
-  selector: 'tp-team-list',
-  templateUrl: './team-list.component.html'
+    selector: 'tp-team-list',
+    templateUrl: './team-list.component.html',
+    imports: [TranslateDirective, TooltipIconComponent, RenameButtonComponent, SmallSpinnerComponent, NgClass, NgbPopover, ActionButtonComponent, AsyncPipe, TranslatePipe, TranslateDatePipe]
 })
 export class TeamListComponent {
   protected readonly Actions = Actions;

@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
+import { TranslateDirective } from '@ngx-translate/core';
 
 @Component({
-  standalone: false,
-  selector: 'tp-badge',
-  templateUrl: './badge.component.html'
+    selector: 'tp-badge',
+    templateUrl: './badge.component.html',
+    imports: [TranslateDirective]
 })
 export class BadgeComponent {
   @Input()

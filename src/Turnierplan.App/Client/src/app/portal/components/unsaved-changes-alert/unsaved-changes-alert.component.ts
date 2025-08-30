@@ -1,9 +1,13 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AlertComponent } from '../alert/alert.component';
+import { TranslateDirective } from '@ngx-translate/core';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-  standalone: false,
-  selector: 'tp-unsaved-changes-alert',
-  templateUrl: './unsaved-changes-alert.component.html'
+    selector: 'tp-unsaved-changes-alert',
+    templateUrl: './unsaved-changes-alert.component.html',
+    imports: [AlertComponent, TranslateDirective, SmallSpinnerComponent, ActionButtonComponent]
 })
 export class UnsavedChangesAlertComponent implements OnInit, OnDestroy {
   @Input()

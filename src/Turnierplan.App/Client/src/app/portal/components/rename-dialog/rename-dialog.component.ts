@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateDirective } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-  standalone: false,
-  templateUrl: './rename-dialog.component.html'
+    templateUrl: './rename-dialog.component.html',
+    imports: [TranslateDirective, FormsModule, NgClass, ActionButtonComponent]
 })
 export class RenameDialogComponent {
   protected isInitialized = false;

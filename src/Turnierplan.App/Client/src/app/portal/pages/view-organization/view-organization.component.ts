@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { mergeMap, Observable, of, Subject, switchMap, takeUntil, tap, zip } from 'rxjs';
 
 import {
@@ -15,15 +15,32 @@ import {
   PlanningRealmsService
 } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
-import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
+import { BadgeComponent } from '../../components/badge/badge.component';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { TournamentExplorerComponent } from '../../components/tournament-explorer/tournament-explorer.component';
+import { LoadingIndicatorComponent } from '../../components/loading-indicator/loading-indicator.component';
+import { VenueTileComponent } from '../../components/venue-tile/venue-tile.component';
+import { NgClass, AsyncPipe } from '@angular/common';
+import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
+import { FormsModule } from '@angular/forms';
+import { DeleteButtonComponent } from '../../components/delete-button/delete-button.component';
+import { ApiKeyUsageComponent } from '../../components/api-key-usage/api-key-usage.component';
+import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
+import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 @Component({
-  standalone: false,
-  templateUrl: './view-organization.component.html'
+    templateUrl: './view-organization.component.html',
+    imports: [LoadingStateDirective, PageFrameComponent, IsActionAllowedDirective, ActionButtonComponent, RouterLink, SmallSpinnerComponent, RenameButtonComponent, BadgeComponent, TranslateDirective, TournamentExplorerComponent, LoadingIndicatorComponent, VenueTileComponent, NgClass, TooltipIconComponent, FormsModule, DeleteButtonComponent, ApiKeyUsageComponent, RbacWidgetComponent, DeleteWidgetComponent, AsyncPipe, TranslatePipe, TranslateDatePipe]
 })
 export class ViewOrganizationComponent implements OnInit, OnDestroy {
   private static readonly venuesPageId = 1;

@@ -1,13 +1,17 @@
 import { Component, Inject, OnDestroy } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 
 import { ReceiptsDocumentConfiguration } from '../../../api';
 import { CURRENT_CONFIGURATION, DocumentConfigComponent } from '../document-config-frame/document-config-frame.component';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
+import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-  standalone: false,
-  templateUrl: './document-config-receipts.component.html'
+    templateUrl: './document-config-receipts.component.html',
+    imports: [FormsModule, ReactiveFormsModule, TranslateDirective, NgClass, TooltipIconComponent, ActionButtonComponent, TranslatePipe]
 })
 export class DocumentConfigReceiptsComponent extends DocumentConfigComponent<ReceiptsDocumentConfiguration> implements OnDestroy {
   private static readonly maxNumberOfAmountEntries = 4;

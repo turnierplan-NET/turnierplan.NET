@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { from, switchMap } from 'rxjs';
 
 import { UsersService } from '../../../api';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { TitleService } from '../../services/title.service';
+import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 
 @Component({
-  standalone: false,
-  templateUrl: './create-user.component.html'
+    templateUrl: './create-user.component.html',
+    imports: [LoadingStateDirective, PageFrameComponent, FormsModule, ReactiveFormsModule, TranslateDirective, NgClass, ActionButtonComponent, TranslatePipe]
 })
 export class CreateUserComponent implements OnInit {
   protected loadingState: LoadingState = { isLoading: false };

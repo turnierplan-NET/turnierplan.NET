@@ -4,6 +4,8 @@ import { RbacOffcanvasComponent } from '../rbac-offcanvas/rbac-offcanvas.compone
 import { NavigationStart, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
+import { ActionButtonComponent } from '../action-button/action-button.component';
+import { TranslateDirective } from '@ngx-translate/core';
 
 interface IRbacWidgetTarget {
   name: string;
@@ -11,9 +13,9 @@ interface IRbacWidgetTarget {
 }
 
 @Component({
-  standalone: false,
-  selector: 'tp-rbac-widget',
-  templateUrl: './rbac-widget.component.html'
+    selector: 'tp-rbac-widget',
+    templateUrl: './rbac-widget.component.html',
+    imports: [ActionButtonComponent, TranslateDirective]
 })
 export class RbacWidgetComponent {
   @Input()

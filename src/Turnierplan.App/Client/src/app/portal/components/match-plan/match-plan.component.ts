@@ -2,6 +2,11 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 
 import { MatchType, NullableOfMatchOutcomeType } from '../../../api';
 import { GroupView } from '../groups/groups.component';
+import { NgClass } from '@angular/common';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { LiveIndicatorComponent } from '../live-indicator/live-indicator.component';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 // IDEA: This interface should probably be moved to a separate .ts file as long as it is referenced by other components
 export interface MatchView {
@@ -40,10 +45,10 @@ interface MatchViewGrouping {
 }
 
 @Component({
-  standalone: false,
-  selector: 'tp-match-plan',
-  templateUrl: './match-plan.component.html',
-  styleUrls: ['./match-plan.component.scss']
+    selector: 'tp-match-plan',
+    templateUrl: './match-plan.component.html',
+    styleUrls: ['./match-plan.component.scss'],
+    imports: [NgClass, TranslateDirective, SmallSpinnerComponent, LiveIndicatorComponent, TranslatePipe, TranslateDatePipe]
 })
 export class MatchPlanComponent implements OnChanges {
   @Input()

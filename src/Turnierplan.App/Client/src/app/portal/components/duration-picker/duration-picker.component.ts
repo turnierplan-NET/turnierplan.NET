@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 const pad = (i: number): string => (i < 10 ? `0${i}` : `${i}`);
 
 @Component({
-  standalone: false,
-  selector: 'tp-duration-picker',
-  templateUrl: './duration-picker.component.html'
+    selector: 'tp-duration-picker',
+    templateUrl: './duration-picker.component.html',
+    imports: [FormsModule]
 })
 export class DurationPickerComponent {
   @Output()

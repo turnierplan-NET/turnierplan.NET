@@ -2,13 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs';
 
 import { OrganizationDto, OrganizationsService } from '../../../api';
-import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { TitleService } from '../../services/title.service';
+import { IsAdministratorDirective } from '../../directives/is-administrator/is-administrator.directive';
+import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { RouterLink } from '@angular/router';
+import { AlertComponent } from '../../components/alert/alert.component';
+import { IllustrationComponent } from '../../components/illustration/illustration.component';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { BadgeComponent } from '../../components/badge/badge.component';
 
 @Component({
-  standalone: false,
-  templateUrl: './landing-page.component.html'
+    templateUrl: './landing-page.component.html',
+    imports: [LoadingStateDirective, PageFrameComponent, IsAdministratorDirective, ActionButtonComponent, RouterLink, AlertComponent, IllustrationComponent, TranslateDirective, BadgeComponent, TranslatePipe]
 })
 export class LandingPageComponent implements OnInit {
   protected loadingState: LoadingState = { isLoading: true };

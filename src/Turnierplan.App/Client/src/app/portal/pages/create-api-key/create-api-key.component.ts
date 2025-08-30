@@ -1,16 +1,22 @@
 import { Component } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { AbstractControl, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 
 import { ApiKeyDto, OrganizationDto, ApiKeysService, OrganizationsService } from '../../../api';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { TitleService } from '../../services/title.service';
+import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
+import { AlertComponent } from '../../components/alert/alert.component';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { CopyToClipboardComponent } from '../../components/copy-to-clipboard/copy-to-clipboard.component';
+import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { NgClass } from '@angular/common';
 
 @Component({
-  standalone: false,
-  templateUrl: './create-api-key.component.html'
+    templateUrl: './create-api-key.component.html',
+    imports: [PageFrameComponent, AlertComponent, TranslateDirective, CopyToClipboardComponent, ActionButtonComponent, RouterLink, LoadingStateDirective, FormsModule, ReactiveFormsModule, NgClass, TranslatePipe]
 })
 export class CreateApiKeyComponent {
   protected loadingState: LoadingState = { isLoading: false };

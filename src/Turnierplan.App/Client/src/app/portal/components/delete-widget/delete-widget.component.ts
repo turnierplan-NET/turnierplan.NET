@@ -1,9 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-  standalone: false,
-  selector: 'tp-delete-widget',
-  templateUrl: './delete-widget.component.html'
+    selector: 'tp-delete-widget',
+    templateUrl: './delete-widget.component.html',
+    imports: [TranslateDirective, NgClass, FormsModule, ActionButtonComponent, TranslatePipe]
 })
 export class DeleteWidgetComponent {
   @Input()

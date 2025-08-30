@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
+import { NgClass } from '@angular/common';
 
 @Component({
-  standalone: false,
-  selector: 'tp-loading-indicator',
-  templateUrl: './loading-indicator.component.html',
-  styleUrls: ['./loading-indicator.component.scss']
+    selector: 'tp-loading-indicator',
+    templateUrl: './loading-indicator.component.html',
+    styleUrls: ['./loading-indicator.component.scss'],
+    imports: [NgClass]
 })
 export class LoadingIndicatorComponent {
   @Input()

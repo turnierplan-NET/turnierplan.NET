@@ -9,18 +9,26 @@ import {
   ApplicationDto
 } from '../../../api';
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbTooltip, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs/operators';
+import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicator.component';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
+import { ActionButtonComponent } from '../action-button/action-button.component';
+import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { NgClass } from '@angular/common';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 // TODO: Endpoint + UI for removing the connection between team & application team (here and in the team-list component)
 // TODO: Endpoint + UI for renaming an application team (should also rename Team if a link is active)
 // TODO: Display linked teams in applications page incl. link to navigate to the corresponding tournament
 
 @Component({
-  standalone: false,
-  selector: 'tp-manage-applications',
-  templateUrl: './manage-applications.component.html',
-  styleUrl: './manage-applications.component.scss'
+    selector: 'tp-manage-applications',
+    templateUrl: './manage-applications.component.html',
+    styleUrl: './manage-applications.component.scss',
+    imports: [LoadingIndicatorComponent, TranslateDirective, TooltipIconComponent, ActionButtonComponent, CopyToClipboardComponent, SmallSpinnerComponent, NgClass, NgbTooltip, NgbPagination, TranslatePipe, TranslateDatePipe]
 })
 export class ManageApplicationsComponent implements OnDestroy {
   @Input()

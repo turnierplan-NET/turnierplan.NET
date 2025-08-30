@@ -6,16 +6,25 @@ import { of, Subject, switchMap, takeUntil } from 'rxjs';
 import { VenueDto, VenuesService } from '../../../api';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 import { NotificationService } from '../../../core/services/notification.service';
-import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
+import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { TextInputDialogComponent } from '../../components/text-input-dialog/text-input-dialog.component';
 import { TextListDialogComponent } from '../../components/text-list-dialog/text-list-dialog.component';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { Actions } from '../../../generated/actions';
+import { UnsavedChangesAlertComponent } from '../../components/unsaved-changes-alert/unsaved-changes-alert.component';
+import { AlertComponent } from '../../components/alert/alert.component';
+import { TranslateDirective } from '@ngx-translate/core';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
+import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
+import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
+import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 
 @Component({
-  standalone: false,
-  templateUrl: './view-venue.component.html'
+    templateUrl: './view-venue.component.html',
+    imports: [LoadingStateDirective, PageFrameComponent, UnsavedChangesAlertComponent, AlertComponent, TranslateDirective, IsActionAllowedDirective, RenameButtonComponent, ActionButtonComponent, TooltipIconComponent, RbacWidgetComponent, DeleteWidgetComponent]
 })
 export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDetector {
   protected readonly Actions = Actions;

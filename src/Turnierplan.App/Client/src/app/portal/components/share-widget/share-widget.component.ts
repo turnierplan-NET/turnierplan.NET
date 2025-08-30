@@ -1,10 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
+import { TranslateDirective } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { ShareLinkComponent } from '../share-link/share-link.component';
+import { QRCodeComponent } from 'angularx-qrcode';
 
 @Component({
-  standalone: false,
-  selector: 'tp-share-widget',
-  templateUrl: './share-widget.component.html'
+    selector: 'tp-share-widget',
+    templateUrl: './share-widget.component.html',
+    imports: [TranslateDirective, NgClass, ShareLinkComponent, QRCodeComponent]
 })
 export class ShareWidgetComponent {
   @Input()

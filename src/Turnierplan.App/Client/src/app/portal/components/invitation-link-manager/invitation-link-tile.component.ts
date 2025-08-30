@@ -3,15 +3,24 @@ import { ImageDto, ImageType, InvitationLinkDto, InvitationLinkEntryDto, Plannin
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { UpdatePlanningRealmFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { formatDate } from '@angular/common';
+import { NgbModal, NgbTooltip, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem } from '@ng-bootstrap/ng-bootstrap';
+import { FormArray, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { formatDate, NgStyle, NgClass, AsyncPipe } from '@angular/common';
 import { ApplicationsFilter } from '../../models/applications-filter';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
+import { ShareLinkComponent } from '../share-link/share-link.component';
+import { ActionButtonComponent } from '../action-button/action-button.component';
+import { ImageWidgetComponent } from '../image-widget/image-widget.component';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { DeleteButtonComponent } from '../delete-button/delete-button.component';
+import { AlertComponent } from '../alert/alert.component';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 @Component({
-  standalone: false,
-  selector: 'tp-invitation-link-tile',
-  templateUrl: './invitation-link-tile.component.html'
+    selector: 'tp-invitation-link-tile',
+    templateUrl: './invitation-link-tile.component.html',
+    imports: [NgStyle, TranslateDirective, TooltipIconComponent, ShareLinkComponent, NgbTooltip, NgClass, ActionButtonComponent, ImageWidgetComponent, IsActionAllowedDirective, DeleteButtonComponent, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem, FormsModule, ReactiveFormsModule, AlertComponent, AsyncPipe, TranslatePipe, TranslateDatePipe]
 })
 export class InvitationLinkTileComponent {
   private _planningRealm!: PlanningRealmDto;

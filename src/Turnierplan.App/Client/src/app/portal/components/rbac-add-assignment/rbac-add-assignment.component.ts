@@ -1,15 +1,20 @@
 import { Component, OnDestroy } from '@angular/core';
 import { CreateRoleAssignmentEndpointRequest, PrincipalKind, Role, RoleAssignmentsService } from '../../../api';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { finalize, Observable, Subject } from 'rxjs';
 import { NotificationService } from '../../../core/services/notification.service';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { ActionButtonComponent } from '../action-button/action-button.component';
+import { FormsModule } from '@angular/forms';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
 
 type Step = 'SelectRole' | 'SelectPrincipal';
 
 @Component({
-  standalone: false,
-  templateUrl: './rbac-add-assignment.component.html',
-  styleUrl: './rbac-add-assignment.component.scss'
+    templateUrl: './rbac-add-assignment.component.html',
+    styleUrl: './rbac-add-assignment.component.scss',
+    imports: [TranslateDirective, NgClass, ActionButtonComponent, FormsModule, NgbTooltip, SmallSpinnerComponent, TranslatePipe]
 })
 export class RbacAddAssignmentComponent implements OnDestroy {
   protected readonly PrincipalKind = PrincipalKind;

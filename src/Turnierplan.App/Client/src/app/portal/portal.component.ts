@@ -4,13 +4,19 @@ import { Subject, takeUntil } from 'rxjs';
 import { AuthenticatedUser } from '../core/models/identity';
 import { AuthenticationService } from '../core/services/authentication.service';
 import { DiscardChangesDetector, hasUnsavedChangesFunctionName } from '../core/guards/discard-changes.guard';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { IsAdministratorDirective } from './directives/is-administrator/is-administrator.directive';
+import { NgTemplateOutlet, NgClass } from '@angular/common';
+import { FooterComponent } from '../shared/components/footer/footer.component';
 
 type UserInfoAction = 'EditUserInfo' | 'ChangePassword' | 'Logout';
 
 @Component({
-  standalone: false,
-  templateUrl: './portal.component.html',
-  styleUrls: ['./portal.component.scss']
+    templateUrl: './portal.component.html',
+    styleUrls: ['./portal.component.scss'],
+    imports: [RouterLink, TranslateDirective, NgbPopover, IsAdministratorDirective, NgTemplateOutlet, NgClass, RouterOutlet, FooterComponent, TranslatePipe]
 })
 export class PortalComponent implements OnInit, OnDestroy {
   protected currentComponent?: Object;

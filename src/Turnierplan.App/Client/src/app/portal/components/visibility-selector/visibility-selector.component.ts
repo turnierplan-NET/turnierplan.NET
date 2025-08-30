@@ -1,11 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Visibility } from '../../../api';
+import { NgClass } from '@angular/common';
+import { TranslateDirective } from '@ngx-translate/core';
 
 @Component({
-  standalone: false,
-  selector: 'tp-visibility-selector',
-  templateUrl: './visibility-selector.component.html'
+    selector: 'tp-visibility-selector',
+    templateUrl: './visibility-selector.component.html',
+    imports: [NgClass, TranslateDirective]
 })
 export class VisibilitySelectorComponent {
   @Input()

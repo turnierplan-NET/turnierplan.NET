@@ -5,6 +5,10 @@ import { Subject, switchMap, take, takeUntil } from 'rxjs';
 import { NullableOfChangePasswordFailedReason } from '../../../api';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { NotificationService } from '../../../core/services/notification.service';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { NgClass } from '@angular/common';
 
 enum PasswordChangeFailedReason {
   EmptyOrExtraWhitespace = 'EmptyOrExtraWhitespace',
@@ -16,8 +20,8 @@ enum PasswordChangeFailedReason {
 }
 
 @Component({
-  standalone: false,
-  templateUrl: './change-password.component.html'
+    templateUrl: './change-password.component.html',
+    imports: [TranslateDirective, FormsModule, SmallSpinnerComponent, NgClass, TranslatePipe]
 })
 export class ChangePasswordComponent implements OnInit, OnDestroy {
   protected oldPassword: string = '';

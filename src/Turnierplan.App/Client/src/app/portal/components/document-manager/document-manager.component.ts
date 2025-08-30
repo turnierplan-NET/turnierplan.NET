@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Injector, Input, Output, Type, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService } from '@ngx-translate/core';
-import { PdfJsViewerComponent } from 'ng2-pdfjs-viewer';
+import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { PdfJsViewerComponent, PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { finalize, Observable, tap } from 'rxjs';
 
 import { DocumentDto, DocumentsService, DocumentType, MatchPlanDocumentConfiguration, ReceiptsDocumentConfiguration } from '../../../api';
@@ -11,12 +11,18 @@ import { DocumentConfigMatchPlanComponent } from '../document-config-match-plan/
 import { DocumentConfigReceiptsComponent } from '../document-config-receipts/document-config-receipts.component';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
+import { NgClass, AsyncPipe } from '@angular/common';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { RenameButtonComponent } from '../rename-button/rename-button.component';
+import { ActionButtonComponent } from '../action-button/action-button.component';
+import { DeleteButtonComponent } from '../delete-button/delete-button.component';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 @Component({
-  standalone: false,
-  selector: 'tp-document-manager',
-  templateUrl: './document-manager.component.html',
-  styleUrls: ['document-manager.component.scss']
+    selector: 'tp-document-manager',
+    templateUrl: './document-manager.component.html',
+    styleUrls: ['document-manager.component.scss'],
+    imports: [TranslateDirective, NgClass, SmallSpinnerComponent, RenameButtonComponent, ActionButtonComponent, DeleteButtonComponent, PdfJsViewerModule, AsyncPipe, TranslatePipe, TranslateDatePipe]
 })
 export class DocumentManagerComponent {
   @Input()

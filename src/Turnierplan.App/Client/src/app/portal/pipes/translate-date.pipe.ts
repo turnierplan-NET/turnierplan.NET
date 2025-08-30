@@ -4,9 +4,8 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 @Pipe({
-  standalone: false,
-  name: 'translateDate',
-  pure: false
+    name: 'translateDate',
+    pure: false
 })
 export class TranslateDatePipe implements PipeTransform, OnDestroy {
   private onLangChange?: Subscription;
