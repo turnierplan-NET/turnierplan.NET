@@ -9,11 +9,14 @@
     "url": "https://github.com/turnierplan-NET/turnierplan.NET"
   },
   "scripts": {
-    "e2e:prepare": "docker compose up --build -d",
+    "e2e:set-version": "replace-in-file \"#{TOKEN_APPLICATION_VERSION}#\" \"9.9.9\" ../src/Turnierplan.App/Client/src/environments/environment.prod.ts",
+    "e2e:reset-version": "replace-in-file \"9.9.9\" \"#{TOKEN_APPLICATION_VERSION}#\" ../src/Turnierplan.App/Client/src/environments/environment.prod.ts",
+    "e2e:prepare": "npm run e2e:set-version && docker compose up --build -d && npm run e2e:reset-version",
     "e2e:start": "npx cypress open",
     "e2e:destroy": "docker compose down"
   },
   "devDependencies": {
-    "cypress": "~15.0.0"
+    "cypress": "~15.0.0",
+    "replace-in-file": "~8.3.0"
   }
 }
