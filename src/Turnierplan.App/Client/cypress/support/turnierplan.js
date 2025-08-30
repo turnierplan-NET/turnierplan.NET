@@ -1,8 +1,11 @@
 export const turnierplan = {
-  loginPage: {
-    loginButton: 'login-page-login-button',
-    passwordField: 'login-page-password-field',
-    emailField: 'login-page-email-field'
+  createOrganizationPage: {
+    confirmButton: 'create-organization-page-confirm-button',
+    organizationNameField: 'create-organization-page-organization-name-field'
+  },
+  deleteWidget: {
+    confirmButton: 'delete-widget-confirm-button',
+    confirmationField: 'delete-widget-confirmation-field'
   },
   header: {
     logoLink: 'header-logo-link'
@@ -10,19 +13,16 @@ export const turnierplan = {
   landingPage: {
     newOrganizationButton: 'landing-page-new-organization-button'
   },
-  pageFrame: {
-    title: 'page-frame-title',
-    navigationTab: (id) => `page-frame-navigation-tab-${id}`
+  loginPage: {
+    emailField: 'login-page-email-field',
+    loginButton: 'login-page-login-button',
+    passwordField: 'login-page-password-field'
   },
-  createOrganizationPage: {
-    organizationNameField: 'create-organization-page-organization-name-field',
-    confirmButton: 'create-organization-page-confirm-button'
+  pageFrame: {
+    navigationTab: (id) => `page-frame-navigation-tab-${id}`,
+    title: 'page-frame-title'
   },
   viewOrganizationPage: {
     settingsPageId: 3
-  },
-  deleteWidget: {
-    confirmationField: 'delete-widget-confirmation-field',
-    confirmButton: 'delete-widget-confirm-button'
   }
 };
