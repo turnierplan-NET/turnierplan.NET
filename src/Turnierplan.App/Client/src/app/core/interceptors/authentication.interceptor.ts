@@ -4,7 +4,7 @@ import { Observable, of, switchMap } from 'rxjs';
 
 import { AuthenticationService } from '../services/authentication.service';
 
-const doesPathRequireAuthentication = (path: string): boolean => {
+export const doesPathRequireAuthentication = (path: string): boolean => {
   return /^\/api(?!\/identity)/.test(path);
 };
 
