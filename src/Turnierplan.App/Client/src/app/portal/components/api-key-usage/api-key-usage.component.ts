@@ -61,10 +61,7 @@ export class ApiKeyUsageComponent implements OnDestroy {
 
           this.apiKeyUsageChart = {
             tooltip: {
-              trigger: 'axis',
-              axisPointer: {
-                type: 'none'
-              }
+              trigger: 'axis'
             },
             grid: {
               top: '20',
