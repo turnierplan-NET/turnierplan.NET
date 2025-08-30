@@ -9,7 +9,7 @@
     "url": "https://github.com/turnierplan-NET/turnierplan.NET"
   },
   "scripts": {
-    "e2e:prepare": "docker compose up -d",
+    "e2e:prepare": "docker compose up --build -d",
     "e2e:start": "npx cypress open",
     "e2e:destroy": "docker compose down"
   },
