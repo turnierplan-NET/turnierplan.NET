@@ -2,10 +2,14 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
 
 jobs:
   e2e:
-    name: 'E2E tests'
+    name: 'E2E Tests'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v2
