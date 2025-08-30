@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Turnierplan.App.Options;
 using Turnierplan.Core.User;
 using Turnierplan.Dal;
 using Turnierplan.Dal.Extensions;
@@ -26,22 +28,30 @@ internal static class WebApplicationExtensions
 
         if (userCount == 0)
         {
-            const string initialEmail = "admin@example.com";
-            var initialPassword = Guid.NewGuid().ToString();
+            var options = scope.ServiceProvider.GetRequiredService<IOptions<TurnierplanOptions>>().Value;
+
+            var overwriteInitialUserPassword = !string.IsNullOrWhiteSpace(options.InitialUserPassword);
+
+            var initialUserName = string.IsNullOrWhiteSpace(options.InitialUserName) ? "Administrator" : options.InitialUserName;
+            var initialUserEmail = string.IsNullOrWhiteSpace(options.InitialUserName) ? "admin@example.com" : options.InitialUserEmail;
+            var initialUserPassword = overwriteInitialUserPassword ? options.InitialUserPassword! : Guid.NewGuid().ToString();
 
             var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
 
-            var initialUser = new User("Administrator", initialEmail)
+            var initialUser = new User(initialUserName, initialUserEmail)
             {
                 IsAdministrator = true
             };
 
-            initialUser.UpdatePassword(passwordHasher.HashPassword(initialUser, initialPassword));
+            initialUser.UpdatePassword(passwordHasher.HashPassword(initialUser, initialUserPassword));
 
             await context.Users.AddAsync(initialUser).ConfigureAwait(false);
             await context.SaveChangesAsync().ConfigureAwait(false);
 
-            logger.LogInformation("An initial user was created. You can log in using \"{Email}\" and the password \"{Password}\". IMMEDIATELY change this password when running in a production environment!", initialEmail, initialPassword);
+            // Don't log the password if it was specified using an environment variable
+            var passwordForLogging = overwriteInitialUserPassword ? "****" : initialUserPassword;
+
+            logger.LogInformation("An initial user \"{Name}\" was created. You can log in using \"{Email}\" and the password \"{Password}\". IMMEDIATELY change this password when running in a production environment!", initialUserName, initialUserEmail, passwordForLogging);
         }
         else
         {
