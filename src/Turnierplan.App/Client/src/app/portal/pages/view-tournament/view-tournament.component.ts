@@ -58,6 +58,7 @@ import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.co
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { MatchTreeComponent } from '../../components/match-tree/match-tree.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { IdWidgetComponent } from '../../components/id-widget/id-widget.component';
 
 @Component({
   templateUrl: './view-tournament.component.html',
@@ -89,7 +90,8 @@ import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
     MatchTreeComponent,
     AsyncPipe,
     TranslatePipe,
-    TranslateDatePipe
+    TranslateDatePipe,
+    IdWidgetComponent
   ]
 })
 export class ViewTournamentComponent implements OnInit, OnDestroy {

@@ -37,6 +37,7 @@ import { ApiKeyUsageComponent } from '../../components/api-key-usage/api-key-usa
 import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { IdWidgetComponent } from '../../components/id-widget/id-widget.component';
 
 @Component({
   templateUrl: './view-organization.component.html',
@@ -62,7 +63,8 @@ import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
     DeleteWidgetComponent,
     AsyncPipe,
     TranslatePipe,
-    TranslateDatePipe
+    TranslateDatePipe,
+    IdWidgetComponent
   ]
 })
 export class ViewOrganizationComponent implements OnInit, OnDestroy {
