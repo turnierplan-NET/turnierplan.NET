@@ -1,6 +1,6 @@
 ﻿export const environment = {
   production: true,
   defaultTitle: 'turnierplan.NET',
-  version: '9.9.9',
+  version: '#{TOKEN_APPLICATION_VERSION}#',
   originOverwrite: undefined
 };
