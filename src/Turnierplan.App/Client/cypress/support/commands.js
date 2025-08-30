@@ -8,26 +8,32 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
+import { ids } from './ids';
+
 const makeIdentifier = () => {
   return `e2e_${`${Math.random()}`.substring(2)}`;
 };
 
+Cypress.Commands.add('getx', (id) => {
+  return cy.get(`[data-cy="${id}"]`);
+});
+
 Cypress.Commands.add('login', () => {
   cy.visit('/portal/login');
 
-  cy.get('input#email').type('admin@example.com');
-  cy.get('input#password').type('P@ssw0rd');
-  cy.get('button#loginButton').click();
+  cy.getx(ids.loginPage.emailField).type('admin@example.com');
+  cy.getx(ids.loginPage.passwordField).type('P@ssw0rd');
+  cy.getx(ids.loginPage.loginButton).click();
 });
 
 Cypress.Commands.add('add_organization', () => {
   const organizationName = makeIdentifier();
 
-  cy.get('#turnierplanLogoLink').click();
-  cy.get('#newOrganizationButton').click();
-  cy.get('input#create_organization_name').type(organizationName);
-  cy.get('#createOrganizationConfirmButton').click();
-  cy.get('span#pageFrameTitle').should('have.text', organizationName);
+  cy.getx(ids.header.logoLink).click();
+  cy.getx(ids.landingPage.newOrganizationButton).click();
+  cy.getx(ids.createOrganizationPage.organizationNameField).type(organizationName);
+  cy.getx(ids.createOrganizationPage.confirmButton).click();
+  cy.getx(ids.pageFrame.title).should('have.text', organizationName);
 
   return cy.wrap(organizationName);
 });
