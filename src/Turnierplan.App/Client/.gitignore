@@ -1,4 +1,5 @@
 .angular
+node_modules
 dist
 
 # Code coverage reports
