@@ -46,7 +46,7 @@
             [type]="'outline-primary'"
             [icon]="'cloud-upload-fill'"
             [title]="'Portal.ImageChooser.Upload'"
-            (click)="openFileSelectionDialog()" />
+            (buttonClick)="openFileSelectionDialog()" />
         }
       </div>
 
@@ -62,13 +62,13 @@
             <div
               class="hover-buttons d-none position-absolute flex-row align-items-center justify-content-center gap-2"
               style="top: 0; left: 0">
-              <tp-action-button [type]="'primary'" [mode]="'IconOnly'" [icon]="'info-circle'" (click)="imageForDetailView = image" />
+              <tp-action-button [type]="'primary'" [mode]="'IconOnly'" [icon]="'info-circle'" (buttonClick)="imageForDetailView = image" />
               @if (image.id !== currentImageId) {
                 <tp-action-button
                   [type]="'success'"
                   [mode]="'IconOnly'"
                   [icon]="'check-lg'"
-                  (click)="image.id !== currentImageId && modal.close({ type: 'ImageSelected', image: image })" />
+                  (buttonClick)="image.id !== currentImageId && modal.close({ type: 'ImageSelected', image: image })" />
               }
             </div>
             <div class="image-wrapper d-flex flex-column align-items-center justify-content-center">
@@ -89,15 +89,15 @@
   @if (!isLoadingImages) {
     <div class="modal-footer">
       @if (isInImageDetailView) {
-        <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Back'" (click)="imageForDetailView = undefined" />
+        <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Back'" (buttonClick)="imageForDetailView = undefined" />
       } @else {
         @if (currentImageId !== undefined && !isInImageDetailView) {
           <tp-action-button
             [type]="'outline-secondary'"
             [title]="'Portal.ImageChooser.Remove'"
-            (click)="modal.close({ type: 'ImageSelected', image: undefined })" />
+            (buttonClick)="modal.close({ type: 'ImageSelected', image: undefined })" />
         }
-        <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
+        <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
       }
     </div>
   }

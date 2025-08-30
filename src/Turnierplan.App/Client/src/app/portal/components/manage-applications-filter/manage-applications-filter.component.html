@@ -31,11 +31,11 @@
       [icon]="'x-circle'"
       [mode]="'IconOnly'"
       [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.FilterPanel.Reset' | translate"
-      (click)="resetAndEmitFilter()" />
+      (buttonClick)="resetAndEmitFilter()" />
     <tp-action-button
       [type]="'outline-primary'"
       [icon]="'search'"
       [title]="'Portal.ViewPlanningRealm.Applications.FilterPanel.Search'"
-      (click)="emitFilter()" />
+      (buttonClick)="emitFilter()" />
   </div>
 </div>

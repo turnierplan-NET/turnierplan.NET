@@ -50,6 +50,10 @@
   <hr />
 
   <div class="d-flex flex-row justify-content-end">
-    <tp-action-button [type]="'success'" [title]="'Portal.CreateUser.Submit'" [disabled]="form.invalid" (click)="confirmButtonClicked()" />
+    <tp-action-button
+      [type]="'success'"
+      [title]="'Portal.CreateUser.Submit'"
+      [disabled]="form.invalid"
+      (buttonClick)="confirmButtonClicked()" />
   </div>
 </tp-page-frame>

@@ -136,7 +136,7 @@
                     [icon]="'x-circle'"
                     [mode]="'IconOnly'"
                     [attr.aria-label]="'Portal.ViewTournament.Documents.ConfigureModal.Receipts.RemoveReducedAmount' | translate"
-                    (click)="removeReducedAmountEntry(amountKey)" />
+                    (buttonClick)="removeReducedAmountEntry(amountKey)" />
                 </div>
                 @if (amount(amountKey).touched && !amount(amountKey).valid) {
                   <div class="invalid-feedback" translate="Portal.ViewTournament.Documents.ConfigureModal.Receipts.AmountInvalid"></div>
@@ -157,7 +157,7 @@
         [type]="'outline-primary'"
         [icon]="'plus-circle'"
         [title]="'Portal.ViewTournament.Documents.ConfigureModal.Receipts.AddReducedAmount'"
-        (click)="addReducedAmountEntry()" />
+        (buttonClick)="addReducedAmountEntry()" />
     }
   }
 </form>

@@ -44,7 +44,7 @@
                       [type]="'outline-danger'"
                       [mode]="'IconOnly'"
                       [disabled]="user.id === currentUserId"
-                      (click)="deleteButtonClicked(user.id, deleteConfirmationCanvas)" />
+                      (buttonClick)="deleteButtonClicked(user.id, deleteConfirmationCanvas)" />
                   </td>
                 </tr>
               }

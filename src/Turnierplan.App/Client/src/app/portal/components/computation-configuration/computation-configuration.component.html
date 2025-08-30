@@ -125,7 +125,7 @@
   @if (isSaving) {
     <tp-small-spinner />
   } @else {
-    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
-    <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" (click)="saveClicked()" />
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
+    <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" (buttonClick)="saveClicked()" />
   }
 </div>

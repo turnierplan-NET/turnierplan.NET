@@ -50,7 +50,7 @@
         [type]="'success'"
         [title]="'Portal.ConfigureTournament.Submit'"
         [disabled]="!canSave"
-        (click)="saveButtonClicked()" />
+        (buttonClick)="saveButtonClicked()" />
     </div>
   </div>
 </tp-page-frame>
@@ -133,7 +133,7 @@
           [type]="'outline-primary'"
           [icon]="'plus-circle'"
           [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeamButton'"
-          (click)="addTeam(group, teamNameInput)" />
+          (buttonClick)="addTeam(group, teamNameInput)" />
       </div>
     </div>
   } @empty {
@@ -148,12 +148,12 @@
       [icon]="'shuffle'"
       [disabled]="totalTeamCount <= 1"
       [title]="'Portal.ConfigureTournament.Sections.Participants.ShuffleGroupsButton'"
-      (click)="shuffleGroups()" />
+      (buttonClick)="shuffleGroups()" />
     <tp-action-button
       [type]="'outline-primary'"
       [icon]="'plus-circle'"
       [title]="'Portal.ConfigureTournament.Sections.Participants.AddGroupButton'"
-      (click)="addGroup()" />
+      (buttonClick)="addGroup()" />
   </div>
 </ng-template>
 

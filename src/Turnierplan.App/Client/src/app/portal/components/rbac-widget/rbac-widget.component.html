@@ -1,5 +1,5 @@
 @if (buttonOnly) {
-  <tp-action-button [type]="'outline-secondary'" [icon]="'shield-lock'" [mode]="'IconOnly'" (click)="buttonClicked()" />
+  <tp-action-button [type]="'outline-secondary'" [icon]="'shield-lock'" [mode]="'IconOnly'" (buttonClick)="buttonClicked()" />
 } @else {
   <div class="fw-bold mb-3" translate="Portal.RbacManagement.Title"></div>
   <div translate="{{ translationKey }}.Info"></div>
@@ -9,6 +9,6 @@
       [type]="'outline-secondary'"
       [icon]="'shield-lock'"
       [title]="'Portal.RbacManagement.ButtonLabel'"
-      (click)="buttonClicked()" />
+      (buttonClick)="buttonClicked()" />
   </div>
 }

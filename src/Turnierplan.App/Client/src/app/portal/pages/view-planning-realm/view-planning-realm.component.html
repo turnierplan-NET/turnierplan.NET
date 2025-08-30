@@ -17,7 +17,7 @@
               [title]="'Portal.ViewPlanningRealm.NewTournamentClass.Title'"
               [type]="'outline-success'"
               [icon]="'plus-circle'"
-              (click)="addTournamentClass()" />
+              (buttonClick)="addTournamentClass()" />
           }
           @case (1) {
             <!-- Invitation links page -->
@@ -26,7 +26,7 @@
               [title]="'Portal.ViewPlanningRealm.NewInvitationLink.Title'"
               [type]="'outline-success'"
               [icon]="'plus-circle'"
-              (click)="addInvitationLink()" />
+              (buttonClick)="addInvitationLink()" />
           }
           @case (2) {
             <!-- Applications page -->
@@ -42,7 +42,7 @@
               [disabled]="!canAddApplications"
               [type]="'outline-success'"
               [icon]="'plus-circle'"
-              (click)="addApplication()" />
+              (buttonClick)="addApplication()" />
           }
           @case (3) {
             <tp-rename-button

@@ -17,13 +17,13 @@
                   [title]="'Portal.ViewTournament.MatchPlan.ShowMatchList'"
                   [type]="'outline-secondary'"
                   [icon]="'list-columns'"
-                  (click)="showTournamentTree = false" />
+                  (buttonClick)="showTournamentTree = false" />
               } @else {
                 <tp-action-button
                   [title]="'Portal.ViewTournament.MatchPlan.ShowMatchTree'"
                   [type]="'outline-secondary'"
                   [icon]="'diagram-2'"
-                  (click)="showTournamentTree = true" />
+                  (buttonClick)="showTournamentTree = true" />
               }
             }
           }
@@ -33,12 +33,12 @@
                 [title]="'Portal.ViewTournament.Documents.Copy'"
                 [type]="'outline-secondary'"
                 [icon]="'copy'"
-                (click)="copyDocument()" />
+                (buttonClick)="copyDocument()" />
               <tp-action-button
                 [title]="'Portal.ViewTournament.Documents.Create'"
                 [type]="'outline-success'"
                 [icon]="'plus-circle'"
-                (click)="createDocument()" />
+                (buttonClick)="createDocument()" />
             </ng-container>
           }
           @case (6) {
@@ -241,7 +241,7 @@
                   [type]="'outline-secondary'"
                   [title]="'Portal.General.Change'"
                   [icon]="'gear'"
-                  (click)="editVenueAssignment()" />
+                  (buttonClick)="editVenueAssignment()" />
               </div>
               <hr class="m-0" />
               <div class="card-body">
@@ -281,7 +281,7 @@
                   [type]="'outline-secondary'"
                   [title]="'Portal.ViewTournament.Settings.EditComputationConfig.Button'"
                   [icon]="'gear'"
-                  (click)="editComputationConfiguration()" />
+                  (buttonClick)="editComputationConfiguration()" />
               </div>
               <hr class="m-0" />
               <div class="card-body">
@@ -335,7 +335,7 @@
                   [type]="'outline-secondary'"
                   [title]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.Button'"
                   [icon]="'box-arrow-right'"
-                  (click)="moveToAnotherFolder()" />
+                  (buttonClick)="moveToAnotherFolder()" />
               </div>
               <ng-container *tpIsActionAllowed="[tournament.id, Actions.ReadOrWriteRoleAssignments]">
                 <hr class="m-0" />
