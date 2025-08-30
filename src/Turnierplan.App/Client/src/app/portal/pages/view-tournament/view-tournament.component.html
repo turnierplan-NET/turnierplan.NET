@@ -1,366 +1,371 @@
 ﻿<ng-container *tpLoadingState="loadingState">
-  <tp-page-frame
-    *ngIf="tournament"
-    [title]="tournament.name"
-    [backLink]="'../../organization/' + tournament.organizationId"
-    [navigationTabs]="pages"
-    [contextEntityId]="tournament.id"
-    [rememberNavigationTab]="true"
-    [hideMainContent]="isTournamentTreeVisible"
-    (navigationTabSelected)="togglePage($event.id)">
-    <ng-template #buttons>
-      @switch (currentPage) {
-        @case (0) {
-          @if (canShowTournamentTree) {
-            @if (showTournamentTree) {
-              <tp-action-button
-                [title]="'Portal.ViewTournament.MatchPlan.ShowMatchList'"
-                [type]="'outline-secondary'"
-                [icon]="'list-columns'"
-                (click)="showTournamentTree = false" />
-            } @else {
-              <tp-action-button
-                [title]="'Portal.ViewTournament.MatchPlan.ShowMatchTree'"
-                [type]="'outline-secondary'"
-                [icon]="'diagram-2'"
-                (click)="showTournamentTree = true" />
-            }
-          }
-        }
-        @case (4) {
-          <ng-container *tpIsActionAllowed="[tournament.id, Actions.GenericWrite]">
-            <tp-action-button
-              [title]="'Portal.ViewTournament.Documents.Copy'"
-              [type]="'outline-secondary'"
-              [icon]="'copy'"
-              (click)="copyDocument()" />
-            <tp-action-button
-              [title]="'Portal.ViewTournament.Documents.Create'"
-              [type]="'outline-success'"
-              [icon]="'plus-circle'"
-              (click)="createDocument()" />
-          </ng-container>
-        }
-        @case (6) {
-          @if (isUpdatingName) {
-            <tp-small-spinner />
-          }
-          <tp-rename-button
-            translationKey="Portal.ViewTournament.Settings.Rename"
-            [current]="tournament.name"
-            [disabled]="isUpdatingName"
-            (renamed)="renameTournament($event)" />
-        }
-      }
-    </ng-template>
-    <ng-template #mainContent>
-      <div class="card" [ngClass]="{ 'd-none': isTournamentTreeVisible }">
+  @if (tournament) {
+    <tp-page-frame
+      [title]="tournament.name"
+      [backLink]="'../../organization/' + tournament.organizationId"
+      [navigationTabs]="pages"
+      [contextEntityId]="tournament.id"
+      [rememberNavigationTab]="true"
+      [hideMainContent]="isTournamentTreeVisible"
+      (navigationTabSelected)="togglePage($event.id)">
+      <ng-template #buttons>
         @switch (currentPage) {
           @case (0) {
-            <div class="card-header d-flex flex-row align-items-center">
-              @if (tournamentDate !== undefined) {
-                <tp-badge context="ViewTournament" label="Date" [value]="tournamentDate | translateDate: 'longDate'" />
+            @if (canShowTournamentTree) {
+              @if (showTournamentTree) {
+                <tp-action-button
+                  [title]="'Portal.ViewTournament.MatchPlan.ShowMatchList'"
+                  [type]="'outline-secondary'"
+                  [icon]="'list-columns'"
+                  (click)="showTournamentTree = false" />
+              } @else {
+                <tp-action-button
+                  [title]="'Portal.ViewTournament.MatchPlan.ShowMatchTree'"
+                  [type]="'outline-secondary'"
+                  [icon]="'diagram-2'"
+                  (click)="showTournamentTree = true" />
               }
-              <tp-badge context="ViewTournament" label="MatchCount" [value]="processedMatches.length" />
-              <tp-badge context="ViewTournament" label="GoalCount" [value]="totalScoreCount" />
-              <span class="flex-grow-1"></span>
-              <div class="form-check mb-0">
-                <input
-                  class="form-check-input me-2"
-                  id="accumulateScoreCheckbox"
-                  type="checkbox"
-                  [ngModel]="showAccumulatedScore"
-                  (ngModelChange)="saveAccumulatedScoreSetting($event)" />
-                <label
-                  class="form-check-label"
-                  for="accumulateScoreCheckbox"
-                  translate="Portal.ViewTournament.MatchPlan.AccumulateGoals"></label>
-              </div>
-            </div>
-            <div class="card-body p-0">
-              <tp-match-plan
-                [allowReporting]="(authorizationService.isActionAllowed$(tournament.id, Actions.TournamentConduct) | async) ?? false"
-                [showAccumulatedScore]="showAccumulatedScore"
-                [matches]="processedMatches"
-                [groups]="processedGroups"
-                (matchClick)="matchClicked($event)"></tp-match-plan>
-              @if (processedMatches.length === 0) {
-                <div class="mt-5 mb-3 d-flex flex-row justify-content-center">
-                  <tp-action-button
-                    [type]="'success'"
-                    [icon]="'arrow-right-circle'"
-                    [mode]="'IconRightAndText'"
-                    [title]="'Portal.ViewTournament.MatchPlan.CreateMatchPlan'"
-                    [routerLink]="'configure'" />
-                </div>
-              }
-            </div>
-          }
-          @case (1) {
-            <div class="card-header d-flex flex-row align-items-center">
-              <tp-badge context="ViewTournament" label="GroupCount" [value]="processedGroups.length" />
-            </div>
-            <div class="card-body p-0">
-              <tp-groups
-                [tournamentId]="tournament.id"
-                [groups]="processedGroups"
-                (groupRename)="renameGroup($event.groupId, $event.name)" />
-            </div>
-          }
-          @case (2) {
-            <div class="card-header d-flex flex-row align-items-center">
-              <tp-badge context="ViewTournament" label="TeamCount" [value]="processedTeams.length" />
-            </div>
-            <div class="card-body p-0">
-              <tp-team-list
-                [tournamentId]="tournament.id"
-                [teams]="processedTeams"
-                (teamRename)="renameTeam($event.teamId, $event.name)"
-                (teamSetPriority)="setTeamPriority($event.teamId, $event.groupId, $event.priority)"
-                (teamSetEntryFeePaid)="setTeamEntryFeePaid($event.teamId, $event.entryFeePaid)"
-                (teamSetOutOfCompetition)="setTeamOutOfCompetition($event.teamId, $event.outOfCompetition)" />
-            </div>
-          }
-          @case (3) {
-            <div class="card-header d-flex flex-row align-items-center">
-              <tp-badge context="ViewTournament" label="RankingsCount" [value]="processedRankings.length" />
-            </div>
-            <div class="card-body p-0">
-              <tp-ranking [rankings]="processedRankings" />
-            </div>
+            }
           }
           @case (4) {
-            @if (isLoadingDocuments || !documents) {
-              <tp-loading-indicator class="my-5" [marginY]="false" />
-            } @else {
-              <div class="card-header d-flex flex-row align-items-center">
-                <tp-badge context="ViewTournament" label="DocumentsCount" [value]="documents.length" />
-              </div>
-              <div class="card-body p-0">
-                <tp-document-manager
-                  [tournamentId]="tournament.id"
-                  [tournamentName]="tournament.name"
-                  [documents]="documents"
-                  [recentDocumentId]="recentDocumentId"
-                  (deleteClick)="deleteDocument($event)"
-                  (errorOccured)="loadingState = { isLoading: false, error: $event }" />
-              </div>
-            }
-          }
-          @case (5) {
-            <div class="card-body">
-              <div class="fw-bold mb-3" translate="Portal.ViewTournament.Share.Title"></div>
-              <div class="mb-3" [innerHTML]="'Portal.ViewTournament.Share.Info' | translate"></div>
-
-              <div class="d-flex flex-row gap-2 align-items-center">
-                <tp-visibility-selector
-                  [ngClass]="{ 'pe-none': isUpdatingVisibility }"
-                  [visibility]="tournament.visibility"
-                  [disabled]="(authorizationService.isActionNotAllowed$(tournament.id, Actions.GenericWrite) | async) ?? true"
-                  (visibilityChange)="setTournamentVisibility($event)" />
-
-                @if (isUpdatingVisibility) {
-                  <tp-small-spinner />
-                }
-              </div>
-
-              @if (tournament.visibility === Visibility.Private) {
-                <tp-alert margin="mb-0 mt-4" type="secondary" icon="info-circle" text="Portal.ViewTournament.Share.QrCodeNotice" />
-              }
-            </div>
-            @if (tournament.visibility === Visibility.Public) {
-              <hr class="m-0" />
-              <div class="card-body">
-                <tp-share-widget
-                  [resourcePath]="'/tournament?id=' + tournament.id"
-                  [resourceName]="'Portal.ViewTournament.Share.QrCodeDownloadFileName' | translate: { tournamentName: tournament.name }"
-                  [translationKey]="'Portal.ViewTournament.Share.VisitorLink'"
-                  [viewsCounter]="tournament.publicPageViews" />
-              </div>
-              <hr class="m-0" />
-              <div class="card-body">
-                <tp-share-widget
-                  [resourcePath]="'/tournamentFullscreen?id=' + tournament.id"
-                  [translationKey]="'Portal.ViewTournament.Share.FullscreenLink'"
-                  [showQrCode]="false" />
-              </div>
-              <hr class="m-0" />
-              <div class="card-body">
-                <tp-presentation-config-widget
-                  [tournamentId]="tournament.id"
-                  [organizationId]="tournament.organizationId"
-                  [organizationName]="tournament.organizationName"
-                  [config]="tournament.presentationConfiguration"
-                  [canSaveChanges]="(authorizationService.isActionAllowed$(tournament.id, Actions.GenericWrite) | async) ?? false"
-                  (errorOccured)="loadingState = { isLoading: false, error: $event }" />
-              </div>
-            }
+            <ng-container *tpIsActionAllowed="[tournament.id, Actions.GenericWrite]">
+              <tp-action-button
+                [title]="'Portal.ViewTournament.Documents.Copy'"
+                [type]="'outline-secondary'"
+                [icon]="'copy'"
+                (click)="copyDocument()" />
+              <tp-action-button
+                [title]="'Portal.ViewTournament.Documents.Create'"
+                [type]="'outline-success'"
+                [icon]="'plus-circle'"
+                (click)="createDocument()" />
+            </ng-container>
           }
           @case (6) {
-            <div class="card-body">
-              <div class="fw-bold mb-3" translate="Portal.ViewTournament.Settings.EditMatchPlan.Title"></div>
-              @if (processedMatches.length > 0) {
-                <div class="mb-3" [innerHTML]="'Portal.ViewTournament.Settings.EditMatchPlan.EditAndRecreateInfo' | translate"></div>
-                <tp-action-button
-                  [type]="'outline-secondary'"
-                  [title]="'Portal.ViewTournament.Settings.EditMatchPlan.ButtonEdit'"
-                  [icon]="'gear'"
-                  [routerLink]="'edit-match-plan'" />
-                <tp-action-button
-                  class="ms-2"
-                  [type]="'outline-danger'"
-                  [title]="'Portal.ViewTournament.Settings.EditMatchPlan.ButtonRecreate'"
-                  [icon]="'arrow-clockwise'"
-                  [routerLink]="'configure'" />
-              } @else {
-                <div class="mb-3" translate="Portal.ConfigureTournament.Subtitle"></div>
-                <tp-action-button
-                  [type]="'outline-primary'"
-                  [title]="'Portal.ViewTournament.Settings.EditMatchPlan.ButtonCreate'"
-                  [icon]="'gear'"
-                  [routerLink]="'configure'" />
-              }
-            </div>
-            <hr class="m-0" />
-            <div class="card-body">
-              <div class="fw-bold mb-3" translate="Portal.ViewTournament.Settings.EditVenue.Title"></div>
-              <div class="mb-3" translate="Portal.ViewTournament.Settings.EditVenue.Info"></div>
-              @if (tournament.venueId && tournament.venueName) {
-                <div class="mb-3 d-flex flex-row gap-2 align-items-center">
-                  <span translate="Portal.ViewTournament.Settings.EditVenue.CurrentVenue"></span>
-                  <span class="fw-bold">{{ tournament.venueName }}</span>
-                  <a class="card-link" [routerLink]="'../../venue/' + tournament.venueId">
-                    <span translate="Portal.ViewTournament.Settings.EditVenue.Open"></span>
-                    <i class="ms-2 bi bi-arrow-right-circle" aria-hidden="true"></i>
-                  </a>
-                </div>
-              } @else {
-                <div class="mb-3 fst-italic" translate="Portal.ViewTournament.Settings.EditVenue.NoVenue"></div>
-              }
-              <tp-action-button
-                [type]="'outline-secondary'"
-                [title]="'Portal.General.Change'"
-                [icon]="'gear'"
-                (click)="editVenueAssignment()" />
-            </div>
-            <hr class="m-0" />
-            <div class="card-body">
-              <div class="fw-bold mb-3" translate="Portal.ViewTournament.Settings.EditComputationConfig.Title"></div>
-              <div class="mb-3" translate="Portal.ViewTournament.Settings.EditComputationConfig.Info"></div>
-              <div class="mb-2 d-flex flex-row gap-2">
-                <span translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.MatchWonPoints"></span>
-                <span class="fw-bold">{{ tournament.computationConfiguration.matchWonPoints }}</span>
-                <span class="border-end"></span>
-                <span translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.MatchDrawnPoints"></span>
-                <span class="fw-bold">{{ tournament.computationConfiguration.matchDrawnPoints }}</span>
-                <span class="border-end"></span>
-                <span translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.MatchLostPoints"></span>
-                <span class="fw-bold">{{ tournament.computationConfiguration.matchLostPoints }}</span>
-              </div>
-              @if (tournament.computationConfiguration.higherScoreLoses) {
-                <div
-                  class="mb-2"
-                  translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.HigherScoreLoses.Activated"></div>
-              }
-              <div class="mb-3 d-flex flex-row">
-                <span class="me-2" translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.ComparisonModes.Label"></span>
-                @for (entry of tournament.computationConfiguration.comparisonModes; track entry; let isLast = $last) {
-                  <span
-                    class="fw-bold"
-                    [translate]="'Portal.ViewTournament.Settings.EditComputationConfig.Properties.ComparisonModes.Values.' + entry"></span>
-                  @if (!isLast) {
-                    <span>,&nbsp;</span>
-                  }
-                }
-              </div>
-              <tp-action-button
-                [type]="'outline-secondary'"
-                [title]="'Portal.ViewTournament.Settings.EditComputationConfig.Button'"
-                [icon]="'gear'"
-                (click)="editComputationConfiguration()" />
-            </div>
-            <hr class="m-0" />
-            <div class="card-body">
-              <div class="fw-bold mb-3" translate="Portal.ViewTournament.Settings.EditImages.Title"></div>
-              @if (isLoadingImages || !images || isUpdatingImage) {
-                <tp-loading-indicator class="my-5" [marginY]="false" />
-              } @else {
-                <div class="d-flex flex-column flex-md-row gap-2">
-                  <tp-image-widget
-                    class="flex-md-grow-1"
-                    [currentImage]="images.organizerLogo"
-                    [imageAlt]="'OrganizerLogo'"
-                    [imageType]="ImageType.SquareLargeLogo"
-                    [organizationId]="tournament.organizationId"
-                    (imageChange)="setImage('organizerLogo', $event?.id)"
-                    (imageDelete)="loadTournamentImages()"
-                    (apiError)="loadingState = { isLoading: false, error: $event }" />
-                  <tp-image-widget
-                    class="flex-md-grow-1"
-                    [currentImage]="images.sponsorLogo"
-                    [imageAlt]="'SponsorLogo'"
-                    [imageType]="ImageType.SquareLargeLogo"
-                    [organizationId]="tournament.organizationId"
-                    (imageChange)="setImage('sponsorLogo', $event?.id)"
-                    (imageDelete)="loadTournamentImages()"
-                    (apiError)="loadingState = { isLoading: false, error: $event }" />
-                  <tp-image-widget
-                    class="flex-md-grow-1"
-                    [currentImage]="images.sponsorBanner"
-                    [imageAlt]="'SponsorBanner'"
-                    [imageType]="ImageType.SponsorBanner"
-                    [organizationId]="tournament.organizationId"
-                    (imageChange)="setImage('sponsorBanner', $event?.id)"
-                    (imageDelete)="loadTournamentImages()"
-                    (apiError)="loadingState = { isLoading: false, error: $event }" />
-                </div>
-              }
-            </div>
-            <hr class="m-0" />
-            <div class="card-body">
-              <div class="fw-bold mb-3" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.Title"></div>
-              @if (tournament.folderId) {
-                <div class="mb-3">
-                  <span class="me-2" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.CurrentFolderName"></span>
-                  <strong>{{ tournament.folderName }}</strong>
-                </div>
-              } @else {
-                <div class="mb-3" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.CurrentlyNoFolder"></div>
-              }
-              <tp-action-button
-                [type]="'outline-secondary'"
-                [title]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.Button'"
-                [icon]="'box-arrow-right'"
-                (click)="moveToAnotherFolder()" />
-            </div>
-            <ng-container *tpIsActionAllowed="[tournament.id, Actions.ReadOrWriteRoleAssignments]">
-              <hr class="m-0" />
-              <div class="card-body">
-                <tp-rbac-widget
-                  [translationKey]="'Portal.ViewTournament.RbacWidget'"
-                  [target]="tournament"
-                  (errorOccured)="loadingState = { isLoading: false, error: $event }" />
-              </div>
-            </ng-container>
-            <hr class="m-0" />
-            <div class="card-body">
-              <tp-delete-widget
-                [translationKey]="'Portal.ViewTournament.DeleteWidget'"
-                [targetObjectName]="tournament.name"
-                (deleteClick)="deleteTournament()" />
-            </div>
+            @if (isUpdatingName) {
+              <tp-small-spinner />
+            }
+            <tp-rename-button
+              translationKey="Portal.ViewTournament.Settings.Rename"
+              [current]="tournament.name"
+              [disabled]="isUpdatingName"
+              (renamed)="renameTournament($event)" />
           }
         }
-      </div>
-    </ng-template>
-    <ng-template #fullWidthContent>
-      @if (tournament && isTournamentTreeVisible) {
-        <tp-match-tree
-          [allowReporting]="(authorizationService.isActionAllowed$(tournament.id, Actions.TournamentConduct) | async) ?? false"
-          [matches]="processedMatches"
-          [groups]="processedGroups"
-          (matchClick)="matchClicked($event)" />
-      }
-    </ng-template>
-  </tp-page-frame>
+      </ng-template>
+      <ng-template #mainContent>
+        <div class="card" [ngClass]="{ 'd-none': isTournamentTreeVisible }">
+          @switch (currentPage) {
+            @case (0) {
+              <div class="card-header d-flex flex-row align-items-center">
+                @if (tournamentDate !== undefined) {
+                  <tp-badge context="ViewTournament" label="Date" [value]="tournamentDate | translateDate: 'longDate'" />
+                }
+                <tp-badge context="ViewTournament" label="MatchCount" [value]="processedMatches.length" />
+                <tp-badge context="ViewTournament" label="GoalCount" [value]="totalScoreCount" />
+                <span class="flex-grow-1"></span>
+                <div class="form-check mb-0">
+                  <input
+                    class="form-check-input me-2"
+                    id="accumulateScoreCheckbox"
+                    type="checkbox"
+                    [ngModel]="showAccumulatedScore"
+                    (ngModelChange)="saveAccumulatedScoreSetting($event)" />
+                  <label
+                    class="form-check-label"
+                    for="accumulateScoreCheckbox"
+                    translate="Portal.ViewTournament.MatchPlan.AccumulateGoals"></label>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <tp-match-plan
+                  [allowReporting]="(authorizationService.isActionAllowed$(tournament.id, Actions.TournamentConduct) | async) ?? false"
+                  [showAccumulatedScore]="showAccumulatedScore"
+                  [matches]="processedMatches"
+                  [groups]="processedGroups"
+                  (matchClick)="matchClicked($event)"></tp-match-plan>
+                @if (processedMatches.length === 0) {
+                  <div class="mt-5 mb-3 d-flex flex-row justify-content-center">
+                    <tp-action-button
+                      [type]="'success'"
+                      [icon]="'arrow-right-circle'"
+                      [mode]="'IconRightAndText'"
+                      [title]="'Portal.ViewTournament.MatchPlan.CreateMatchPlan'"
+                      [routerLink]="'configure'" />
+                  </div>
+                }
+              </div>
+            }
+            @case (1) {
+              <div class="card-header d-flex flex-row align-items-center">
+                <tp-badge context="ViewTournament" label="GroupCount" [value]="processedGroups.length" />
+              </div>
+              <div class="card-body p-0">
+                <tp-groups
+                  [tournamentId]="tournament.id"
+                  [groups]="processedGroups"
+                  (groupRename)="renameGroup($event.groupId, $event.name)" />
+              </div>
+            }
+            @case (2) {
+              <div class="card-header d-flex flex-row align-items-center">
+                <tp-badge context="ViewTournament" label="TeamCount" [value]="processedTeams.length" />
+              </div>
+              <div class="card-body p-0">
+                <tp-team-list
+                  [tournamentId]="tournament.id"
+                  [teams]="processedTeams"
+                  (teamRename)="renameTeam($event.teamId, $event.name)"
+                  (teamSetPriority)="setTeamPriority($event.teamId, $event.groupId, $event.priority)"
+                  (teamSetEntryFeePaid)="setTeamEntryFeePaid($event.teamId, $event.entryFeePaid)"
+                  (teamSetOutOfCompetition)="setTeamOutOfCompetition($event.teamId, $event.outOfCompetition)" />
+              </div>
+            }
+            @case (3) {
+              <div class="card-header d-flex flex-row align-items-center">
+                <tp-badge context="ViewTournament" label="RankingsCount" [value]="processedRankings.length" />
+              </div>
+              <div class="card-body p-0">
+                <tp-ranking [rankings]="processedRankings" />
+              </div>
+            }
+            @case (4) {
+              @if (isLoadingDocuments || !documents) {
+                <tp-loading-indicator class="my-5" [marginY]="false" />
+              } @else {
+                <div class="card-header d-flex flex-row align-items-center">
+                  <tp-badge context="ViewTournament" label="DocumentsCount" [value]="documents.length" />
+                </div>
+                <div class="card-body p-0">
+                  <tp-document-manager
+                    [tournamentId]="tournament.id"
+                    [tournamentName]="tournament.name"
+                    [documents]="documents"
+                    [recentDocumentId]="recentDocumentId"
+                    (deleteClick)="deleteDocument($event)"
+                    (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+                </div>
+              }
+            }
+            @case (5) {
+              <div class="card-body">
+                <div class="fw-bold mb-3" translate="Portal.ViewTournament.Share.Title"></div>
+                <div class="mb-3" [innerHTML]="'Portal.ViewTournament.Share.Info' | translate"></div>
+
+                <div class="d-flex flex-row gap-2 align-items-center">
+                  <tp-visibility-selector
+                    [ngClass]="{ 'pe-none': isUpdatingVisibility }"
+                    [visibility]="tournament.visibility"
+                    [disabled]="(authorizationService.isActionNotAllowed$(tournament.id, Actions.GenericWrite) | async) ?? true"
+                    (visibilityChange)="setTournamentVisibility($event)" />
+
+                  @if (isUpdatingVisibility) {
+                    <tp-small-spinner />
+                  }
+                </div>
+
+                @if (tournament.visibility === Visibility.Private) {
+                  <tp-alert margin="mb-0 mt-4" type="secondary" icon="info-circle" text="Portal.ViewTournament.Share.QrCodeNotice" />
+                }
+              </div>
+              @if (tournament.visibility === Visibility.Public) {
+                <hr class="m-0" />
+                <div class="card-body">
+                  <tp-share-widget
+                    [resourcePath]="'/tournament?id=' + tournament.id"
+                    [resourceName]="'Portal.ViewTournament.Share.QrCodeDownloadFileName' | translate: { tournamentName: tournament.name }"
+                    [translationKey]="'Portal.ViewTournament.Share.VisitorLink'"
+                    [viewsCounter]="tournament.publicPageViews" />
+                </div>
+                <hr class="m-0" />
+                <div class="card-body">
+                  <tp-share-widget
+                    [resourcePath]="'/tournamentFullscreen?id=' + tournament.id"
+                    [translationKey]="'Portal.ViewTournament.Share.FullscreenLink'"
+                    [showQrCode]="false" />
+                </div>
+                <hr class="m-0" />
+                <div class="card-body">
+                  <tp-presentation-config-widget
+                    [tournamentId]="tournament.id"
+                    [organizationId]="tournament.organizationId"
+                    [organizationName]="tournament.organizationName"
+                    [config]="tournament.presentationConfiguration"
+                    [canSaveChanges]="(authorizationService.isActionAllowed$(tournament.id, Actions.GenericWrite) | async) ?? false"
+                    (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+                </div>
+              }
+            }
+            @case (6) {
+              <div class="card-body">
+                <div class="fw-bold mb-3" translate="Portal.ViewTournament.Settings.EditMatchPlan.Title"></div>
+                @if (processedMatches.length > 0) {
+                  <div class="mb-3" [innerHTML]="'Portal.ViewTournament.Settings.EditMatchPlan.EditAndRecreateInfo' | translate"></div>
+                  <tp-action-button
+                    [type]="'outline-secondary'"
+                    [title]="'Portal.ViewTournament.Settings.EditMatchPlan.ButtonEdit'"
+                    [icon]="'gear'"
+                    [routerLink]="'edit-match-plan'" />
+                  <tp-action-button
+                    class="ms-2"
+                    [type]="'outline-danger'"
+                    [title]="'Portal.ViewTournament.Settings.EditMatchPlan.ButtonRecreate'"
+                    [icon]="'arrow-clockwise'"
+                    [routerLink]="'configure'" />
+                } @else {
+                  <div class="mb-3" translate="Portal.ConfigureTournament.Subtitle"></div>
+                  <tp-action-button
+                    [type]="'outline-primary'"
+                    [title]="'Portal.ViewTournament.Settings.EditMatchPlan.ButtonCreate'"
+                    [icon]="'gear'"
+                    [routerLink]="'configure'" />
+                }
+              </div>
+              <hr class="m-0" />
+              <div class="card-body">
+                <div class="fw-bold mb-3" translate="Portal.ViewTournament.Settings.EditVenue.Title"></div>
+                <div class="mb-3" translate="Portal.ViewTournament.Settings.EditVenue.Info"></div>
+                @if (tournament.venueId && tournament.venueName) {
+                  <div class="mb-3 d-flex flex-row gap-2 align-items-center">
+                    <span translate="Portal.ViewTournament.Settings.EditVenue.CurrentVenue"></span>
+                    <span class="fw-bold">{{ tournament.venueName }}</span>
+                    <a class="card-link" [routerLink]="'../../venue/' + tournament.venueId">
+                      <span translate="Portal.ViewTournament.Settings.EditVenue.Open"></span>
+                      <i class="ms-2 bi bi-arrow-right-circle" aria-hidden="true"></i>
+                    </a>
+                  </div>
+                } @else {
+                  <div class="mb-3 fst-italic" translate="Portal.ViewTournament.Settings.EditVenue.NoVenue"></div>
+                }
+                <tp-action-button
+                  [type]="'outline-secondary'"
+                  [title]="'Portal.General.Change'"
+                  [icon]="'gear'"
+                  (click)="editVenueAssignment()" />
+              </div>
+              <hr class="m-0" />
+              <div class="card-body">
+                <div class="fw-bold mb-3" translate="Portal.ViewTournament.Settings.EditComputationConfig.Title"></div>
+                <div class="mb-3" translate="Portal.ViewTournament.Settings.EditComputationConfig.Info"></div>
+                <div class="mb-2 d-flex flex-row gap-2">
+                  <span translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.MatchWonPoints"></span>
+                  <span class="fw-bold">{{ tournament.computationConfiguration.matchWonPoints }}</span>
+                  <span class="border-end"></span>
+                  <span translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.MatchDrawnPoints"></span>
+                  <span class="fw-bold">{{ tournament.computationConfiguration.matchDrawnPoints }}</span>
+                  <span class="border-end"></span>
+                  <span translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.MatchLostPoints"></span>
+                  <span class="fw-bold">{{ tournament.computationConfiguration.matchLostPoints }}</span>
+                </div>
+                @if (tournament.computationConfiguration.higherScoreLoses) {
+                  <div
+                    class="mb-2"
+                    translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.HigherScoreLoses.Activated"></div>
+                }
+                <div class="mb-3 d-flex flex-row">
+                  <span
+                    class="me-2"
+                    translate="Portal.ViewTournament.Settings.EditComputationConfig.Properties.ComparisonModes.Label"></span>
+                  @for (entry of tournament.computationConfiguration.comparisonModes; track entry; let isLast = $last) {
+                    <span
+                      class="fw-bold"
+                      [translate]="
+                        'Portal.ViewTournament.Settings.EditComputationConfig.Properties.ComparisonModes.Values.' + entry
+                      "></span>
+                    @if (!isLast) {
+                      <span>,&nbsp;</span>
+                    }
+                  }
+                </div>
+                <tp-action-button
+                  [type]="'outline-secondary'"
+                  [title]="'Portal.ViewTournament.Settings.EditComputationConfig.Button'"
+                  [icon]="'gear'"
+                  (click)="editComputationConfiguration()" />
+              </div>
+              <hr class="m-0" />
+              <div class="card-body">
+                <div class="fw-bold mb-3" translate="Portal.ViewTournament.Settings.EditImages.Title"></div>
+                @if (isLoadingImages || !images || isUpdatingImage) {
+                  <tp-loading-indicator class="my-5" [marginY]="false" />
+                } @else {
+                  <div class="d-flex flex-column flex-md-row gap-2">
+                    <tp-image-widget
+                      class="flex-md-grow-1"
+                      [currentImage]="images.organizerLogo"
+                      [imageAlt]="'OrganizerLogo'"
+                      [imageType]="ImageType.SquareLargeLogo"
+                      [organizationId]="tournament.organizationId"
+                      (imageChange)="setImage('organizerLogo', $event?.id)"
+                      (imageDelete)="loadTournamentImages()"
+                      (apiError)="loadingState = { isLoading: false, error: $event }" />
+                    <tp-image-widget
+                      class="flex-md-grow-1"
+                      [currentImage]="images.sponsorLogo"
+                      [imageAlt]="'SponsorLogo'"
+                      [imageType]="ImageType.SquareLargeLogo"
+                      [organizationId]="tournament.organizationId"
+                      (imageChange)="setImage('sponsorLogo', $event?.id)"
+                      (imageDelete)="loadTournamentImages()"
+                      (apiError)="loadingState = { isLoading: false, error: $event }" />
+                    <tp-image-widget
+                      class="flex-md-grow-1"
+                      [currentImage]="images.sponsorBanner"
+                      [imageAlt]="'SponsorBanner'"
+                      [imageType]="ImageType.SponsorBanner"
+                      [organizationId]="tournament.organizationId"
+                      (imageChange)="setImage('sponsorBanner', $event?.id)"
+                      (imageDelete)="loadTournamentImages()"
+                      (apiError)="loadingState = { isLoading: false, error: $event }" />
+                  </div>
+                }
+              </div>
+              <hr class="m-0" />
+              <div class="card-body">
+                <div class="fw-bold mb-3" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.Title"></div>
+                @if (tournament.folderId) {
+                  <div class="mb-3">
+                    <span class="me-2" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.CurrentFolderName"></span>
+                    <strong>{{ tournament.folderName }}</strong>
+                  </div>
+                } @else {
+                  <div class="mb-3" translate="Portal.ViewTournament.Settings.MoveToAnotherFolder.CurrentlyNoFolder"></div>
+                }
+                <tp-action-button
+                  [type]="'outline-secondary'"
+                  [title]="'Portal.ViewTournament.Settings.MoveToAnotherFolder.Button'"
+                  [icon]="'box-arrow-right'"
+                  (click)="moveToAnotherFolder()" />
+              </div>
+              <ng-container *tpIsActionAllowed="[tournament.id, Actions.ReadOrWriteRoleAssignments]">
+                <hr class="m-0" />
+                <div class="card-body">
+                  <tp-rbac-widget
+                    [translationKey]="'Portal.ViewTournament.RbacWidget'"
+                    [target]="tournament"
+                    (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+                </div>
+              </ng-container>
+              <hr class="m-0" />
+              <div class="card-body">
+                <tp-delete-widget
+                  [translationKey]="'Portal.ViewTournament.DeleteWidget'"
+                  [targetObjectName]="tournament.name"
+                  (deleteClick)="deleteTournament()" />
+              </div>
+            }
+          }
+        </div>
+      </ng-template>
+      <ng-template #fullWidthContent>
+        @if (tournament && isTournamentTreeVisible) {
+          <tp-match-tree
+            [allowReporting]="(authorizationService.isActionAllowed$(tournament.id, Actions.TournamentConduct) | async) ?? false"
+            [matches]="processedMatches"
+            [groups]="processedGroups"
+            (matchClick)="matchClicked($event)" />
+        }
+      </ng-template>
+    </tp-page-frame>
+  }
 </ng-container>

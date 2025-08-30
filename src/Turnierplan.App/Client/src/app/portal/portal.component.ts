@@ -1,5 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, DOCUMENT } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
 import { AuthenticatedUser } from '../core/models/identity';

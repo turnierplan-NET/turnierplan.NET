@@ -1,124 +1,125 @@
 <ng-container *tpLoadingState="loadingState">
-  <tp-page-frame
-    *ngIf="venue"
-    [title]="venue.name"
-    [backLink]="'../../organization/' + venue.organizationId"
-    [navigationTabs]="pages"
-    [contextEntityId]="venue.id"
-    [rememberNavigationTab]="true"
-    (navigationTabSelected)="togglePage($event.id)">
-    <ng-template #preContent>
-      @if (isDirty) {
-        <tp-unsaved-changes-alert (save)="saveChanges()" />
-      }
-    </ng-template>
-    <ng-template #mainContent>
-      <div class="card">
-        @switch (currentPage) {
-          @case (0) {
-            <!-- Information page -->
-            <div class="card-body d-flex flex-column gap-2">
-              <tp-alert [type]="'secondary'" [icon]="'info-circle'" [text]="'Portal.ViewVenue.Details.PublicInformationAlert'" />
-            </div>
-            <hr class="m-0" />
-            <div class="card-body d-flex flex-column gap-2">
-              <div class="fs-6 fw-bold" translate="Portal.ViewVenue.Details.Name"></div>
-              <div>{{ venue.name }}</div>
-
-              <tp-rename-button
-                *tpIsActionAllowed="[venue.id, Actions.GenericWrite]"
-                [translationKey]="'Portal.ViewVenue.Details.Rename'"
-                [current]="venue.name"
-                (renamed)="renameVenue($event)" />
-            </div>
-            <hr class="m-0" />
-            <div class="card-body d-flex flex-column gap-2">
-              <div class="fs-6 fw-bold" translate="Portal.ViewVenue.Details.Description"></div>
-
-              @if (venue.description.length > 0) {
-                <div>{{ venue.description }}</div>
-              } @else {
-                <div class="fst-italic text-secondary" translate="Portal.ViewVenue.Details.NoDescription"></div>
-              }
-
-              <tp-action-button
-                *tpIsActionAllowed="[venue.id, Actions.GenericWrite]"
-                [type]="'outline-secondary'"
-                [icon]="'pencil'"
-                [title]="'Portal.ViewVenue.Details.Edit'"
-                (click)="editDescription()" />
-            </div>
-            <hr class="m-0" />
-            <div class="card-body d-flex flex-column gap-2">
-              <div class="fs-6 fw-bold">
-                <span translate="Portal.ViewVenue.Details.AddressDetails"></span>
-                <tp-tooltip-icon [tooltipText]="'Portal.ViewVenue.Details.AddressDetailsTooltip'" />
-              </div>
-
-              @if (venue.addressDetails.length > 0) {
-                <ul class="mb-0">
-                  @for (entry of venue.addressDetails; track entry) {
-                    <li>{{ entry }}</li>
-                  }
-                </ul>
-              } @else {
-                <div class="fst-italic text-secondary" translate="Portal.ViewVenue.Details.NoAddressDetails"></div>
-              }
-
-              <tp-action-button
-                *tpIsActionAllowed="[venue.id, Actions.GenericWrite]"
-                [type]="'outline-secondary'"
-                [icon]="'pencil'"
-                [title]="'Portal.ViewVenue.Details.Edit'"
-                (click)="editTextList('addressDetails')" />
-            </div>
-            <hr class="m-0" />
-            <div class="card-body d-flex flex-column gap-2">
-              <div class="fs-6 fw-bold">
-                <span translate="Portal.ViewVenue.Details.ExternalLinks"></span>
-                <tp-tooltip-icon [tooltipText]="'Portal.ViewVenue.Details.ExternalLinksTooltip'" />
-              </div>
-
-              @if (venue.externalLinks.length > 0) {
-                <ul class="mb-0">
-                  @for (entry of venue.externalLinks; track entry) {
-                    <li>
-                      <a target="_blank" href="{{ entry }}">{{ entry }}</a>
-                    </li>
-                  }
-                </ul>
-              } @else {
-                <div class="fst-italic text-secondary" translate="Portal.ViewVenue.Details.NoExternalLinks"></div>
-              }
-
-              <tp-action-button
-                *tpIsActionAllowed="[venue.id, Actions.GenericWrite]"
-                [type]="'outline-secondary'"
-                [icon]="'pencil'"
-                [title]="'Portal.ViewVenue.Details.Edit'"
-                (click)="editTextList('externalLinks')" />
-            </div>
-          }
-          @case (1) {
-            <!-- Settings page -->
-            <ng-container *tpIsActionAllowed="[venue.id, Actions.ReadOrWriteRoleAssignments]">
-              <div class="card-body">
-                <tp-rbac-widget
-                  [translationKey]="'Portal.ViewVenue.RbacWidget'"
-                  [target]="venue"
-                  (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+  @if (venue) {
+    <tp-page-frame
+      [title]="venue.name"
+      [backLink]="'../../organization/' + venue.organizationId"
+      [navigationTabs]="pages"
+      [contextEntityId]="venue.id"
+      [rememberNavigationTab]="true"
+      (navigationTabSelected)="togglePage($event.id)">
+      <ng-template #preContent>
+        @if (isDirty) {
+          <tp-unsaved-changes-alert (save)="saveChanges()" />
+        }
+      </ng-template>
+      <ng-template #mainContent>
+        <div class="card">
+          @switch (currentPage) {
+            @case (0) {
+              <!-- Information page -->
+              <div class="card-body d-flex flex-column gap-2">
+                <tp-alert [type]="'secondary'" [icon]="'info-circle'" [text]="'Portal.ViewVenue.Details.PublicInformationAlert'" />
               </div>
               <hr class="m-0" />
-            </ng-container>
-            <div class="card-body">
-              <tp-delete-widget
-                [translationKey]="'Portal.ViewVenue.DeleteWidget'"
-                [targetObjectName]="venue.name"
-                (deleteClick)="deleteVenue()" />
-            </div>
+              <div class="card-body d-flex flex-column gap-2">
+                <div class="fs-6 fw-bold" translate="Portal.ViewVenue.Details.Name"></div>
+                <div>{{ venue.name }}</div>
+
+                <tp-rename-button
+                  *tpIsActionAllowed="[venue.id, Actions.GenericWrite]"
+                  [translationKey]="'Portal.ViewVenue.Details.Rename'"
+                  [current]="venue.name"
+                  (renamed)="renameVenue($event)" />
+              </div>
+              <hr class="m-0" />
+              <div class="card-body d-flex flex-column gap-2">
+                <div class="fs-6 fw-bold" translate="Portal.ViewVenue.Details.Description"></div>
+
+                @if (venue.description.length > 0) {
+                  <div>{{ venue.description }}</div>
+                } @else {
+                  <div class="fst-italic text-secondary" translate="Portal.ViewVenue.Details.NoDescription"></div>
+                }
+
+                <tp-action-button
+                  *tpIsActionAllowed="[venue.id, Actions.GenericWrite]"
+                  [type]="'outline-secondary'"
+                  [icon]="'pencil'"
+                  [title]="'Portal.ViewVenue.Details.Edit'"
+                  (click)="editDescription()" />
+              </div>
+              <hr class="m-0" />
+              <div class="card-body d-flex flex-column gap-2">
+                <div class="fs-6 fw-bold">
+                  <span translate="Portal.ViewVenue.Details.AddressDetails"></span>
+                  <tp-tooltip-icon [tooltipText]="'Portal.ViewVenue.Details.AddressDetailsTooltip'" />
+                </div>
+
+                @if (venue.addressDetails.length > 0) {
+                  <ul class="mb-0">
+                    @for (entry of venue.addressDetails; track entry) {
+                      <li>{{ entry }}</li>
+                    }
+                  </ul>
+                } @else {
+                  <div class="fst-italic text-secondary" translate="Portal.ViewVenue.Details.NoAddressDetails"></div>
+                }
+
+                <tp-action-button
+                  *tpIsActionAllowed="[venue.id, Actions.GenericWrite]"
+                  [type]="'outline-secondary'"
+                  [icon]="'pencil'"
+                  [title]="'Portal.ViewVenue.Details.Edit'"
+                  (click)="editTextList('addressDetails')" />
+              </div>
+              <hr class="m-0" />
+              <div class="card-body d-flex flex-column gap-2">
+                <div class="fs-6 fw-bold">
+                  <span translate="Portal.ViewVenue.Details.ExternalLinks"></span>
+                  <tp-tooltip-icon [tooltipText]="'Portal.ViewVenue.Details.ExternalLinksTooltip'" />
+                </div>
+
+                @if (venue.externalLinks.length > 0) {
+                  <ul class="mb-0">
+                    @for (entry of venue.externalLinks; track entry) {
+                      <li>
+                        <a target="_blank" href="{{ entry }}">{{ entry }}</a>
+                      </li>
+                    }
+                  </ul>
+                } @else {
+                  <div class="fst-italic text-secondary" translate="Portal.ViewVenue.Details.NoExternalLinks"></div>
+                }
+
+                <tp-action-button
+                  *tpIsActionAllowed="[venue.id, Actions.GenericWrite]"
+                  [type]="'outline-secondary'"
+                  [icon]="'pencil'"
+                  [title]="'Portal.ViewVenue.Details.Edit'"
+                  (click)="editTextList('externalLinks')" />
+              </div>
+            }
+            @case (1) {
+              <!-- Settings page -->
+              <ng-container *tpIsActionAllowed="[venue.id, Actions.ReadOrWriteRoleAssignments]">
+                <div class="card-body">
+                  <tp-rbac-widget
+                    [translationKey]="'Portal.ViewVenue.RbacWidget'"
+                    [target]="venue"
+                    (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+                </div>
+                <hr class="m-0" />
+              </ng-container>
+              <div class="card-body">
+                <tp-delete-widget
+                  [translationKey]="'Portal.ViewVenue.DeleteWidget'"
+                  [targetObjectName]="venue.name"
+                  (deleteClick)="deleteVenue()" />
+              </div>
+            }
           }
-        }
-      </div>
-    </ng-template>
-  </tp-page-frame>
+        </div>
+      </ng-template>
+    </tp-page-frame>
+  }
 </ng-container>
