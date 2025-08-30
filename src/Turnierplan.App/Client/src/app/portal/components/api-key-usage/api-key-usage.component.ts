@@ -1,14 +1,18 @@
 import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateDirective } from '@ngx-translate/core';
 import { BehaviorSubject, combineLatestWith, delay, distinctUntilChanged, map, Subject, switchMap, tap } from 'rxjs';
 
 import { ApiKeysService } from '../../../api';
+import { FormsModule } from '@angular/forms';
+import { ActionButtonComponent } from '../action-button/action-button.component';
+import { AlertComponent } from '../alert/alert.component';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
 
 @Component({
-  standalone: false,
   selector: 'tp-api-key-usage',
-  templateUrl: './api-key-usage.component.html'
+  templateUrl: './api-key-usage.component.html',
+  imports: [TranslateDirective, FormsModule, ActionButtonComponent, AlertComponent, SmallSpinnerComponent]
 })
 export class ApiKeyUsageComponent implements OnDestroy {
   @Output()

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { FooterComponent } from '../shared/components/footer/footer.component';
 
 @Component({
-  standalone: false,
   templateUrl: './identity.component.html',
-  styleUrls: ['./identity.component.scss']
+  styleUrls: ['./identity.component.scss'],
+  imports: [RouterOutlet, FooterComponent]
 })
 export class IdentityComponent {}

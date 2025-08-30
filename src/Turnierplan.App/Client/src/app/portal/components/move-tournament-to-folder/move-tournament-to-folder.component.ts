@@ -1,15 +1,29 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
 import { FolderDto, SetTournamentFolderEndpointRequest, FoldersService, NullableOfPublicId } from '../../../api';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { NgClass } from '@angular/common';
+import { ActionButtonComponent } from '../action-button/action-button.component';
 
 type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 
 @Component({
-  standalone: false,
-  templateUrl: './move-tournament-to-folder.component.html'
+  templateUrl: './move-tournament-to-folder.component.html',
+  imports: [
+    TranslateDirective,
+    FormsModule,
+    TooltipIconComponent,
+    SmallSpinnerComponent,
+    ReactiveFormsModule,
+    NgClass,
+    ActionButtonComponent,
+    TranslatePipe
+  ]
 })
 export class MoveTournamentToFolderComponent {
   public save$ = new Subject<SetTournamentFolderEndpointRequest>();

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApplicationsFilter, defaultApplicationsFilter } from '../models/applications-filter';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LocalStorageService {
   public setNavigationTab(targetId: string, tabIndex: number): void {
     localStorage.setItem(`tp_navigationTab_${targetId}`, `${tabIndex}`);

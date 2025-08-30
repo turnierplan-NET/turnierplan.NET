@@ -3,13 +3,16 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, switchMap, tap } from 'rxjs';
 
 import { DocumentDto, DocumentsService, TournamentsService } from '../../../api';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
+import { TranslateDirective } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
 
 @Component({
-  standalone: false,
   templateUrl: './document-copy.component.html',
-  styleUrl: './document-copy.component.scss'
+  styleUrl: './document-copy.component.scss',
+  imports: [LoadingStateDirective, TranslateDirective, FolderTreeComponent, NgClass, SmallSpinnerComponent]
 })
 export class DocumentCopyComponent implements OnInit, OnDestroy {
   public selected$ = new Subject<string>();

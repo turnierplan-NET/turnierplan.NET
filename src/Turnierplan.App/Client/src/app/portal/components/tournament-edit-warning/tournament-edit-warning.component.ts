@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AlertComponent } from '../alert/alert.component';
+import { TranslateDirective } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  standalone: false,
   selector: 'tp-tournament-edit-warning',
-  templateUrl: './tournament-edit-warning.component.html'
+  templateUrl: './tournament-edit-warning.component.html',
+  imports: [AlertComponent, TranslateDirective, FormsModule]
 })
 export class TournamentEditWarningComponent {
   @Input()

@@ -9,10 +9,7 @@ export interface LoadingState {
   error?: unknown;
 }
 
-@Directive({
-  standalone: false,
-  selector: '[tpLoadingState]'
-})
+@Directive({ selector: '[tpLoadingState]' })
 export class LoadingStateDirective {
   constructor(
     private readonly templateRef: TemplateRef<ElementRef>,

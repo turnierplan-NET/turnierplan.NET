@@ -1,9 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({
-  standalone: false,
-  name: 'abstractTeamSelector'
-})
+@Pipe({ name: 'abstractTeamSelector' })
 export class AbstractTeamSelectorPipe implements PipeTransform {
   private static transformGroupRankingSelectorDE(position: number, groupId: string): string {
     return `${position}. Gruppe ${groupId}`;

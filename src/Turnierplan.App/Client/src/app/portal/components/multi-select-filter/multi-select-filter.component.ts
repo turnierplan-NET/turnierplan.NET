@@ -1,4 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem } from '@ng-bootstrap/ng-bootstrap';
+import { NgClass } from '@angular/common';
+import { TranslateDirective } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 
 export type MultiSelectFilterOption = {
   value: unknown;
@@ -6,9 +10,9 @@ export type MultiSelectFilterOption = {
 };
 
 @Component({
-  standalone: false,
   selector: 'tp-multi-select-filter',
-  templateUrl: './multi-select-filter.component.html'
+  templateUrl: './multi-select-filter.component.html',
+  imports: [NgbDropdown, NgbDropdownToggle, NgClass, TranslateDirective, NgbDropdownMenu, FormsModule, NgbDropdownItem]
 })
 export class MultiSelectFilterComponent {
   private _selected: unknown[] = [];

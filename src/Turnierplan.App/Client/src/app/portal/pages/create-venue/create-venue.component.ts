@@ -1,15 +1,28 @@
 ﻿import { Component, OnDestroy } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 import { OrganizationDto, OrganizationsService, VenuesService } from '../../../api';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { TitleService } from '../../services/title.service';
+import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 
 @Component({
-  standalone: false,
-  templateUrl: './create-venue.component.html'
+  templateUrl: './create-venue.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    TranslateDirective,
+    FormsModule,
+    ReactiveFormsModule,
+    NgClass,
+    ActionButtonComponent,
+    TranslatePipe
+  ]
 })
 export class CreateVenueComponent implements OnDestroy {
   protected loadingState: LoadingState = { isLoading: false };

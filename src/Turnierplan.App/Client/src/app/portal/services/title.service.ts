@@ -8,7 +8,7 @@ export interface NamedEntity {
   name: string;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TitleService {
   constructor(
     private readonly title: Title,

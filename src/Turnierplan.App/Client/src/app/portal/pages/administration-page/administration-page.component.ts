@@ -6,15 +6,30 @@ import { switchMap } from 'rxjs';
 import { UserDto, UsersService } from '../../../api';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { NotificationService } from '../../../core/services/notification.service';
-import { PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { TitleService } from '../../services/title.service';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationStart, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { BadgeComponent } from '../../components/badge/badge.component';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 @Component({
-  standalone: false,
-  templateUrl: './administration-page.component.html'
+  templateUrl: './administration-page.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    ActionButtonComponent,
+    RouterLink,
+    BadgeComponent,
+    TranslateDirective,
+    DeleteWidgetComponent,
+    TranslatePipe,
+    TranslateDatePipe
+  ]
 })
 export class AdministrationPageComponent implements OnInit {
   protected loadingState: LoadingState = { isLoading: true };

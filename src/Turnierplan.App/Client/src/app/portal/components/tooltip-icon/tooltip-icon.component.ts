@@ -1,9 +1,12 @@
 import { Component, Input } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  standalone: false,
   selector: 'tp-tooltip-icon',
-  templateUrl: './tooltip-icon.component.html'
+  templateUrl: './tooltip-icon.component.html',
+  imports: [NgClass, NgbTooltip, TranslatePipe]
 })
 export class TooltipIconComponent {
   @Input()

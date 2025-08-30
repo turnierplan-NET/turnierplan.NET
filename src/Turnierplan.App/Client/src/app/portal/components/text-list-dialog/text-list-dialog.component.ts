@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateDirective } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-  standalone: false,
-  templateUrl: './text-list-dialog.component.html'
+  templateUrl: './text-list-dialog.component.html',
+  imports: [TranslateDirective, FormsModule, ReactiveFormsModule, NgClass, ActionButtonComponent]
 })
 export class TextListDialogComponent {
   protected isInitialized = false;

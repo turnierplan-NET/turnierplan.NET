@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { RenameDialogComponent } from '../rename-dialog/rename-dialog.component';
+import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-  standalone: false,
   selector: 'tp-rename-button',
-  templateUrl: './rename-button.component.html'
+  templateUrl: './rename-button.component.html',
+  imports: [ActionButtonComponent]
 })
 export class RenameButtonComponent {
   @Input()

@@ -3,10 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 
 import { AuthenticationService } from '../../../core/services/authentication.service';
 
-@Directive({
-  standalone: false,
-  selector: '[tpIsAdministrator]'
-})
+@Directive({ selector: '[tpIsAdministrator]' })
 export class IsAdministratorDirective implements OnInit, OnDestroy {
   private readonly destroyed$ = new Subject<void>();
 

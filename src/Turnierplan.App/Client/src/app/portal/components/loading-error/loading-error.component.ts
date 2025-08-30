@@ -1,9 +1,11 @@
 import { Component, Input } from '@angular/core';
+import { ErrorPageComponent } from '../error-page/error-page.component';
+import { TranslateDirective } from '@ngx-translate/core';
 
 @Component({
-  standalone: false,
   templateUrl: './loading-error.component.html',
-  styleUrls: ['./loading-error.component.scss']
+  styleUrls: ['./loading-error.component.scss'],
+  imports: [ErrorPageComponent, TranslateDirective]
 })
 export class LoadingErrorComponent {
   @Input()

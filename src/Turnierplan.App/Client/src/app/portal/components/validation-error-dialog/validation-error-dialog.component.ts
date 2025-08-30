@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateDirective } from '@ngx-translate/core';
+import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-  standalone: false,
-  templateUrl: './validation-error-dialog.component.html'
+  templateUrl: './validation-error-dialog.component.html',
+  imports: [TranslateDirective, ActionButtonComponent]
 })
 export class ValidationErrorDialogComponent {
   protected _errors: { [key: string]: string[] } = {};

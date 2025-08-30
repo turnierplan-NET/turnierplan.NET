@@ -1,18 +1,35 @@
 ﻿import { Component, OnDestroy } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 import { FolderDto, FoldersService, OrganizationDto, OrganizationsService, TournamentsService, Visibility } from '../../../api';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
+import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
+import { VisibilitySelectorComponent } from '../../components/visibility-selector/visibility-selector.component';
+import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 
 type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 
 @Component({
-  standalone: false,
-  templateUrl: './create-tournament.component.html'
+  templateUrl: './create-tournament.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    TranslateDirective,
+    FormsModule,
+    ReactiveFormsModule,
+    NgClass,
+    TooltipIconComponent,
+    VisibilitySelectorComponent,
+    ActionButtonComponent,
+    TranslatePipe
+  ]
 })
 export class CreateTournamentComponent implements OnDestroy {
   protected loadingState: LoadingState = { isLoading: false };

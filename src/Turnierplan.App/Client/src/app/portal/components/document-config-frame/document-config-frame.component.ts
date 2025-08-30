@@ -14,6 +14,8 @@ import { Observable, Subject } from 'rxjs';
 
 import { NotificationService } from '../../../core/services/notification.service';
 import { DocumentConfiguration } from '../../models/document-configuration';
+import { TranslateDirective } from '@ngx-translate/core';
+import { ActionButtonComponent } from '../action-button/action-button.component';
 
 export abstract class DocumentConfigComponent<T> {
   public abstract submit: Subject<void>;
@@ -24,8 +26,8 @@ export abstract class DocumentConfigComponent<T> {
 export const CURRENT_CONFIGURATION = new InjectionToken<string>('CURRENT_CONFIGURATION');
 
 @Component({
-  standalone: false,
-  templateUrl: './document-config-frame.component.html'
+  templateUrl: './document-config-frame.component.html',
+  imports: [TranslateDirective, ActionButtonComponent]
 })
 export class DocumentConfigFrameComponent implements AfterViewInit {
   @ViewChild('configContainer', { read: ViewContainerRef })

@@ -26,7 +26,7 @@
 
 <div class="mt-5" [ngClass]="{ 'tp-ultra-slim-container': ultraSlim, container: !ultraSlim }">
   @if (preContent) {
-    <ng-container [ngTemplateOutlet]="preContent"></ng-container>
+    <ng-container [ngTemplateOutlet]="preContent" />
   }
 
   <div class="d-flex flex-row flex-wrap align-items-center gap-2" [ngClass]="{ 'mt-4': preContent !== undefined }">
@@ -39,23 +39,23 @@
     <span class="fs-4 fw-bold">{{ title ?? '' }}</span>
     <div class="flex-grow-1"></div>
     @if (buttons) {
-      <ng-container [ngTemplateOutlet]="buttons"></ng-container>
+      <ng-container [ngTemplateOutlet]="buttons" />
     }
   </div>
 
   @if (!hideMainContent) {
     <div class="mt-4">
       @if (mainContent) {
-        <ng-container [ngTemplateOutlet]="mainContent"></ng-container>
+        <ng-container [ngTemplateOutlet]="mainContent" />
       } @else {
-        <ng-content></ng-content>
+        <ng-content />
       }
     </div>
   }
 </div>
 
 @if (fullWidthContent) {
-  <ng-container [ngTemplateOutlet]="fullWidthContent"></ng-container>
+  <ng-container [ngTemplateOutlet]="fullWidthContent" />
 }
 
 <!-- Add some "padding" so that the user can scroll further down than originally. -->

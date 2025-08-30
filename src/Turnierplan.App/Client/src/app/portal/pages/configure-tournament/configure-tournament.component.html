@@ -11,16 +11,16 @@
   <hr />
 
   <h5 class="mb-3" translate="Portal.ConfigureTournament.Sections.General.Title"></h5>
-  <ng-container [ngTemplateOutlet]="generalSection"></ng-container>
+  <ng-container [ngTemplateOutlet]="generalSection" />
 
   <h5 class="mt-4 mb-3" translate="Portal.ConfigureTournament.Sections.Participants.Title"></h5>
-  <ng-container [ngTemplateOutlet]="teamsSection"></ng-container>
+  <ng-container [ngTemplateOutlet]="teamsSection" />
 
   <h5 class="mt-4 mb-3" translate="Portal.ConfigureTournament.Sections.GroupPhase.Title"></h5>
-  <ng-container [ngTemplateOutlet]="groupPhaseSection"></ng-container>
+  <ng-container [ngTemplateOutlet]="groupPhaseSection" />
 
   <h5 class="mt-4 mb-3" translate="Portal.ConfigureTournament.Sections.FinalsPhase.Title"></h5>
-  <ng-container [ngTemplateOutlet]="finalsRoundSection"></ng-container>
+  <ng-container [ngTemplateOutlet]="finalsRoundSection" />
 
   <hr />
 
@@ -321,7 +321,7 @@
 
       @if (enableAdditionalPlayoffs && additionalPlayoffPositions.length > 0) {
         <h5 class="mt-4 mb-3" translate="Portal.ConfigureTournament.Sections.AdditionalPlayoffs.Title"></h5>
-        <ng-container [ngTemplateOutlet]="additionalPlayoffsSection"></ng-container>
+        <ng-container [ngTemplateOutlet]="additionalPlayoffsSection" />
       }
     }
   }

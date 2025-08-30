@@ -1,34 +1,31 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { Observable, of, switchMap } from 'rxjs';
 
 import { AuthenticationService } from '../services/authentication.service';
 
-@Injectable()
-export class AuthenticationInterceptor implements HttpInterceptor {
-  constructor(private readonly authenticationService: AuthenticationService) {}
+export const doesPathRequireAuthentication = (path: string): boolean => {
+  return /^\/api(?!\/identity)/.test(path);
+};
 
-  public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (!request.url.startsWith(window.origin)) {
-      return next.handle(request);
-    }
+export const authenticationInterceptor = (request: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
+  if (!request.url.startsWith(window.origin)) {
+    return next(request);
+  }
 
-    if (!AuthenticationInterceptor.doesPathRequireAuthentication(request.url.substring(window.origin.length))) {
-      return next.handle(request);
-    }
+  if (!doesPathRequireAuthentication(request.url.substring(window.origin.length))) {
+    return next(request);
+  }
 
-    return this.authenticationService.ensureAccessToken().pipe(
+  return inject(AuthenticationService)
+    .ensureAccessToken()
+    .pipe(
       switchMap((shouldContinue) => {
         if (shouldContinue) {
-          return next.handle(request);
+          return next(request);
         }
 
         return of();
       })
     );
-  }
-
-  public static doesPathRequireAuthentication(path: string): boolean {
-    return /^\/api(?!\/identity)/.test(path);
-  }
-}
+};

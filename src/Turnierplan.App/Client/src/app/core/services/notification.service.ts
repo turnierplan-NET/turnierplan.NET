@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NotificationService {
   constructor(
     private readonly toastr: ToastrService,

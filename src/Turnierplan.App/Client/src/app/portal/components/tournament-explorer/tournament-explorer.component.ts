@@ -4,11 +4,29 @@ import { OrganizationDto, TournamentHeaderDto, FoldersService } from '../../../a
 import { LocalStorageService } from '../../services/local-storage.service';
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
 import { Actions } from '../../../generated/actions';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { RenameButtonComponent } from '../rename-button/rename-button.component';
+import { RbacWidgetComponent } from '../rbac-widget/rbac-widget.component';
+import { ActionButtonComponent } from '../action-button/action-button.component';
+import { RouterLink } from '@angular/router';
+import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
+import { TranslateDirective } from '@ngx-translate/core';
 
 @Component({
-  standalone: false,
   selector: 'tp-tournament-explorer',
-  templateUrl: './tournament-explorer.component.html'
+  templateUrl: './tournament-explorer.component.html',
+  imports: [
+    FolderTreeComponent,
+    SmallSpinnerComponent,
+    IsActionAllowedDirective,
+    RenameButtonComponent,
+    RbacWidgetComponent,
+    ActionButtonComponent,
+    RouterLink,
+    TooltipIconComponent,
+    TranslateDirective
+  ]
 })
 export class TournamentExplorerComponent implements OnChanges {
   @Input()

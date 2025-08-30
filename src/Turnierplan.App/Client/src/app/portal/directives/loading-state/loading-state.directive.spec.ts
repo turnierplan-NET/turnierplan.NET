@@ -14,7 +14,7 @@ import { TitleService } from '../../services/title.service';
 import { LoadingStateDirective } from './loading-state.directive';
 
 @Component({
-  standalone: false,
+  imports: [LoadingStateDirective],
   selector: 'tp-is-loading-true-test-component',
   template: `<ng-container *tpLoadingState="{ isLoading: true }">
     <p>Hello World</p>
@@ -23,7 +23,7 @@ import { LoadingStateDirective } from './loading-state.directive';
 class IsLoadingTrueTestComponent {}
 
 @Component({
-  standalone: false,
+  imports: [LoadingStateDirective],
   selector: 'tp-is-loading-false-test-component',
   template: `<ng-container *tpLoadingState="{ isLoading: false }">
     <p>Hello World</p>
@@ -32,7 +32,7 @@ class IsLoadingTrueTestComponent {}
 class IsLoadingFalseTestComponent {}
 
 @Component({
-  standalone: false,
+  imports: [LoadingStateDirective],
   selector: 'tp-is-loading-false-with-404-error-test-component',
   template: `<ng-container *tpLoadingState="{ isLoading: false, error: { status: 404 } }">
     <p>Hello World</p>
@@ -41,7 +41,7 @@ class IsLoadingFalseTestComponent {}
 class IsLoadingFalseWith404ErrorTestComponent {}
 
 @Component({
-  standalone: false,
+  imports: [LoadingStateDirective],
   selector: 'tp-is-loading-false-with-500-error-test-component',
   template: `<ng-container *tpLoadingState="{ isLoading: false, error: { status: 500 } }">
     <p>Hello World</p>
@@ -52,7 +52,10 @@ class IsLoadingFalseWith500ErrorTestComponent {}
 describe('LoadingStateDirective', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+      providers: [TitleService],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterModule.forRoot([]),
         LoadingStateDirective,
         LoadingErrorComponent,
         IsLoadingTrueTestComponent,
@@ -62,9 +65,7 @@ describe('LoadingStateDirective', () => {
         ErrorPageComponent,
         ActionButtonComponent,
         IllustrationComponent
-      ],
-      providers: [TitleService],
-      imports: [TranslateModule.forRoot(), RouterModule.forRoot([])]
+      ]
     }).compileComponents();
   });
 

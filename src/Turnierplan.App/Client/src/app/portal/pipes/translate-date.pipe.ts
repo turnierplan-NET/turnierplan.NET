@@ -4,7 +4,6 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 @Pipe({
-  standalone: false,
   name: 'translateDate',
   pure: false
 })

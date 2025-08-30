@@ -1,12 +1,20 @@
-import { formatDate } from '@angular/common';
+import { formatDate, NgStyle } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, combineLatestWith, delayWhen, interval, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 import { FolderTimetableDto, FolderTimetableTournamentEntry, FoldersService } from '../../../api';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
+import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
+import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { AlertComponent } from '../../components/alert/alert.component';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
+import { FormsModule } from '@angular/forms';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 type TimetableView = {
   hourMarks: number[];
@@ -33,9 +41,21 @@ type TimetableViewDayRowEntry = {
 };
 
 @Component({
-  standalone: false,
   templateUrl: './folder-timetable.component.html',
-  styleUrl: './folder-timetable.component.scss'
+  styleUrl: './folder-timetable.component.scss',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    ActionButtonComponent,
+    AlertComponent,
+    TranslateDirective,
+    NgStyle,
+    NgbTooltip,
+    TooltipIconComponent,
+    FormsModule,
+    TranslatePipe,
+    TranslateDatePipe
+  ]
 })
 export class FolderTimetableComponent implements OnInit, OnDestroy {
   private static readonly columnWidthMinutes = 1;

@@ -1,15 +1,28 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 import { FolderStatisticsDto, FoldersService } from '../../../api';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { TitleService } from '../../services/title.service';
+import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
+import { NgTemplateOutlet, NgStyle, DecimalPipe, PercentPipe } from '@angular/common';
+import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 
 @Component({
-  standalone: false,
-  templateUrl: './folder-statistics.component.html'
+  templateUrl: './folder-statistics.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    TranslateDirective,
+    NgTemplateOutlet,
+    NgStyle,
+    TooltipIconComponent,
+    DecimalPipe,
+    PercentPipe,
+    TranslatePipe
+  ]
 })
 export class FolderStatisticsComponent implements OnInit, OnDestroy {
   // TODO | protected readonly barChartOptions: ChartConfiguration<'bar'>['options'] = {};

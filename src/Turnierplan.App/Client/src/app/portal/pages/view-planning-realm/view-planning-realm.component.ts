@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import {
   ApplicationsService,
   CreateApplicationEndpointRequest,
@@ -20,12 +20,43 @@ import { DiscardChangesDetector } from '../../../core/guards/discard-changes.gua
 import { LocalStorageService } from '../../services/local-storage.service';
 import { ApplicationsFilter, defaultApplicationsFilter } from '../../models/applications-filter';
 import { NewApplicationDialogComponent } from '../../components/new-application-dialog/new-application-dialog.component';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
+import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
+import { UnsavedChangesAlertComponent } from '../../components/unsaved-changes-alert/unsaved-changes-alert.component';
+import { BadgeComponent } from '../../components/badge/badge.component';
+import { TournamentClassManagerComponent } from '../../components/tournament-class-manager/tournament-class-manager.component';
+import { TranslateDirective } from '@ngx-translate/core';
+import { InvitationLinkTileComponent } from '../../components/invitation-link-manager/invitation-link-tile.component';
+import { AlertComponent } from '../../components/alert/alert.component';
+import { ManageApplicationsFilterComponent } from '../../components/manage-applications-filter/manage-applications-filter.component';
+import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
+import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
+import { ManageApplicationsComponent } from '../../components/manage-applications/manage-applications.component';
 
 export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
 
 @Component({
-  standalone: false,
-  templateUrl: './view-planning-realm.component.html'
+  templateUrl: './view-planning-realm.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    IsActionAllowedDirective,
+    ActionButtonComponent,
+    TooltipIconComponent,
+    RenameButtonComponent,
+    UnsavedChangesAlertComponent,
+    BadgeComponent,
+    TournamentClassManagerComponent,
+    TranslateDirective,
+    InvitationLinkTileComponent,
+    AlertComponent,
+    ManageApplicationsFilterComponent,
+    RbacWidgetComponent,
+    DeleteWidgetComponent,
+    ManageApplicationsComponent
+  ]
 })
 export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardChangesDetector {
   private static readonly DefaultInvitationLinkColorCodes: string[] = [

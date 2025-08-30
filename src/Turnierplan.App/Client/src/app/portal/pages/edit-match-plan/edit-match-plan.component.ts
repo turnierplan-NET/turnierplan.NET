@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { DndDropEvent } from 'ngx-drag-drop';
+import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { DndDropEvent, DndDropzoneDirective, DndDraggableDirective, DndHandleDirective, DndPlaceholderRefDirective } from 'ngx-drag-drop';
 import { combineLatestWith, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 import {
@@ -16,9 +16,15 @@ import {
 } from '../../../api';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 import { NotificationService } from '../../../core/services/notification.service';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
+import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
+import { TournamentEditWarningComponent } from '../../components/tournament-edit-warning/tournament-edit-warning.component';
+import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { FormsModule } from '@angular/forms';
+import { NgClass, DatePipe } from '@angular/common';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 type ExtendedMatchEntry = SetTournamentMatchPlanEndpointRequestEntry & {
   formattedType: string;
@@ -27,8 +33,23 @@ type ExtendedMatchEntry = SetTournamentMatchPlanEndpointRequestEntry & {
 };
 
 @Component({
-  standalone: false,
-  templateUrl: './edit-match-plan.component.html'
+  templateUrl: './edit-match-plan.component.html',
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    TranslateDirective,
+    TournamentEditWarningComponent,
+    DndDropzoneDirective,
+    DndDraggableDirective,
+    DndHandleDirective,
+    ActionButtonComponent,
+    FormsModule,
+    DndPlaceholderRefDirective,
+    NgClass,
+    DatePipe,
+    TranslatePipe,
+    TranslateDatePipe
+  ]
 })
 export class EditMatchPlanComponent implements OnInit, OnDestroy, DiscardChangesDetector {
   // Loading & Dirty state

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateDirective } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 
 import { DocumentType } from '../../../api';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { getDocumentName } from '../../helpers/document-name';
 
 type DocumentTypeEntry = {
@@ -13,9 +13,9 @@ type DocumentTypeEntry = {
 };
 
 @Component({
-  standalone: false,
   templateUrl: './document-select.component.html',
-  styleUrl: './document-select.component.scss'
+  styleUrl: './document-select.component.scss',
+  imports: [LoadingStateDirective, TranslateDirective]
 })
 export class DocumentSelectComponent implements OnInit {
   public selected$ = new Subject<DocumentType>();

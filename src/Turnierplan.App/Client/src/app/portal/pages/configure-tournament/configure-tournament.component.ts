@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DndDropEvent } from 'ngx-drag-drop';
+import { DndDropEvent, DndDropzoneDirective, DndPlaceholderRefDirective, DndDraggableDirective } from 'ngx-drag-drop';
 import { combineLatestWith, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 import {
@@ -20,9 +20,20 @@ import {
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 import { NotificationService } from '../../../core/services/notification.service';
 import { ValidationErrorDialogComponent } from '../../components/validation-error-dialog/validation-error-dialog.component';
-import { LoadingState } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
+import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { TournamentEditWarningComponent } from '../../components/tournament-edit-warning/tournament-edit-warning.component';
+import { NgTemplateOutlet, NgClass, DatePipe } from '@angular/common';
+import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { FormsModule } from '@angular/forms';
+import { AlertComponent } from '../../components/alert/alert.component';
+import { DeleteButtonComponent } from '../../components/delete-button/delete-button.component';
+import { DurationPickerComponent } from '../../components/duration-picker/duration-picker.component';
+import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
+import { AbstractTeamSelectorPipe } from '../../pipes/abstract-team-selector.pipe';
 
 interface TemporaryGroup {
   id?: number;
@@ -52,9 +63,28 @@ interface TemporaryAdditionalPlayoff {
 // TODO: UI for inserting teams from planning realm when configuring tournament
 
 @Component({
-  standalone: false,
   templateUrl: './configure-tournament.component.html',
-  styleUrls: ['./configure-tournament.component.scss']
+  styleUrls: ['./configure-tournament.component.scss'],
+  imports: [
+    LoadingStateDirective,
+    PageFrameComponent,
+    TranslateDirective,
+    TournamentEditWarningComponent,
+    NgTemplateOutlet,
+    NgClass,
+    ActionButtonComponent,
+    FormsModule,
+    AlertComponent,
+    DeleteButtonComponent,
+    DndDropzoneDirective,
+    DndPlaceholderRefDirective,
+    DndDraggableDirective,
+    DurationPickerComponent,
+    TooltipIconComponent,
+    DatePipe,
+    TranslatePipe,
+    AbstractTeamSelectorPipe
+  ]
 })
 export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardChangesDetector {
   private static readonly allowedAlphabeticalIds = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');

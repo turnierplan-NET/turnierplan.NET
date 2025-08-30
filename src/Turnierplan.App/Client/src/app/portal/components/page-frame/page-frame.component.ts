@@ -3,6 +3,9 @@ import { Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Action } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
+import { NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 export interface PageFrameNavigationTab {
   id: number;
@@ -12,10 +15,10 @@ export interface PageFrameNavigationTab {
 }
 
 @Component({
-  standalone: false,
   selector: 'tp-page-frame',
   templateUrl: './page-frame.component.html',
-  styleUrls: ['./page-frame.component.scss']
+  styleUrls: ['./page-frame.component.scss'],
+  imports: [NgClass, NgTemplateOutlet, RouterLink, AsyncPipe, TranslatePipe]
 })
 export class PageFrameComponent implements OnInit, OnChanges {
   @Input()

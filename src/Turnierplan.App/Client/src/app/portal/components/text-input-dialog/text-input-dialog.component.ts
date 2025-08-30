@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AlertType } from '../alert/alert.component';
+import { AlertType, AlertComponent } from '../alert/alert.component';
+import { TranslateDirective } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { ActionButtonComponent } from '../action-button/action-button.component';
 
 export interface TextInputDialogAlert {
   type: AlertType;
@@ -8,8 +12,8 @@ export interface TextInputDialogAlert {
 }
 
 @Component({
-  standalone: false,
-  templateUrl: './text-input-dialog.component.html'
+  templateUrl: './text-input-dialog.component.html',
+  imports: [TranslateDirective, FormsModule, NgClass, AlertComponent, ActionButtonComponent]
 })
 export class TextInputDialogComponent {
   protected isInitialized = false;

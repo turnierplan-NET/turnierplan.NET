@@ -4,10 +4,14 @@ import { Subject, take, takeUntil } from 'rxjs';
 
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { NotificationService } from '../../../core/services/notification.service';
+import { TranslateDirective } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { NgClass } from '@angular/common';
 
 @Component({
-  standalone: false,
-  templateUrl: './change-user-info.component.html'
+  templateUrl: './change-user-info.component.html',
+  imports: [TranslateDirective, FormsModule, SmallSpinnerComponent, NgClass]
 })
 export class ChangeUserInfoComponent implements OnInit, OnDestroy {
   protected previousEmailAddress: string = '';

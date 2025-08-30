@@ -3,10 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { AuthenticationService } from '../../../core/services/authentication.service';
+import { TranslateDirective } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { NgClass } from '@angular/common';
 
 @Component({
-  standalone: false,
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  imports: [TranslateDirective, FormsModule, SmallSpinnerComponent, NgClass]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   protected email: string = '';

@@ -5,10 +5,7 @@ import { Action } from '../../../generated/actions';
 
 type Config = [string, Action];
 
-@Directive({
-  standalone: false,
-  selector: '[tpIsActionAllowed]'
-})
+@Directive({ selector: '[tpIsActionAllowed]' })
 export class IsActionAllowedDirective implements OnInit, OnDestroy {
   private readonly destroyed$ = new Subject<void>();
   private config?: Config;

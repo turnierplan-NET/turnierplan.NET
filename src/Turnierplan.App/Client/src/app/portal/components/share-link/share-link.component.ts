@@ -1,10 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { environment } from '../../../../environments/environment';
+import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'tp-share-link',
-  standalone: false,
-  templateUrl: './share-link.component.html'
+  templateUrl: './share-link.component.html',
+  imports: [CopyToClipboardComponent, NgbTooltip, TranslatePipe]
 })
 export class ShareLinkComponent {
   private _resourceUrl: string = '';

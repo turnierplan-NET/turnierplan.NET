@@ -1,14 +1,19 @@
 import { Component } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
 import { ComputationConfigurationDto } from '../../../api';
 
 import { availableComparisonModeOptions, ComparisonModeOption } from './computation-configuration.component-data';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { ActionButtonComponent } from '../action-button/action-button.component';
 
 @Component({
-  standalone: false,
-  templateUrl: './computation-configuration.component.html'
+  templateUrl: './computation-configuration.component.html',
+  imports: [TranslateDirective, FormsModule, NgClass, NgbTooltip, SmallSpinnerComponent, ActionButtonComponent, TranslatePipe]
 })
 export class ComputationConfigurationComponent {
   public save$ = new Subject<ComputationConfigurationDto>();

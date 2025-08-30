@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { CreateApplicationEndpointRequest, PlanningRealmDto } from '../../../api';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateDirective } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { AlertComponent } from '../alert/alert.component';
+import { ActionButtonComponent } from '../action-button/action-button.component';
 
 const atLeastOneTeamValidator = () => {
   return (formArray: AbstractControl): { [key: string]: any } | null => {
@@ -19,8 +23,8 @@ const atLeastOneTeamValidator = () => {
 };
 
 @Component({
-  standalone: false,
-  templateUrl: './new-application-dialog.component.html'
+  templateUrl: './new-application-dialog.component.html',
+  imports: [TranslateDirective, FormsModule, ReactiveFormsModule, NgClass, AlertComponent, ActionButtonComponent]
 })
 export class NewApplicationDialogComponent {
   protected readonly form = new FormGroup({

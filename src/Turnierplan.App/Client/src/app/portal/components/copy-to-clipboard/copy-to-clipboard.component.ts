@@ -1,9 +1,11 @@
 import { Component, Input } from '@angular/core';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  standalone: false,
   selector: 'tp-copy-to-clipboard',
-  templateUrl: './copy-to-clipboard.component.html'
+  templateUrl: './copy-to-clipboard.component.html',
+  imports: [NgbTooltip, TranslatePipe]
 })
 export class CopyToClipboardComponent {
   @Input()
