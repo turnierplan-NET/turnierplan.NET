@@ -14,10 +14,14 @@
     "e2e:prepare": "npm run e2e:set-version && docker compose up --build -d && npm run e2e:reset-version",
     "e2e:start": "npx cypress open",
     "e2e:run": "npx cypress run",
-    "e2e:destroy": "docker compose down"
+    "e2e:destroy": "docker compose down",
+    "e2e:prettier": "prettier \"**/*.*js\" \"**/*.json\"",
+    "e2e:lint": "npm run e2e:prettier -- --write",
+    "e2e:lint:ci": "npm run e2e:prettier -- --check"
   },
   "devDependencies": {
     "cypress": "~15.0.0",
+    "prettier": "~3.6.2",
     "replace-in-file": "~8.3.0"
   }
 }
