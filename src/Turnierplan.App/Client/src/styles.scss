@@ -1,6 +1,7 @@
-@import 'bootstrap/scss/bootstrap';
-@import 'bootstrap-icons/font/bootstrap-icons.min.css';
-@import 'ngx-toastr/toastr';
+@use 'bootstrap/scss/bootstrap' as bootstrap;
+@use 'bootstrap-icons/font/bootstrap-icons.min.css';
+@use 'ngx-toastr/toastr';
+@use "sass:map";
 
 * {
   font-family: system-ui, 'Segoe UI', sans-serif !important;
@@ -65,25 +66,25 @@ body {
   }
 }
 
-@include media-breakpoint-down(md) {
+@include bootstrap.media-breakpoint-down(md) {
   .tp-ultra-slim-container {
     // Use the same padding as the default Bootstrap container
-    padding-left: calc($container-padding-x * 0.5) !important;
-    padding-right: calc($container-padding-x * 0.5) !important;
+    padding-left: (0.5 * bootstrap.$container-padding-x) !important;
+    padding-right: (0.5 * bootstrap.$container-padding-x) !important;
   }
 }
 
-@include media-breakpoint-up(md) {
+@include bootstrap.media-breakpoint-up(md) {
   .tp-ultra-slim-container {
     margin-left: auto !important;
     margin-right: auto !important;
-    max-width: map-get($container-max-widths, md);
+    max-width: map.get(bootstrap.$container-max-widths, md);
   }
 }
 
-@include media-breakpoint-up(xl) {
+@include bootstrap.media-breakpoint-up(xl) {
   .container {
-    max-width: map-get($container-max-widths, xl);
+    max-width: map.get(bootstrap.$container-max-widths, xl);
   }
 }
 
@@ -104,13 +105,13 @@ body {
   border-color: transparent !important;
 }
 
-@include media-breakpoint-up(lg) {
+@include bootstrap.media-breakpoint-up(lg) {
   .border-lg-bottom-0 {
     border-bottom: 0 !important;
   }
 }
 
-@include media-breakpoint-up(lg) {
+@include bootstrap.media-breakpoint-up(lg) {
   .border-lg-end {
     border-right: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
   }
@@ -156,7 +157,7 @@ body {
   }
 }
 
-@include media-breakpoint-up(lg) {
+@include bootstrap.media-breakpoint-up(lg) {
   .w-lg-50 {
     width: 50%;
   }
