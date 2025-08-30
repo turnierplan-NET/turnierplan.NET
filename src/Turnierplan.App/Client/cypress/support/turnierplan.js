@@ -1,4 +1,4 @@
-export const ids = {
+export const turnierplan = {
   loginPage: {
     loginButton: 'login-page-login-button',
     passwordField: 'login-page-password-field',
@@ -11,11 +11,15 @@ export const ids = {
     newOrganizationButton: 'landing-page-new-organization-button'
   },
   pageFrame: {
-    title: 'page-frame-title'
+    title: 'page-frame-title',
+    navigationTab: (id) => `page-frame-navigation-tab-${id}`
   },
   createOrganizationPage: {
     organizationNameField: 'create-organization-page-organization-name-field',
     confirmButton: 'create-organization-page-confirm-button'
+  },
+  viewOrganizationPage: {
+    settingsPageId: 3
   },
   deleteWidget: {
     confirmationField: 'delete-widget-confirmation-field',

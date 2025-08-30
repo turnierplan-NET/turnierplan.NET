@@ -10,6 +10,7 @@
 
         <div
           class="tp-navigation-tab px-3 py-1 d-flex flex-row gap-2"
+          [attr.data-cy]="'page-frame-navigation-tab-' + tab.id"
           [ngClass]="{
             'tp-cursor-not-allowed text-secondary': isTabDisabled,
             'tp-text-shadow tp-navigation-tab-selected tp-cursor-default': !isTabDisabled && tab.id === currentTabId,
