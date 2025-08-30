@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - main
+      - eliaspr/e2e-tests
 
 jobs:
   e2e:
