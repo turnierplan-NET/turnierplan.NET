@@ -11,7 +11,6 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, Routes, UrlSegment } from '@angular/router';
-import { identityPages } from './app/identity/identity.module';
 import { TranslateLoader, TranslationObject, provideTranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 import { de as languageDE } from './app/i18n/de';
@@ -26,13 +25,14 @@ const routes: Routes = [
     path: 'portal',
     children: [
       {
-        matcher: (url: UrlSegment[]) => (url.length > 0 && identityPages.some((x) => x === url[0].path) ? { consumed: [] } : null),
+        matcher: (url: UrlSegment[]) =>
+          url.length > 0 && ['change-password', 'login', 'user-info'].some((x) => x === url[0].path) ? { consumed: [] } : null,
         title: environment.defaultTitle,
-        loadChildren: () => import('./app/identity/identity.module').then((m) => m.IdentityModule)
+        loadChildren: () => import('./app/identity/identity.routes').then((m) => m.identityRoutes)
       },
       {
         path: '',
-        loadChildren: () => import('./app/portal/portal.module').then((m) => m.PortalModule)
+        loadChildren: () => import('./app/portal/portal.routes').then((m) => m.portalRoutes)
       }
     ]
   },

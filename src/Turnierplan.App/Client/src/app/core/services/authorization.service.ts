@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Action } from '../../generated/actions';
 import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthorizationService {
   private readonly rolesSubjects: { [key: string]: BehaviorSubject<Role[]> } = {};
 

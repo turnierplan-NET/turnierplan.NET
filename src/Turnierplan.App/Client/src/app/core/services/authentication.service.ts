@@ -19,7 +19,7 @@ interface TurnierplanRefreshToken {
   uid: string;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthenticationService implements OnDestroy {
   private static readonly localStorageUserIdKey = 'tp_id_userId';
   private static readonly localStorageUserNameKey = 'tp_id_userName';
