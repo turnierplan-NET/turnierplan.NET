@@ -1,0 +1,23 @@
+services:
+  turnierplan.e2e.database:
+    image: postgres:17.0
+    networks:
+      - turnierplan.e2e
+    environment:
+      - POSTGRES_PASSWORD=P@ssw0rd
+      - POSTGRES_DB=turnierplan
+
+  turnierplan.e2e.application:
+    build:
+      dockerfile: 'Turnierplan.App/Dockerfile'
+      context: '../src'
+    networks:
+      - turnierplan.e2e
+    ports:
+      - "45009:8080"
+    environment:
+      - Database__ConnectionString=Host=turnierplan.e2e.database;Database=turnierplan;Username=postgres;Password=P@ssw0rd
+      - Turnierplan__ApplicationUrl=http://localhost:45009
+
+networks:
+  turnierplan.e2e: {}

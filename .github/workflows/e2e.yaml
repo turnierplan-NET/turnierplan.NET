@@ -1,0 +1,35 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  e2e:
+    name: 'E2E tests'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: 'Setup Node.js 24.x'
+        uses: actions/setup-node@v3
+        with:
+          node-version: '24.x'
+      - name: 'Insert mock version number'
+        uses: cschleiden/replace-tokens@v1
+        with:
+          files: '["**/environment.prod.ts"]'
+        env:
+          TOKEN_APPLICATION_VERSION: "1.2.3"
+      - name: 'Install npm packages'
+        run: 'npm ci'
+        working-directory: './e2e/'
+      - name: 'Prepare e2e test environment'
+        run: 'npm run e2e:prepare'
+        working-directory: './e2e/'
+
+    # TODO RUN CYPRESS TESTS HERE
+
+      - name: 'Destroy e2e test environment'
+        run: 'npm run e2e:destroy'
+        working-directory: './e2e/'
