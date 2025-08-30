@@ -16,7 +16,7 @@ import { MatchType } from '../../../api';
 import { GroupView } from '../groups/groups.component';
 import { MatchView } from '../match-plan/match-plan.component';
 import { NgClass, NgTemplateOutlet, NgStyle } from '@angular/common';
-import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { LiveIndicatorComponent } from '../live-indicator/live-indicator.component';
 import { TranslateDirective } from '@ngx-translate/core';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';

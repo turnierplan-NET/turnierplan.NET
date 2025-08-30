@@ -52,7 +52,7 @@ export class FolderStatisticsComponent implements OnInit, OnDestroy {
     private readonly titleService: TitleService,
     private readonly translateService: TranslateService
   ) {
-    this.locale = translateService.currentLang;
+    this.locale = translateService.getCurrentLang();
   }
 
   public ngOnInit(): void {

@@ -12,7 +12,7 @@ import { DocumentConfigReceiptsComponent } from '../document-config-receipts/doc
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { NgClass, AsyncPipe } from '@angular/common';
-import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { RenameButtonComponent } from '../rename-button/rename-button.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
@@ -135,7 +135,7 @@ export class DocumentManagerComponent {
       const fileName = this.getDocumentFileName(documentName);
 
       this.documentService
-        .getDocumentPdf({ id: id, languageCode: this.translateService.currentLang, timeZone: this.getTimeZoneName() })
+        .getDocumentPdf({ id: id, languageCode: this.translateService.getCurrentLang(), timeZone: this.getTimeZoneName() })
         .subscribe({
           next: (result) => {
             this.documents.find((x) => x.id === id)!.generationCount += 1;
@@ -202,7 +202,7 @@ export class DocumentManagerComponent {
     this.currentlyViewedDocumentId = id;
 
     this.documentService
-      .getDocumentPdf({ id: id, languageCode: this.translateService.currentLang, timeZone: this.getTimeZoneName() })
+      .getDocumentPdf({ id: id, languageCode: this.translateService.getCurrentLang(), timeZone: this.getTimeZoneName() })
       .pipe(
         tap(() => {
           this.currentlyLoadingPreview = undefined;

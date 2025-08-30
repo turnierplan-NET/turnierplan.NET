@@ -59,7 +59,7 @@
                   [icon]="'gear'"
                   [mode]="'IconOnly'"
                   [attr.aria-label]="'Portal.ViewTournament.Documents.Configure' | translate"
-                  (click)="configureDocument(doc.id)" />
+                  (buttonClick)="configureDocument(doc.id)" />
               }
             }
           </td>
@@ -74,7 +74,7 @@
               [mode]="'IconOnly'"
               [disabled]="downloadOrPreviewDisabled"
               [attr.aria-label]="'Portal.ViewTournament.Documents.Download' | translate"
-              (click)="downloadDocument(doc.id)" />
+              (buttonClick)="downloadDocument(doc.id)" />
           }
         </td>
         <td class="align-middle">
@@ -87,7 +87,7 @@
               [icon]="'file-earmark-pdf'"
               [title]="'Portal.ViewTournament.Documents.OpenPreview'"
               [disabled]="downloadOrPreviewDisabled"
-              (click)="previewDocument(doc.id)" />
+              (buttonClick)="previewDocument(doc.id)" />
           }
         </td>
         @if (writeAllowed) {

@@ -58,7 +58,7 @@
               type="outline-secondary"
               [attr.aria-label]="'Portal.EditMatchPlan.EditButtonTooltip.Button' | translate"
               [mode]="'IconOnly'"
-              (click)="currentlyEditingMatchId = currentlyEditingMatchId === match.id ? undefined : match.id" />
+              (buttonClick)="currentlyEditingMatchId = currentlyEditingMatchId === match.id ? undefined : match.id" />
           </td>
         </tr>
         @if (match.id === currentlyEditingMatchId) {
@@ -139,7 +139,11 @@
 
     <div class="flex-grow-1"></div>
     <div [ngClass]="{ 'tp-cursor-not-allowed': !canSave }">
-      <tp-action-button [type]="'success'" [title]="'Portal.EditMatchPlan.Submit'" [disabled]="!canSave" (click)="saveButtonClicked()" />
+      <tp-action-button
+        [type]="'success'"
+        [title]="'Portal.EditMatchPlan.Submit'"
+        [disabled]="!canSave"
+        (buttonClick)="saveButtonClicked()" />
     </div>
   </div>
 </tp-page-frame>

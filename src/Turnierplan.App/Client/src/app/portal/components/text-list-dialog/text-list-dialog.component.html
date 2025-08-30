@@ -27,11 +27,11 @@
         [type]="'outline-primary'"
         [title]="translationKey + '.AddEntry'"
         [icon]="'plus-circle'"
-        (click)="addEmptyControl()" />
+        (buttonClick)="addEmptyControl()" />
     </div>
   </div>
   <div class="modal-footer">
-    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
-    <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" (click)="save()" />
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
+    <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" (buttonClick)="save()" />
   </div>
 }

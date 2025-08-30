@@ -40,7 +40,7 @@
     @if (textArea) {
       <span class="flex-grow-1 small text-secondary" translate="Portal.General.CtrlEnter"></span>
     }
-    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
-    <tp-action-button [type]="'success'" [title]="translationKey + '.Confirm'" (click)="save()" />
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
+    <tp-action-button [type]="'success'" [title]="translationKey + '.Confirm'" (buttonClick)="save()" />
   </div>
 }

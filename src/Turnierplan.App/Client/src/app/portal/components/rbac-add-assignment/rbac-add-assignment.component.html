@@ -26,7 +26,7 @@
                 <div class="small text-secondary" [translate]="'Portal.RbacManagement.RoleDescription.' + role"></div>
               </td>
               <td style="width: 1px" class="align-middle">
-                <tp-action-button [mode]="'IconOnly'" [icon]="'arrow-right-circle'" (click)="selectRole(role)" />
+                <tp-action-button [mode]="'IconOnly'" [icon]="'arrow-right-circle'" (buttonClick)="selectRole(role)" />
               </td>
             </tr>
           }
@@ -81,7 +81,7 @@
             [icon]="'search'"
             [title]="'Portal.RbacManagement.AddRoleAssignment.SearchPrincipalButton'"
             [disabled]="createDisabled"
-            (click)="addRoleAssignment()" />
+            (buttonClick)="addRoleAssignment()" />
         </div>
       </div>
 
@@ -96,13 +96,13 @@
 </div>
 <div class="modal-footer">
   @if (step === 'SelectRole') {
-    <tp-action-button [type]="'outline-secondary'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
+    <tp-action-button [type]="'outline-secondary'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
   } @else {
     <tp-action-button
       [type]="'outline-dark'"
       [title]="'Portal.RbacManagement.AddRoleAssignment.PreviousStep'"
       [icon]="'arrow-left-circle'"
-      (click)="previousStep()" />
+      (buttonClick)="previousStep()" />
   }
   <span class="flex-grow-1"></span>
   @if (step === 'SelectRole') {
@@ -113,7 +113,7 @@
         [title]="'Portal.RbacManagement.AddRoleAssignment.NextStep'"
         [icon]="'arrow-right-circle'"
         [disabled]="nextDisabled"
-        (click)="nextStep()" />
+        (buttonClick)="nextStep()" />
     </div>
   }
 </div>

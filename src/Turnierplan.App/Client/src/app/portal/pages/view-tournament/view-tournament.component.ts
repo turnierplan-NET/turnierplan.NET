@@ -42,7 +42,7 @@ import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
-import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
 import { NgClass, AsyncPipe } from '@angular/common';
 import { BadgeComponent } from '../../components/badge/badge.component';

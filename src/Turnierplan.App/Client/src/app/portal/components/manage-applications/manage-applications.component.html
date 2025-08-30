@@ -43,7 +43,7 @@
                 [mode]="'IconOnly'"
                 [icon]="showApplicationTeams ? 'chevron-bar-contract' : 'chevron-bar-expand'"
                 [type]="'outline-secondary'"
-                (click)="showTeamsApplicationId = showApplicationTeams ? undefined : application.id" />
+                (buttonClick)="showTeamsApplicationId = showApplicationTeams ? undefined : application.id" />
             </td>
             <td class="text-center align-correctly">{{ result.currentPage * result.itemsPerPage + i + 1 }}</td>
             <td class="text-nowrap align-correctly">

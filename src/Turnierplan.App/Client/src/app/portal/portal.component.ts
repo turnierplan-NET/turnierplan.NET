@@ -9,7 +9,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { IsAdministratorDirective } from './directives/is-administrator/is-administrator.directive';
 import { NgTemplateOutlet, NgClass } from '@angular/common';
-import { FooterComponent } from '../shared/components/footer/footer.component';
+import { FooterComponent } from '../core/components/footer/footer.component';
 
 type UserInfoAction = 'EditUserInfo' | 'ChangePassword' | 'Logout';
 

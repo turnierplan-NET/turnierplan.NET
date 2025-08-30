@@ -46,7 +46,7 @@
                   [type]="'outline-secondary'"
                   [icon]="'pencil'"
                   [title]="'Portal.ViewVenue.Details.Edit'"
-                  (click)="editDescription()" />
+                  (buttonClick)="editDescription()" />
               </div>
               <hr class="m-0" />
               <div class="card-body d-flex flex-column gap-2">
@@ -70,7 +70,7 @@
                   [type]="'outline-secondary'"
                   [icon]="'pencil'"
                   [title]="'Portal.ViewVenue.Details.Edit'"
-                  (click)="editTextList('addressDetails')" />
+                  (buttonClick)="editTextList('addressDetails')" />
               </div>
               <hr class="m-0" />
               <div class="card-body d-flex flex-column gap-2">
@@ -96,7 +96,7 @@
                   [type]="'outline-secondary'"
                   [icon]="'pencil'"
                   [title]="'Portal.ViewVenue.Details.Edit'"
-                  (click)="editTextList('externalLinks')" />
+                  (buttonClick)="editTextList('externalLinks')" />
               </div>
             }
             @case (1) {

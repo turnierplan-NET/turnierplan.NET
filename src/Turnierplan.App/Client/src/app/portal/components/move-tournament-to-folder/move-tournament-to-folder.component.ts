@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { FolderDto, SetTournamentFolderEndpointRequest, FoldersService, NullableOfPublicId } from '../../../api';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
-import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 

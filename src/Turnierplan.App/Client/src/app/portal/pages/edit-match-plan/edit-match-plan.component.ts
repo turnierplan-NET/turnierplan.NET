@@ -106,7 +106,7 @@ export class EditMatchPlanComponent implements OnInit, OnDestroy, DiscardChanges
             combineLatestWith(
               this.tournamentService.getTournamentTeamSelectors({
                 id: this.tournamentId,
-                languageCode: this.translateService.currentLang
+                languageCode: this.translateService.getCurrentLang()
               })
             )
           );

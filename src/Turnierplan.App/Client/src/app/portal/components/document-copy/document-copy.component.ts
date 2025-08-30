@@ -7,7 +7,7 @@ import { LoadingState, LoadingStateDirective } from '../../directives/loading-st
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
 import { TranslateDirective } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
-import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 
 @Component({
   templateUrl: './document-copy.component.html',

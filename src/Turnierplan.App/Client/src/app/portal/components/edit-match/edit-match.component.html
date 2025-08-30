@@ -91,8 +91,8 @@
   </div>
 }
 <div class="modal-footer">
-  <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="closeModal('cancel')" />
-  <tp-action-button [type]="'outline-danger'" [title]="'Portal.ViewTournament.EditMatchDialog.Clear'" (click)="closeModal('clear')" />
+  <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="closeModal('cancel')" />
+  <tp-action-button [type]="'outline-danger'" [title]="'Portal.ViewTournament.EditMatchDialog.Clear'" (buttonClick)="closeModal('clear')" />
   <div class="flex-grow-1"></div>
 
   <button type="button" class="btn btn-sm btn-outline-secondary text-nowrap" (click)="closeModal('saveLive')">
@@ -101,7 +101,7 @@
     <span translate="Portal.ViewTournament.EditMatchDialog.SaveLiveSuffix"></span>
   </button>
 
-  <tp-action-button [type]="'success'" [title]="'Portal.ViewTournament.EditMatchDialog.SaveFinished'" (click)="closeModal('save')" />
+  <tp-action-button [type]="'success'" [title]="'Portal.ViewTournament.EditMatchDialog.SaveFinished'" (buttonClick)="closeModal('save')" />
 </div>
 
 <ng-template #matchInfoColumn let-name="name" let-value="value">

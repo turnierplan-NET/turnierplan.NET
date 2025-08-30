@@ -65,7 +65,7 @@
                 [type]="'outline-secondary'"
                 [title]="'Portal.ViewPlanningRealm.InvitationLink.EditProperties'"
                 [icon]="'pencil'"
-                (click)="showEditPropertiesDialog(editPropertiesDialog)" />
+                (buttonClick)="showEditPropertiesDialog(editPropertiesDialog)" />
             }
           </div>
           <div class="col-12 col-md-6 d-flex flex-column">
@@ -168,7 +168,7 @@
                         [type]="'light'"
                         [icon]="'search'"
                         [mode]="'IconOnly'"
-                        (click)="searchApplicationsClicked(entry.tournamentClassId)" />
+                        (buttonClick)="searchApplicationsClicked(entry.tournamentClassId)" />
                     }
                   </div>
                 }
@@ -179,7 +179,7 @@
                     [type]="'outline-secondary'"
                     [icon]="'pencil'"
                     [mode]="'IconOnly'"
-                    (click)="showEditEntryDialog(entry, editEntryDialog)" />
+                    (buttonClick)="showEditEntryDialog(entry, editEntryDialog)" />
                   <tp-delete-button class="ms-1" (confirmed)="removeTournamentClass(entry.tournamentClassId)" />
                 </td>
               }
@@ -253,7 +253,7 @@
         [type]="'outline-secondary'"
         [icon]="'search'"
         [title]="'Portal.ViewPlanningRealm.InvitationLink.ShowApplications'"
-        (click)="searchApplicationsClicked()" />
+        (buttonClick)="searchApplicationsClicked()" />
     }
   </div>
 </div>
@@ -352,7 +352,7 @@
 
       <div class="d-flex flex-row align-items-center mb-2">
         <span class="flex-grow-1" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ExternalLinks"></span>
-        <tp-action-button [type]="'outline-primary'" [icon]="'plus-circle'" [mode]="'IconOnly'" (click)="addExternalLinkToForm()" />
+        <tp-action-button [type]="'outline-primary'" [icon]="'plus-circle'" [mode]="'IconOnly'" (buttonClick)="addExternalLinkToForm()" />
       </div>
 
       <ng-container formArrayName="externalLinks">
@@ -391,12 +391,12 @@
     </form>
   </div>
   <div class="modal-footer">
-    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
     <tp-action-button
       [type]="'success'"
       [title]="'Portal.General.Apply'"
       [disabled]="editPropertiesForm.invalid"
-      (click)="editPropertiesForm.valid && modal.close()" />
+      (buttonClick)="editPropertiesForm.valid && modal.close()" />
   </div>
 </ng-template>
 
@@ -457,11 +457,11 @@
     </form>
   </div>
   <div class="modal-footer">
-    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (click)="modal.dismiss()" />
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
     <tp-action-button
       [type]="'success'"
       [title]="'Portal.General.Apply'"
       [disabled]="editEntryForm.invalid"
-      (click)="editEntryForm.valid && modal.close()" />
+      (buttonClick)="editEntryForm.valid && modal.close()" />
   </div>
 </ng-template>

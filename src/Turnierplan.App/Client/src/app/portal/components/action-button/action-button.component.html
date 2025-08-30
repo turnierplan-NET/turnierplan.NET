@@ -1,19 +1,24 @@
 @if (mode === 'IconLeftAndText') {
-  <button type="button" class="btn btn-sm btn-{{ type }} text-nowrap" [ngClass]="{ disabled: disabled }">
+  <button type="button" class="btn btn-sm btn-{{ type }} text-nowrap" [ngClass]="{ disabled: disabled }" (click)="buttonClick.emit()">
     @if (icon) {
       <i class="bi bi-{{ icon }}" aria-hidden="true"></i>
     }
     <span [translate]="title" [ngClass]="{ 'ms-2': icon }"></span>
   </button>
 } @else if (mode === 'IconRightAndText') {
-  <button type="button" class="btn btn-sm btn-{{ type }} text-nowrap" [ngClass]="{ disabled: disabled }">
+  <button type="button" class="btn btn-sm btn-{{ type }} text-nowrap" [ngClass]="{ disabled: disabled }" (click)="buttonClick.emit()">
     <span [translate]="title" [ngClass]="{ 'me-2': icon }"></span>
     @if (icon) {
       <i class="bi bi-{{ icon }}" aria-hidden="true"></i>
     }
   </button>
 } @else if (mode === 'IconOnly' && icon) {
-  <button type="button" class="btn btn-sm btn-{{ type }}" [ngClass]="{ disabled: disabled }" [attr.aria-label]="title | translate">
+  <button
+    type="button"
+    class="btn btn-sm btn-{{ type }}"
+    [ngClass]="{ disabled: disabled }"
+    [attr.aria-label]="title | translate"
+    (click)="buttonClick.emit()">
     <i class="bi bi-{{ icon }}" aria-hidden="true"></i>
   </button>
 }

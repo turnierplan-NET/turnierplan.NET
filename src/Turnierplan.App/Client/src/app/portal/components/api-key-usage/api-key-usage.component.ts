@@ -7,7 +7,7 @@ import { ApiKeysService } from '../../../api';
 import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { AlertComponent } from '../alert/alert.component';
-import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 
 @Component({
   selector: 'tp-api-key-usage',
@@ -56,7 +56,7 @@ export class ApiKeyUsageComponent implements OnDestroy {
           for (let i = 0; i < data.bucketCount; i++) {
             const bucketStart = new Date(new Date(data.timeFrameStart).getTime() + i * data.bucketWidthSeconds * 1000);
             const bucketCount = data.entries.find((x) => x.bucketIndex === i)?.count ?? 0;
-            labels.push(formatDate(bucketStart, 'short', translateService.currentLang));
+            labels.push(formatDate(bucketStart, 'short', translateService.getCurrentLang()));
             values.push(bucketCount);
             this.totalCount += bucketCount;
           }

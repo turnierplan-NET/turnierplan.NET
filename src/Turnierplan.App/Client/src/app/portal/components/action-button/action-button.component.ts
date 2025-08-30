@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 
@@ -22,4 +22,7 @@ export class ActionButtonComponent {
 
   @Input()
   public disabled = false;
+
+  @Output()
+  public buttonClick = new EventEmitter<void>();
 }

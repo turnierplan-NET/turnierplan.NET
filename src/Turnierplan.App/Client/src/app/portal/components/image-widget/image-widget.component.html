@@ -15,7 +15,11 @@
   <div class="d-flex flex-column align-items-start align-items-md-center gap-1">
     <div class="fst-italic" [translate]="'Portal.ImageAlt.' + imageAlt"></div>
     @if (allowChanging) {
-      <tp-action-button [type]="'outline-secondary'" [title]="'Portal.General.Change'" [icon]="'pencil'" (click)="openSelectionDialog()" />
+      <tp-action-button
+        [type]="'outline-secondary'"
+        [title]="'Portal.General.Change'"
+        [icon]="'pencil'"
+        (buttonClick)="openSelectionDialog()" />
     }
   </div>
 </div>
