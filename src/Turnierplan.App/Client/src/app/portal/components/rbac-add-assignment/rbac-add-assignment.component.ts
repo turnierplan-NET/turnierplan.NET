@@ -7,7 +7,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { FormsModule } from '@angular/forms';
-import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 
 type Step = 'SelectRole' | 'SelectPrincipal';
 

@@ -6,7 +6,7 @@ import { AuthenticationService } from '../../../core/services/authentication.ser
 import { NotificationService } from '../../../core/services/notification.service';
 import { TranslateDirective } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
-import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NgClass } from '@angular/common';
 
 @Component({

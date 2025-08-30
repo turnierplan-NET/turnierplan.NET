@@ -16,7 +16,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
-import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NgClass } from '@angular/common';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 

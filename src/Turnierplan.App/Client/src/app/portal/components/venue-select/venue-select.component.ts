@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 
 import { NullableOfPublicId, VenueDto, VenuesService } from '../../../api';
 import { TranslateDirective } from '@ngx-translate/core';
-import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgClass } from '@angular/common';

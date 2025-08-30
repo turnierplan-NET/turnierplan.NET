@@ -7,7 +7,7 @@ import { ApiKeysService } from '../../../api';
 import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { AlertComponent } from '../alert/alert.component';
-import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 
 @Component({
   selector: 'tp-api-key-usage',

@@ -5,7 +5,7 @@ import { NotificationService } from '../../../core/services/notification.service
 import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { RbacAddAssignmentComponent } from '../rbac-add-assignment/rbac-add-assignment.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
-import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { RbacPrincipalComponent } from '../rbac-principal/rbac-principal.component';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';

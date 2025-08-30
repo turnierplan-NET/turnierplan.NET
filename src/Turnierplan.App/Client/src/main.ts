@@ -14,9 +14,7 @@ import { provideRouter, Routes, UrlSegment } from '@angular/router';
 import { TranslateLoader, TranslationObject, provideTranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 import { de as languageDE } from './app/i18n/de';
-import { CoreModule } from './app/core/core.module';
 import { provideToastr } from 'ngx-toastr';
-import { SharedModule } from './app/shared/shared.module';
 import { ApiModule } from './app/api';
 import { AppComponent } from './app/app.component';
 
@@ -61,7 +59,7 @@ registerLocaleData(localeDe, 'de', localeDeExtra);
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(CommonModule, BrowserModule, CoreModule.forRoot(), SharedModule, ApiModule.forRoot({ rootUrl: window.origin })),
+    importProvidersFrom(CommonModule, BrowserModule, ApiModule.forRoot({ rootUrl: window.origin })),
     provideHttpClient(withInterceptors([authenticationInterceptor, rolesInterceptor])),
     provideTranslateService({
       loader: provideTranslateLoader(ImmediateTranslateLoader)

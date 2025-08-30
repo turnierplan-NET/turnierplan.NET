@@ -12,7 +12,7 @@ import { DocumentConfigReceiptsComponent } from '../document-config-receipts/doc
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { NgClass, AsyncPipe } from '@angular/common';
-import { SmallSpinnerComponent } from '../../../shared/components/small-spinner/small-spinner.component';
+import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { RenameButtonComponent } from '../rename-button/rename-button.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
