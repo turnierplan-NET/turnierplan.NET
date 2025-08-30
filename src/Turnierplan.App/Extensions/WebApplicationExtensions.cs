@@ -33,7 +33,7 @@ internal static class WebApplicationExtensions
             var overwriteInitialUserPassword = !string.IsNullOrWhiteSpace(options.InitialUserPassword);
 
             var initialUserName = string.IsNullOrWhiteSpace(options.InitialUserName) ? "Administrator" : options.InitialUserName;
-            var initialUserEmail = string.IsNullOrWhiteSpace(options.InitialUserName) ? "admin@example.com" : options.InitialUserEmail;
+            var initialUserEmail = string.IsNullOrWhiteSpace(options.InitialUserEmail) ? "admin@example.com" : options.InitialUserEmail;
             var initialUserPassword = overwriteInitialUserPassword ? options.InitialUserPassword! : Guid.NewGuid().ToString();
 
             var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
@@ -48,10 +48,15 @@ internal static class WebApplicationExtensions
             await context.Users.AddAsync(initialUser).ConfigureAwait(false);
             await context.SaveChangesAsync().ConfigureAwait(false);
 
-            // Don't log the password if it was specified using an environment variable
-            var passwordForLogging = overwriteInitialUserPassword ? "****" : initialUserPassword;
-
-            logger.LogInformation("An initial user \"{Name}\" was created. You can log in using \"{Email}\" and the password \"{Password}\". IMMEDIATELY change this password when running in a production environment!", initialUserName, initialUserEmail, passwordForLogging);
+            if (overwriteInitialUserPassword)
+            {
+                // Don't log the password if it was specified using an environment variable
+                logger.LogInformation("An initial user \"{Name}\" was created. You can log in using \"{Email}\" and the password \"****\" (set by environment variable). This is NOT recommended in a production environment!", initialUserName, initialUserEmail);
+            }
+            else
+            {
+                logger.LogInformation("An initial user \"{Name}\" was created. You can log in using \"{Email}\" and the password \"{Password}\". IMMEDIATELY change this password when running in a production environment!", initialUserName, initialUserEmail, initialUserPassword);
+            }
         }
         else
         {
