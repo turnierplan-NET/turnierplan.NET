@@ -4,7 +4,9 @@
 }
 
 <div class="d-flex flex-row gap-2 align-items-center">
-  <tp-tooltip-icon [margin]="false" [tooltipText]="'Portal.IdWidget.InfoText'" />
+  @if (compact) {
+    <tp-tooltip-icon [margin]="false" [tooltipText]="'Portal.IdWidget.InfoText'" />
+  }
   <span class="font-monospace id-value">{{ id }}</span>
   <tp-copy-to-clipboard [value]="id" />
 </div>
