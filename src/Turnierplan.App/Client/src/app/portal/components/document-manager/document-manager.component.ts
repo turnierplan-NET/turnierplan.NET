@@ -135,7 +135,7 @@ export class DocumentManagerComponent {
       const fileName = this.getDocumentFileName(documentName);
 
       this.documentService
-        .getDocumentPdf({ id: id, languageCode: this.translateService.currentLang, timeZone: this.getTimeZoneName() })
+        .getDocumentPdf({ id: id, languageCode: this.translateService.getCurrentLang(), timeZone: this.getTimeZoneName() })
         .subscribe({
           next: (result) => {
             this.documents.find((x) => x.id === id)!.generationCount += 1;
@@ -202,7 +202,7 @@ export class DocumentManagerComponent {
     this.currentlyViewedDocumentId = id;
 
     this.documentService
-      .getDocumentPdf({ id: id, languageCode: this.translateService.currentLang, timeZone: this.getTimeZoneName() })
+      .getDocumentPdf({ id: id, languageCode: this.translateService.getCurrentLang(), timeZone: this.getTimeZoneName() })
       .pipe(
         tap(() => {
           this.currentlyLoadingPreview = undefined;
