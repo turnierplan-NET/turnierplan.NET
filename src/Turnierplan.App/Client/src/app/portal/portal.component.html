@@ -21,13 +21,11 @@
               <span class="text-decoration-underline" [translate]="'Portal.UserInfoPopover.Administration'"></span>
             </div>
           </ng-container>
-          <ng-container
-            [ngTemplateOutlet]="userInfoAction"
-            [ngTemplateOutletContext]="{ isFirst: true, action: 'EditUserInfo' }"></ng-container>
-          <ng-container
-            [ngTemplateOutlet]="userInfoAction"
-            [ngTemplateOutletContext]="{ isFirst: false, action: 'ChangePassword' }"></ng-container>
-          <ng-container [ngTemplateOutlet]="userInfoAction" [ngTemplateOutletContext]="{ isFirst: false, action: 'Logout' }"></ng-container>
+          <ng-container [ngTemplateOutlet]="userInfoAction"
+            [ngTemplateOutletContext]="{ isFirst: true, action: 'EditUserInfo' }" />
+          <ng-container [ngTemplateOutlet]="userInfoAction"
+            [ngTemplateOutletContext]="{ isFirst: false, action: 'ChangePassword' }" />
+          <ng-container [ngTemplateOutlet]="userInfoAction" [ngTemplateOutletContext]="{ isFirst: false, action: 'Logout' }" />
         </ng-template>
         <ng-template #userInfoAction let-action="action">
           <div class="d-flex flex-row tp-cursor-pointer mt-1" (click)="userInfoActionClicked(action)">
@@ -40,6 +38,6 @@
   </div>
 </header>
 
-<router-outlet (activate)="currentComponent = $event"></router-outlet>
+<router-outlet (activate)="currentComponent = $event" />
 
 <tp-footer [footerStyle]="footerStyle" />

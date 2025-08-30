@@ -7,6 +7,6 @@
   @if (text !== undefined) {
     <span [translate]="text" [translateParams]="textParams ?? {}"></span>
   } @else {
-    <ng-content></ng-content>
+    <ng-content />
   }
 </div>

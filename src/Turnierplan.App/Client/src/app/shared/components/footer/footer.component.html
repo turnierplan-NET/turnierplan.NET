@@ -1,11 +1,11 @@
 @if (contentOnly) {
   <div class="tp-footer-layout">
-    <ng-container [ngTemplateOutlet]="footerContent"></ng-container>
+    <ng-container [ngTemplateOutlet]="footerContent" />
   </div>
 } @else {
   <div class="tp-footer tp-footer-layout position-fixed bottom-0" [style]="footerStyle">
     <div class="container d-flex flex-row justify-content-center py-1">
-      <ng-container [ngTemplateOutlet]="footerContent"></ng-container>
+      <ng-container [ngTemplateOutlet]="footerContent" />
     </div>
   </div>
 }

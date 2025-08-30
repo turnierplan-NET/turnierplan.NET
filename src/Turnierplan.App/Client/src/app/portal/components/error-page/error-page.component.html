@@ -1,9 +1,9 @@
 <div class="error-page-container w-100 d-flex flex-column align-items-center">
   @if (illustrationName) {
-    <tp-illustration [name]="illustrationName!"></tp-illustration>
+    <tp-illustration [name]="illustrationName!" />
   }
   <div class="mt-5 text-center">
-    <ng-content></ng-content>
+    <ng-content />
   </div>
   @if (actionButton) {
     <tp-action-button
