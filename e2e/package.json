@@ -1,0 +1,15 @@
+{
+  "name": "turnierplan-net-e2e",
+  "version": "0.0.0",
+  "description": "End-to-end tests for turnierplan.NET",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/turnierplan-NET/turnierplan.NET"
+  },
+  "scripts": {},
+  "devDependencies": {
+    "cypress": "~15.0.0"
+  }
+}
