@@ -21,9 +21,9 @@ jobs:
       - name: 'Prepare e2e test environment'
         run: 'npm run e2e:prepare'
         working-directory: './e2e/'
-
-    # TODO RUN CYPRESS TESTS HERE
-
+      - name: 'Run e2e tests'
+        run: 'npm run e2e:run'
+        working-directory: './e2e/'
       - name: 'Destroy e2e test environment'
         run: 'npm run e2e:destroy'
         working-directory: './e2e/'
