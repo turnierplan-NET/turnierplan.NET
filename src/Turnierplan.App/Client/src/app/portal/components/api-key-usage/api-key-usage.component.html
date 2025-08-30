@@ -32,7 +32,7 @@
     </div>
   } @else {
     <div style="width: 50%">
-      <!-- TODO <canvas baseChart type="bar" [data]="chartData" [options]="chartOptions"></canvas> -->
+      <div echarts [options]="apiKeyUsageChart" style="height: 300px"></div>
       <div class="text-center small">
         <span translate="Portal.ApiKeyUsage.Total"></span>
         <span class="ms-1 fw-bold">{{ totalCount }}</span>
