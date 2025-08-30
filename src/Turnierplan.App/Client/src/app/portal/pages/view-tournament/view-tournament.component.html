@@ -337,6 +337,10 @@
                   [icon]="'box-arrow-right'"
                   (buttonClick)="moveToAnotherFolder()" />
               </div>
+              <hr class="m-0" />
+              <div class="card-body">
+                <tp-id-widget [id]="tournament.id" />
+              </div>
               <ng-container *tpIsActionAllowed="[tournament.id, Actions.ReadOrWriteRoleAssignments]">
                 <hr class="m-0" />
                 <div class="card-body">

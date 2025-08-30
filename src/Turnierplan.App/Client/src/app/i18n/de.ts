@@ -1102,6 +1102,7 @@ export const de = {
     RbacManagement: {
       Title: 'Zugriff verwalten',
       ButtonLabel: 'Verwalten',
+      ButtonLabelAlternative: 'Zugriff',
       OffcanvasTitle: 'Rollenzuweisungen bearbeiten',
       Loading: 'Rollenzuweisungen werden geladen',
       NewRoleAssignment: 'Neue Rollenzuweisung',
@@ -1186,6 +1187,11 @@ export const de = {
           Message: 'Die angegebene Rolle ist bereits für den spezifizierten Prinzipal zugewiesen.'
         }
       }
+    },
+    IdWidget: {
+      Title: 'Resourcen-ID',
+      TitleShort: 'ID:',
+      InfoText: 'Die ID kann verwendet werden, um mithilfe eines API-Keys auf diese Resource zuzugreifen.'
     }
   }
 };

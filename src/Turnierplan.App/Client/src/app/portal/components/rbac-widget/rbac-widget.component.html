@@ -1,5 +1,9 @@
 @if (buttonOnly) {
-  <tp-action-button [type]="'outline-secondary'" [icon]="'shield-lock'" [mode]="'IconOnly'" (buttonClick)="buttonClicked()" />
+  <tp-action-button
+    [type]="'outline-dark'"
+    [icon]="'shield-lock'"
+    [title]="'Portal.RbacManagement.ButtonLabelAlternative'"
+    (buttonClick)="buttonClicked()" />
 } @else {
   <div class="fw-bold mb-3" translate="Portal.RbacManagement.Title"></div>
   <div translate="{{ translationKey }}.Info"></div>

@@ -12,6 +12,7 @@ import { ActionButtonComponent } from '../action-button/action-button.component'
 import { RouterLink } from '@angular/router';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { TranslateDirective } from '@ngx-translate/core';
+import { IdWidgetComponent } from '../id-widget/id-widget.component';
 
 @Component({
   selector: 'tp-tournament-explorer',
@@ -25,7 +26,8 @@ import { TranslateDirective } from '@ngx-translate/core';
     ActionButtonComponent,
     RouterLink,
     TooltipIconComponent,
-    TranslateDirective
+    TranslateDirective,
+    IdWidgetComponent
   ]
 })
 export class TournamentExplorerComponent implements OnChanges {
