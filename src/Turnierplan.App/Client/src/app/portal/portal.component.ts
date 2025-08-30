@@ -10,6 +10,13 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { IsAdministratorDirective } from './directives/is-administrator/is-administrator.directive';
 import { NgTemplateOutlet, NgClass } from '@angular/common';
 import { FooterComponent } from '../core/components/footer/footer.component';
+import { provideEchartsCore } from 'ngx-echarts';
+import * as echarts from 'echarts/core';
+import { BarChart } from 'echarts/charts';
+import { GridComponent, TooltipComponent } from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
+
+echarts.use([BarChart, GridComponent, CanvasRenderer, TooltipComponent]);
 
 type UserInfoAction = 'EditUserInfo' | 'ChangePassword' | 'Logout';
 
@@ -26,7 +33,8 @@ type UserInfoAction = 'EditUserInfo' | 'ChangePassword' | 'Logout';
     RouterOutlet,
     FooterComponent,
     TranslatePipe
-  ]
+  ],
+  providers: [provideEchartsCore({ echarts })]
 })
 export class PortalComponent implements OnInit, OnDestroy {
   protected currentComponent?: Object;

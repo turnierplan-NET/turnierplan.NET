@@ -8,28 +8,24 @@ import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { AlertComponent } from '../alert/alert.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
+import { NgxEchartsDirective } from 'ngx-echarts';
+import { EChartsCoreOption } from 'echarts/core';
 
 @Component({
   selector: 'tp-api-key-usage',
   templateUrl: './api-key-usage.component.html',
-  imports: [TranslateDirective, FormsModule, ActionButtonComponent, AlertComponent, SmallSpinnerComponent]
+  imports: [TranslateDirective, FormsModule, ActionButtonComponent, AlertComponent, SmallSpinnerComponent, NgxEchartsDirective]
 })
 export class ApiKeyUsageComponent implements OnDestroy {
   @Output()
   public errorOccured = new EventEmitter<unknown>();
 
-  // TODO: Re-implement charts with Apache echarts
-  // TODO | protected readonly chartOptions: ChartConfiguration<'bar'>['options'] = {};
   protected readonly reload$ = new BehaviorSubject<void>(undefined);
 
   protected isLoading = true;
   protected timeRange: number = 7;
   protected showNoRequestsNotification = false;
-
-  // TODO | protected chartData: ChartData<'bar'> = {
-  //          labels: [],
-  //          datasets: []
-  //        };
+  protected apiKeyUsageChart: EChartsCoreOption = {};
 
   protected totalCount = 0;
 
@@ -62,18 +58,37 @@ export class ApiKeyUsageComponent implements OnDestroy {
           }
 
           this.isLoading = false;
-          // TODO | this.chartData = {
-          //          labels: labels,
-          //          datasets: [
-          //            {
-          //              data: values,
-          //              backgroundColor: '#16811a',
-          //              borderColor: '#0e4210',
-          //              hoverBackgroundColor: '#279f2b',
-          //              label: translateService.instant('Portal.ApiKeyUsage.Legend') as string
-          //            }
-          //          ]
-          //        };
+
+          this.apiKeyUsageChart = {
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                type: 'none'
+              }
+            },
+            grid: {
+              top: '20',
+              left: '20',
+              right: '20',
+              bottom: '20',
+              containLabel: true
+            },
+            xAxis: {
+              type: 'category',
+              data: labels
+            },
+            yAxis: {
+              type: 'value'
+            },
+            series: [
+              {
+                name: translateService.instant('Portal.ApiKeyUsage.Legend') as string,
+                data: values,
+                type: 'bar',
+                color: '#16811a'
+              }
+            ]
+          };
         },
         error: (error) => this.errorOccured.emit(error)
       });

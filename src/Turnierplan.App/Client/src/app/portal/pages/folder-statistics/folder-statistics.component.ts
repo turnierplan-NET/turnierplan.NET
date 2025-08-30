@@ -9,6 +9,8 @@ import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { NgTemplateOutlet, NgStyle, DecimalPipe, PercentPipe } from '@angular/common';
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
+import { NgxEchartsDirective } from 'ngx-echarts';
+import { EChartsCoreOption } from 'echarts/core';
 
 @Component({
   templateUrl: './folder-statistics.component.html',
@@ -21,12 +23,11 @@ import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon
     TooltipIconComponent,
     DecimalPipe,
     PercentPipe,
-    TranslatePipe
+    TranslatePipe,
+    NgxEchartsDirective
   ]
 })
 export class FolderStatisticsComponent implements OnInit, OnDestroy {
-  // TODO | protected readonly barChartOptions: ChartConfiguration<'bar'>['options'] = {};
-
   protected loadingState: LoadingState = { isLoading: true };
   protected folderName: string = '';
   protected organizationId?: string;
@@ -34,15 +35,8 @@ export class FolderStatisticsComponent implements OnInit, OnDestroy {
   protected locale: string;
   protected goalDistributionExcludedTournaments?: string;
 
-  // TODO | protected outcomesBarChart: ChartData<'bar'> = {
-  //         labels: [],
-  //         datasets: []
-  //       };
-
-  //       protected pageViewsBarChart: ChartData<'bar'> = {
-  //         labels: [],
-  //         datasets: []
-  //       };
+  protected outcomesBarChart: EChartsCoreOption = {};
+  protected pageViewsBarChart: EChartsCoreOption = {};
 
   private readonly destroyed$ = new Subject<void>();
 
@@ -111,30 +105,58 @@ export class FolderStatisticsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // TODO | this.outcomesBarChart = {
-    //          labels: this.statistics.outcomeDistribution.map((x) => `${x.outcome.scoreA}:${x.outcome.scoreB}`),
-    //          datasets: [
-    //            {
-    //              data: this.statistics.outcomeDistribution.map((x) => x.count),
-    //              backgroundColor: '#16811a',
-    //              borderColor: '#0e4210',
-    //              hoverBackgroundColor: '#279f2b',
-    //              label: this.translateService.instant('Portal.FolderStatistics.NumberOfMatches') as string
-    //            }
-    //          ]
-    //        };
+    const commonOptions = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'none'
+        }
+      },
+      grid: {
+        top: '20',
+        left: '20',
+        right: '20',
+        bottom: '20',
+        containLabel: true
+      }
+    };
 
-    //        this.pageViewsBarChart = {
-    //          labels: this.statistics.tournamentPageViews.map((x) => x.tournamentName),
-    //          datasets: [
-    //            {
-    //              data: this.statistics.tournamentPageViews.map((x) => x.publicPageViews),
-    //              backgroundColor: '#16811a',
-    //              borderColor: '#0e4210',
-    //              hoverBackgroundColor: '#279f2b',
-    //              label: this.translateService.instant('Portal.FolderStatistics.NumberOfPageViews') as string
-    //            }
-    //          ]
-    //        };
+    this.outcomesBarChart = {
+      ...commonOptions,
+      xAxis: {
+        type: 'category',
+        data: this.statistics.outcomeDistribution.map((x) => `${x.outcome.scoreA}:${x.outcome.scoreB}`)
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: this.translateService.instant('Portal.FolderStatistics.NumberOfMatches') as string,
+          data: this.statistics.outcomeDistribution.map((x) => x.count),
+          type: 'bar',
+          color: '#16811a'
+        }
+      ]
+    };
+
+    this.pageViewsBarChart = {
+      ...commonOptions,
+      xAxis: {
+        type: 'category',
+        data: this.statistics.tournamentPageViews.map((x) => x.tournamentName)
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: this.translateService.instant('Portal.FolderStatistics.NumberOfPageViews') as string,
+          data: this.statistics.tournamentPageViews.map((x) => x.publicPageViews),
+          type: 'bar',
+          color: '#16811a'
+        }
+      ]
+    };
   }
 }
