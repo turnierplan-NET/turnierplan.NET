@@ -43,11 +43,11 @@
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:prod" />
 
     <!-- Rename the index.html file to portal.html since this is the file served by the backend -->
-    <Move SourceFiles="$(SpaRoot)dist/index.html" DestinationFiles="$(SpaRoot)dist/portal.html" />
+    <Move SourceFiles="$(SpaRoot)dist/browser/index.html" DestinationFiles="$(SpaRoot)dist/browser/portal.html" />
 
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>
-      <DistFiles Include="$(SpaRoot)dist/**; $(SpaRoot)dist-server/**" />
+      <DistFiles Include="$(SpaRoot)dist/browser/**" />
       <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>wwwroot/%(RecursiveDir)%(FileName)%(Extension)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
