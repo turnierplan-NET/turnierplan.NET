@@ -36,7 +36,7 @@
         [attr.aria-label]="'Portal.General.Back' | translate"
         [routerLink]="backLink"></i>
     }
-    <span class="fs-4 fw-bold">{{ title ?? '' }}</span>
+    <span class="fs-4 fw-bold" id="pageFrameTitle">{{ title ?? '' }}</span>
     <div class="flex-grow-1"></div>
     @if (buttons) {
       <ng-container [ngTemplateOutlet]="buttons" />

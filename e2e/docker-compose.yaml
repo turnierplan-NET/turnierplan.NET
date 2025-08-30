@@ -14,13 +14,11 @@ services:
     networks:
       - turnierplan.e2e
     ports:
-      - "45009:8080"
+      - "45001:8080"
     environment:
       - Database__ConnectionString=Host=turnierplan.e2e.database;Database=turnierplan;Username=postgres;Password=P@ssw0rd
       - Turnierplan__ApplicationUrl=http://localhost:45009
-      - Turnierplan__InitialUserName=E2E Test User
-      - Turnierplan__InitialUserEmail=admin-e2e@example.com
-      - Turnierplan__InitialUserPassword=e2e
+      - Turnierplan__InitialUserPassword=P@ssw0rd
 
 networks:
   turnierplan.e2e: {}

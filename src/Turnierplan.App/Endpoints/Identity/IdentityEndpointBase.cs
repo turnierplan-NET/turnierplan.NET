@@ -114,5 +114,10 @@ internal abstract class IdentityEndpointBase<TResponse> : EndpointBase<TResponse
     }
 
     // All identity endpoints should use this artificial delay at the start of every request
+
+#if DEBUG
+    protected static Task IdentityDelay() => Task.CompletedTask;
+#else
     protected static Task IdentityDelay() => Task.Delay(1000 + Random.Shared.Next(500));
+#endif
 }
