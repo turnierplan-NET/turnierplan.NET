@@ -18,6 +18,9 @@ services:
     environment:
       - Database__ConnectionString=Host=turnierplan.e2e.database;Database=turnierplan;Username=postgres;Password=P@ssw0rd
       - Turnierplan__ApplicationUrl=http://localhost:45009
+      - Turnierplan__InitialUserName=E2E Test User
+      - Turnierplan__InitialUserEmail=admin-e2e@example.com
+      - Turnierplan__InitialUserPassword=e2e
 
 networks:
   turnierplan.e2e: {}
