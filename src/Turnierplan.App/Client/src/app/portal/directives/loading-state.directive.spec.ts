@@ -4,12 +4,12 @@ import { By } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ActionButtonComponent } from '../../components/action-button/action-button.component';
-import { ErrorPageComponent } from '../../components/error-page/error-page.component';
-import { IllustrationComponent } from '../../components/illustration/illustration.component';
-import { LoadingErrorComponent } from '../../components/loading-error/loading-error.component';
-import { LoadingIndicatorComponent } from '../../components/loading-indicator/loading-indicator.component';
-import { TitleService } from '../../services/title.service';
+import { ActionButtonComponent } from '../components/action-button/action-button.component';
+import { ErrorPageComponent } from '../components/error-page/error-page.component';
+import { IllustrationComponent } from '../components/illustration/illustration.component';
+import { LoadingErrorComponent } from '../components/loading-error/loading-error.component';
+import { LoadingIndicatorComponent } from '../components/loading-indicator/loading-indicator.component';
+import { TitleService } from '../services/title.service';
 
 import { LoadingStateDirective } from './loading-state.directive';
 
