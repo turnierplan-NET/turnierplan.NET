@@ -102,7 +102,9 @@ public sealed class TournamentTest
         tournament.EndTimestamp.Should().Be(new DateTime(2024, 07, 01, 12, 20, 00));
     }
 
-    [Theory, CombinatorialData]
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
     public void Tournament___StartTimestamp_And_EndTimestamp_When_Matches_Have_Kickoff_Time_And_Duration___Returns_Correct_Value(bool isFinalsMatch)
     {
         var tournament = TestTournament.Default;
