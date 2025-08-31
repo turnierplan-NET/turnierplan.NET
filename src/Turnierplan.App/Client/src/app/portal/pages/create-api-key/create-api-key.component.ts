@@ -5,7 +5,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 
 import { ApiKeyDto, OrganizationDto, ApiKeysService, OrganizationsService } from '../../../api';
-import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { AlertComponent } from '../../components/alert/alert.component';

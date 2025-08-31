@@ -12,7 +12,7 @@ import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { ShareLinkComponent } from '../share-link/share-link.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { ImageWidgetComponent } from '../image-widget/image-widget.component';
-import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { AlertComponent } from '../alert/alert.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';

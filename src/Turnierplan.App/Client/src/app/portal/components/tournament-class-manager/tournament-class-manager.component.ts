@@ -6,7 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdatePlanningRealmFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
 import { ApplicationsFilter } from '../../models/applications-filter';
 import { TranslateDirective } from '@ngx-translate/core';
-import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { RenameButtonComponent } from '../rename-button/rename-button.component';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';

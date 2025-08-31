@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import {
   ApplicationsService,
   CreateApplicationEndpointRequest,
@@ -20,7 +20,7 @@ import { DiscardChangesDetector } from '../../../core/guards/discard-changes.gua
 import { LocalStorageService } from '../../services/local-storage.service';
 import { ApplicationsFilter, defaultApplicationsFilter } from '../../models/applications-filter';
 import { NewApplicationDialogComponent } from '../../components/new-application-dialog/new-application-dialog.component';
-import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';

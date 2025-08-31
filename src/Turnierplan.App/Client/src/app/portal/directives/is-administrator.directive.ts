@@ -1,7 +1,7 @@
 import { Directive, ElementRef, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
-import { AuthenticationService } from '../../../core/services/authentication.service';
+import { AuthenticationService } from '../../core/services/authentication.service';
 
 @Directive({ selector: '[tpIsAdministrator]' })
 export class IsAdministratorDirective implements OnInit, OnDestroy {

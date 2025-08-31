@@ -4,7 +4,7 @@ import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-transl
 import { of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 import { FolderStatisticsDto, FoldersService } from '../../../api';
-import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { NgTemplateOutlet, NgStyle, DecimalPipe, PercentPipe } from '@angular/common';
