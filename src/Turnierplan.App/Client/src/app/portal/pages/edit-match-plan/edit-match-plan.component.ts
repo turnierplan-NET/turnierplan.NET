@@ -16,7 +16,7 @@ import {
 } from '../../../api';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 import { NotificationService } from '../../../core/services/notification.service';
-import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';

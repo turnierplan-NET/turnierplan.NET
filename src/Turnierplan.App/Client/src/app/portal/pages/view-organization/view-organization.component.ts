@@ -16,11 +16,11 @@ import {
 } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
 import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
-import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
-import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';

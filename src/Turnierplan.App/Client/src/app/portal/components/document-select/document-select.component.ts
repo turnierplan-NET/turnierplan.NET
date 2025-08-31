@@ -4,7 +4,7 @@ import { TranslateService, TranslateDirective } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 
 import { DocumentType } from '../../../api';
-import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { getDocumentName } from '../../helpers/document-name';
 
 type DocumentTypeEntry = {

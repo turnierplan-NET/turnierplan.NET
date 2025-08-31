@@ -7,7 +7,7 @@ import { UserDto, UsersService } from '../../../api';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
-import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { NavigationStart, Router, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';

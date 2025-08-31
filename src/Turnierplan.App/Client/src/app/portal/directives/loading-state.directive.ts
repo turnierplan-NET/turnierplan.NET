@@ -1,8 +1,8 @@
 import { Directive, ElementRef, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
-import { LoadingErrorComponent } from '../../components/loading-error/loading-error.component';
-import { LoadingIndicatorComponent } from '../../components/loading-indicator/loading-indicator.component';
-import { TitleService } from '../../services/title.service';
+import { LoadingErrorComponent } from '../components/loading-error/loading-error.component';
+import { LoadingIndicatorComponent } from '../components/loading-indicator/loading-indicator.component';
+import { TitleService } from '../services/title.service';
 
 export interface LoadingState {
   isLoading: boolean;
