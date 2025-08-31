@@ -19,9 +19,9 @@
     "lint:ci": "npm run prettier -- --check",
     "test": "ng test",
     "test:ci": "ng test --watch=false --source-map=true --code-coverage --browsers ChromeHeadless",
-    "e2e:set-version": "replace-in-file \"#{TOKEN_APPLICATION_VERSION}#\" \"9.9.9\" src/environments/environment.prod.ts",
-    "e2e:reset-version": "replace-in-file \"9.9.9\" \"#{TOKEN_APPLICATION_VERSION}#\" src/environments/environment.prod.ts",
-    "e2e:prepare": "npm run e2e:set-version && docker compose -f cypress/docker/docker-compose.yaml up --build -d && npm run e2e:reset-version",
+    "e2e:swap-environment": "replace-in-file \"environment.prod.ts\" \"environment.e2e.ts\" angular.json",
+    "e2e:swap-environment-back": "replace-in-file \"environment.e2e.ts\" \"environment.prod.ts\" angular.json",
+    "e2e:prepare": "npm run e2e:swap-environment && docker compose -f cypress/docker/docker-compose.yaml up --build -d && npm run e2e:swap-environment-back",
     "e2e:destroy": "docker compose -f cypress/docker/docker-compose.yaml down",
     "e2e:start": "npx cypress open",
     "e2e:run": "npx cypress run"

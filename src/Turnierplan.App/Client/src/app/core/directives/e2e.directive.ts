@@ -1,4 +1,5 @@
 import { Directive, ElementRef, Input } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Directive({
   selector: '[tpE2E]'
@@ -8,6 +9,10 @@ export class E2eDirective {
 
   @Input()
   public set tpE2E(value: string | (string | number)[]) {
+    if (!environment.includeE2EData) {
+      return;
+    }
+
     this.elementRef.nativeElement.setAttribute('data-cy', E2eDirective.transformValue(value));
   }
 
