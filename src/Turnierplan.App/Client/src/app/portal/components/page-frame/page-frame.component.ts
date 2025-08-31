@@ -6,6 +6,7 @@ import { AuthorizationService } from '../../../core/services/authorization.servi
 import { NgClass, NgTemplateOutlet, AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 export interface PageFrameNavigationTab {
   id: number;
@@ -18,7 +19,7 @@ export interface PageFrameNavigationTab {
   selector: 'tp-page-frame',
   templateUrl: './page-frame.component.html',
   styleUrls: ['./page-frame.component.scss'],
-  imports: [NgClass, NgTemplateOutlet, RouterLink, AsyncPipe, TranslatePipe]
+  imports: [NgClass, NgTemplateOutlet, RouterLink, AsyncPipe, TranslatePipe, E2eDirective]
 })
 export class PageFrameComponent implements OnInit, OnChanges {
   @Input()

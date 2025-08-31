@@ -8,7 +8,7 @@
     id="create_organization_name"
     type="text"
     class="form-control"
-    data-cy="create-organization-page-organization-name-field"
+    [tpE2E]="'create-organization-page-organization-name-field'"
     [formControl]="organizationName"
     [required]="true"
     [minlength]="1"
@@ -27,7 +27,7 @@
 
   <div class="d-flex flex-row justify-content-end">
     <tp-action-button
-      data-cy="create-organization-page-confirm-button"
+      [tpE2E]="'create-organization-page-confirm-button'"
       [type]="'success'"
       [title]="'Portal.CreateOrganization.Submit'"
       [disabled]="organizationName.invalid"
