@@ -5,7 +5,7 @@ import { ImageDto2, ImageType, ImagesService, ImageDto } from '../../../api';
 import { Actions } from '../../../generated/actions';
 import { TranslateDirective } from '@ngx-translate/core';
 import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicator.component';
-import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';

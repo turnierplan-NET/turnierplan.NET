@@ -5,7 +5,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
 import { Actions } from '../../../generated/actions';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
-import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { RenameButtonComponent } from '../rename-button/rename-button.component';
 import { RbacWidgetComponent } from '../rbac-widget/rbac-widget.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';

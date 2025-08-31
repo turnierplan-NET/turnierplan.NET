@@ -34,14 +34,14 @@ import { PageFrameNavigationTab, PageFrameComponent } from '../../components/pag
 import { RankingView, RankingComponent } from '../../components/ranking/ranking.component';
 import { TeamView, TeamListComponent } from '../../components/team-list/team-list.component';
 import { VenueSelectComponent } from '../../components/venue-select/venue-select.component';
-import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { getDocumentName } from '../../helpers/document-name';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
-import { IsActionAllowedDirective } from '../../directives/is-action-allowed/is-action-allowed.directive';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
 import { NgClass, AsyncPipe } from '@angular/common';

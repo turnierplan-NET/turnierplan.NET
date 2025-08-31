@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { TournamentsService } from '../../../api';
-import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
 import { TranslateDirective } from '@ngx-translate/core';
 

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { from, switchMap } from 'rxjs';
 
 import { UsersService } from '../../../api';
-import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';

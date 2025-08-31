@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 import { FolderDto, FoldersService, OrganizationDto, OrganizationsService, TournamentsService, Visibility } from '../../../api';
-import { LoadingState, LoadingStateDirective } from '../../directives/loading-state/loading-state.directive';
+import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
