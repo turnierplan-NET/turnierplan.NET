@@ -23,7 +23,7 @@
     "e2e:swap-environment-back": "replace-in-file \"environment.e2e.ts\" \"environment.prod.ts\" angular.json",
     "e2e:prepare": "npm run e2e:swap-environment && docker compose -f cypress/docker/docker-compose.yaml up --build -d && npm run e2e:swap-environment-back",
     "e2e:destroy": "docker compose -f cypress/docker/docker-compose.yaml down",
-    "e2e:start": "npx cypress open",
+    "e2e:open": "npx cypress open",
     "e2e:run": "npx cypress run"
   },
   "dependencies": {
