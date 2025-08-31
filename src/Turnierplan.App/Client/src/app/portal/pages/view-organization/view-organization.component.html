@@ -218,6 +218,10 @@
             }
             @case (3) {
               <div class="card-body">
+                <tp-id-widget [id]="organization.id" />
+              </div>
+              <hr class="m-0" />
+              <div class="card-body">
                 <tp-rbac-widget
                   [translationKey]="'Portal.ViewOrganization.RbacWidget'"
                   [target]="organization"

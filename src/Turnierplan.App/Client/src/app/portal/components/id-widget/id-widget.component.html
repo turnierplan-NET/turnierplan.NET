@@ -1,0 +1,12 @@
+@if (!compact) {
+  <div class="fw-bold mb-3" translate="Portal.IdWidget.Title"></div>
+  <div class="mb-3" translate="Portal.IdWidget.InfoText"></div>
+}
+
+<div class="d-flex flex-row gap-2 align-items-center">
+  @if (compact) {
+    <tp-tooltip-icon [margin]="false" [tooltipText]="'Portal.IdWidget.InfoText'" />
+  }
+  <span class="font-monospace id-value">{{ id }}</span>
+  <tp-copy-to-clipboard [value]="id" />
+</div>
