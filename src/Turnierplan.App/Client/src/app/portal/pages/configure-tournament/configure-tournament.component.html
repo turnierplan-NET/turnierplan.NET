@@ -110,13 +110,21 @@
             <td>{{ team.name }}</td>
             <td style="width: 1px" class="text-center">
               @if (!isFirst) {
-                <i class="bi bi-caret-up-square tp-cursor-pointer" (click)="swapTeams(group, index, index - 1)"></i>
+                <i
+                  class="bi bi-caret-up-square tp-cursor-pointer"
+                  [ngbTooltip]="'Portal.ConfigureTournament.Sections.Participants.MoveUp' | translate"
+                  (click)="swapTeams(group, index, index - 1)"></i>
               }
               @if (!isLast) {
-                <i class="bi bi-caret-down-square tp-cursor-pointer" (click)="swapTeams(group, index, index + 1)"></i>
+                <i
+                  class="bi bi-caret-down-square tp-cursor-pointer"
+                  [ngbTooltip]="'Portal.ConfigureTournament.Sections.Participants.MoveDown' | translate"
+                  (click)="swapTeams(group, index, index + 1)"></i>
               }
             </td>
-            <td style="width: 1px"><tp-delete-button [reducedFootprint]="true" (confirmed)="removeTeam(group, index)" /></td>
+            <td style="width: 1px">
+              <tp-delete-button [reducedFootprint]="true" (confirmed)="removeTeam(group, index)" />
+            </td>
           </tr>
         } @empty {
           <tr>

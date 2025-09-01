@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatestWith, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 import {
@@ -78,7 +78,8 @@ interface TemporaryAdditionalPlayoff {
     TooltipIconComponent,
     DatePipe,
     TranslatePipe,
-    AbstractTeamSelectorPipe
+    AbstractTeamSelectorPipe,
+    NgbTooltip
   ]
 })
 export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardChangesDetector {

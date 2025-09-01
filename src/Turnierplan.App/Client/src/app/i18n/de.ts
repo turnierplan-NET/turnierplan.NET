@@ -634,6 +634,8 @@ export const de = {
           Title: 'Teilnehmende Mannschaften',
           GroupWithName: 'Gruppe {{alphabeticalId}}: {{displayName}}',
           GroupWithoutName: 'Gruppe {{alphabeticalId}}',
+          MoveUp: 'Mit der Mannschaft darüber tauschen',
+          MoveDown: 'Mit der Mannschaft darunter tauschen',
           NoTeamsNotice: 'Keine Mannschaften vorhanden',
           NoGroupsNotice: 'Es existieren aktuell keine Gruppen',
           AddGroupButton: 'Neue Gruppe hinzufügen',
