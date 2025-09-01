@@ -1,6 +1,5 @@
 <tp-page-frame
   *tpLoadingState="loadingState"
-  [ultraSlim]="true"
   [title]="'Portal.ConfigureTournament.Title' | translate: { tournament: tournamentName }"
   [backLink]="'..'">
   <div translate="Portal.ConfigureTournament.Subtitle"></div>
@@ -76,72 +75,52 @@
 </ng-template>
 
 <ng-template #teamsSection>
-  @for (group of groups; track group.alphabeticalId; let groupIndex = $index) {
-    <div class="mb-3 card shadow-sm d-flex flex-column" [ngClass]="{ 'border-danger': attemptedToSaveChanges && group.teams.length === 0 }">
-      <div class="card-header p-2 fw-bold d-flex flex-row">
-        @if (group.displayName.length > 0) {
-          <span
-            class="flex-grow-1"
-            translate="Portal.ConfigureTournament.Sections.Participants.GroupWithName"
-            [translateParams]="{ alphabeticalId: group.alphabeticalId, displayName: group.displayName }"></span>
-        } @else {
-          <span
-            class="flex-grow-1"
-            translate="Portal.ConfigureTournament.Sections.Participants.GroupWithoutName"
-            [translateParams]="{ alphabeticalId: group.alphabeticalId }"></span>
-        }
-        <tp-delete-button [reducedFootprint]="true" (confirmed)="removeGroup(groupIndex)" />
-      </div>
-
-      <div [dndDropzone]="" (dndDrop)="moveTeam($event, group)" class="card-body p-2 d-flex flex-column gap-2" style="min-height: 1em">
-        <!--suppress HtmlUnknownAttribute | IDEs fails to recognize directive below as a valid HTML attribute -->
-        <div
-          class="px-2 py-1 border rounded text-secondary fst-italic"
-          dndPlaceholderRef
-          translate="Portal.ConfigureTournament.Sections.Participants.DragDropPlaceholder"></div>
+  <table class="table table-bordered shadow-sm">
+    <tbody>
+      @for (group of groups; track group.alphabeticalId; let groupIndex = $index) {
+        <tr>
+          <td colspan="3" class="bg-light">
+            <div class="d-flex flex-row align-items-center">
+              @if (group.displayName.length > 0) {
+                <span
+                  class="flex-grow-1 fw-bold"
+                  translate="Portal.ConfigureTournament.Sections.Participants.GroupWithName"
+                  [translateParams]="{ alphabeticalId: group.alphabeticalId, displayName: group.displayName }"></span>
+              } @else {
+                <span
+                  class="flex-grow-1 fw-bold"
+                  translate="Portal.ConfigureTournament.Sections.Participants.GroupWithoutName"
+                  [translateParams]="{ alphabeticalId: group.alphabeticalId }"></span>
+              }
+              <tp-delete-button (confirmed)="removeGroup(groupIndex)" />
+            </div>
+          </td>
+        </tr>
 
         @for (team of group.teams; track team; let index = $index) {
-          <div
-            [dndDraggable]="team"
-            (dndMoved)="removeTeam(group, index)"
-            dndEffectAllowed="move"
-            class="px-2 py-1 border rounded d-flex flex-row gap-2 tp-cursor-move">
-            <span
-              class="flex-grow-1"
-              translate="Portal.ConfigureTournament.Sections.Participants.TeamEntry"
-              [translateParams]="{ index: index + 1, name: team.name }"></span>
-            <tp-delete-button [reducedFootprint]="true" (confirmed)="removeTeam(group, index)" />
-          </div>
+          <tr>
+            <td style="width: 1px">{{ index + 1 }}.</td>
+            <td>{{ team.name }}</td>
+            <td style="width: 1px"><tp-delete-button [reducedFootprint]="true" (confirmed)="removeTeam(group, index)" /></td>
+          </tr>
+        } @empty {
+          <tr>
+            <td
+              colspan="3"
+              [ngClass]="attemptedToSaveChanges ? 'small fw-bold text-danger' : 'small fst-italic'"
+              translate="Portal.ConfigureTournament.Sections.Participants.NoTeamsNotice"></td>
+          </tr>
         }
+      } @empty {
+        <tr>
+          <td
+            [ngClass]="attemptedToSaveChanges && groups.length === 0 ? 'small fw-bold text-danger' : 'small fst-italic'"
+            translate="Portal.ConfigureTournament.Sections.Participants.NoGroupsNotice"></td>
+        </tr>
+      }
+    </tbody>
+  </table>
 
-        <!-- Use d-none here and set display to block using custom scss if the list is empty. We can't use an *ngIf and check if the teams
-          array is empty because the resulting div would then be able to interfere with the drag&drop in a non-user-friendly manner. -->
-        <div
-          class="empty-notice d-none small"
-          [ngClass]="attemptedToSaveChanges ? 'fw-bold text-danger' : 'fst-italic'"
-          translate="Portal.ConfigureTournament.Sections.Participants.NoTeamsNotice"></div>
-      </div>
-
-      <div class="card-footer p-2 d-flex flex-row align-items-center justify-content-center gap-2">
-        <!-- IDEA: Add validation feedback for team name length -->
-        <input
-          class="form-control form-control-sm w-50"
-          [placeholder]="'Portal.ConfigureTournament.Sections.Participants.NewTeamNamePlaceholder' | translate"
-          #teamNameInput
-          (keyup.enter)="addTeam(group, teamNameInput)" />
-        <tp-action-button
-          [type]="'outline-primary'"
-          [icon]="'plus-circle'"
-          [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeamButton'"
-          (buttonClick)="addTeam(group, teamNameInput)" />
-      </div>
-    </div>
-  } @empty {
-    <div
-      class="text-center fst-italic mb-2 py-2 border rounded"
-      [ngClass]="attemptedToSaveChanges && groups.length === 0 ? 'border-danger' : 'border-transparent'"
-      translate="Portal.ConfigureTournament.Sections.Participants.NoGroupsNotice"></div>
-  }
   <div class="d-flex flex-row justify-content-center gap-2">
     <tp-action-button
       [type]="'outline-secondary'"

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DndDropEvent, DndDropzoneDirective, DndPlaceholderRefDirective, DndDraggableDirective } from 'ngx-drag-drop';
 import { combineLatestWith, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 import {
@@ -64,7 +63,6 @@ interface TemporaryAdditionalPlayoff {
 
 @Component({
   templateUrl: './configure-tournament.component.html',
-  styleUrls: ['./configure-tournament.component.scss'],
   imports: [
     LoadingStateDirective,
     PageFrameComponent,
@@ -76,9 +74,6 @@ interface TemporaryAdditionalPlayoff {
     FormsModule,
     AlertComponent,
     DeleteButtonComponent,
-    DndDropzoneDirective,
-    DndPlaceholderRefDirective,
-    DndDraggableDirective,
     DurationPickerComponent,
     TooltipIconComponent,
     DatePipe,
@@ -307,17 +302,18 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
     this.firstMatchKickoff = new Date(value);
   }
 
-  protected addTeam(group: TemporaryGroup, input: HTMLInputElement): void {
-    const name = input.value.trim();
-    if (name.length > 0 && name.length <= 60) {
-      group.teams.push({ id: undefined, name: name });
-      input.value = '';
-
-      this.determineAvailableFinalsRounds();
-      this.determineAvailableAbstractTeamSelectors();
-      this.markDirty();
-    }
-  }
+  // TODO ?
+  // protected addTeam(group: TemporaryGroup, input: HTMLInputElement): void {
+  //   const name = input.value.trim();
+  //   if (name.length > 0 && name.length <= 60) {
+  //     group.teams.push({ id: undefined, name: name });
+  //     input.value = '';
+  //
+  //     this.determineAvailableFinalsRounds();
+  //     this.determineAvailableAbstractTeamSelectors();
+  //     this.markDirty();
+  //   }
+  // }
 
   protected addGroup(): void {
     let nextAlphabeticalId: string | undefined;
@@ -351,16 +347,17 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
     this.markDirty();
   }
 
-  protected moveTeam(event: DndDropEvent, group: TemporaryGroup): void {
-    if (event.dropEffect === 'move') {
-      const index = event.index ?? group.teams.length;
-      group.teams.splice(index, 0, event.data as TemporaryTeam);
-
-      this.determineAvailableFinalsRounds();
-      this.determineAvailableAbstractTeamSelectors();
-      this.markDirty();
-    }
-  }
+  // TODO ?
+  // protected moveTeam(event: DndDropEvent, group: TemporaryGroup): void {
+  //   if (event.dropEffect === 'move') {
+  //     const index = event.index ?? group.teams.length;
+  //     group.teams.splice(index, 0, event.data as TemporaryTeam);
+  //
+  //     this.determineAvailableFinalsRounds();
+  //     this.determineAvailableAbstractTeamSelectors();
+  //     this.markDirty();
+  //   }
+  // }
 
   protected removeTeam(group: TemporaryGroup, teamIndex: number): void {
     group.teams.splice(teamIndex, 1);
