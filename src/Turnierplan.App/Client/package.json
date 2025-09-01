@@ -38,7 +38,6 @@
     "echarts": "~6.0.0",
     "jwt-decode": "~4.0.0",
     "ng2-pdfjs-viewer": "~20.0.1",
-    "ngx-drag-drop": "~20.0.1",
     "ngx-echarts": "~20.0.2",
     "ngx-toastr": "~19.0.0",
     "rxjs": "~7.8.2",
