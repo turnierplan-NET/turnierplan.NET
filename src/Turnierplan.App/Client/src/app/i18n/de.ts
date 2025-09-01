@@ -1090,7 +1090,9 @@ export const de = {
     },
     MultiSelectFilter: {
       All: 'alle',
-      Reset: 'Filter zurücksetzen'
+      Reset: 'Filter zurücksetzen',
+      NoFilter: 'keine Filter verfügbar',
+      NoFurtherFilter: 'keine weiteren Filter verfügbar'
     },
     ErrorPage: {
       Title: 'Fehler',
