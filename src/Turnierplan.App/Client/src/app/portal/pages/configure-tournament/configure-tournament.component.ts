@@ -367,6 +367,14 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
     this.markDirty();
   }
 
+  protected swapTeams(group: TemporaryGroup, teamIndex: number, newTeamIndex: number): void {
+    const swapWith = group.teams[newTeamIndex];
+    group.teams[newTeamIndex] = group.teams[teamIndex];
+    group.teams[teamIndex] = swapWith;
+
+    this.markDirty();
+  }
+
   protected removeGroup(groupIndex: number): void {
     this.groups.splice(groupIndex, 1);
 

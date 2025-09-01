@@ -79,7 +79,7 @@
     <tbody>
       @for (group of groups; track group.alphabeticalId; let groupIndex = $index) {
         <tr>
-          <td colspan="3" class="bg-light">
+          <td colspan="4" class="bg-light">
             <div class="d-flex flex-row align-items-center">
               @if (group.displayName.length > 0) {
                 <span
@@ -97,16 +97,24 @@
           </td>
         </tr>
 
-        @for (team of group.teams; track team; let index = $index) {
+        @for (team of group.teams; track team; let index = $index; let isFirst = $first; let isLast = $last) {
           <tr>
             <td style="width: 1px">{{ index + 1 }}.</td>
             <td>{{ team.name }}</td>
+            <td style="width: 1px" class="text-center">
+              @if (!isFirst) {
+                <i class="bi bi-caret-up-square tp-cursor-pointer" (click)="swapTeams(group, index, index - 1)"></i>
+              }
+              @if (!isLast) {
+                <i class="bi bi-caret-down-square tp-cursor-pointer" (click)="swapTeams(group, index, index + 1)"></i>
+              }
+            </td>
             <td style="width: 1px"><tp-delete-button [reducedFootprint]="true" (confirmed)="removeTeam(group, index)" /></td>
           </tr>
         } @empty {
           <tr>
             <td
-              colspan="3"
+              colspan="4"
               [ngClass]="attemptedToSaveChanges ? 'small fw-bold text-danger' : 'small fst-italic'"
               translate="Portal.ConfigureTournament.Sections.Participants.NoTeamsNotice"></td>
           </tr>
