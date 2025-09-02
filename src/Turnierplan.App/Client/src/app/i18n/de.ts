@@ -648,6 +648,11 @@ export const de = {
             Title: 'Gruppennamen ändern',
             EnterNewName: 'Geben Sie den neuen Namen für die Gruppe ein:',
             EmptyAllowed: 'Sie können das Feld leerlassen, um zum Standardnamen ("Gruppe A-Z") zurückzukehren.'
+          },
+          TeamRename: {
+            Button: 'Teamnamen ändern',
+            Title: 'Teamnamen ändern',
+            EnterNewName: 'Geben Sie den neuen Namen für die Mannschaft ein:'
           }
         },
         GroupPhase: {

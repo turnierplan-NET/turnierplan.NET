@@ -77,7 +77,6 @@
 <!-- TODO: Add new buttons for
           1) adding team
           2) importing team from planning realm
-          3) renaming team
 -->
 
 <ng-template #teamsSection>
@@ -122,7 +121,16 @@
         @for (team of group.teams; track team; let index = $index; let isFirst = $first; let isLast = $last) {
           <tr>
             <td style="width: 1px">{{ index + 1 }}.</td>
-            <td>{{ team.name }}</td>
+            <td>
+              <span>{{ team.name }}</span>
+              <tp-rename-button
+                class="ms-2"
+                translationKey="Portal.ConfigureTournament.Sections.Participants.TeamRename"
+                [displayLabel]="false"
+                [reducedFootprint]="true"
+                [current]="team.name"
+                (renamed)="team.name = $event" />
+            </td>
             <td style="width: 1px">
               <div class="d-flex flex-row gap-2 justify-content-center">
                 @if (!isFirst) {

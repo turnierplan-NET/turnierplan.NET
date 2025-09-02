@@ -1,7 +1,13 @@
-<tp-action-button
-  icon="pencil"
-  type="outline-secondary"
-  [disabled]="disabled"
-  [title]="translationKey + '.Button'"
-  [mode]="displayLabel ? 'IconLeftAndText' : 'IconOnly'"
-  (buttonClick)="openRenameDialog()" />
+<span
+  [ngClass]="{
+    'tp-cursor-pointer': reducedFootprint,
+    'btn btn-sm btn-outline-secondary': !reducedFootprint,
+    'text-secondary tp-cursor-not-allowed': reducedFootprint && disabled,
+    disabled: !reducedFootprint && disabled
+  }"
+  (click)="openRenameDialog()">
+  <i class="bi bi-pencil"></i>
+  @if (displayLabel) {
+    <span class="ms-2" [translate]="translationKey + '.Button'"></span>
+  }
+</span>

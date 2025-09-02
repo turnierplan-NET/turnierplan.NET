@@ -2,12 +2,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { RenameDialogComponent } from '../rename-dialog/rename-dialog.component';
-import { ActionButtonComponent } from '../action-button/action-button.component';
+import { TranslateDirective } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'tp-rename-button',
   templateUrl: './rename-button.component.html',
-  imports: [ActionButtonComponent]
+  imports: [TranslateDirective, NgClass]
 })
 export class RenameButtonComponent {
   @Input()
@@ -24,6 +25,9 @@ export class RenameButtonComponent {
 
   @Input()
   public disabled = false;
+
+  @Input()
+  public reducedFootprint: boolean = false;
 
   @Output()
   public renamed = new EventEmitter<string>();
