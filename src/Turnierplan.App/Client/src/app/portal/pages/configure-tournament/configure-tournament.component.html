@@ -110,10 +110,12 @@
               <span class="flex-grow-1"></span>
               @if (group.teams.length > 0) {
                 <tp-tooltip-icon
+                  [margin]="false"
                   [iconClass]="'text-danger'"
                   [tooltipText]="'Portal.ConfigureTournament.Sections.Participants.CannotDeleteGroupWithTeams'" />
+              } @else {
+                <tp-delete-button (confirmed)="removeGroup(groupIndex)" />
               }
-              <tp-delete-button [disabled]="group.teams.length > 0" (confirmed)="removeGroup(groupIndex)" />
             </div>
           </td>
         </tr>
