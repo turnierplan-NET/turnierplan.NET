@@ -84,9 +84,10 @@
 <ng-template #teamsSection>
   <table class="table table-bordered shadow-sm">
     <tbody>
+      @let numberOfColumns = groups.length > 1 ? 5 : 4;
       @for (group of groups; track group.alphabeticalId; let groupIndex = $index) {
         <tr>
-          <td colspan="4" class="bg-light">
+          <td [attr.colspan]="numberOfColumns" class="bg-light">
             <div class="d-flex flex-row align-items-center">
               @if (group.displayName.length > 0) {
                 <span
@@ -99,7 +100,12 @@
                   translate="Portal.ConfigureTournament.Sections.Participants.GroupWithoutName"
                   [translateParams]="{ alphabeticalId: group.alphabeticalId }"></span>
               }
-              <tp-delete-button (confirmed)="removeGroup(groupIndex)" />
+              @if (group.teams.length > 0) {
+                <tp-tooltip-icon
+                  [iconClass]="'text-danger'"
+                  [tooltipText]="'Portal.ConfigureTournament.Sections.Participants.CannotDeleteGroupWithTeams'" />
+              }
+              <tp-delete-button [disabled]="group.teams.length > 0" (confirmed)="removeGroup(groupIndex)" />
             </div>
           </td>
         </tr>
@@ -108,20 +114,34 @@
           <tr>
             <td style="width: 1px">{{ index + 1 }}.</td>
             <td>{{ team.name }}</td>
-            <td style="width: 1px" class="text-center">
-              @if (!isFirst) {
-                <i
-                  class="bi bi-caret-up-square tp-cursor-pointer"
-                  [ngbTooltip]="'Portal.ConfigureTournament.Sections.Participants.MoveUp' | translate"
-                  (click)="swapTeams(group, index, index - 1)"></i>
-              }
-              @if (!isLast) {
-                <i
-                  class="bi bi-caret-down-square tp-cursor-pointer"
-                  [ngbTooltip]="'Portal.ConfigureTournament.Sections.Participants.MoveDown' | translate"
-                  (click)="swapTeams(group, index, index + 1)"></i>
-              }
+            <td style="width: 1px">
+              <div class="d-flex flex-row gap-2 justify-content-center">
+                @if (!isFirst) {
+                  <i
+                    class="bi bi-caret-up tp-cursor-pointer"
+                    [ngbTooltip]="'Portal.ConfigureTournament.Sections.Participants.MoveUp' | translate"
+                    (click)="swapTeams(group, index, index - 1)"></i>
+                }
+                @if (!isLast) {
+                  <i
+                    class="bi bi-caret-down tp-cursor-pointer"
+                    [ngbTooltip]="'Portal.ConfigureTournament.Sections.Participants.MoveDown' | translate"
+                    (click)="swapTeams(group, index, index + 1)"></i>
+                }
+              </div>
             </td>
+            @if (groups.length > 1) {
+              <td style="width: 1px">
+                <i
+                  class="bi bi-box-arrow-right tp-cursor-pointer"
+                  [ngbPopover]="moveTeamToGroupPopover"
+                  [autoClose]="'outside'"
+                  [placement]="'end'"
+                  container="body"
+                  popoverClass="tp-popover-slim"
+                  (click)="teamForMovingToOtherGroup = { team: team, currentGroup: group }"></i>
+              </td>
+            }
             <td style="width: 1px">
               <tp-delete-button [reducedFootprint]="true" (confirmed)="removeTeam(group, index)" />
             </td>
@@ -129,7 +149,7 @@
         } @empty {
           <tr>
             <td
-              colspan="4"
+              [attr.colspan]="numberOfColumns"
               [ngClass]="attemptedToSaveChanges ? 'small fw-bold text-danger' : 'small fst-italic'"
               translate="Portal.ConfigureTournament.Sections.Participants.NoTeamsNotice"></td>
           </tr>
@@ -157,6 +177,25 @@
       [title]="'Portal.ConfigureTournament.Sections.Participants.AddGroupButton'"
       (buttonClick)="addGroup()" />
   </div>
+</ng-template>
+
+<ng-template #moveTeamToGroupPopover>
+  @if (teamForMovingToOtherGroup) {
+    <div class="p-3 d-flex flex-column gap-2">
+      <div class="fw-bold small" translate="Portal.ConfigureTournament.Sections.Participants.MoveToOtherGroup"></div>
+      <div class="d-flex flex-row flex-wrap gap-1">
+        @for (group of groups; track group.alphabeticalId) {
+          @if (group !== teamForMovingToOtherGroup.currentGroup) {
+            <div
+              class="p-1 border tp-cursor-pointer"
+              (click)="moveTeam(teamForMovingToOtherGroup.team, teamForMovingToOtherGroup.currentGroup, group)">
+              {{ group.alphabeticalId }}
+            </div>
+          }
+        }
+      </div>
+    </div>
+  }
 </ng-template>
 
 <ng-template #groupPhaseSection>

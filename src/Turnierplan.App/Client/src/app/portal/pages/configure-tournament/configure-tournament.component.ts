@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbPopover, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatestWith, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 import {
@@ -79,7 +79,8 @@ interface TemporaryAdditionalPlayoff {
     DatePipe,
     TranslatePipe,
     AbstractTeamSelectorPipe,
-    NgbTooltip
+    NgbTooltip,
+    NgbPopover
   ]
 })
 export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardChangesDetector {
@@ -97,6 +98,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
   protected availableFinalRounds: FirstFinalRound[] = [];
   protected abstractTeamSelectors: string[] = [];
   protected groupAlphabeticalIdsForTeamSelectors: string[] = [];
+  protected teamForMovingToOtherGroup?: { team: TemporaryTeam; currentGroup: TemporaryGroup };
   protected timeStampToday: Date;
 
   // Current tournament configuration
@@ -348,17 +350,15 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
     this.markDirty();
   }
 
-  // TODO ?
-  // protected moveTeam(event: DndDropEvent, group: TemporaryGroup): void {
-  //   if (event.dropEffect === 'move') {
-  //     const index = event.index ?? group.teams.length;
-  //     group.teams.splice(index, 0, event.data as TemporaryTeam);
-  //
-  //     this.determineAvailableFinalsRounds();
-  //     this.determineAvailableAbstractTeamSelectors();
-  //     this.markDirty();
-  //   }
-  // }
+  protected moveTeam(team: TemporaryTeam, from: TemporaryGroup, to: TemporaryGroup): void {
+    const index = from.teams.findIndex((x) => x === team);
+    from.teams.splice(index, 1);
+    to.teams.push(team);
+
+    this.determineAvailableFinalsRounds();
+    this.determineAvailableAbstractTeamSelectors();
+    this.markDirty();
+  }
 
   protected removeTeam(group: TemporaryGroup, teamIndex: number): void {
     group.teams.splice(teamIndex, 1);
@@ -377,6 +377,10 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
   }
 
   protected removeGroup(groupIndex: number): void {
+    if (this.groups[groupIndex].teams.length > 0) {
+      return;
+    }
+
     this.groups.splice(groupIndex, 1);
 
     this.determineAvailableFinalsRounds();
