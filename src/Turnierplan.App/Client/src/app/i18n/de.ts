@@ -642,7 +642,13 @@ export const de = {
           NoGroupsNotice: 'Es existieren aktuell keine Gruppen',
           AddGroupButton: 'Neue Gruppe hinzufügen',
           ShuffleGroupsButton: 'Gruppen würfeln',
-          GroupLimitReached: 'Die maximale Gruppenanzahl (26) ist erreicht.'
+          GroupLimitReached: 'Die maximale Gruppenanzahl (26) ist erreicht.',
+          GroupRename: {
+            Button: 'Gruppennamen ändern',
+            Title: 'Gruppennamen ändern',
+            EnterNewName: 'Geben Sie den neuen Namen für die Gruppe ein:',
+            EmptyAllowed: 'Sie können das Feld leerlassen, um zum Standardnamen ("Gruppe A-Z") zurückzukehren.'
+          }
         },
         GroupPhase: {
           Title: 'Gruppenphase',

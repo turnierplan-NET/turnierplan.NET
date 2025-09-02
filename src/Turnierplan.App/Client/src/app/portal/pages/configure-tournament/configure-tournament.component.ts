@@ -33,6 +33,9 @@ import { DeleteButtonComponent } from '../../components/delete-button/delete-but
 import { DurationPickerComponent } from '../../components/duration-picker/duration-picker.component';
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { AbstractTeamSelectorPipe } from '../../pipes/abstract-team-selector.pipe';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
+import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
+import { Actions } from '../../../generated/actions';
 
 interface TemporaryGroup {
   id?: number;
@@ -80,7 +83,9 @@ interface TemporaryAdditionalPlayoff {
     TranslatePipe,
     AbstractTeamSelectorPipe,
     NgbTooltip,
-    NgbPopover
+    NgbPopover,
+    IsActionAllowedDirective,
+    RenameButtonComponent
   ]
 })
 export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardChangesDetector {
@@ -679,4 +684,6 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
       finalsPhase: finalsPhaseConfig
     };
   }
+
+  protected readonly Actions = Actions;
 }

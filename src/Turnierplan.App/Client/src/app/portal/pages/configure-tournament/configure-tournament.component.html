@@ -77,8 +77,7 @@
 <!-- TODO: Add new buttons for
           1) adding team
           2) importing team from planning realm
-          3) renaming group
-          4) renaming team
+          3) renaming team
 -->
 
 <ng-template #teamsSection>
@@ -89,17 +88,27 @@
         <tr>
           <td [attr.colspan]="numberOfColumns" class="bg-light">
             <div class="d-flex flex-row align-items-center">
-              @if (group.displayName.length > 0) {
+              @let hasCustomDisplayName = group.displayName.length;
+              @if (hasCustomDisplayName) {
                 <span
-                  class="flex-grow-1 fw-bold"
+                  class="fw-bold"
                   translate="Portal.ConfigureTournament.Sections.Participants.GroupWithName"
                   [translateParams]="{ alphabeticalId: group.alphabeticalId, displayName: group.displayName }"></span>
               } @else {
                 <span
-                  class="flex-grow-1 fw-bold"
+                  class="fw-bold"
                   translate="Portal.ConfigureTournament.Sections.Participants.GroupWithoutName"
                   [translateParams]="{ alphabeticalId: group.alphabeticalId }"></span>
               }
+              <tp-rename-button
+                class="ms-3"
+                translationKey="Portal.ConfigureTournament.Sections.Participants.GroupRename"
+                [displayLabel]="false"
+                [allowReset]="true"
+                [current]="hasCustomDisplayName ? group.displayName : undefined"
+                (renamed)="group.displayName = $event"
+                (resetName)="group.displayName = ''" />
+              <span class="flex-grow-1"></span>
               @if (group.teams.length > 0) {
                 <tp-tooltip-icon
                   [iconClass]="'text-danger'"
