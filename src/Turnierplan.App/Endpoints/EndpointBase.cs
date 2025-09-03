@@ -34,7 +34,7 @@ internal abstract partial class EndpointBase
         var builder = endpoints
             .MapMethods(Route, [Method.Method], Handler)
             .DisableAntiforgery()
-            .WithName(EndpointTypeSuffix().Replace(GetType().Name, string.Empty))
+            .WithName(name)
             .WithSummary(FormatSummary(name))
             .WithTags(NamespacePrefix().Replace(GetType().Namespace ?? string.Empty, string.Empty));
 
