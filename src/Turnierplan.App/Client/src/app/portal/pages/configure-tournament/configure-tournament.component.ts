@@ -33,7 +33,6 @@ import { DeleteButtonComponent } from '../../components/delete-button/delete-but
 import { DurationPickerComponent } from '../../components/duration-picker/duration-picker.component';
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { AbstractTeamSelectorPipe } from '../../pipes/abstract-team-selector.pipe';
-import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
 import { Actions } from '../../../generated/actions';
 
@@ -84,7 +83,6 @@ interface TemporaryAdditionalPlayoff {
     AbstractTeamSelectorPipe,
     NgbTooltip,
     NgbPopover,
-    IsActionAllowedDirective,
     RenameButtonComponent
   ]
 })
