@@ -10,6 +10,7 @@ import { PageFrameComponent } from '../../components/page-frame/page-frame.compo
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 @Component({
   templateUrl: './create-organization.component.html',
@@ -21,7 +22,8 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
     ReactiveFormsModule,
     NgClass,
     ActionButtonComponent,
-    TranslatePipe
+    TranslatePipe,
+    E2eDirective
   ]
 })
 export class CreateOrganizationComponent implements OnInit {

@@ -12,6 +12,7 @@ import { AlertComponent } from '../../components/alert/alert.component';
 import { IllustrationComponent } from '../../components/illustration/illustration.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { BadgeComponent } from '../../components/badge/badge.component';
+import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 @Component({
   templateUrl: './landing-page.component.html',
@@ -25,7 +26,8 @@ import { BadgeComponent } from '../../components/badge/badge.component';
     IllustrationComponent,
     TranslateDirective,
     BadgeComponent,
-    TranslatePipe
+    TranslatePipe,
+    E2eDirective
   ]
 })
 export class LandingPageComponent implements OnInit {
