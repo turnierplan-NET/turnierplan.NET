@@ -31,6 +31,7 @@ internal abstract partial class EndpointBase
     public void Map(IEndpointRouteBuilder endpoints)
     {
         var name = EndpointTypeSuffix().Replace(GetType().Name, string.Empty);
+
         var builder = endpoints
             .MapMethods(Route, [Method.Method], Handler)
             .DisableAntiforgery()
