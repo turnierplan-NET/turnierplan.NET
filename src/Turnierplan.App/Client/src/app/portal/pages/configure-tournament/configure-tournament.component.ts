@@ -35,6 +35,7 @@ import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon
 import { AbstractTeamSelectorPipe } from '../../pipes/abstract-team-selector.pipe';
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
 import { Actions } from '../../../generated/actions';
+import { TextInputDialogComponent } from '../../components/text-input-dialog/text-input-dialog.component';
 
 interface TemporaryGroup {
   id?: number;
@@ -60,8 +61,6 @@ interface TemporaryAdditionalPlayoff {
   teamSelectorA: string;
   teamSelectorB: string;
 }
-
-// TODO: UI for inserting teams from planning realm when configuring tournament
 
 @Component({
   templateUrl: './configure-tournament.component.html',
@@ -308,18 +307,28 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
     this.firstMatchKickoff = new Date(value);
   }
 
-  // TODO ?
-  // protected addTeam(group: TemporaryGroup, input: HTMLInputElement): void {
-  //   const name = input.value.trim();
-  //   if (name.length > 0 && name.length <= 60) {
-  //     group.teams.push({ id: undefined, name: name });
-  //     input.value = '';
-  //
-  //     this.determineAvailableFinalsRounds();
-  //     this.determineAvailableAbstractTeamSelectors();
-  //     this.markDirty();
-  //   }
-  // }
+  protected addTeam(group: TemporaryGroup): void {
+    // TODO: Add custom dialog which allows adding team from planning realm
+
+    const ref = this.modalService.open(TextInputDialogComponent, {
+      centered: true,
+      size: 'md',
+      fullscreen: 'md'
+    });
+
+    const component = ref.componentInstance as TextInputDialogComponent;
+    component.init(`Portal.ConfigureTournament.Sections.Participants.AddTeam`, '', false, true);
+
+    ref.closed.subscribe({
+      next: (name: string) => {
+        group.teams.push({ id: undefined, name: name });
+
+        this.determineAvailableFinalsRounds();
+        this.determineAvailableAbstractTeamSelectors();
+        this.markDirty();
+      }
+    });
+  }
 
   protected addGroup(): void {
     let nextAlphabeticalId: string | undefined;

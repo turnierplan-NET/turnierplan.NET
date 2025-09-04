@@ -653,6 +653,9 @@ export const de = {
             Button: 'Teamnamen ändern',
             Title: 'Teamnamen ändern',
             EnterNewName: 'Geben Sie den neuen Namen für die Mannschaft ein:'
+          },
+          AddTeam: {
+            Button: 'Mannschaft hinzufügen'
           }
         },
         GroupPhase: {
