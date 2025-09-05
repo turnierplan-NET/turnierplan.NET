@@ -5,7 +5,7 @@
   container="body"
   popoverClass="tp-popover-slim"
   [tabindex]="popover.isOpen() ? 0 : -1"
-  (keydown)="popover.isOpen() && confirmed.emit()"
+  (keydown.enter)="popover.isOpen() && confirmed.emit()"
   [ngClass]="{
     'tp-cursor-pointer': reducedFootprint,
     'btn btn-sm btn-outline-danger': !reducedFootprint,

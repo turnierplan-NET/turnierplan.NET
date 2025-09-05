@@ -49,6 +49,14 @@ export class LocalStorageService {
     return { ...defaultApplicationsFilter, ...(JSON.parse(value) as ApplicationsFilter) };
   }
 
+  public setAddTeamDialogMode(mode: string): void {
+    localStorage.setItem('tp_addTeamDialogMode', mode);
+  }
+
+  public getAddTeamDialogMode(): string | undefined {
+    return this.getValueFromLocalStorage('tp_addTeamDialogMode', (x) => x);
+  }
+
   private getValueFromLocalStorage<T>(key: string, parser: (value: string) => T): T | undefined {
     const value = localStorage.getItem(key);
     return value !== null && value.length > 0 ? parser(value) : undefined;

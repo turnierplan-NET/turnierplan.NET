@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DndDropEvent, DndDropzoneDirective, DndPlaceholderRefDirective, DndDraggableDirective } from 'ngx-drag-drop';
+import { NgbModal, NgbPopover, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatestWith, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 import {
@@ -34,6 +33,9 @@ import { DeleteButtonComponent } from '../../components/delete-button/delete-but
 import { DurationPickerComponent } from '../../components/duration-picker/duration-picker.component';
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { AbstractTeamSelectorPipe } from '../../pipes/abstract-team-selector.pipe';
+import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
+import { Actions } from '../../../generated/actions';
+import { ConfigureTournamentAddTeamComponent } from '../../components/configure-tournament-add-team/configure-tournament-add-team.component';
 
 interface TemporaryGroup {
   id?: number;
@@ -42,7 +44,7 @@ interface TemporaryGroup {
   teams: TemporaryTeam[];
 }
 
-interface TemporaryTeam {
+export interface TemporaryTeam {
   id?: number;
   name: string;
 }
@@ -60,11 +62,8 @@ interface TemporaryAdditionalPlayoff {
   teamSelectorB: string;
 }
 
-// TODO: UI for inserting teams from planning realm when configuring tournament
-
 @Component({
   templateUrl: './configure-tournament.component.html',
-  styleUrls: ['./configure-tournament.component.scss'],
   imports: [
     LoadingStateDirective,
     PageFrameComponent,
@@ -76,14 +75,14 @@ interface TemporaryAdditionalPlayoff {
     FormsModule,
     AlertComponent,
     DeleteButtonComponent,
-    DndDropzoneDirective,
-    DndPlaceholderRefDirective,
-    DndDraggableDirective,
     DurationPickerComponent,
     TooltipIconComponent,
     DatePipe,
     TranslatePipe,
-    AbstractTeamSelectorPipe
+    AbstractTeamSelectorPipe,
+    NgbTooltip,
+    NgbPopover,
+    RenameButtonComponent
   ]
 })
 export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardChangesDetector {
@@ -101,6 +100,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
   protected availableFinalRounds: FirstFinalRound[] = [];
   protected abstractTeamSelectors: string[] = [];
   protected groupAlphabeticalIdsForTeamSelectors: string[] = [];
+  protected teamForMovingToOtherGroup?: { team: TemporaryTeam; currentGroup: TemporaryGroup };
   protected timeStampToday: Date;
 
   // Current tournament configuration
@@ -307,16 +307,25 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
     this.firstMatchKickoff = new Date(value);
   }
 
-  protected addTeam(group: TemporaryGroup, input: HTMLInputElement): void {
-    const name = input.value.trim();
-    if (name.length > 0 && name.length <= 60) {
-      group.teams.push({ id: undefined, name: name });
-      input.value = '';
+  protected addTeam(group: TemporaryGroup): void {
+    const ref = this.modalService.open(ConfigureTournamentAddTeamComponent, {
+      centered: true,
+      size: 'lg',
+      fullscreen: 'lg'
+    });
 
-      this.determineAvailableFinalsRounds();
-      this.determineAvailableAbstractTeamSelectors();
-      this.markDirty();
-    }
+    const component = ref.componentInstance as ConfigureTournamentAddTeamComponent;
+    // component.init(...);
+
+    ref.closed.subscribe({
+      next: (team: TemporaryTeam) => {
+        group.teams.push(team);
+
+        this.determineAvailableFinalsRounds();
+        this.determineAvailableAbstractTeamSelectors();
+        this.markDirty();
+      }
+    });
   }
 
   protected addGroup(): void {
@@ -351,15 +360,14 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
     this.markDirty();
   }
 
-  protected moveTeam(event: DndDropEvent, group: TemporaryGroup): void {
-    if (event.dropEffect === 'move') {
-      const index = event.index ?? group.teams.length;
-      group.teams.splice(index, 0, event.data as TemporaryTeam);
+  protected moveTeam(team: TemporaryTeam, from: TemporaryGroup, to: TemporaryGroup): void {
+    const index = from.teams.findIndex((x) => x === team);
+    from.teams.splice(index, 1);
+    to.teams.push(team);
 
-      this.determineAvailableFinalsRounds();
-      this.determineAvailableAbstractTeamSelectors();
-      this.markDirty();
-    }
+    this.determineAvailableFinalsRounds();
+    this.determineAvailableAbstractTeamSelectors();
+    this.markDirty();
   }
 
   protected removeTeam(group: TemporaryGroup, teamIndex: number): void {
@@ -370,7 +378,19 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
     this.markDirty();
   }
 
+  protected swapTeams(group: TemporaryGroup, teamIndex: number, newTeamIndex: number): void {
+    const swapWith = group.teams[newTeamIndex];
+    group.teams[newTeamIndex] = group.teams[teamIndex];
+    group.teams[teamIndex] = swapWith;
+
+    this.markDirty();
+  }
+
   protected removeGroup(groupIndex: number): void {
+    if (this.groups[groupIndex].teams.length > 0) {
+      return;
+    }
+
     this.groups.splice(groupIndex, 1);
 
     this.determineAvailableFinalsRounds();
@@ -669,4 +689,6 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
       finalsPhase: finalsPhaseConfig
     };
   }
+
+  protected readonly Actions = Actions;
 }

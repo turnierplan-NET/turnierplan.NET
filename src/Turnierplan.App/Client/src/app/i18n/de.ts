@@ -634,15 +634,41 @@ export const de = {
           Title: 'Teilnehmende Mannschaften',
           GroupWithName: 'Gruppe {{alphabeticalId}}: {{displayName}}',
           GroupWithoutName: 'Gruppe {{alphabeticalId}}',
-          DragDropPlaceholder: 'hier einfügen...',
-          TeamEntry: '{{index}}. {{name}}',
+          CannotDeleteGroupWithTeams: 'Entfernen Sie erst alle Mannschaften, um diese Gruppe zu löschen',
+          MoveUp: 'Mit der Mannschaft darüber tauschen',
+          MoveDown: 'Mit der Mannschaft darunter tauschen',
+          MoveToOtherGroup: 'Verschieben in:',
           NoTeamsNotice: 'Keine Mannschaften vorhanden',
-          NewTeamNamePlaceholder: 'Neue Mannschaft',
-          AddTeamButton: 'Hinzufügen',
           NoGroupsNotice: 'Es existieren aktuell keine Gruppen',
           AddGroupButton: 'Neue Gruppe hinzufügen',
           ShuffleGroupsButton: 'Gruppen würfeln',
-          GroupLimitReached: 'Die maximale Gruppenanzahl (26) ist erreicht.'
+          GroupLimitReached: 'Die maximale Gruppenanzahl (26) ist erreicht.',
+          GroupRename: {
+            Button: 'Gruppennamen ändern',
+            Title: 'Gruppennamen ändern',
+            EnterNewName: 'Geben Sie den neuen Namen für die Gruppe ein:',
+            EmptyAllowed: 'Sie können das Feld leerlassen, um zum Standardnamen ("Gruppe A-Z") zurückzukehren.'
+          },
+          TeamRename: {
+            Button: 'Teamnamen ändern',
+            Title: 'Teamnamen ändern',
+            EnterNewName: 'Geben Sie den neuen Namen für die Mannschaft ein:'
+          },
+          AddTeam: {
+            Button: 'Mannschaft',
+            Title: 'Mannschaft hinzufügen',
+            NewTeam: {
+              Navigation: 'Neue Mannschaft',
+              Explanation: 'Erstellen Sie eine neue Mannschaft, welche nur in diesem Turnier mitspielt.',
+              TeamName: 'Mannschaftsname:',
+              TeamNameEmpty: 'Der Mannschaftsname darf nicht leer sein'
+            },
+            ImportTeam: {
+              Navigation: 'Angemeldete Mannschaft',
+              Explanation: 'Wählen Sie eine angemeldete Mannschaft aus einem Turnierplaner.'
+            },
+            Confirm: 'Hinzufügen'
+          }
         },
         GroupPhase: {
           Title: 'Gruppenphase',
@@ -1090,7 +1116,9 @@ export const de = {
     },
     MultiSelectFilter: {
       All: 'alle',
-      Reset: 'Filter zurücksetzen'
+      Reset: 'Filter zurücksetzen',
+      NoFilter: 'keine Filter verfügbar',
+      NoFurtherFilter: 'keine weiteren Filter verfügbar'
     },
     ErrorPage: {
       Title: 'Fehler',

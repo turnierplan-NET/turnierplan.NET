@@ -33,6 +33,10 @@
           (ngModelChange)="setValueSelected(option.value, $event)" />
         <label class="form-check-label" [for]="id">{{ option.label }}</label>
       </div>
+    } @empty {
+      <div
+        class="text-secondary small mx-3"
+        [translate]="'Portal.MultiSelectFilter.' + (specialOption ? 'NoFurtherFilter' : 'NoFilter')"></div>
     }
     @if (selectedCount > 0) {
       <div class="dropdown-divider"></div>
