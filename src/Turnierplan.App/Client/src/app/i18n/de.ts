@@ -655,7 +655,9 @@ export const de = {
             EnterNewName: 'Geben Sie den neuen Namen für die Mannschaft ein:'
           },
           AddTeam: {
-            Button: 'Mannschaft hinzufügen'
+            Button: 'Mannschaft',
+            Title: 'Mannschaft hinzufügen',
+            Confirm: 'Hinzufügen'
           }
         },
         GroupPhase: {

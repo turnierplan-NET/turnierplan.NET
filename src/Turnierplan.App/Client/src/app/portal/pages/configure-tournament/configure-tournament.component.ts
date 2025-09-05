@@ -35,7 +35,7 @@ import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon
 import { AbstractTeamSelectorPipe } from '../../pipes/abstract-team-selector.pipe';
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
 import { Actions } from '../../../generated/actions';
-import { TextInputDialogComponent } from '../../components/text-input-dialog/text-input-dialog.component';
+import { ConfigureTournamentAddTeamComponent } from '../../components/configure-tournament-add-team/configure-tournament-add-team.component';
 
 interface TemporaryGroup {
   id?: number;
@@ -308,16 +308,14 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
   }
 
   protected addTeam(group: TemporaryGroup): void {
-    // TODO: Add custom dialog which allows adding team from planning realm
-
-    const ref = this.modalService.open(TextInputDialogComponent, {
+    const ref = this.modalService.open(ConfigureTournamentAddTeamComponent, {
       centered: true,
-      size: 'md',
-      fullscreen: 'md'
+      size: 'lg',
+      fullscreen: 'lg'
     });
 
-    const component = ref.componentInstance as TextInputDialogComponent;
-    component.init(`Portal.ConfigureTournament.Sections.Participants.AddTeam`, '', false, true);
+    const component = ref.componentInstance as ConfigureTournamentAddTeamComponent;
+    // component.init(...);
 
     ref.closed.subscribe({
       next: (name: string) => {

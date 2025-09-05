@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <div class="modal-title" [translate]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.Title'"></div>
+  <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
+</div>
+<div class="modal-body d-flex flex-column"></div>
+<div class="modal-footer">
+  <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
+  <tp-action-button
+    [type]="'success'"
+    [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.Confirm'"
+    (buttonClick)="confirm()" />
+</div>
