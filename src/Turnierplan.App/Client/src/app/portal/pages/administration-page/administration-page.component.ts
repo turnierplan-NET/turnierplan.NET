@@ -16,6 +16,7 @@ import { BadgeComponent } from '../../components/badge/badge.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { NgClass } from '@angular/common';
 
 @Component({
   templateUrl: './administration-page.component.html',
@@ -28,7 +29,8 @@ import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
     TranslateDirective,
     DeleteWidgetComponent,
     TranslatePipe,
-    TranslateDatePipe
+    TranslateDatePipe,
+    NgClass
   ]
 })
 export class AdministrationPageComponent implements OnInit {
@@ -37,6 +39,7 @@ export class AdministrationPageComponent implements OnInit {
   protected currentUserId: string = '';
 
   protected userSelectedForDeletion?: UserDto;
+  protected userSelectedForEditing?: UserDto;
   protected currentOffcanvas?: NgbOffcanvasRef;
 
   protected pages: PageFrameNavigationTab[] = [
@@ -81,6 +84,18 @@ export class AdministrationPageComponent implements OnInit {
         this.loadingState = { isLoading: false, error: error };
       }
     });
+  }
+
+  protected editButtonClicked(id: string, template: TemplateRef<unknown>): void {
+    if (id === this.currentUserId) {
+      return;
+    }
+
+    this.userSelectedForEditing = this.users.find((x) => x.id === id);
+
+    if (this.userSelectedForEditing) {
+      this.currentOffcanvas = this.offcanvasService.open(template, { position: 'end' });
+    }
   }
 
   protected deleteButtonClicked(id: string, template: TemplateRef<unknown>): void {

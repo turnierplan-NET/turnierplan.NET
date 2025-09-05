@@ -27,24 +27,33 @@
             </thead>
             <tbody>
               @for (user of users; track user) {
+                @let isCurrentUser = user.id === currentUserId;
                 <tr>
                   <td class="align-middle small text-secondary">{{ user.id }}</td>
                   <td class="align-middle">{{ user.name }}</td>
                   <td class="align-middle">{{ user.eMail }}</td>
                   <td class="align-middle small">{{ user.createdAt | translateDate: 'medium' }}</td>
                   <td class="align-middle small">{{ user.lastPasswordChange | translateDate: 'medium' }}</td>
-                  <td class="align-middle">
+                  <td class="align-middle text-center">
                     @if (user.isAdministrator) {
                       <i class="bi bi-check-circle"></i>
                     }
                   </td>
                   <td>
-                    <tp-action-button
-                      [icon]="'trash'"
-                      [type]="'outline-danger'"
-                      [mode]="'IconOnly'"
-                      [disabled]="user.id === currentUserId"
-                      (buttonClick)="deleteButtonClicked(user.id, deleteConfirmationCanvas)" />
+                    <div class="d-flex flex-row gap-2" [ngClass]="{ 'tp-cursor-not-allowed': isCurrentUser }">
+                      <tp-action-button
+                        [icon]="'pencil'"
+                        [type]="'outline-secondary'"
+                        [mode]="'IconOnly'"
+                        [disabled]="isCurrentUser"
+                        (buttonClick)="editButtonClicked(user.id, deleteConfirmationCanvas)" />
+                      <tp-action-button
+                        [icon]="'trash'"
+                        [type]="'outline-danger'"
+                        [mode]="'IconOnly'"
+                        [disabled]="isCurrentUser"
+                        (buttonClick)="deleteButtonClicked(user.id, deleteConfirmationCanvas)" />
+                    </div>
                   </td>
                 </tr>
               }
@@ -55,6 +64,11 @@
     </ng-template>
   </tp-page-frame>
 </ng-container>
+
+<ng-template #editUserCanvas>
+  <!-- TODO: Don't allow deselection administrator if editing own user profile -->
+  <div class="p-3">okjisfd</div>
+</ng-template>
 
 <ng-template #deleteConfirmationCanvas>
   <div class="p-3">
