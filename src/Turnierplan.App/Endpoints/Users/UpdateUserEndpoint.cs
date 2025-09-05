@@ -51,6 +51,7 @@ internal sealed class UpdateUserEndpoint : EndpointBase
         }
 
         user.Name = request.UserName;
+        user.IsAdministrator = request.IsAdministrator;
 
         user.UpdateEmail(request.EMail);
 
@@ -69,6 +70,8 @@ internal sealed class UpdateUserEndpoint : EndpointBase
         public required string UserName { get; init; }
 
         public required string EMail { get; init; }
+
+        public bool IsAdministrator { get; init; }
 
         public bool UpdatePassword { get; init; }
 
