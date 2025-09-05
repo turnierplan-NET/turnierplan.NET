@@ -657,6 +657,16 @@ export const de = {
           AddTeam: {
             Button: 'Mannschaft',
             Title: 'Mannschaft hinzufügen',
+            NewTeam: {
+              Navigation: 'Neue Mannschaft',
+              Explanation: 'Erstellen Sie eine neue Mannschaft, welche nur in diesem Turnier mitspielt.',
+              TeamName: 'Mannschaftsname:',
+              TeamNameEmpty: 'Der Mannschaftsname darf nicht leer sein'
+            },
+            ImportTeam: {
+              Navigation: 'Angemeldete Mannschaft',
+              Explanation: 'Wählen Sie eine angemeldete Mannschaft aus einem Turnierplaner.'
+            },
             Confirm: 'Hinzufügen'
           }
         },

@@ -44,7 +44,7 @@ interface TemporaryGroup {
   teams: TemporaryTeam[];
 }
 
-interface TemporaryTeam {
+export interface TemporaryTeam {
   id?: number;
   name: string;
 }
@@ -318,8 +318,8 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
     // component.init(...);
 
     ref.closed.subscribe({
-      next: (name: string) => {
-        group.teams.push({ id: undefined, name: name });
+      next: (team: TemporaryTeam) => {
+        group.teams.push(team);
 
         this.determineAvailableFinalsRounds();
         this.determineAvailableAbstractTeamSelectors();
