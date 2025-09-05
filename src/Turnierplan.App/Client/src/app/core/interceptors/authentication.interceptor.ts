@@ -9,11 +9,7 @@ export const doesPathRequireAuthentication = (path: string): boolean => {
 };
 
 export const authenticationInterceptor = (request: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
-  if (!request.url.startsWith(window.origin)) {
-    return next(request);
-  }
-
-  if (!doesPathRequireAuthentication(request.url.substring(window.origin.length))) {
+  if (!doesPathRequireAuthentication(request.url)) {
     return next(request);
   }
 
