@@ -46,7 +46,7 @@
                         [type]="'outline-secondary'"
                         [mode]="'IconOnly'"
                         [disabled]="isCurrentUser"
-                        (buttonClick)="editButtonClicked(user.id, deleteConfirmationCanvas)" />
+                        (buttonClick)="editButtonClicked(user.id, editUserCanvas)" />
                       <tp-action-button
                         [icon]="'trash'"
                         [type]="'outline-danger'"
@@ -66,8 +66,66 @@
 </ng-container>
 
 <ng-template #editUserCanvas>
-  <!-- TODO: Don't allow deselection administrator if editing own user profile -->
-  <div class="p-3">okjisfd</div>
+  <div class="p-3">
+    @if (userSelectedForEditing) {
+      <div class="fw-bold mb-3" translate="Portal.Administration.EditUser.Title"></div>
+      <div class="mb-4" translate="Portal.Administration.EditUser.Info"></div>
+
+      <!-- TODO: Add validation feedback -->
+
+      <form [formGroup]="editUserForm">
+        <div class="form-group mb-3">
+          <label class="form-label" for="userName" translate="Portal.Administration.EditUser.Name"></label>
+          <input class="form-control" id="userName" type="text" formControlName="userName" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label class="form-label" for="eMail" translate="Portal.Administration.EditUser.Email"></label>
+          <input class="form-control" id="eMail" type="email" formControlName="eMail" />
+        </div>
+
+        <div class="form-check mb-3">
+          <input class="form-check-input" id="isAdministrator" type="checkbox" formControlName="isAdministrator" />
+          <label class="form-check-label" for="isAdministrator" translate="Portal.Administration.EditUser.IsAdministrator"></label>
+        </div>
+
+        @let isAdministratorControl = editUserForm.get('isAdministrator')!;
+        @if (!userSelectedForEditing.isAdministrator && isAdministratorControl.value) {
+          <tp-alert
+            [margin]="'mb-3'"
+            [type]="'warning'"
+            [icon]="'exclamation-triangle'"
+            [text]="'Portal.Administration.EditUser.AdministratorWarning'" />
+        }
+
+        <div class="form-check mb-3">
+          <input
+            class="form-check-input"
+            id="updatePassword"
+            type="checkbox"
+            formControlName="updatePassword"
+            (change)="updatePasswordToggled()" />
+          <label class="form-check-label" for="updatePassword" translate="Portal.Administration.EditUser.UpdatePassword"></label>
+        </div>
+
+        @let updatePasswordControl = editUserForm.get('updatePassword')!;
+        @if (updatePasswordControl.value) {
+          <div class="form-group mb-3">
+            <label class="form-label" for="password" translate="Portal.Administration.EditUser.Password"></label>
+            <input class="form-control" id="password" type="password" formControlName="password" />
+          </div>
+        }
+      </form>
+
+      <div class="mt-4 d-flex flex-row">
+        <tp-action-button
+          [type]="'outline-success'"
+          [icon]="'floppy'"
+          [title]="'Portal.General.Save'"
+          (buttonClick)="editConfirmed(userSelectedForEditing.id)" />
+      </div>
+    }
+  </div>
 </ng-template>
 
 <ng-template #deleteConfirmationCanvas>

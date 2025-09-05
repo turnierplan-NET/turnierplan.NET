@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 import { switchMap } from 'rxjs';
 
-import { UserDto, UsersService } from '../../../api';
+import { UpdateUserEndpointRequest, UserDto, UsersService } from '../../../api';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
@@ -17,6 +17,8 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { NgClass } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AlertComponent } from '../../components/alert/alert.component';
 
 @Component({
   templateUrl: './administration-page.component.html',
@@ -30,7 +32,9 @@ import { NgClass } from '@angular/common';
     DeleteWidgetComponent,
     TranslatePipe,
     TranslateDatePipe,
-    NgClass
+    NgClass,
+    ReactiveFormsModule,
+    AlertComponent
   ]
 })
 export class AdministrationPageComponent implements OnInit {
@@ -41,6 +45,14 @@ export class AdministrationPageComponent implements OnInit {
   protected userSelectedForDeletion?: UserDto;
   protected userSelectedForEditing?: UserDto;
   protected currentOffcanvas?: NgbOffcanvasRef;
+
+  protected editUserForm = new FormGroup({
+    userName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    eMail: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+    isAdministrator: new FormControl(false, { nonNullable: true }),
+    updatePassword: new FormControl(false, { nonNullable: true }),
+    password: new FormControl('', { validators: [Validators.required] })
+  });
 
   protected pages: PageFrameNavigationTab[] = [
     {
@@ -94,8 +106,62 @@ export class AdministrationPageComponent implements OnInit {
     this.userSelectedForEditing = this.users.find((x) => x.id === id);
 
     if (this.userSelectedForEditing) {
+      this.editUserForm.setValue({
+        userName: this.userSelectedForEditing.name,
+        eMail: this.userSelectedForEditing.eMail,
+        isAdministrator: this.userSelectedForEditing.isAdministrator,
+        updatePassword: false,
+        password: ''
+      });
+
+      this.editUserForm.get('password')!.disable();
+
       this.currentOffcanvas = this.offcanvasService.open(template, { position: 'end' });
     }
+  }
+
+  protected updatePasswordToggled(): void {
+    if (this.editUserForm.get('updatePassword')!.value) {
+      this.editUserForm.get('password')?.enable();
+    } else {
+      this.editUserForm.get('password')?.disable();
+    }
+  }
+
+  protected editConfirmed(userId: string): void {
+    if (this.editUserForm.invalid) {
+      return;
+    }
+
+    this.currentOffcanvas?.close();
+    this.loadingState = { isLoading: true };
+
+    const formValue = this.editUserForm.getRawValue();
+    const request: UpdateUserEndpointRequest = {
+      userName: formValue.userName,
+      eMail: formValue.eMail,
+      isAdministrator: formValue.isAdministrator,
+      updatePassword: formValue.updatePassword,
+      password: formValue.updatePassword ? formValue.password : undefined
+    };
+
+    this.userService
+      .updateUser({ id: userId, body: request })
+      .pipe(switchMap(() => this.userService.getUsers()))
+      .subscribe({
+        next: (users) => {
+          this.users = users;
+          this.notificationService.showNotification(
+            'success',
+            'Portal.Administration.EditUser.SuccessToast.Title',
+            'Portal.Administration.EditUser.SuccessToast.Message'
+          );
+          this.loadingState = { isLoading: false };
+        },
+        error: (error) => {
+          this.loadingState = { isLoading: false, error: error };
+        }
+      });
   }
 
   protected deleteButtonClicked(id: string, template: TemplateRef<unknown>): void {
