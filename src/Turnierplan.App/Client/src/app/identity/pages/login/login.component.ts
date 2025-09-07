@@ -7,10 +7,11 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NgClass } from '@angular/common';
+import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 @Component({
   templateUrl: './login.component.html',
-  imports: [TranslateDirective, FormsModule, SmallSpinnerComponent, NgClass]
+  imports: [TranslateDirective, FormsModule, SmallSpinnerComponent, NgClass, E2eDirective]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   protected email: string = '';

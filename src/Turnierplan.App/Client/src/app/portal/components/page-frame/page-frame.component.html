@@ -10,6 +10,7 @@
 
         <div
           class="tp-navigation-tab px-3 py-1 d-flex flex-row gap-2"
+          [tpE2E]="['page-frame-navigation-tab', tab.id]"
           [ngClass]="{
             'tp-cursor-not-allowed text-secondary': isTabDisabled,
             'tp-text-shadow tp-navigation-tab-selected tp-cursor-default': !isTabDisabled && tab.id === currentTabId,
@@ -36,7 +37,7 @@
         [attr.aria-label]="'Portal.General.Back' | translate"
         [routerLink]="backLink"></i>
     }
-    <span class="fs-4 fw-bold">{{ title ?? '' }}</span>
+    <span class="fs-4 fw-bold" [tpE2E]="'page-frame-title'">{{ title ?? '' }}</span>
     <div class="flex-grow-1"></div>
     @if (buttons) {
       <ng-container [ngTemplateOutlet]="buttons" />
