@@ -49,14 +49,14 @@ The following environment variables *can* be set if you want to enable specific 
 | Environment Variable                    | Description                                                                                                                                                                      | Default      |
 |-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
 | `ApplicationInsights__ConnectionString` | Can be set if you wish that your instance sends telemetry data to [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview). | -            |
-| `Identity__AccessTokenLifetime`         | Defines the lifetime of issued JWT access tokens.                                                                                                                                | `00:05:00`   |
+| `Identity__AccessTokenLifetime`         | Defines the lifetime of issued JWT access tokens.                                                                                                                                | `00:03:00`   |
 | `Identity__RefreshTokenLifetime`        | Defines the lifetime of issued JWT refresh tokens.                                                                                                                               | `1.00:00:00` |
 | `Turnierplan__InstanceName`             | The instance name is displayed in the header/footer of the public pages. If not specified, `turnierplan.NET` will be shown instead.                                              | -            |
 | `Turnierplan__LogoUrl`                  | The URL of the custom logo to be displayed in the header of the public pages. If not specified, the turnierplan.NET logo will be shown instead.                                  | -            |
 | `Turnierplan__ImprintUrl`               | The URL of your external imprint page if you want it to be linked on the public pages.                                                                                           | -            |
 | `Turnierplan__PrivacyUrl`               | The URL of your external privacy page if you want it to be linked on the public pages.                                                                                           | -            |
 
-> The token lifetimes must be specified as .NET `TimeSpan` strings. For example `00:05:00` means 5 minutes or `1.00:00.00` means 1 day.
+> The token lifetimes must be specified as .NET `TimeSpan` strings. For example `00:03:00` means 3 minutes or `1.00:00.00` means 1 day.
 
 ### Docker Compose Example
 
