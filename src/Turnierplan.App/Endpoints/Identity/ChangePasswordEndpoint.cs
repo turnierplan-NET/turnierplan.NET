@@ -31,8 +31,6 @@ internal sealed class ChangePasswordEndpoint : IdentityEndpointBase<ChangePasswo
         IPasswordHasher<User> passwordHasher,
         CancellationToken cancellationToken)
     {
-        await IdentityDelay().ConfigureAwait(false);
-
         if (!Validator.Instance.ValidateAndGetResult(request, out var result))
         {
             return result;

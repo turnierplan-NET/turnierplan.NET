@@ -27,8 +27,10 @@ export class AuthenticationService implements OnDestroy {
   private static readonly localStorageUserAdministratorKey = 'tp_id_userAdmin';
   private static readonly localStorageAccessTokenExpiryKey = 'tp_id_accTokenExp';
   private static readonly localStorageRefreshTokenExpiryKey = 'tp_id_rfsTokenExp';
-  private static readonly refreshAccessTokenIfExpiresInLessThanSeconds = 300;
-  private static readonly tokenExpiryCheckClockSkewSeconds = 15;
+
+  // Clock skew should be as short as possible, but still long enough that a request to the token
+  // refresh endpoint can complete even in the case of a bad connection or unfavorable conditions.
+  private static readonly tokenExpiryCheckClockSkewSeconds = 10;
 
   public readonly authentication$ = new ReplaySubject<AuthenticatedUser>(1);
 
@@ -115,6 +117,7 @@ export class AuthenticationService implements OnDestroy {
   }
 
   public isLoggedIn(): boolean {
+    // User is logged in if he either has a valid access token or, alternatively, a valid refresh token
     return !this.isAccessTokenExpired() || !this.isRefreshTokenExpired();
   }
 
@@ -179,8 +182,6 @@ export class AuthenticationService implements OnDestroy {
       }).pipe(map(() => false));
     }
 
-    const shouldRefresh = this.shouldRefreshAccessToken();
-
     const logoutWithRedirect = (): Observable<boolean> => {
       return this.logoutAndClearData(() => {
         void this.router.navigate(['/portal/login'], {
@@ -188,6 +189,9 @@ export class AuthenticationService implements OnDestroy {
         });
       }).pipe(map(() => false));
     };
+
+    // Note: Expiry check includes some clock skew
+    const shouldRefresh = this.isAccessTokenExpired();
 
     if (shouldRefresh) {
       if (this.isRefreshTokenExpired()) {
@@ -232,13 +236,14 @@ export class AuthenticationService implements OnDestroy {
   private isAccessTokenExpired(): boolean {
     const expiry = this.readAccessTokenExpiryFromLocalStorage();
 
-    return expiry === undefined || expiry * 1000 < new Date().getTime();
+    // Add some clock skew to prevent race condition
+    return expiry === undefined || expiry * 1000 < new Date().getTime() + AuthenticationService.tokenExpiryCheckClockSkewSeconds * 1000;
   }
 
   private isRefreshTokenExpired(): boolean {
     const expiry = this.readRefreshTokenExpiryFromLocalStorage();
 
-    // Add some clock skew to prevent "race condition"
+    // Add some clock skew to prevent race condition
     return expiry === undefined || expiry * 1000 < new Date().getTime() + AuthenticationService.tokenExpiryCheckClockSkewSeconds * 1000;
   }
 
@@ -248,15 +253,6 @@ export class AuthenticationService implements OnDestroy {
 
   private decodeRefreshToken(token: string): TurnierplanRefreshToken {
     return jwtDecode<TurnierplanRefreshToken>(token);
-  }
-
-  private shouldRefreshAccessToken(): boolean {
-    const expiry = this.readAccessTokenExpiryFromLocalStorage();
-
-    return (
-      expiry === undefined ||
-      expiry * 1000 - new Date().getTime() < AuthenticationService.refreshAccessTokenIfExpiresInLessThanSeconds * 1000
-    );
   }
 
   private readUserIdFromLocalStorage(): string | undefined {
