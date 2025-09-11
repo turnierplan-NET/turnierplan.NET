@@ -127,11 +127,14 @@ export const de = {
         Title: 'Benutzer bearbeiten',
         Info: 'Ändern Sie die Informationen eines bestehenden Benutzers. Beachten Sie, dass der betroffene Nutzer diese Änderungen unter Umständen nicht direkt sieht.',
         Name: 'Name:',
+        NameInvalid: 'Der Name eines neuen Nutzers darf nicht leer sein.',
         Email: 'E-Mailadresse',
+        EmailInvalid: 'Die eingegebene E-Mailadresse ist ungültig.',
         IsAdministrator: 'Administrator',
         AdministratorWarning: 'Mit Administratorrechten kann dieser Nutzer ALLES machen!',
         UpdatePassword: 'Passwort ändern',
         Password: 'Neues Passwort:',
+        PasswordInvalid: 'Das eingegebene Passwort ist ungültig.',
         SuccessToast: {
           Title: 'Benutzer wurde gespeichert',
           Message: 'Die Benutzerinformationen wurden aktualisiert.'

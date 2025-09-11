@@ -71,17 +71,29 @@
       <div class="fw-bold mb-3" translate="Portal.Administration.EditUser.Title"></div>
       <div class="mb-4" translate="Portal.Administration.EditUser.Info"></div>
 
-      <!-- TODO: Add validation feedback -->
-
       <form [formGroup]="editUserForm">
         <div class="form-group mb-3">
+          @let userNameControl = editUserForm.get('userName')!;
           <label class="form-label" for="userName" translate="Portal.Administration.EditUser.Name"></label>
-          <input class="form-control" id="userName" type="text" formControlName="userName" />
+          <input
+            class="form-control"
+            id="userName"
+            type="text"
+            formControlName="userName"
+            [ngClass]="userNameControl.dirty || userNameControl.touched ? (userNameControl.invalid ? 'is-invalid' : 'is-valid') : ''" />
+          <div class="invalid-feedback" translate="Portal.Administration.EditUser.NameInvalid"></div>
         </div>
 
         <div class="form-group mb-3">
+          @let eMailNameControl = editUserForm.get('eMail')!;
           <label class="form-label" for="eMail" translate="Portal.Administration.EditUser.Email"></label>
-          <input class="form-control" id="eMail" type="email" formControlName="eMail" />
+          <input
+            class="form-control"
+            id="eMail"
+            type="email"
+            formControlName="eMail"
+            [ngClass]="eMailNameControl.dirty || eMailNameControl.touched ? (eMailNameControl.invalid ? 'is-invalid' : 'is-valid') : ''" />
+          <div class="invalid-feedback" translate="Portal.Administration.EditUser.EmailInvalid"></div>
         </div>
 
         <div class="form-check mb-3">
@@ -111,8 +123,15 @@
         @let updatePasswordControl = editUserForm.get('updatePassword')!;
         @if (updatePasswordControl.value) {
           <div class="form-group mb-3">
+            @let passwordControl = editUserForm.get('password')!;
             <label class="form-label" for="password" translate="Portal.Administration.EditUser.Password"></label>
-            <input class="form-control" id="password" type="password" formControlName="password" />
+            <input
+              class="form-control"
+              id="password"
+              type="password"
+              formControlName="password"
+              [ngClass]="passwordControl.dirty || passwordControl.touched ? (passwordControl.invalid ? 'is-invalid' : 'is-valid') : ''" />
+            <div class="invalid-feedback" translate="Portal.Administration.EditUser.PasswordInvalid"></div>
           </div>
         }
       </form>
@@ -122,6 +141,7 @@
           [type]="'outline-success'"
           [icon]="'floppy'"
           [title]="'Portal.General.Save'"
+          [disabled]="editUserForm.invalid"
           (buttonClick)="editConfirmed(userSelectedForEditing.id)" />
       </div>
     }
