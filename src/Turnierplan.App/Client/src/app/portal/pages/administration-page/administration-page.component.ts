@@ -115,6 +115,7 @@ export class AdministrationPageComponent implements OnInit {
       });
 
       this.editUserForm.get('password')!.disable();
+      this.editUserForm.markAsPristine({ onlySelf: false });
 
       this.currentOffcanvas = this.offcanvasService.open(template, { position: 'end' });
     }
