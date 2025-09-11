@@ -26,8 +26,6 @@ internal sealed class RefreshEndpoint : IdentityEndpointBase<RefreshEndpoint.Ref
         HttpContext context,
         IUserRepository userRepository)
     {
-        await IdentityDelay().ConfigureAwait(false);
-
         Guid userIdFromToken;
         Guid securityStampFromToken;
 

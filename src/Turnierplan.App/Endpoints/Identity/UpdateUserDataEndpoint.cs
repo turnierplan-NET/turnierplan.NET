@@ -27,8 +27,6 @@ internal sealed class UpdateUserDataEndpoint : IdentityEndpointBase<UpdateUserDa
         IUserRepository userRepository,
         CancellationToken cancellationToken)
     {
-        await IdentityDelay().ConfigureAwait(false);
-
         if (!Validator.Instance.ValidateAndGetResult(request, out var result))
         {
             return result;
