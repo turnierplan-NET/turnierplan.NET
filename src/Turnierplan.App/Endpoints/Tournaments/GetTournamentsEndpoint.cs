@@ -31,7 +31,7 @@ internal sealed class GetTournamentsEndpoint : EndpointBase<IEnumerable<Tourname
 
         if (organizationId.HasValue && !folderId.HasValue)
         {
-            var organization = await organizationRepository.GetByPublicIdAsync(organizationId.Value, IOrganizationRepository.Include.Tournaments).ConfigureAwait(false);
+            var organization = await organizationRepository.GetByPublicIdAsync(organizationId.Value, IOrganizationRepository.Include.Tournaments);
 
             if (organization is null)
             {
@@ -47,7 +47,7 @@ internal sealed class GetTournamentsEndpoint : EndpointBase<IEnumerable<Tourname
         }
         else if (!organizationId.HasValue && folderId.HasValue)
         {
-            var folder = await folderRepository.GetByPublicIdAsync(folderId.Value, IFolderRepository.Include.Tournaments).ConfigureAwait(false);
+            var folder = await folderRepository.GetByPublicIdAsync(folderId.Value, IFolderRepository.Include.Tournaments);
 
             if (folder is null)
             {

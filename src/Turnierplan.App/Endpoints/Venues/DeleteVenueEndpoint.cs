@@ -19,7 +19,7 @@ internal sealed class DeleteVenueEndpoint : EndpointBase
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var venue = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var venue = await repository.GetByPublicIdAsync(id);
 
         if (venue is null)
         {
@@ -33,7 +33,7 @@ internal sealed class DeleteVenueEndpoint : EndpointBase
 
         repository.Remove(venue);
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

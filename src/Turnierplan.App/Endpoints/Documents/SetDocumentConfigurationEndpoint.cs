@@ -42,7 +42,7 @@ internal abstract class SetDocumentConfigurationEndpoint<T> : EndpointBase
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var document = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var document = await repository.GetByPublicIdAsync(id);
 
         if (document is null)
         {
@@ -66,7 +66,7 @@ internal abstract class SetDocumentConfigurationEndpoint<T> : EndpointBase
 
         document.UpdateConfiguration(JsonSerializer.Serialize(configuration, _jsonSerializerOptions));
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

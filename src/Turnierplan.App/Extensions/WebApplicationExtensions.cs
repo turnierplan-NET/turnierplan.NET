@@ -20,9 +20,9 @@ internal static class WebApplicationExtensions
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<DatabaseMigrator>>();
         var context = scope.ServiceProvider.GetRequiredService<TurnierplanContext>();
 
-        await context.Database.MigrateAsync().ConfigureAwait(false);
+        await context.Database.MigrateAsync();
 
-        var userCount = await context.Users.CountAsync().ConfigureAwait(false);
+        var userCount = await context.Users.CountAsync();
 
         if (userCount == 0)
         {
@@ -38,8 +38,8 @@ internal static class WebApplicationExtensions
 
             initialUser.UpdatePassword(passwordHasher.HashPassword(initialUser, initialPassword));
 
-            await context.Users.AddAsync(initialUser).ConfigureAwait(false);
-            await context.SaveChangesAsync().ConfigureAwait(false);
+            await context.Users.AddAsync(initialUser);
+            await context.SaveChangesAsync();
 
             logger.LogInformation("An initial user was created. You can log in using \"{Email}\" and the password \"{Password}\". IMMEDIATELY change this password when running in a production environment!", initialEmail, initialPassword);
         }

@@ -78,7 +78,7 @@ internal sealed class S3ImageStorage : IImageStorage
                 CannedACL = S3CannedACL.PublicRead
             };
 
-            var response = await _client.PutObjectAsync(request).ConfigureAwait(false);
+            var response = await _client.PutObjectAsync(request);
 
             if (response.HttpStatusCode == HttpStatusCode.OK)
             {
@@ -105,7 +105,7 @@ internal sealed class S3ImageStorage : IImageStorage
             Key = objectKey
         };
 
-        var response = await _client.GetObjectAsync(request).ConfigureAwait(false);
+        var response = await _client.GetObjectAsync(request);
 
         if (response.HttpStatusCode == HttpStatusCode.OK)
         {
@@ -129,7 +129,7 @@ internal sealed class S3ImageStorage : IImageStorage
                 Key = objectKey
             };
 
-            var response = await _client.DeleteObjectAsync(request).ConfigureAwait(false);
+            var response = await _client.DeleteObjectAsync(request);
 
             if (response.HttpStatusCode == HttpStatusCode.NoContent)
             {

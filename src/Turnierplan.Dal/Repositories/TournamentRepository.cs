@@ -68,6 +68,6 @@ internal sealed class TournamentRepository(TurnierplanContext context) : Reposit
 
         query = query.AsSplitQuery();
 
-        return await query.FirstOrDefaultAsync().ConfigureAwait(false);
+        return await query.FirstOrDefaultAsync();
     }
 }

@@ -27,7 +27,7 @@ internal sealed class SetOrganizationNameEndpoint : EndpointBase
             return result;
         }
 
-        var organization = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var organization = await repository.GetByPublicIdAsync(id);
 
         if (organization is null)
         {
@@ -41,7 +41,7 @@ internal sealed class SetOrganizationNameEndpoint : EndpointBase
 
         organization.Name = request.Name.Trim();
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

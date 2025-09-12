@@ -21,7 +21,7 @@ internal sealed class DeleteImageEndpoint : EndpointBase
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var image = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var image = await repository.GetByPublicIdAsync(id);
 
         if (image is null)
         {
@@ -33,7 +33,7 @@ internal sealed class DeleteImageEndpoint : EndpointBase
             return Results.Forbid();
         }
 
-        var imageDeletedSuccessfully = await imageStorage.DeleteImageAsync(image).ConfigureAwait(false);
+        var imageDeletedSuccessfully = await imageStorage.DeleteImageAsync(image);
 
         if (!imageDeletedSuccessfully)
         {
@@ -42,7 +42,7 @@ internal sealed class DeleteImageEndpoint : EndpointBase
 
         repository.Remove(image);
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

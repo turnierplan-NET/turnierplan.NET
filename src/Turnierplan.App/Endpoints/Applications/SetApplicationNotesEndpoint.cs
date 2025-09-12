@@ -21,7 +21,7 @@ internal sealed class SetApplicationNotesEndpoint : EndpointBase
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Include.TournamentClasses | IPlanningRealmRepository.Include.ApplicationsWithTeams).ConfigureAwait(false);
+        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Include.TournamentClasses | IPlanningRealmRepository.Include.ApplicationsWithTeams);
 
         if (planningRealm is null)
         {
@@ -42,7 +42,7 @@ internal sealed class SetApplicationNotesEndpoint : EndpointBase
 
         application.Notes = request.Notes.Trim();
 
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

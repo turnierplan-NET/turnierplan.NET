@@ -43,7 +43,7 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
             return Results.BadRequest("Invalid organization ID provided.");
         }
 
-        var organization = await organizationRepository.GetByPublicIdAsync(organizationId.Value).ConfigureAwait(false);
+        var organization = await organizationRepository.GetByPublicIdAsync(organizationId.Value);
 
         if (organization is null)
         {
@@ -96,15 +96,15 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
         // Dispose here because Image() ctor accesses width and height of imageData
         imageData.Dispose();
 
-        var saveImageResult = await imageStorage.SaveImageAsync(image, memoryStream).ConfigureAwait(false);
+        var saveImageResult = await imageStorage.SaveImageAsync(image, memoryStream);
 
         if (!saveImageResult)
         {
             return Results.InternalServerError("Could not save image internally.");
         }
 
-        await imageRepository.CreateAsync(image).ConfigureAwait(false);
-        await imageRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await imageRepository.CreateAsync(image);
+        await imageRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         accessValidator.AddRolesToResponseHeader(image);
 

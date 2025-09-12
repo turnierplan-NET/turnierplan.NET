@@ -29,7 +29,7 @@ internal sealed class SetMatchOutcomeEndpoint : EndpointBase
             return result;
         }
 
-        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Include.Matches).ConfigureAwait(false);
+        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Include.Matches);
 
         if (tournament is null)
         {
@@ -58,7 +58,7 @@ internal sealed class SetMatchOutcomeEndpoint : EndpointBase
             match.SetOutcome(isCurrentlyPlaying, request.ScoreA!.Value, request.ScoreB!.Value, request.OutcomeType!.Value);
         }
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

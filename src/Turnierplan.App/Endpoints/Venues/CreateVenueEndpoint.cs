@@ -31,7 +31,7 @@ internal sealed class CreateVenueEndpoint : EndpointBase<VenueDto>
             return result;
         }
 
-        var organization = await organizationRepository.GetByPublicIdAsync(request.OrganizationId).ConfigureAwait(false);
+        var organization = await organizationRepository.GetByPublicIdAsync(request.OrganizationId);
 
         if (organization is null)
         {
@@ -45,8 +45,8 @@ internal sealed class CreateVenueEndpoint : EndpointBase<VenueDto>
 
         var venue = new Venue(organization, request.Name.Trim(), string.Empty);
 
-        await venueRepository.CreateAsync(venue).ConfigureAwait(false);
-        await venueRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await venueRepository.CreateAsync(venue);
+        await venueRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         accessValidator.AddRolesToResponseHeader(venue);
 

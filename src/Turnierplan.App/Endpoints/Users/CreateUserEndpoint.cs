@@ -30,7 +30,7 @@ internal sealed class CreateUserEndpoint : EndpointBase
             return result;
         }
 
-        var existingUser = await repository.GetByEmailAsync(request.EMail).ConfigureAwait(false);
+        var existingUser = await repository.GetByEmailAsync(request.EMail);
 
         if (existingUser is not null)
         {
@@ -41,8 +41,8 @@ internal sealed class CreateUserEndpoint : EndpointBase
 
         user.UpdatePassword(passwordHasher.HashPassword(user, request.Password));
 
-        await repository.CreateAsync(user).ConfigureAwait(false);
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.CreateAsync(user);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.Ok(mapper.Map<UserDto>(user));
     }

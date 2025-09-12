@@ -25,7 +25,7 @@ internal sealed class GetApiKeyUsageEndpoint : EndpointBase<ApiKeyUsageDto>
             return Results.BadRequest("Range in days must be between 1 and 30.");
         }
 
-        var apiKey = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var apiKey = await repository.GetByPublicIdAsync(id);
 
         if (apiKey is null)
         {
@@ -43,7 +43,7 @@ internal sealed class GetApiKeyUsageEndpoint : EndpointBase<ApiKeyUsageDto>
         var endTime = new DateTime((long)(Math.Ceiling((double)DateTime.UtcNow.Ticks / bucketWidth.Ticks) * bucketWidth.Ticks), DateTimeKind.Utc);
         var startTime = endTime - timeRange;
 
-        var requests = await repository.GetRequestsInTimeRange(apiKey, startTime, endTime).ConfigureAwait(false);
+        var requests = await repository.GetRequestsInTimeRange(apiKey, startTime, endTime);
 
         var requestsGroupedIntoBuckets = requests.GroupBy(x =>
         {

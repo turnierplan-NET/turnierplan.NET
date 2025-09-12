@@ -31,7 +31,7 @@ internal sealed class CreatePlanningRealmEndpoint : EndpointBase<PlanningRealmDt
             return result;
         }
 
-        var organization = await organizationRepository.GetByPublicIdAsync(request.OrganizationId).ConfigureAwait(false);
+        var organization = await organizationRepository.GetByPublicIdAsync(request.OrganizationId);
 
         if (organization is null)
         {
@@ -45,8 +45,8 @@ internal sealed class CreatePlanningRealmEndpoint : EndpointBase<PlanningRealmDt
 
         var planningRealm = new PlanningRealm(organization, request.Name.Trim());
 
-        await planningRealmRepository.CreateAsync(planningRealm).ConfigureAwait(false);
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await planningRealmRepository.CreateAsync(planningRealm);
+        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         accessValidator.AddRolesToResponseHeader(planningRealm);
 

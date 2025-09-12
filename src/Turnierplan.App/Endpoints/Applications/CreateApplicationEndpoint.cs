@@ -30,7 +30,7 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
             return result;
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Include.TournamentClasses).ConfigureAwait(false);
+        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Include.TournamentClasses);
 
         if (planningRealm is null)
         {
@@ -63,7 +63,7 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
             }
         }
 
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.Ok(mapper.Map<ApplicationDto>(application));
     }

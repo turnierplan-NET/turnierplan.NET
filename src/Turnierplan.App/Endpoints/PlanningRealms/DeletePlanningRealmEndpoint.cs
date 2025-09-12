@@ -19,7 +19,7 @@ internal sealed class DeletePlanningRealmEndpoint : EndpointBase
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var planningRealm = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var planningRealm = await repository.GetByPublicIdAsync(id);
 
         if (planningRealm is null)
         {
@@ -33,7 +33,7 @@ internal sealed class DeletePlanningRealmEndpoint : EndpointBase
 
         repository.Remove(planningRealm);
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

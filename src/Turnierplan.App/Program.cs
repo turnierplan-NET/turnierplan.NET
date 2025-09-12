@@ -111,6 +111,6 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 
 // Migrate database and create admin user if DB is empty
-await app.InitializeDatabaseAsync().ConfigureAwait(false);
+await app.InitializeDatabaseAsync();
 
-await app.RunAsync().ConfigureAwait(false);
+await app.RunAsync();

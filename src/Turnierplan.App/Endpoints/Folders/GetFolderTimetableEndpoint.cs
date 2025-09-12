@@ -19,7 +19,7 @@ internal sealed class GetFolderTimetableEndpoint : EndpointBase<FolderTimetableD
         IFolderRepository folderRepository,
         IAccessValidator accessValidator)
     {
-        var folder = await folderRepository.GetByPublicIdAsync(id, IFolderRepository.Include.TournamentsWithMatchesAndGroups).ConfigureAwait(false);
+        var folder = await folderRepository.GetByPublicIdAsync(id, IFolderRepository.Include.TournamentsWithMatchesAndGroups);
 
         if (folder is null)
         {

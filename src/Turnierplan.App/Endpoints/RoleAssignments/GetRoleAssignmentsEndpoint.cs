@@ -54,13 +54,13 @@ internal sealed class GetRoleAssignmentsEndpoint : EndpointBase<IEnumerable<Role
 
         return task is null
             ? Results.BadRequest("Invalid scope identifier provided.")
-            : await task.ConfigureAwait(false);
+            : await task;
     }
 
     private static async Task<IResult> GetRoleAssignmentsAsync<T>(IRepositoryWithPublicId<T, long> repository, PublicId targetId, IAccessValidator accessValidator, IMapper mapper)
         where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
-        var entity = await repository.GetByPublicIdAsync(targetId).ConfigureAwait(false);
+        var entity = await repository.GetByPublicIdAsync(targetId);
 
         if (entity is null)
         {

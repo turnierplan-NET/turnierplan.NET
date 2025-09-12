@@ -22,7 +22,7 @@ internal sealed class SetTournamentVenueEndpoint : EndpointBase
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var tournament = await tournamentRepository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var tournament = await tournamentRepository.GetByPublicIdAsync(id);
 
         if (tournament is null)
         {
@@ -40,7 +40,7 @@ internal sealed class SetTournamentVenueEndpoint : EndpointBase
         }
         else
         {
-            var venue = await venueRepository.GetByPublicIdAsync(request.VenueId.Value).ConfigureAwait(false);
+            var venue = await venueRepository.GetByPublicIdAsync(request.VenueId.Value);
 
             if (venue is null)
             {
@@ -60,7 +60,7 @@ internal sealed class SetTournamentVenueEndpoint : EndpointBase
             tournament.SetVenue(venue);
         }
 
-        await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }
