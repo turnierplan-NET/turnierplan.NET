@@ -21,7 +21,7 @@ internal sealed class GetDocumentsEndpoint : EndpointBase<IEnumerable<DocumentDt
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Include.Documents).ConfigureAwait(false);
+        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Include.Documents);
 
         if (tournament is null)
         {

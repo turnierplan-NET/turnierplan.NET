@@ -21,7 +21,7 @@ internal sealed class DeleteOrganizationEndpoint : EndpointBase
         IDeletionHelper deletionHelper,
         CancellationToken cancellationToken)
     {
-        var organization = await repository.GetByPublicIdAsync(id, IOrganizationRepository.Include.Tournaments | IOrganizationRepository.Include.Venues | IOrganizationRepository.Include.Images | IOrganizationRepository.Include.PlanningRealms).ConfigureAwait(false);
+        var organization = await repository.GetByPublicIdAsync(id, IOrganizationRepository.Include.Tournaments | IOrganizationRepository.Include.Venues | IOrganizationRepository.Include.Images | IOrganizationRepository.Include.PlanningRealms);
 
         if (organization is null)
         {
@@ -33,7 +33,7 @@ internal sealed class DeleteOrganizationEndpoint : EndpointBase
             return Results.Forbid();
         }
 
-        var result = await deletionHelper.DeleteOrganizationAsync(organization, cancellationToken).ConfigureAwait(false);
+        var result = await deletionHelper.DeleteOrganizationAsync(organization, cancellationToken);
 
         if (!result)
         {

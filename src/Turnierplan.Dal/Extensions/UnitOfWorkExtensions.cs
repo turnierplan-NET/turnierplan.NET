@@ -20,18 +20,18 @@ public static class UnitOfWorkExtensions
         {
             if (ShouldCommit)
             {
-                await _unitOfWork.CommitTransactionAsync().ConfigureAwait(false);
+                await _unitOfWork.CommitTransactionAsync();
             }
             else
             {
-                await _unitOfWork.RollbackTransactionAsync().ConfigureAwait(false);
+                await _unitOfWork.RollbackTransactionAsync();
             }
         }
     }
 
     public static async Task<TransactionWrapper> WrapTransactionAsync(this IUnitOfWork unitOfWork)
     {
-        await unitOfWork.BeginTransactionAsync().ConfigureAwait(false);
+        await unitOfWork.BeginTransactionAsync();
 
         return new TransactionWrapper(unitOfWork);
     }

@@ -23,7 +23,7 @@ internal sealed class GetTournamentTeamSelectorsEndpoint : EndpointBase<IEnumera
         IAccessValidator accessValidator,
         ILocalizationProvider localizationProvider)
     {
-        var tournament = await repository.GetByPublicIdAsync(id, ITournamentRepository.Include.GameRelevant).ConfigureAwait(false);
+        var tournament = await repository.GetByPublicIdAsync(id, ITournamentRepository.Include.GameRelevant);
 
         if (tournament is null)
         {

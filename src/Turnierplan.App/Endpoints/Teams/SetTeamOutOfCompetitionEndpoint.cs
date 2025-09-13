@@ -21,7 +21,7 @@ internal sealed class SetTeamOutOfCompetitionEndpoint : EndpointBase
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Include.Teams).ConfigureAwait(false);
+        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Include.Teams);
 
         if (tournament is null)
         {
@@ -42,7 +42,7 @@ internal sealed class SetTeamOutOfCompetitionEndpoint : EndpointBase
 
         team.OutOfCompetition = request.OutOfCompetition;
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

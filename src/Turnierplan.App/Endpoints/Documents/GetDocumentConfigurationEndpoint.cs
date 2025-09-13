@@ -48,7 +48,7 @@ internal abstract class GetDocumentConfigurationEndpoint : EndpointBase
         IDocumentRepository repository,
         IAccessValidator accessValidator)
     {
-        var document = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var document = await repository.GetByPublicIdAsync(id);
 
         if (document is null)
         {

@@ -27,7 +27,7 @@ internal sealed class SetTournamentNameEndpoint : EndpointBase
             return result;
         }
 
-        var tournament = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var tournament = await repository.GetByPublicIdAsync(id);
 
         if (tournament is null)
         {
@@ -41,7 +41,7 @@ internal sealed class SetTournamentNameEndpoint : EndpointBase
 
         tournament.Name = request.Name.Trim();
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

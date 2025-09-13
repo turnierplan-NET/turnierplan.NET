@@ -27,7 +27,7 @@ internal sealed class SetFolderNameEndpoint : EndpointBase
             return result;
         }
 
-        var folder = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var folder = await repository.GetByPublicIdAsync(id);
 
         if (folder is null)
         {
@@ -41,7 +41,7 @@ internal sealed class SetFolderNameEndpoint : EndpointBase
 
         folder.Name = request.Name.Trim();
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

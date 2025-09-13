@@ -93,7 +93,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
         _logger.LogInformation("Beginning database transaction");
 
-        _activeTransaction = await Database.BeginTransactionAsync().ConfigureAwait(false);
+        _activeTransaction = await Database.BeginTransactionAsync();
     }
 
     public async Task CommitTransactionAsync()
@@ -105,8 +105,8 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
         _logger.LogInformation("Committing database transaction");
 
-        await _activeTransaction.CommitAsync().ConfigureAwait(false);
-        await _activeTransaction.DisposeAsync().ConfigureAwait(false);
+        await _activeTransaction.CommitAsync();
+        await _activeTransaction.DisposeAsync();
 
         _activeTransaction = null;
     }
@@ -120,8 +120,8 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
         _logger.LogInformation("Rolling back database transaction");
 
-        await _activeTransaction.RollbackAsync().ConfigureAwait(false);
-        await _activeTransaction.DisposeAsync().ConfigureAwait(false);
+        await _activeTransaction.RollbackAsync();
+        await _activeTransaction.DisposeAsync();
 
         _activeTransaction = null;
     }
@@ -138,11 +138,11 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
     {
         if (_activeTransaction is not null)
         {
-            await _activeTransaction.DisposeAsync().ConfigureAwait(false);
+            await _activeTransaction.DisposeAsync();
             _activeTransaction = null;
         }
 
-        await base.DisposeAsync().ConfigureAwait(false);
+        await base.DisposeAsync();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

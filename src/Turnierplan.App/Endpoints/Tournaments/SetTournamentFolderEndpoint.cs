@@ -29,7 +29,7 @@ internal sealed class SetTournamentFolderEndpoint : EndpointBase
             return result;
         }
 
-        var tournament = await tournamentRepository.GetByPublicIdAsync(id, ITournamentRepository.Include.FolderWithTournaments).ConfigureAwait(false);
+        var tournament = await tournamentRepository.GetByPublicIdAsync(id, ITournamentRepository.Include.FolderWithTournaments);
 
         if (tournament is null)
         {
@@ -60,14 +60,14 @@ internal sealed class SetTournamentFolderEndpoint : EndpointBase
 
                 accessValidator.AddRolesToResponseHeader(folder);
 
-                await folderRepository.CreateAsync(folder).ConfigureAwait(false);
+                await folderRepository.CreateAsync(folder);
             }
         }
         else
         {
             // Assign tournament to an existing folder
 
-            var folder = await folderRepository.GetByPublicIdAsync(request.FolderId.Value).ConfigureAwait(false);
+            var folder = await folderRepository.GetByPublicIdAsync(request.FolderId.Value);
 
             if (folder is null)
             {
@@ -92,7 +92,7 @@ internal sealed class SetTournamentFolderEndpoint : EndpointBase
             folderRepository.Remove(previousFolder);
         }
 
-        await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

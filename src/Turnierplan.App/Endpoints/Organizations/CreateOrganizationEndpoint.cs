@@ -33,7 +33,7 @@ internal sealed class CreateOrganizationEndpoint : EndpointBase<OrganizationDto>
             return result;
         }
 
-        var user = await userRepository.GetByIdAsync(httpContext.GetCurrentUserIdOrThrow()).ConfigureAwait(false);
+        var user = await userRepository.GetByIdAsync(httpContext.GetCurrentUserIdOrThrow());
 
         if (user is null)
         {
@@ -44,8 +44,8 @@ internal sealed class CreateOrganizationEndpoint : EndpointBase<OrganizationDto>
 
         organization.AddRoleAssignment(Role.Owner, user.AsPrincipal());
 
-        await organizationRepository.CreateAsync(organization).ConfigureAwait(false);
-        await organizationRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await organizationRepository.CreateAsync(organization);
+        await organizationRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         accessValidator.AddRolesToResponseHeader(organization);
 

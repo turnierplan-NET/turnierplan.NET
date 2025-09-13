@@ -38,7 +38,7 @@ public sealed class TournamentFullscreen : PageModel
         }
 
         const ITournamentRepository.Include includes = ITournamentRepository.Include.GameRelevant | ITournamentRepository.Include.Images;
-        var tournament = await _repository.GetByPublicIdAsync(publicId, includes).ConfigureAwait(false);
+        var tournament = await _repository.GetByPublicIdAsync(publicId, includes);
 
         if (tournament is null || !tournament.IsPublic)
         {

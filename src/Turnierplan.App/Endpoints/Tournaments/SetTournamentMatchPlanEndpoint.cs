@@ -30,7 +30,7 @@ internal sealed class SetTournamentMatchPlanEndpoint : EndpointBase
             return result;
         }
 
-        var tournament = await repository.GetByPublicIdAsync(id, ITournamentRepository.Include.GameRelevant).ConfigureAwait(false);
+        var tournament = await repository.GetByPublicIdAsync(id, ITournamentRepository.Include.GameRelevant);
 
         if (tournament is null)
         {
@@ -81,7 +81,7 @@ internal sealed class SetTournamentMatchPlanEndpoint : EndpointBase
             return Results.BadRequest($"Changes to match plan result in computation failure: {ex.Message}");
         }
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

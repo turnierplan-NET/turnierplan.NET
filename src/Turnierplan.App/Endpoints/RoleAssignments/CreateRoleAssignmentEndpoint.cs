@@ -67,7 +67,7 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
 
         return task is null
             ? Results.BadRequest("Invalid scope identifier provided.")
-            : await task.ConfigureAwait(false);
+            : await task;
     }
 
     private static async Task<IResult> CreateRoleAssignmentAsync<T>(
@@ -82,7 +82,7 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
         CancellationToken cancellationToken)
         where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
-        var entity = await repository.GetByPublicIdAsync(targetId).ConfigureAwait(false);
+        var entity = await repository.GetByPublicIdAsync(targetId);
 
         if (entity is null)
         {
@@ -94,7 +94,7 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
             return Results.Forbid();
         }
 
-        var principal = await GetPrincipalAsync(request, apiKeyRepository, userRepository).ConfigureAwait(false);
+        var principal = await GetPrincipalAsync(request, apiKeyRepository, userRepository);
 
         if (principal is null)
         {
@@ -108,8 +108,8 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
 
         var roleAssignment = entity.AddRoleAssignment(request.Role, principal);
 
-        await roleAssignmentRepository.CreateAsync(roleAssignment).ConfigureAwait(false);
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await roleAssignmentRepository.CreateAsync(roleAssignment);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.Ok(mapper.Map<RoleAssignmentDto>(roleAssignment));
     }
@@ -121,14 +121,14 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
     {
         if (request.ApiKeyId.HasValue)
         {
-            var apiKey = await apiKeyRepository.GetByPublicIdAsync(request.ApiKeyId.Value).ConfigureAwait(false);
+            var apiKey = await apiKeyRepository.GetByPublicIdAsync(request.ApiKeyId.Value);
 
             return apiKey?.AsPrincipal();
         }
 
         if (request.UserEmail is not null)
         {
-            var user = await userRepository.GetByEmailAsync(request.UserEmail).ConfigureAwait(false);
+            var user = await userRepository.GetByEmailAsync(request.UserEmail);
 
             return user?.AsPrincipal();
         }

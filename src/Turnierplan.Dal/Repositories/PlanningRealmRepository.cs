@@ -42,6 +42,6 @@ internal sealed class PlanningRealmRepository(TurnierplanContext context) : Repo
 
         query = query.AsSplitQuery();
 
-        return await query.FirstOrDefaultAsync().ConfigureAwait(false);
+        return await query.FirstOrDefaultAsync();
     }
 }

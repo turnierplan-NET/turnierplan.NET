@@ -28,7 +28,7 @@ internal sealed partial class UpdateVenueEndpoint : EndpointBase
             return result;
         }
 
-        var venue = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var venue = await repository.GetByPublicIdAsync(id);
 
         if (venue is null)
         {
@@ -45,7 +45,7 @@ internal sealed partial class UpdateVenueEndpoint : EndpointBase
         venue.AddressDetails = [..request.AddressDetails];
         venue.ExternalLinks = [..request.ExternalLinks];
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

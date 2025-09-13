@@ -28,7 +28,7 @@ internal sealed class SetTournamentPresentationConfigurationEndpoint : EndpointB
             return result;
         }
 
-        var tournament = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var tournament = await repository.GetByPublicIdAsync(id);
 
         if (tournament is null)
         {
@@ -57,7 +57,7 @@ internal sealed class SetTournamentPresentationConfigurationEndpoint : EndpointB
             ShowSponsorLogo = request.Configuration.ShowSponsorLogo
         };
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }
