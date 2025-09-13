@@ -30,7 +30,7 @@ internal sealed class SetTournamentMatchPlanEndpoint : EndpointBase
             return result;
         }
 
-        var tournament = await repository.GetByPublicIdAsync(id, ITournamentRepository.Include.GameRelevant);
+        var tournament = await repository.GetByPublicIdAsync(id, ITournamentRepository.Includes.GameRelevant);
 
         if (tournament is null)
         {

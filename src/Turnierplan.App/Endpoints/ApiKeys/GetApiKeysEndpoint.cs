@@ -21,7 +21,7 @@ internal sealed class GetApiKeysEndpoint : EndpointBase<IEnumerable<ApiKeyDto>>
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        var organization = await repository.GetByPublicIdAsync(organizationId, IOrganizationRepository.Include.ApiKeys);
+        var organization = await repository.GetByPublicIdAsync(organizationId, IOrganizationRepository.Includes.ApiKeys);
 
         if (organization is null)
         {

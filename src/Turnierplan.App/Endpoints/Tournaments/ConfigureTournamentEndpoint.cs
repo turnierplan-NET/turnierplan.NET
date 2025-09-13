@@ -32,7 +32,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
             return result;
         }
 
-        var tournament = await tournamentRepository.GetByPublicIdAsync(id, ITournamentRepository.Include.GameRelevant | ITournamentRepository.Include.TeamsWithLinks);
+        var tournament = await tournamentRepository.GetByPublicIdAsync(id, ITournamentRepository.Includes.GameRelevant | ITournamentRepository.Includes.TeamsWithLinks);
 
         if (tournament is null)
         {
@@ -60,7 +60,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
 
         foreach (var planningRealmId in planningRealmIds)
         {
-            var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Include.ApplicationsWithTeams);
+            var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.ApplicationsWithTeams);
 
             if (planningRealm is null)
             {

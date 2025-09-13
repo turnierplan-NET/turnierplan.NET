@@ -15,23 +15,23 @@ internal sealed class PlanningRealmRepository(TurnierplanContext context) : Repo
             .FirstOrDefaultAsync();
     }
 
-    public async Task<PlanningRealm?> GetByPublicIdAsync(PublicId id, IPlanningRealmRepository.Include include)
+    public async Task<PlanningRealm?> GetByPublicIdAsync(PublicId id, IPlanningRealmRepository.Includes includes)
     {
         var query = DbSet.Where(x => x.PublicId == id);
 
-        if (include.HasFlag(IPlanningRealmRepository.Include.TournamentClasses))
+        if (includes.HasFlag(IPlanningRealmRepository.Includes.TournamentClasses))
         {
             query = query.Include(x => x.TournamentClasses);
         }
 
-        if (include.HasFlag(IPlanningRealmRepository.Include.InvitationLinks))
+        if (includes.HasFlag(IPlanningRealmRepository.Includes.InvitationLinks))
         {
             query = query.Include(x => x.InvitationLinks).ThenInclude(x => x.PrimaryLogo);
             query = query.Include(x => x.InvitationLinks).ThenInclude(x => x.SecondaryLogo);
             query = query.Include(x => x.InvitationLinks).ThenInclude(x => x.Entries);
         }
 
-        if (include.HasFlag(IPlanningRealmRepository.Include.ApplicationsWithTeams))
+        if (includes.HasFlag(IPlanningRealmRepository.Includes.ApplicationsWithTeams))
         {
             query = query.Include(x => x.Applications).ThenInclude(x => x.SourceLink);
             query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.Class);

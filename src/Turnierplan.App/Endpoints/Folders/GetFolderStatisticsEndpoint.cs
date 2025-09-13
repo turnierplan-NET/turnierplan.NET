@@ -20,7 +20,7 @@ internal sealed class GetFolderStatisticsEndpoint : EndpointBase<FolderStatistic
         IFolderRepository folderRepository,
         IAccessValidator accessValidator)
     {
-        var folder = await folderRepository.GetByPublicIdAsync(id, IFolderRepository.Include.TournamentsWithGameRelevant);
+        var folder = await folderRepository.GetByPublicIdAsync(id, IFolderRepository.Includes.TournamentsWithGameRelevant);
 
         if (folder is null)
         {

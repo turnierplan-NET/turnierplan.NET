@@ -21,7 +21,7 @@ internal sealed class GetTournamentImagesEndpoint : EndpointBase<TournamentImage
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        var tournament = await repository.GetByPublicIdAsync(id, ITournamentRepository.Include.Images);
+        var tournament = await repository.GetByPublicIdAsync(id, ITournamentRepository.Includes.Images);
 
         if (tournament is null)
         {

@@ -29,7 +29,7 @@ internal sealed class SetTournamentImageEndpoint : EndpointBase
             return result;
         }
 
-        var tournament = await tournamentRepository.GetByPublicIdAsync(id, ITournamentRepository.Include.Images);
+        var tournament = await tournamentRepository.GetByPublicIdAsync(id, ITournamentRepository.Includes.Images);
 
         if (tournament is null)
         {

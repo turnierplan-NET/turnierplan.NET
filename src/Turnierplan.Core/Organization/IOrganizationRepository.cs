@@ -5,7 +5,7 @@ namespace Turnierplan.Core.Organization;
 
 public interface IOrganizationRepository : IRepositoryWithPublicId<Organization, long>
 {
-    Task<Organization?> GetByPublicIdAsync(PublicId.PublicId id, Include include);
+    Task<Organization?> GetByPublicIdAsync(PublicId.PublicId id, Includes includes);
 
     Task<List<Organization>> GetAllAsync();
 
@@ -15,7 +15,7 @@ public interface IOrganizationRepository : IRepositoryWithPublicId<Organization,
     Task<List<Organization>> GetByPrincipalAsync(Principal principal);
 
     [Flags]
-    public enum Include
+    public enum Includes
     {
         None = 0,
         Folders = 1,

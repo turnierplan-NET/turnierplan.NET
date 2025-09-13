@@ -21,7 +21,7 @@ internal sealed class SetTeamPriorityEndpoint : EndpointBase
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Include.Teams | ITournamentRepository.Include.Groups);
+        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Includes.Teams | ITournamentRepository.Includes.Groups);
 
         if (tournament is null)
         {

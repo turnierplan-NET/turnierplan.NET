@@ -2,7 +2,6 @@ using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
-using Turnierplan.App.Mapping;
 using Turnierplan.Core.User;
 
 namespace Turnierplan.App.Endpoints.Users;
@@ -22,7 +21,6 @@ internal sealed class UpdateUserEndpoint : EndpointBase
         [FromBody] UpdateUserEndpointRequest request,
         IPasswordHasher<User> passwordHasher,
         IUserRepository repository,
-        IMapper mapper,
         CancellationToken cancellationToken)
     {
         if (!Validator.Instance.ValidateAndGetResult(request, out var result))
