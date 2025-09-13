@@ -53,7 +53,7 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
             return AuthenticateResult.Fail("There exists no valid API key with the specified ID and secret.");
         }
 
-        var apiKey = await _apiKeyRepository.GetByPublicIdAsync(apiKeyIdParsed.Value).ConfigureAwait(false);
+        var apiKey = await _apiKeyRepository.GetByPublicIdAsync(apiKeyIdParsed.Value);
 
         if (apiKey is null || !apiKey.IsActive || apiKey.IsExpired)
         {
@@ -69,7 +69,7 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
 
         apiKey.AddRequest(new ApiKeyRequest($"{Request.Path}{Request.QueryString}"));
 
-        await _apiKeyRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        await _apiKeyRepository.UnitOfWork.SaveChangesAsync();
 
         var identity = new ClaimsIdentity(claims: [
             new Claim(ClaimTypes.PrincipalId, apiKey.PrincipalId.ToString()),

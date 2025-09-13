@@ -24,7 +24,7 @@ internal sealed class CopyDocumentEndpoint : EndpointBase<DocumentDto>
         IMapper mapper,
         CancellationToken cancellationToken)
     {
-        var tournament = await tournamentRepository.GetByPublicIdAsync(request.TournamentId).ConfigureAwait(false);
+        var tournament = await tournamentRepository.GetByPublicIdAsync(request.TournamentId);
 
         if (tournament is null)
         {
@@ -36,7 +36,7 @@ internal sealed class CopyDocumentEndpoint : EndpointBase<DocumentDto>
             return Results.Forbid();
         }
 
-        var sourceDocument = await documentRepository.GetByPublicIdAsync(request.SourceDocumentId).ConfigureAwait(false);
+        var sourceDocument = await documentRepository.GetByPublicIdAsync(request.SourceDocumentId);
 
         if (sourceDocument is null)
         {
@@ -52,8 +52,8 @@ internal sealed class CopyDocumentEndpoint : EndpointBase<DocumentDto>
 
         var documentCopy = new Document(tournament, sourceDocument.Type, documentCopyName, sourceDocument.Configuration);
 
-        await documentRepository.CreateAsync(documentCopy).ConfigureAwait(false);
-        await documentRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await documentRepository.CreateAsync(documentCopy);
+        await documentRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.Ok(mapper.Map<DocumentDto>(documentCopy));
     }

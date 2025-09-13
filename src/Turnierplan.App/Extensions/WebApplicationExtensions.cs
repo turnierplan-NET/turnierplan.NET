@@ -22,9 +22,9 @@ internal static class WebApplicationExtensions
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<DatabaseMigrator>>();
         var context = scope.ServiceProvider.GetRequiredService<TurnierplanContext>();
 
-        await context.Database.MigrateAsync().ConfigureAwait(false);
+        await context.Database.MigrateAsync();
 
-        var userCount = await context.Users.CountAsync().ConfigureAwait(false);
+        var userCount = await context.Users.CountAsync();
 
         if (userCount == 0)
         {
@@ -45,8 +45,8 @@ internal static class WebApplicationExtensions
 
             initialUser.UpdatePassword(passwordHasher.HashPassword(initialUser, initialUserPassword));
 
-            await context.Users.AddAsync(initialUser).ConfigureAwait(false);
-            await context.SaveChangesAsync().ConfigureAwait(false);
+            await context.Users.AddAsync(initialUser);
+            await context.SaveChangesAsync();
 
             if (overwriteInitialUserPassword)
             {

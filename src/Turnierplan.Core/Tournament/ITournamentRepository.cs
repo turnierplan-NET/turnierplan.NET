@@ -4,10 +4,10 @@ namespace Turnierplan.Core.Tournament;
 
 public interface ITournamentRepository : IRepositoryWithPublicId<Tournament, long>
 {
-    Task<Tournament?> GetByPublicIdAsync(PublicId.PublicId id, Include include);
+    Task<Tournament?> GetByPublicIdAsync(PublicId.PublicId id, Includes includes);
 
     [Flags]
-    public enum Include
+    public enum Includes
     {
         None = 0,
         Teams = 1,

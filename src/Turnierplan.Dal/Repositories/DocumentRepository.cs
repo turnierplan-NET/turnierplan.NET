@@ -27,6 +27,6 @@ internal sealed class DocumentRepository(TurnierplanContext context) : Repositor
             query = query.AsSplitQuery();
         }
 
-        return await query.FirstOrDefaultAsync().ConfigureAwait(false);
+        return await query.FirstOrDefaultAsync();
     }
 }

@@ -21,7 +21,7 @@ internal sealed class SetTeamPriorityEndpoint : EndpointBase
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Include.Teams | ITournamentRepository.Include.Groups).ConfigureAwait(false);
+        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Includes.Teams | ITournamentRepository.Includes.Groups);
 
         if (tournament is null)
         {
@@ -43,7 +43,7 @@ internal sealed class SetTeamPriorityEndpoint : EndpointBase
 
         participant.Priority = request.Priority;
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

@@ -27,14 +27,12 @@ internal sealed class UpdateUserDataEndpoint : IdentityEndpointBase<UpdateUserDa
         IUserRepository userRepository,
         CancellationToken cancellationToken)
     {
-        await IdentityDelay().ConfigureAwait(false);
-
         if (!Validator.Instance.ValidateAndGetResult(request, out var result))
         {
             return result;
         }
 
-        var user = await userRepository.GetByIdAsync(context.GetCurrentUserIdOrThrow()).ConfigureAwait(false);
+        var user = await userRepository.GetByIdAsync(context.GetCurrentUserIdOrThrow());
 
         if (user is null)
         {
@@ -47,7 +45,7 @@ internal sealed class UpdateUserDataEndpoint : IdentityEndpointBase<UpdateUserDa
         {
             // Check if the email address is already taken
 
-            var existingUser = await userRepository.GetByEmailAsync(request.EMail).ConfigureAwait(false);
+            var existingUser = await userRepository.GetByEmailAsync(request.EMail);
 
             if (existingUser is not null)
             {
@@ -60,7 +58,7 @@ internal sealed class UpdateUserDataEndpoint : IdentityEndpointBase<UpdateUserDa
             user.UpdateEmail(request.EMail);
         }
 
-        await userRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         // Give the user a new
         //  - access token which includes the updated username & email claims

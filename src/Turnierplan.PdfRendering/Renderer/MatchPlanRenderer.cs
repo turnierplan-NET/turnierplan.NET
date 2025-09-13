@@ -253,8 +253,12 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
                         break;
                     case MatchPlanDateFormat.DateAndDayOfWeekAndTimeOfDay:
                         var hourOfDay = kickoff.TimeOfDay.Hours;
-                        var timeOfDay = hourOfDay <= 12 ? "Forenoon" : (hourOfDay <= 18 ? "Afternoon" : "Evening");
-                        yield return localization.Get($"Documents.MatchPlan.TournamentKickoff.DateAndDayOfWeek{timeOfDay}", kickoff);
+                        yield return localization.Get(hourOfDay switch
+                        {
+                            <= 12 => "Documents.MatchPlan.TournamentKickoff.DateAndDayOfWeekForenoon",
+                            <= 18 => "Documents.MatchPlan.TournamentKickoff.DateAndDayOfWeekAfternoon",
+                            _ => "Documents.MatchPlan.TournamentKickoff.DateAndDayOfWeekEvening"
+                        }, kickoff);
                         break;
                     case MatchPlanDateFormat.NoDate:
                     default:

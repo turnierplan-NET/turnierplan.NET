@@ -27,7 +27,7 @@ internal sealed class SetDocumentNameEndpoint : EndpointBase
             return result;
         }
 
-        var document = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var document = await repository.GetByPublicIdAsync(id);
 
         if (document is null)
         {
@@ -41,7 +41,7 @@ internal sealed class SetDocumentNameEndpoint : EndpointBase
 
         document.Name = request.Name.Trim();
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

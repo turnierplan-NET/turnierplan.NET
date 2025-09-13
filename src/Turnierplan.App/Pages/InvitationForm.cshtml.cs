@@ -23,12 +23,12 @@ public sealed class InvitationForm : PageModel
 
     public async Task OnGet()
     {
-        await LoadInvitationLink().ConfigureAwait(false);
+        await LoadInvitationLink();
     }
 
     public async Task OnPost()
     {
-        await LoadInvitationLink().ConfigureAwait(false);
+        await LoadInvitationLink();
 
         if (Data is null)
         {
@@ -101,7 +101,7 @@ public sealed class InvitationForm : PageModel
             }
         }
 
-        await _repository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        await _repository.UnitOfWork.SaveChangesAsync();
 
         State = SubmissionState.SubmissionSuccessful;
     }
@@ -124,7 +124,7 @@ public sealed class InvitationForm : PageModel
             return;
         }
 
-        var invitationLink = await _repository.GetByPublicIdAsync(publicId).ConfigureAwait(false);
+        var invitationLink = await _repository.GetByPublicIdAsync(publicId);
 
         if (invitationLink is null || !invitationLink.IsActive)
         {

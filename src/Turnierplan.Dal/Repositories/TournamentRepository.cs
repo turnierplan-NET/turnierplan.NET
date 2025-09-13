@@ -16,46 +16,46 @@ internal sealed class TournamentRepository(TurnierplanContext context) : Reposit
             .FirstOrDefaultAsync();
     }
 
-    public async Task<Tournament?> GetByPublicIdAsync(PublicId id, ITournamentRepository.Include include)
+    public async Task<Tournament?> GetByPublicIdAsync(PublicId id, ITournamentRepository.Includes includes)
     {
         var query = DbSet.Where(x => x.PublicId == id);
 
-        if (include.HasFlag(ITournamentRepository.Include.Teams))
+        if (includes.HasFlag(ITournamentRepository.Includes.Teams))
         {
             query = query.Include(x => x.Teams).ThenInclude(x => x.TeamLink);
         }
 
-        if (include.HasFlag(ITournamentRepository.Include.TeamsWithLinks))
+        if (includes.HasFlag(ITournamentRepository.Includes.TeamsWithLinks))
         {
             query = query.Include(x => x.Teams).ThenInclude(x => x.TeamLink).ThenInclude(x => x!.ApplicationTeam).ThenInclude(x => x.Application).ThenInclude(x => x.PlanningRealm);
         }
 
-        if (include.HasFlag(ITournamentRepository.Include.Groups))
+        if (includes.HasFlag(ITournamentRepository.Includes.Groups))
         {
             query = query.Include(x => x.Groups).ThenInclude(x => x.Participants.OrderBy(p => p.Order).ThenBy(p => p.Team.Id));
         }
 
-        if (include.HasFlag(ITournamentRepository.Include.Matches))
+        if (includes.HasFlag(ITournamentRepository.Includes.Matches))
         {
             query = query.Include(x => x.Matches);
         }
 
-        if (include.HasFlag(ITournamentRepository.Include.Documents))
+        if (includes.HasFlag(ITournamentRepository.Includes.Documents))
         {
             query = query.Include(x => x.Documents);
         }
 
-        if (include.HasFlag(ITournamentRepository.Include.Venue))
+        if (includes.HasFlag(ITournamentRepository.Includes.Venue))
         {
             query = query.Include(x => x.Venue);
         }
 
-        if (include.HasFlag(ITournamentRepository.Include.FolderWithTournaments))
+        if (includes.HasFlag(ITournamentRepository.Includes.FolderWithTournaments))
         {
             query = query.Include(x => x.Folder).ThenInclude(x => x!.Tournaments);
         }
 
-        if (include.HasFlag(ITournamentRepository.Include.Images))
+        if (includes.HasFlag(ITournamentRepository.Includes.Images))
         {
             query = query.Include(x => x.OrganizerLogo);
             query = query.Include(x => x.SponsorLogo);
@@ -68,6 +68,6 @@ internal sealed class TournamentRepository(TurnierplanContext context) : Reposit
 
         query = query.AsSplitQuery();
 
-        return await query.FirstOrDefaultAsync().ConfigureAwait(false);
+        return await query.FirstOrDefaultAsync();
     }
 }

@@ -112,12 +112,4 @@ internal abstract class IdentityEndpointBase<TResponse> : EndpointBase<TResponse
 
         return upper == 0 || lower == 0 || digits == 0 || (punctuation == 0 && symbols == 0);
     }
-
-    // All identity endpoints should use this artificial delay at the start of every request
-
-#if DEBUG
-    protected static Task IdentityDelay() => Task.CompletedTask;
-#else
-    protected static Task IdentityDelay() => Task.Delay(1000 + Random.Shared.Next(500));
-#endif
 }

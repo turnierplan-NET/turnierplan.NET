@@ -31,14 +31,16 @@ internal sealed class LoginEndpoint : IdentityEndpointBase<LoginEndpoint.LoginEn
         IPasswordHasher<User> passwordHasher,
         CancellationToken cancellationToken)
     {
-        await IdentityDelay().ConfigureAwait(false);
+#if !DEBUG
+        await Task.Delay(1000 + Random.Shared.Next(500), cancellationToken);
+#endif
 
         if (!Validator.Instance.ValidateAndGetResult(request, out var result))
         {
             return result;
         }
 
-        var user = await userRepository.GetByEmailAsync(request.EMail).ConfigureAwait(false);
+        var user = await userRepository.GetByEmailAsync(request.EMail);
 
         if (user is null)
         {
@@ -60,7 +62,7 @@ internal sealed class LoginEndpoint : IdentityEndpointBase<LoginEndpoint.LoginEn
 
         user.UpdateLastLoginTime();
 
-        await userRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         var accessToken = CreateTokenForUser(user, false);
         var refreshToken = CreateTokenForUser(user, true);

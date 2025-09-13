@@ -20,7 +20,7 @@ internal sealed class SetApiKeyStatusEndpoint : EndpointBase
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var apiKey = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var apiKey = await repository.GetByPublicIdAsync(id);
 
         if (apiKey is null)
         {
@@ -44,7 +44,7 @@ internal sealed class SetApiKeyStatusEndpoint : EndpointBase
 
         apiKey.IsActive = request.IsActive;
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

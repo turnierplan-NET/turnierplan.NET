@@ -4,10 +4,10 @@ namespace Turnierplan.Core.PlanningRealm;
 
 public interface IPlanningRealmRepository : IRepositoryWithPublicId<PlanningRealm, long>
 {
-    Task<PlanningRealm?> GetByPublicIdAsync(PublicId.PublicId id, Include include);
+    Task<PlanningRealm?> GetByPublicIdAsync(PublicId.PublicId id, Includes includes);
 
     [Flags]
-    public enum Include
+    public enum Includes
     {
         None = 0,
         TournamentClasses = 1,
