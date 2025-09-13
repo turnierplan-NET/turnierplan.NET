@@ -28,7 +28,7 @@ internal sealed class SetGroupNameEndpoint : EndpointBase
             return result;
         }
 
-        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Include.Groups).ConfigureAwait(false);
+        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Includes.Groups);
 
         if (tournament is null)
         {
@@ -49,7 +49,7 @@ internal sealed class SetGroupNameEndpoint : EndpointBase
 
         group.DisplayName = request.Name?.Trim();
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

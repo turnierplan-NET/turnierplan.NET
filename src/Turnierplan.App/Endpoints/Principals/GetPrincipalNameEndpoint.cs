@@ -24,11 +24,11 @@ internal sealed class GetPrincipalNameEndpoint : EndpointBase<GetPrincipalNameEn
         switch (principalKind)
         {
             case PrincipalKind.ApiKey:
-                var apiKey = await apiKeyRepository.GetByPrincipalIdAsync(principalId).ConfigureAwait(false);
+                var apiKey = await apiKeyRepository.GetByPrincipalIdAsync(principalId);
                 name = apiKey?.Name;
                 break;
             case PrincipalKind.User:
-                var user = await userRepository.GetByPrincipalIdAsync(principalId).ConfigureAwait(false);
+                var user = await userRepository.GetByPrincipalIdAsync(principalId);
                 name = user?.Name;
                 break;
             default:

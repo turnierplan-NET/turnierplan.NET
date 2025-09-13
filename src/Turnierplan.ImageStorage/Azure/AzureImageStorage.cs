@@ -85,7 +85,7 @@ internal sealed class AzureImageStorage : IImageStorage
 
         try
         {
-            await blobClient.UploadAsync(imageData).ConfigureAwait(false);
+            await blobClient.UploadAsync(imageData);
 
             return true;
         }
@@ -104,7 +104,7 @@ internal sealed class AzureImageStorage : IImageStorage
 
         try
         {
-            var response = await blobClient.DownloadAsync().ConfigureAwait(false);
+            var response = await blobClient.DownloadAsync();
 
             return response.Value.Content;
         }
@@ -123,7 +123,7 @@ internal sealed class AzureImageStorage : IImageStorage
 
         try
         {
-            await blobClient.DeleteIfExistsAsync().ConfigureAwait(false);
+            await blobClient.DeleteIfExistsAsync();
 
             return true;
         }

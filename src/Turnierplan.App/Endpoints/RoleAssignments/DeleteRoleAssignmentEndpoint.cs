@@ -59,7 +59,7 @@ internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
 
         return task is null
             ? Results.BadRequest("Invalid scope identifier provided.")
-            : await task.ConfigureAwait(false);
+            : await task;
     }
 
     private static async Task<IResult> DeleteRoleAssignmentAsync<T>(
@@ -70,7 +70,7 @@ internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
         CancellationToken cancellationToken)
         where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
-        var entity = await repository.GetByPublicIdAsync(targetId).ConfigureAwait(false);
+        var entity = await repository.GetByPublicIdAsync(targetId);
 
         if (entity is null)
         {
@@ -98,7 +98,7 @@ internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
             return Results.BadRequest("When deleting role assignments from an Organization, at least one owner must always remain.");
         }
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

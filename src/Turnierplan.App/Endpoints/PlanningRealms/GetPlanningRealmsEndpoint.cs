@@ -21,7 +21,7 @@ internal sealed class GetPlanningRealmsEndpoint : EndpointBase<IEnumerable<Plann
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        var organization = await organizationRepository.GetByPublicIdAsync(organizationId.Value, IOrganizationRepository.Include.PlanningRealms).ConfigureAwait(false);
+        var organization = await organizationRepository.GetByPublicIdAsync(organizationId.Value, IOrganizationRepository.Includes.PlanningRealms);
 
         if (organization is null)
         {

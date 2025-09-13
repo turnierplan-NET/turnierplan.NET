@@ -23,7 +23,7 @@ internal sealed class GetImagesEndpoint : EndpointBase<IEnumerable<ImageDto>>
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        var organization = await repository.GetByPublicIdAsync(organizationId, IOrganizationRepository.Include.Images).ConfigureAwait(false);
+        var organization = await repository.GetByPublicIdAsync(organizationId, IOrganizationRepository.Includes.Images);
 
         if (organization is null)
         {

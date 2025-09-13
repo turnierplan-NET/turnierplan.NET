@@ -29,7 +29,7 @@ internal sealed class SetTournamentImageEndpoint : EndpointBase
             return result;
         }
 
-        var tournament = await tournamentRepository.GetByPublicIdAsync(id, ITournamentRepository.Include.Images).ConfigureAwait(false);
+        var tournament = await tournamentRepository.GetByPublicIdAsync(id, ITournamentRepository.Includes.Images);
 
         if (tournament is null)
         {
@@ -79,7 +79,7 @@ internal sealed class SetTournamentImageEndpoint : EndpointBase
                 throw new InvalidOperationException();
         }
 
-        await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

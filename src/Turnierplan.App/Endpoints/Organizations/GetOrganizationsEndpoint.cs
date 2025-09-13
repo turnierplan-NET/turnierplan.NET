@@ -22,13 +22,13 @@ internal sealed class GetOrganizationsEndpoint : EndpointBase<IEnumerable<Organi
 
         if (context.IsCurrentUserAdministrator())
         {
-            organizations = await repository.GetAllAsync().ConfigureAwait(false);
+            organizations = await repository.GetAllAsync();
         }
         else
         {
             var principal = context.GetActivePrincipal();
 
-            organizations = await repository.GetByPrincipalAsync(principal).ConfigureAwait(false);
+            organizations = await repository.GetByPrincipalAsync(principal);
         }
 
         return Results.Ok(mapper.MapCollection<OrganizationDto>(organizations));

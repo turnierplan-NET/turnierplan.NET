@@ -48,7 +48,7 @@ internal sealed class DeletionHelper : IDeletionHelper
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var result = await _imageStorage.DeleteImageAsync(image).ConfigureAwait(false);
+            var result = await _imageStorage.DeleteImageAsync(image);
 
             if (result)
             {
@@ -56,7 +56,7 @@ internal sealed class DeletionHelper : IDeletionHelper
                 {
                     _imageRepository.Remove(image);
 
-                    await _imageRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                    await _imageRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
                 }
                 catch (Exception ex)
                 {
@@ -85,7 +85,7 @@ internal sealed class DeletionHelper : IDeletionHelper
             _tournamentRepository.Remove(tournament);
         }
 
-        await _tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await _tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -94,7 +94,7 @@ internal sealed class DeletionHelper : IDeletionHelper
             _venueRepository.Remove(venue);
         }
 
-        await _venueRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await _venueRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         cancellationToken.ThrowIfCancellationRequested();
 
@@ -103,14 +103,14 @@ internal sealed class DeletionHelper : IDeletionHelper
             _planningRealmRepository.Remove(planningRealm);
         }
 
-        await _planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await _planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         // Note that ApiKeys and Folders need not be deleted explicitly, because the corresponding
         // foreign keys in the database are configured with the 'Cascade' deletion behaviour.
 
         _organizationRepository.Remove(organization);
 
-        await _organizationRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await _organizationRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return true;
     }

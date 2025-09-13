@@ -37,8 +37,8 @@ public sealed class Tournament : PageModel
             return;
         }
 
-        const ITournamentRepository.Include includes = ITournamentRepository.Include.GameRelevant | ITournamentRepository.Include.Images | ITournamentRepository.Include.Venue;
-        var tournament = await _repository.GetByPublicIdAsync(publicId, includes).ConfigureAwait(false);
+        const ITournamentRepository.Includes includes = ITournamentRepository.Includes.GameRelevant | ITournamentRepository.Includes.Images | ITournamentRepository.Includes.Venue;
+        var tournament = await _repository.GetByPublicIdAsync(publicId, includes);
 
         if (tournament is null || !tournament.IsPublic)
         {
@@ -46,7 +46,7 @@ public sealed class Tournament : PageModel
         }
 
         tournament.IncrementPublicPageViews();
-        await _repository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        await _repository.UnitOfWork.SaveChangesAsync();
 
         tournament.Compute();
 

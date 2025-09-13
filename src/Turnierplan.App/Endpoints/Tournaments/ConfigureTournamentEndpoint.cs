@@ -32,7 +32,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
             return result;
         }
 
-        var tournament = await tournamentRepository.GetByPublicIdAsync(id, ITournamentRepository.Include.GameRelevant | ITournamentRepository.Include.TeamsWithLinks).ConfigureAwait(false);
+        var tournament = await tournamentRepository.GetByPublicIdAsync(id, ITournamentRepository.Includes.GameRelevant | ITournamentRepository.Includes.TeamsWithLinks);
 
         if (tournament is null)
         {
@@ -60,7 +60,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
 
         foreach (var planningRealmId in planningRealmIds)
         {
-            var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Include.ApplicationsWithTeams).ConfigureAwait(false);
+            var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.ApplicationsWithTeams);
 
             if (planningRealm is null)
             {
@@ -174,10 +174,10 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
         // Wrap the code below in a transaction such that the modifications to the tournament are only
         // stored to the database if no exception occurs between the two SaveChangesAsync() calls.
 
-        await using (var transaction = await tournamentRepository.UnitOfWork.WrapTransactionAsync().ConfigureAwait(false))
+        await using (var transaction = await tournamentRepository.UnitOfWork.WrapTransactionAsync())
         {
             // Save changes to generate IDs for all new groups and teams
-            await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             for (var i = 0; i < request.Groups.Length; i++)
             {
@@ -196,7 +196,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
             var configuration = ConvertMatchPlanConfiguration(request);
             tournament.GenerateMatchPlan(configuration, clearMatches: true);
 
-            await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             transaction.ShouldCommit = true;
         }

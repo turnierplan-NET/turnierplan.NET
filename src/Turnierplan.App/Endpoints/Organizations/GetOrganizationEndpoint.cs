@@ -21,7 +21,7 @@ internal sealed class GetOrganizationEndpoint : EndpointBase<OrganizationDto>
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        var organization = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var organization = await repository.GetByPublicIdAsync(id);
 
         if (organization is null)
         {

@@ -27,7 +27,7 @@ internal sealed class SetTournamentVisibilityEndpoint : EndpointBase
             return result;
         }
 
-        var tournament = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var tournament = await repository.GetByPublicIdAsync(id);
 
         if (tournament is null)
         {
@@ -41,7 +41,7 @@ internal sealed class SetTournamentVisibilityEndpoint : EndpointBase
 
         tournament.Visibility = request.Visibility;
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

@@ -15,7 +15,6 @@ import { TranslateLoader, TranslationObject, provideTranslateLoader, provideTran
 import { Observable, of } from 'rxjs';
 import { de as languageDE } from './app/i18n/de';
 import { provideToastr } from 'ngx-toastr';
-import { ApiModule } from './app/api';
 import { AppComponent } from './app/app.component';
 
 const routes: Routes = [

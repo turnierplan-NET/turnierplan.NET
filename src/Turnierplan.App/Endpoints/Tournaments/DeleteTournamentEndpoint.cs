@@ -21,7 +21,7 @@ internal sealed class DeleteTournamentEndpoint : EndpointBase
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var tournament = await tournamentRepository.GetByPublicIdAsync(id, ITournamentRepository.Include.FolderWithTournaments).ConfigureAwait(false);
+        var tournament = await tournamentRepository.GetByPublicIdAsync(id, ITournamentRepository.Includes.FolderWithTournaments);
 
         if (tournament is null)
         {
@@ -42,7 +42,7 @@ internal sealed class DeleteTournamentEndpoint : EndpointBase
 
         tournamentRepository.Remove(tournament);
 
-        await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

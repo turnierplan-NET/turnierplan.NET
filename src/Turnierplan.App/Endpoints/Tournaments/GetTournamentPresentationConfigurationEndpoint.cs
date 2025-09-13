@@ -21,7 +21,7 @@ internal sealed class GetTournamentPresentationConfigurationEndpoint : EndpointB
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        var tournament = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var tournament = await repository.GetByPublicIdAsync(id);
 
         if (tournament is null)
         {
