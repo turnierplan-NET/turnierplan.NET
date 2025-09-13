@@ -2,12 +2,24 @@
 
 <div class="form-group mb-2">
   <label class="form-label" for="email" translate="Identity.Login.EMail"></label>
-  <input class="form-control" id="email" type="email" [(ngModel)]="email" (keyup.enter)="attemptLogin()" />
+  <input
+    class="form-control"
+    id="email"
+    type="email"
+    [tpE2E]="'login-page-email-field'"
+    [(ngModel)]="email"
+    (keyup.enter)="attemptLogin()" />
 </div>
 
 <div class="form-group">
   <label class="form-label" for="password" translate="Identity.Login.Password"></label>
-  <input class="form-control" id="password" type="password" [(ngModel)]="password" (keyup.enter)="attemptLogin()" />
+  <input
+    class="form-control"
+    id="password"
+    type="password"
+    [tpE2E]="'login-page-password-field'"
+    [(ngModel)]="password"
+    (keyup.enter)="attemptLogin()" />
 </div>
 
 <div class="mt-4 text-secondary d-flex flex-row align-items-center gap-2 small">
@@ -21,7 +33,12 @@
   @if (isLoading) {
     <tp-small-spinner />
   }
-  <button class="btn btn-primary" [ngClass]="{ disabled: isLoading }" translate="Identity.Login.Submit" (click)="attemptLogin()"></button>
+  <button
+    class="btn btn-primary"
+    [tpE2E]="'login-page-login-button'"
+    [ngClass]="{ disabled: isLoading }"
+    translate="Identity.Login.Submit"
+    (click)="attemptLogin()"></button>
 </div>
 
 @if (!isLoading && loginFailed) {

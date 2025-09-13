@@ -3,11 +3,12 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
+import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 @Component({
   selector: 'tp-delete-widget',
   templateUrl: './delete-widget.component.html',
-  imports: [TranslateDirective, NgClass, FormsModule, ActionButtonComponent, TranslatePipe]
+  imports: [TranslateDirective, NgClass, FormsModule, ActionButtonComponent, TranslatePipe, E2eDirective]
 })
 export class DeleteWidgetComponent {
   @Input()

@@ -1,0 +1,28 @@
+export const turnierplan = {
+  createOrganizationPage: {
+    confirmButton: 'create-organization-page-confirm-button',
+    organizationNameField: 'create-organization-page-organization-name-field'
+  },
+  deleteWidget: {
+    confirmButton: 'delete-widget-confirm-button',
+    confirmationField: 'delete-widget-confirmation-field'
+  },
+  header: {
+    logoLink: 'header-logo-link'
+  },
+  landingPage: {
+    newOrganizationButton: 'landing-page-new-organization-button'
+  },
+  loginPage: {
+    emailField: 'login-page-email-field',
+    loginButton: 'login-page-login-button',
+    passwordField: 'login-page-password-field'
+  },
+  pageFrame: {
+    navigationTab: (id) => `page-frame-navigation-tab-${id}`,
+    title: 'page-frame-title'
+  },
+  viewOrganizationPage: {
+    settingsPageId: 3
+  }
+};

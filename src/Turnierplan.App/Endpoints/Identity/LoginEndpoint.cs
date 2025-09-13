@@ -31,7 +31,9 @@ internal sealed class LoginEndpoint : IdentityEndpointBase<LoginEndpoint.LoginEn
         IPasswordHasher<User> passwordHasher,
         CancellationToken cancellationToken)
     {
+#if !DEBUG
         await Task.Delay(1000 + Random.Shared.Next(500), cancellationToken);
+#endif
 
         if (!Validator.Instance.ValidateAndGetResult(request, out var result))
         {
