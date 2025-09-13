@@ -27,8 +27,6 @@ enum AddTeamMode {
   templateUrl: './configure-tournament-add-team.component.html'
 })
 export class ConfigureTournamentAddTeamComponent implements AfterViewInit {
-  // TODO: This dialog can select from planning realm
-
   protected readonly AddTeamMode = AddTeamMode;
 
   @ViewChild('addTeamNameInput')
