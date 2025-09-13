@@ -29,7 +29,7 @@ internal sealed class SetMatchOutcomeEndpoint : EndpointBase
             return result;
         }
 
-        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Include.Matches);
+        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Includes.Matches);
 
         if (tournament is null)
         {

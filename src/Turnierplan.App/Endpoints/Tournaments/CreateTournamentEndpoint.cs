@@ -33,7 +33,7 @@ internal sealed class CreateTournamentEndpoint : EndpointBase<TournamentDto>
             return result;
         }
 
-        var queryDetails = request.FolderId is not null ? IOrganizationRepository.Include.Folders : IOrganizationRepository.Include.None;
+        var queryDetails = request.FolderId is not null ? IOrganizationRepository.Includes.Folders : IOrganizationRepository.Includes.None;
         var organization = await organizationRepository.GetByPublicIdAsync(request.OrganizationId, queryDetails);
 
         if (organization is null)

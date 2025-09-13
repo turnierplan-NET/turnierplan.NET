@@ -37,7 +37,7 @@ public sealed class Tournament : PageModel
             return;
         }
 
-        const ITournamentRepository.Include includes = ITournamentRepository.Include.GameRelevant | ITournamentRepository.Include.Images | ITournamentRepository.Include.Venue;
+        const ITournamentRepository.Includes includes = ITournamentRepository.Includes.GameRelevant | ITournamentRepository.Includes.Images | ITournamentRepository.Includes.Venue;
         var tournament = await _repository.GetByPublicIdAsync(publicId, includes);
 
         if (tournament is null || !tournament.IsPublic)

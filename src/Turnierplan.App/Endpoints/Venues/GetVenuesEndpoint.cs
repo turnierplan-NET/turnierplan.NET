@@ -21,7 +21,7 @@ internal sealed class GetVenuesEndpoint : EndpointBase<IEnumerable<VenueDto>>
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        var organization = await repository.GetByPublicIdAsync(organizationId, IOrganizationRepository.Include.Venues);
+        var organization = await repository.GetByPublicIdAsync(organizationId, IOrganizationRepository.Includes.Venues);
 
         if (organization is null)
         {

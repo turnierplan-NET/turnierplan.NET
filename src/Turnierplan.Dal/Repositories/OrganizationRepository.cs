@@ -14,36 +14,36 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
             .FirstOrDefaultAsync();
     }
 
-    public Task<Organization?> GetByPublicIdAsync(PublicId id, IOrganizationRepository.Include include)
+    public Task<Organization?> GetByPublicIdAsync(PublicId id, IOrganizationRepository.Includes includes)
     {
         var query = DbSet.Where(o => o.PublicId == id);
 
-        if (include.HasFlag(IOrganizationRepository.Include.Tournaments))
+        if (includes.HasFlag(IOrganizationRepository.Includes.Tournaments))
         {
             query = query.Include(x => x.Tournaments).ThenInclude(x => x.Folder);
         }
 
-        if (include.HasFlag(IOrganizationRepository.Include.Venues))
+        if (includes.HasFlag(IOrganizationRepository.Includes.Venues))
         {
             query = query.Include(x => x.Venues);
         }
 
-        if (include.HasFlag(IOrganizationRepository.Include.Folders))
+        if (includes.HasFlag(IOrganizationRepository.Includes.Folders))
         {
             query = query.Include(x => x.Folders);
         }
 
-        if (include.HasFlag(IOrganizationRepository.Include.Images))
+        if (includes.HasFlag(IOrganizationRepository.Includes.Images))
         {
             query = query.Include(x => x.Images);
         }
 
-        if (include.HasFlag(IOrganizationRepository.Include.ApiKeys))
+        if (includes.HasFlag(IOrganizationRepository.Includes.ApiKeys))
         {
             query = query.Include(x => x.ApiKeys);
         }
 
-        if (include.HasFlag(IOrganizationRepository.Include.PlanningRealms))
+        if (includes.HasFlag(IOrganizationRepository.Includes.PlanningRealms))
         {
             query = query.Include(x => x.PlanningRealms);
         }

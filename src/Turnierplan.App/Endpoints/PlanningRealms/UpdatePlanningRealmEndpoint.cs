@@ -32,7 +32,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
             return result;
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(id, IPlanningRealmRepository.Include.All);
+        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(id, IPlanningRealmRepository.Includes.All);
 
         if (planningRealm is null)
         {

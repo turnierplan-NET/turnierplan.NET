@@ -28,7 +28,7 @@ internal sealed class SetGroupNameEndpoint : EndpointBase
             return result;
         }
 
-        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Include.Groups);
+        var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Includes.Groups);
 
         if (tournament is null)
         {

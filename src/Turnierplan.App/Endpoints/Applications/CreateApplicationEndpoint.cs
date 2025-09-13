@@ -30,7 +30,7 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
             return result;
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Include.TournamentClasses);
+        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.TournamentClasses);
 
         if (planningRealm is null)
         {
