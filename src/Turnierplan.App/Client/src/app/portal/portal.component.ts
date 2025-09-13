@@ -15,6 +15,7 @@ import * as echarts from 'echarts/core';
 import { BarChart } from 'echarts/charts';
 import { GridComponent, TooltipComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
+import { E2eDirective } from '../core/directives/e2e.directive';
 
 echarts.use([BarChart, GridComponent, CanvasRenderer, TooltipComponent]);
 
@@ -32,7 +33,8 @@ type UserInfoAction = 'EditUserInfo' | 'ChangePassword' | 'Logout';
     NgClass,
     RouterOutlet,
     FooterComponent,
-    TranslatePipe
+    TranslatePipe,
+    E2eDirective
   ],
   providers: [provideEchartsCore({ echarts })]
 })

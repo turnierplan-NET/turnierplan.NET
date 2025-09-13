@@ -13,12 +13,14 @@
       class="form-control form-control-sm"
       style="width: 20em"
       aria-labelledby="deleteBoxLabel"
+      [tpE2E]="'delete-widget-confirmation-field'"
       [(ngModel)]="confirmationTextInput"
       (ngModelChange)="checkConfirmationText()" />
   </div>
   <div class="d-flex flex-row">
     <div [ngClass]="{ 'tp-cursor-not-allowed': !allowDeletion }">
       <tp-action-button
+        [tpE2E]="'delete-widget-confirm-button'"
         [type]="'outline-danger'"
         [icon]="'trash'"
         [disabled]="!allowDeletion"

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "The client application of turnierplan.NET",
   "private": true,
+  "license": "AGPL-3.0-only",
   "repository": {
     "type": "git",
     "url": "https://github.com/turnierplan-NET/turnierplan.NET"
@@ -17,7 +18,13 @@
     "lint": "npm run prettier -- --write",
     "lint:ci": "npm run prettier -- --check",
     "test": "ng test",
-    "test:ci": "ng test --watch=false --source-map=true --code-coverage --browsers ChromeHeadless"
+    "test:ci": "ng test --watch=false --source-map=true --code-coverage --browsers ChromeHeadless",
+    "e2e:swap-environment": "replace-in-file \"environment.prod.ts\" \"environment.e2e.ts\" angular.json",
+    "e2e:swap-environment-back": "replace-in-file \"environment.e2e.ts\" \"environment.prod.ts\" angular.json",
+    "e2e:prepare": "npm run e2e:swap-environment && docker compose -f cypress/docker/docker-compose.yaml up --build -d && npm run e2e:swap-environment-back",
+    "e2e:destroy": "docker compose -f cypress/docker/docker-compose.yaml down",
+    "e2e:open": "npx cypress open",
+    "e2e:run": "npx cypress run"
   },
   "dependencies": {
     "@angular/animations": "~20.2.3",
@@ -50,6 +57,7 @@
     "@angular/compiler-cli": "~20.2.3",
     "@types/jasmine": "~5.1.9",
     "@types/node": "~24.3.0",
+    "cypress": "~15.0.0",
     "jasmine-core": "~5.9.0",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.2.0",
