@@ -35,12 +35,15 @@ internal sealed class DocumentTypeRegistry : IDocumentTypeRegistry
             .Where(x => x is { IsPublic: true, IsInterface: false } && x.IsAssignableTo(documentConfigurationType))
             .ToDictionary(x => GetDocumentType(x.Name), x => x);
 
-        foreach (var enumType in Enum.GetValues<DocumentType>())
+        var missingTypes = Enum.GetValues<DocumentType>()
+            .Where(type => !_configurationTypes.ContainsKey(type))
+            .ToList();
+
+        if (missingTypes.Count > 0)
         {
-            if (!_configurationTypes.ContainsKey(enumType))
-            {
-                throw new InvalidOperationException($"The detected document configuration types contain no entry for '{enumType}'.");
-            }
+            var formatted = string.Join(", ", missingTypes.Select(x => $"'{x}'"));
+
+            throw new InvalidOperationException($"The following document types do not have a configuration type: {formatted}");
         }
     }
 
