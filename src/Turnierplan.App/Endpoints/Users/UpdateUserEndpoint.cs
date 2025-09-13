@@ -30,7 +30,7 @@ internal sealed class UpdateUserEndpoint : EndpointBase
             return result;
         }
 
-        var user = await repository.GetByIdAsync(id).ConfigureAwait(false);
+        var user = await repository.GetByIdAsync(id);
 
         if (user is null)
         {
@@ -41,7 +41,7 @@ internal sealed class UpdateUserEndpoint : EndpointBase
         {
             // If the email address ought to be changed, check that no other user uses that email address
 
-            var existingUserWithNewEmail = await repository.GetByEmailAsync(request.EMail).ConfigureAwait(false);
+            var existingUserWithNewEmail = await repository.GetByEmailAsync(request.EMail);
 
             if (existingUserWithNewEmail is not null)
             {
@@ -59,7 +59,7 @@ internal sealed class UpdateUserEndpoint : EndpointBase
             user.UpdatePassword(passwordHasher.HashPassword(user, request.Password!));
         }
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }
