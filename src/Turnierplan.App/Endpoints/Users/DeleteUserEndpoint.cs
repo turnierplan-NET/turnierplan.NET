@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
+using Turnierplan.App.Helpers;
 using Turnierplan.Core.User;
 
 namespace Turnierplan.App.Endpoints.Users;
