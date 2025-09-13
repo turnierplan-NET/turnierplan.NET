@@ -90,11 +90,11 @@ public sealed partial class TurnierplanClient : IDisposable
         VerifyId(tournamentId);
 
         var request = new HttpRequestMessage(HttpMethod.Get, $"/api/tournaments/{tournamentId}");
-        var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+        var response = await _httpClient.SendAsync(request);
 
         VerifyServerVersion(response);
 
-        return await Deserialize<Tournament>(response).ConfigureAwait(false);
+        return await Deserialize<Tournament>(response);
     }
 
     /// <summary>
@@ -117,11 +117,11 @@ public sealed partial class TurnierplanClient : IDisposable
 
         var query = new QueryBuilder { { "folderId", folderId } };
         var request = new HttpRequestMessage(HttpMethod.Get, $"/api/tournaments{query}");
-        var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+        var response = await _httpClient.SendAsync(request);
 
         VerifyServerVersion(response);
 
-        return await Deserialize<List<TournamentHeader>>(response).ConfigureAwait(false);
+        return await Deserialize<List<TournamentHeader>>(response);
     }
 
     /// <summary>
@@ -182,7 +182,7 @@ public sealed partial class TurnierplanClient : IDisposable
             throw new TurnierplanClientException($"API returned unexpected status code: {response.StatusCode}");
         }
 
-        var data = await response.Content.ReadFromJsonAsync<T>(__serializerOptions).ConfigureAwait(false);
+        var data = await response.Content.ReadFromJsonAsync<T>(__serializerOptions);
 
         if (data is null)
         {

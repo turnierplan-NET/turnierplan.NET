@@ -45,7 +45,7 @@ internal sealed class GetDocumentPdfEndpoint : EndpointBase
             return Results.BadRequest("Invalid language code specified.");
         }
 
-        var document = await repository.GetByPublicIdAsync(id, true).ConfigureAwait(false);
+        var document = await repository.GetByPublicIdAsync(id, true);
 
         if (document is null)
         {
@@ -78,12 +78,12 @@ internal sealed class GetDocumentPdfEndpoint : EndpointBase
         // Wrap the code below in a transaction such that the generation count
         // is only incremented when the document is rendered successfully.
 
-        await using (var transaction = await repository.UnitOfWork.WrapTransactionAsync().ConfigureAwait(false))
+        await using (var transaction = await repository.UnitOfWork.WrapTransactionAsync())
         {
             document.IncreaseGenerationCount();
 
             // SaveChanges() must be called first because ShiftToTimezone() modifies the tournament itself
-            await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             document.Tournament.ShiftToTimezone(timeZoneInfo);
             document.Tournament.Compute();

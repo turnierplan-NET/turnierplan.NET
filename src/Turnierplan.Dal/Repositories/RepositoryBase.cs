@@ -21,7 +21,7 @@ public abstract class RepositoryBase<TEntity, TIdentifier> : IRepository<TEntity
 
     public virtual async Task CreateAsync(TEntity entity)
     {
-        await DbSet.AddAsync(entity).ConfigureAwait(false);
+        await DbSet.AddAsync(entity);
     }
 
     public virtual void Remove(TEntity entity)

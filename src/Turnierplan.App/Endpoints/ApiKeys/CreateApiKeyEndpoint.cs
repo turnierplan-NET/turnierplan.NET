@@ -37,7 +37,7 @@ internal sealed class CreateApiKeyEndpoint : EndpointBase<ApiKeyDto>
             return result;
         }
 
-        var organization = await organizationRepository.GetByPublicIdAsync(request.OrganizationId).ConfigureAwait(false);
+        var organization = await organizationRepository.GetByPublicIdAsync(request.OrganizationId);
 
         if (organization is null)
         {
@@ -54,18 +54,18 @@ internal sealed class CreateApiKeyEndpoint : EndpointBase<ApiKeyDto>
 
         apiKey.AssignNewSecret(plainText => secretHasher.HashPassword(apiKey, plainText), out var secret);
 
-        await apiKeyRepository.CreateAsync(apiKey).ConfigureAwait(false);
+        await apiKeyRepository.CreateAsync(apiKey);
 
-        await using (var transaction = await apiKeyRepository.UnitOfWork.WrapTransactionAsync().ConfigureAwait(false))
+        await using (var transaction = await apiKeyRepository.UnitOfWork.WrapTransactionAsync())
         {
             // Save changes to generate IDs for the api key
-            await apiKeyRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await apiKeyRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             // Once the api key has an ID, the role assignment can be created
             var roleAssignment = organization.AddRoleAssignment(Role.Reader, apiKey.AsPrincipal());
 
-            await organizationRoleAssignmentRepository.CreateAsync(roleAssignment).ConfigureAwait(false);
-            await apiKeyRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            await organizationRoleAssignmentRepository.CreateAsync(roleAssignment);
+            await apiKeyRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             transaction.ShouldCommit = true;
         }

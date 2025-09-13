@@ -32,7 +32,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
             return result;
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(id, IPlanningRealmRepository.Include.All).ConfigureAwait(false);
+        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(id, IPlanningRealmRepository.Include.All);
 
         if (planningRealm is null)
         {
@@ -51,7 +51,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
 
         // The invitation links are updated separately to avoid having to pass required services along multiple
         // nested method calls, and so we can use the Try..() pattern for the other apply methods.
-        var applyImageResult = await UpdateInvitationLinkImagesAsync(imageRepository, accessValidator, planningRealm, request).ConfigureAwait(false);
+        var applyImageResult = await UpdateInvitationLinkImagesAsync(imageRepository, accessValidator, planningRealm, request);
 
         if (applyImageResult is not null)
         {
@@ -59,7 +59,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
             return applyImageResult;
         }
 
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }
@@ -254,7 +254,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
                 requestInvitationLink._invitationLink!.PrimaryLogo,
                 requestInvitationLink.PrimaryLogoId,
                 x => requestInvitationLink._invitationLink.SetPrimaryLogo(x)
-            ).ConfigureAwait(false);
+            );
 
             if (primaryImageResult is not null)
             {
@@ -268,7 +268,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
                 requestInvitationLink._invitationLink!.SecondaryLogo,
                 requestInvitationLink.SecondaryLogoId,
                 x => requestInvitationLink._invitationLink.SetSecondaryLogo(x)
-            ).ConfigureAwait(false);
+            );
 
             if (secondaryImageResult is not null)
             {
@@ -306,7 +306,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
             return null; // means no error occurred
         }
 
-        var requestImage = await imageRepository.GetByPublicIdAsync(requestImageId.Value).ConfigureAwait(false);
+        var requestImage = await imageRepository.GetByPublicIdAsync(requestImageId.Value);
 
         if (requestImage is null)
         {

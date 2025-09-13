@@ -34,7 +34,7 @@ internal sealed class CreateTournamentEndpoint : EndpointBase<TournamentDto>
         }
 
         var queryDetails = request.FolderId is not null ? IOrganizationRepository.Include.Folders : IOrganizationRepository.Include.None;
-        var organization = await organizationRepository.GetByPublicIdAsync(request.OrganizationId, queryDetails).ConfigureAwait(false);
+        var organization = await organizationRepository.GetByPublicIdAsync(request.OrganizationId, queryDetails);
 
         if (organization is null)
         {
@@ -61,7 +61,7 @@ internal sealed class CreateTournamentEndpoint : EndpointBase<TournamentDto>
         {
             folder = new Folder(organization, request.FolderName);
 
-            await folderRepository.CreateAsync(folder).ConfigureAwait(false);
+            await folderRepository.CreateAsync(folder);
 
             accessValidator.AddRolesToResponseHeader(folder);
         }
@@ -69,8 +69,8 @@ internal sealed class CreateTournamentEndpoint : EndpointBase<TournamentDto>
         var tournament = new Tournament(organization, request.Name.Trim(), request.Visibility);
         tournament.SetFolder(folder);
 
-        await tournamentRepository.CreateAsync(tournament).ConfigureAwait(false);
-        await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await tournamentRepository.CreateAsync(tournament);
+        await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         accessValidator.AddRolesToResponseHeader(tournament);
 

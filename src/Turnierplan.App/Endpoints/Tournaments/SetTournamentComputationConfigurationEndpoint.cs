@@ -28,7 +28,7 @@ internal sealed class SetTournamentComputationConfigurationEndpoint : EndpointBa
             return result;
         }
 
-        var tournament = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var tournament = await repository.GetByPublicIdAsync(id);
 
         if (tournament is null)
         {
@@ -49,7 +49,7 @@ internal sealed class SetTournamentComputationConfigurationEndpoint : EndpointBa
             ComparisonModes = request.Configuration.ComparisonModes.ToList()
         };
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

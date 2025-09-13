@@ -21,7 +21,7 @@ internal sealed class GetFoldersEndpoint : EndpointBase<IEnumerable<FolderDto>>
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        var organization = await repository.GetByPublicIdAsync(organizationId, IOrganizationRepository.Include.Folders).ConfigureAwait(false);
+        var organization = await repository.GetByPublicIdAsync(organizationId, IOrganizationRepository.Include.Folders);
 
         if (organization is null)
         {

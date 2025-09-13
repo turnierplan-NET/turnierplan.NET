@@ -19,7 +19,7 @@ internal sealed class DeleteDocumentEndpoint : EndpointBase
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var document = await repository.GetByPublicIdAsync(id).ConfigureAwait(false);
+        var document = await repository.GetByPublicIdAsync(id);
 
         if (document is null)
         {
@@ -33,7 +33,7 @@ internal sealed class DeleteDocumentEndpoint : EndpointBase
 
         repository.Remove(document);
 
-        await repository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

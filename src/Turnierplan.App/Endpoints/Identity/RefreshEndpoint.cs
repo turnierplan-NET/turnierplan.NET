@@ -61,7 +61,7 @@ internal sealed class RefreshEndpoint : IdentityEndpointBase<RefreshEndpoint.Ref
             return Results.Unauthorized();
         }
 
-        var user = await userRepository.GetByIdAsync(userIdFromToken).ConfigureAwait(false);
+        var user = await userRepository.GetByIdAsync(userIdFromToken);
 
         // If the security stamp has changed, that means the user has changed their password since the reset token was issued
         if (user is null || user.SecurityStamp != securityStampFromToken)

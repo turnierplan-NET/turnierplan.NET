@@ -55,7 +55,7 @@ internal sealed class ChangePasswordEndpoint : IdentityEndpointBase<ChangePasswo
             });
         }
 
-        var user = await userRepository.GetByEmailAsync(request.EMail).ConfigureAwait(false);
+        var user = await userRepository.GetByEmailAsync(request.EMail);
 
         if (user is null)
         {
@@ -79,7 +79,7 @@ internal sealed class ChangePasswordEndpoint : IdentityEndpointBase<ChangePasswo
 
         user.UpdatePassword(passwordHasher.HashPassword(user, request.NewPassword));
 
-        await userRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         // Give the user a new refresh token since the one he currently
         // holds is invalidated due to the updated security stamp.

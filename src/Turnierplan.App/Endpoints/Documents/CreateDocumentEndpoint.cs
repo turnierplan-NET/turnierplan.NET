@@ -39,7 +39,7 @@ internal sealed class CreateDocumentEndpoint : EndpointBase<DocumentDto>
             return Results.BadRequest("The specified document type does not exist.");
         }
 
-        var tournament = await tournamentRepository.GetByPublicIdAsync(request.TournamentId).ConfigureAwait(false);
+        var tournament = await tournamentRepository.GetByPublicIdAsync(request.TournamentId);
 
         if (tournament is null)
         {
@@ -60,8 +60,8 @@ internal sealed class CreateDocumentEndpoint : EndpointBase<DocumentDto>
 
         var document = new Document(tournament, request.Type, request.Name.Trim(), configuration);
 
-        await documentRepository.CreateAsync(document).ConfigureAwait(false);
-        await documentRepository.UnitOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+        await documentRepository.CreateAsync(document);
+        await documentRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.Ok(mapper.Map<DocumentDto>(document));
     }
