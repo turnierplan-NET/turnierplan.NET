@@ -77,7 +77,7 @@
 <ng-template #teamsSection>
   <table class="table table-bordered shadow-sm">
     <tbody>
-      @let numberOfColumns = groups.length > 1 ? 5 : 4;
+      @let numberOfColumns = groups.length > 1 ? 6 : 5;
       @for (group of groups; track group.alphabeticalId; let groupIndex = $index) {
         <tr>
           <td [attr.colspan]="numberOfColumns" class="bg-light">
@@ -123,15 +123,25 @@
         @for (team of group.teams; track team; let index = $index; let isFirst = $first; let isLast = $last) {
           <tr>
             <td style="width: 1px">{{ index + 1 }}.</td>
+            <td style="width: 1px">
+              @if (team.teamLink) {
+                <tp-tooltip-icon
+                  [margin]="false"
+                  [icon]="'ticket-perforated'"
+                  [tooltipText]="'Portal.ConfigureTournament.Sections.Participants.TeamFromPlanningRealm'" />
+              }
+            </td>
             <td>
               <span>{{ team.name }}</span>
-              <tp-rename-button
-                class="ms-2"
-                translationKey="Portal.ConfigureTournament.Sections.Participants.TeamRename"
-                [displayLabel]="false"
-                [reducedFootprint]="true"
-                [current]="team.name"
-                (renamed)="team.name = $event" />
+              @if (!team.teamLink) {
+                <tp-rename-button
+                  class="ms-2"
+                  translationKey="Portal.ConfigureTournament.Sections.Participants.TeamRename"
+                  [displayLabel]="false"
+                  [reducedFootprint]="true"
+                  [current]="team.name"
+                  (renamed)="team.name = $event" />
+              }
             </td>
             <td style="width: 1px">
               <div class="d-flex flex-row gap-2 justify-content-center">

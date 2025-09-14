@@ -485,10 +485,32 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
         id: group.id,
         alphabeticalId: group.alphabeticalId,
         displayName: group.hasCustomDisplayName ? group.displayName : '',
-        teams: group.participants.map((participant) => ({
-          id: participant.teamId,
-          name: result.teams.find((x) => x.id === participant.teamId)?.name ?? ''
-        }))
+        teams: group.participants.map((participant): TemporaryTeam => {
+          const team = result.teams.find((x) => x.id === participant.teamId);
+
+          if (!team) {
+            return {
+              id: participant.teamId,
+              name: '??'
+            };
+          }
+
+          if (team.link) {
+            return {
+              id: participant.teamId,
+              name: team.name,
+              teamLink: {
+                planningRealmId: team.link.planningRealmId,
+                applicationTeamId: team.link.applicationTeamId
+              }
+            };
+          }
+
+          return {
+            id: participant.teamId,
+            name: team.name
+          };
+        })
       };
     });
 

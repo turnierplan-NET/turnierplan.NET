@@ -665,6 +665,7 @@ export const de = {
             EnterNewName: 'Geben Sie den neuen Namen für die Gruppe ein:',
             EmptyAllowed: 'Sie können das Feld leerlassen, um zum Standardnamen ("Gruppe A-Z") zurückzukehren.'
           },
+          TeamFromPlanningRealm: 'Diese Mannschaft stammt aus einen Turnierplaner.',
           TeamRename: {
             Button: 'Teamnamen ändern',
             Title: 'Teamnamen ändern',
