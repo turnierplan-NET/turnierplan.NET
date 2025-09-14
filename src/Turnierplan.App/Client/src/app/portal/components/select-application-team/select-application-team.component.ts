@@ -57,6 +57,9 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   @Input()
   public organizationId!: PublicId;
 
+  @Input()
+  public usedApplicationTeamIds: number[] = [];
+
   @Output()
   public teamSelected = new EventEmitter<SelectApplicationTeamResult>();
 
@@ -199,6 +202,10 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
 
   protected isTeamSelected(id: number): boolean {
     return this.currentSelection.some((x) => x.applicationTeamId === id);
+  }
+
+  protected isTeamDisabled(id: number): boolean {
+    return this.usedApplicationTeamIds.some((x) => x === id);
   }
 
   private emitSelectedTeams(): void {

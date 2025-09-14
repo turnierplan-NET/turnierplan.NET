@@ -325,8 +325,13 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
       fullscreen: 'lg'
     });
 
+    const usedApplicationTeamIds = this.groups
+      .flatMap((x) => x.teams)
+      .map((x) => x.teamLink?.applicationTeamId)
+      .filter((x) => x !== undefined);
+
     const component = ref.componentInstance as ConfigureTournamentAddTeamComponent;
-    component.init(this.originalTournament.organizationId);
+    component.init(this.originalTournament.organizationId, usedApplicationTeamIds);
 
     ref.closed.subscribe({
       next: (teams: TemporaryTeam[]) => {

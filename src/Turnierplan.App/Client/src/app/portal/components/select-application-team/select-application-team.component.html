@@ -59,17 +59,16 @@
                 @let filteredTeams = filterTeams(application.teams);
                 @for (team of filteredTeams; track team.id; let isFirst = $first) {
                   @let tournamentClass = getTournamentClassName(team.tournamentClassId);
+                  @let teamDisabled = isTeamDisabled(team.id);
                   <tr>
                     <td class="align-middle">
-                      @if (!team.hasLinkedTeam) {
-                        <!-- TODO: Checkbox must also be disabled, if the team is referenced by the current changes to the configuration that have not been saved yet -->
-                        <input
-                          type="checkbox"
-                          aria-label="Mannschaft '{{ team.name }}' ({{ tournamentClass }}) selektieren"
-                          class="tp-cursor-pointer form-check-input mx-1"
-                          [ngModel]="isTeamSelected(team.id)"
-                          (ngModelChange)="setTeamSelected(team.id, $event, team.name, tournamentClass)" />
-                      }
+                      <input
+                        type="checkbox"
+                        aria-label="Mannschaft '{{ team.name }}' ({{ tournamentClass }}) selektieren"
+                        class="tp-cursor-pointer form-check-input mx-1"
+                        [ngModel]="teamDisabled || isTeamSelected(team.id)"
+                        [disabled]="teamDisabled"
+                        (ngModelChange)="setTeamSelected(team.id, $event, team.name, tournamentClass)" />
                     </td>
                     <td class="align-middle">{{ tournamentClass }}</td>
                     <td class="align-middle text-nowrap">{{ team.name }}</td>

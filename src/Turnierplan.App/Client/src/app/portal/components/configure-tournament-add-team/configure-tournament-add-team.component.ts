@@ -37,6 +37,7 @@ export class ConfigureTournamentAddTeamComponent implements AfterViewInit {
   protected addTeamNameInput!: ElementRef<HTMLInputElement>;
 
   protected organizationId?: PublicId;
+  protected usedApplicationTeamIds: number[] = [];
   protected currentMode: AddTeamMode = AddTeamMode.NewTeam;
   protected addTeamName: string = '';
   protected importTeamSelected?: SelectApplicationTeamResult;
@@ -61,8 +62,9 @@ export class ConfigureTournamentAddTeamComponent implements AfterViewInit {
     }
   }
 
-  public init(organizationId: PublicId): void {
+  public init(organizationId: PublicId, usedApplicationTeamIds: number[]): void {
     this.organizationId = organizationId;
+    this.usedApplicationTeamIds = usedApplicationTeamIds;
   }
 
   protected currentModeChanged(): void {
