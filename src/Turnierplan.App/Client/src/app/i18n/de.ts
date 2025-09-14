@@ -680,8 +680,7 @@ export const de = {
               TeamNameEmpty: 'Der Mannschaftsname darf nicht leer sein'
             },
             ImportTeam: {
-              Navigation: 'Angemeldete Mannschaft',
-              Explanation: 'Wählen Sie eine angemeldete Mannschaft aus einem Turnierplaner.'
+              Navigation: 'Angemeldete Mannschaft'
             },
             Confirm: 'Hinzufügen'
           }
@@ -1142,6 +1141,18 @@ export const de = {
       UnexpectedError:
         'Beim Verarbeiten der Anfrage ist ein unerwarteter Server-Fehler aufgetreten.\nLaden Sie die Seite neu und versuchen Sie es erneut.',
       ErrorDescription: 'Fehlerbeschreibung:'
+    },
+    SelectApplicationTeam: {
+      Explanation: 'Wählen Sie eine angemeldete Mannschaft aus einem Turnierplaner.',
+      LoadingPlanningRealms: 'Turnierplaner werden geladen',
+      LoadingPlanningRealmsFailed: 'Fehler beim Laden der Turnierplaner',
+      NoPlanningRealms: 'In dieser Organisation gibt es keine Turnierplaner',
+      LoadingPlanningRealmDetail: 'Turnierplaner wird geladen',
+      LoadingPlanningRealmDetailFailed: 'Fehler beim Laden des Turnierplaners',
+      FilterExplanation: 'Suchen und wählen Sie die Mannschaften zum Hinzufügen:',
+      FilterTooltip: 'Dieser Suchfilter wird synchronisiert mit dem Filter auf der Turnierplaner-Seite',
+      LoadingApplications: 'Mannschaftsanmeldungen werden geladen',
+      LoadingApplicationsFailed: 'Fehler beim Laden der Mannschaftsanmeldungen. Eventuell fehlen die erforderlichen Rechte'
     },
     RbacManagement: {
       Title: 'Zugriff verwalten',

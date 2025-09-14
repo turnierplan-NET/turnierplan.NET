@@ -39,7 +39,7 @@ export class ConfigureTournamentAddTeamComponent implements AfterViewInit {
   protected organizationId?: PublicId;
   protected currentMode: AddTeamMode = AddTeamMode.NewTeam;
   protected addTeamName: string = '';
-  protected importTeamSelected?: SelectApplicationTeamResult;
+  protected importTeamSelected?: SelectApplicationTeamResult; // TODO Implement multi-select
   protected confirmAttempted = false;
 
   constructor(

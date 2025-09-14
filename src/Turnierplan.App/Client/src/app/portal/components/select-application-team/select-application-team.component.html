@@ -1,1 +1,55 @@
-<div translate="Portal.ConfigureTournament.Sections.Participants.AddTeam.ImportTeam.Explanation"></div>
+<div class="mb-3" translate="Portal.SelectApplicationTeam.Explanation" id="selectApplicationTeamExplanation"></div>
+
+@if (isLoadingPlanningRealms) {
+  <div class="d-flex flex-row gap-2">
+    <tp-small-spinner />
+    <span translate="Portal.SelectApplicationTeam.LoadingPlanningRealms"></span>
+  </div>
+} @else if (planningRealms) {
+  @if (planningRealms.length === 0) {
+    <div class="text-secondary fst-italic" translate="Portal.SelectApplicationTeam.NoPlanningRealms"></div>
+  } @else {
+    <select
+      class="form-select"
+      aria-labelledby="selectApplicationTeamExplanation"
+      [(ngModel)]="currentPlanningRealmId"
+      (ngModelChange)="onPlanningRealmChange($event)">
+      @for (planningRealm of planningRealms; track planningRealm) {
+        <option [value]="planningRealm.id">{{ planningRealm.name }}</option>
+      }
+    </select>
+
+    @if (isLoadingPlanningRealmDetail) {
+      <div class="mt-3 d-flex flex-row gap-2">
+        <tp-small-spinner />
+        <span translate="Portal.SelectApplicationTeam.LoadingPlanningRealmDetail"></span>
+      </div>
+    } @else if (planningRealmDetail) {
+      <div class="mt-4">
+        <span translate="Portal.SelectApplicationTeam.FilterExplanation"></span>
+        <tp-tooltip-icon [tooltipText]="'Portal.SelectApplicationTeam.FilterTooltip'" />
+      </div>
+      <div class="mt-2 border rounded-2 p-2">
+        <tp-manage-applications-filter
+          [planningRealm]="planningRealmDetail"
+          [filter]="applicationsFilter"
+          (filterChange)="onApplicationsFilterChange($event)" />
+      </div>
+
+      @if (isLoadingApplications) {
+        <div class="mt-3 d-flex flex-row gap-2">
+          <tp-small-spinner />
+          <span translate="Portal.SelectApplicationTeam.LoadingApplications"></span>
+        </div>
+      } @else if (applications) {
+        {{ applications.totalItems }}
+      } @else {
+        <div class="mt-3 fw-bold text-danger" translate="Portal.SelectApplicationTeam.LoadingApplicationsFailed"></div>
+      }
+    } @else {
+      <div class="mt-3 fw-bold text-danger" translate="Portal.SelectApplicationTeam.LoadingPlanningRealmDetailFailed"></div>
+    }
+  }
+} @else {
+  <div class="fw-bold text-danger" translate="Portal.SelectApplicationTeam.LoadingPlanningRealmsFailed"></div>
+}

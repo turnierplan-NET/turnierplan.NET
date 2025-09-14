@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { ApplicationsFilter } from '../../models/applications-filter';
+import { ApplicationsFilter, applicationsFilterToQueryParameters } from '../../models/applications-filter';
 import { BehaviorSubject, combineLatestWith, ReplaySubject, switchMap, tap } from 'rxjs';
 import {
   ApplicationsService,
@@ -88,9 +88,7 @@ export class ManageApplicationsComponent implements OnDestroy {
             planningRealmId: this.planningRealm.id,
             page: this.currentPage - 1,
             pageSize: this.pageSize,
-            searchTerm: filter.searchTerm.trim() === '' ? undefined : filter.searchTerm,
-            tournamentClass: filter.tournamentClass.map((x) => `${x}`),
-            invitationLink: filter.invitationLink.map((x) => `${x}`)
+            ...applicationsFilterToQueryParameters(filter)
           });
         })
       )

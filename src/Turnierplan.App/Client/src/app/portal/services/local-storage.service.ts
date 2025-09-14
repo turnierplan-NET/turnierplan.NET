@@ -57,6 +57,14 @@ export class LocalStorageService {
     return this.getValueFromLocalStorage('tp_addTeamDialogMode', (x) => x);
   }
 
+  public setSelectApplicationTeamPlanningRealmId(organizationId: string, planningRealmId: string): void {
+    localStorage.setItem(`tp_selectApplicationTeamPlanningRealmId_${organizationId}`, planningRealmId);
+  }
+
+  public getSelectApplicationTeamPlanningRealmId(organizationId: string): string | undefined {
+    return this.getValueFromLocalStorage(`tp_selectApplicationTeamPlanningRealmId_${organizationId}`, (x) => x);
+  }
+
   private getValueFromLocalStorage<T>(key: string, parser: (value: string) => T): T | undefined {
     const value = localStorage.getItem(key);
     return value !== null && value.length > 0 ? parser(value) : undefined;
