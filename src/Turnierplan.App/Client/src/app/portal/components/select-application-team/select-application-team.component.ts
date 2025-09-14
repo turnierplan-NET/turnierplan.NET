@@ -15,6 +15,7 @@ import { catchError, of, Subject, switchMap } from 'rxjs';
 import { ManageApplicationsFilterComponent } from '../manage-applications-filter/manage-applications-filter.component';
 import { ApplicationsFilter, applicationsFilterToQueryParameters, defaultApplicationsFilter } from '../../models/applications-filter';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 export type SelectApplicationTeamResult = {
   name: string;
@@ -24,7 +25,14 @@ export type SelectApplicationTeamResult = {
 
 @Component({
   selector: 'tp-select-application-team',
-  imports: [TranslateDirective, SmallSpinnerComponent, FormsModule, ManageApplicationsFilterComponent, TooltipIconComponent],
+  imports: [
+    TranslateDirective,
+    SmallSpinnerComponent,
+    FormsModule,
+    ManageApplicationsFilterComponent,
+    TooltipIconComponent,
+    PaginationComponent
+  ],
   templateUrl: './select-application-team.component.html',
   styleUrl: './select-application-team.component.scss'
 })
@@ -36,6 +44,8 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   protected planningRealmDetail?: PlanningRealmDto;
   protected applicationsFilter: ApplicationsFilter = defaultApplicationsFilter;
   protected isLoadingApplications = true;
+  protected applicationsCurrentPage = 0;
+  protected applicationsPageSize = 10;
   protected applications?: PaginationResultDtoOfApplicationDto;
 
   @Input()
@@ -63,6 +73,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
 
         if (this.planningRealms.length > 0) {
           const currentId = this.localStorageService.getSelectApplicationTeamPlanningRealmId(this.organizationId);
+
           if (currentId && this.planningRealms.some((x) => x.id === currentId)) {
             this.currentPlanningRealmId = currentId;
             this.onPlanningRealmChange(currentId);
@@ -81,6 +92,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((id) => {
           this.isLoadingPlanningRealmDetail = true;
+
           return this.planningRealmService.getPlanningRealm({ id: id });
         }),
         catchError(() => of(undefined))
@@ -97,10 +109,11 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap(() => {
           this.isLoadingApplications = true;
+
           return this.applicationsService.getApplications({
             planningRealmId: this.planningRealmDetail!.id,
-            page: 0,
-            pageSize: 99,
+            page: this.applicationsCurrentPage,
+            pageSize: this.applicationsPageSize,
             excludeLinkedTeams: true,
             ...applicationsFilterToQueryParameters(this.applicationsFilter)
           });
@@ -128,10 +141,22 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   protected onApplicationsFilterChange(filter: ApplicationsFilter): void {
     this.applicationsFilter = filter;
 
+    // Always reset to the first page when the filter changes
+    this.applicationsCurrentPage = 0;
+
     if (this.planningRealmDetail) {
       this.localStorageService.setPlanningRealmApplicationsFilter(this.planningRealmDetail.id, filter);
     }
 
+    this.loadApplications$.next();
+  }
+
+  protected switchPage(page: number): void {
+    if (!this.applications || page < 0 || page >= this.applications.totalPages) {
+      return;
+    }
+
+    this.applicationsCurrentPage = page;
     this.loadApplications$.next();
   }
 }

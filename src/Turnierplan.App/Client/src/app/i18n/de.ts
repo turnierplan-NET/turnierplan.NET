@@ -79,7 +79,8 @@ export const de = {
       OpenInNewTab: 'In neuem Tab öffnen',
       UnsavedChanges: 'Sie haben ungespeicherte Änderungen.',
       ApplyChanges: 'Änderungen übernehmen',
-      CtrlEnter: 'Strg. + Enter zum Speichern'
+      CtrlEnter: 'Strg. + Enter zum Speichern',
+      PaginationRange: 'Zeige {{start}} - {{end}} von {{total}}'
     },
     UserInfoPopover: {
       Text: 'Sie sind angemeldet als:\n<strong>{{userName}}</strong>',
@@ -1028,8 +1029,7 @@ export const de = {
         HiddenTeamsTooltip: 'Diese Anmeldung beinhaltet weitere Mannschaften, welche nicht den Filterkriterien entsprechen',
         HiddenTeams: '{{count}} weitere Mannschaft(en) werden aufgrund Ihrer Filterkriterien nicht angezeigt.',
         HiddenTeamsShowAll: 'alle anzeigen',
-        NoResults: 'Es gibt keine Anmeldungen, welche den angegebenen Filterkriterien entsprechen.',
-        PaginationRange: 'Zeige {{start}} - {{end}} von {{total}}'
+        NoResults: 'Es gibt keine Anmeldungen, welche den angegebenen Filterkriterien entsprechen.'
       },
       Settings: {
         Rename: {
@@ -1143,7 +1143,7 @@ export const de = {
       ErrorDescription: 'Fehlerbeschreibung:'
     },
     SelectApplicationTeam: {
-      Explanation: 'Wählen Sie eine angemeldete Mannschaft aus einem Turnierplaner.',
+      Explanation: 'Wählen Sie eine angemeldete Mannschaft aus einem Turnierplaner:',
       LoadingPlanningRealms: 'Turnierplaner werden geladen',
       LoadingPlanningRealmsFailed: 'Fehler beim Laden der Turnierplaner',
       NoPlanningRealms: 'In dieser Organisation gibt es keine Turnierplaner',

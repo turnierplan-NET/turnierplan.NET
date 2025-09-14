@@ -9,7 +9,7 @@ import {
   ApplicationDto
 } from '../../../api';
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
-import { NgbModal, NgbTooltip, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs/operators';
 import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicator.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
@@ -19,6 +19,7 @@ import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NgClass } from '@angular/common';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { PaginationComponent } from '../pagination/pagination.component';
 
 // TODO: Endpoint + UI for removing the connection between team & application team (here and in the team-list component)
 // TODO: Endpoint + UI for renaming an application team (should also rename Team if a link is active)
@@ -37,9 +38,9 @@ import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
     SmallSpinnerComponent,
     NgClass,
     NgbTooltip,
-    NgbPagination,
     TranslatePipe,
-    TranslateDatePipe
+    TranslateDatePipe,
+    PaginationComponent
   ]
 })
 export class ManageApplicationsComponent implements OnDestroy {
@@ -57,7 +58,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   @Output()
   public filterRequested = new EventEmitter<ApplicationsFilter>();
 
-  protected currentPage = 1;
+  protected currentPage = 0;
   protected pageSize = 15;
   protected isLoading = false;
   protected result?: PaginationResultDtoOfApplicationDto;
@@ -77,7 +78,7 @@ export class ManageApplicationsComponent implements OnDestroy {
       .pipe(
         tap((filter) => {
           // Always reset to the first page when the filter changes
-          this.currentPage = 1;
+          this.currentPage = 0;
 
           this.tournamentClassFilter = filter.tournamentClass;
         }),
@@ -86,7 +87,7 @@ export class ManageApplicationsComponent implements OnDestroy {
         switchMap(([filter, _]) => {
           return this.applicationsService.getApplications({
             planningRealmId: this.planningRealm.id,
-            page: this.currentPage - 1,
+            page: this.currentPage,
             pageSize: this.pageSize,
             ...applicationsFilterToQueryParameters(filter)
           });
@@ -113,7 +114,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   }
 
   protected switchPage(page: number): void {
-    if (!this.result || page <= 0 || page > this.result.totalPages) {
+    if (!this.result || page < 0 || page >= this.result.totalPages) {
       return;
     }
 
