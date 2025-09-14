@@ -1154,7 +1154,10 @@ export const de = {
       LoadingApplications: 'Mannschaftsanmeldungen werden geladen',
       LoadingApplicationsFailed: 'Fehler beim Laden der Mannschaftsanmeldungen. Eventuell fehlen die erforderlichen Rechte',
       NoApplications:
-        'Es gibt keine Anmeldungen, die den Suchkriterien entsprechen, oder alle Anmeldungen sind bereits einem Turnier zugeordnet.'
+        'Es gibt keine Anmeldungen, die den Suchkriterien entsprechen, oder alle Anmeldungen sind bereits einem Turnier zugeordnet.',
+      TournamentClass: 'Turnierklasse',
+      TeamName: 'Mannschaft',
+      ApplicationDetails: 'Anmeldung'
     },
     RbacManagement: {
       Title: 'Zugriff verwalten',
