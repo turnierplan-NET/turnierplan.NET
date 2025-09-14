@@ -6,7 +6,8 @@ import { NgbActiveModal, NgbNav, NgbNavContent, NgbNavItem, NgbNavLinkButton, Ng
 import { LocalStorageService } from '../../services/local-storage.service';
 import { NgClass } from '@angular/common';
 import { TemporaryTeam } from '../../pages/configure-tournament/configure-tournament.component';
-import { SelectApplicationTeamComponent } from '../select-application-team/select-application-team.component';
+import { SelectApplicationTeamComponent, SelectApplicationTeamResult } from '../select-application-team/select-application-team.component';
+import { PublicId } from '../../../api';
 
 enum AddTeamMode {
   NewTeam = 'NewTeam',
@@ -35,8 +36,10 @@ export class ConfigureTournamentAddTeamComponent implements AfterViewInit {
   @ViewChild('addTeamNameInput')
   protected addTeamNameInput!: ElementRef<HTMLInputElement>;
 
+  protected organizationId?: PublicId;
   protected currentMode: AddTeamMode = AddTeamMode.NewTeam;
   protected addTeamName: string = '';
+  protected importTeamSelected?: SelectApplicationTeamResult;
   protected confirmAttempted = false;
 
   constructor(
@@ -58,6 +61,10 @@ export class ConfigureTournamentAddTeamComponent implements AfterViewInit {
     }
   }
 
+  public init(organizationId: PublicId): void {
+    this.organizationId = organizationId;
+  }
+
   protected currentModeChanged(): void {
     this.localStorageService.setAddTeamDialogMode(this.currentMode);
   }
@@ -77,7 +84,16 @@ export class ConfigureTournamentAddTeamComponent implements AfterViewInit {
         break;
       }
       case AddTeamMode.ImportTeam: {
-        // TODO
+        if (this.importTeamSelected) {
+          this.modal.close({
+            id: undefined,
+            name: this.importTeamSelected.name,
+            teamLink: {
+              planningRealmId: this.importTeamSelected.planningRealmId,
+              applicationTeamId: this.importTeamSelected.applicationTeamId
+            }
+          } as TemporaryTeam);
+        }
         break;
       }
     }

@@ -34,7 +34,9 @@
     <li [ngbNavItem]="AddTeamMode.ImportTeam">
       <button ngbNavLink translate="Portal.ConfigureTournament.Sections.Participants.AddTeam.ImportTeam.Navigation"></button>
       <ng-template ngbNavContent>
-        <tp-select-application-team />
+        @if (organizationId) {
+          <tp-select-application-team [organizationId]="organizationId" (teamSelected)="importTeamSelected = $event" />
+        }
       </ng-template>
     </li>
   </ul>
@@ -46,5 +48,6 @@
   <tp-action-button
     [type]="'success'"
     [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.Confirm'"
+    [disabled]="currentMode === AddTeamMode.ImportTeam && !importTeamSelected"
     (buttonClick)="confirm()" />
 </div>

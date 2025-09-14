@@ -44,9 +44,15 @@ interface TemporaryGroup {
   teams: TemporaryTeam[];
 }
 
+export interface TemporaryTeamLink {
+  planningRealmId: string;
+  applicationTeamId: number;
+}
+
 export interface TemporaryTeam {
   id?: number;
   name: string;
+  teamLink?: TemporaryTeamLink;
 }
 
 enum FirstFinalRound {
@@ -307,6 +313,10 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
   }
 
   protected addTeam(group: TemporaryGroup): void {
+    if (!this.originalTournament) {
+      return;
+    }
+
     const ref = this.modalService.open(ConfigureTournamentAddTeamComponent, {
       centered: true,
       size: 'lg',
@@ -314,7 +324,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
     });
 
     const component = ref.componentInstance as ConfigureTournamentAddTeamComponent;
-    // component.init(...);
+    component.init(this.originalTournament.organizationId);
 
     ref.closed.subscribe({
       next: (team: TemporaryTeam) => {
@@ -671,7 +681,16 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
           id: group.id ?? null,
           alphabeticalId: group.alphabeticalId,
           displayName: group.displayName.length === 0 ? null : group.displayName,
-          teams: group.teams.map((team): ConfigureTournamentEndpointRequestTeamEntry => ({ id: team.id ?? null, name: team.name }))
+          teams: group.teams.map(
+            (team): ConfigureTournamentEndpointRequestTeamEntry => ({
+              id: team.id ?? null,
+              name: team.name,
+              teamLink:
+                team.teamLink === undefined
+                  ? null
+                  : { planningRealmId: team.teamLink.planningRealmId, applicationTeamId: team.teamLink.applicationTeamId }
+            })
+          )
         })
       ),
       firstMatchKickoff: this.firstMatchKickoff.toISOString(),
