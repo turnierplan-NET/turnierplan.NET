@@ -684,7 +684,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
           teams: group.teams.map(
             (team): ConfigureTournamentEndpointRequestTeamEntry => ({
               id: team.id ?? null,
-              name: team.name,
+              name: team.teamLink === undefined ? team.name : null,
               teamLink:
                 team.teamLink === undefined
                   ? null
