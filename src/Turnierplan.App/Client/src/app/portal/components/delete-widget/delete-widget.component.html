@@ -20,12 +20,34 @@
   <div class="d-flex flex-row">
     <div [ngClass]="{ 'tp-cursor-not-allowed': !allowDeletion }">
       <tp-action-button
-        [tpE2E]="'delete-widget-confirm-button'"
+        [tpE2E]="'delete-widget-delete-button'"
         [type]="'outline-danger'"
         [icon]="'trash'"
         [disabled]="!allowDeletion"
         [title]="'Portal.DeleteWidget.Delete'"
-        (buttonClick)="deleteClicked()" />
+        (buttonClick)="deleteClicked(confirmModal)" />
     </div>
   </div>
 }
+
+<ng-template #confirmModal>
+  <div class="modal-header">
+    <div class="modal-title" [translate]="translationKey + '.Title'"></div>
+  </div>
+  <div class="modal-body d-flex flex-column">
+    <div [innerHTML]="'Portal.DeleteWidget.ConfirmModalText' | translate"></div>
+    <div class="mt-3 d-flex flex-row gap-2 text-danger">
+      <i class="bi bi-trash"></i>
+      <span class="fw-bold">{{ confirmationText }}</span>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="openModal?.dismiss()" />
+    <tp-action-button
+      [tpE2E]="'delete-widget-confirm-delete-button'"
+      [type]="'danger'"
+      [icon]="'trash'"
+      [title]="'Portal.DeleteWidget.DeleteConfirm'"
+      (buttonClick)="confirmDeleteClicked()" />
+  </div>
+</ng-template>

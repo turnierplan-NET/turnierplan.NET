@@ -1098,8 +1098,11 @@ export const de = {
       ConfirmTooltip: 'Löschvorgang bestätigen'
     },
     DeleteWidget: {
-      EnterToConfirm: 'Zur Bestätigung geben Sie bitte &quot;<strong>{{text}}</strong>&quot; in folgendes Textfeld ein:',
-      Delete: 'Löschen'
+      EnterToConfirm:
+        'Zur Bestätigung geben Sie bitte &quot;<span class="text-decoration-underline">{{text}}</span>&quot; in folgendes Textfeld ein:',
+      ConfirmModalText: 'Bestätigen Sie den Löschvorgang. Dies kann <span class="fw-bold">nicht</span> rückgängig gemacht werden!',
+      Delete: 'Löschen',
+      DeleteConfirm: 'Löschen bestätigen'
     },
     VisibilitySelector: {
       Private: 'Privat',
