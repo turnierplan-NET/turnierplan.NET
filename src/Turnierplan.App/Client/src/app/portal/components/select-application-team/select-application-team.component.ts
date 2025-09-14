@@ -101,7 +101,8 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
             planningRealmId: this.planningRealmDetail!.id,
             page: 0,
             pageSize: 99,
-            ...applicationsFilterToQueryParameters(this.applicationsFilter) // TODO: Filter applications that have no team link atm
+            excludeLinkedTeams: true,
+            ...applicationsFilterToQueryParameters(this.applicationsFilter)
           });
         }),
         catchError(() => of(undefined))

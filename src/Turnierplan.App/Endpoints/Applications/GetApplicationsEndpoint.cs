@@ -23,6 +23,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
         [FromQuery] string? searchTerm,
         [FromQuery] string[] tournamentClass,
         [FromQuery] string[] invitationLink,
+        [FromQuery] bool? excludeLinkedTeams,
         IPlanningRealmRepository planningRealmRepository,
         IAccessValidator accessValidator,
         IMapper mapper)
@@ -49,7 +50,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
             return Results.Forbid();
         }
 
-        var queryLogic = new QueryLogic(page, pageSize, searchTerm, tournamentClassFilter, invitationLinkFilter);
+        var queryLogic = new QueryLogic(page, pageSize, searchTerm, tournamentClassFilter, invitationLinkFilter, excludeLinkedTeams);
         var result = queryLogic.Process(planningRealm, mapper);
 
         return Results.Ok(result);
@@ -64,14 +65,16 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
         private readonly string? _searchTerm;
         private readonly TournamentClassFilter? _tournamentClassFilter;
         private readonly InvitationLinkFilter? _invitationLinkFilter;
+        private readonly bool _excludeLinkedTeams;
 
-        public QueryLogic(int? page, int? pageSize, string? searchTerm, TournamentClassFilter? tournamentClassFilter, InvitationLinkFilter? invitationLinkFilter)
+        public QueryLogic(int? page, int? pageSize, string? searchTerm, TournamentClassFilter? tournamentClassFilter, InvitationLinkFilter? invitationLinkFilter, bool? excludeLinkedTeams)
         {
             _page = page ?? 0;
             _pageSize = pageSize ?? DefaultPageSize;
             _searchTerm = searchTerm?.Trim();
             _tournamentClassFilter = tournamentClassFilter;
             _invitationLinkFilter = invitationLinkFilter;
+            _excludeLinkedTeams = excludeLinkedTeams ?? false;
         }
 
         public PaginationResultDto<ApplicationDto> Process(PlanningRealm planningRealm, IMapper mapper)
@@ -115,6 +118,11 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
                         || x.Comment?.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase) == true
                         || x.Teams.Any(team => team.Name.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase));
                 });
+            }
+
+            if (_excludeLinkedTeams)
+            {
+                applications = applications.Where(application => application.Teams.Any(x => x.TeamLink is null));
             }
 
             applications = applications.OrderByDescending(x => x.CreatedAt);

@@ -21,7 +21,8 @@ internal sealed class ApplicationMappingRule : MappingRuleBase<Application, Appl
             {
                 Id = team.Id,
                 TournamentClassId = team.Class.Id,
-                Name = team.Name
+                Name = team.Name,
+                HasLinkedTeam = team.TeamLink is not null
             }).ToArray()
         };
     }
