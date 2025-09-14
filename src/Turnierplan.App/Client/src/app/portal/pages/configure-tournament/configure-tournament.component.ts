@@ -46,6 +46,8 @@ interface TemporaryGroup {
 
 export interface TemporaryTeamLink {
   planningRealmId: string;
+  planningRealmName: string;
+  tournamentClassName: string;
   applicationTeamId: number;
 }
 
@@ -501,6 +503,8 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
               name: team.name,
               teamLink: {
                 planningRealmId: team.link.planningRealmId,
+                planningRealmName: team.link.planningRealmName,
+                tournamentClassName: team.link.tournamentClassName,
                 applicationTeamId: team.link.applicationTeamId
               }
             };

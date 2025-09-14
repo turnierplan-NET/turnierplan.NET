@@ -129,8 +129,10 @@
                   [margin]="false"
                   [icon]="'ticket-perforated'"
                   [tooltipText]="'Portal.ConfigureTournament.Sections.Participants.TeamFromPlanningRealm'"
-                  [tooltipTextParams]="{ planningRealm: 'TODO' }" />
-                <!-- TODO: Resolve name of planning realm & tournament class -->
+                  [tooltipTextParams]="{
+                    planningRealm: team.teamLink.planningRealmName,
+                    tournamentClass: team.teamLink.tournamentClassName
+                  }" />
               }
             </td>
             <td>

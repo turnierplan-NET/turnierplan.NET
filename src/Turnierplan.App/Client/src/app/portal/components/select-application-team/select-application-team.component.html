@@ -68,7 +68,7 @@
                           aria-label="Mannschaft '{{ team.name }}' ({{ tournamentClass }}) selektieren"
                           class="tp-cursor-pointer form-check-input mx-1"
                           [ngModel]="isTeamSelected(team.id)"
-                          (ngModelChange)="setTeamSelected(team.id, $event, team.name)" />
+                          (ngModelChange)="setTeamSelected(team.id, $event, team.name, tournamentClass)" />
                       }
                     </td>
                     <td class="align-middle">{{ tournamentClass }}</td>

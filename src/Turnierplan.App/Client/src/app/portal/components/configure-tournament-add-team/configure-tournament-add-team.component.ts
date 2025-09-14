@@ -5,7 +5,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgbActiveModal, NgbNav, NgbNavContent, NgbNavItem, NgbNavLinkButton, NgbNavOutlet } from '@ng-bootstrap/ng-bootstrap';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { NgClass } from '@angular/common';
-import { TemporaryTeam } from '../../pages/configure-tournament/configure-tournament.component';
+import { TemporaryTeam, TemporaryTeamLink } from '../../pages/configure-tournament/configure-tournament.component';
 import { SelectApplicationTeamComponent, SelectApplicationTeamResult } from '../select-application-team/select-application-team.component';
 import { PublicId } from '../../../api';
 
@@ -99,6 +99,8 @@ export class ConfigureTournamentAddTeamComponent implements AfterViewInit {
                   name: team.name,
                   teamLink: {
                     planningRealmId: team.planningRealmId,
+                    planningRealmName: team.planningRealmName,
+                    tournamentClassName: team.tournamentClassName,
                     applicationTeamId: team.applicationTeamId
                   }
                 }) as TemporaryTeam

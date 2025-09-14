@@ -22,6 +22,8 @@ import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 export type SelectApplicationTeamResult = {
   name: string;
   planningRealmId: string;
+  planningRealmName: string;
+  tournamentClassName: string;
   applicationTeamId: number;
 }[];
 
@@ -179,13 +181,15 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
     return teams.filter((team) => this.isTeamVisible(team));
   }
 
-  protected setTeamSelected(id: number, selected: boolean, name?: string): void {
+  protected setTeamSelected(id: number, selected: boolean, name?: string, tournamentClassName?: string): void {
     this.currentSelection = this.currentSelection.filter((x) => x.applicationTeamId !== id);
 
-    if (selected && name && this.planningRealmDetail) {
+    if (selected && name && tournamentClassName && this.planningRealmDetail) {
       this.currentSelection.push({
         name: name,
         planningRealmId: this.planningRealmDetail?.id,
+        planningRealmName: this.planningRealmDetail?.name,
+        tournamentClassName: tournamentClassName,
         applicationTeamId: id
       });
     }
