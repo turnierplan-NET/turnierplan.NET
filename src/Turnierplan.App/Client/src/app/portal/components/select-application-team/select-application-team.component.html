@@ -61,13 +61,15 @@
                   @let tournamentClass = getTournamentClassName(team.tournamentClassId);
                   <tr>
                     <td class="align-middle">
-                      <!-- TODO: Disable checkbox when this team is already linked -->
-                      <input
-                        type="checkbox"
-                        aria-label="Mannschaft '{{ team.name }}' ({{ tournamentClass }}) selektieren"
-                        class="tp-cursor-pointer form-check-input mx-1"
-                        [ngModel]="isTeamSelected(team.id)"
-                        (ngModelChange)="setTeamSelected(team.id, $event, team.name)" />
+                      @if (!team.hasLinkedTeam) {
+                        <!-- TODO: Checkbox must also be disabled, if the team is referenced by the current changes to the configuration that have not been saved yet -->
+                        <input
+                          type="checkbox"
+                          aria-label="Mannschaft '{{ team.name }}' ({{ tournamentClass }}) selektieren"
+                          class="tp-cursor-pointer form-check-input mx-1"
+                          [ngModel]="isTeamSelected(team.id)"
+                          (ngModelChange)="setTeamSelected(team.id, $event, team.name)" />
+                      }
                     </td>
                     <td class="align-middle">{{ tournamentClass }}</td>
                     <td class="align-middle text-nowrap">{{ team.name }}</td>
