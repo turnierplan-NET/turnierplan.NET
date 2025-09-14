@@ -128,21 +128,6 @@
       </tbody>
     </table>
 
-    <div class="mt-4 d-flex flex-column align-items-center gap-2">
-      <div
-        class="small"
-        translate="Portal.ViewPlanningRealm.Applications.PaginationRange"
-        [translateParams]="{
-          start: result.currentPage * result.itemsPerPage + 1,
-          end: result.currentPage * result.itemsPerPage + result.items.length,
-          total: result.totalItems
-        }"></div>
-      <ngb-pagination
-        [collectionSize]="result.totalItems"
-        [page]="currentPage"
-        [pageSize]="pageSize"
-        [maxSize]="5"
-        (pageChange)="switchPage($event)" />
-    </div>
+    <tp-pagination [pagination]="result" (pageChange)="switchPage($event)" />
   }
 }

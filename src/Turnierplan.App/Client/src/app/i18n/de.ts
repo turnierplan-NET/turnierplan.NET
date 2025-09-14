@@ -79,7 +79,8 @@ export const de = {
       OpenInNewTab: 'In neuem Tab öffnen',
       UnsavedChanges: 'Sie haben ungespeicherte Änderungen.',
       ApplyChanges: 'Änderungen übernehmen',
-      CtrlEnter: 'Strg. + Enter zum Speichern'
+      CtrlEnter: 'Strg. + Enter zum Speichern',
+      PaginationRange: 'Zeige {{start}} - {{end}} von {{total}}'
     },
     UserInfoPopover: {
       Text: 'Sie sind angemeldet als:\n<strong>{{userName}}</strong>',
@@ -651,15 +652,42 @@ export const de = {
           Title: 'Teilnehmende Mannschaften',
           GroupWithName: 'Gruppe {{alphabeticalId}}: {{displayName}}',
           GroupWithoutName: 'Gruppe {{alphabeticalId}}',
-          DragDropPlaceholder: 'hier einfügen...',
-          TeamEntry: '{{index}}. {{name}}',
+          CannotDeleteGroupWithTeams: 'Entfernen Sie erst alle Mannschaften, um diese Gruppe zu löschen',
+          MoveToOtherGroup: 'Verschieben in:',
           NoTeamsNotice: 'Keine Mannschaften vorhanden',
-          NewTeamNamePlaceholder: 'Neue Mannschaft',
-          AddTeamButton: 'Hinzufügen',
           NoGroupsNotice: 'Es existieren aktuell keine Gruppen',
           AddGroupButton: 'Neue Gruppe hinzufügen',
           ShuffleGroupsButton: 'Gruppen würfeln',
-          GroupLimitReached: 'Die maximale Gruppenanzahl (26) ist erreicht.'
+          GroupLimitReached: 'Die maximale Gruppenanzahl (26) ist erreicht.',
+          GroupRename: {
+            Button: 'Gruppennamen ändern',
+            Title: 'Gruppennamen ändern',
+            EnterNewName: 'Geben Sie den neuen Namen für die Gruppe ein:',
+            EmptyAllowed: 'Sie können das Feld leerlassen, um zum Standardnamen ("Gruppe A-Z") zurückzukehren.'
+          },
+          TeamFromPlanningRealm: 'Diese Mannschaft stammt aus einen Turnierplaner: "{{planningRealm}}" ("{{tournamentClass}}")',
+          TeamRename: {
+            Button: 'Teamnamen ändern',
+            Title: 'Teamnamen ändern',
+            EnterNewName: 'Geben Sie den neuen Namen für die Mannschaft ein:'
+          },
+          AddTeam: {
+            Button: 'Mannschaft',
+            Title: 'Mannschaft hinzufügen',
+            NewTeam: {
+              Navigation: 'Neue Mannschaft',
+              Explanation: 'Erstellen Sie eine neue Mannschaft, welche nur in diesem Turnier mitspielt.',
+              TeamName: 'Mannschaftsname:',
+              TeamNamePlaceholder: 'Neuen Mannschaftsnamen eingeben',
+              TeamNameEmpty: 'Der Mannschaftsname darf nicht leer sein'
+            },
+            ImportTeam: {
+              Navigation: 'Angemeldete Mannschaft'
+            },
+            Confirm: 'Hinzufügen',
+            ConfirmWithSingle: '{{count}} Mannschaft hinzufügen',
+            ConfirmWithCount: '{{count}} Mannschaften hinzufügen'
+          }
         },
         GroupPhase: {
           Title: 'Gruppenphase',
@@ -1004,8 +1032,7 @@ export const de = {
         HiddenTeamsTooltip: 'Diese Anmeldung beinhaltet weitere Mannschaften, welche nicht den Filterkriterien entsprechen',
         HiddenTeams: '{{count}} weitere Mannschaft(en) werden aufgrund Ihrer Filterkriterien nicht angezeigt.',
         HiddenTeamsShowAll: 'alle anzeigen',
-        NoResults: 'Es gibt keine Anmeldungen, welche den angegebenen Filterkriterien entsprechen.',
-        PaginationRange: 'Zeige {{start}} - {{end}} von {{total}}'
+        NoResults: 'Es gibt keine Anmeldungen, welche den angegebenen Filterkriterien entsprechen.'
       },
       Settings: {
         Rename: {
@@ -1107,7 +1134,9 @@ export const de = {
     },
     MultiSelectFilter: {
       All: 'alle',
-      Reset: 'Filter zurücksetzen'
+      Reset: 'Filter zurücksetzen',
+      NoFilter: 'keine Filter verfügbar',
+      NoFurtherFilter: 'keine weiteren Filter verfügbar'
     },
     ErrorPage: {
       Title: 'Fehler',
@@ -1115,6 +1144,23 @@ export const de = {
       UnexpectedError:
         'Beim Verarbeiten der Anfrage ist ein unerwarteter Server-Fehler aufgetreten.\nLaden Sie die Seite neu und versuchen Sie es erneut.',
       ErrorDescription: 'Fehlerbeschreibung:'
+    },
+    SelectApplicationTeam: {
+      Explanation: 'Wählen Sie eine angemeldete Mannschaft aus einem Turnierplaner:',
+      LoadingPlanningRealms: 'Turnierplaner werden geladen',
+      LoadingPlanningRealmsFailed: 'Fehler beim Laden der Turnierplaner',
+      NoPlanningRealms: 'In dieser Organisation gibt es keine Turnierplaner',
+      LoadingPlanningRealmDetail: 'Turnierplaner wird geladen',
+      LoadingPlanningRealmDetailFailed: 'Fehler beim Laden des Turnierplaners',
+      FilterExplanation: 'Suchen und wählen Sie die Mannschaften zum Hinzufügen:',
+      FilterTooltip: 'Dieser Suchfilter wird synchronisiert mit dem Filter auf der Turnierplaner-Seite',
+      LoadingApplications: 'Mannschaftsanmeldungen werden geladen',
+      LoadingApplicationsFailed: 'Fehler beim Laden der Mannschaftsanmeldungen. Eventuell fehlen die erforderlichen Rechte',
+      NoApplications:
+        'Es gibt keine Anmeldungen, die den Suchkriterien entsprechen, oder alle Anmeldungen sind bereits einem Turnier zugeordnet.',
+      TournamentClass: 'Turnierklasse',
+      TeamName: 'Mannschaft',
+      ApplicationDetails: 'Anmeldung'
     },
     RbacManagement: {
       Title: 'Zugriff verwalten',

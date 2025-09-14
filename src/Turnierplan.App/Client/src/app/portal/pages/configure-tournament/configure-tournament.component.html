@@ -1,6 +1,5 @@
 <tp-page-frame
   *tpLoadingState="loadingState"
-  [ultraSlim]="true"
   [title]="'Portal.ConfigureTournament.Title' | translate: { tournament: tournamentName }"
   [backLink]="'..'">
   <div translate="Portal.ConfigureTournament.Subtitle"></div>
@@ -56,7 +55,7 @@
 </tp-page-frame>
 
 <ng-template #generalSection>
-  <div class="card shadow-sm">
+  <div class="card shadow-sm rounded-0">
     <div class="card-body d-flex flex-column align-items-start gap-2">
       <div translate="Portal.ConfigureTournament.Sections.General.KickoffDateTime"></div>
       <input
@@ -76,72 +75,122 @@
 </ng-template>
 
 <ng-template #teamsSection>
-  @for (group of groups; track group.alphabeticalId; let groupIndex = $index) {
-    <div class="mb-3 card shadow-sm d-flex flex-column" [ngClass]="{ 'border-danger': attemptedToSaveChanges && group.teams.length === 0 }">
-      <div class="card-header p-2 fw-bold d-flex flex-row">
-        @if (group.displayName.length > 0) {
-          <span
-            class="flex-grow-1"
-            translate="Portal.ConfigureTournament.Sections.Participants.GroupWithName"
-            [translateParams]="{ alphabeticalId: group.alphabeticalId, displayName: group.displayName }"></span>
-        } @else {
-          <span
-            class="flex-grow-1"
-            translate="Portal.ConfigureTournament.Sections.Participants.GroupWithoutName"
-            [translateParams]="{ alphabeticalId: group.alphabeticalId }"></span>
+  <table class="table table-bordered shadow-sm">
+    <tbody>
+      @let numberOfColumns = groups.length > 1 ? 6 : 5;
+      @for (group of groups; track group.alphabeticalId; let groupIndex = $index) {
+        <tr>
+          <td [attr.colspan]="numberOfColumns" class="bg-light">
+            <div class="d-flex flex-row gap-2 align-items-center">
+              @let hasCustomDisplayName = group.displayName.length;
+              @if (hasCustomDisplayName) {
+                <span
+                  class="fw-bold"
+                  translate="Portal.ConfigureTournament.Sections.Participants.GroupWithName"
+                  [translateParams]="{ alphabeticalId: group.alphabeticalId, displayName: group.displayName }"></span>
+              } @else {
+                <span
+                  class="fw-bold"
+                  translate="Portal.ConfigureTournament.Sections.Participants.GroupWithoutName"
+                  [translateParams]="{ alphabeticalId: group.alphabeticalId }"></span>
+              }
+              <tp-rename-button
+                class="ms-2"
+                translationKey="Portal.ConfigureTournament.Sections.Participants.GroupRename"
+                [displayLabel]="false"
+                [allowReset]="true"
+                [current]="hasCustomDisplayName ? group.displayName : undefined"
+                (renamed)="group.displayName = $event"
+                (resetName)="group.displayName = ''" />
+              <tp-action-button
+                [icon]="'plus-circle'"
+                [type]="'outline-primary'"
+                [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.Button'"
+                (buttonClick)="addTeam(group)" />
+              <span class="flex-grow-1"></span>
+              @if (group.teams.length > 0) {
+                <tp-tooltip-icon
+                  [margin]="false"
+                  [iconClass]="'text-danger'"
+                  [tooltipText]="'Portal.ConfigureTournament.Sections.Participants.CannotDeleteGroupWithTeams'" />
+              } @else {
+                <tp-delete-button (confirmed)="removeGroup(groupIndex)" />
+              }
+            </div>
+          </td>
+        </tr>
+
+        @for (team of group.teams; track team; let index = $index; let isFirst = $first; let isLast = $last) {
+          <tr>
+            <td style="width: 1px">{{ index + 1 }}.</td>
+            <td style="width: 1px">
+              @if (team.teamLink) {
+                <tp-tooltip-icon
+                  [margin]="false"
+                  [icon]="'ticket-perforated'"
+                  [tooltipText]="'Portal.ConfigureTournament.Sections.Participants.TeamFromPlanningRealm'"
+                  [tooltipTextParams]="{
+                    planningRealm: team.teamLink.planningRealmName,
+                    tournamentClass: team.teamLink.tournamentClassName
+                  }" />
+              }
+            </td>
+            <td>
+              <span>{{ team.name }}</span>
+              @if (!team.teamLink) {
+                <tp-rename-button
+                  class="ms-2"
+                  translationKey="Portal.ConfigureTournament.Sections.Participants.TeamRename"
+                  [displayLabel]="false"
+                  [reducedFootprint]="true"
+                  [current]="team.name"
+                  (renamed)="team.name = $event" />
+              }
+            </td>
+            <td style="width: 1px">
+              <div class="d-flex flex-row gap-2 justify-content-center">
+                @if (!isFirst) {
+                  <i class="bi bi-caret-up tp-cursor-pointer" (click)="swapTeams(group, index, index - 1)"></i>
+                }
+                @if (!isLast) {
+                  <i class="bi bi-caret-down tp-cursor-pointer" (click)="swapTeams(group, index, index + 1)"></i>
+                }
+              </div>
+            </td>
+            @if (groups.length > 1) {
+              <td style="width: 1px">
+                <i
+                  class="bi bi-box-arrow-right tp-cursor-pointer"
+                  [ngbPopover]="moveTeamToGroupPopover"
+                  [autoClose]="'outside'"
+                  [placement]="'end'"
+                  container="body"
+                  popoverClass="tp-popover-slim"
+                  (click)="teamForMovingToOtherGroup = { team: team, currentGroup: group }"></i>
+              </td>
+            }
+            <td style="width: 1px">
+              <tp-delete-button [reducedFootprint]="true" (confirmed)="removeTeam(group, index)" />
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td
+              [attr.colspan]="numberOfColumns"
+              [ngClass]="attemptedToSaveChanges ? 'small fw-bold text-danger' : 'small fst-italic'"
+              translate="Portal.ConfigureTournament.Sections.Participants.NoTeamsNotice"></td>
+          </tr>
         }
-        <tp-delete-button [reducedFootprint]="true" (confirmed)="removeGroup(groupIndex)" />
-      </div>
+      } @empty {
+        <tr>
+          <td
+            [ngClass]="attemptedToSaveChanges && groups.length === 0 ? 'small fw-bold text-danger' : 'small fst-italic'"
+            translate="Portal.ConfigureTournament.Sections.Participants.NoGroupsNotice"></td>
+        </tr>
+      }
+    </tbody>
+  </table>
 
-      <div [dndDropzone]="" (dndDrop)="moveTeam($event, group)" class="card-body p-2 d-flex flex-column gap-2" style="min-height: 1em">
-        <!--suppress HtmlUnknownAttribute | IDEs fails to recognize directive below as a valid HTML attribute -->
-        <div
-          class="px-2 py-1 border rounded text-secondary fst-italic"
-          dndPlaceholderRef
-          translate="Portal.ConfigureTournament.Sections.Participants.DragDropPlaceholder"></div>
-
-        @for (team of group.teams; track team; let index = $index) {
-          <div
-            [dndDraggable]="team"
-            (dndMoved)="removeTeam(group, index)"
-            dndEffectAllowed="move"
-            class="px-2 py-1 border rounded d-flex flex-row gap-2 tp-cursor-move">
-            <span
-              class="flex-grow-1"
-              translate="Portal.ConfigureTournament.Sections.Participants.TeamEntry"
-              [translateParams]="{ index: index + 1, name: team.name }"></span>
-            <tp-delete-button [reducedFootprint]="true" (confirmed)="removeTeam(group, index)" />
-          </div>
-        }
-
-        <!-- Use d-none here and set display to block using custom scss if the list is empty. We can't use an *ngIf and check if the teams
-          array is empty because the resulting div would then be able to interfere with the drag&drop in a non-user-friendly manner. -->
-        <div
-          class="empty-notice d-none small"
-          [ngClass]="attemptedToSaveChanges ? 'fw-bold text-danger' : 'fst-italic'"
-          translate="Portal.ConfigureTournament.Sections.Participants.NoTeamsNotice"></div>
-      </div>
-
-      <div class="card-footer p-2 d-flex flex-row align-items-center justify-content-center gap-2">
-        <!-- IDEA: Add validation feedback for team name length -->
-        <input
-          class="form-control form-control-sm w-50"
-          [placeholder]="'Portal.ConfigureTournament.Sections.Participants.NewTeamNamePlaceholder' | translate"
-          #teamNameInput
-          (keyup.enter)="addTeam(group, teamNameInput)" />
-        <tp-action-button
-          [type]="'outline-primary'"
-          [icon]="'plus-circle'"
-          [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeamButton'"
-          (buttonClick)="addTeam(group, teamNameInput)" />
-      </div>
-    </div>
-  } @empty {
-    <div
-      class="text-center fst-italic mb-2 py-2 border rounded"
-      [ngClass]="attemptedToSaveChanges && groups.length === 0 ? 'border-danger' : 'border-transparent'"
-      translate="Portal.ConfigureTournament.Sections.Participants.NoGroupsNotice"></div>
-  }
   <div class="d-flex flex-row justify-content-center gap-2">
     <tp-action-button
       [type]="'outline-secondary'"
@@ -157,8 +206,27 @@
   </div>
 </ng-template>
 
+<ng-template #moveTeamToGroupPopover>
+  @if (teamForMovingToOtherGroup) {
+    <div class="p-3 d-flex flex-column gap-2">
+      <div class="fw-bold small" translate="Portal.ConfigureTournament.Sections.Participants.MoveToOtherGroup"></div>
+      <div class="d-flex flex-row flex-wrap gap-1">
+        @for (group of groups; track group.alphabeticalId) {
+          @if (group !== teamForMovingToOtherGroup.currentGroup) {
+            <div
+              class="p-1 border tp-cursor-pointer"
+              (click)="moveTeam(teamForMovingToOtherGroup.team, teamForMovingToOtherGroup.currentGroup, group)">
+              {{ group.alphabeticalId }}
+            </div>
+          }
+        }
+      </div>
+    </div>
+  }
+</ng-template>
+
 <ng-template #groupPhaseSection>
-  <div class="card shadow-sm">
+  <div class="card shadow-sm rounded-0">
     <div class="card-body d-flex flex-column align-items-start gap-2">
       @if (groups.length > 1) {
         <div translate="Portal.ConfigureTournament.Sections.GroupPhase.OrderLabel"></div>
@@ -248,7 +316,7 @@
         translate="Portal.ConfigureTournament.Sections.FinalsPhase.EnableCheckbox"></label>
     </div>
     @if (enableFinalsRound) {
-      <div class="card shadow-sm">
+      <div class="card shadow-sm rounded-0">
         <div class="card-body d-flex flex-column gap-2">
           <div translate="Portal.ConfigureTournament.Sections.FinalsPhase.IntermediatePause"></div>
           <tp-duration-picker [(duration)]="pauseBetweenGroupAndFinalsPhase" />
@@ -328,7 +396,7 @@
 </ng-template>
 
 <ng-template #additionalPlayoffsSection>
-  <div class="card shadow-sm">
+  <div class="card shadow-sm rounded-0">
     <div class="card-body d-flex flex-column gap-2">
       <div class="mb-2" translate="Portal.ConfigureTournament.Sections.AdditionalPlayoffs.InfoText"></div>
       @for (position of additionalPlayoffPositions; track position) {

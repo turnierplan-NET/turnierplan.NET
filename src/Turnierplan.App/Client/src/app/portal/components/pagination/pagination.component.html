@@ -1,0 +1,16 @@
+<div class="d-flex flex-column align-items-center gap-2">
+  <div
+    class="small"
+    translate="Portal.General.PaginationRange"
+    [translateParams]="{
+      start: pagination.totalItems === 0 ? 0 : pagination.currentPage * pagination.itemsPerPage + 1,
+      end: pagination.currentPage * pagination.itemsPerPage + pagination.items.length,
+      total: pagination.totalItems
+    }"></div>
+  <ngb-pagination
+    [collectionSize]="pagination.totalItems"
+    [page]="pagination.currentPage + 1"
+    [pageSize]="pagination.itemsPerPage"
+    [maxSize]="5"
+    (pageChange)="pageChange.emit($event - 1)" />
+</div>

@@ -18,6 +18,9 @@ export class ActionButtonComponent {
   public title = '';
 
   @Input()
+  public titleParams: { [key: string]: unknown } = {};
+
+  @Input()
   public mode: 'IconLeftAndText' | 'IconRightAndText' | 'IconOnly' = 'IconLeftAndText';
 
   @Input()

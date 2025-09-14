@@ -1,0 +1,66 @@
+<div class="modal-header">
+  <div class="modal-title" [translate]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.Title'"></div>
+  <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
+</div>
+<div class="modal-body d-flex flex-column">
+  <ul ngbNav #nav="ngbNav" [(activeId)]="currentMode" (activeIdChange)="currentModeChanged()" class="nav-tabs">
+    <li [ngbNavItem]="AddTeamMode.NewTeam">
+      <button ngbNavLink translate="Portal.ConfigureTournament.Sections.Participants.AddTeam.NewTeam.Navigation"></button>
+      <ng-template ngbNavContent>
+        <div translate="Portal.ConfigureTournament.Sections.Participants.AddTeam.NewTeam.Explanation"></div>
+
+        <div class="form-group">
+          <label
+            class="form-label"
+            for="content"
+            translate="Portal.ConfigureTournament.Sections.Participants.AddTeam.NewTeam.TeamName"></label>
+          <input
+            #addTeamNameInput
+            class="form-control"
+            type="text"
+            id="content"
+            autofocus
+            [(ngModel)]="addTeamName"
+            [placeholder]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.NewTeam.TeamNamePlaceholder' | translate"
+            [ngClass]="{ 'is-invalid': confirmAttempted && addTeamNameInvalid }"
+            (keyup.enter)="confirm()" />
+
+          @if (addTeamNameInvalid) {
+            <div class="invalid-feedback" translate="Portal.ConfigureTournament.Sections.Participants.AddTeam.NewTeam.TeamNameEmpty"></div>
+          }
+        </div>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="AddTeamMode.ImportTeam">
+      <button ngbNavLink translate="Portal.ConfigureTournament.Sections.Participants.AddTeam.ImportTeam.Navigation"></button>
+      <ng-template ngbNavContent>
+        @if (organizationId) {
+          <tp-select-application-team
+            [organizationId]="organizationId"
+            [usedApplicationTeamIds]="usedApplicationTeamIds"
+            (teamSelected)="importTeamSelected = $event" />
+        }
+      </ng-template>
+    </li>
+  </ul>
+
+  <div [ngbNavOutlet]="nav" class="mt-4"></div>
+</div>
+<div class="modal-footer">
+  <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
+
+  @if (currentMode === AddTeamMode.ImportTeam) {
+    @let count = importTeamSelected ? importTeamSelected.length : 0;
+    <tp-action-button
+      [type]="'success'"
+      [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.' + (count === 1 ? 'ConfirmWithSingle' : 'ConfirmWithCount')"
+      [titleParams]="{ count: count }"
+      [disabled]="count === 0"
+      (buttonClick)="confirm()" />
+  } @else {
+    <tp-action-button
+      [type]="'success'"
+      [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.Confirm'"
+      (buttonClick)="confirm()" />
+  }
+</div>

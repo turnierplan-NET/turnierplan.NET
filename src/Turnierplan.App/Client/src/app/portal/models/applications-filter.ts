@@ -11,3 +11,9 @@ export const defaultApplicationsFilter: ApplicationsFilter = {
   tournamentClass: [],
   invitationLink: []
 };
+
+export const applicationsFilterToQueryParameters = (filter: ApplicationsFilter) => ({
+  searchTerm: filter.searchTerm.trim() === '' ? undefined : filter.searchTerm,
+  tournamentClass: filter.tournamentClass.map((x) => `${x}`),
+  invitationLink: filter.invitationLink.map((x) => `${x}`)
+});
