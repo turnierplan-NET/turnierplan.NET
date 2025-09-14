@@ -6,6 +6,7 @@ import { NgbActiveModal, NgbNav, NgbNavContent, NgbNavItem, NgbNavLinkButton, Ng
 import { LocalStorageService } from '../../services/local-storage.service';
 import { NgClass } from '@angular/common';
 import { TemporaryTeam } from '../../pages/configure-tournament/configure-tournament.component';
+import { SelectApplicationTeamComponent } from '../select-application-team/select-application-team.component';
 
 enum AddTeamMode {
   NewTeam = 'NewTeam',
@@ -23,7 +24,8 @@ enum AddTeamMode {
     NgbNavContent,
     NgbNavOutlet,
     NgClass,
-    TranslatePipe
+    TranslatePipe,
+    SelectApplicationTeamComponent
   ],
   templateUrl: './configure-tournament-add-team.component.html'
 })
