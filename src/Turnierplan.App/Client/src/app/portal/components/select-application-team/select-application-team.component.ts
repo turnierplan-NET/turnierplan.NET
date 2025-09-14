@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { TranslateDirective } from '@ngx-translate/core';
 import {
   ApplicationsService,
+  ApplicationTeamDto,
   PaginationResultDtoOfApplicationDto,
   PlanningRealmDto,
   PlanningRealmHeaderDto,
@@ -11,11 +12,12 @@ import {
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { FormsModule } from '@angular/forms';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { catchError, of, Subject, switchMap } from 'rxjs';
+import { catchError, of, Subject, switchMap, tap } from 'rxjs';
 import { ManageApplicationsFilterComponent } from '../manage-applications-filter/manage-applications-filter.component';
 import { ApplicationsFilter, applicationsFilterToQueryParameters, defaultApplicationsFilter } from '../../models/applications-filter';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { PaginationComponent } from '../pagination/pagination.component';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 export type SelectApplicationTeamResult = {
   name: string;
@@ -31,7 +33,8 @@ export type SelectApplicationTeamResult = {
     FormsModule,
     ManageApplicationsFilterComponent,
     TooltipIconComponent,
-    PaginationComponent
+    PaginationComponent,
+    TranslateDatePipe
   ],
   templateUrl: './select-application-team.component.html',
   styleUrl: './select-application-team.component.scss'
@@ -47,6 +50,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   protected applicationsCurrentPage = 0;
   protected applicationsPageSize = 10;
   protected applications?: PaginationResultDtoOfApplicationDto;
+  protected selectedTeamIds = new Set<number>();
 
   @Input()
   public organizationId!: PublicId;
@@ -90,6 +94,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
 
     this.planningRealmId$
       .pipe(
+        tap(() => this.selectedTeamIds.clear()),
         switchMap((id) => {
           this.isLoadingPlanningRealmDetail = true;
 
@@ -114,7 +119,6 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
             planningRealmId: this.planningRealmDetail!.id,
             page: this.applicationsCurrentPage,
             pageSize: this.applicationsPageSize,
-            excludeLinkedTeams: true,
             ...applicationsFilterToQueryParameters(this.applicationsFilter)
           });
         }),
@@ -144,6 +148,9 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
     // Always reset to the first page when the filter changes
     this.applicationsCurrentPage = 0;
 
+    // Always clear all selected teams when the filter changes
+    this.selectedTeamIds.clear();
+
     if (this.planningRealmDetail) {
       this.localStorageService.setPlanningRealmApplicationsFilter(this.planningRealmDetail.id, filter);
     }
@@ -158,5 +165,28 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
 
     this.applicationsCurrentPage = page;
     this.loadApplications$.next();
+  }
+
+  protected getTournamentClassName(id: number): string {
+    return this.planningRealmDetail?.tournamentClasses.find((x) => x.id === id)?.name ?? '';
+  }
+
+  protected filterTeams(teams: ApplicationTeamDto[]): ApplicationTeamDto[] {
+    return teams.filter((team) => this.isTeamVisible(team));
+  }
+
+  protected setTeamSelected(id: number, selected: boolean): void {
+    if (selected) {
+      this.selectedTeamIds.add(id);
+    } else {
+      this.selectedTeamIds.delete(id);
+    }
+  }
+
+  private isTeamVisible(team: ApplicationTeamDto): boolean {
+    return (
+      this.applicationsFilter.tournamentClass.length === 0 ||
+      this.applicationsFilter.tournamentClass.some((x) => x === team.tournamentClassId)
+    );
   }
 }

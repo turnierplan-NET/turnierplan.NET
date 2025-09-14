@@ -1152,7 +1152,9 @@ export const de = {
       FilterExplanation: 'Suchen und wählen Sie die Mannschaften zum Hinzufügen:',
       FilterTooltip: 'Dieser Suchfilter wird synchronisiert mit dem Filter auf der Turnierplaner-Seite',
       LoadingApplications: 'Mannschaftsanmeldungen werden geladen',
-      LoadingApplicationsFailed: 'Fehler beim Laden der Mannschaftsanmeldungen. Eventuell fehlen die erforderlichen Rechte'
+      LoadingApplicationsFailed: 'Fehler beim Laden der Mannschaftsanmeldungen. Eventuell fehlen die erforderlichen Rechte',
+      NoApplications:
+        'Es gibt keine Anmeldungen, die den Suchkriterien entsprechen, oder alle Anmeldungen sind bereits einem Turnier zugeordnet.'
     },
     RbacManagement: {
       Title: 'Zugriff verwalten',
