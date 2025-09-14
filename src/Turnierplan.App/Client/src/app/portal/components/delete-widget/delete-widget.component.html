@@ -20,7 +20,7 @@
   <div class="d-flex flex-row">
     <div [ngClass]="{ 'tp-cursor-not-allowed': !allowDeletion }">
       <tp-action-button
-        [tpE2E]="'delete-widget-confirm-button'"
+        [tpE2E]="'delete-widget-delete-button'"
         [type]="'outline-danger'"
         [icon]="'trash'"
         [disabled]="!allowDeletion"
@@ -44,6 +44,7 @@
   <div class="modal-footer">
     <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="openModal?.dismiss()" />
     <tp-action-button
+      [tpE2E]="'delete-widget-confirm-delete-button'"
       [type]="'danger'"
       [icon]="'trash'"
       [title]="'Portal.DeleteWidget.DeleteConfirm'"
