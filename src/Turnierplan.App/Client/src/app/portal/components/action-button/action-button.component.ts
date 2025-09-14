@@ -28,5 +28,4 @@ export class ActionButtonComponent {
 
   @Output()
   public buttonClick = new EventEmitter<void>();
-  protected readonly TranslatePipe = TranslatePipe;
 }

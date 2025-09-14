@@ -738,6 +738,4 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
       finalsPhase: finalsPhaseConfig
     };
   }
-
-  protected readonly Actions = Actions;
 }
