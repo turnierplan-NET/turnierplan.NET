@@ -652,8 +652,6 @@ export const de = {
           GroupWithName: 'Gruppe {{alphabeticalId}}: {{displayName}}',
           GroupWithoutName: 'Gruppe {{alphabeticalId}}',
           CannotDeleteGroupWithTeams: 'Entfernen Sie erst alle Mannschaften, um diese Gruppe zu löschen',
-          MoveUp: 'Mit der Mannschaft darüber tauschen',
-          MoveDown: 'Mit der Mannschaft darunter tauschen',
           MoveToOtherGroup: 'Verschieben in:',
           NoTeamsNotice: 'Keine Mannschaften vorhanden',
           NoGroupsNotice: 'Es existieren aktuell keine Gruppen',

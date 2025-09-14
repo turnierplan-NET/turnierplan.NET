@@ -136,16 +136,10 @@
             <td style="width: 1px">
               <div class="d-flex flex-row gap-2 justify-content-center">
                 @if (!isFirst) {
-                  <i
-                    class="bi bi-caret-up tp-cursor-pointer"
-                    [ngbTooltip]="'Portal.ConfigureTournament.Sections.Participants.MoveUp' | translate"
-                    (click)="swapTeams(group, index, index - 1)"></i>
+                  <i class="bi bi-caret-up tp-cursor-pointer" (click)="swapTeams(group, index, index - 1)"></i>
                 }
                 @if (!isLast) {
-                  <i
-                    class="bi bi-caret-down tp-cursor-pointer"
-                    [ngbTooltip]="'Portal.ConfigureTournament.Sections.Participants.MoveDown' | translate"
-                    (click)="swapTeams(group, index, index + 1)"></i>
+                  <i class="bi bi-caret-down tp-cursor-pointer" (click)="swapTeams(group, index, index + 1)"></i>
                 }
               </div>
             </td>

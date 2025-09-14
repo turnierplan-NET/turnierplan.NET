@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal, NgbPopover, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatestWith, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
 import {
@@ -80,7 +80,6 @@ interface TemporaryAdditionalPlayoff {
     DatePipe,
     TranslatePipe,
     AbstractTeamSelectorPipe,
-    NgbTooltip,
     NgbPopover,
     RenameButtonComponent
   ]
