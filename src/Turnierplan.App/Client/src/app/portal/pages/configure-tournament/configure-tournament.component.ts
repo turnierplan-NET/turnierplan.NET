@@ -327,8 +327,8 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
     component.init(this.originalTournament.organizationId);
 
     ref.closed.subscribe({
-      next: (team: TemporaryTeam) => {
-        group.teams.push(team);
+      next: (teams: TemporaryTeam[]) => {
+        group.teams.push(...teams);
 
         this.determineAvailableFinalsRounds();
         this.determineAvailableAbstractTeamSelectors();

@@ -683,7 +683,9 @@ export const de = {
             ImportTeam: {
               Navigation: 'Angemeldete Mannschaft'
             },
-            Confirm: 'Hinzufügen'
+            Confirm: 'Hinzufügen',
+            ConfirmWithSingle: '{{count}} Mannschaft hinzufügen',
+            ConfirmWithCount: '{{count}} Mannschaften hinzufügen'
           }
         },
         GroupPhase: {

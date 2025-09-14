@@ -39,7 +39,7 @@ export class ConfigureTournamentAddTeamComponent implements AfterViewInit {
   protected organizationId?: PublicId;
   protected currentMode: AddTeamMode = AddTeamMode.NewTeam;
   protected addTeamName: string = '';
-  protected importTeamSelected?: SelectApplicationTeamResult; // TODO Implement multi-select
+  protected importTeamSelected?: SelectApplicationTeamResult;
   protected confirmAttempted = false;
 
   constructor(
@@ -67,6 +67,10 @@ export class ConfigureTournamentAddTeamComponent implements AfterViewInit {
 
   protected currentModeChanged(): void {
     this.localStorageService.setAddTeamDialogMode(this.currentMode);
+
+    if (this.currentMode === AddTeamMode.ImportTeam) {
+      this.importTeamSelected = undefined;
+    }
   }
 
   protected confirm(): void {
@@ -76,23 +80,30 @@ export class ConfigureTournamentAddTeamComponent implements AfterViewInit {
       case AddTeamMode.NewTeam: {
         const trimmed = this.addTeamName.trim();
         if (trimmed.length > 0) {
-          this.modal.close({
-            id: undefined,
-            name: this.addTeamName
-          } as TemporaryTeam);
+          this.modal.close([
+            {
+              id: undefined,
+              name: this.addTeamName
+            }
+          ] as TemporaryTeam[]);
         }
         break;
       }
       case AddTeamMode.ImportTeam: {
         if (this.importTeamSelected) {
-          this.modal.close({
-            id: undefined,
-            name: this.importTeamSelected.name,
-            teamLink: {
-              planningRealmId: this.importTeamSelected.planningRealmId,
-              applicationTeamId: this.importTeamSelected.applicationTeamId
-            }
-          } as TemporaryTeam);
+          this.modal.close(
+            this.importTeamSelected.map(
+              (team) =>
+                ({
+                  id: undefined,
+                  name: team.name,
+                  teamLink: {
+                    planningRealmId: team.planningRealmId,
+                    applicationTeamId: team.applicationTeamId
+                  }
+                }) as TemporaryTeam
+            )
+          );
         }
         break;
       }

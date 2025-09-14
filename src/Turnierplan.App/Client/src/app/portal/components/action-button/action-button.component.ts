@@ -18,6 +18,9 @@ export class ActionButtonComponent {
   public title = '';
 
   @Input()
+  public titleParams: { [key: string]: unknown } = {};
+
+  @Input()
   public mode: 'IconLeftAndText' | 'IconRightAndText' | 'IconOnly' = 'IconLeftAndText';
 
   @Input()
@@ -25,4 +28,5 @@ export class ActionButtonComponent {
 
   @Output()
   public buttonClick = new EventEmitter<void>();
+  protected readonly TranslatePipe = TranslatePipe;
 }

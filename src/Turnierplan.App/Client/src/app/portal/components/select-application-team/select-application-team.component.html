@@ -66,8 +66,8 @@
                         type="checkbox"
                         aria-label="Mannschaft '{{ team.name }}' ({{ tournamentClass }}) selektieren"
                         class="tp-cursor-pointer form-check-input mx-1"
-                        [ngModel]="selectedTeamIds.has(team.id)"
-                        (ngModelChange)="setTeamSelected(team.id, $event)" />
+                        [ngModel]="isTeamSelected(team.id)"
+                        (ngModelChange)="setTeamSelected(team.id, $event, team.name)" />
                     </td>
                     <td class="align-middle">{{ tournamentClass }}</td>
                     <td class="align-middle text-nowrap">{{ team.name }}</td>

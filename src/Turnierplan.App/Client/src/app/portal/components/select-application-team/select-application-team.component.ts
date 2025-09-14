@@ -23,7 +23,7 @@ export type SelectApplicationTeamResult = {
   name: string;
   planningRealmId: string;
   applicationTeamId: number;
-};
+}[];
 
 @Component({
   selector: 'tp-select-application-team',
@@ -50,7 +50,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   protected applicationsCurrentPage = 0;
   protected applicationsPageSize = 10;
   protected applications?: PaginationResultDtoOfApplicationDto;
-  protected selectedTeamIds = new Set<number>();
+  protected currentSelection: SelectApplicationTeamResult = [];
 
   @Input()
   public organizationId!: PublicId;
@@ -94,7 +94,10 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
 
     this.planningRealmId$
       .pipe(
-        tap(() => this.selectedTeamIds.clear()),
+        tap(() => {
+          this.currentSelection = [];
+          this.emitSelectedTeams();
+        }),
         switchMap((id) => {
           this.isLoadingPlanningRealmDetail = true;
 
@@ -149,7 +152,8 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
     this.applicationsCurrentPage = 0;
 
     // Always clear all selected teams when the filter changes
-    this.selectedTeamIds.clear();
+    this.currentSelection = [];
+    this.emitSelectedTeams();
 
     if (this.planningRealmDetail) {
       this.localStorageService.setPlanningRealmApplicationsFilter(this.planningRealmDetail.id, filter);
@@ -175,12 +179,26 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
     return teams.filter((team) => this.isTeamVisible(team));
   }
 
-  protected setTeamSelected(id: number, selected: boolean): void {
-    if (selected) {
-      this.selectedTeamIds.add(id);
-    } else {
-      this.selectedTeamIds.delete(id);
+  protected setTeamSelected(id: number, selected: boolean, name?: string): void {
+    this.currentSelection = this.currentSelection.filter((x) => x.applicationTeamId !== id);
+
+    if (selected && name && this.planningRealmDetail) {
+      this.currentSelection.push({
+        name: name,
+        planningRealmId: this.planningRealmDetail?.id,
+        applicationTeamId: id
+      });
     }
+
+    this.emitSelectedTeams();
+  }
+
+  protected isTeamSelected(id: number): boolean {
+    return this.currentSelection.some((x) => x.applicationTeamId === id);
+  }
+
+  private emitSelectedTeams(): void {
+    this.teamSelected.emit(this.currentSelection);
   }
 
   private isTeamVisible(team: ApplicationTeamDto): boolean {

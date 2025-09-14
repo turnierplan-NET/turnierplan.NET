@@ -45,9 +45,19 @@
 </div>
 <div class="modal-footer">
   <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
-  <tp-action-button
-    [type]="'success'"
-    [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.Confirm'"
-    [disabled]="currentMode === AddTeamMode.ImportTeam && !importTeamSelected"
-    (buttonClick)="confirm()" />
+
+  @if (currentMode === AddTeamMode.ImportTeam) {
+    @let count = importTeamSelected ? importTeamSelected.length : 0;
+    <tp-action-button
+      [type]="'success'"
+      [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.' + (count === 1 ? 'ConfirmWithSingle' : 'ConfirmWithCount')"
+      [titleParams]="{ count: count }"
+      [disabled]="count === 0"
+      (buttonClick)="confirm()" />
+  } @else {
+    <tp-action-button
+      [type]="'success'"
+      [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.Confirm'"
+      (buttonClick)="confirm()" />
+  }
 </div>
