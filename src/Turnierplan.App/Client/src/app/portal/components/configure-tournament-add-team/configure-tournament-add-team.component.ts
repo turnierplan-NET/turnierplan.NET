@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { FormsModule } from '@angular/forms';
-import { TranslateDirective } from '@ngx-translate/core';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgbActiveModal, NgbNav, NgbNavContent, NgbNavItem, NgbNavLinkButton, NgbNavOutlet } from '@ng-bootstrap/ng-bootstrap';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { NgClass } from '@angular/common';
@@ -22,7 +22,8 @@ enum AddTeamMode {
     NgbNavLinkButton,
     NgbNavContent,
     NgbNavOutlet,
-    NgClass
+    NgClass,
+    TranslatePipe
   ],
   templateUrl: './configure-tournament-add-team.component.html'
 })

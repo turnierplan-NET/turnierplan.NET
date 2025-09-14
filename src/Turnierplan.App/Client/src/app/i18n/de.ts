@@ -678,6 +678,7 @@ export const de = {
               Navigation: 'Neue Mannschaft',
               Explanation: 'Erstellen Sie eine neue Mannschaft, welche nur in diesem Turnier mitspielt.',
               TeamName: 'Mannschaftsname:',
+              TeamNamePlaceholder: 'Neuen Mannschaftsnamen eingeben',
               TeamNameEmpty: 'Der Mannschaftsname darf nicht leer sein'
             },
             ImportTeam: {

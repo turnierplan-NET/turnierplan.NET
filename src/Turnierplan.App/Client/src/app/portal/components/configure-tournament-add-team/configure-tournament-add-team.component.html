@@ -21,6 +21,7 @@
             id="content"
             autofocus
             [(ngModel)]="addTeamName"
+            [placeholder]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.NewTeam.TeamNamePlaceholder' | translate"
             [ngClass]="{ 'is-invalid': confirmAttempted && addTeamNameInvalid }"
             (keyup.enter)="confirm()" />
 
