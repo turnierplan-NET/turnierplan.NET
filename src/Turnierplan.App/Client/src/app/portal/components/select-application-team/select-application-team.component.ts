@@ -63,8 +63,8 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   @Output()
   public teamSelected = new EventEmitter<SelectApplicationTeamResult>();
 
-  private planningRealmId$ = new Subject<string>();
-  private loadApplications$ = new Subject<void>();
+  private readonly planningRealmId$ = new Subject<string>();
+  private readonly loadApplications$ = new Subject<void>();
 
   constructor(
     private readonly planningRealmService: PlanningRealmsService,

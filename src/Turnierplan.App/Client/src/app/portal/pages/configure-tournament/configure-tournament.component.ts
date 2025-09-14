@@ -34,7 +34,6 @@ import { DurationPickerComponent } from '../../components/duration-picker/durati
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { AbstractTeamSelectorPipe } from '../../pipes/abstract-team-selector.pipe';
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
-import { Actions } from '../../../generated/actions';
 import { ConfigureTournamentAddTeamComponent } from '../../components/configure-tournament-add-team/configure-tournament-add-team.component';
 
 interface TemporaryGroup {
