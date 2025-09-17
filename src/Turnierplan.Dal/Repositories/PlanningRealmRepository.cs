@@ -31,10 +31,23 @@ internal sealed class PlanningRealmRepository(TurnierplanContext context) : Repo
             query = query.Include(x => x.InvitationLinks).ThenInclude(x => x.Entries);
         }
 
+        if (includes.HasFlag(IPlanningRealmRepository.Includes.Applications))
+        {
+            query = query.Include(x => x.Applications).ThenInclude(x => x.SourceLink);
+        }
+
         if (includes.HasFlag(IPlanningRealmRepository.Includes.ApplicationsWithTeams))
         {
             query = query.Include(x => x.Applications).ThenInclude(x => x.SourceLink);
             query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.Class);
+            query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.TeamLink);
+        }
+
+        if (includes.HasFlag(IPlanningRealmRepository.Includes.ApplicationsWithTeamsAndTournamentLinks))
+        {
+            query = query.Include(x => x.Applications).ThenInclude(x => x.SourceLink);
+            query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.Class);
+            query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.TeamLink).ThenInclude(x => x!.Team).ThenInclude(x => x.Tournament).ThenInclude(x => x.Folder);
         }
 
         query = query.Include(x => x.Organization).ThenInclude(x => x.RoleAssignments);

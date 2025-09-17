@@ -37,7 +37,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
             return Results.BadRequest("Invalid invitation link filter provided.");
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.TournamentClasses | IPlanningRealmRepository.Includes.ApplicationsWithTeams);
+        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.TournamentClasses | IPlanningRealmRepository.Includes.ApplicationsWithTeamsAndTournamentLinks);
 
         if (planningRealm is null)
         {
