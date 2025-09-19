@@ -96,9 +96,14 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
                 // If the search term is exactly 6 digits long, we expect that the user wants to search for a specific
                 // tag. However, the user might also want to search for a specific telephone number or email address via
                 // these 6 digits. This is considered in the search logic below.
-
                 int? searchTag = _searchTerm.Length == 6 && _searchTerm.All(char.IsNumber)
                     ? int.Parse(_searchTerm)
+                    : null;
+
+                // If the search term starts with an exclamation mark, the rest is interpreted as an exact id match on an application team.
+                long? searchApplicationTeamId = _searchTerm.Length >= 2 && _searchTerm[0] == '!' &&
+                                               _searchTerm.Skip(1).All(char.IsNumber)
+                    ? int.Parse(_searchTerm[1..])
                     : null;
 
                 applications = applications.Where(x =>
@@ -106,6 +111,11 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
                     if (searchTag.HasValue && x.Tag == searchTag)
                     {
                         return true;
+                    }
+
+                    if (searchApplicationTeamId.HasValue)
+                    {
+                        return x.Teams.Any(team => team.Id == searchApplicationTeamId);
                     }
 
                     return x.Notes.Contains(_searchTerm, StringComparison.OrdinalIgnoreCase)

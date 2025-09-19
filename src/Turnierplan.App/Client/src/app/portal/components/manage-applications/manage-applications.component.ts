@@ -103,7 +103,9 @@ export class ManageApplicationsComponent implements OnDestroy {
           this.result = result;
           this.isLoading = false;
 
-          if (this.showTeamsApplicationId !== undefined && !result.items.some((x) => x.id === this.showTeamsApplicationId)) {
+          if (result.items.length === 1) {
+            this.showTeamsApplicationId = result.items[0].id;
+          } else if (this.showTeamsApplicationId !== undefined && !result.items.some((x) => x.id === this.showTeamsApplicationId)) {
             this.showTeamsApplicationId = undefined;
           }
         },

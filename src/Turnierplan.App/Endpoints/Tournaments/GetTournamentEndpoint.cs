@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Turnierplan.App.Extensions;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
@@ -38,6 +39,16 @@ internal sealed class GetTournamentEndpoint : EndpointBase<TournamentDto>
         tournament.Compute();
 
         accessValidator.AddRolesToResponseHeader(tournament);
+
+        var planningRealms = tournament.Teams.Select(x => x.TeamLink)
+            .WhereNotNull()
+            .Select(x => x.ApplicationTeam.Application.PlanningRealm)
+            .Distinct();
+
+        foreach (var planningRealm in planningRealms)
+        {
+            accessValidator.AddRolesToResponseHeader(planningRealm);
+        }
 
         return Results.Ok(mapper.Map<TournamentDto>(tournament));
     }

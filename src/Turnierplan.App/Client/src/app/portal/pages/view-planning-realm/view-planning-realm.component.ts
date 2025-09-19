@@ -74,7 +74,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     '0055bb'
   ];
 
-  private static readonly ApplicationsManagerPageId = 2;
+  public static readonly ApplicationsManagerPageId = 2;
 
   protected readonly Actions = Actions;
 

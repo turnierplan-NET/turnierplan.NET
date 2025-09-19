@@ -68,6 +68,7 @@
                   [icon]="'box-arrow-up-right'"
                   [mode]="'IconOnly'"
                   [type]="'outline-secondary'"
+                  *tpIsActionAllowed="[team.teamLink.planningRealmId, Actions.ManageApplications]"
                   (buttonClick)="navigateToPlanningRealm(team.teamLink.planningRealmId, team.teamLink.applicationTeamId)" />
               </div>
             }
