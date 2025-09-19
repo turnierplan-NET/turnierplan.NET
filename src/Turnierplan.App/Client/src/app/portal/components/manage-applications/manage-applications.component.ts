@@ -25,7 +25,6 @@ import { ViewTournamentComponent } from '../../pages/view-tournament/view-tourna
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';
 
-// TODO: Endpoint + UI for removing the connection between team & application team (here and in the team-list component)
 // TODO: Endpoint + UI for renaming an application team (should also rename Team if a link is active)
 
 @Component({
