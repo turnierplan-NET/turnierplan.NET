@@ -25,6 +25,7 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
 import { FormsModule } from '@angular/forms';
 import { NgClass, DatePipe } from '@angular/common';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { ViewTournamentComponent } from '../view-tournament/view-tournament.component';
 
 type ExtendedMatchEntry = SetTournamentMatchPlanEndpointRequestEntry & {
   formattedType: string;
@@ -142,7 +143,7 @@ export class EditMatchPlanComponent implements OnInit, OnDestroy, DiscardChanges
     const navigateBack = (): Promise<boolean> => {
       // Update local storage so that the user is redirected to the match plan page of the tournament
       if (this.tournamentId) {
-        this.localStorageService.setNavigationTab(this.tournamentId, 0);
+        this.localStorageService.setNavigationTab(this.tournamentId, ViewTournamentComponent.matchPlanPageId);
       }
 
       return this.router.navigate(['..'], { relativeTo: this.route });

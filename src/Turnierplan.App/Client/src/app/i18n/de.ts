@@ -1022,12 +1022,16 @@ export const de = {
           Notes: 'Notizen',
           NotesTooltip: 'In dieser Spalte können Sie eigene Notizen hinzufügen.',
           TournamentClass: 'Turnierklasse',
-          TeamName: 'Mannschaftsname'
+          TeamName: 'Mannschaftsname',
+          Tournament: 'Turnier'
         },
         EditNotes: {
           Title: 'Notizen bearbeiten',
           InfoText: 'Geben Sie Ihre Notizen für die Anmeldung ein:',
           Confirm: 'Speichern'
+        },
+        LinkedTournament: {
+          NoTournament: 'kein Turnier verknpüft'
         },
         HiddenTeamsTooltip: 'Diese Anmeldung beinhaltet weitere Mannschaften, welche nicht den Filterkriterien entsprechen',
         HiddenTeams: '{{count}} weitere Mannschaft(en) werden aufgrund Ihrer Filterkriterien nicht angezeigt.',

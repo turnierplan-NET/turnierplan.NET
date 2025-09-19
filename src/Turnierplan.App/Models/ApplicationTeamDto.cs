@@ -1,5 +1,3 @@
-using Turnierplan.Core.PublicId;
-
 namespace Turnierplan.App.Models;
 
 public sealed record ApplicationTeamDto
@@ -8,11 +6,7 @@ public sealed record ApplicationTeamDto
 
     public required long TournamentClassId { get; init; }
 
-    public required string Name { get; set; }
+    public required string Name { get; init; }
 
-    public PublicId? LinkedTournamentId { get; set; }
-
-    public string? LinkedTournamentFolderName { get; set; }
-
-    public string? LinkedTournamentName { get; set; }
+    public required ApplicationTeamLinkedTournamentDto? LinkedTournament { get; init; }
 }

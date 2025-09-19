@@ -17,27 +17,19 @@ internal sealed class ApplicationMappingRule : MappingRuleBase<Application, Appl
             ContactEmail = source.ContactEmail,
             ContactTelephone = source.ContactTelephone,
             Comment = source.Comment,
-            Teams = source.Teams.Select(team =>
+            Teams = source.Teams.Select(team => new ApplicationTeamDto
             {
-                if (team.TeamLink is null)
-                {
-                    return new ApplicationTeamDto
+                Id = team.Id,
+                TournamentClassId = team.Class.Id,
+                Name = team.Name,
+                LinkedTournament = team.TeamLink is null
+                    ? null
+                    : new ApplicationTeamLinkedTournamentDto
                     {
-                        Id = team.Id,
-                        TournamentClassId = team.Class.Id,
-                        Name = team.Name
-                    };
-                }
-
-                return new ApplicationTeamDto
-                {
-                    Id = team.Id,
-                    TournamentClassId = team.Class.Id,
-                    Name = team.Name,
-                    LinkedTournamentId = team.TeamLink.Team.Tournament.PublicId,
-                    LinkedTournamentFolderName = team.TeamLink.Team.Tournament.Folder?.Name,
-                    LinkedTournamentName = team.TeamLink.Team.Tournament.Name
-                };
+                        Id = team.TeamLink.Team.Tournament.PublicId,
+                        FolderName = team.TeamLink.Team.Tournament.Folder?.Name,
+                        Name = team.TeamLink.Team.Tournament.Name
+                    }
             }).ToArray()
         };
     }

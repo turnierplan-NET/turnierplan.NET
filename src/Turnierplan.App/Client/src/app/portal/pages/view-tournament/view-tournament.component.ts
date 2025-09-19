@@ -95,6 +95,8 @@ import { IdWidgetComponent } from '../../components/id-widget/id-widget.componen
   ]
 })
 export class ViewTournamentComponent implements OnInit, OnDestroy {
+  public static readonly matchPlanPageId = 0;
+  public static readonly teamsPageId = 2;
   private static readonly documentsPageId = 4;
   private static readonly settingsPageId = 6;
 
@@ -108,7 +110,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
   protected currentPage = 0;
   protected pages: PageFrameNavigationTab[] = [
     {
-      id: 0,
+      id: ViewTournamentComponent.matchPlanPageId,
       title: 'Portal.ViewTournament.Pages.MatchPlan',
       icon: 'bi-list-columns'
     },
@@ -118,7 +120,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       icon: 'bi-collection'
     },
     {
-      id: 2,
+      id: ViewTournamentComponent.teamsPageId,
       title: 'Portal.ViewTournament.Pages.Teams',
       icon: 'bi-people'
     },
@@ -189,7 +191,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
   ) {}
 
   protected get isTournamentTreeVisible(): boolean {
-    return this.canShowTournamentTree && this.currentPage === 0 && this.showTournamentTree;
+    return this.canShowTournamentTree && this.currentPage === ViewTournamentComponent.matchPlanPageId && this.showTournamentTree;
   }
 
   public ngOnInit(): void {

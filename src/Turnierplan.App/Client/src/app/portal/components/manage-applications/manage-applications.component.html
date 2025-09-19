@@ -94,20 +94,38 @@
                     <tr>
                       <th translate="Portal.ViewPlanningRealm.Applications.TableHeader.TournamentClass"></th>
                       <th translate="Portal.ViewPlanningRealm.Applications.TableHeader.TeamName"></th>
+                      <th translate="Portal.ViewPlanningRealm.Applications.TableHeader.Tournament"></th>
                     </tr>
                   </thead>
                   <tbody>
                     @for (team of application.teams; track team) {
                       @if (isTeamVisible(team)) {
                         <tr>
-                          <td>{{ getTournamentClassName(team.tournamentClassId) }}</td>
-                          <td>{{ team.name }}</td>
+                          <td class="align-middle">{{ getTournamentClassName(team.tournamentClassId) }}</td>
+                          <td class="align-middle">{{ team.name }}</td>
+                          <td class="align-middle">
+                            @if (team.linkedTournament) {
+                              <div class="d-flex flex-row align-items-center gap-2">
+                                <span>{{ team.linkedTournament.name }}</span>
+                                <span class="small text-secondary">{{ team.linkedTournament.folderName }}</span>
+                                <tp-action-button
+                                  [icon]="'box-arrow-up-right'"
+                                  [mode]="'IconOnly'"
+                                  [type]="'outline-secondary'"
+                                  (buttonClick)="navigateToTournament(team.linkedTournament.id)" />
+                              </div>
+                            } @else {
+                              <span
+                                class="fst-italic small text-secondary"
+                                translate="Portal.ViewPlanningRealm.Applications.LinkedTournament.NoTournament"></span>
+                            }
+                          </td>
                         </tr>
                       }
                     }
                     @if (hiddenTeamsCount > 0) {
                       <tr>
-                        <td colspan="2">
+                        <td colspan="3">
                           <span
                             class="fst-italic small text-secondary"
                             translate="Portal.ViewPlanningRealm.Applications.HiddenTeams"

@@ -35,6 +35,7 @@ import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon
 import { AbstractTeamSelectorPipe } from '../../pipes/abstract-team-selector.pipe';
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
 import { ConfigureTournamentAddTeamComponent } from '../../components/configure-tournament-add-team/configure-tournament-add-team.component';
+import { ViewTournamentComponent } from '../view-tournament/view-tournament.component';
 
 interface TemporaryGroup {
   id?: number;
@@ -266,7 +267,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
 
           // Update local storage so that the user is redirected to the match plan page of the tournament
           if (this.originalTournament) {
-            this.localStorageService.setNavigationTab(this.originalTournament.id, 0);
+            this.localStorageService.setNavigationTab(this.originalTournament.id, ViewTournamentComponent.matchPlanPageId);
           }
 
           return from(this.router.navigate(['..'], { relativeTo: this.route }));
