@@ -312,6 +312,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
 
   protected setKickoffDatetime(value: string): void {
     this.firstMatchKickoff = new Date(value);
+    this.markDirty();
   }
 
   protected addTeam(group: TemporaryGroup): void {
