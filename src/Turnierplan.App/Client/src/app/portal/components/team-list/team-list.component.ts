@@ -9,6 +9,7 @@ import { NgClass, AsyncPipe } from '@angular/common';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { PublicId, TeamLinkDto } from '../../../api';
 
 export interface TeamView {
   id: number;
@@ -17,7 +18,7 @@ export interface TeamView {
   entryFeePaidAt?: Date;
   groupId?: number;
   priority?: number;
-  hasTeamLink: boolean;
+  teamLink?: TeamLinkDto;
   // IDEA: The properties below should probably be extracted from this interface (see MatchView)
   showLoadingIndicator: { name: boolean; priority: boolean; entryFee: boolean; outOfCompetition: boolean };
 }
@@ -39,8 +40,6 @@ export interface TeamView {
   ]
 })
 export class TeamListComponent {
-  protected readonly Actions = Actions;
-
   @Input()
   public tournamentId: string = '';
 
@@ -59,6 +58,8 @@ export class TeamListComponent {
   @Output()
   public teamSetOutOfCompetition = new EventEmitter<{ teamId: number; outOfCompetition: boolean }>();
 
+  protected readonly Actions = Actions;
+
   constructor(protected readonly authorizationService: AuthorizationService) {}
 
   protected get isUpdatingAnyTeam(): boolean {
@@ -69,6 +70,10 @@ export class TeamListComponent {
         x.showLoadingIndicator.entryFee ||
         x.showLoadingIndicator.outOfCompetition
     );
+  }
+
+  protected get hasTeamsWithLink(): boolean {
+    return this.teams.some((x) => !!x.teamLink);
   }
 
   protected renameTeam(teamId: number, name: string): void {
@@ -113,5 +118,9 @@ export class TeamListComponent {
     }
 
     this.teamSetOutOfCompetition.emit({ teamId: teamId, outOfCompetition: !team.outOfCompetition });
+  }
+
+  protected navigateToPlanningRealm(planningRealmId: PublicId, applicationTag: number): void {
+    // TODO: Implement
   }
 }

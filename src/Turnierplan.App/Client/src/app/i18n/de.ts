@@ -336,6 +336,10 @@ export const de = {
         TableLabel: 'Mannschaften des Turniers',
         NoTeams: 'Keine Mannschaften vorhanden',
         Name: 'Name',
+        Link: {
+          Header: 'Anmeldung',
+          Tooltip: 'Wenn eine Mannschaft aus einem Turnierplaner hinzugefügt wurde, können Sie hier zu der Anmeldung abspringen.'
+        },
         Priority: {
           Header: 'Priorität',
           Tooltip: 'Bei Gleichstand der Gruppenergebnisse wird die Mannschaft mit der höheren Priorität höher platziert.'

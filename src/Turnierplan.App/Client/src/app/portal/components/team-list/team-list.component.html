@@ -1,22 +1,27 @@
 @let genericWriteAllowed = (authorizationService.isActionAllowed$(tournamentId, Actions.GenericWrite) | async) ?? false;
 @let tournamentConductAllowed = (authorizationService.isActionAllowed$(tournamentId, Actions.TournamentConduct) | async) ?? false;
 
-<!-- TODO: For linked teams, add a link to jump to the applications page with the correct filter pre-set -->
-
 <table class="table table-hover" [attr.aria-label]="'Portal.ViewTournament.Teams.TableLabelTableLabel' | translate">
+  @let showLinkColumn = hasTeamsWithLink;
   <thead>
     <tr>
       <th style="width: 0"></th>
       <th style="width: 38%" translate="Portal.ViewTournament.Teams.Name"></th>
-      <th style="width: 13%">
+      @if (showLinkColumn) {
+        <th class="text-nowrap">
+          <span translate="Portal.ViewTournament.Teams.Link.Header"></span>
+          <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.Link.Tooltip'" />
+        </th>
+      }
+      <th class="text-nowrap">
         <span translate="Portal.ViewTournament.Teams.Priority.Header"></span>
         <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.Priority.Tooltip'" />
       </th>
-      <th style="width: 20%">
+      <th class="text-nowrap">
         <span translate="Portal.ViewTournament.Teams.OutOfCompetition.Header"></span>
         <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.OutOfCompetition.Tooltip'" />
       </th>
-      <th style="width: 30%">
+      <th class="text-nowrap">
         <span translate="Portal.ViewTournament.Teams.EntryFeePaid.Header"></span>
         <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.EntryFeePaid.Tooltip'" />
       </th>
@@ -27,7 +32,7 @@
       <tr>
         <td class="align-middle text-center">
           @if (genericWriteAllowed) {
-            @if (team.hasTeamLink) {
+            @if (team.teamLink !== undefined) {
               <tp-tooltip-icon
                 [margin]="false"
                 [iconClass]="'text-secondary'"
@@ -49,6 +54,25 @@
             {{ team.name }}
           }
         </td>
+        @if (showLinkColumn) {
+          <td class="text-nowrap">
+            @if (team.teamLink) {
+              <div class="d-flex flex-row align-items-center gap-2 pe-3">
+                <span>{{ team.teamLink.tournamentClassName }}</span>
+                <tp-tooltip-icon
+                  [margin]="false"
+                  [icon]="'question-circle'"
+                  [iconClass]="'text-secondary'"
+                  [tooltipText]="team.teamLink.planningRealmName" />
+                <tp-action-button
+                  [icon]="'box-arrow-up-right'"
+                  [mode]="'IconOnly'"
+                  [type]="'outline-secondary'"
+                  (buttonClick)="navigateToPlanningRealm(team.teamLink.planningRealmId, team.teamLink.applicationTeamId)" />
+              </div>
+            }
+          </td>
+        }
         <td class="align-middle">
           @if (team.groupId !== undefined && team.priority !== undefined) {
             <div class="d-flex flex-row gap-2 justify-content-between align-items-center" style="width: 4em">
@@ -82,7 +106,7 @@
             </div>
           }
         </td>
-        <td class="align-middle">
+        <td class="align-middle text-nowrap">
           <div class="d-flex flex-row gap-2 align-items-center">
             @if (team.showLoadingIndicator.entryFee) {
               <tp-small-spinner />
@@ -118,7 +142,7 @@
       </tr>
     } @empty {
       <tr>
-        <td colspan="5" translate="Portal.ViewTournament.Teams.NoTeams"></td>
+        <td [attr.colspan]="showLinkColumn ? 6 : 5" translate="Portal.ViewTournament.Teams.NoTeams"></td>
       </tr>
     }
   </tbody>
