@@ -100,8 +100,8 @@
                 [displayLabel]="false"
                 [allowReset]="true"
                 [current]="hasCustomDisplayName ? group.displayName : undefined"
-                (renamed)="group.displayName = $event"
-                (resetName)="group.displayName = ''" />
+                (renamed)="setGroupName(group, $event)"
+                (resetName)="setGroupName(group, '')" />
               <tp-action-button
                 [icon]="'plus-circle'"
                 [type]="'outline-primary'"
@@ -144,7 +144,7 @@
                   [displayLabel]="false"
                   [reducedFootprint]="true"
                   [current]="team.name"
-                  (renamed)="team.name = $event" />
+                  (renamed)="setTeamName(team, $event)" />
               }
             </td>
             <td style="width: 1px">
