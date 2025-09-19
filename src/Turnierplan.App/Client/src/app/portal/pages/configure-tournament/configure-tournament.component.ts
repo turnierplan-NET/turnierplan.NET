@@ -267,7 +267,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
 
           // Update local storage so that the user is redirected to the match plan page of the tournament
           if (this.originalTournament) {
-            this.localStorageService.setNavigationTab(this.originalTournament.id, ViewTournamentComponent.matchPlanPageId);
+            this.localStorageService.setNavigationTab(this.originalTournament.id, ViewTournamentComponent.MatchPlanPageId);
           }
 
           return from(this.router.navigate(['..'], { relativeTo: this.route }));

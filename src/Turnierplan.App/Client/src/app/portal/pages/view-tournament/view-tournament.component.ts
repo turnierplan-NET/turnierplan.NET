@@ -95,10 +95,10 @@ import { IdWidgetComponent } from '../../components/id-widget/id-widget.componen
   ]
 })
 export class ViewTournamentComponent implements OnInit, OnDestroy {
-  public static readonly matchPlanPageId = 0;
-  public static readonly teamsPageId = 2;
-  private static readonly documentsPageId = 4;
-  private static readonly settingsPageId = 6;
+  public static readonly MatchPlanPageId = 0;
+  public static readonly TeamListPageId = 2;
+  private static readonly DocumentsPageId = 4;
+  private static readonly SettingsPageId = 6;
 
   protected readonly ImageType = ImageType;
   protected readonly Visibility = Visibility;
@@ -110,7 +110,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
   protected currentPage = 0;
   protected pages: PageFrameNavigationTab[] = [
     {
-      id: ViewTournamentComponent.matchPlanPageId,
+      id: ViewTournamentComponent.MatchPlanPageId,
       title: 'Portal.ViewTournament.Pages.MatchPlan',
       icon: 'bi-list-columns'
     },
@@ -120,7 +120,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       icon: 'bi-collection'
     },
     {
-      id: ViewTournamentComponent.teamsPageId,
+      id: ViewTournamentComponent.TeamListPageId,
       title: 'Portal.ViewTournament.Pages.Teams',
       icon: 'bi-people'
     },
@@ -130,7 +130,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       icon: 'bi-list-ol'
     },
     {
-      id: ViewTournamentComponent.documentsPageId,
+      id: ViewTournamentComponent.DocumentsPageId,
       title: 'Portal.ViewTournament.Pages.Documents',
       icon: 'bi-file-earmark-ruled'
     },
@@ -191,7 +191,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
   ) {}
 
   protected get isTournamentTreeVisible(): boolean {
-    return this.canShowTournamentTree && this.currentPage === ViewTournamentComponent.matchPlanPageId && this.showTournamentTree;
+    return this.canShowTournamentTree && this.currentPage === ViewTournamentComponent.MatchPlanPageId && this.showTournamentTree;
   }
 
   public ngOnInit(): void {
@@ -233,7 +233,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     // after switching to another page and then back to the documents page
     this.recentDocumentId = undefined;
 
-    if (number === ViewTournamentComponent.documentsPageId && this.tournament && !this.documents && !this.isLoadingDocuments) {
+    if (number === ViewTournamentComponent.DocumentsPageId && this.tournament && !this.documents && !this.isLoadingDocuments) {
       this.isLoadingDocuments = true;
       this.documentService.getDocuments({ tournamentId: this.tournament.id }).subscribe({
         next: (documents) => {
@@ -247,7 +247,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (number === ViewTournamentComponent.settingsPageId && !this.images) {
+    if (number === ViewTournamentComponent.SettingsPageId && !this.images) {
       this.loadTournamentImages();
     }
   }

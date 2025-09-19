@@ -101,8 +101,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
                     : null;
 
                 // If the search term starts with an exclamation mark, the rest is interpreted as an exact id match on an application team.
-                long? searchApplicationTeamId = _searchTerm.Length >= 2 && _searchTerm[0] == '!' &&
-                                               _searchTerm.Skip(1).All(char.IsNumber)
+                long? searchApplicationTeamId = _searchTerm.Length >= 2 && _searchTerm[0] == '!' && _searchTerm.Skip(1).All(char.IsNumber)
                     ? int.Parse(_searchTerm[1..])
                     : null;
 

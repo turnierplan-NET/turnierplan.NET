@@ -196,7 +196,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   }
 
   protected navigateToTournament(tournamentId: PublicId): void {
-    this.localStorageService.setNavigationTab(tournamentId, ViewTournamentComponent.teamsPageId);
+    this.localStorageService.setNavigationTab(tournamentId, ViewTournamentComponent.TeamListPageId);
     void this.router.navigate(['/portal/tournament/', tournamentId]);
   }
 

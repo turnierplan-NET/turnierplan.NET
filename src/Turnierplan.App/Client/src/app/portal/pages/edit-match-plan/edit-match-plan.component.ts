@@ -143,7 +143,7 @@ export class EditMatchPlanComponent implements OnInit, OnDestroy, DiscardChanges
     const navigateBack = (): Promise<boolean> => {
       // Update local storage so that the user is redirected to the match plan page of the tournament
       if (this.tournamentId) {
-        this.localStorageService.setNavigationTab(this.tournamentId, ViewTournamentComponent.matchPlanPageId);
+        this.localStorageService.setNavigationTab(this.tournamentId, ViewTournamentComponent.MatchPlanPageId);
       }
 
       return this.router.navigate(['..'], { relativeTo: this.route });
