@@ -102,7 +102,15 @@
                       @if (isTeamVisible(team)) {
                         <tr>
                           <td class="align-middle">{{ getTournamentClassName(team.tournamentClassId) }}</td>
-                          <td class="align-middle">{{ team.name }}</td>
+                          <td class="align-middle">
+                            <span class="me-2">{{ team.name }}</span>
+                            <tp-rename-button
+                              translationKey="Portal.ViewPlanningRealm.Applications.RenameTeam"
+                              [current]="team.name"
+                              [displayLabel]="false"
+                              [reducedFootprint]="true"
+                              (renamed)="renameTeam(application.id, team, $event)" />
+                          </td>
                           <td class="align-middle">
                             @if (team.linkedTournament) {
                               <div class="d-flex flex-row align-items-center gap-2">
@@ -117,7 +125,7 @@
                             } @else {
                               <span
                                 class="fst-italic small text-secondary"
-                                translate="Portal.ViewPlanningRealm.Applications.LinkedTournament.NoTournament"></span>
+                                translate="Portal.ViewPlanningRealm.Applications.NoLinkedTournament"></span>
                             }
                           </td>
                         </tr>

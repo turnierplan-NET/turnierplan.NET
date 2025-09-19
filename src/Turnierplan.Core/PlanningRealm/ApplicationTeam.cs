@@ -20,11 +20,21 @@ public sealed class ApplicationTeam : Entity<long>
 
     public override long Id { get; protected set; }
 
-    public string Name { get; set; }
+    public string Name { get; private set; }
 
     public Application Application { get; internal set; } = null!;
 
     public TournamentClass Class { get; internal set; } = null!;
 
     public TeamLink? TeamLink { get; internal set; }
+
+    public void SetName(string name)
+    {
+        Name = name.Trim();
+
+        if (TeamLink is not null)
+        {
+            TeamLink.Team.Name = name.Trim();
+        }
+    }
 }

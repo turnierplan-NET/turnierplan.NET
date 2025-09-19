@@ -1034,8 +1034,12 @@ export const de = {
           InfoText: 'Geben Sie Ihre Notizen für die Anmeldung ein:',
           Confirm: 'Speichern'
         },
-        LinkedTournament: {
-          NoTournament: 'kein Turnier verknpüft'
+        NoLinkedTournament: 'kein Turnier verknüpft',
+        RenameTeam: {
+          Title: 'Mannschaft umbenennen',
+          EnterNewName:
+            'Geben Sie den neuen Mannschaftsnamen ein. Wenn diese Mannschaft einem Turnier hinzugefügt wurde, wird die Mannschaft im Turnier automatisch mit umbenannt.',
+          RequiredFeedback: 'Der Mannschaftsname darf nicht leer sein'
         },
         HiddenTeamsTooltip: 'Diese Anmeldung beinhaltet weitere Mannschaften, welche nicht den Filterkriterien entsprechen',
         HiddenTeams: '{{count}} weitere Mannschaft(en) werden aufgrund Ihrer Filterkriterien nicht angezeigt.',

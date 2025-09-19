@@ -7,7 +7,8 @@ import {
   PaginationResultDtoOfApplicationDto,
   ApplicationTeamDto,
   ApplicationDto,
-  PublicId
+  PublicId,
+  ApplicationTeamsService
 } from '../../../api';
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
 import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
@@ -24,8 +25,7 @@ import { PaginationComponent } from '../pagination/pagination.component';
 import { ViewTournamentComponent } from '../../pages/view-tournament/view-tournament.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';
-
-// TODO: Endpoint + UI for renaming an application team (should also rename Team if a link is active)
+import { RenameButtonComponent } from '../rename-button/rename-button.component';
 
 @Component({
   selector: 'tp-manage-applications',
@@ -42,7 +42,8 @@ import { Router } from '@angular/router';
     NgbTooltip,
     TranslatePipe,
     TranslateDatePipe,
-    PaginationComponent
+    PaginationComponent,
+    RenameButtonComponent
   ]
 })
 export class ManageApplicationsComponent implements OnDestroy {
@@ -74,6 +75,7 @@ export class ManageApplicationsComponent implements OnDestroy {
 
   constructor(
     private readonly applicationsService: ApplicationsService,
+    private readonly applicationTeamsService: ApplicationTeamsService,
     private readonly modalService: NgbModal,
     private readonly localStorageService: LocalStorageService,
     private readonly router: Router
@@ -196,5 +198,25 @@ export class ManageApplicationsComponent implements OnDestroy {
   protected navigateToTournament(tournamentId: PublicId): void {
     this.localStorageService.setNavigationTab(tournamentId, ViewTournamentComponent.teamsPageId);
     void this.router.navigate(['/portal/tournament/', tournamentId]);
+  }
+
+  protected renameTeam(applicationId: number, applicationTeam: ApplicationTeamDto, name: string): void {
+    this.applicationTeamsService
+      .setApplicationTeamName({
+        planningRealmId: this.planningRealm.id,
+        applicationId: applicationId,
+        applicationTeamId: applicationTeam.id,
+        body: {
+          name: name
+        }
+      })
+      .subscribe({
+        next: () => {
+          applicationTeam.name = name;
+        },
+        error: (error) => {
+          this.errorOccured.emit(error);
+        }
+      });
   }
 }

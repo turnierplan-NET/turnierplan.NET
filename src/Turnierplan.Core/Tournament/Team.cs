@@ -29,7 +29,7 @@ public sealed class Team : Entity<int>
 
     public TeamLink? TeamLink { get; internal set; }
 
-    public string Name { get; private set; }
+    public string Name { get; internal set; }
 
     public bool OutOfCompetition { get; set; }
 
