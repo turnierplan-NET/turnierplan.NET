@@ -336,6 +336,10 @@ export const de = {
         TableLabel: 'Mannschaften des Turniers',
         NoTeams: 'Keine Mannschaften vorhanden',
         Name: 'Name',
+        Link: {
+          Header: 'Anmeldung',
+          Tooltip: 'Wenn eine Mannschaft aus einem Turnierplaner hinzugefügt wurde, können Sie hier zu der Anmeldung abspringen.'
+        },
         Priority: {
           Header: 'Priorität',
           Tooltip: 'Bei Gleichstand der Gruppenergebnisse wird die Mannschaft mit der höheren Priorität höher platziert.'
@@ -1022,12 +1026,20 @@ export const de = {
           Notes: 'Notizen',
           NotesTooltip: 'In dieser Spalte können Sie eigene Notizen hinzufügen.',
           TournamentClass: 'Turnierklasse',
-          TeamName: 'Mannschaftsname'
+          TeamName: 'Mannschaftsname',
+          Tournament: 'Turnier'
         },
         EditNotes: {
           Title: 'Notizen bearbeiten',
           InfoText: 'Geben Sie Ihre Notizen für die Anmeldung ein:',
           Confirm: 'Speichern'
+        },
+        NoLinkedTournament: 'kein Turnier verknüpft',
+        RenameTeam: {
+          Title: 'Mannschaft umbenennen',
+          EnterNewName:
+            'Geben Sie den neuen Mannschaftsnamen ein. Wenn diese Mannschaft einem Turnier hinzugefügt wurde, wird die Mannschaft im Turnier automatisch mit umbenannt.',
+          RequiredFeedback: 'Der Mannschaftsname darf nicht leer sein'
         },
         HiddenTeamsTooltip: 'Diese Anmeldung beinhaltet weitere Mannschaften, welche nicht den Filterkriterien entsprechen',
         HiddenTeams: '{{count}} weitere Mannschaft(en) werden aufgrund Ihrer Filterkriterien nicht angezeigt.',

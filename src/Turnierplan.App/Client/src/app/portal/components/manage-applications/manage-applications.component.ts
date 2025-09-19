@@ -6,7 +6,9 @@ import {
   PlanningRealmDto,
   PaginationResultDtoOfApplicationDto,
   ApplicationTeamDto,
-  ApplicationDto
+  ApplicationDto,
+  PublicId,
+  ApplicationTeamsService
 } from '../../../api';
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
 import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
@@ -20,10 +22,10 @@ import { SmallSpinnerComponent } from '../../../core/components/small-spinner/sm
 import { NgClass } from '@angular/common';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { PaginationComponent } from '../pagination/pagination.component';
-
-// TODO: Endpoint + UI for removing the connection between team & application team (here and in the team-list component)
-// TODO: Endpoint + UI for renaming an application team (should also rename Team if a link is active)
-// TODO: Display linked teams in applications page incl. link to navigate to the corresponding tournament
+import { ViewTournamentComponent } from '../../pages/view-tournament/view-tournament.component';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { Router } from '@angular/router';
+import { RenameButtonComponent } from '../rename-button/rename-button.component';
 
 @Component({
   selector: 'tp-manage-applications',
@@ -40,7 +42,8 @@ import { PaginationComponent } from '../pagination/pagination.component';
     NgbTooltip,
     TranslatePipe,
     TranslateDatePipe,
-    PaginationComponent
+    PaginationComponent,
+    RenameButtonComponent
   ]
 })
 export class ManageApplicationsComponent implements OnDestroy {
@@ -72,7 +75,10 @@ export class ManageApplicationsComponent implements OnDestroy {
 
   constructor(
     private readonly applicationsService: ApplicationsService,
-    private readonly modalService: NgbModal
+    private readonly applicationTeamsService: ApplicationTeamsService,
+    private readonly modalService: NgbModal,
+    private readonly localStorageService: LocalStorageService,
+    private readonly router: Router
   ) {
     this.filter$
       .pipe(
@@ -98,7 +104,9 @@ export class ManageApplicationsComponent implements OnDestroy {
           this.result = result;
           this.isLoading = false;
 
-          if (this.showTeamsApplicationId !== undefined && !result.items.some((x) => x.id === this.showTeamsApplicationId)) {
+          if (result.items.length === 1) {
+            this.showTeamsApplicationId = result.items[0].id;
+          } else if (this.showTeamsApplicationId !== undefined && !result.items.some((x) => x.id === this.showTeamsApplicationId)) {
             this.showTeamsApplicationId = undefined;
           }
         },
@@ -180,6 +188,31 @@ export class ManageApplicationsComponent implements OnDestroy {
         next: (notes: string) => {
           application.notes = notes;
           this.updatingNotesOfApplicationId = undefined;
+        },
+        error: (error) => {
+          this.errorOccured.emit(error);
+        }
+      });
+  }
+
+  protected navigateToTournament(tournamentId: PublicId): void {
+    this.localStorageService.setNavigationTab(tournamentId, ViewTournamentComponent.TeamListPageId);
+    void this.router.navigate(['/portal/tournament/', tournamentId]);
+  }
+
+  protected renameTeam(applicationId: number, applicationTeam: ApplicationTeamDto, name: string): void {
+    this.applicationTeamsService
+      .setApplicationTeamName({
+        planningRealmId: this.planningRealm.id,
+        applicationId: applicationId,
+        applicationTeamId: applicationTeam.id,
+        body: {
+          name: name
+        }
+      })
+      .subscribe({
+        next: () => {
+          applicationTeam.name = name;
         },
         error: (error) => {
           this.errorOccured.emit(error);
