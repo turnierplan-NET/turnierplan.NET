@@ -10,7 +10,7 @@ interface GitHubApiResponse {
   tag_name: string;
 }
 
-type VersionData = {
+type VersionCache = {
   timestamp: number;
   version?: string;
 };
@@ -46,7 +46,7 @@ export class UpdatesCheckComponent implements OnInit {
 
     if (localStorageValue) {
       try {
-        const parsed = JSON.parse(localStorageValue) as VersionData;
+        const parsed = JSON.parse(localStorageValue) as VersionCache;
         const cacheExpiry = parsed.timestamp + cacheMaxAgeMilliseconds;
         if (new Date().getTime() < cacheExpiry) {
           return of(parsed.version);
@@ -65,7 +65,7 @@ export class UpdatesCheckComponent implements OnInit {
           JSON.stringify({
             version: version,
             timestamp: new Date().getTime()
-          } as VersionData)
+          } as VersionCache)
         );
       })
     );
