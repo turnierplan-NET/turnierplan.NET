@@ -4,6 +4,8 @@ public sealed record ApplicationDto
 {
     public required long Id { get; init; }
 
+    public required long? SourceLinkId { get; init; }
+
     public required int Tag { get; set; }
 
     public required DateTime CreatedAt { get; set; }

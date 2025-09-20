@@ -9,8 +9,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th></th>
-          <th class="text-center" style="width: 1px" translate="Portal.ViewPlanningRealm.Applications.TableHeader.Index"></th>
+          <th colspan="3"></th>
           <th style="width: 1px">
             <span translate="Portal.ViewPlanningRealm.Applications.TableHeader.Tag"></span>
             <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.Applications.TableHeader.TagTooltip'" />
@@ -46,6 +45,26 @@
                 (buttonClick)="showTeamsApplicationId = showApplicationTeams ? undefined : application.id" />
             </td>
             <td class="text-center align-correctly">{{ result.currentPage * result.itemsPerPage + i + 1 }}</td>
+            <td class="text-center align-correctly">
+              @if (application.sourceLinkId) {
+                @let invitationLink = getInvitationLink(application.sourceLinkId);
+                @if (invitationLink) {
+                  <span
+                    class="d-inline-block text-center text-white"
+                    style="width: 1.5em; border-radius: 0.4em"
+                    [ngStyle]="{ 'background-color': '#' + invitationLink.colorCode }"
+                    [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.SourceLinkTooltip' | translate: { name: invitationLink.name }">
+                    <i class="bi bi-link-45deg"></i
+                  ></span>
+                }
+              } @else {
+                <tp-tooltip-icon
+                  [margin]="false"
+                  [icon]="'vector-pen'"
+                  [iconClass]="'text-secondary'"
+                  [tooltipText]="'Portal.ViewPlanningRealm.Applications.NoSourceLinkTooltip'" />
+              }
+            </td>
             <td class="text-nowrap align-correctly">
               <span class="me-2">{{ application.tag }}</span>
               <tp-copy-to-clipboard [value]="application.tag" />

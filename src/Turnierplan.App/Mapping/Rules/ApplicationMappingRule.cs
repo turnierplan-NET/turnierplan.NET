@@ -10,6 +10,7 @@ internal sealed class ApplicationMappingRule : MappingRuleBase<Application, Appl
         return new ApplicationDto
         {
             Id = source.Id,
+            SourceLinkId = source.SourceLink?.Id,
             Tag = source.Tag,
             CreatedAt = source.CreatedAt,
             Notes = source.Notes,
