@@ -29,18 +29,15 @@ export class UpdatesCheckComponent implements OnInit {
   constructor(private readonly http: HttpClient) {}
 
   public ngOnInit(): void {
-    this.getMostRecentReleaseVersion().subscribe((result) => {
-      this.latestVersion = result.version;
+    this.getMostRecentReleaseVersion().subscribe((version) => {
+      this.latestVersion = version;
       this.isInitializing = false;
     });
   }
 
-  private getMostRecentReleaseVersion(): Observable<VersionData> {
+  private getMostRecentReleaseVersion(): Observable<string | undefined> {
     if (!environment.production) {
-      return of({
-        version: environment.version,
-        timestamp: new Date().getTime()
-      });
+      return of(environment.version);
     }
 
     const localStorageKey = 'tp_updatesCheck_cache';
@@ -52,31 +49,24 @@ export class UpdatesCheckComponent implements OnInit {
         const parsed = JSON.parse(localStorageValue) as VersionData;
         const cacheExpiry = parsed.timestamp + cacheMaxAgeMilliseconds;
         if (new Date().getTime() < cacheExpiry) {
-          return of(parsed);
+          return of(parsed.version);
         }
       } catch (e) {
-        return of({
-          version: undefined,
-          timestamp: 0
-        });
+        return of(undefined);
       }
     }
 
     return this.http.get<GitHubApiResponse>('https://api.github.com/repos/turnierplan-NET/turnierplan.NET/releases/latest').pipe(
-      map(
-        (response): VersionData => ({
-          version: response.tag_name,
-          timestamp: new Date().getTime()
-        })
-      ),
-      catchError(() =>
-        of({
-          version: undefined,
-          timestamp: new Date().getTime()
-        })
-      ),
-      tap((data) => {
-        localStorage.setItem(localStorageKey, JSON.stringify(data));
+      map((response) => response.tag_name),
+      catchError(() => of(undefined)),
+      tap((version) => {
+        localStorage.setItem(
+          localStorageKey,
+          JSON.stringify({
+            version: version,
+            timestamp: new Date().getTime()
+          } as VersionData)
+        );
       })
     );
   }
