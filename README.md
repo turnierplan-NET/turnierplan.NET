@@ -191,26 +191,6 @@ Below are some screenshots of the application:
 
 ## Turnierplan.Adapter
 
-If you want to use the **turnierplan.NET** API programatically in a .NET environment, you can use the `Turnierplan.Adapter` [package](https://www.nuget.org/packages/Turnierplan.Adapter) which contains all model classes and an abstraction layer to easily query the API endpoints.
+If you want to use the **turnierplan.NET** API programatically in a .NET environment, you can use the `Turnierplan.Adapter` [NuGet package](https://www.nuget.org/packages/Turnierplan.Adapter) which contains all model classes and an abstraction layer to easily query the API endpoints.
 
-Add the package reference to your project:
-
-```csproj
-<ItemGroup>
-  <PackageReference Include="Turnierplan.Adapter" Version="2025.1.0" /> <!-- Use the latest version! -->
-</ItemGroup>
-```
-
-In your program, instantiate the `TurnierplanClient` class providing your API key. Finally, you can query the API!
-
-```cs
-var config = new TurnierplanClientOptions("http://localhost:45000", "<ApiKey>", "<ApiKeySecret>")
-{
-  UserAgent = "<YourApplicationName>"
-};
-
-using var client = new TurnierplanClient(config);
-
-var x = await client.GetTournaments("<FolderId>");
-var y = await client.GetTournament("<TournamentId>");
-```
+Please refer to the [package readme](src/Turnierplan.Adapter/README.md) for details and usage examples. 
