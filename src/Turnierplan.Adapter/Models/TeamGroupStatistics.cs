@@ -1,8 +1,7 @@
 ﻿namespace Turnierplan.Adapter.Models;
 
 /// <summary>
-/// Value object which holds a single <see cref="Team"/>s statistics in the context
-/// of the <see cref="Group"/> to which this team is assigned to.
+/// Represents a team's game statistics in the context of its group.
 /// </summary>
 public sealed record TeamGroupStatistics
 {

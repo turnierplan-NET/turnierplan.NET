@@ -3,8 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Turnierplan.Adapter.Models;
 
 /// <summary>
-/// Represents a single ranking in the context of a <see cref="Tournament"/>. There are
-/// equally many rankings in a tournament as there are teams.
+/// A ranking in the context of a <see cref="Tournament"/>. There are equally many rankings in a tournament as there are teams.
 /// </summary>
 public sealed record Ranking
 {

@@ -3,12 +3,12 @@
 namespace Turnierplan.Adapter.Models;
 
 /// <summary>
-/// Represents a single tournament but does not include any specific data for brevity.
+/// Information about a tournament, excluding any game-specific information for brevity.
 /// </summary>
 public sealed record TournamentHeader
 {
     /// <summary>
-    /// The ID of the tournament which is an 11-character sequence of <c>[A-Za-z0-9_-]</c>.
+    /// The id of the tournament.
     /// </summary>
     public required string Id { get; init; }
 
