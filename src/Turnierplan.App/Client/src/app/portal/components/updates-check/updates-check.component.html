@@ -1,0 +1,33 @@
+@if (isInitializing) {
+  <div class="border rounded-3 p-3 d-flex flex-row align-items-center gap-2 updates-tile-loading">
+    <tp-small-spinner />
+    <span [translate]="'Portal.UpdatesCheck.Loading'"></span>
+  </div>
+} @else if (latestVersion === undefined) {
+  <div class="border rounded-3 p-3 d-flex flex-row align-items-center gap-2 updates-tile-error">
+    <i class="bi bi-x-lg text-danger"></i>
+    <span translate="Portal.UpdatesCheck.Error"></span>
+  </div>
+} @else if (latestVersion === currentVersion) {
+  <div class="border rounded-3 p-3 d-flex flex-row align-items-center gap-2 updates-tile-up-to-date">
+    <i class="bi bi-check-lg text-success"></i>
+    <span [innerHTML]="'Portal.UpdatesCheck.UpToDate' | translate: { version: currentVersion }"></span>
+    <span class="flex-grow-1"></span>
+    <a
+      target="_blank"
+      class="me-1 bi bi-github tp-cursor-pointer text-dark"
+      [ngbTooltip]="'Portal.UpdatesCheck.ShowOnGitHub' | translate"
+      href="https://github.com/turnierplan-NET/turnierplan.NET/releases/tag/{{ currentVersion }}"></a>
+  </div>
+} @else {
+  <div class="border rounded-3 p-3 d-flex flex-row align-items-center gap-2 updates-tile-outdated">
+    <i class="bi bi-exclamation-lg"></i>
+    <span [innerHTML]="'Portal.UpdatesCheck.Outdated' | translate: { version: latestVersion }"></span>
+    <span class="flex-grow-1"></span>
+    <a
+      target="_blank"
+      class="me-1 bi bi-github tp-cursor-pointer text-dark"
+      [ngbTooltip]="'Portal.UpdatesCheck.ShowOnGitHub' | translate"
+      href="https://github.com/turnierplan-NET/turnierplan.NET/releases/tag/{{ latestVersion }}"></a>
+  </div>
+}
