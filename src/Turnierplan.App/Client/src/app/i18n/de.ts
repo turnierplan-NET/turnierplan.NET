@@ -1271,6 +1271,13 @@ export const de = {
       Title: 'Resourcen-ID',
       TitleShort: 'ID:',
       InfoText: 'Die ID kann verwendet werden, um mithilfe eines API-Keys auf diese Resource zuzugreifen.'
+    },
+    UpdatesCheck: {
+      Loading: 'Release-Information wird von GitHub geladen...',
+      Error: 'Beim Laden der Release-Information von GitHub ist ein Fehler aufgetreten',
+      UpToDate: 'Die neuste Version <span class="fw-bold">{{version}}</span> ist installiert',
+      Outdated: 'Es ist eine neue Version verfügbar: <span class="fw-bold">{{version}}</span>',
+      ShowOnGitHub: 'Release auf GitHub öffnen'
     }
   }
 };
