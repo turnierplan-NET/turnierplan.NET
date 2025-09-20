@@ -1013,7 +1013,6 @@ export const de = {
           Reset: 'Filter zurücksetzen'
         },
         TableHeader: {
-          Index: '#',
           Tag: 'Tag',
           TagTooltip: 'Der Tag kann z.B. im E-Mailverkehr genutzt werden um eine eindeutige Referenz zu dieser Anmeldung zu haben.',
           CreatedAt: 'Erstellt am',
@@ -1029,6 +1028,8 @@ export const de = {
           TeamName: 'Mannschaftsname',
           Tournament: 'Turnier'
         },
+        NoSourceLinkTooltip: 'Diese Anmeldung wurde manuell angelegt',
+        SourceLinkTooltip: 'Diese Anmeldung wurde mit dem Anmeldelink "{{name}}" angelegt',
         EditNotes: {
           Title: 'Notizen bearbeiten',
           InfoText: 'Geben Sie Ihre Notizen für die Anmeldung ein:',

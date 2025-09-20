@@ -8,7 +8,8 @@ import {
   ApplicationTeamDto,
   ApplicationDto,
   PublicId,
-  ApplicationTeamsService
+  ApplicationTeamsService,
+  InvitationLinkDto
 } from '../../../api';
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
 import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
@@ -19,7 +20,7 @@ import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
-import { NgClass } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { ViewTournamentComponent } from '../../pages/view-tournament/view-tournament.component';
@@ -43,7 +44,8 @@ import { RenameButtonComponent } from '../rename-button/rename-button.component'
     TranslatePipe,
     TranslateDatePipe,
     PaginationComponent,
-    RenameButtonComponent
+    RenameButtonComponent,
+    NgStyle
   ]
 })
 export class ManageApplicationsComponent implements OnDestroy {
@@ -132,6 +134,10 @@ export class ManageApplicationsComponent implements OnDestroy {
 
   protected getTournamentClassName(id: number): string {
     return this.planningRealm.tournamentClasses.find((x) => x.id === id)?.name ?? '?';
+  }
+
+  protected getInvitationLink(id: number): InvitationLinkDto {
+    return this.planningRealm.invitationLinks.find((x) => x.id === id)!;
   }
 
   protected isTeamVisible(team: ApplicationTeamDto): boolean {
