@@ -8,20 +8,31 @@ public sealed record TurnierplanClientOptions
     /// <summary>
     /// Initializes a new instance of the <see cref="TurnierplanClientOptions"/> class with the specified options.
     /// </summary>
-    /// <param name="applicationUrl">The base URL of the turnierplan.NET instance that should be queried.</param>
+    /// <param name="applicationUri">The base URI of the turnierplan.NET instance that should be queried.</param>
     /// <param name="apiKey">The id of the API key.</param>
     /// <param name="apiKeySecret">The secret of the API key.</param>
-    public TurnierplanClientOptions(string applicationUrl, string apiKey, string apiKeySecret)
+    public TurnierplanClientOptions(Uri applicationUri, string apiKey, string apiKeySecret)
     {
-        ApplicationUrl = applicationUrl;
+        ApplicationUri = applicationUri;
         ApiKey = apiKey;
         ApiKeySecret = apiKeySecret;
     }
 
     /// <summary>
-    /// The base URL of the turnierplan.NET instance that should be queried.
+    /// Initializes a new instance of the <see cref="TurnierplanClientOptions"/> class with the specified options.
     /// </summary>
-    public string ApplicationUrl { get; }
+    /// <param name="applicationUri">The base URI of the turnierplan.NET instance that should be queried.</param>
+    /// <param name="apiKey">The id of the API key.</param>
+    /// <param name="apiKeySecret">The secret of the API key.</param>
+    public TurnierplanClientOptions(string applicationUri, string apiKey, string apiKeySecret)
+        : this(new Uri(applicationUri), apiKey, apiKeySecret)
+    {
+    }
+
+    /// <summary>
+    /// The base URI of the turnierplan.NET instance that should be queried.
+    /// </summary>
+    public Uri ApplicationUri { get; }
 
     /// <summary>
     /// The id of the API key.

@@ -42,10 +42,9 @@ public sealed class TurnierplanClient : IDisposable
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(options.ApiKey);
         ArgumentException.ThrowIfNullOrWhiteSpace(options.ApiKeySecret);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.ApplicationUrl);
 
         _httpClient = httpClient;
-        _httpClient.BaseAddress = new Uri(options.ApplicationUrl);
+        _httpClient.BaseAddress = options.ApplicationUri;
 
         _httpClient.DefaultRequestHeaders.Add(ApiKeyIdHeaderName, options.ApiKey);
         _httpClient.DefaultRequestHeaders.Add(ApiKeySecretHeaderName, options.ApiKeySecret);
