@@ -12,9 +12,9 @@ namespace Turnierplan.Adapter;
 /// </summary>
 public sealed class TurnierplanClient : IDisposable
 {
-    private const string ApiKeyIdHeaderName = "x-api-key";
-    private const string ApiKeySecretHeaderName = "x-api-key-secret";
-    private const string TurnierplanVersionHeaderName = "x-turnierplan-version";
+    private const string ApiKeyIdHeaderName = "X-Api-Key";
+    private const string ApiKeySecretHeaderName = "X-Api-Key-Secret";
+    private const string TurnierplanVersionHeaderName = "X-Turnierplan-Version";
 
     private static readonly string __turnierplanAdapterVersion =
         typeof(TurnierplanClient).Assembly.GetName().Version?.ToString()

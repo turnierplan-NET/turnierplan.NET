@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System.Net;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
@@ -298,6 +299,42 @@ public sealed class TurnierplanAdapterTest
         });
     }
 
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public async Task Turnierplan_Client_Throws_Exception_When_Version_Does_Not_Match(bool sendHeader)
+    {
+        using var httpClient = new HttpClient(new MockHttpMessageHandler(_ =>
+        {
+            var response = new HttpResponseMessage();
+            response.StatusCode = HttpStatusCode.Unauthorized;
+
+            if (sendHeader)
+            {
+                response.Headers.Add("x-turnierplan-version", "2024.0.0"); // old version that does not exist
+            }
+
+            return response;
+        }));
+
+        var options = new TurnierplanClientOptions("http://localhost", "_", "_");
+        var client = new TurnierplanClient(httpClient, options);
+
+        var action = async () =>
+        {
+            _ = await client.GetTournament("x");
+        };
+
+        var actualVersion = typeof(TurnierplanClient).Assembly.GetName().Version!.ToString();
+        var expectedMessage = sendHeader
+            ? $"Server version '2024.0.0' does not match the Turnierplan.Adapter version '{actualVersion}'."
+            : "Could not get 'X-Turnierplan-Version' header from response.";
+
+        await action.Should()
+            .ThrowAsync<TurnierplanClientException>()
+            .WithMessage(expectedMessage);
+    }
+
     private async Task<SeedingResult> SeedDatabaseAsync(TurnierplanContext context, IPasswordHasher<ApiKey> secretHasher)
     {
         var organization = new Organization("TestOrg");
@@ -366,4 +403,18 @@ public sealed class TurnierplanAdapterTest
         }
     }
 
+    private sealed class MockHttpMessageHandler : HttpMessageHandler
+    {
+        private readonly Func<HttpRequestMessage, HttpResponseMessage> _handler;
+
+        public MockHttpMessageHandler(Func<HttpRequestMessage, HttpResponseMessage> handler)
+        {
+            _handler = handler;
+        }
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(_handler(request));
+        }
+    }
 }
