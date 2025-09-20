@@ -6,9 +6,8 @@ using MatchType = Turnierplan.Adapter.Enums.MatchType;
 namespace Turnierplan.Adapter.Models;
 
 /// <summary>
-/// Represents a single match in the context of a <see cref="Tournament"/>. A match has two participants
-/// which are computed by evaluating the team selectors. Once the match is finished, each participant is
-/// assigned a score.
+/// A match in the context of a <see cref="Tournament"/>. A match has two participants which are computed
+/// by evaluating the team selectors. Once the match is finished, each participant is assigned a score.
 /// </summary>
 public sealed record Match
 {
@@ -56,6 +55,7 @@ public sealed record Match
     /// if this match is a deciding/ranking match.
     /// </summary>
     /// <seealso cref="GroupId"/>
+    /// <remarks>This value is generated client-side because it is not part of the API definition.</remarks>
     [JsonIgnore]
     [MemberNotNullWhen(true, nameof(GroupId))]
     public bool IsGroupMatch => GroupId is not null;

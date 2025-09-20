@@ -1,7 +1,7 @@
 namespace Turnierplan.Adapter.Models;
 
 /// <summary>
-/// Represents a single group in the context of a <see cref="Tournament"/>.
+/// A group in the context of a <see cref="Tournament"/>.
 /// </summary>
 public sealed record Group
 {

@@ -3,12 +3,12 @@ using Turnierplan.Adapter.Enums;
 namespace Turnierplan.Adapter.Models;
 
 /// <summary>
-/// Represents a single tournament consisting of <see cref="Group"/>s, <see cref="Match"/>es and <see cref="Ranking"/>s
+/// A tournament including all details such as teams, groups and matches.
 /// </summary>
 public sealed record Tournament
 {
     /// <summary>
-    /// The ID of the tournament which is an 11-character sequence of <c>[A-Za-z0-9_-]</c>.
+    /// The id of the tournament.
     /// </summary>
     public required string Id { get; init; }
 
@@ -25,7 +25,12 @@ public sealed record Tournament
     /// <summary>
     /// The name of the folder to which this tournament is assigned or <c>null</c> if not applicable.
     /// </summary>
-    public required string? FolderName { get; init; }
+    public string? FolderName { get; init; }
+
+    /// <summary>
+    /// The name of the venue assigned to this tournament or <c>null</c> if not applicable.
+    /// </summary>
+    public string? VenueName { get; init; }
 
     /// <summary>
     /// The visibility of the tournament.

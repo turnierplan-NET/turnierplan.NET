@@ -1,7 +1,7 @@
 namespace Turnierplan.Adapter;
 
 /// <summary>
-/// Represents an error that occurred in the <see cref="TurnierplanClient"/> API abstraction layer.
+/// An error that occurred in the <see cref="TurnierplanClient"/>.
 /// </summary>
 public sealed class TurnierplanClientException : Exception
 {

@@ -17,10 +17,16 @@ This readme describes how to deploy the application using the pre-built containe
 
 **turnierplan.NET** comes as a pre-built container image which can be deployed with minimal configuration. The image is available on GitHub: [ghcr.io/turnierplan-net/turnierplan](https://github.com/turnierplan-NET/turnierplan.NET/pkgs/container/turnierplan)
 
-In the simplest case, run the container directly using the following command. Make sure to substitute the correct PostgreSQL database connection string:
+In the simplest case, you can configure the container to use an in-memory data store. Note that this in-memory store is only meant for quick testing and is *not stable* for production! 
 
 ```shell
-docker run -p 80:8080 -e Turnierplan__ApplicationUrl="http://localhost" -e Database__ConnectionString="" ghcr.io/turnierplan-net/turnierplan:latest
+docker run -p 80:8080 -e Turnierplan__ApplicationUrl="http://localhost" -e Database__InMemory="true" ghcr.io/turnierplan-net/turnierplan:latest
+```
+
+A PostgreSQL database can be configured by specifying the `Database__ConnectionString` environment variable:
+
+```shell
+docker run -p 80:8080 -e Turnierplan__ApplicationUrl="http://localhost" -e Database__ConnectionString="<connection_string>" ghcr.io/turnierplan-net/turnierplan:latest
 ```
 
 The credentials of the initial admin user are displayed in the container logs.
@@ -191,26 +197,6 @@ Below are some screenshots of the application:
 
 ## Turnierplan.Adapter
 
-If you want to use the **turnierplan.NET** API programatically in a .NET environment, you can use the `Turnierplan.Adapter` [package](https://www.nuget.org/packages/Turnierplan.Adapter) which contains all model classes and an abstraction layer to easily query the API endpoints.
+If you want to use the **turnierplan.NET** API programatically in a .NET environment, you can use the `Turnierplan.Adapter` [NuGet package](https://www.nuget.org/packages/Turnierplan.Adapter) which contains all model classes and an abstraction layer to easily query the API endpoints.
 
-Add the package reference to your project:
-
-```csproj
-<ItemGroup>
-  <PackageReference Include="Turnierplan.Adapter" Version="2025.1.0" /> <!-- Use the latest version! -->
-</ItemGroup>
-```
-
-In your program, instantiate the `TurnierplanClient` class providing your API key. Finally, you can query the API!
-
-```cs
-var config = new TurnierplanClientOptions("http://localhost:45000", "<ApiKey>", "<ApiKeySecret>")
-{
-  UserAgent = "<YourApplicationName>"
-};
-
-using var client = new TurnierplanClient(config);
-
-var x = await client.GetTournaments("<FolderId>");
-var y = await client.GetTournament("<TournamentId>");
-```
+Please refer to the [package readme](src/Turnierplan.Adapter/README.md) for details and usage examples. 
