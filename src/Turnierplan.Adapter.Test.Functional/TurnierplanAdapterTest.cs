@@ -335,7 +335,7 @@ public sealed class TurnierplanAdapterTest
             .WithMessage(expectedMessage);
     }
 
-    private async Task<SeedingResult> SeedDatabaseAsync(TurnierplanContext context, IPasswordHasher<ApiKey> secretHasher)
+    private static async Task<SeedingResult> SeedDatabaseAsync(TurnierplanContext context, IPasswordHasher<ApiKey> secretHasher)
     {
         var organization = new Organization("TestOrg");
 
