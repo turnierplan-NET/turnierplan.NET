@@ -22,7 +22,11 @@ internal static class WebApplicationExtensions
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<DatabaseMigrator>>();
         var context = scope.ServiceProvider.GetRequiredService<TurnierplanContext>();
 
-        await context.Database.MigrateAsync();
+        if (context.Database.IsNpgsql())
+        {
+            // If the database is in-memory, no migration is necessary
+            await context.Database.MigrateAsync();
+        }
 
         var userCount = await context.Users.CountAsync();
 

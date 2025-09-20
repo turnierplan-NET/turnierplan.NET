@@ -17,10 +17,16 @@ This readme describes how to deploy the application using the pre-built containe
 
 **turnierplan.NET** comes as a pre-built container image which can be deployed with minimal configuration. The image is available on GitHub: [ghcr.io/turnierplan-net/turnierplan](https://github.com/turnierplan-NET/turnierplan.NET/pkgs/container/turnierplan)
 
-In the simplest case, run the container directly using the following command. Make sure to substitute the correct PostgreSQL database connection string:
+In the simplest case, you can configure the container to use an in-memory data store. Note that this in-memory store is only meant for quick testing and is *not stable* for production! 
 
 ```shell
-docker run -p 80:8080 -e Turnierplan__ApplicationUrl="http://localhost" -e Database__ConnectionString="" ghcr.io/turnierplan-net/turnierplan:latest
+docker run -p 80:8080 -e Turnierplan__ApplicationUrl="http://localhost" -e Database__InMemory="true" ghcr.io/turnierplan-net/turnierplan:latest
+```
+
+A PostgreSQL database can be configured by specifying the `Database__ConnectionString` environment variable:
+
+```shell
+docker run -p 80:8080 -e Turnierplan__ApplicationUrl="http://localhost" -e Database__ConnectionString="<connection_string>" ghcr.io/turnierplan-net/turnierplan:latest
 ```
 
 The credentials of the initial admin user are displayed in the container logs.

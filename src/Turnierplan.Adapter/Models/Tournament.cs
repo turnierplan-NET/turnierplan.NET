@@ -25,12 +25,12 @@ public sealed record Tournament
     /// <summary>
     /// The name of the folder to which this tournament is assigned or <c>null</c> if not applicable.
     /// </summary>
-    public required string? FolderName { get; init; }
+    public string? FolderName { get; init; }
 
     /// <summary>
     /// The name of the venue assigned to this tournament or <c>null</c> if not applicable.
     /// </summary>
-    public required string? VenueName { get; init; }
+    public string? VenueName { get; init; }
 
     /// <summary>
     /// The visibility of the tournament.

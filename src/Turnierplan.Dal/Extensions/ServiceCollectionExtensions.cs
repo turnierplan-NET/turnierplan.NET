@@ -1,6 +1,7 @@
 ﻿using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +24,8 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddTurnierplanDataAccessLayer(this IServiceCollection services, IConfiguration configuration)
     {
+        string? inMemoryDatabaseName = null;
+
         services.AddDbContext<TurnierplanContext>((sp, options) =>
         {
             if (sp.GetRequiredService<IWebHostEnvironment>().IsDevelopment())
@@ -30,13 +33,22 @@ public static class ServiceCollectionExtensions
                 options.EnableSensitiveDataLogging();
             }
 
-            var connectionString = configuration.GetDatabaseConnectionString();
-
-            options.UseNpgsql(connectionString, npgsqlOptions =>
+            if (configuration.UseInMemoryDatabase())
             {
-                npgsqlOptions.MigrationsAssembly(typeof(TurnierplanContext).Assembly.GetName().Name);
-                npgsqlOptions.MigrationsHistoryTable("__EFMigrationHistory", TurnierplanContext.Schema);
-            });
+                inMemoryDatabaseName ??= Guid.NewGuid().ToString();
+                options.UseInMemoryDatabase(inMemoryDatabaseName);
+                options.ConfigureWarnings(x => x.Log(InMemoryEventId.TransactionIgnoredWarning));
+            }
+            else
+            {
+                var connectionString = configuration.GetDatabaseConnectionString();
+
+                options.UseNpgsql(connectionString, npgsqlOptions =>
+                {
+                    npgsqlOptions.MigrationsAssembly(typeof(TurnierplanContext).Assembly.GetName().Name);
+                    npgsqlOptions.MigrationsHistoryTable("__EFMigrationHistory", TurnierplanContext.Schema);
+                });
+            }
         });
 
         var applicationInsightsConnectionString = configuration.GetSection("ApplicationInsights").GetValue<string>("ConnectionString");
