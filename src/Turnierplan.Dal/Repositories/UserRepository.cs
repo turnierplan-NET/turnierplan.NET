@@ -5,7 +5,7 @@ namespace Turnierplan.Dal.Repositories;
 
 internal sealed class UserRepository(TurnierplanContext context) : RepositoryBase<User, Guid>(context, context.Users), IUserRepository
 {
-    public Task<List<User>> GetAllUsers()
+    public Task<List<User>> GetAllUsersAsync()
     {
         return DbSet
             .ToListAsync();

@@ -18,7 +18,7 @@ internal sealed class GetUsersEndpoint : EndpointBase<IEnumerable<UserDto>>
         IUserRepository repository,
         IMapper mapper)
     {
-        var users = await repository.GetAllUsers();
+        var users = await repository.GetAllUsersAsync();
 
         return Results.Ok(mapper.MapCollection<UserDto>(users));
     }

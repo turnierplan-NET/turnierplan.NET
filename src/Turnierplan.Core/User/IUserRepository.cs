@@ -4,7 +4,7 @@ namespace Turnierplan.Core.User;
 
 public interface IUserRepository : IRepository<User, Guid>
 {
-    Task<List<User>> GetAllUsers();
+    Task<List<User>> GetAllUsersAsync();
 
     Task<User?> GetByIdAsync(Guid id);
 
