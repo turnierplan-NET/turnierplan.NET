@@ -317,7 +317,7 @@ public sealed class TurnierplanAdapterTest
             return response;
         }));
 
-        var options = new TurnierplanClientOptions("http://localhost", "_", "_");
+        var options = new TurnierplanClientOptions(new Uri("http://localhost"), "_", "_");
         var client = new TurnierplanClient(httpClient, options);
 
         var action = async () =>
