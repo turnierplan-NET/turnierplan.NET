@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { TournamentsService } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
 import { TranslateDirective } from '@ngx-translate/core';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getTournaments } from '../../../api/fn/tournaments/get-tournaments';
 
 @Component({
   templateUrl: './tournament-select.component.html',
@@ -21,7 +22,7 @@ export class TournamentSelectComponent implements OnInit {
 
   constructor(
     protected readonly modal: NgbActiveModal,
-    private readonly tournamentService: TournamentsService
+    private readonly turnierplanApi: TurnierplanApi
   ) {}
 
   public set organization(value: { name: string; id: string }) {
@@ -30,7 +31,7 @@ export class TournamentSelectComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.tournamentService.getTournaments({ organizationId: this.organizationId }).subscribe({
+    this.turnierplanApi.invoke(getTournaments, { organizationId: this.organizationId }).subscribe({
       next: (tournaments) => {
         this.folderTree = FolderTreeComponent.generateTree(this.organizationName, tournaments);
         this.selectTreeEntry('/');

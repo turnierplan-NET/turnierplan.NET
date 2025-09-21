@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { of, Subject, switchMap, takeUntil } from 'rxjs';
 
-import { VenueDto, VenuesService } from '../../../api';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 import { NotificationService } from '../../../core/services/notification.service';
 import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
@@ -21,6 +20,11 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
+import { VenueDto } from '../../../api/models/venue-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getVenue } from '../../../api/fn/venues/get-venue';
+import { updateVenue } from '../../../api/fn/venues/update-venue';
+import { deleteVenue } from '../../../api/fn/venues/delete-venue';
 
 @Component({
   templateUrl: './view-venue.component.html',
@@ -63,9 +67,9 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly venueService: VenuesService,
     private readonly notificationService: NotificationService,
     private readonly modalService: NgbModal,
     private readonly titleService: TitleService
@@ -82,7 +86,7 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
             return of();
           }
           this.loadingState = { isLoading: true };
-          return this.venueService.getVenue({ id: venueId });
+          return this.turnierplanApi.invoke(getVenue, { id: venueId });
         })
       )
       .subscribe({
@@ -195,7 +199,7 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
 
     this.loadingState = { isLoading: true };
 
-    this.venueService.updateVenue({ id: this.venue.id, body: this.venue }).subscribe({
+    this.turnierplanApi.invoke(updateVenue, { id: this.venue.id, body: this.venue }).subscribe({
       next: () => {
         this.loadingState = { isLoading: false };
         this.isDirty = false;
@@ -213,7 +217,7 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
 
     const organizationId = this.venue.organizationId;
     this.loadingState = { isLoading: true, error: undefined };
-    this.venueService.deleteVenue({ id: this.venue.id }).subscribe({
+    this.turnierplanApi.invoke(deleteVenue, { id: this.venue.id }).subscribe({
       next: () => {
         this.notificationService.showNotification(
           'info',

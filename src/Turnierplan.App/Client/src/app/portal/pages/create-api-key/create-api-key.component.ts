@@ -4,7 +4,6 @@ import { AbstractControl, FormControl, FormGroup, Validators, FormsModule, React
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 
-import { ApiKeyDto, OrganizationDto, ApiKeysService, OrganizationsService } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
@@ -13,6 +12,11 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { CopyToClipboardComponent } from '../../components/copy-to-clipboard/copy-to-clipboard.component';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 import { NgClass } from '@angular/common';
+import { OrganizationDto } from '../../../api/models/organization-dto';
+import { ApiKeyDto } from '../../../api/models/api-key-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getOrganization } from '../../../api/fn/organizations/get-organization';
+import { createApiKey } from '../../../api/fn/api-keys/create-api-key';
 
 @Component({
   templateUrl: './create-api-key.component.html',
@@ -42,8 +46,7 @@ export class CreateApiKeyComponent {
   });
 
   constructor(
-    private readonly organizationService: OrganizationsService,
-    private readonly apiKeyService: ApiKeysService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly titleService: TitleService
   ) {
@@ -57,7 +60,7 @@ export class CreateApiKeyComponent {
             return of(undefined);
           }
           this.loadingState = { isLoading: true };
-          return this.organizationService.getOrganization({ id: organizationId });
+          return this.turnierplanApi.invoke(getOrganization, { id: organizationId });
         })
       )
       .subscribe({
@@ -83,8 +86,8 @@ export class CreateApiKeyComponent {
   protected confirmButtonClicked(): void {
     if (this.form.valid && !this.loadingState.isLoading && this.organization) {
       this.loadingState = { isLoading: true };
-      this.apiKeyService
-        .createApiKey({
+      this.turnierplanApi
+        .invoke(createApiKey, {
           body: {
             organizationId: this.organization.id,
             ...this.form.getRawValue()

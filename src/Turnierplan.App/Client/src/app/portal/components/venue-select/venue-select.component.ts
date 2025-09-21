@@ -2,12 +2,15 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
-import { NullableOfPublicId, VenueDto, VenuesService } from '../../../api';
 import { TranslateDirective } from '@ngx-translate/core';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgClass } from '@angular/common';
+import { VenueDto } from '../../../api/models/venue-dto';
+import { NullableOfPublicId } from '../../../api/models/nullable-of-public-id';
+import { getVenues } from '../../../api/fn/venues/get-venues';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
 
 @Component({
   templateUrl: './venue-select.component.html',
@@ -23,12 +26,12 @@ export class VenueSelectComponent {
   protected venues: VenueDto[] = [];
 
   constructor(
-    protected readonly modal: NgbActiveModal,
-    private readonly venueService: VenuesService
+    private readonly turnierplanApi: TurnierplanApi,
+    protected readonly modal: NgbActiveModal
   ) {}
 
   public initialize(organizationId: string, currentVenueId?: NullableOfPublicId): void {
-    this.venueService.getVenues({ organizationId: organizationId }).subscribe({
+    this.turnierplanApi.invoke(getVenues, { organizationId: organizationId }).subscribe({
       next: (venues) => {
         this.venues = venues;
         this.initialVenueId = currentVenueId ?? '';

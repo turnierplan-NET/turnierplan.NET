@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { finalize, Observable, Subject } from 'rxjs';
-import { Role, RoleAssignmentDto, RoleAssignmentsService } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
 import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { RbacAddAssignmentComponent } from '../rbac-add-assignment/rbac-add-assignment.component';
@@ -10,6 +9,11 @@ import { ActionButtonComponent } from '../action-button/action-button.component'
 import { RbacPrincipalComponent } from '../rbac-principal/rbac-principal.component';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { Role } from '../../../api/models/role';
+import { RoleAssignmentDto } from '../../../api/models/role-assignment-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { deleteRoleAssignment } from '../../../api/fn/role-assignments/delete-role-assignment';
+import { getRoleAssignments } from '../../../api/fn/role-assignments/get-role-assignments';
 
 interface IRbacOffcanvasTarget {
   name: string;
@@ -42,7 +46,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
   private targetIsOrganization: boolean = false;
 
   constructor(
-    private readonly roleAssignmentsService: RoleAssignmentsService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly notificationService: NotificationService,
     private readonly modalService: NgbModal
   ) {}
@@ -87,7 +91,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
   }
 
   protected removeRoleAssignment(id: string): void {
-    this.roleAssignmentsService.deleteRoleAssignment({ scopeId: this.target.rbacScopeId, roleAssignmentId: id }).subscribe({
+    this.turnierplanApi.invoke(deleteRoleAssignment, { scopeId: this.target.rbacScopeId, roleAssignmentId: id }).subscribe({
       next: () => {
         this.roleAssignmentCount = 0;
 
@@ -152,8 +156,8 @@ export class RbacOffcanvasComponent implements OnDestroy {
   private loadRoleAssignments(): void {
     this.isLoadingRoleAssignments = true;
 
-    this.roleAssignmentsService
-      .getRoleAssignments({ scopeId: this.target.rbacScopeId })
+    this.turnierplanApi
+      .invoke(getRoleAssignments, { scopeId: this.target.rbacScopeId })
       .pipe(finalize(() => (this.isLoadingRoleAssignments = false)))
       .subscribe({
         next: (roleAssignments) => {

@@ -1,14 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { TranslateDirective } from '@ngx-translate/core';
-import {
-  ApplicationsService,
-  ApplicationTeamDto,
-  PaginationResultDtoOfApplicationDto,
-  PlanningRealmDto,
-  PlanningRealmHeaderDto,
-  PlanningRealmsService,
-  PublicId
-} from '../../../api';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { FormsModule } from '@angular/forms';
 import { LocalStorageService } from '../../services/local-storage.service';
@@ -18,6 +9,15 @@ import { ApplicationsFilter, applicationsFilterToQueryParameters, defaultApplica
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { ApplicationTeamDto } from '../../../api/models/application-team-dto';
+import { PlanningRealmHeaderDto } from '../../../api/models/planning-realm-header-dto';
+import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { PaginationResultDtoOfApplicationDto } from '../../../api/models/pagination-result-dto-of-application-dto';
+import { PublicId } from '../../../api/models/public-id';
+import { getPlanningRealms } from '../../../api/fn/planning-realms/get-planning-realms';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getPlanningRealm } from '../../../api/fn/planning-realms/get-planning-realm';
+import { getApplications } from '../../../api/fn/applications/get-applications';
 
 export type SelectApplicationTeamResult = {
   name: string;
@@ -67,15 +67,14 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   private readonly loadApplications$ = new Subject<void>();
 
   constructor(
-    private readonly planningRealmService: PlanningRealmsService,
-    private readonly applicationsService: ApplicationsService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly localStorageService: LocalStorageService
   ) {}
 
   public ngOnInit(): void {
     this.isLoadingPlanningRealms = true;
 
-    this.planningRealmService.getPlanningRealms({ organizationId: this.organizationId }).subscribe({
+    this.turnierplanApi.invoke(getPlanningRealms, { organizationId: this.organizationId }).subscribe({
       next: (result) => {
         this.planningRealms = result;
         this.isLoadingPlanningRealms = false;
@@ -106,7 +105,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
         switchMap((id) => {
           this.isLoadingPlanningRealmDetail = true;
 
-          return this.planningRealmService.getPlanningRealm({ id: id });
+          return this.turnierplanApi.invoke(getPlanningRealm, { id: id });
         }),
         catchError(() => of(undefined))
       )
@@ -123,7 +122,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
         switchMap(() => {
           this.isLoadingApplications = true;
 
-          return this.applicationsService.getApplications({
+          return this.turnierplanApi.invoke(getApplications, {
             planningRealmId: this.planningRealmDetail!.id,
             page: this.applicationsCurrentPage,
             pageSize: this.applicationsPageSize,

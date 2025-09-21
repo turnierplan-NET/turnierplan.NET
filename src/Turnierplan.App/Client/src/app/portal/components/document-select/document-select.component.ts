@@ -3,9 +3,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService, TranslateDirective } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 
-import { DocumentType } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { getDocumentName } from '../../helpers/document-name';
+import { DocumentType } from '../../../api/models/document-type';
 
 type DocumentTypeEntry = {
   displayName: string;

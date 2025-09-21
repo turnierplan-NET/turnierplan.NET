@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
-import { FolderStatisticsDto, FoldersService } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
@@ -11,6 +10,9 @@ import { NgTemplateOutlet, NgStyle, DecimalPipe, PercentPipe } from '@angular/co
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import { EChartsCoreOption } from 'echarts/core';
+import { FolderStatisticsDto } from '../../../api/models/folder-statistics-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getFolderStatistics } from '../../../api/fn/folders/get-folder-statistics';
 
 @Component({
   templateUrl: './folder-statistics.component.html',
@@ -41,8 +43,8 @@ export class FolderStatisticsComponent implements OnInit, OnDestroy {
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
-    private readonly folderService: FoldersService,
     private readonly titleService: TitleService,
     private readonly translateService: TranslateService
   ) {
@@ -66,7 +68,7 @@ export class FolderStatisticsComponent implements OnInit, OnDestroy {
 
           this.loadingState = { isLoading: true };
 
-          return this.folderService.getFolderStatistics({ id: folderId });
+          return this.turnierplanApi.invoke(getFolderStatistics, { id: folderId });
         })
       )
       .subscribe({

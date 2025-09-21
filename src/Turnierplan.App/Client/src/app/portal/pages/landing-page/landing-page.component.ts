@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs';
 
-import { OrganizationDto, OrganizationsService } from '../../../api';
 import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
@@ -14,6 +13,9 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { BadgeComponent } from '../../components/badge/badge.component';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
 import { UpdatesCheckComponent } from '../../components/updates-check/updates-check.component';
+import { OrganizationDto } from '../../../api/models/organization-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getOrganizations } from '../../../api/fn/organizations/get-organizations';
 
 @Component({
   templateUrl: './landing-page.component.html',
@@ -45,15 +47,15 @@ export class LandingPageComponent implements OnInit {
   ];
 
   constructor(
-    private readonly organizationService: OrganizationsService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly titleService: TitleService
   ) {}
 
   public ngOnInit(): void {
     this.titleService.setTitleTranslated('Portal.LandingPage.Title');
 
-    this.organizationService
-      .getOrganizations()
+    this.turnierplanApi
+      .invoke(getOrganizations)
       .pipe(take(1))
       .subscribe({
         next: (result) => {

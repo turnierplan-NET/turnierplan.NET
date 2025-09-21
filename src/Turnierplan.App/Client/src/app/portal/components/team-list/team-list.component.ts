@@ -9,12 +9,13 @@ import { NgClass, AsyncPipe } from '@angular/common';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
-import { PublicId, TeamLinkDto } from '../../../api';
 import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';
 import { defaultApplicationsFilter } from '../../models/applications-filter';
 import { ViewPlanningRealmComponent } from '../../pages/view-planning-realm/view-planning-realm.component';
+import { PublicId } from '../../../api/models/public-id';
+import { TeamLinkDto } from '../../../api/models/team-link-dto';
 
 export interface TeamView {
   id: number;

@@ -2,14 +2,13 @@ import { Component } from '@angular/core';
 import { NgbActiveModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
-import { ComputationConfigurationDto } from '../../../api';
-
 import { availableComparisonModeOptions, ComparisonModeOption } from './computation-configuration.component-data';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
+import { ComputationConfigurationDto } from '../../../api/models/computation-configuration-dto';
 
 @Component({
   templateUrl: './computation-configuration.component.html',

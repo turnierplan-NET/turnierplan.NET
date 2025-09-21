@@ -2,12 +2,14 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 
-import { MatchPlanDateFormat, MatchPlanDocumentConfiguration, MatchPlanOutcomes } from '../../../api';
 import { CURRENT_CONFIGURATION, DocumentConfigComponent } from '../document-config-frame/document-config-frame.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { NgClass } from '@angular/common';
 import { AlertComponent } from '../alert/alert.component';
+import { MatchPlanDocumentConfiguration } from '../../../api/models/match-plan-document-configuration';
+import { MatchPlanDateFormat } from '../../../api/models/match-plan-date-format';
+import { MatchPlanOutcomes } from '../../../api/models/match-plan-outcomes';
 
 @Component({
   templateUrl: './document-config-match-plan.component.html',

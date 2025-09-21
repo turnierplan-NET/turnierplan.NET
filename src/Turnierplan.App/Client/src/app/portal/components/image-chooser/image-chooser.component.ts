@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ImageDto2, ImageType, ImagesService, ImageDto } from '../../../api';
 import { Actions } from '../../../generated/actions';
 import { TranslateDirective } from '@ngx-translate/core';
 import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicator.component';
@@ -12,6 +11,13 @@ import { ActionButtonComponent } from '../action-button/action-button.component'
 import { AlertComponent } from '../alert/alert.component';
 import { NgClass } from '@angular/common';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { ImageType } from '../../../api/models/image-type';
+import { ImageDto2 } from '../../../api/models/image-dto-2';
+import { uploadImage$FormData } from '../../../api/fn/images/upload-image-form-data';
+import { getImages } from '../../../api/fn/images/get-images';
+import { ImageDto } from '../../../api/models/image-dto';
+import { deleteImage } from '../../../api/fn/images/delete-image';
 
 export interface ImageChooserResult {
   type: 'ImageDeleted' | 'ImageSelected' | 'ImageUploaded';
@@ -56,7 +62,7 @@ export class ImageChooserComponent {
 
   constructor(
     protected readonly modal: NgbActiveModal,
-    private readonly imageService: ImagesService
+    private readonly turnierplanApi: TurnierplanApi
   ) {}
 
   protected get isInImageDetailView(): boolean {
@@ -97,8 +103,8 @@ export class ImageChooserComponent {
           const content = data.target?.result as ArrayBuffer;
 
           if (content) {
-            this.imageService
-              .uploadImage$FormData({
+            this.turnierplanApi
+              .invoke(uploadImage$FormData, {
                 body: {
                   organizationId: this.organizationId,
                   imageType: this.imageType,
@@ -139,7 +145,7 @@ export class ImageChooserComponent {
 
     this.isLoadingImages = true;
 
-    this.imageService.deleteImage({ id: deleteImageId }).subscribe({
+    this.turnierplanApi.invoke(deleteImage, { id: deleteImageId }).subscribe({
       next: () => {
         if (deleteImageId === this.currentImageId) {
           this.modal.close({ type: 'ImageDeleted', deletedImageId: deleteImageId } as ImageChooserResult);
@@ -154,7 +160,7 @@ export class ImageChooserComponent {
   }
 
   private loadImages(): void {
-    this.imageService.getImages({ organizationId: this.organizationId, imageType: this.imageType }).subscribe({
+    this.turnierplanApi.invoke(getImages, { organizationId: this.organizationId, imageType: this.imageType }).subscribe({
       next: (images) => {
         this.existingImages = images;
         this.existingImages.sort((a, b) => {

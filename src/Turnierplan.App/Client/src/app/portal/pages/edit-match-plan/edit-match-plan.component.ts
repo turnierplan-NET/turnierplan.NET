@@ -4,16 +4,6 @@ import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-transl
 import { DndDropEvent, DndDropzoneDirective, DndDraggableDirective, DndHandleDirective, DndPlaceholderRefDirective } from 'ngx-drag-drop';
 import { combineLatestWith, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
-import {
-  GroupDto,
-  MatchState,
-  MatchType,
-  SetTournamentMatchPlanEndpointRequestEntry,
-  TeamDto,
-  TeamSelectorDto,
-  TournamentDto,
-  TournamentsService
-} from '../../../api';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 import { NotificationService } from '../../../core/services/notification.service';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
@@ -26,6 +16,17 @@ import { FormsModule } from '@angular/forms';
 import { NgClass, DatePipe } from '@angular/common';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { ViewTournamentComponent } from '../view-tournament/view-tournament.component';
+import { SetTournamentMatchPlanEndpointRequestEntry } from '../../../api/models/set-tournament-match-plan-endpoint-request-entry';
+import { GroupDto } from '../../../api/models/group-dto';
+import { TeamDto } from '../../../api/models/team-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getTournament } from '../../../api/fn/tournaments/get-tournament';
+import { getTournamentTeamSelectors } from '../../../api/fn/tournaments/get-tournament-team-selectors';
+import { setTournamentMatchPlan } from '../../../api/fn/tournaments/set-tournament-match-plan';
+import { TournamentDto } from '../../../api/models/tournament-dto';
+import { TeamSelectorDto } from '../../../api/models/team-selector-dto';
+import { MatchType } from '../../../api/models/match-type';
+import { MatchState } from '../../../api/models/match-state';
 
 type ExtendedMatchEntry = SetTournamentMatchPlanEndpointRequestEntry & {
   formattedType: string;
@@ -76,9 +77,9 @@ export class EditMatchPlanComponent implements OnInit, OnDestroy, DiscardChanges
   private tournamentId?: string;
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly tournamentService: TournamentsService,
     private readonly titleService: TitleService,
     private readonly notificationService: NotificationService,
     private readonly localStorageService: LocalStorageService,
@@ -103,9 +104,9 @@ export class EditMatchPlanComponent implements OnInit, OnDestroy, DiscardChanges
 
           this.loadingState = { isLoading: true };
 
-          return this.tournamentService.getTournament({ id: this.tournamentId }).pipe(
+          return this.turnierplanApi.invoke(getTournament, { id: this.tournamentId }).pipe(
             combineLatestWith(
-              this.tournamentService.getTournamentTeamSelectors({
+              this.turnierplanApi.invoke(getTournamentTeamSelectors, {
                 id: this.tournamentId,
                 languageCode: this.translateService.getCurrentLang()
               })
@@ -156,8 +157,8 @@ export class EditMatchPlanComponent implements OnInit, OnDestroy, DiscardChanges
 
     this.loadingState = { isLoading: true };
 
-    this.tournamentService
-      .setTournamentMatchPlan({
+    this.turnierplanApi
+      .invoke(setTournamentMatchPlan, {
         id: this.tournamentId,
         body: { matches: this.currentState }
       })

@@ -3,13 +3,16 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
-import { OrganizationDto, OrganizationsService, VenuesService } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { OrganizationDto } from '../../../api/models/organization-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getOrganization } from '../../../api/fn/organizations/get-organization';
+import { createVenue } from '../../../api/fn/venues/create-venue';
 
 @Component({
   templateUrl: './create-venue.component.html',
@@ -33,8 +36,7 @@ export class CreateVenueComponent implements OnDestroy {
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
-    private readonly organizationService: OrganizationsService,
-    private readonly venueService: VenuesService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly titleService: TitleService
@@ -49,7 +51,7 @@ export class CreateVenueComponent implements OnDestroy {
             return of(undefined);
           }
           this.loadingState = { isLoading: true };
-          return this.organizationService.getOrganization({ id: organizationId });
+          return this.turnierplanApi.invoke(getOrganization, { id: organizationId });
         })
       )
       .subscribe({
@@ -72,8 +74,8 @@ export class CreateVenueComponent implements OnDestroy {
   protected confirmButtonClicked(): void {
     if (this.venueName.valid && !this.loadingState.isLoading && this.organization) {
       this.loadingState = { isLoading: true };
-      this.venueService
-        .createVenue({
+      this.turnierplanApi
+        .invoke(createVenue, {
           body: {
             organizationId: this.organization.id,
             name: this.venueName.value

@@ -2,18 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { mergeMap, Observable, of, Subject, switchMap, takeUntil, tap, zip } from 'rxjs';
 
-import {
-  ApiKeyDto,
-  OrganizationDto,
-  TournamentHeaderDto,
-  VenueDto,
-  ApiKeysService,
-  OrganizationsService,
-  TournamentsService,
-  VenuesService,
-  PlanningRealmHeaderDto,
-  PlanningRealmsService
-} from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
 import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
@@ -38,6 +26,21 @@ import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.co
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { IdWidgetComponent } from '../../components/id-widget/id-widget.component';
+import { OrganizationDto } from '../../../api/models/organization-dto';
+import { TournamentHeaderDto } from '../../../api/models/tournament-header-dto';
+import { VenueDto } from '../../../api/models/venue-dto';
+import { PlanningRealmHeaderDto } from '../../../api/models/planning-realm-header-dto';
+import { ApiKeyDto } from '../../../api/models/api-key-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getOrganization } from '../../../api/fn/organizations/get-organization';
+import { getTournaments } from '../../../api/fn/tournaments/get-tournaments';
+import { getVenues } from '../../../api/fn/venues/get-venues';
+import { getPlanningRealms } from '../../../api/fn/planning-realms/get-planning-realms';
+import { setOrganizationName } from '../../../api/fn/organizations/set-organization-name';
+import { deleteOrganization } from '../../../api/fn/organizations/delete-organization';
+import { deleteApiKey } from '../../../api/fn/api-keys/delete-api-key';
+import { setApiKeyStatus } from '../../../api/fn/api-keys/set-api-key-status';
+import { getApiKeys } from '../../../api/fn/api-keys/get-api-keys';
 
 @Component({
   templateUrl: './view-organization.component.html',
@@ -121,12 +124,8 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
 
   constructor(
     protected readonly authorizationService: AuthorizationService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
-    private readonly organizationService: OrganizationsService,
-    private readonly tournamentService: TournamentsService,
-    private readonly venueService: VenuesService,
-    private readonly planningRealmsService: PlanningRealmsService,
-    private readonly apiKeyService: ApiKeysService,
     private readonly titleService: TitleService,
     private readonly router: Router,
     private readonly notificationService: NotificationService
@@ -143,14 +142,14 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
             return of(undefined);
           }
           this.loadingState = { isLoading: true };
-          return this.organizationService.getOrganization({ id: organizationId });
+          return this.turnierplanApi.invoke(getOrganization, { id: organizationId });
         }),
         mergeMap((organization) => {
           if (!organization) {
             return of([undefined, undefined]);
           }
 
-          return zip(of(organization), this.tournamentService.getTournaments({ organizationId: organization.id }));
+          return zip(of(organization), this.turnierplanApi.invoke(getTournaments, { organizationId: organization.id }));
         })
       )
       .subscribe({
@@ -183,7 +182,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     if (number === ViewOrganizationComponent.venuesPageId && !this.venues && !this.isLoadingVenues) {
       // Load venues only when the page is opened
       this.isLoadingVenues = true;
-      this.venueService.getVenues({ organizationId: this.organization.id }).subscribe({
+      this.turnierplanApi.invoke(getVenues, { organizationId: this.organization.id }).subscribe({
         next: (venues) => {
           this.venues = venues;
           this.isLoadingVenues = false;
@@ -197,7 +196,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     if (number === ViewOrganizationComponent.planningRealmsPageId && !this.planningRealms && !this.isLoadingPlanningRealms) {
       // Load planning realms only when the page is opened
       this.isLoadingPlanningRealms = true;
-      this.planningRealmsService.getPlanningRealms({ organizationId: this.organization.id }).subscribe({
+      this.turnierplanApi.invoke(getPlanningRealms, { organizationId: this.organization.id }).subscribe({
         next: (planningRealms) => {
           this.planningRealms = planningRealms;
           this.isLoadingPlanningRealms = false;
@@ -223,7 +222,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       return;
     }
     this.loadingState = { isLoading: true, error: undefined };
-    this.organizationService.deleteOrganization({ id: this.organization.id }).subscribe({
+    this.turnierplanApi.invoke(deleteOrganization, { id: this.organization.id }).subscribe({
       next: () => {
         this.notificationService.showNotification(
           'info',
@@ -245,7 +244,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
 
     this.isUpdatingName = true;
 
-    this.organizationService.setOrganizationName({ id: this.organization.id, body: { name: name } }).subscribe({
+    this.turnierplanApi.invoke(setOrganizationName, { id: this.organization.id, body: { name: name } }).subscribe({
       next: () => {
         if (this.organization) {
           this.organization.name = name;
@@ -260,8 +259,8 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
   }
 
   protected deleteApiKey(id: string): void {
-    this.apiKeyService
-      .deleteApiKey({ id: id })
+    this.turnierplanApi
+      .invoke(deleteApiKey, { id: id })
       .pipe(switchMap(() => this.loadApiKeys()))
       .subscribe({
         next: () => {
@@ -282,8 +281,8 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.apiKeyService
-      .setApiKeyStatus({ id: apiKey.id, body: { isActive: isActive } })
+    this.turnierplanApi
+      .invoke(setApiKeyStatus, { id: apiKey.id, body: { isActive: isActive } })
       .pipe(switchMap(() => this.loadApiKeys()))
       .subscribe({
         next: () => {
@@ -304,7 +303,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
 
     this.isLoadingApiKeys = true;
 
-    return this.apiKeyService.getApiKeys({ organizationId: this.organization.id }).pipe(
+    return this.turnierplanApi.invoke(getApiKeys, { organizationId: this.organization.id }).pipe(
       tap((apiKeys) => {
         this.apiKeys = apiKeys;
         this.isLoadingApiKeys = false;

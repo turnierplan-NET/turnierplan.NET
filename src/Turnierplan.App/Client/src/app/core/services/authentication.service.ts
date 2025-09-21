@@ -3,8 +3,14 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { catchError, map, Observable, of, ReplaySubject, Subject, switchMap, tap } from 'rxjs';
 
-import { NullableOfChangePasswordFailedReason, IdentityService } from '../../api';
 import { AuthenticatedUser } from '../models/identity';
+import { TurnierplanApi } from '../../api/turnierplan-api';
+import { login } from '../../api/fn/identity/login';
+import { NullableOfChangePasswordFailedReason } from '../../api/models/nullable-of-change-password-failed-reason';
+import { changePassword } from '../../api/fn/identity/change-password';
+import { updateUserData } from '../../api/fn/identity/update-user-data';
+import { refresh } from '../../api/fn/identity/refresh';
+import { logout } from '../../api/fn/identity/logout';
 
 interface TurnierplanAccessToken {
   exp: number;
@@ -39,7 +45,7 @@ export class AuthenticationService implements OnDestroy {
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
-    private readonly identityService: IdentityService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly router: Router
   ) {
     const storedUserId = this.readUserIdFromLocalStorage();
@@ -57,7 +63,7 @@ export class AuthenticationService implements OnDestroy {
   }
 
   public login(email: string, password: string): Observable<'success' | 'failure'> {
-    return this.identityService.login({ body: { eMail: email, password: password } }).pipe(
+    return this.turnierplanApi.invoke(login, { body: { eMail: email, password: password } }).pipe(
       catchError(() => of(undefined)),
       map((result) => {
         if (result && result.success && result.accessToken && result.refreshToken) {
@@ -130,8 +136,8 @@ export class AuthenticationService implements OnDestroy {
     newPassword: string,
     currentPassword: string
   ): Observable<'success' | 'failure' | NullableOfChangePasswordFailedReason> {
-    return this.identityService
-      .changePassword({
+    return this.turnierplanApi
+      .invoke(changePassword, {
         body: {
           eMail: userEmail,
           newPassword: newPassword,
@@ -158,7 +164,7 @@ export class AuthenticationService implements OnDestroy {
   }
 
   public changeUserInformation(userName: string, emailAddress: string): Observable<'success' | 'emailVerificationPending' | 'failure'> {
-    return this.identityService.updateUserData({ body: { userName: userName, eMail: emailAddress } }).pipe(
+    return this.turnierplanApi.invoke(updateUserData, { body: { userName: userName, eMail: emailAddress } }).pipe(
       catchError(() => of(undefined)),
       map((result) => {
         if (result?.success !== true) {
@@ -198,7 +204,7 @@ export class AuthenticationService implements OnDestroy {
         return logoutWithRedirect();
       }
 
-      return this.identityService.refresh().pipe(
+      return this.turnierplanApi.invoke(refresh).pipe(
         switchMap((result) => {
           if (result.success && result.accessToken && result.refreshToken) {
             const decodedAccessToken = this.decodeAccessToken(result.accessToken);
@@ -310,7 +316,7 @@ export class AuthenticationService implements OnDestroy {
   }
 
   private logoutAndClearData(navigateTo?: () => void): Observable<void> {
-    const logout$ = this.identityService.logout().pipe(
+    const logout$ = this.turnierplanApi.invoke(logout).pipe(
       catchError(() => of(undefined)),
       tap(() => {
         localStorage.removeItem(AuthenticationService.localStorageUserNameKey);

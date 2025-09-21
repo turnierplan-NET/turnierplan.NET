@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@ang
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
-import { MatchState, MatchType, NullableOfMatchOutcomeType, SetMatchOutcomeEndpointRequest } from '../../../api';
 import { GroupView } from '../groups/groups.component';
 import { MatchView } from '../match-plan/match-plan.component';
 import { TranslateDirective } from '@ngx-translate/core';
@@ -12,6 +11,10 @@ import { AlertComponent } from '../alert/alert.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { LiveIndicatorComponent } from '../live-indicator/live-indicator.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { NullableOfMatchOutcomeType } from '../../../api/models/nullable-of-match-outcome-type';
+import { SetMatchOutcomeEndpointRequest } from '../../../api/models/set-match-outcome-endpoint-request';
+import { MatchType } from '../../../api/models/match-type';
+import { MatchState } from '../../../api/models/match-state';
 
 @Component({
   templateUrl: './edit-match.component.html',

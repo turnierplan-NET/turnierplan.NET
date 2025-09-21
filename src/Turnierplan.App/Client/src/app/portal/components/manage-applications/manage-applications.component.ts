@@ -1,16 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { ApplicationsFilter, applicationsFilterToQueryParameters } from '../../models/applications-filter';
 import { BehaviorSubject, combineLatestWith, ReplaySubject, switchMap, tap } from 'rxjs';
-import {
-  ApplicationsService,
-  PlanningRealmDto,
-  PaginationResultDtoOfApplicationDto,
-  ApplicationTeamDto,
-  ApplicationDto,
-  PublicId,
-  ApplicationTeamsService,
-  InvitationLinkDto
-} from '../../../api';
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
 import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs/operators';
@@ -27,6 +17,16 @@ import { ViewTournamentComponent } from '../../pages/view-tournament/view-tourna
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';
 import { RenameButtonComponent } from '../rename-button/rename-button.component';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { PaginationResultDtoOfApplicationDto } from '../../../api/models/pagination-result-dto-of-application-dto';
+import { getApplications } from '../../../api/fn/applications/get-applications';
+import { InvitationLinkDto } from '../../../api/models/invitation-link-dto';
+import { ApplicationTeamDto } from '../../../api/models/application-team-dto';
+import { ApplicationDto } from '../../../api/models/application-dto';
+import { setApplicationNotes } from '../../../api/fn/applications/set-application-notes';
+import { PublicId } from '../../../api/models/public-id';
+import { setApplicationTeamName } from '../../../api/fn/application-teams/set-application-team-name';
 
 @Component({
   selector: 'tp-manage-applications',
@@ -76,8 +76,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   private tournamentClassFilter: number[] = [];
 
   constructor(
-    private readonly applicationsService: ApplicationsService,
-    private readonly applicationTeamsService: ApplicationTeamsService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly modalService: NgbModal,
     private readonly localStorageService: LocalStorageService,
     private readonly router: Router
@@ -93,7 +92,7 @@ export class ManageApplicationsComponent implements OnDestroy {
         combineLatestWith(this.reload$),
         tap(() => (this.isLoading = true)),
         switchMap(([filter, _]) => {
-          return this.applicationsService.getApplications({
+          return this.turnierplanApi.invoke(getApplications, {
             planningRealmId: this.planningRealm.id,
             page: this.currentPage,
             pageSize: this.pageSize,
@@ -179,8 +178,8 @@ export class ManageApplicationsComponent implements OnDestroy {
       .pipe(
         tap(() => (this.updatingNotesOfApplicationId = application.id)),
         switchMap((notes) =>
-          this.applicationsService
-            .setApplicationNotes({
+          this.turnierplanApi
+            .invoke(setApplicationNotes, {
               planningRealmId: this.planningRealm.id,
               applicationId: application.id,
               body: {
@@ -207,8 +206,8 @@ export class ManageApplicationsComponent implements OnDestroy {
   }
 
   protected renameTeam(applicationId: number, applicationTeam: ApplicationTeamDto, name: string): void {
-    this.applicationTeamsService
-      .setApplicationTeamName({
+    this.turnierplanApi
+      .invoke(setApplicationTeamName, {
         planningRealmId: this.planningRealm.id,
         applicationId: applicationId,
         applicationTeamId: applicationTeam.id,

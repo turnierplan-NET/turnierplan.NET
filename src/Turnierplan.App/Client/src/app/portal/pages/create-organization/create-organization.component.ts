@@ -3,7 +3,6 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { from, switchMap } from 'rxjs';
 
-import { OrganizationsService } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
@@ -11,6 +10,8 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { createOrganization } from '../../../api/fn/organizations/create-organization';
 
 @Component({
   templateUrl: './create-organization.component.html',
@@ -31,7 +32,7 @@ export class CreateOrganizationComponent implements OnInit {
   protected organizationName = new FormControl('', { nonNullable: true });
 
   constructor(
-    private readonly organizationService: OrganizationsService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly titleService: TitleService
@@ -44,8 +45,8 @@ export class CreateOrganizationComponent implements OnInit {
   protected confirmButtonClicked(): void {
     if (this.organizationName.valid && !this.loadingState.isLoading) {
       this.loadingState = { isLoading: true };
-      this.organizationService
-        .createOrganization({ body: { name: this.organizationName.value } })
+      this.turnierplanApi
+        .invoke(createOrganization, { body: { name: this.organizationName.value } })
         .pipe(switchMap((organization) => from(this.router.navigate(['../../organization', organization.id], { relativeTo: this.route }))))
         .subscribe({
           next: () => {

@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PlanningRealmDto } from '../../../api';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UpdatePlanningRealmFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
 import { ApplicationsFilter } from '../../models/applications-filter';
 import { TranslateDirective } from '@ngx-translate/core';
@@ -12,6 +10,7 @@ import { RenameButtonComponent } from '../rename-button/rename-button.component'
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { AsyncPipe } from '@angular/common';
+import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
 
 @Component({
   selector: 'tp-tournament-classes-manager',
@@ -38,10 +37,7 @@ export class TournamentClassManagerComponent {
 
   protected readonly Actions = Actions;
 
-  constructor(
-    protected readonly authorizationService: AuthorizationService,
-    private readonly modalService: NgbModal
-  ) {}
+  constructor(protected readonly authorizationService: AuthorizationService) {}
 
   protected getNumberOfReferencingLinks(id: number): number {
     return this.planningRealm.invitationLinks.filter((link) => link.entries.some((entry) => entry.tournamentClassId == id)).length;

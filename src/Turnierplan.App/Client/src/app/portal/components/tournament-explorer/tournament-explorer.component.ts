@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 
-import { OrganizationDto, TournamentHeaderDto, FoldersService } from '../../../api';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
 import { Actions } from '../../../generated/actions';
@@ -13,6 +12,10 @@ import { RouterLink } from '@angular/router';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { TranslateDirective } from '@ngx-translate/core';
 import { IdWidgetComponent } from '../id-widget/id-widget.component';
+import { OrganizationDto } from '../../../api/models/organization-dto';
+import { TournamentHeaderDto } from '../../../api/models/tournament-header-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { setFolderName } from '../../../api/fn/folders/set-folder-name';
 
 @Component({
   selector: 'tp-tournament-explorer',
@@ -48,7 +51,7 @@ export class TournamentExplorerComponent implements OnChanges {
   protected isUpdatingFolderName: boolean = false;
 
   constructor(
-    private readonly folderService: FoldersService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly localStorageService: LocalStorageService
   ) {}
 
@@ -76,7 +79,7 @@ export class TournamentExplorerComponent implements OnChanges {
 
   protected renameFolder(folderId: string, name: string): void {
     this.isUpdatingFolderName = true;
-    this.folderService.setFolderName({ id: folderId, body: { name: name } }).subscribe({
+    this.turnierplanApi.invoke(setFolderName, { id: folderId, body: { name: name } }).subscribe({
       next: () => {
         const folder = this.treeData.find((x) => x.folderId === folderId);
         if (folder) {

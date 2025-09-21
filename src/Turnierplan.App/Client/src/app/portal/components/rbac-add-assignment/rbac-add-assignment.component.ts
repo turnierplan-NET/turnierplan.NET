@@ -1,5 +1,4 @@
 import { Component, OnDestroy } from '@angular/core';
-import { CreateRoleAssignmentEndpointRequest, PrincipalKind, Role, RoleAssignmentsService } from '../../../api';
 import { NgbActiveModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { finalize, Observable, Subject } from 'rxjs';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -8,6 +7,11 @@ import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { FormsModule } from '@angular/forms';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
+import { PrincipalKind } from '../../../api/models/principal-kind';
+import { Role } from '../../../api/models/role';
+import { CreateRoleAssignmentEndpointRequest } from '../../../api/models/create-role-assignment-endpoint-request';
+import { createRoleAssignment } from '../../../api/fn/role-assignments/create-role-assignment';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
 
 type Step = 'SelectRole' | 'SelectPrincipal';
 
@@ -31,7 +35,7 @@ export class RbacAddAssignmentComponent implements OnDestroy {
 
   constructor(
     protected readonly modal: NgbActiveModal,
-    private readonly roleAssignmentsService: RoleAssignmentsService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly notificationService: NotificationService
   ) {}
 
@@ -78,8 +82,8 @@ export class RbacAddAssignmentComponent implements OnDestroy {
       userEmail: this.selectedPrincipalKind === PrincipalKind.User ? this.searchPrincipalInput.trim() : null
     };
 
-    this.roleAssignmentsService
-      .createRoleAssignment({ body: request })
+    this.turnierplanApi
+      .invoke(createRoleAssignment, { body: request })
       .pipe(finalize(() => (this.isCreatingRoleAssignment = false)))
       .subscribe({
         next: () => {

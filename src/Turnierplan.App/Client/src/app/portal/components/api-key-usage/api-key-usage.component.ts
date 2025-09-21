@@ -3,13 +3,14 @@ import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core
 import { TranslateService, TranslateDirective } from '@ngx-translate/core';
 import { BehaviorSubject, combineLatestWith, delay, distinctUntilChanged, map, Subject, switchMap, tap } from 'rxjs';
 
-import { ApiKeysService } from '../../../api';
 import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { AlertComponent } from '../alert/alert.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import { EChartsCoreOption } from 'echarts/core';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getApiKeyUsage } from '../../../api/fn/api-keys/get-api-key-usage';
 
 @Component({
   selector: 'tp-api-key-usage',
@@ -31,7 +32,7 @@ export class ApiKeyUsageComponent implements OnDestroy {
 
   private readonly apiKeyId$ = new Subject<string>();
 
-  constructor(apiKeyClient: ApiKeysService, translateService: TranslateService) {
+  constructor(translateService: TranslateService, turnierplanApi: TurnierplanApi) {
     this.apiKeyId$
       .pipe(
         distinctUntilChanged(),
@@ -39,7 +40,7 @@ export class ApiKeyUsageComponent implements OnDestroy {
         map(([x]) => x),
         tap(() => (this.isLoading = true)),
         delay(300),
-        switchMap((id) => apiKeyClient.getApiKeyUsage({ rangeDays: this.timeRange, id: id }))
+        switchMap((id) => turnierplanApi.invoke(getApiKeyUsage, { rangeDays: this.timeRange, id: id }))
       )
       .subscribe({
         next: (data) => {

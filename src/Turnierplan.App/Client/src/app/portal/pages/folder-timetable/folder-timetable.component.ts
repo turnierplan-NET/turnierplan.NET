@@ -3,7 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, combineLatestWith, delayWhen, interval, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
-import { FolderTimetableDto, FolderTimetableTournamentEntry, FoldersService } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
@@ -15,6 +14,10 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { FormsModule } from '@angular/forms';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getFolderTimetable } from '../../../api/fn/folders/get-folder-timetable';
+import { FolderTimetableTournamentEntry } from '../../../api/models/folder-timetable-tournament-entry';
+import { FolderTimetableDto } from '../../../api/models/folder-timetable-dto';
 
 type TimetableView = {
   hourMarks: number[];
@@ -73,8 +76,8 @@ export class FolderTimetableComponent implements OnInit, OnDestroy {
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
-    private readonly folderService: FoldersService,
     private readonly titleService: TitleService,
     private readonly localStorageService: LocalStorageService
   ) {}
@@ -98,7 +101,7 @@ export class FolderTimetableComponent implements OnInit, OnDestroy {
 
           this.loadingState = { isLoading: true };
 
-          return this.folderService.getFolderTimetable({ id: folderId });
+          return this.turnierplanApi.invoke(getFolderTimetable, { id: folderId });
         })
       )
       .subscribe({

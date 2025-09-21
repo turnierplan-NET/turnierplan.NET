@@ -2,13 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, switchMap, take, takeUntil } from 'rxjs';
 
-import { NullableOfChangePasswordFailedReason } from '../../../api';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NgClass } from '@angular/common';
+import { NullableOfChangePasswordFailedReason } from '../../../api/models/nullable-of-change-password-failed-reason';
 
 enum PasswordChangeFailedReason {
   EmptyOrExtraWhitespace = 'EmptyOrExtraWhitespace',

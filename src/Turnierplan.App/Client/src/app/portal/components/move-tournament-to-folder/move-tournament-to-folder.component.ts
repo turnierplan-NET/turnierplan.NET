@@ -3,12 +3,16 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
-import { FolderDto, SetTournamentFolderEndpointRequest, FoldersService, NullableOfPublicId } from '../../../api';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../action-button/action-button.component';
+import { SetTournamentFolderEndpointRequest } from '../../../api/models/set-tournament-folder-endpoint-request';
+import { NullableOfPublicId } from '../../../api/models/nullable-of-public-id';
+import { FolderDto } from '../../../api/models/folder-dto';
+import { getFolders } from '../../../api/fn/folders/get-folders';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
 
 type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 
@@ -41,7 +45,7 @@ export class MoveTournamentToFolderComponent {
 
   constructor(
     protected readonly modal: NgbActiveModal,
-    private readonly folderService: FoldersService
+    private readonly turnierplanApi: TurnierplanApi
   ) {}
 
   protected get disableExistingFolders(): boolean {
@@ -52,7 +56,7 @@ export class MoveTournamentToFolderComponent {
     this.currentFolderId = currentFolderId;
     this.currentFolderName = currentFolderName;
 
-    this.folderService.getFolders({ organizationId: organizationId }).subscribe({
+    this.turnierplanApi.invoke(getFolders, { organizationId: organizationId }).subscribe({
       next: (availableFolders) => {
         this.availableFolders = availableFolders.filter((x) => x.id !== currentFolderId);
         this.availableFolders.sort((a, b) => a.name.localeCompare(b.name));

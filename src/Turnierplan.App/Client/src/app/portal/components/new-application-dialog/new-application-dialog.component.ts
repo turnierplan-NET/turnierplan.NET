@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { CreateApplicationEndpointRequest, PlanningRealmDto } from '../../../api';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateDirective } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { AlertComponent } from '../alert/alert.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
+import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { CreateApplicationEndpointRequest } from '../../../api/models/create-application-endpoint-request';
 
 const atLeastOneTeamValidator = () => {
   return (formArray: AbstractControl): { [key: string]: any } | null => {

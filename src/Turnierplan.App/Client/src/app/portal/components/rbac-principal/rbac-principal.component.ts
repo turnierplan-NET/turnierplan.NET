@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PrincipalDto, PrincipalKind } from '../../../api';
-import { PrincipalsService } from '../../../api/services/principals.service';
 import { catchError, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { NgClass, AsyncPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+import { PrincipalDto } from '../../../api/models/principal-dto';
+import { PrincipalKind } from '../../../api/models/principal-kind';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getPrincipalName } from '../../../api/fn/principals/get-principal-name';
 
 @Component({
   selector: 'tp-rbac-principal',
@@ -20,11 +22,11 @@ export class RbacPrincipalComponent implements OnInit {
   @Input()
   public principal!: PrincipalDto;
 
-  constructor(private readonly principalsService: PrincipalsService) {}
+  constructor(private readonly turnierplanApi: TurnierplanApi) {}
 
   public ngOnInit(): void {
-    this.displayName$ = this.principalsService
-      .getPrincipalName({
+    this.displayName$ = this.turnierplanApi
+      .invoke(getPrincipalName, {
         principalKind: this.principal.kind,
         principalId: this.principal.principalId
       })

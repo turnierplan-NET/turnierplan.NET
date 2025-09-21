@@ -1,12 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
-import {
-  ApplicationsService,
-  CreateApplicationEndpointRequest,
-  PlanningRealmDto,
-  PlanningRealmsService,
-  UpdatePlanningRealmEndpointRequest
-} from '../../../api';
 import { PageFrameComponent, PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
 import { Observable, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
@@ -34,6 +27,14 @@ import { ManageApplicationsFilterComponent } from '../../components/manage-appli
 import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { ManageApplicationsComponent } from '../../components/manage-applications/manage-applications.component';
+import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { CreateApplicationEndpointRequest } from '../../../api/models/create-application-endpoint-request';
+import { UpdatePlanningRealmEndpointRequest } from '../../../api/models/update-planning-realm-endpoint-request';
+import { getPlanningRealm } from '../../../api/fn/planning-realms/get-planning-realm';
+import { createApplication } from '../../../api/fn/applications/create-application';
+import { updatePlanningRealm } from '../../../api/fn/planning-realms/update-planning-realm';
+import { deletePlanningRealm } from '../../../api/fn/planning-realms/delete-planning-realm';
 
 export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
 
@@ -122,10 +123,9 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   private originalPlanningRealm?: PlanningRealmDto;
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly planningRealmService: PlanningRealmsService,
-    private readonly applicationService: ApplicationsService,
     private readonly notificationService: NotificationService,
     private readonly titleService: TitleService,
     private readonly modalService: NgbModal,
@@ -151,7 +151,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
             return of();
           }
           this.loadingState = { isLoading: true };
-          return this.planningRealmService.getPlanningRealm({ id: planningRealmId });
+          return this.turnierplanApi.invoke(getPlanningRealm, { id: planningRealmId });
         })
       )
       .subscribe({
@@ -242,7 +242,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       .pipe(
         tap(() => (this.loadingState = { isLoading: true })),
         switchMap((request: CreateApplicationEndpointRequest) =>
-          this.applicationService.createApplication({ planningRealmId: planningRealmId, body: request })
+          this.turnierplanApi.invoke(createApplication, { planningRealmId: planningRealmId, body: request })
         )
       )
       .subscribe({
@@ -304,9 +304,9 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       }))
     };
 
-    this.planningRealmService
-      .updatePlanningRealm({ id: planningRealmId, body: request })
-      .pipe(switchMap(() => this.planningRealmService.getPlanningRealm({ id: planningRealmId })))
+    this.turnierplanApi
+      .invoke(updatePlanningRealm, { id: planningRealmId, body: request })
+      .pipe(switchMap(() => this.turnierplanApi.invoke(getPlanningRealm, { id: planningRealmId })))
       .subscribe({
         next: (planningRealm) => {
           this.setPlanningRealm(planningRealm);
@@ -325,7 +325,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
 
     const organizationId = this.planningRealm.organizationId;
     this.loadingState = { isLoading: true, error: undefined };
-    this.planningRealmService.deletePlanningRealm({ id: this.planningRealm.id }).subscribe({
+    this.turnierplanApi.invoke(deletePlanningRealm, { id: this.planningRealm.id }).subscribe({
       next: () => {
         this.notificationService.showNotification(
           'info',

@@ -2,12 +2,15 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, switchMap, tap } from 'rxjs';
 
-import { DocumentDto, DocumentsService, TournamentsService } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
 import { TranslateDirective } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
+import { DocumentDto } from '../../../api/models/document-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getTournaments } from '../../../api/fn/tournaments/get-tournaments';
+import { getDocuments } from '../../../api/fn/documents/get-documents';
 
 @Component({
   templateUrl: './document-copy.component.html',
@@ -31,8 +34,7 @@ export class DocumentCopyComponent implements OnInit, OnDestroy {
 
   constructor(
     protected readonly modal: NgbActiveModal,
-    private readonly tournamentService: TournamentsService,
-    private readonly documentService: DocumentsService
+    private readonly turnierplanApi: TurnierplanApi
   ) {}
 
   public set organization(value: { name: string; id: string }) {
@@ -41,7 +43,7 @@ export class DocumentCopyComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.tournamentService.getTournaments({ organizationId: this.organizationId }).subscribe({
+    this.turnierplanApi.invoke(getTournaments, { organizationId: this.organizationId }).subscribe({
       next: (tournaments) => {
         this.folderTree = FolderTreeComponent.generateTree(this.organizationName, tournaments);
         this.selectTreeEntry('/');
@@ -55,7 +57,7 @@ export class DocumentCopyComponent implements OnInit, OnDestroy {
     this.tournamentId$
       .pipe(
         tap(() => (this.isLoadingDocuments = true)),
-        switchMap((id) => this.documentService.getDocuments({ tournamentId: id }))
+        switchMap((id) => this.turnierplanApi.invoke(getDocuments, { tournamentId: id }))
       )
       .subscribe({
         next: (documents) => {

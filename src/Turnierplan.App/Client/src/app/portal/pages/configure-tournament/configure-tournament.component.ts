@@ -3,19 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatestWith, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
-import {
-  AdditionalPlayoffDto,
-  ConfigureTournamentEndpointRequest,
-  ConfigureTournamentEndpointRequestGroupEntry,
-  ConfigureTournamentEndpointRequestTeamEntry,
-  FinalsMatchDefinitionDto,
-  FinalsPhaseConfigurationDto,
-  MatchPlanConfigurationDto,
-  MatchState,
-  MetadataService,
-  TournamentDto,
-  TournamentsService
-} from '../../../api';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 import { NotificationService } from '../../../core/services/notification.service';
 import { ValidationErrorDialogComponent } from '../../components/validation-error-dialog/validation-error-dialog.component';
@@ -36,6 +23,19 @@ import { AbstractTeamSelectorPipe } from '../../pipes/abstract-team-selector.pip
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
 import { ConfigureTournamentAddTeamComponent } from '../../components/configure-tournament-add-team/configure-tournament-add-team.component';
 import { ViewTournamentComponent } from '../view-tournament/view-tournament.component';
+import { FinalsMatchDefinitionDto } from '../../../api/models/finals-match-definition-dto';
+import { TournamentDto } from '../../../api/models/tournament-dto';
+import { getTournament } from '../../../api/fn/tournaments/get-tournament';
+import { getAvailableFinalsMatchDefinitions } from '../../../api/fn/metadata/get-available-finals-match-definitions';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { configureTournament } from '../../../api/fn/tournaments/configure-tournament';
+import { MatchState } from '../../../api/models/match-state';
+import { MatchPlanConfigurationDto } from '../../../api/models/match-plan-configuration-dto';
+import { ConfigureTournamentEndpointRequest } from '../../../api/models/configure-tournament-endpoint-request';
+import { FinalsPhaseConfigurationDto } from '../../../api/models/finals-phase-configuration-dto';
+import { AdditionalPlayoffDto } from '../../../api/models/additional-playoff-dto';
+import { ConfigureTournamentEndpointRequestGroupEntry } from '../../../api/models/configure-tournament-endpoint-request-group-entry';
+import { ConfigureTournamentEndpointRequestTeamEntry } from '../../../api/models/configure-tournament-endpoint-request-team-entry';
 
 interface TemporaryGroup {
   id?: number;
@@ -135,10 +135,9 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
   private originalTournament?: TournamentDto;
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly metadataService: MetadataService,
-    private readonly tournamentService: TournamentsService,
     private readonly notificationService: NotificationService,
     private readonly titleService: TitleService,
     private readonly localStorageService: LocalStorageService,
@@ -215,9 +214,9 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
             return of(undefined);
           }
           this.loadingState = { isLoading: true };
-          return this.tournamentService.getTournament({ id: tournamentId });
+          return this.turnierplanApi.invoke(getTournament, { id: tournamentId });
         }),
-        combineLatestWith(this.metadataService.getAvailableFinalsMatchDefinitions())
+        combineLatestWith(this.turnierplanApi.invoke(getAvailableFinalsMatchDefinitions))
       )
       .subscribe({
         next: ([tournament, finalsMatchDefinitions]) => {
@@ -254,8 +253,8 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
 
     const request = this.createRequest();
 
-    this.tournamentService
-      .configureTournament({ id: this.originalTournament.id, body: request })
+    this.turnierplanApi
+      .invoke(configureTournament, { id: this.originalTournament.id, body: request })
       .pipe(
         switchMap(() => {
           this.isDirty = false;

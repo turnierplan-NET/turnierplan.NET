@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { HttpEvent, HttpHandlerFn, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { AuthorizationService } from '../services/authorization.service';
-import { Role } from '../../api';
+import { Role } from '../../api/models/role';
 
 export const rolesInterceptor = (request: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
   const authorizationService = inject(AuthorizationService);

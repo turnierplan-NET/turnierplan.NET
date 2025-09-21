@@ -2,7 +2,6 @@ import { Component, EventEmitter, Injector, Input, Output } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { switchMap } from 'rxjs';
 
-import { HeaderLineContent, PresentationConfigurationDto, ResultsMode, TournamentsService } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
 import { TournamentSelectComponent } from '../tournament-select/tournament-select.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
@@ -11,6 +10,12 @@ import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UnsavedChangesAlertComponent } from '../unsaved-changes-alert/unsaved-changes-alert.component';
 import { AlertComponent } from '../alert/alert.component';
+import { PresentationConfigurationDto } from '../../../api/models/presentation-configuration-dto';
+import { ResultsMode } from '../../../api/models/results-mode';
+import { HeaderLineContent } from '../../../api/models/header-line-content';
+import { setTournamentPresentationConfiguration } from '../../../api/fn/tournaments/set-tournament-presentation-configuration';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getTournamentPresentationConfiguration } from '../../../api/fn/tournaments/get-tournament-presentation-configuration';
 
 @Component({
   selector: 'tp-presentation-config-widget',
@@ -49,7 +54,7 @@ export class PresentationConfigWidgetComponent {
   protected isSaving = false;
 
   constructor(
-    private readonly tournamentService: TournamentsService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly notificationService: NotificationService,
     private readonly modalService: NgbModal,
     private readonly injector: Injector
@@ -103,7 +108,7 @@ export class PresentationConfigWidgetComponent {
       }
     };
 
-    this.tournamentService.setTournamentPresentationConfiguration({ id: this.tournamentId, body: data }).subscribe({
+    this.turnierplanApi.invoke(setTournamentPresentationConfiguration, { id: this.tournamentId, body: data }).subscribe({
       next: () => {
         this.hasUnsavedChanges = false;
         this.isSaving = false;
@@ -135,7 +140,7 @@ export class PresentationConfigWidgetComponent {
       name: this.organizationName
     };
 
-    ref.closed.pipe(switchMap((id: string) => this.tournamentService.getTournamentPresentationConfiguration({ id: id }))).subscribe({
+    ref.closed.pipe(switchMap((id: string) => this.turnierplanApi.invoke(getTournamentPresentationConfiguration, { id: id }))).subscribe({
       next: (presentationConfiguration) => {
         this.initialize(presentationConfiguration);
         this.hasUnsavedChanges = true;

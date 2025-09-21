@@ -3,7 +3,6 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
-import { FolderDto, FoldersService, OrganizationDto, OrganizationsService, TournamentsService, Visibility } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
@@ -13,6 +12,13 @@ import { NgClass } from '@angular/common';
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { VisibilitySelectorComponent } from '../../components/visibility-selector/visibility-selector.component';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { OrganizationDto } from '../../../api/models/organization-dto';
+import { FolderDto } from '../../../api/models/folder-dto';
+import { Visibility } from '../../../api/models/visibility';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getOrganization } from '../../../api/fn/organizations/get-organization';
+import { getFolders } from '../../../api/fn/folders/get-folders';
+import { createTournament } from '../../../api/fn/tournaments/create-tournament';
 
 type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 
@@ -45,9 +51,7 @@ export class CreateTournamentComponent implements OnDestroy {
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
-    private readonly organizationService: OrganizationsService,
-    private readonly folderService: FoldersService,
-    private readonly tournamentService: TournamentsService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly localStorageService: LocalStorageService,
@@ -64,8 +68,8 @@ export class CreateTournamentComponent implements OnDestroy {
           }
           this.loadingState = { isLoading: true };
           return combineLatest([
-            this.organizationService.getOrganization({ id: organizationId }),
-            this.folderService.getFolders({ organizationId: organizationId })
+            this.turnierplanApi.invoke(getOrganization, { id: organizationId }),
+            this.turnierplanApi.invoke(getFolders, { organizationId: organizationId })
           ]);
         })
       )
@@ -137,8 +141,8 @@ export class CreateTournamentComponent implements OnDestroy {
     if (this.tournamentName.valid && !this.loadingState.isLoading && this.organization) {
       this.loadingState = { isLoading: true };
 
-      this.tournamentService
-        .createTournament({
+      this.turnierplanApi
+        .invoke(createTournament, {
           body: {
             organizationId: this.organization.id,
             name: this.tournamentName.value,
