@@ -6,15 +6,15 @@ public sealed record TournamentImagesDto
 {
     public required PublicId TournamentId { get; init; }
 
-    public required bool HasOrganizerLogo { get; init; }
+    public required bool HasPrimaryLogo { get; init; }
 
-    public required bool HasSponsorLogo { get; init; }
+    public required bool HasSecondaryLogo { get; init; }
 
-    public required bool HasSponsorBanner { get; init; }
+    public required bool HasBannerImage { get; init; }
 
-    public required ImageDto? OrganizerLogo { get; init; }
+    public required ImageDto? PrimaryLogo { get; init; }
 
-    public required ImageDto? SponsorLogo { get; init; }
+    public required ImageDto? SecondaryLogo { get; init; }
 
-    public required ImageDto? SponsorBanner { get; init; }
+    public required ImageDto? BannerImage { get; init; }
 }

@@ -61,11 +61,11 @@
         <div class="mb-3 bg-white border p-3 pe-4 shadow-sm d-flex flex-column flex-lg-row gap-3 align-items-stretch align-items-lg-center">
             <div class="align-self-stretch d-flex d-lg-none flex-row justify-content-evenly">
                 @{ /* This displays the organizer and/or sponsor logo on the top side when viewing on a small screen */ }
-                @if (tournament.PresentationConfiguration.ShowOrganizerLogo && tournament.PrimaryLogo is not null)
+                @if (tournament.PresentationConfiguration.ShowPrimaryLogo && tournament.PrimaryLogo is not null)
                 {
                     <img style="width: 9em;" src="@ImageStorage.GetFullImageUrl(tournament.PrimaryLogo)" alt="@tournament.PrimaryLogo.Name"/>
                 }
-                @if (tournament.PresentationConfiguration.ShowSponsorLogo && tournament.SecondaryLogo is not null)
+                @if (tournament.PresentationConfiguration.ShowSecondaryLogo && tournament.SecondaryLogo is not null)
                 {
                     <img style="width: 9em;" src="@ImageStorage.GetFullImageUrl(tournament.SecondaryLogo)" alt="@tournament.SecondaryLogo.Name"/>
                 }
@@ -75,13 +75,13 @@
                 @await Component.InvokeAsync(typeof(Header), new { tournament, showKickoffAndVenue = true, allowVenueExpand = displayVenueTile })
             </div>
 
-            @if (tournament.PresentationConfiguration.ShowOrganizerLogo && tournament.PrimaryLogo is not null)
+            @if (tournament.PresentationConfiguration.ShowPrimaryLogo && tournament.PrimaryLogo is not null)
             {
                 // This displays the organizer logo on the right side when viewing on a large screen
                 <img style="width: 9em;" class="d-none d-lg-block" src="@ImageStorage.GetFullImageUrl(tournament.PrimaryLogo)" alt="@tournament.PrimaryLogo.Name"/>
             }
 
-            @if (tournament.PresentationConfiguration.ShowSponsorLogo && tournament.SecondaryLogo is not null)
+            @if (tournament.PresentationConfiguration.ShowSecondaryLogo && tournament.SecondaryLogo is not null)
             {
                 // This displays the sponsor logo on the right side when viewing on a large screen
                 <img style="width: 9em;" class="d-none d-lg-block" src="@ImageStorage.GetFullImageUrl(tournament.SecondaryLogo)" alt="@tournament.SecondaryLogo.Name"/>

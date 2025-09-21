@@ -34,11 +34,11 @@
     <div class="position-fixed px-4 overlay-background d-flex flex-row align-items-center gap-3"
          style="width: 100vw; height: 9em; z-index: 10;" id="header-information">
         <!-- Fixed height is necessary because of the way the layout is done -->
-        @if (tournament.PresentationConfiguration.ShowOrganizerLogo && tournament.PrimaryLogo is not null)
+        @if (tournament.PresentationConfiguration.ShowPrimaryLogo && tournament.PrimaryLogo is not null)
         {
             <img style="width: 7em;" src="@ImageStorage.GetFullImageUrl(tournament.PrimaryLogo)" alt="@tournament.PrimaryLogo.Name"/>
         }
-        @if (tournament.PresentationConfiguration.ShowSponsorLogo && tournament.SecondaryLogo is not null)
+        @if (tournament.PresentationConfiguration.ShowSecondaryLogo && tournament.SecondaryLogo is not null)
         {
             <img style="width: 7em;" src="@ImageStorage.GetFullImageUrl(tournament.SecondaryLogo)" alt="@tournament.SecondaryLogo.Name"/>
         }

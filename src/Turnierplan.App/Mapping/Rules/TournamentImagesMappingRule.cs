@@ -7,15 +7,15 @@ internal sealed class TournamentImagesMappingRule : MappingRuleBase<Tournament, 
 {
     protected override TournamentImagesDto Map(IMapper mapper, MappingContext context, Tournament source)
     {
-        return new TournamentImagesDto // TODO Rename properties
+        return new TournamentImagesDto
         {
             TournamentId = source.PublicId,
-            HasOrganizerLogo = source.PrimaryLogo is not null,
-            HasSponsorLogo = source.SecondaryLogo is not null,
-            HasSponsorBanner = source.BannerImage is not null,
-            OrganizerLogo = mapper.MapNullable<ImageDto>(source.PrimaryLogo),
-            SponsorLogo = mapper.MapNullable<ImageDto>(source.SecondaryLogo),
-            SponsorBanner = mapper.MapNullable<ImageDto>(source.BannerImage)
+            HasPrimaryLogo = source.PrimaryLogo is not null,
+            HasSecondaryLogo = source.SecondaryLogo is not null,
+            HasBannerImage = source.BannerImage is not null,
+            PrimaryLogo = mapper.MapNullable<ImageDto>(source.PrimaryLogo),
+            SecondaryLogo = mapper.MapNullable<ImageDto>(source.SecondaryLogo),
+            BannerImage = mapper.MapNullable<ImageDto>(source.BannerImage)
         };
     }
 }

@@ -246,17 +246,17 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         Venue?._tournaments.Add(this);
     }
 
-    public void SetOrganizerLogo(Image.Image? organizerLogo) // TODO Rename
+    public void SetPrimaryLogo(Image.Image? organizerLogo)
     {
         CheckImageTypeAndSetImage(organizerLogo, ImageType.SquareLargeLogo, () => PrimaryLogo = organizerLogo);
     }
 
-    public void SetSponsorLogo(Image.Image? sponsorLogo) // TODO Rename
+    public void SetSecondaryLogo(Image.Image? sponsorLogo)
     {
         CheckImageTypeAndSetImage(sponsorLogo, ImageType.SquareLargeLogo, () => SecondaryLogo = sponsorLogo);
     }
 
-    public void SetSponsorBanner(Image.Image? sponsorBanner) // TODO Rename
+    public void SetBannerImage(Image.Image? sponsorBanner)
     {
         CheckImageTypeAndSetImage(sponsorBanner, ImageType.SponsorBanner, () => BannerImage = sponsorBanner);
     }
