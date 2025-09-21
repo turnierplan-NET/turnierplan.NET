@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 import { switchMap } from 'rxjs';
 
-import { UpdateUserEndpointRequest, UserDto, UsersService } from '../../../api';
+import { UpdateUserEndpointRequest, UserDto } from '../../../api';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
@@ -63,7 +63,6 @@ export class AdministrationPageComponent implements OnInit {
   ];
 
   constructor(
-    private readonly userService: UsersService,
     private readonly titleService: TitleService,
     private readonly authenticationService: AuthenticationService,
     private readonly offcanvasService: NgbOffcanvas,

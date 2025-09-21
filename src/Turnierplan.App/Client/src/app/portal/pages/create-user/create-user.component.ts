@@ -3,7 +3,6 @@ import { AbstractControl, FormControl, FormGroup, Validators, FormsModule, React
 import { ActivatedRoute, Router } from '@angular/router';
 import { from, switchMap } from 'rxjs';
 
-import { UsersService } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
@@ -34,7 +33,6 @@ export class CreateUserComponent implements OnInit {
   });
 
   constructor(
-    private readonly userService: UsersService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly titleService: TitleService

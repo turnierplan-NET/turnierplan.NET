@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
-import { FolderStatisticsDto, FoldersService } from '../../../api';
+import { FolderStatisticsDto } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
@@ -42,7 +42,6 @@ export class FolderStatisticsComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly folderService: FoldersService,
     private readonly titleService: TitleService,
     private readonly translateService: TranslateService
   ) {

@@ -12,9 +12,7 @@ import {
   FinalsPhaseConfigurationDto,
   MatchPlanConfigurationDto,
   MatchState,
-  MetadataService,
-  TournamentDto,
-  TournamentsService
+  TournamentDto
 } from '../../../api';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -137,8 +135,6 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly metadataService: MetadataService,
-    private readonly tournamentService: TournamentsService,
     private readonly notificationService: NotificationService,
     private readonly titleService: TitleService,
     private readonly localStorageService: LocalStorageService,

@@ -4,7 +4,7 @@ import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-transl
 import { PdfJsViewerComponent, PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { finalize, Observable, tap } from 'rxjs';
 
-import { DocumentDto, DocumentsService, DocumentType, MatchPlanDocumentConfiguration, ReceiptsDocumentConfiguration } from '../../../api';
+import { DocumentDto, DocumentType, MatchPlanDocumentConfiguration, ReceiptsDocumentConfiguration } from '../../../api';
 import { DocumentConfiguration } from '../../models/document-configuration';
 import { DocumentConfigComponent, DocumentConfigFrameComponent } from '../document-config-frame/document-config-frame.component';
 import { DocumentConfigMatchPlanComponent } from '../document-config-match-plan/document-config-match-plan.component';
@@ -69,7 +69,6 @@ export class DocumentManagerComponent {
   constructor(
     protected readonly authorizationService: AuthorizationService,
     private readonly injector: Injector,
-    private readonly documentService: DocumentsService,
     private readonly translateService: TranslateService,
     private readonly modalService: NgbModal
   ) {

@@ -1,12 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
-import {
-  ApplicationsService,
-  CreateApplicationEndpointRequest,
-  PlanningRealmDto,
-  PlanningRealmsService,
-  UpdatePlanningRealmEndpointRequest
-} from '../../../api';
+import { CreateApplicationEndpointRequest, PlanningRealmDto, UpdatePlanningRealmEndpointRequest } from '../../../api';
 import { PageFrameComponent, PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
 import { Observable, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
@@ -124,8 +118,6 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly planningRealmService: PlanningRealmsService,
-    private readonly applicationService: ApplicationsService,
     private readonly notificationService: NotificationService,
     private readonly titleService: TitleService,
     private readonly modalService: NgbModal,

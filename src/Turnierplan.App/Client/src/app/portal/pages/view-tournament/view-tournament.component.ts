@@ -7,19 +7,14 @@ import { finalize, map, Observable, of, Subject, switchMap, takeUntil, tap } fro
 import {
   ComputationConfigurationDto,
   DocumentDto,
-  DocumentsService,
   DocumentType,
-  GroupsService,
   ImageType,
-  MatchesService,
   MatchState,
   MatchType,
   NullableOfMatchOutcomeType,
   SetTournamentImageEndpointRequestTarget,
-  TeamsService,
   TournamentDto,
   TournamentImagesDto,
-  TournamentsService,
   Visibility
 } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -177,11 +172,6 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     protected readonly authorizationService: AuthorizationService,
     private readonly injector: Injector,
     private readonly route: ActivatedRoute,
-    private readonly tournamentService: TournamentsService,
-    private readonly documentService: DocumentsService,
-    private readonly matchService: MatchesService,
-    private readonly teamService: TeamsService,
-    private readonly groupService: GroupsService,
     private readonly titleService: TitleService,
     private readonly modalService: NgbModal,
     private readonly notificationService: NotificationService,

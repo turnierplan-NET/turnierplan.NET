@@ -11,8 +11,7 @@ import {
   SetTournamentMatchPlanEndpointRequestEntry,
   TeamDto,
   TeamSelectorDto,
-  TournamentDto,
-  TournamentsService
+  TournamentDto
 } from '../../../api';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -78,7 +77,6 @@ export class EditMatchPlanComponent implements OnInit, OnDestroy, DiscardChanges
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly tournamentService: TournamentsService,
     private readonly titleService: TitleService,
     private readonly notificationService: NotificationService,
     private readonly localStorageService: LocalStorageService,

@@ -3,7 +3,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
-import { FolderDto, SetTournamentFolderEndpointRequest, FoldersService, NullableOfPublicId } from '../../../api';
+import { FolderDto, SetTournamentFolderEndpointRequest, NullableOfPublicId } from '../../../api';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
@@ -39,10 +39,7 @@ export class MoveTournamentToFolderComponent {
   protected moveToFolderId: string | undefined = undefined;
   protected moveToNewFolder = new FormControl<string | undefined>('');
 
-  constructor(
-    protected readonly modal: NgbActiveModal,
-    private readonly folderService: FoldersService
-  ) {}
+  constructor(protected readonly modal: NgbActiveModal) {}
 
   protected get disableExistingFolders(): boolean {
     return !!this.availableFolders && this.availableFolders.length === 0;

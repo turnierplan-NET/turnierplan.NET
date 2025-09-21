@@ -3,7 +3,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
-import { OrganizationDto, OrganizationsService, PlanningRealmsService } from '../../../api';
+import { OrganizationDto } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
@@ -33,8 +33,6 @@ export class CreatePlanningRealmComponent implements OnDestroy {
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
-    private readonly organizationService: OrganizationsService,
-    private readonly planningRealmService: PlanningRealmsService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly titleService: TitleService

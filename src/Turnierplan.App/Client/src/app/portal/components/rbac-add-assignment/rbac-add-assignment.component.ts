@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { CreateRoleAssignmentEndpointRequest, PrincipalKind, Role, RoleAssignmentsService } from '../../../api';
+import { CreateRoleAssignmentEndpointRequest, PrincipalKind, Role } from '../../../api';
 import { NgbActiveModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { finalize, Observable, Subject } from 'rxjs';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -31,7 +31,6 @@ export class RbacAddAssignmentComponent implements OnDestroy {
 
   constructor(
     protected readonly modal: NgbActiveModal,
-    private readonly roleAssignmentsService: RoleAssignmentsService,
     private readonly notificationService: NotificationService
   ) {}
 

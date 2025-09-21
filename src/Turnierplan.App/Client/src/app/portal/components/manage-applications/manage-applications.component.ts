@@ -2,13 +2,11 @@ import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core
 import { ApplicationsFilter, applicationsFilterToQueryParameters } from '../../models/applications-filter';
 import { BehaviorSubject, combineLatestWith, ReplaySubject, switchMap, tap } from 'rxjs';
 import {
-  ApplicationsService,
   PlanningRealmDto,
   PaginationResultDtoOfApplicationDto,
   ApplicationTeamDto,
   ApplicationDto,
   PublicId,
-  ApplicationTeamsService,
   InvitationLinkDto
 } from '../../../api';
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
@@ -76,8 +74,6 @@ export class ManageApplicationsComponent implements OnDestroy {
   private tournamentClassFilter: number[] = [];
 
   constructor(
-    private readonly applicationsService: ApplicationsService,
-    private readonly applicationTeamsService: ApplicationTeamsService,
     private readonly modalService: NgbModal,
     private readonly localStorageService: LocalStorageService,
     private readonly router: Router

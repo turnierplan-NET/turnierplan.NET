@@ -4,7 +4,7 @@ import { AbstractControl, FormControl, FormGroup, Validators, FormsModule, React
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { of, switchMap } from 'rxjs';
 
-import { ApiKeyDto, OrganizationDto, ApiKeysService, OrganizationsService } from '../../../api';
+import { ApiKeyDto, OrganizationDto } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
@@ -42,8 +42,6 @@ export class CreateApiKeyComponent {
   });
 
   constructor(
-    private readonly organizationService: OrganizationsService,
-    private readonly apiKeyService: ApiKeysService,
     private readonly route: ActivatedRoute,
     private readonly titleService: TitleService
   ) {

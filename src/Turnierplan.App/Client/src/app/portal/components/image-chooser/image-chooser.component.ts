@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ImageDto2, ImageType, ImagesService, ImageDto } from '../../../api';
+import { ImageDto2, ImageType, ImageDto } from '../../../api';
 import { Actions } from '../../../generated/actions';
 import { TranslateDirective } from '@ngx-translate/core';
 import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicator.component';
@@ -54,10 +54,7 @@ export class ImageChooserComponent {
 
   protected imageForDetailView?: ImageDto2;
 
-  constructor(
-    protected readonly modal: NgbActiveModal,
-    private readonly imageService: ImagesService
-  ) {}
+  constructor(protected readonly modal: NgbActiveModal) {}
 
   protected get isInImageDetailView(): boolean {
     return this.imageForDetailView !== undefined;

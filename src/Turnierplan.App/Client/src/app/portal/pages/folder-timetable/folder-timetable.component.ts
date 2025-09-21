@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, combineLatestWith, delayWhen, interval, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
-import { FolderTimetableDto, FolderTimetableTournamentEntry, FoldersService } from '../../../api';
+import { FolderTimetableDto, FolderTimetableTournamentEntry } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
@@ -74,7 +74,6 @@ export class FolderTimetableComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly folderService: FoldersService,
     private readonly titleService: TitleService,
     private readonly localStorageService: LocalStorageService
   ) {}

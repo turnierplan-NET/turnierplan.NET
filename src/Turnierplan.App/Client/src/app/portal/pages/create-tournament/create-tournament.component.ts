@@ -3,7 +3,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
-import { FolderDto, FoldersService, OrganizationDto, OrganizationsService, TournamentsService, Visibility } from '../../../api';
+import { FolderDto, OrganizationDto, Visibility } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
@@ -45,9 +45,6 @@ export class CreateTournamentComponent implements OnDestroy {
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
-    private readonly organizationService: OrganizationsService,
-    private readonly folderService: FoldersService,
-    private readonly tournamentService: TournamentsService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly localStorageService: LocalStorageService,

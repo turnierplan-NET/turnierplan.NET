@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs';
 
-import { OrganizationDto, OrganizationsService } from '../../../api';
+import { OrganizationDto } from '../../../api';
 import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
@@ -44,10 +44,7 @@ export class LandingPageComponent implements OnInit {
     }
   ];
 
-  constructor(
-    private readonly organizationService: OrganizationsService,
-    private readonly titleService: TitleService
-  ) {}
+  constructor(private readonly titleService: TitleService) {}
 
   public ngOnInit(): void {
     this.titleService.setTitleTranslated('Portal.LandingPage.Title');

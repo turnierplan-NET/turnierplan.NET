@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PrincipalDto, PrincipalKind } from '../../../api';
-import { PrincipalsService } from '../../../api/services/principals.service';
 import { catchError, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
@@ -20,7 +19,7 @@ export class RbacPrincipalComponent implements OnInit {
   @Input()
   public principal!: PrincipalDto;
 
-  constructor(private readonly principalsService: PrincipalsService) {}
+  constructor() {}
 
   public ngOnInit(): void {
     this.displayName$ = this.principalsService

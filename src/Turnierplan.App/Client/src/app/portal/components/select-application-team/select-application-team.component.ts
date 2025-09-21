@@ -1,14 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { TranslateDirective } from '@ngx-translate/core';
-import {
-  ApplicationsService,
-  ApplicationTeamDto,
-  PaginationResultDtoOfApplicationDto,
-  PlanningRealmDto,
-  PlanningRealmHeaderDto,
-  PlanningRealmsService,
-  PublicId
-} from '../../../api';
+import { ApplicationTeamDto, PaginationResultDtoOfApplicationDto, PlanningRealmDto, PlanningRealmHeaderDto, PublicId } from '../../../api';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { FormsModule } from '@angular/forms';
 import { LocalStorageService } from '../../services/local-storage.service';
@@ -66,11 +58,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   private readonly planningRealmId$ = new Subject<string>();
   private readonly loadApplications$ = new Subject<void>();
 
-  constructor(
-    private readonly planningRealmService: PlanningRealmsService,
-    private readonly applicationsService: ApplicationsService,
-    private readonly localStorageService: LocalStorageService
-  ) {}
+  constructor(private readonly localStorageService: LocalStorageService) {}
 
   public ngOnInit(): void {
     this.isLoadingPlanningRealms = true;

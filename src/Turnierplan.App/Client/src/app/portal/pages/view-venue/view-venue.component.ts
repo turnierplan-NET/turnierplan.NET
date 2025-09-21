@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { of, Subject, switchMap, takeUntil } from 'rxjs';
 
-import { VenueDto, VenuesService } from '../../../api';
+import { VenueDto } from '../../../api';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 import { NotificationService } from '../../../core/services/notification.service';
 import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
@@ -65,7 +65,6 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
   constructor(
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly venueService: VenuesService,
     private readonly notificationService: NotificationService,
     private readonly modalService: NgbModal,
     private readonly titleService: TitleService

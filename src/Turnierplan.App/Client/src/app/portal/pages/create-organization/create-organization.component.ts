@@ -3,7 +3,6 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { from, switchMap } from 'rxjs';
 
-import { OrganizationsService } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
@@ -31,7 +30,6 @@ export class CreateOrganizationComponent implements OnInit {
   protected organizationName = new FormControl('', { nonNullable: true });
 
   constructor(
-    private readonly organizationService: OrganizationsService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly titleService: TitleService

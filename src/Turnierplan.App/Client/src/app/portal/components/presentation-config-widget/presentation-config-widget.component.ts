@@ -2,7 +2,7 @@ import { Component, EventEmitter, Injector, Input, Output } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { switchMap } from 'rxjs';
 
-import { HeaderLineContent, PresentationConfigurationDto, ResultsMode, TournamentsService } from '../../../api';
+import { HeaderLineContent, PresentationConfigurationDto, ResultsMode } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
 import { TournamentSelectComponent } from '../tournament-select/tournament-select.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
@@ -49,7 +49,6 @@ export class PresentationConfigWidgetComponent {
   protected isSaving = false;
 
   constructor(
-    private readonly tournamentService: TournamentsService,
     private readonly notificationService: NotificationService,
     private readonly modalService: NgbModal,
     private readonly injector: Injector

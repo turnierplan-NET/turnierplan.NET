@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { TournamentsService } from '../../../api';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
 import { TranslateDirective } from '@ngx-translate/core';
@@ -19,10 +18,7 @@ export class TournamentSelectComponent implements OnInit {
   private organizationId!: string;
   private organizationName!: string;
 
-  constructor(
-    protected readonly modal: NgbActiveModal,
-    private readonly tournamentService: TournamentsService
-  ) {}
+  constructor(protected readonly modal: NgbActiveModal) {}
 
   public set organization(value: { name: string; id: string }) {
     this.organizationId = value.id;
