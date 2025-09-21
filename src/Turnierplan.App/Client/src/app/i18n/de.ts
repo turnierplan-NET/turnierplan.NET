@@ -423,7 +423,8 @@ export const de = {
             SignatureRecipientTooltip:
               'Wenn angegeben, wird dieser Zahlungsempfänger im Bereich der Unterschrift angegeben. Als Standard steht dort "(Turnierleitung)".',
             SignatureRecipientInvalid: 'Der angegebene Text ist ungültig.',
-            ShowSponsorLogo: 'Sponsorlogo abbilden (falls vorhanden)',
+            ShowPrimaryLogo: 'Hauptlogo abbilden (falls vorhanden)',
+            ShowSecondaryLogo: 'zweites Logo abbilden (falls vorhanden)',
             CombineSimilarTeams: 'Mannschaften mit ähnlichem Namen kombinieren',
             CombineSimilarTeamsTooltip:
               'Mannschaften, welche sich nur durch eine bis zu dreistellige Zahl am Ende des Namens unterscheiden, werden auf eine Quittung gedruckt. (römische Zahlen bis 10 werden unterstützt)',
