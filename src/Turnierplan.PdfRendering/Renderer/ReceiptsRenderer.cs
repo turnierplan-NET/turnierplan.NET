@@ -36,16 +36,16 @@ public sealed partial class ReceiptsRenderer(TelemetryClient telemetryClient, II
                     {
                         baseColumn.Item().Extend().Border(2).Padding(6).Column(column =>
                         {
-                            if (tournament.OrganizerLogo is not null)
+                            if (configuration.ShowPrimaryLogo && tournament.PrimaryLogo is not null)
                             {
-                                _telemetryClient.TrackTrace("Loading tournament organizer logo from external source.");
-                                column.Item().Unconstrained().Width(1.7f, Unit.Centimetre).Image(tournament.OrganizerLogo, imageStorage);
+                                _telemetryClient.TrackTrace("Loading tournament primary logo from external source.");
+                                column.Item().Unconstrained().Width(1.7f, Unit.Centimetre).Image(tournament.PrimaryLogo, imageStorage);
                             }
 
-                            if (configuration.ShowSponsorLogo && tournament.SponsorLogo is not null)
+                            if (configuration.ShowSecondaryLogo && tournament.SecondaryLogo is not null)
                             {
-                                _telemetryClient.TrackTrace("Loading tournament sponsor logo from external source.");
-                                column.Item().AlignRight().Unconstrained().TranslateX(-1.7f, Unit.Centimetre).Width(1.7f, Unit.Centimetre).Image(tournament.SponsorLogo, imageStorage);
+                                _telemetryClient.TrackTrace("Loading tournament secondary logo from external source.");
+                                column.Item().AlignRight().Unconstrained().TranslateX(-1.7f, Unit.Centimetre).Width(1.7f, Unit.Centimetre).Image(tournament.SecondaryLogo, imageStorage);
                             }
 
                             column.Item().PaddingVertical(10).MinHeight(12, Unit.Millimetre).AlignMiddle().Column(headerColumn =>

@@ -10,9 +10,9 @@ public sealed record PresentationConfigurationDto
 
     public required PresentationConfiguration.ResultsMode ShowResults { get; init; }
 
-    public required bool ShowOrganizerLogo { get; init; }
+    public required bool ShowPrimaryLogo { get; init; }
 
-    public required bool ShowSponsorLogo { get; init; }
+    public required bool ShowSecondaryLogo { get; init; }
 
     public sealed record HeaderLine
     {

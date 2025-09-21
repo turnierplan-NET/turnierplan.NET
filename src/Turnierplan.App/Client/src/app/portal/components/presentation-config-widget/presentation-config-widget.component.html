@@ -95,13 +95,13 @@
         class="form-check-input"
         type="checkbox"
         role="switch"
-        id="showOrganizerLogo"
-        [ngModel]="showOrganizerLogo"
-        (ngModelChange)="showOrganizerLogo = $event; onChanged()" />
+        id="showPrimaryLogo"
+        [ngModel]="showPrimaryLogo"
+        (ngModelChange)="showPrimaryLogo = $event; onChanged()" />
       <label
         class="form-check-label"
-        for="showOrganizerLogo"
-        translate="Portal.ViewTournament.Share.PresentationConfig.ShowOrganizerLogo"></label>
+        for="showPrimaryLogo"
+        translate="Portal.ViewTournament.Share.PresentationConfig.ShowPrimaryLogo"></label>
     </div>
 
     <div class="form-check form-switch">
@@ -109,13 +109,13 @@
         class="form-check-input"
         type="checkbox"
         role="switch"
-        id="showSponsorLogo"
-        [ngModel]="showSponsorLogo"
-        (ngModelChange)="showSponsorLogo = $event; onChanged()" />
+        id="showSecondaryLogo"
+        [ngModel]="showSecondaryLogo"
+        (ngModelChange)="showSecondaryLogo = $event; onChanged()" />
       <label
         class="form-check-label"
-        for="showSponsorLogo"
-        translate="Portal.ViewTournament.Share.PresentationConfig.ShowSponsorLogo"></label>
+        for="showSecondaryLogo"
+        translate="Portal.ViewTournament.Share.PresentationConfig.ShowSecondaryLogo"></label>
     </div>
   </div>
 </div>

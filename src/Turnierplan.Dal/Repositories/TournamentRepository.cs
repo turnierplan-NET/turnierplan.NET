@@ -58,9 +58,9 @@ internal sealed class TournamentRepository(TurnierplanContext context) : Reposit
 
         if (includes.HasFlag(ITournamentRepository.Includes.Images))
         {
-            query = query.Include(x => x.OrganizerLogo);
-            query = query.Include(x => x.SponsorLogo);
-            query = query.Include(x => x.SponsorBanner);
+            query = query.Include(x => x.PrimaryLogo);
+            query = query.Include(x => x.SecondaryLogo);
+            query = query.Include(x => x.BannerImage);
         }
 
         query = query.Include(x => x.Organization).ThenInclude(x => x.RoleAssignments);

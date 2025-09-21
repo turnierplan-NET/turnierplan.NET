@@ -115,8 +115,8 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
     {
         var maxWidth = imageType switch
         {
-            ImageType.SquareLargeLogo => 400,
-            ImageType.SponsorBanner => 1600,
+            ImageType.Logo => 400,
+            ImageType.Banner => 1600,
             _ => throw new ArgumentOutOfRangeException(nameof(imageType), imageType, null)
         };
 

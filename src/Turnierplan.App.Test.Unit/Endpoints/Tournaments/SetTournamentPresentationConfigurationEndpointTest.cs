@@ -21,8 +21,8 @@ public sealed class SetTournamentPresentationConfigurationEndpointTest
             CustomContent = null
         },
         ShowResults = PresentationConfiguration.ResultsMode.Default,
-        ShowOrganizerLogo = true,
-        ShowSponsorLogo = true
+        ShowPrimaryLogo = true,
+        ShowSecondaryLogo = true
     };
 
     public SetTournamentPresentationConfigurationEndpointTest()
