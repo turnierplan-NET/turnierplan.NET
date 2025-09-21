@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, switchMap, take, takeUntil } from 'rxjs';
 
-import { NullableOfChangePasswordFailedReason } from '../../../api';
 import { AuthenticationService } from '../../../core/services/authentication.service';
 import { NotificationService } from '../../../core/services/notification.service';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';

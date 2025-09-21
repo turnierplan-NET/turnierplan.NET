@@ -1,6 +1,4 @@
-﻿import { TeamComparisonMode } from '../../../api';
-
-export type ComparisonModeOption = {
+﻿export type ComparisonModeOption = {
   id: number;
   modes: TeamComparisonMode[];
   isStandard: boolean;

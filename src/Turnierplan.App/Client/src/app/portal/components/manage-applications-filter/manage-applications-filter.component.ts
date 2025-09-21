@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ApplicationsFilter, defaultApplicationsFilter, InvitationLinkFilterValue } from '../../models/applications-filter';
-import { PlanningRealmDto } from '../../../api';
 import { MultiSelectFilterOption, MultiSelectFilterComponent } from '../multi-select-filter/multi-select-filter.component';
 import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';

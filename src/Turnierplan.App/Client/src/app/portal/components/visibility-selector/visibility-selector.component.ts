@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Visibility } from '../../../api';
 import { NgClass } from '@angular/common';
 import { TranslateDirective } from '@ngx-translate/core';
 

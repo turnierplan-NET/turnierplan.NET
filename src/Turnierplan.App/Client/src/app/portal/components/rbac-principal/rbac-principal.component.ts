@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PrincipalDto, PrincipalKind } from '../../../api';
 import { catchError, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';

@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@ang
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
-import { MatchState, MatchType, NullableOfMatchOutcomeType, SetMatchOutcomeEndpointRequest } from '../../../api';
 import { GroupView } from '../groups/groups.component';
 import { MatchView } from '../match-plan/match-plan.component';
 import { TranslateDirective } from '@ngx-translate/core';

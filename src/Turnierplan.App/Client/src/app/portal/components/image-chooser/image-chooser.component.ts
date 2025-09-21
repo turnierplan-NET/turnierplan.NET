@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ImageDto2, ImageType, ImageDto } from '../../../api';
 import { Actions } from '../../../generated/actions';
 import { TranslateDirective } from '@ngx-translate/core';
 import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicator.component';

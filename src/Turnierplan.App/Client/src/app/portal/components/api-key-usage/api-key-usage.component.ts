@@ -9,8 +9,6 @@ import { AlertComponent } from '../alert/alert.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import { EChartsCoreOption } from 'echarts/core';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getApiKeyUsage } from '../../../api';
 
 @Component({
   selector: 'tp-api-key-usage',
@@ -32,7 +30,7 @@ export class ApiKeyUsageComponent implements OnDestroy {
 
   private readonly apiKeyId$ = new Subject<string>();
 
-  constructor(translateService: TranslateService, turnierplanApi: TurnierplanApi) {
+  constructor(translateService: TranslateService) {
     this.apiKeyId$
       .pipe(
         distinctUntilChanged(),

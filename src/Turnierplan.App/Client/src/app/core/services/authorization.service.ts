@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Role } from '../../api';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Action } from '../../generated/actions';
 import { map } from 'rxjs/operators';

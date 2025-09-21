@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { catchError, map, Observable, of, ReplaySubject, Subject, switchMap, tap } from 'rxjs';
 
-import { NullableOfChangePasswordFailedReason } from '../../api';
 import { AuthenticatedUser } from '../models/identity';
 
 interface TurnierplanAccessToken {
@@ -38,9 +37,7 @@ export class AuthenticationService implements OnDestroy {
   private tokenEnsureCompleted$?: Subject<boolean>;
   private readonly destroyed$ = new Subject<void>();
 
-  constructor(
-    private readonly router: Router
-  ) {
+  constructor(private readonly router: Router) {
     const storedUserId = this.readUserIdFromLocalStorage();
     const storedUserName = this.readUserNameFromLocalStorage();
     const storedUserEMail = this.readUserEMailFromLocalStorage();

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ImageDto, ImageType } from '../../../api';
 import { ImageChooserComponent, ImageChooserResult } from '../image-chooser/image-chooser.component';
 import { TranslateDirective } from '@ngx-translate/core';
 import { ActionButtonComponent } from '../action-button/action-button.component';

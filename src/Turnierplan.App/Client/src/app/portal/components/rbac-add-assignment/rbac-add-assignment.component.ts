@@ -1,5 +1,4 @@
 import { Component, OnDestroy } from '@angular/core';
-import { CreateRoleAssignmentEndpointRequest, PrincipalKind, Role } from '../../../api';
 import { NgbActiveModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { finalize, Observable, Subject } from 'rxjs';
 import { NotificationService } from '../../../core/services/notification.service';

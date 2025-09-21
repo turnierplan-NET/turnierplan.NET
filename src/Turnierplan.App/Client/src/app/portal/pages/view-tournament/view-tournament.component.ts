@@ -4,19 +4,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { finalize, map, Observable, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
-import {
-  ComputationConfigurationDto,
-  DocumentDto,
-  DocumentType,
-  ImageType,
-  MatchState,
-  MatchType,
-  NullableOfMatchOutcomeType,
-  SetTournamentImageEndpointRequestTarget,
-  TournamentDto,
-  TournamentImagesDto,
-  Visibility
-} from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
 import { ComputationConfigurationComponent } from '../../components/computation-configuration/computation-configuration.component';
 import { DocumentCopyComponent } from '../../components/document-copy/document-copy.component';

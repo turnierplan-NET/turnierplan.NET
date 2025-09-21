@@ -12,7 +12,6 @@ import {
   ViewChildren
 } from '@angular/core';
 
-import { MatchType } from '../../../api';
 import { GroupView } from '../groups/groups.component';
 import { MatchView } from '../match-plan/match-plan.component';
 import { NgClass, NgTemplateOutlet, NgStyle } from '@angular/common';

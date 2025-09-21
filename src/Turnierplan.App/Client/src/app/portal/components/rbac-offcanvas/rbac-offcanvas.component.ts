@@ -1,6 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
 import { finalize, Observable, Subject } from 'rxjs';
-import { Role, RoleAssignmentDto } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
 import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { RbacAddAssignmentComponent } from '../rbac-add-assignment/rbac-add-assignment.component';

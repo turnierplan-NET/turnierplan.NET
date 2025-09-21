@@ -1,14 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { ApplicationsFilter, applicationsFilterToQueryParameters } from '../../models/applications-filter';
 import { BehaviorSubject, combineLatestWith, ReplaySubject, switchMap, tap } from 'rxjs';
-import {
-  PlanningRealmDto,
-  PaginationResultDtoOfApplicationDto,
-  ApplicationTeamDto,
-  ApplicationDto,
-  PublicId,
-  InvitationLinkDto
-} from '../../../api';
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
 import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs/operators';

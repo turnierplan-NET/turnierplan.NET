@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { mergeMap, Observable, of, Subject, switchMap, takeUntil, tap, zip } from 'rxjs';
 
-import { ApiKeyDto, OrganizationDto, TournamentHeaderDto, VenueDto, PlanningRealmHeaderDto } from '../../../api';
 import { NotificationService } from '../../../core/services/notification.service';
 import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';

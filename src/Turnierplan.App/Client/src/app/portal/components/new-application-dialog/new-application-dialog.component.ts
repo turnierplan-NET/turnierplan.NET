@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CreateApplicationEndpointRequest, PlanningRealmDto } from '../../../api';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateDirective } from '@ngx-translate/core';

@@ -3,17 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatestWith, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
-import {
-  AdditionalPlayoffDto,
-  ConfigureTournamentEndpointRequest,
-  ConfigureTournamentEndpointRequestGroupEntry,
-  ConfigureTournamentEndpointRequestTeamEntry,
-  FinalsMatchDefinitionDto,
-  FinalsPhaseConfigurationDto,
-  MatchPlanConfigurationDto,
-  MatchState,
-  TournamentDto
-} from '../../../api';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 import { NotificationService } from '../../../core/services/notification.service';
 import { ValidationErrorDialogComponent } from '../../components/validation-error-dialog/validation-error-dialog.component';

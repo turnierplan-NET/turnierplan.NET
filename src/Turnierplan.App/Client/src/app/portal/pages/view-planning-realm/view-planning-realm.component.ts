@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
-import { CreateApplicationEndpointRequest, PlanningRealmDto, UpdatePlanningRealmEndpointRequest } from '../../../api';
 import { PageFrameComponent, PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
 import { Observable, of, Subject, switchMap, takeUntil, tap } from 'rxjs';

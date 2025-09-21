@@ -4,15 +4,6 @@ import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-transl
 import { DndDropEvent, DndDropzoneDirective, DndDraggableDirective, DndHandleDirective, DndPlaceholderRefDirective } from 'ngx-drag-drop';
 import { combineLatestWith, from, of, Subject, switchMap, takeUntil } from 'rxjs';
 
-import {
-  GroupDto,
-  MatchState,
-  MatchType,
-  SetTournamentMatchPlanEndpointRequestEntry,
-  TeamDto,
-  TeamSelectorDto,
-  TournamentDto
-} from '../../../api';
 import { DiscardChangesDetector } from '../../../core/guards/discard-changes.guard';
 import { NotificationService } from '../../../core/services/notification.service';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';

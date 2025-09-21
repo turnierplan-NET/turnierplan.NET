@@ -9,7 +9,6 @@ import { NgClass, AsyncPipe } from '@angular/common';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
-import { PublicId, TeamLinkDto } from '../../../api';
 import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';

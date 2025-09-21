@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 
-import { VenueDto } from '../../../api';
 import { TranslateDirective } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 

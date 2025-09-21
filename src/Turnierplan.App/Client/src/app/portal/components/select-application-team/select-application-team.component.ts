@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { TranslateDirective } from '@ngx-translate/core';
-import { ApplicationTeamDto, PaginationResultDtoOfApplicationDto, PlanningRealmDto, PlanningRealmHeaderDto, PublicId } from '../../../api';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { FormsModule } from '@angular/forms';
 import { LocalStorageService } from '../../services/local-storage.service';

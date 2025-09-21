@@ -7,7 +7,6 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { NgClass } from '@angular/common';
 import { TemporaryTeam } from '../../pages/configure-tournament/configure-tournament.component';
 import { SelectApplicationTeamComponent, SelectApplicationTeamResult } from '../select-application-team/select-application-team.component';
-import { PublicId } from '../../../api';
 
 enum AddTeamMode {
   NewTeam = 'NewTeam',
