@@ -51,13 +51,13 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
 
                     if (tournament.PrimaryLogo is not null)
                     {
-                        _telemetryClient.TrackTrace("Loading tournament organizer logo from external source.");
+                        _telemetryClient.TrackTrace("Loading tournament primary logo from external source.");
                         column.Item().Unconstrained().Width(3, Unit.Centimetre).Image(tournament.PrimaryLogo, imageStorage);
                     }
 
                     if (tournament.SecondaryLogo is not null)
                     {
-                        _telemetryClient.TrackTrace("Loading tournament sponsor logo from external source.");
+                        _telemetryClient.TrackTrace("Loading tournament secondary logo from external source.");
                         column.Item().AlignRight().Unconstrained().TranslateX(-3, Unit.Centimetre).Width(3, Unit.Centimetre).Image(tournament.SecondaryLogo, imageStorage);
                     }
 
@@ -88,7 +88,7 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
 
                     if (tournament.BannerImage is not null)
                     {
-                        _telemetryClient.TrackTrace("Loading tournament sponsor banner from external source.");
+                        _telemetryClient.TrackTrace("Loading tournament banner image from external source.");
                         column.Item().PaddingVertical(16).Image(tournament.BannerImage, imageStorage);
                     }
 

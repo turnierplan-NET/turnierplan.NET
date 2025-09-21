@@ -38,13 +38,13 @@ public sealed partial class ReceiptsRenderer(TelemetryClient telemetryClient, II
                         {
                             if (configuration.ShowPrimaryLogo && tournament.PrimaryLogo is not null)
                             {
-                                _telemetryClient.TrackTrace("Loading tournament organizer logo from external source.");
+                                _telemetryClient.TrackTrace("Loading tournament primary logo from external source.");
                                 column.Item().Unconstrained().Width(1.7f, Unit.Centimetre).Image(tournament.PrimaryLogo, imageStorage);
                             }
 
                             if (configuration.ShowSecondaryLogo && tournament.SecondaryLogo is not null)
                             {
-                                _telemetryClient.TrackTrace("Loading tournament sponsor logo from external source.");
+                                _telemetryClient.TrackTrace("Loading tournament secondary logo from external source.");
                                 column.Item().AlignRight().Unconstrained().TranslateX(-1.7f, Unit.Centimetre).Width(1.7f, Unit.Centimetre).Image(tournament.SecondaryLogo, imageStorage);
                             }
 
