@@ -49,16 +49,16 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
                         return $"{sectionNumber}. {sectionTitle}";
                     }
 
-                    if (tournament.OrganizerLogo is not null)
+                    if (tournament.PrimaryLogo is not null)
                     {
                         _telemetryClient.TrackTrace("Loading tournament organizer logo from external source.");
-                        column.Item().Unconstrained().Width(3, Unit.Centimetre).Image(tournament.OrganizerLogo, imageStorage);
+                        column.Item().Unconstrained().Width(3, Unit.Centimetre).Image(tournament.PrimaryLogo, imageStorage);
                     }
 
-                    if (tournament.SponsorLogo is not null)
+                    if (tournament.SecondaryLogo is not null)
                     {
                         _telemetryClient.TrackTrace("Loading tournament sponsor logo from external source.");
-                        column.Item().AlignRight().Unconstrained().TranslateX(-3, Unit.Centimetre).Width(3, Unit.Centimetre).Image(tournament.SponsorLogo, imageStorage);
+                        column.Item().AlignRight().Unconstrained().TranslateX(-3, Unit.Centimetre).Width(3, Unit.Centimetre).Image(tournament.SecondaryLogo, imageStorage);
                     }
 
                     var organizerName = string.IsNullOrWhiteSpace(configuration.OrganizerNameOverride)
@@ -86,10 +86,10 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
 
                     column.Item().AlignCenter().GroupPhaseMatches(tournament, localization, configuration.Outcomes);
 
-                    if (tournament.SponsorBanner is not null)
+                    if (tournament.BannerImage is not null)
                     {
                         _telemetryClient.TrackTrace("Loading tournament sponsor banner from external source.");
-                        column.Item().PaddingVertical(16).Image(tournament.SponsorBanner, imageStorage);
+                        column.Item().PaddingVertical(16).Image(tournament.BannerImage, imageStorage);
                     }
 
                     if (configuration.Outcomes is MatchPlanOutcomes.ShowEmptyOutcomeStructures or MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes)

@@ -79,11 +79,11 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     public PresentationConfiguration PresentationConfiguration { get; set; }
 
-    public Image.Image? OrganizerLogo { get; internal set; }
+    public Image.Image? PrimaryLogo { get; internal set; }
 
-    public Image.Image? SponsorLogo { get; internal set; }
+    public Image.Image? SecondaryLogo { get; internal set; }
 
-    public Image.Image? SponsorBanner { get; internal set; }
+    public Image.Image? BannerImage { get; internal set; }
 
     public IReadOnlyList<Team> Teams => _teams.AsReadOnly();
 
@@ -246,19 +246,19 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         Venue?._tournaments.Add(this);
     }
 
-    public void SetOrganizerLogo(Image.Image? organizerLogo)
+    public void SetOrganizerLogo(Image.Image? organizerLogo) // TODO Rename
     {
-        CheckImageTypeAndSetImage(organizerLogo, ImageType.SquareLargeLogo, () => OrganizerLogo = organizerLogo);
+        CheckImageTypeAndSetImage(organizerLogo, ImageType.SquareLargeLogo, () => PrimaryLogo = organizerLogo);
     }
 
-    public void SetSponsorLogo(Image.Image? sponsorLogo)
+    public void SetSponsorLogo(Image.Image? sponsorLogo) // TODO Rename
     {
-        CheckImageTypeAndSetImage(sponsorLogo, ImageType.SquareLargeLogo, () => SponsorLogo = sponsorLogo);
+        CheckImageTypeAndSetImage(sponsorLogo, ImageType.SquareLargeLogo, () => SecondaryLogo = sponsorLogo);
     }
 
-    public void SetSponsorBanner(Image.Image? sponsorBanner)
+    public void SetSponsorBanner(Image.Image? sponsorBanner) // TODO Rename
     {
-        CheckImageTypeAndSetImage(sponsorBanner, ImageType.SponsorBanner, () => SponsorBanner = sponsorBanner);
+        CheckImageTypeAndSetImage(sponsorBanner, ImageType.SponsorBanner, () => BannerImage = sponsorBanner);
     }
 
     public void ShiftToTimezone(TimeZoneInfo timeZone)

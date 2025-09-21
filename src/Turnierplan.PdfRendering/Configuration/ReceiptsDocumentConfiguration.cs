@@ -20,7 +20,7 @@ public sealed record ReceiptsDocumentConfiguration : IDocumentConfiguration
 
     public string SignatureRecipient { get; init; } = string.Empty;
 
-    public bool ShowSponsorLogo { get; init; } = false;
+    public bool ShowSponsorLogo { get; init; } = false; // TODO Rename
 
     public bool CombineSimilarTeams { get; init; } = false;
 
