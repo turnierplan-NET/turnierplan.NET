@@ -41,6 +41,41 @@ import { DeleteWidgetComponent } from '../../components/delete-widget/delete-wid
 import { MatchTreeComponent } from '../../components/match-tree/match-tree.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { IdWidgetComponent } from '../../components/id-widget/id-widget.component';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import {
+  ComputationConfigurationDto,
+  DocumentDto,
+  DocumentType,
+  ImageType,
+  MatchState,
+  MatchType,
+  NullableOfMatchOutcomeType,
+  SetTournamentImageEndpointRequestTarget,
+  TournamentDto,
+  TournamentImagesDto,
+  Visibility
+} from '../../../api/models';
+import {
+  copyDocument,
+  createDocument,
+  deleteDocument,
+  deleteTournament,
+  getDocuments,
+  getTournament,
+  getTournamentImages,
+  setGroupName,
+  setMatchOutcome,
+  setTeamEntryFeePaid,
+  setTeamName,
+  setTeamOutOfCompetition,
+  setTeamPriority,
+  setTournamentComputationConfiguration,
+  setTournamentFolder,
+  setTournamentImage,
+  setTournamentName,
+  setTournamentVenue,
+  setTournamentVisibility
+} from '../../../api/functions';
 
 @Component({
   templateUrl: './view-tournament.component.html',
@@ -157,6 +192,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
 
   constructor(
     protected readonly authorizationService: AuthorizationService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly injector: Injector,
     private readonly route: ActivatedRoute,
     private readonly titleService: TitleService,

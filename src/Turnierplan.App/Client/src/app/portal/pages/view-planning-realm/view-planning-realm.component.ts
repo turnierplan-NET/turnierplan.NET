@@ -27,6 +27,11 @@ import { ManageApplicationsFilterComponent } from '../../components/manage-appli
 import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { ManageApplicationsComponent } from '../../components/manage-applications/manage-applications.component';
+import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { createApplication, deletePlanningRealm, getPlanningRealm, updatePlanningRealm } from '../../../api/functions';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { CreateApplicationEndpointRequest } from '../../../api/models/create-application-endpoint-request';
+import { UpdatePlanningRealmEndpointRequest } from '../../../api/models/update-planning-realm-endpoint-request';
 
 export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
 
@@ -115,6 +120,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   private originalPlanningRealm?: PlanningRealmDto;
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly notificationService: NotificationService,

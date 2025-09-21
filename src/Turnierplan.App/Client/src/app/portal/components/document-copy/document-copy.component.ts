@@ -7,6 +7,9 @@ import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree
 import { TranslateDirective } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
+import { DocumentDto } from '../../../api/models/document-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getDocuments, getTournaments } from '../../../api/functions';
 
 @Component({
   templateUrl: './document-copy.component.html',
@@ -28,7 +31,10 @@ export class DocumentCopyComponent implements OnInit, OnDestroy {
   private organizationId!: string;
   private organizationName!: string;
 
-  constructor(protected readonly modal: NgbActiveModal) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly turnierplanApi: TurnierplanApi
+  ) {}
 
   public set organization(value: { name: string; id: string }) {
     this.organizationId = value.id;

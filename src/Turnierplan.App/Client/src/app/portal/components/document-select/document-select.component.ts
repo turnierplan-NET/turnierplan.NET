@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { getDocumentName } from '../../helpers/document-name';
+import { DocumentType } from '../../../api/models/document-type';
 
 type DocumentTypeEntry = {
   displayName: string;

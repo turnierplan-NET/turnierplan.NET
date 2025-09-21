@@ -26,6 +26,23 @@ import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.co
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { IdWidgetComponent } from '../../components/id-widget/id-widget.component';
+import { OrganizationDto } from '../../../api/models/organization-dto';
+import { TournamentHeaderDto } from '../../../api/models/tournament-header-dto';
+import { VenueDto } from '../../../api/models/venue-dto';
+import { PlanningRealmHeaderDto } from '../../../api/models/planning-realm-header-dto';
+import { ApiKeyDto } from '../../../api/models/api-key-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import {
+  deleteApiKey,
+  deleteOrganization,
+  getApiKeys,
+  getOrganization,
+  getPlanningRealms,
+  getTournaments,
+  getVenues,
+  setApiKeyStatus,
+  setOrganizationName
+} from '../../../api/functions';
 
 @Component({
   templateUrl: './view-organization.component.html',
@@ -109,6 +126,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
 
   constructor(
     protected readonly authorizationService: AuthorizationService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly titleService: TitleService,
     private readonly router: Router,

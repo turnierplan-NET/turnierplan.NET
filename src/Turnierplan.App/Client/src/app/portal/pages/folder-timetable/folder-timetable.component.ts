@@ -14,6 +14,9 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { FormsModule } from '@angular/forms';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getFolderTimetable } from '../../../api/functions';
+import { FolderTimetableDto, FolderTimetableTournamentEntry } from '../../../api/models';
 
 type TimetableView = {
   hourMarks: number[];
@@ -72,6 +75,7 @@ export class FolderTimetableComponent implements OnInit, OnDestroy {
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly titleService: TitleService,
     private readonly localStorageService: LocalStorageService

@@ -20,6 +20,9 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
+import { VenueDto } from '../../../api/models/venue-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { deleteVenue, getVenue, updateVenue } from '../../../api/functions';
 
 @Component({
   templateUrl: './view-venue.component.html',
@@ -62,6 +65,7 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly notificationService: NotificationService,
