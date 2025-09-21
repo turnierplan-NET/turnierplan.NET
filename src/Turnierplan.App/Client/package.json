@@ -10,7 +10,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "gen:api": "ng-openapi-gen --input ../obj/Turnierplan.App_turnierplan.json --output src/app/api --indexFile true --endOfLineStyle lf --enumStyle pascal --promises false --apiService TurnierplanApi && replace-in-file \"PublicId = any\" \"PublicId = string\" src/app/api/**/* && replace-in-file \"return obs.pipe(map(r => r.body));\" \"return resp.pipe(map(r => r.body));\" src/app/api/turnierplan-api.ts",
+    "gen:api": "ng-openapi-gen --input ../obj/Turnierplan.App_turnierplan.json --output src/app/api --endOfLineStyle lf --enumStyle pascal --promises false --apiService TurnierplanApi && replace-in-file \"PublicId = any\" \"PublicId = string\" src/app/api/**/* && replace-in-file \"return obs.pipe(map(r => r.body));\" \"return resp.pipe(map(r => r.body));\" src/app/api/turnierplan-api.ts",
     "gen:tp": "node actions.gen.js",
     "build:prod": "npm run gen:api && npm run gen:tp && npm run ng -- build --configuration production",
     "start": "npm run gen:api && npm run gen:tp && npm run ng -- serve --port 45001",
