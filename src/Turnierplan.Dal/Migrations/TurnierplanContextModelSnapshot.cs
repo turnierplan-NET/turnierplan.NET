@@ -816,9 +816,6 @@ namespace Turnierplan.Dal.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long?>("BannerImageId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -832,7 +829,7 @@ namespace Turnierplan.Dal.Migrations
                     b.Property<long>("OrganizationId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("PrimaryLogoId")
+                    b.Property<long?>("OrganizerLogoId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("PublicId")
@@ -841,7 +838,10 @@ namespace Turnierplan.Dal.Migrations
                     b.Property<int>("PublicPageViews")
                         .HasColumnType("integer");
 
-                    b.Property<long?>("SecondaryLogoId")
+                    b.Property<long?>("SponsorBannerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("SponsorLogoId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("VenueId")
@@ -852,18 +852,18 @@ namespace Turnierplan.Dal.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BannerImageId");
-
                     b.HasIndex("FolderId");
 
                     b.HasIndex("OrganizationId");
 
-                    b.HasIndex("PrimaryLogoId");
+                    b.HasIndex("OrganizerLogoId");
 
                     b.HasIndex("PublicId")
                         .IsUnique();
 
-                    b.HasIndex("SecondaryLogoId");
+                    b.HasIndex("SponsorBannerId");
+
+                    b.HasIndex("SponsorLogoId");
 
                     b.HasIndex("VenueId");
 
@@ -1300,11 +1300,6 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("Turnierplan.Core.Tournament.Tournament", b =>
                 {
-                    b.HasOne("Turnierplan.Core.Image.Image", "BannerImage")
-                        .WithMany()
-                        .HasForeignKey("BannerImageId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.HasOne("Turnierplan.Core.Folder.Folder", "Folder")
                         .WithMany("Tournaments")
                         .HasForeignKey("FolderId")
@@ -1316,14 +1311,19 @@ namespace Turnierplan.Dal.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Turnierplan.Core.Image.Image", "PrimaryLogo")
+                    b.HasOne("Turnierplan.Core.Image.Image", "OrganizerLogo")
                         .WithMany()
-                        .HasForeignKey("PrimaryLogoId")
+                        .HasForeignKey("OrganizerLogoId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("Turnierplan.Core.Image.Image", "SecondaryLogo")
+                    b.HasOne("Turnierplan.Core.Image.Image", "SponsorBanner")
                         .WithMany()
-                        .HasForeignKey("SecondaryLogoId")
+                        .HasForeignKey("SponsorBannerId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Turnierplan.Core.Image.Image", "SponsorLogo")
+                        .WithMany()
+                        .HasForeignKey("SponsorLogoId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Turnierplan.Core.Venue.Venue", "Venue")
@@ -1599,8 +1599,6 @@ namespace Turnierplan.Dal.Migrations
                                 .IsRequired();
                         });
 
-                    b.Navigation("BannerImage");
-
                     b.Navigation("ComputationConfiguration")
                         .IsRequired();
 
@@ -1610,12 +1608,14 @@ namespace Turnierplan.Dal.Migrations
 
                     b.Navigation("Organization");
 
+                    b.Navigation("OrganizerLogo");
+
                     b.Navigation("PresentationConfiguration")
                         .IsRequired();
 
-                    b.Navigation("PrimaryLogo");
+                    b.Navigation("SponsorBanner");
 
-                    b.Navigation("SecondaryLogo");
+                    b.Navigation("SponsorLogo");
 
                     b.Navigation("Venue");
                 });
