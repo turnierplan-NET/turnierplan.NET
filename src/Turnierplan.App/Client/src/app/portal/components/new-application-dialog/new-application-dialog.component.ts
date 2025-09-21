@@ -5,6 +5,8 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { AlertComponent } from '../alert/alert.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
+import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { CreateApplicationEndpointRequest } from '../../../api/models/create-application-endpoint-request';
 
 const atLeastOneTeamValidator = () => {
   return (formArray: AbstractControl): { [key: string]: any } | null => {

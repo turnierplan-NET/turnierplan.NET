@@ -4,6 +4,13 @@ import { jwtDecode } from 'jwt-decode';
 import { catchError, map, Observable, of, ReplaySubject, Subject, switchMap, tap } from 'rxjs';
 
 import { AuthenticatedUser } from '../models/identity';
+import { TurnierplanApi } from '../../api/turnierplan-api';
+import { login } from '../../api/fn/identity/login';
+import { NullableOfChangePasswordFailedReason } from '../../api/models/nullable-of-change-password-failed-reason';
+import { changePassword } from '../../api/fn/identity/change-password';
+import { updateUserData } from '../../api/fn/identity/update-user-data';
+import { refresh } from '../../api/fn/identity/refresh';
+import { logout } from '../../api/fn/identity/logout';
 
 interface TurnierplanAccessToken {
   exp: number;
@@ -37,7 +44,10 @@ export class AuthenticationService implements OnDestroy {
   private tokenEnsureCompleted$?: Subject<boolean>;
   private readonly destroyed$ = new Subject<void>();
 
-  constructor(private readonly router: Router) {
+  constructor(
+    private readonly turnierplanApi: TurnierplanApi,
+    private readonly router: Router
+  ) {
     const storedUserId = this.readUserIdFromLocalStorage();
     const storedUserName = this.readUserNameFromLocalStorage();
     const storedUserEMail = this.readUserEMailFromLocalStorage();

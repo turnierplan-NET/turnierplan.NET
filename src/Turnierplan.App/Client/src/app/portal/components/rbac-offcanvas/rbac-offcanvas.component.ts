@@ -9,6 +9,11 @@ import { ActionButtonComponent } from '../action-button/action-button.component'
 import { RbacPrincipalComponent } from '../rbac-principal/rbac-principal.component';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { Role } from '../../../api/models/role';
+import { RoleAssignmentDto } from '../../../api/models/role-assignment-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { deleteRoleAssignment } from '../../../api/fn/role-assignments/delete-role-assignment';
+import { getRoleAssignments } from '../../../api/fn/role-assignments/get-role-assignments';
 
 interface IRbacOffcanvasTarget {
   name: string;
@@ -41,6 +46,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
   private targetIsOrganization: boolean = false;
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly notificationService: NotificationService,
     private readonly modalService: NgbModal
   ) {}

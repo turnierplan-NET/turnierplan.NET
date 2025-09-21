@@ -9,6 +9,15 @@ import { ApplicationsFilter, applicationsFilterToQueryParameters, defaultApplica
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { ApplicationTeamDto } from '../../../api/models/application-team-dto';
+import { PlanningRealmHeaderDto } from '../../../api/models/planning-realm-header-dto';
+import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { PaginationResultDtoOfApplicationDto } from '../../../api/models/pagination-result-dto-of-application-dto';
+import { PublicId } from '../../../api/models/public-id';
+import { getPlanningRealms } from '../../../api/fn/planning-realms/get-planning-realms';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getPlanningRealm } from '../../../api/fn/planning-realms/get-planning-realm';
+import { getApplications } from '../../../api/fn/applications/get-applications';
 
 export type SelectApplicationTeamResult = {
   name: string;
@@ -57,7 +66,10 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   private readonly planningRealmId$ = new Subject<string>();
   private readonly loadApplications$ = new Subject<void>();
 
-  constructor(private readonly localStorageService: LocalStorageService) {}
+  constructor(
+    private readonly turnierplanApi: TurnierplanApi,
+    private readonly localStorageService: LocalStorageService
+  ) {}
 
   public ngOnInit(): void {
     this.isLoadingPlanningRealms = true;

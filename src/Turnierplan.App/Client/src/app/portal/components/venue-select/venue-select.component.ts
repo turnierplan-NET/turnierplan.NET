@@ -7,6 +7,10 @@ import { SmallSpinnerComponent } from '../../../core/components/small-spinner/sm
 import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgClass } from '@angular/common';
+import { VenueDto } from '../../../api/models/venue-dto';
+import { NullableOfPublicId } from '../../../api/models/nullable-of-public-id';
+import { getVenues } from '../../../api/fn/venues/get-venues';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
 
 @Component({
   templateUrl: './venue-select.component.html',
@@ -21,7 +25,10 @@ export class VenueSelectComponent {
   protected currentVenueId: string = '';
   protected venues: VenueDto[] = [];
 
-  constructor(protected readonly modal: NgbActiveModal) {}
+  constructor(
+    private readonly turnierplanApi: TurnierplanApi,
+    protected readonly modal: NgbActiveModal
+  ) {}
 
   public initialize(organizationId: string, currentVenueId?: NullableOfPublicId): void {
     this.turnierplanApi.invoke(getVenues, { organizationId: organizationId }).subscribe({

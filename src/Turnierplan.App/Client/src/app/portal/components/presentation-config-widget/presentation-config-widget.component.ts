@@ -10,6 +10,12 @@ import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UnsavedChangesAlertComponent } from '../unsaved-changes-alert/unsaved-changes-alert.component';
 import { AlertComponent } from '../alert/alert.component';
+import { PresentationConfigurationDto } from '../../../api/models/presentation-configuration-dto';
+import { ResultsMode } from '../../../api/models/results-mode';
+import { HeaderLineContent } from '../../../api/models/header-line-content';
+import { setTournamentPresentationConfiguration } from '../../../api/fn/tournaments/set-tournament-presentation-configuration';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getTournamentPresentationConfiguration } from '../../../api/fn/tournaments/get-tournament-presentation-configuration';
 
 @Component({
   selector: 'tp-presentation-config-widget',
@@ -48,6 +54,7 @@ export class PresentationConfigWidgetComponent {
   protected isSaving = false;
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly notificationService: NotificationService,
     private readonly modalService: NgbModal,
     private readonly injector: Injector

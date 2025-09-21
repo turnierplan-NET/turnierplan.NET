@@ -12,6 +12,10 @@ import { RouterLink } from '@angular/router';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { TranslateDirective } from '@ngx-translate/core';
 import { IdWidgetComponent } from '../id-widget/id-widget.component';
+import { OrganizationDto } from '../../../api/models/organization-dto';
+import { TournamentHeaderDto } from '../../../api/models/tournament-header-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { setFolderName } from '../../../api/fn/folders/set-folder-name';
 
 @Component({
   selector: 'tp-tournament-explorer',
@@ -46,7 +50,10 @@ export class TournamentExplorerComponent implements OnChanges {
   protected treeData: FolderTreeEntry[] = [];
   protected isUpdatingFolderName: boolean = false;
 
-  constructor(private readonly localStorageService: LocalStorageService) {}
+  constructor(
+    private readonly turnierplanApi: TurnierplanApi,
+    private readonly localStorageService: LocalStorageService
+  ) {}
 
   public ngOnChanges(): void {
     this.treeData = FolderTreeComponent.generateTree(this.organization.name, this.tournaments);

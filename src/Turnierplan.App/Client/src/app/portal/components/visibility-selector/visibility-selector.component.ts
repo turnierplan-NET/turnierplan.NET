@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { NgClass } from '@angular/common';
 import { TranslateDirective } from '@ngx-translate/core';
+import { Visibility } from '../../../api/models/visibility';
 
 @Component({
   selector: 'tp-visibility-selector',

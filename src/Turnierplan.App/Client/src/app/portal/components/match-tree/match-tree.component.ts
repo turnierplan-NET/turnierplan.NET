@@ -19,6 +19,7 @@ import { SmallSpinnerComponent } from '../../../core/components/small-spinner/sm
 import { LiveIndicatorComponent } from '../live-indicator/live-indicator.component';
 import { TranslateDirective } from '@ngx-translate/core';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { MatchType } from '../../../api/models/match-type';
 
 type TreeColumn = {
   index: number;

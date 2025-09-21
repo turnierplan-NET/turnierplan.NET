@@ -9,6 +9,10 @@ import { PageFrameComponent } from '../../components/page-frame/page-frame.compo
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { OrganizationDto } from '../../../api/models/organization-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getOrganization } from '../../../api/fn/organizations/get-organization';
+import { createPlanningRealm } from '../../../api/fn/planning-realms/create-planning-realm';
 
 @Component({
   templateUrl: './create-planning-realm.component.html',
@@ -32,6 +36,7 @@ export class CreatePlanningRealmComponent implements OnDestroy {
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly titleService: TitleService

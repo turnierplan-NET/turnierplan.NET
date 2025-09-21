@@ -9,7 +9,8 @@ import { NgClass } from '@angular/common';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { DocumentDto } from '../../../api/models/document-dto';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getDocuments, getTournaments } from '../../../api/functions';
+import { getTournaments } from '../../../api/fn/tournaments/get-tournaments';
+import { getDocuments } from '../../../api/fn/documents/get-documents';
 
 @Component({
   templateUrl: './document-copy.component.html',

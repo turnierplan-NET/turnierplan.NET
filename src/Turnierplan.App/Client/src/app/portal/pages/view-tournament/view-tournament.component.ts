@@ -42,40 +42,36 @@ import { MatchTreeComponent } from '../../components/match-tree/match-tree.compo
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { IdWidgetComponent } from '../../components/id-widget/id-widget.component';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
-import {
-  ComputationConfigurationDto,
-  DocumentDto,
-  DocumentType,
-  ImageType,
-  MatchState,
-  MatchType,
-  NullableOfMatchOutcomeType,
-  SetTournamentImageEndpointRequestTarget,
-  TournamentDto,
-  TournamentImagesDto,
-  Visibility
-} from '../../../api/models';
-import {
-  copyDocument,
-  createDocument,
-  deleteDocument,
-  deleteTournament,
-  getDocuments,
-  getTournament,
-  getTournamentImages,
-  setGroupName,
-  setMatchOutcome,
-  setTeamEntryFeePaid,
-  setTeamName,
-  setTeamOutOfCompetition,
-  setTeamPriority,
-  setTournamentComputationConfiguration,
-  setTournamentFolder,
-  setTournamentImage,
-  setTournamentName,
-  setTournamentVenue,
-  setTournamentVisibility
-} from '../../../api/functions';
+import { ImageType } from '../../../api/models/image-type';
+import { Visibility } from '../../../api/models/visibility';
+import { TournamentDto } from '../../../api/models/tournament-dto';
+import { TournamentImagesDto } from '../../../api/models/tournament-images-dto';
+import { DocumentDto } from '../../../api/models/document-dto';
+import { getTournament } from '../../../api/fn/tournaments/get-tournament';
+import { getTournamentImages } from '../../../api/fn/tournaments/get-tournament-images';
+import { getDocuments } from '../../../api/fn/documents/get-documents';
+import { setMatchOutcome } from '../../../api/fn/matches/set-match-outcome';
+import { MatchState } from '../../../api/models/match-state';
+import { DocumentType } from '../../../api/models/document-type';
+import { createDocument } from '../../../api/fn/documents/create-document';
+import { deleteDocument } from '../../../api/fn/documents/delete-document';
+import { copyDocument } from '../../../api/fn/documents/copy-document';
+import { deleteTournament } from '../../../api/fn/tournaments/delete-tournament';
+import { setTeamName } from '../../../api/fn/teams/set-team-name';
+import { setTeamPriority } from '../../../api/fn/teams/set-team-priority';
+import { setTeamEntryFeePaid } from '../../../api/fn/teams/set-team-entry-fee-paid';
+import { setTeamOutOfCompetition } from '../../../api/fn/teams/set-team-out-of-competition';
+import { setGroupName } from '../../../api/fn/groups/set-group-name';
+import { ComputationConfigurationDto } from '../../../api/models/computation-configuration-dto';
+import { setTournamentComputationConfiguration } from '../../../api/fn/tournaments/set-tournament-computation-configuration';
+import { setTournamentFolder } from '../../../api/fn/tournaments/set-tournament-folder';
+import { setTournamentVenue } from '../../../api/fn/tournaments/set-tournament-venue';
+import { setTournamentVisibility } from '../../../api/fn/tournaments/set-tournament-visibility';
+import { SetTournamentImageEndpointRequestTarget } from '../../../api/models/set-tournament-image-endpoint-request-target';
+import { setTournamentImage } from '../../../api/fn/tournaments/set-tournament-image';
+import { setTournamentName } from '../../../api/fn/tournaments/set-tournament-name';
+import { MatchType } from '../../../api/models/match-type';
+import { NullableOfMatchOutcomeType } from '../../../api/models/nullable-of-match-outcome-type';
 
 @Component({
   templateUrl: './view-tournament.component.html',

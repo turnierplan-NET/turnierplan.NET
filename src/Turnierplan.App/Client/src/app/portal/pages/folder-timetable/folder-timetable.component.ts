@@ -15,8 +15,9 @@ import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon
 import { FormsModule } from '@angular/forms';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getFolderTimetable } from '../../../api/functions';
-import { FolderTimetableDto, FolderTimetableTournamentEntry } from '../../../api/models';
+import { getFolderTimetable } from '../../../api/fn/folders/get-folder-timetable';
+import { FolderTimetableTournamentEntry } from '../../../api/models/folder-timetable-tournament-entry';
+import { FolderTimetableDto } from '../../../api/models/folder-timetable-dto';
 
 type TimetableView = {
   hourMarks: number[];

@@ -11,6 +11,13 @@ import { ActionButtonComponent } from '../action-button/action-button.component'
 import { AlertComponent } from '../alert/alert.component';
 import { NgClass } from '@angular/common';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { ImageType } from '../../../api/models/image-type';
+import { ImageDto2 } from '../../../api/models/image-dto-2';
+import { uploadImage$FormData } from '../../../api/fn/images/upload-image-form-data';
+import { getImages } from '../../../api/fn/images/get-images';
+import { ImageDto } from '../../../api/models/image-dto';
+import { deleteImage } from '../../../api/fn/images/delete-image';
 
 export interface ImageChooserResult {
   type: 'ImageDeleted' | 'ImageSelected' | 'ImageUploaded';
@@ -53,7 +60,10 @@ export class ImageChooserComponent {
 
   protected imageForDetailView?: ImageDto2;
 
-  constructor(protected readonly modal: NgbActiveModal) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly turnierplanApi: TurnierplanApi
+  ) {}
 
   protected get isInImageDetailView(): boolean {
     return this.imageForDetailView !== undefined;
@@ -93,8 +103,8 @@ export class ImageChooserComponent {
           const content = data.target?.result as ArrayBuffer;
 
           if (content) {
-            this.imageService
-              .uploadImage$FormData({
+            this.turnierplanApi
+              .invoke(uploadImage$FormData, {
                 body: {
                   organizationId: this.organizationId,
                   imageType: this.imageType,

@@ -32,17 +32,15 @@ import { VenueDto } from '../../../api/models/venue-dto';
 import { PlanningRealmHeaderDto } from '../../../api/models/planning-realm-header-dto';
 import { ApiKeyDto } from '../../../api/models/api-key-dto';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
-import {
-  deleteApiKey,
-  deleteOrganization,
-  getApiKeys,
-  getOrganization,
-  getPlanningRealms,
-  getTournaments,
-  getVenues,
-  setApiKeyStatus,
-  setOrganizationName
-} from '../../../api/functions';
+import { getOrganization } from '../../../api/fn/organizations/get-organization';
+import { getTournaments } from '../../../api/fn/tournaments/get-tournaments';
+import { getVenues } from '../../../api/fn/venues/get-venues';
+import { getPlanningRealms } from '../../../api/fn/planning-realms/get-planning-realms';
+import { setOrganizationName } from '../../../api/fn/organizations/set-organization-name';
+import { deleteOrganization } from '../../../api/fn/organizations/delete-organization';
+import { deleteApiKey } from '../../../api/fn/api-keys/delete-api-key';
+import { setApiKeyStatus } from '../../../api/fn/api-keys/set-api-key-status';
+import { getApiKeys } from '../../../api/fn/api-keys/get-api-keys';
 
 @Component({
   templateUrl: './view-organization.component.html',

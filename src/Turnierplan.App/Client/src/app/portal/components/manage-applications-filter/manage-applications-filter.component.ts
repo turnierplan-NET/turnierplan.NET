@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe } from '@ngx-translate/core';
+import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
 
 @Component({
   selector: 'tp-manage-applications-filter',

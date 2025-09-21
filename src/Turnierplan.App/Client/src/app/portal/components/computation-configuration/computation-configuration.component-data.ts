@@ -1,4 +1,6 @@
-﻿export type ComparisonModeOption = {
+﻿import { TeamComparisonMode } from '../../../api/models/team-comparison-mode';
+
+export type ComparisonModeOption = {
   id: number;
   modes: TeamComparisonMode[];
   isStandard: boolean;

@@ -22,7 +22,9 @@ import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.co
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { VenueDto } from '../../../api/models/venue-dto';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { deleteVenue, getVenue, updateVenue } from '../../../api/functions';
+import { getVenue } from '../../../api/fn/venues/get-venue';
+import { updateVenue } from '../../../api/fn/venues/update-venue';
+import { deleteVenue } from '../../../api/fn/venues/delete-venue';
 
 @Component({
   templateUrl: './view-venue.component.html',

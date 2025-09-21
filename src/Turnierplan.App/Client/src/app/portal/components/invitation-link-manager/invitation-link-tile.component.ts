@@ -15,6 +15,12 @@ import { IsActionAllowedDirective } from '../../directives/is-action-allowed.dir
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { AlertComponent } from '../alert/alert.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { InvitationLinkDto } from '../../../api/models/invitation-link-dto';
+import { ImageType } from '../../../api/models/image-type';
+import { TournamentClassDto } from '../../../api/models/tournament-class-dto';
+import { InvitationLinkEntryDto } from '../../../api/models/invitation-link-entry-dto';
+import { ImageDto } from '../../../api/models/image-dto';
 
 @Component({
   selector: 'tp-invitation-link-tile',

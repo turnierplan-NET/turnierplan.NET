@@ -9,6 +9,8 @@ import { PageFrameComponent } from '../../components/page-frame/page-frame.compo
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { createUser } from '../../../api/fn/users/create-user';
 
 @Component({
   templateUrl: './create-user.component.html',
@@ -33,6 +35,7 @@ export class CreateUserComponent implements OnInit {
   });
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private readonly titleService: TitleService

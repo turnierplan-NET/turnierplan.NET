@@ -11,6 +11,10 @@ import { AlertComponent } from '../alert/alert.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { LiveIndicatorComponent } from '../live-indicator/live-indicator.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { NullableOfMatchOutcomeType } from '../../../api/models/nullable-of-match-outcome-type';
+import { SetMatchOutcomeEndpointRequest } from '../../../api/models/set-match-outcome-endpoint-request';
+import { MatchType } from '../../../api/models/match-type';
+import { MatchState } from '../../../api/models/match-state';
 
 @Component({
   templateUrl: './edit-match.component.html',

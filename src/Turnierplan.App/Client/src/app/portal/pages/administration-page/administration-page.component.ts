@@ -18,6 +18,12 @@ import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { NgClass } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertComponent } from '../../components/alert/alert.component';
+import { UserDto } from '../../../api/models/user-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getUsers } from '../../../api/fn/users/get-users';
+import { UpdateUserEndpointRequest } from '../../../api/models/update-user-endpoint-request';
+import { updateUser } from '../../../api/fn/users/update-user';
+import { deleteUser } from '../../../api/fn/users/delete-user';
 
 @Component({
   templateUrl: './administration-page.component.html',
@@ -62,6 +68,7 @@ export class AdministrationPageComponent implements OnInit {
   ];
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly titleService: TitleService,
     private readonly authenticationService: AuthenticationService,
     private readonly offcanvasService: NgbOffcanvas,

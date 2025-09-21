@@ -28,10 +28,13 @@ import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.co
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { ManageApplicationsComponent } from '../../components/manage-applications/manage-applications.component';
 import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
-import { createApplication, deletePlanningRealm, getPlanningRealm, updatePlanningRealm } from '../../../api/functions';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { CreateApplicationEndpointRequest } from '../../../api/models/create-application-endpoint-request';
 import { UpdatePlanningRealmEndpointRequest } from '../../../api/models/update-planning-realm-endpoint-request';
+import { getPlanningRealm } from '../../../api/fn/planning-realms/get-planning-realm';
+import { createApplication } from '../../../api/fn/applications/create-application';
+import { updatePlanningRealm } from '../../../api/fn/planning-realms/update-planning-realm';
+import { deletePlanningRealm } from '../../../api/fn/planning-realms/delete-planning-realm';
 
 export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
 

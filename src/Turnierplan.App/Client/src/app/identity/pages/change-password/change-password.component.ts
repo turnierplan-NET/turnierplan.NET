@@ -8,6 +8,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NgClass } from '@angular/common';
+import { NullableOfChangePasswordFailedReason } from '../../../api/models/nullable-of-change-password-failed-reason';
 
 enum PasswordChangeFailedReason {
   EmptyOrExtraWhitespace = 'EmptyOrExtraWhitespace',

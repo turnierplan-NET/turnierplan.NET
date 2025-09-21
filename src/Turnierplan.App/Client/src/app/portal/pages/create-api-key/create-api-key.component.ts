@@ -12,6 +12,11 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { CopyToClipboardComponent } from '../../components/copy-to-clipboard/copy-to-clipboard.component';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 import { NgClass } from '@angular/common';
+import { OrganizationDto } from '../../../api/models/organization-dto';
+import { ApiKeyDto } from '../../../api/models/api-key-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getOrganization } from '../../../api/fn/organizations/get-organization';
+import { createApiKey } from '../../../api/fn/api-keys/create-api-key';
 
 @Component({
   templateUrl: './create-api-key.component.html',
@@ -41,6 +46,7 @@ export class CreateApiKeyComponent {
   });
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly titleService: TitleService
   ) {

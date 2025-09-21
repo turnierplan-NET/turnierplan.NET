@@ -7,6 +7,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
+import { ReceiptsDocumentConfiguration } from '../../../api/models/receipts-document-configuration';
 
 @Component({
   templateUrl: './document-config-receipts.component.html',

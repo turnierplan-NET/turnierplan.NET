@@ -4,6 +4,10 @@ import { map } from 'rxjs/operators';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { NgClass, AsyncPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+import { PrincipalDto } from '../../../api/models/principal-dto';
+import { PrincipalKind } from '../../../api/models/principal-kind';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getPrincipalName } from '../../../api/fn/principals/get-principal-name';
 
 @Component({
   selector: 'tp-rbac-principal',
@@ -18,7 +22,7 @@ export class RbacPrincipalComponent implements OnInit {
   @Input()
   public principal!: PrincipalDto;
 
-  constructor() {}
+  constructor(private readonly turnierplanApi: TurnierplanApi) {}
 
   public ngOnInit(): void {
     this.displayName$ = this.turnierplanApi

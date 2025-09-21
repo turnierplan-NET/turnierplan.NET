@@ -4,6 +4,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ImageChooserComponent, ImageChooserResult } from '../image-chooser/image-chooser.component';
 import { TranslateDirective } from '@ngx-translate/core';
 import { ActionButtonComponent } from '../action-button/action-button.component';
+import { ImageDto } from '../../../api/models/image-dto';
+import { ImageType } from '../../../api/models/image-type';
 
 @Component({
   selector: 'tp-image-widget',

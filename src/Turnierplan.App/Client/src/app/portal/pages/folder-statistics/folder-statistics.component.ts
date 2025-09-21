@@ -10,6 +10,9 @@ import { NgTemplateOutlet, NgStyle, DecimalPipe, PercentPipe } from '@angular/co
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import { EChartsCoreOption } from 'echarts/core';
+import { FolderStatisticsDto } from '../../../api/models/folder-statistics-dto';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getFolderStatistics } from '../../../api/fn/folders/get-folder-statistics';
 
 @Component({
   templateUrl: './folder-statistics.component.html',
@@ -40,6 +43,7 @@ export class FolderStatisticsComponent implements OnInit, OnDestroy {
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
     private readonly titleService: TitleService,
     private readonly translateService: TranslateService

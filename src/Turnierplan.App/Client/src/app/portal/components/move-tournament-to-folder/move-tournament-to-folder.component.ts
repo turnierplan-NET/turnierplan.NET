@@ -8,6 +8,11 @@ import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../action-button/action-button.component';
+import { SetTournamentFolderEndpointRequest } from '../../../api/models/set-tournament-folder-endpoint-request';
+import { NullableOfPublicId } from '../../../api/models/nullable-of-public-id';
+import { FolderDto } from '../../../api/models/folder-dto';
+import { getFolders } from '../../../api/fn/folders/get-folders';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
 
 type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 
@@ -38,7 +43,10 @@ export class MoveTournamentToFolderComponent {
   protected moveToFolderId: string | undefined = undefined;
   protected moveToNewFolder = new FormControl<string | undefined>('');
 
-  constructor(protected readonly modal: NgbActiveModal) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly turnierplanApi: TurnierplanApi
+  ) {}
 
   protected get disableExistingFolders(): boolean {
     return !!this.availableFolders && this.availableFolders.length === 0;

@@ -17,6 +17,16 @@ import { ViewTournamentComponent } from '../../pages/view-tournament/view-tourna
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';
 import { RenameButtonComponent } from '../rename-button/rename-button.component';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { PaginationResultDtoOfApplicationDto } from '../../../api/models/pagination-result-dto-of-application-dto';
+import { getApplications } from '../../../api/fn/applications/get-applications';
+import { InvitationLinkDto } from '../../../api/models/invitation-link-dto';
+import { ApplicationTeamDto } from '../../../api/models/application-team-dto';
+import { ApplicationDto } from '../../../api/models/application-dto';
+import { setApplicationNotes } from '../../../api/fn/applications/set-application-notes';
+import { PublicId } from '../../../api/models/public-id';
+import { setApplicationTeamName } from '../../../api/fn/application-teams/set-application-team-name';
 
 @Component({
   selector: 'tp-manage-applications',
@@ -66,6 +76,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   private tournamentClassFilter: number[] = [];
 
   constructor(
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly modalService: NgbModal,
     private readonly localStorageService: LocalStorageService,
     private readonly router: Router

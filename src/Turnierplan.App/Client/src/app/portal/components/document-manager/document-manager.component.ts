@@ -16,6 +16,17 @@ import { RenameButtonComponent } from '../rename-button/rename-button.component'
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { DocumentDto } from '../../../api/models/document-dto';
+import { DocumentType } from '../../../api/models/document-type';
+import { getDocumentPdf } from '../../../api/fn/documents/get-document-pdf';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { setDocumentName } from '../../../api/fn/documents/set-document-name';
+import { getMatchPlanDocumentConfiguration } from '../../../api/fn/documents/get-match-plan-document-configuration';
+import { getReceiptsDocumentConfiguration } from '../../../api/fn/documents/get-receipts-document-configuration';
+import { setMatchPlanDocumentConfiguration } from '../../../api/fn/documents/set-match-plan-document-configuration';
+import { MatchPlanDocumentConfiguration } from '../../../api/models/match-plan-document-configuration';
+import { setReceiptsDocumentConfiguration } from '../../../api/fn/documents/set-receipts-document-configuration';
+import { ReceiptsDocumentConfiguration } from '../../../api/models/receipts-document-configuration';
 
 @Component({
   selector: 'tp-document-manager',
@@ -67,6 +78,7 @@ export class DocumentManagerComponent {
 
   constructor(
     protected readonly authorizationService: AuthorizationService,
+    private readonly turnierplanApi: TurnierplanApi,
     private readonly injector: Injector,
     private readonly translateService: TranslateService,
     private readonly modalService: NgbModal
