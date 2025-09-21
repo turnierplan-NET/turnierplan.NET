@@ -184,7 +184,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
             return of(undefined);
           }
           this.loadingState = { isLoading: true };
-          return this.tournamentService.getTournament({ id: tournamentId });
+          return this.turnierplanApi.invoke(getTournament, { id: tournamentId });
         })
       )
       .subscribe({
@@ -212,7 +212,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
 
     if (number === ViewTournamentComponent.DocumentsPageId && this.tournament && !this.documents && !this.isLoadingDocuments) {
       this.isLoadingDocuments = true;
-      this.documentService.getDocuments({ tournamentId: this.tournament.id }).subscribe({
+      this.turnierplanApi.invoke(getDocuments, { tournamentId: this.tournament.id }).subscribe({
         next: (documents) => {
           this.documents = documents ?? [];
           this.documents.sort((a, b) => a.id.localeCompare(b.id));
@@ -235,7 +235,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     }
 
     this.isLoadingImages = true;
-    this.tournamentService.getTournamentImages({ id: this.tournament.id }).subscribe({
+    this.turnierplanApi.invoke(getTournamentImages, { id: this.tournament.id }).subscribe({
       next: (images) => {
         this.images = images;
         this.isLoadingImages = false;
@@ -277,10 +277,12 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
             }
           }),
           switchMap((command) =>
-            this.matchService.setMatchOutcome({ matchId: matchId, tournamentId: tournamentId, body: command }).pipe(map(() => command))
+            this.turnierplanApi
+              .invoke(setMatchOutcome, { matchId: matchId, tournamentId: tournamentId, body: command })
+              .pipe(map(() => command))
           ),
           switchMap((request) =>
-            this.tournamentService.getTournament({ id: tournamentId }).pipe(
+            this.turnierplanApi.invoke(getTournament, { id: tournamentId }).pipe(
               map((tournament) => ({
                 tournament: tournament,
                 request: request
@@ -331,7 +333,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     component.selected$
       .pipe(
         switchMap((documentId: string) =>
-          this.documentService.copyDocument({
+          this.turnierplanApi.invoke(copyDocument, {
             body: {
               tournamentId: tournamentId,
               sourceDocumentId: documentId
@@ -377,7 +379,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     component.selected$
       .pipe(
         switchMap((type: DocumentType) =>
-          this.documentService.createDocument({
+          this.turnierplanApi.invoke(createDocument, {
             body: {
               tournamentId: tournamentId,
               type: type,
@@ -397,8 +399,8 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
   }
 
   protected deleteDocument(id: string): void {
-    this.documentService
-      .deleteDocument({ id: id })
+    this.turnierplanApi
+      .invoke(deleteDocument, { id: id })
       .pipe(switchMap(() => this.reloadDocuments()))
       .subscribe({
         next: () => {
@@ -420,7 +422,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     }
     const organizationId = this.tournament.organizationId;
     this.loadingState = { isLoading: true, error: undefined };
-    this.tournamentService.deleteTournament({ id: this.tournament.id }).subscribe({
+    this.turnierplanApi.invoke(deleteTournament, { id: this.tournament.id }).subscribe({
       next: () => {
         this.notificationService.showNotification(
           'info',
@@ -446,7 +448,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       team.showLoadingIndicator.name = true;
     }
 
-    this.teamService.setTeamName({ teamId: teamId, tournamentId: this.tournament.id, body: { name: name } }).subscribe({
+    this.turnierplanApi.invoke(setTeamName, { teamId: teamId, tournamentId: this.tournament.id, body: { name: name } }).subscribe({
       next: () => {
         if (this.tournament) {
           const team = this.tournament.teams.find((x) => x.id === teamId);
@@ -476,9 +478,9 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       team.showLoadingIndicator.priority = true;
     }
 
-    this.teamService
-      .setTeamPriority({ teamId: teamId, tournamentId: this.tournament.id, body: { groupId: groupId, priority: priority } })
-      .pipe(switchMap(() => this.tournamentService.getTournament({ id: tournamentId })))
+    this.turnierplanApi
+      .invoke(setTeamPriority, { teamId: teamId, tournamentId: this.tournament.id, body: { groupId: groupId, priority: priority } })
+      .pipe(switchMap(() => this.turnierplanApi.invoke(getTournament, { id: tournamentId })))
       .subscribe({
         next: (result) => {
           // The tournament must be re-loaded because changing the priority of any team might change group/match outcomes.
@@ -501,8 +503,8 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       team.showLoadingIndicator.entryFee = true;
     }
 
-    this.teamService
-      .setTeamEntryFeePaid({ teamId: teamId, tournamentId: this.tournament.id, body: { hasPaidEntryFee: entryFeePaid } })
+    this.turnierplanApi
+      .invoke(setTeamEntryFeePaid, { teamId: teamId, tournamentId: this.tournament.id, body: { hasPaidEntryFee: entryFeePaid } })
       .subscribe({
         next: () => {
           if (this.tournament) {
@@ -539,9 +541,9 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       team.showLoadingIndicator.outOfCompetition = true;
     }
 
-    this.teamService
-      .setTeamOutOfCompetition({ teamId: teamId, tournamentId: this.tournament.id, body: { outOfCompetition: outOfCompetition } })
-      .pipe(switchMap(() => this.tournamentService.getTournament({ id: tournamentId })))
+    this.turnierplanApi
+      .invoke(setTeamOutOfCompetition, { teamId: teamId, tournamentId: this.tournament.id, body: { outOfCompetition: outOfCompetition } })
+      .pipe(switchMap(() => this.turnierplanApi.invoke(getTournament, { id: tournamentId })))
       .subscribe({
         next: (result) => {
           // The tournament must be re-loaded because changing 'out of competition' of any team might change group/match outcomes.
@@ -566,9 +568,9 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       group.showLoadingIndicator = true;
     }
 
-    this.groupService
-      .setGroupName({ groupId: groupId, tournamentId: this.tournament.id, body: { name: name ?? null } })
-      .pipe(switchMap(() => this.tournamentService.getTournament({ id: tournamentId })))
+    this.turnierplanApi
+      .invoke(setGroupName, { groupId: groupId, tournamentId: this.tournament.id, body: { name: name ?? null } })
+      .pipe(switchMap(() => this.turnierplanApi.invoke(getTournament, { id: tournamentId })))
       .subscribe({
         next: (tournament) => {
           this.setTournament(tournament);
@@ -597,12 +599,12 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     component.save$
       .pipe(
         switchMap((configuration: ComputationConfigurationDto) => {
-          return this.tournamentService
-            .setTournamentComputationConfiguration({ id: tournamentId, body: { configuration: configuration } })
+          return this.turnierplanApi
+            .invoke(setTournamentComputationConfiguration, { id: tournamentId, body: { configuration: configuration } })
             .pipe(map(() => configuration));
         }),
         finalize(() => ref.close()),
-        switchMap(() => this.tournamentService.getTournament({ id: tournamentId }))
+        switchMap(() => this.turnierplanApi.invoke(getTournament, { id: tournamentId }))
       )
       .subscribe({
         next: (tournament) => {
@@ -634,9 +636,9 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     component.save$
       .pipe(
         switchMap((command) => {
-          return this.tournamentService.setTournamentFolder({ id: tournamentId, body: command });
+          return this.turnierplanApi.invoke(setTournamentFolder, { id: tournamentId, body: command });
         }),
-        switchMap(() => this.tournamentService.getTournament({ id: tournamentId })),
+        switchMap(() => this.turnierplanApi.invoke(getTournament, { id: tournamentId })),
         finalize(() => ref.close())
       )
       .subscribe({
@@ -668,8 +670,8 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     component.selected$
       .pipe(
         switchMap((venueData) => {
-          return this.tournamentService
-            .setTournamentVenue({ id: tournamentId, body: { venueId: venueData?.id } })
+          return this.turnierplanApi
+            .invoke(setTournamentVenue, { id: tournamentId, body: { venueId: venueData?.id } })
             .pipe(map(() => venueData));
         }),
         finalize(() => ref.close())
@@ -694,7 +696,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
 
     this.isUpdatingVisibility = true;
 
-    this.tournamentService.setTournamentVisibility({ id: this.tournament.id, body: { visibility: visibility } }).subscribe({
+    this.turnierplanApi.invoke(setTournamentVisibility, { id: this.tournament.id, body: { visibility: visibility } }).subscribe({
       next: () => {
         if (this.tournament) {
           this.tournament.visibility = visibility;
@@ -726,9 +728,9 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       bannerImage: SetTournamentImageEndpointRequestTarget.BannerImage
     }[whichImage];
 
-    this.tournamentService
-      .setTournamentImage({ id: tournamentId, body: { imageId: imageId, target: mappedTarget } })
-      .pipe(switchMap(() => this.tournamentService.getTournamentImages({ id: tournamentId })))
+    this.turnierplanApi
+      .invoke(setTournamentImage, { id: tournamentId, body: { imageId: imageId, target: mappedTarget } })
+      .pipe(switchMap(() => this.turnierplanApi.invoke(getTournamentImages, { id: tournamentId })))
       .subscribe({
         next: (result) => {
           this.images = result;
@@ -747,7 +749,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
 
     this.isUpdatingName = true;
 
-    this.tournamentService.setTournamentName({ id: this.tournament.id, body: { name: name } }).subscribe({
+    this.turnierplanApi.invoke(setTournamentName, { id: this.tournament.id, body: { name: name } }).subscribe({
       next: () => {
         if (this.tournament) {
           this.tournament.name = name;
@@ -765,7 +767,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     if (!this.tournament) {
       return of({});
     }
-    return this.documentService.getDocuments({ tournamentId: this.tournament.id }).pipe(
+    return this.turnierplanApi.invoke(getDocuments, { tournamentId: this.tournament.id }).pipe(
       tap((result) => {
         this.documents = result;
         this.documents.sort((a, b) => a.id.localeCompare(b.id));

@@ -96,7 +96,7 @@ export class FolderTimetableComponent implements OnInit, OnDestroy {
 
           this.loadingState = { isLoading: true };
 
-          return this.folderService.getFolderTimetable({ id: folderId });
+          return this.turnierplanApi.invoke(getFolderTimetable, { id: folderId });
         })
       )
       .subscribe({

@@ -46,7 +46,7 @@ export class CreatePlanningRealmComponent implements OnDestroy {
             return of(undefined);
           }
           this.loadingState = { isLoading: true };
-          return this.organizationService.getOrganization({ id: organizationId });
+          return this.turnierplanApi.invoke(getOrganization, { id: organizationId });
         })
       )
       .subscribe({
@@ -69,8 +69,8 @@ export class CreatePlanningRealmComponent implements OnDestroy {
   protected confirmButtonClicked(): void {
     if (this.planningRealmName.valid && !this.loadingState.isLoading && this.organization) {
       this.loadingState = { isLoading: true };
-      this.planningRealmService
-        .createPlanningRealm({
+      this.turnierplanApi
+        .invoke(createPlanningRealm, {
           body: {
             organizationId: this.organization.id,
             name: this.planningRealmName.value

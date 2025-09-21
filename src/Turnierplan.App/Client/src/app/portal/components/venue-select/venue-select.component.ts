@@ -24,7 +24,7 @@ export class VenueSelectComponent {
   constructor(protected readonly modal: NgbActiveModal) {}
 
   public initialize(organizationId: string, currentVenueId?: NullableOfPublicId): void {
-    this.venueService.getVenues({ organizationId: organizationId }).subscribe({
+    this.turnierplanApi.invoke(getVenues, { organizationId: organizationId }).subscribe({
       next: (venues) => {
         this.venues = venues;
         this.initialVenueId = currentVenueId ?? '';

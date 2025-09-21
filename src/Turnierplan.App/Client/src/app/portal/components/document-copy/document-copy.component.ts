@@ -36,7 +36,7 @@ export class DocumentCopyComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.tournamentService.getTournaments({ organizationId: this.organizationId }).subscribe({
+    this.turnierplanApi.invoke(getTournaments, { organizationId: this.organizationId }).subscribe({
       next: (tournaments) => {
         this.folderTree = FolderTreeComponent.generateTree(this.organizationName, tournaments);
         this.selectTreeEntry('/');
@@ -50,7 +50,7 @@ export class DocumentCopyComponent implements OnInit, OnDestroy {
     this.tournamentId$
       .pipe(
         tap(() => (this.isLoadingDocuments = true)),
-        switchMap((id) => this.documentService.getDocuments({ tournamentId: id }))
+        switchMap((id) => this.turnierplanApi.invoke(getDocuments, { tournamentId: id }))
       )
       .subscribe({
         next: (documents) => {

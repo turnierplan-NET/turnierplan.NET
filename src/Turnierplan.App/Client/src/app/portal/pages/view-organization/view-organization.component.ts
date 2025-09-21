@@ -126,14 +126,14 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
             return of(undefined);
           }
           this.loadingState = { isLoading: true };
-          return this.organizationService.getOrganization({ id: organizationId });
+          return this.turnierplanApi.invoke(getOrganization, { id: organizationId });
         }),
         mergeMap((organization) => {
           if (!organization) {
             return of([undefined, undefined]);
           }
 
-          return zip(of(organization), this.tournamentService.getTournaments({ organizationId: organization.id }));
+          return zip(of(organization), this.turnierplanApi.invoke(getTournaments, { organizationId: organization.id }));
         })
       )
       .subscribe({
@@ -166,7 +166,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     if (number === ViewOrganizationComponent.venuesPageId && !this.venues && !this.isLoadingVenues) {
       // Load venues only when the page is opened
       this.isLoadingVenues = true;
-      this.venueService.getVenues({ organizationId: this.organization.id }).subscribe({
+      this.turnierplanApi.invoke(getVenues, { organizationId: this.organization.id }).subscribe({
         next: (venues) => {
           this.venues = venues;
           this.isLoadingVenues = false;
@@ -180,7 +180,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     if (number === ViewOrganizationComponent.planningRealmsPageId && !this.planningRealms && !this.isLoadingPlanningRealms) {
       // Load planning realms only when the page is opened
       this.isLoadingPlanningRealms = true;
-      this.planningRealmsService.getPlanningRealms({ organizationId: this.organization.id }).subscribe({
+      this.turnierplanApi.invoke(getPlanningRealms, { organizationId: this.organization.id }).subscribe({
         next: (planningRealms) => {
           this.planningRealms = planningRealms;
           this.isLoadingPlanningRealms = false;
@@ -206,7 +206,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       return;
     }
     this.loadingState = { isLoading: true, error: undefined };
-    this.organizationService.deleteOrganization({ id: this.organization.id }).subscribe({
+    this.turnierplanApi.invoke(deleteOrganization, { id: this.organization.id }).subscribe({
       next: () => {
         this.notificationService.showNotification(
           'info',
@@ -228,7 +228,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
 
     this.isUpdatingName = true;
 
-    this.organizationService.setOrganizationName({ id: this.organization.id, body: { name: name } }).subscribe({
+    this.turnierplanApi.invoke(setOrganizationName, { id: this.organization.id, body: { name: name } }).subscribe({
       next: () => {
         if (this.organization) {
           this.organization.name = name;
@@ -243,8 +243,8 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
   }
 
   protected deleteApiKey(id: string): void {
-    this.apiKeyService
-      .deleteApiKey({ id: id })
+    this.turnierplanApi
+      .invoke(deleteApiKey, { id: id })
       .pipe(switchMap(() => this.loadApiKeys()))
       .subscribe({
         next: () => {
@@ -265,8 +265,8 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.apiKeyService
-      .setApiKeyStatus({ id: apiKey.id, body: { isActive: isActive } })
+    this.turnierplanApi
+      .invoke(setApiKeyStatus, { id: apiKey.id, body: { isActive: isActive } })
       .pipe(switchMap(() => this.loadApiKeys()))
       .subscribe({
         next: () => {
@@ -287,7 +287,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
 
     this.isLoadingApiKeys = true;
 
-    return this.apiKeyService.getApiKeys({ organizationId: this.organization.id }).pipe(
+    return this.turnierplanApi.invoke(getApiKeys, { organizationId: this.organization.id }).pipe(
       tap((apiKeys) => {
         this.apiKeys = apiKeys;
         this.isLoadingApiKeys = false;

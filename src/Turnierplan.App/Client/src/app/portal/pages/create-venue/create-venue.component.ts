@@ -46,7 +46,7 @@ export class CreateVenueComponent implements OnDestroy {
             return of(undefined);
           }
           this.loadingState = { isLoading: true };
-          return this.organizationService.getOrganization({ id: organizationId });
+          return this.turnierplanApi.invoke(getOrganization, { id: organizationId });
         })
       )
       .subscribe({
@@ -69,8 +69,8 @@ export class CreateVenueComponent implements OnDestroy {
   protected confirmButtonClicked(): void {
     if (this.venueName.valid && !this.loadingState.isLoading && this.organization) {
       this.loadingState = { isLoading: true };
-      this.venueService
-        .createVenue({
+      this.turnierplanApi
+        .invoke(createVenue, {
           body: {
             organizationId: this.organization.id,
             name: this.venueName.value

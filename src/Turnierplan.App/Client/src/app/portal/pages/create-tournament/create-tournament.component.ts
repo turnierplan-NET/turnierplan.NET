@@ -60,8 +60,8 @@ export class CreateTournamentComponent implements OnDestroy {
           }
           this.loadingState = { isLoading: true };
           return combineLatest([
-            this.organizationService.getOrganization({ id: organizationId }),
-            this.folderService.getFolders({ organizationId: organizationId })
+            this.turnierplanApi.invoke(getOrganization, { id: organizationId }),
+            this.turnierplanApi.invoke(getFolders, { organizationId: organizationId })
           ]);
         })
       )
@@ -133,8 +133,8 @@ export class CreateTournamentComponent implements OnDestroy {
     if (this.tournamentName.valid && !this.loadingState.isLoading && this.organization) {
       this.loadingState = { isLoading: true };
 
-      this.tournamentService
-        .createTournament({
+      this.turnierplanApi
+        .invoke(createTournament, {
           body: {
             organizationId: this.organization.id,
             name: this.tournamentName.value,

@@ -80,7 +80,7 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
             return of();
           }
           this.loadingState = { isLoading: true };
-          return this.venueService.getVenue({ id: venueId });
+          return this.turnierplanApi.invoke(getVenue, { id: venueId });
         })
       )
       .subscribe({
@@ -193,7 +193,7 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
 
     this.loadingState = { isLoading: true };
 
-    this.venueService.updateVenue({ id: this.venue.id, body: this.venue }).subscribe({
+    this.turnierplanApi.invoke(updateVenue, { id: this.venue.id, body: this.venue }).subscribe({
       next: () => {
         this.loadingState = { isLoading: false };
         this.isDirty = false;
@@ -211,7 +211,7 @@ export class ViewVenueComponent implements OnInit, OnDestroy, DiscardChangesDete
 
     const organizationId = this.venue.organizationId;
     this.loadingState = { isLoading: true, error: undefined };
-    this.venueService.deleteVenue({ id: this.venue.id }).subscribe({
+    this.turnierplanApi.invoke(deleteVenue, { id: this.venue.id }).subscribe({
       next: () => {
         this.notificationService.showNotification(
           'info',

@@ -53,7 +53,7 @@ export class AuthenticationService implements OnDestroy {
   }
 
   public login(email: string, password: string): Observable<'success' | 'failure'> {
-    return this.identityService.login({ body: { eMail: email, password: password } }).pipe(
+    return this.turnierplanApi.invoke(login, { body: { eMail: email, password: password } }).pipe(
       catchError(() => of(undefined)),
       map((result) => {
         if (result && result.success && result.accessToken && result.refreshToken) {
@@ -126,8 +126,8 @@ export class AuthenticationService implements OnDestroy {
     newPassword: string,
     currentPassword: string
   ): Observable<'success' | 'failure' | NullableOfChangePasswordFailedReason> {
-    return this.identityService
-      .changePassword({
+    return this.turnierplanApi
+      .invoke(changePassword, {
         body: {
           eMail: userEmail,
           newPassword: newPassword,
@@ -154,7 +154,7 @@ export class AuthenticationService implements OnDestroy {
   }
 
   public changeUserInformation(userName: string, emailAddress: string): Observable<'success' | 'emailVerificationPending' | 'failure'> {
-    return this.identityService.updateUserData({ body: { userName: userName, eMail: emailAddress } }).pipe(
+    return this.turnierplanApi.invoke(updateUserData, { body: { userName: userName, eMail: emailAddress } }).pipe(
       catchError(() => of(undefined)),
       map((result) => {
         if (result?.success !== true) {
@@ -194,7 +194,7 @@ export class AuthenticationService implements OnDestroy {
         return logoutWithRedirect();
       }
 
-      return this.identityService.refresh().pipe(
+      return this.turnierplanApi.invoke(refresh).pipe(
         switchMap((result) => {
           if (result.success && result.accessToken && result.refreshToken) {
             const decodedAccessToken = this.decodeAccessToken(result.accessToken);
@@ -306,7 +306,7 @@ export class AuthenticationService implements OnDestroy {
   }
 
   private logoutAndClearData(navigateTo?: () => void): Observable<void> {
-    const logout$ = this.identityService.logout().pipe(
+    const logout$ = this.turnierplanApi.invoke(logout).pipe(
       catchError(() => of(undefined)),
       tap(() => {
         localStorage.removeItem(AuthenticationService.localStorageUserNameKey);

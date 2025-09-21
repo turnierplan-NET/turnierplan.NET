@@ -101,7 +101,7 @@ export class PresentationConfigWidgetComponent {
       }
     };
 
-    this.tournamentService.setTournamentPresentationConfiguration({ id: this.tournamentId, body: data }).subscribe({
+    this.turnierplanApi.invoke(setTournamentPresentationConfiguration, { id: this.tournamentId, body: data }).subscribe({
       next: () => {
         this.hasUnsavedChanges = false;
         this.isSaving = false;
@@ -133,7 +133,7 @@ export class PresentationConfigWidgetComponent {
       name: this.organizationName
     };
 
-    ref.closed.pipe(switchMap((id: string) => this.tournamentService.getTournamentPresentationConfiguration({ id: id }))).subscribe({
+    ref.closed.pipe(switchMap((id: string) => this.turnierplanApi.invoke(getTournamentPresentationConfiguration, { id: id }))).subscribe({
       next: (presentationConfiguration) => {
         this.initialize(presentationConfiguration);
         this.hasUnsavedChanges = true;

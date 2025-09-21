@@ -48,7 +48,7 @@ export class MoveTournamentToFolderComponent {
     this.currentFolderId = currentFolderId;
     this.currentFolderName = currentFolderName;
 
-    this.folderService.getFolders({ organizationId: organizationId }).subscribe({
+    this.turnierplanApi.invoke(getFolders, { organizationId: organizationId }).subscribe({
       next: (availableFolders) => {
         this.availableFolders = availableFolders.filter((x) => x.id !== currentFolderId);
         this.availableFolders.sort((a, b) => a.name.localeCompare(b.name));

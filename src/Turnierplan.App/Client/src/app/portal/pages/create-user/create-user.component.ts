@@ -57,8 +57,8 @@ export class CreateUserComponent implements OnInit {
   protected confirmButtonClicked(): void {
     if (this.form.valid && !this.loadingState.isLoading) {
       this.loadingState = { isLoading: true };
-      this.userService
-        .createUser({ body: this.form.getRawValue() })
+      this.turnierplanApi
+        .invoke(createUser, { body: this.form.getRawValue() })
         .pipe(switchMap(() => from(this.router.navigate(['../..'], { relativeTo: this.route }))))
         .subscribe({
           next: () => {

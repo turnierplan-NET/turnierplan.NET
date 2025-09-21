@@ -135,7 +135,7 @@ export class ImageChooserComponent {
 
     this.isLoadingImages = true;
 
-    this.imageService.deleteImage({ id: deleteImageId }).subscribe({
+    this.turnierplanApi.invoke(deleteImage, { id: deleteImageId }).subscribe({
       next: () => {
         if (deleteImageId === this.currentImageId) {
           this.modal.close({ type: 'ImageDeleted', deletedImageId: deleteImageId } as ImageChooserResult);
@@ -150,7 +150,7 @@ export class ImageChooserComponent {
   }
 
   private loadImages(): void {
-    this.imageService.getImages({ organizationId: this.organizationId, imageType: this.imageType }).subscribe({
+    this.turnierplanApi.invoke(getImages, { organizationId: this.organizationId, imageType: this.imageType }).subscribe({
       next: (images) => {
         this.existingImages = images;
         this.existingImages.sort((a, b) => {

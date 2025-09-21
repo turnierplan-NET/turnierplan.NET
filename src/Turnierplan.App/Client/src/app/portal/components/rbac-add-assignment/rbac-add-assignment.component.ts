@@ -76,8 +76,8 @@ export class RbacAddAssignmentComponent implements OnDestroy {
       userEmail: this.selectedPrincipalKind === PrincipalKind.User ? this.searchPrincipalInput.trim() : null
     };
 
-    this.roleAssignmentsService
-      .createRoleAssignment({ body: request })
+    this.turnierplanApi
+      .invoke(createRoleAssignment, { body: request })
       .pipe(finalize(() => (this.isCreatingRoleAssignment = false)))
       .subscribe({
         next: () => {

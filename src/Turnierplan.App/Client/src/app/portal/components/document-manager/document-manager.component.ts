@@ -132,8 +132,8 @@ export class DocumentManagerComponent {
       this.currentlyDownloading = id;
       const fileName = this.getDocumentFileName(documentName);
 
-      this.documentService
-        .getDocumentPdf({ id: id, languageCode: this.translateService.getCurrentLang(), timeZone: this.getTimeZoneName() })
+      this.turnierplanApi
+        .invoke(getDocumentPdf, { id: id, languageCode: this.translateService.getCurrentLang(), timeZone: this.getTimeZoneName() })
         .subscribe({
           next: (result) => {
             this.documents.find((x) => x.id === id)!.generationCount += 1;
@@ -171,7 +171,7 @@ export class DocumentManagerComponent {
 
     this.currentlyUpdatingName = id;
 
-    this.documentService.setDocumentName({ id: id, body: { name: name } }).subscribe({
+    this.turnierplanApi.invoke(setDocumentName, { id: id, body: { name: name } }).subscribe({
       next: () => {
         const document = this.documents.find((x) => x.id === id);
         if (document) {
@@ -199,8 +199,8 @@ export class DocumentManagerComponent {
     this.displayPdfViewer = true;
     this.currentlyViewedDocumentId = id;
 
-    this.documentService
-      .getDocumentPdf({ id: id, languageCode: this.translateService.getCurrentLang(), timeZone: this.getTimeZoneName() })
+    this.turnierplanApi
+      .invoke(getDocumentPdf, { id: id, languageCode: this.translateService.getCurrentLang(), timeZone: this.getTimeZoneName() })
       .pipe(
         tap(() => {
           this.currentlyLoadingPreview = undefined;
@@ -228,9 +228,9 @@ export class DocumentManagerComponent {
   private getDocumentConfig(document: DocumentDto): Observable<DocumentConfiguration> {
     switch (document.type) {
       case DocumentType.MatchPlan:
-        return this.documentService.getMatchPlanDocumentConfiguration({ id: document.id });
+        return this.turnierplanApi.invoke(getMatchPlanDocumentConfiguration, { id: document.id });
       case DocumentType.Receipts:
-        return this.documentService.getReceiptsDocumentConfiguration({ id: document.id });
+        return this.turnierplanApi.invoke(getReceiptsDocumentConfiguration, { id: document.id });
     }
 
     throw new Error(`Document type '${document.type}' is currently not registered for fetching configuration.`);
@@ -240,10 +240,13 @@ export class DocumentManagerComponent {
     switch (document.type) {
       case DocumentType.MatchPlan:
         return (config) =>
-          this.documentService.setMatchPlanDocumentConfiguration({ id: document.id, body: config as MatchPlanDocumentConfiguration });
+          this.turnierplanApi.invoke(setMatchPlanDocumentConfiguration, {
+            id: document.id,
+            body: config as MatchPlanDocumentConfiguration
+          });
       case DocumentType.Receipts:
         return (config) =>
-          this.documentService.setReceiptsDocumentConfiguration({ id: document.id, body: config as ReceiptsDocumentConfiguration });
+          this.turnierplanApi.invoke(setReceiptsDocumentConfiguration, { id: document.id, body: config as ReceiptsDocumentConfiguration });
     }
 
     throw new Error(`Document type '${document.type}' is currently not registered for saving configuration.`);

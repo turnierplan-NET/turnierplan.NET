@@ -64,7 +64,7 @@ export class FolderStatisticsComponent implements OnInit, OnDestroy {
 
           this.loadingState = { isLoading: true };
 
-          return this.folderService.getFolderStatistics({ id: folderId });
+          return this.turnierplanApi.invoke(getFolderStatistics, { id: folderId });
         })
       )
       .subscribe({

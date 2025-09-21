@@ -200,9 +200,9 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
             return of(undefined);
           }
           this.loadingState = { isLoading: true };
-          return this.tournamentService.getTournament({ id: tournamentId });
+          return this.turnierplanApi.invoke(getTournament, { id: tournamentId });
         }),
-        combineLatestWith(this.metadataService.getAvailableFinalsMatchDefinitions())
+        combineLatestWith(this.turnierplanApi.invoke(getAvailableFinalsMatchDefinitions))
       )
       .subscribe({
         next: ([tournament, finalsMatchDefinitions]) => {
@@ -239,8 +239,8 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
 
     const request = this.createRequest();
 
-    this.tournamentService
-      .configureTournament({ id: this.originalTournament.id, body: request })
+    this.turnierplanApi
+      .invoke(configureTournament, { id: this.originalTournament.id, body: request })
       .pipe(
         switchMap(() => {
           this.isDirty = false;

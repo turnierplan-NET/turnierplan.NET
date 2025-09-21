@@ -21,8 +21,8 @@ export class RbacPrincipalComponent implements OnInit {
   constructor() {}
 
   public ngOnInit(): void {
-    this.displayName$ = this.principalsService
-      .getPrincipalName({
+    this.displayName$ = this.turnierplanApi
+      .invoke(getPrincipalName, {
         principalKind: this.principal.kind,
         principalId: this.principal.principalId
       })

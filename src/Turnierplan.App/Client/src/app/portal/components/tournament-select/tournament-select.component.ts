@@ -26,7 +26,7 @@ export class TournamentSelectComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.tournamentService.getTournaments({ organizationId: this.organizationId }).subscribe({
+    this.turnierplanApi.invoke(getTournaments, { organizationId: this.organizationId }).subscribe({
       next: (tournaments) => {
         this.folderTree = FolderTreeComponent.generateTree(this.organizationName, tournaments);
         this.selectTreeEntry('/');

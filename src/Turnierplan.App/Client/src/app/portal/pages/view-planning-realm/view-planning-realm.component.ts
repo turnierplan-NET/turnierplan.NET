@@ -142,7 +142,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
             return of();
           }
           this.loadingState = { isLoading: true };
-          return this.planningRealmService.getPlanningRealm({ id: planningRealmId });
+          return this.turnierplanApi.invoke(getPlanningRealm, { id: planningRealmId });
         })
       )
       .subscribe({
@@ -233,7 +233,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       .pipe(
         tap(() => (this.loadingState = { isLoading: true })),
         switchMap((request: CreateApplicationEndpointRequest) =>
-          this.applicationService.createApplication({ planningRealmId: planningRealmId, body: request })
+          this.turnierplanApi.invoke(createApplication, { planningRealmId: planningRealmId, body: request })
         )
       )
       .subscribe({
@@ -295,9 +295,9 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       }))
     };
 
-    this.planningRealmService
-      .updatePlanningRealm({ id: planningRealmId, body: request })
-      .pipe(switchMap(() => this.planningRealmService.getPlanningRealm({ id: planningRealmId })))
+    this.turnierplanApi
+      .invoke(updatePlanningRealm, { id: planningRealmId, body: request })
+      .pipe(switchMap(() => this.turnierplanApi.invoke(getPlanningRealm, { id: planningRealmId })))
       .subscribe({
         next: (planningRealm) => {
           this.setPlanningRealm(planningRealm);
@@ -316,7 +316,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
 
     const organizationId = this.planningRealm.organizationId;
     this.loadingState = { isLoading: true, error: undefined };
-    this.planningRealmService.deletePlanningRealm({ id: this.planningRealm.id }).subscribe({
+    this.turnierplanApi.invoke(deletePlanningRealm, { id: this.planningRealm.id }).subscribe({
       next: () => {
         this.notificationService.showNotification(
           'info',

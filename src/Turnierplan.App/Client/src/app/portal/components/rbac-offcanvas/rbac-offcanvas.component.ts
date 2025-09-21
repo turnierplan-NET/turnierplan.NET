@@ -85,7 +85,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
   }
 
   protected removeRoleAssignment(id: string): void {
-    this.roleAssignmentsService.deleteRoleAssignment({ scopeId: this.target.rbacScopeId, roleAssignmentId: id }).subscribe({
+    this.turnierplanApi.invoke(deleteRoleAssignment, { scopeId: this.target.rbacScopeId, roleAssignmentId: id }).subscribe({
       next: () => {
         this.roleAssignmentCount = 0;
 
@@ -150,8 +150,8 @@ export class RbacOffcanvasComponent implements OnDestroy {
   private loadRoleAssignments(): void {
     this.isLoadingRoleAssignments = true;
 
-    this.roleAssignmentsService
-      .getRoleAssignments({ scopeId: this.target.rbacScopeId })
+    this.turnierplanApi
+      .invoke(getRoleAssignments, { scopeId: this.target.rbacScopeId })
       .pipe(finalize(() => (this.isLoadingRoleAssignments = false)))
       .subscribe({
         next: (roleAssignments) => {

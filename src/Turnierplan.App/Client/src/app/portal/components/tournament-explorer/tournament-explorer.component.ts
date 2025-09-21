@@ -72,7 +72,7 @@ export class TournamentExplorerComponent implements OnChanges {
 
   protected renameFolder(folderId: string, name: string): void {
     this.isUpdatingFolderName = true;
-    this.folderService.setFolderName({ id: folderId, body: { name: name } }).subscribe({
+    this.turnierplanApi.invoke(setFolderName, { id: folderId, body: { name: name } }).subscribe({
       next: () => {
         const folder = this.treeData.find((x) => x.folderId === folderId);
         if (folder) {

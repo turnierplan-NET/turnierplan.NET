@@ -54,7 +54,7 @@ export class CreateApiKeyComponent {
             return of(undefined);
           }
           this.loadingState = { isLoading: true };
-          return this.organizationService.getOrganization({ id: organizationId });
+          return this.turnierplanApi.invoke(getOrganization, { id: organizationId });
         })
       )
       .subscribe({
@@ -80,8 +80,8 @@ export class CreateApiKeyComponent {
   protected confirmButtonClicked(): void {
     if (this.form.valid && !this.loadingState.isLoading && this.organization) {
       this.loadingState = { isLoading: true };
-      this.apiKeyService
-        .createApiKey({
+      this.turnierplanApi
+        .invoke(createApiKey, {
           body: {
             organizationId: this.organization.id,
             ...this.form.getRawValue()

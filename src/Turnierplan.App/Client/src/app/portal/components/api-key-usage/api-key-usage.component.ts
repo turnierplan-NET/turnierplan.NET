@@ -38,7 +38,7 @@ export class ApiKeyUsageComponent implements OnDestroy {
         map(([x]) => x),
         tap(() => (this.isLoading = true)),
         delay(300),
-        switchMap((id) => apiKeyService.getApiKeyUsage({ rangeDays: this.timeRange, id: id }))
+        switchMap((id) => turnierplanApi.invoke(getApiKeyUsage, { rangeDays: this.timeRange, id: id }))
       )
       .subscribe({
         next: (data) => {

@@ -85,7 +85,7 @@ export class AdministrationPageComponent implements OnInit {
   public ngOnInit(): void {
     this.titleService.setTitleTranslated('Portal.Administration.Title');
 
-    this.userService.getUsers().subscribe({
+    this.turnierplanApi.invoke(getUsers).subscribe({
       next: (users) => {
         this.users = users;
         this.loadingState = { isLoading: false };
@@ -144,9 +144,9 @@ export class AdministrationPageComponent implements OnInit {
       password: formValue.updatePassword ? formValue.password : undefined
     };
 
-    this.userService
-      .updateUser({ id: userId, body: request })
-      .pipe(switchMap(() => this.userService.getUsers()))
+    this.turnierplanApi
+      .invoke(updateUser, { id: userId, body: request })
+      .pipe(switchMap(() => this.turnierplanApi.invoke(getUsers)))
       .subscribe({
         next: (users) => {
           this.users = users;
@@ -179,9 +179,9 @@ export class AdministrationPageComponent implements OnInit {
     this.currentOffcanvas?.close();
     this.loadingState = { isLoading: true };
 
-    this.userService
-      .deleteUser({ id: userId })
-      .pipe(switchMap(() => this.userService.getUsers()))
+    this.turnierplanApi
+      .invoke(deleteUser, { id: userId })
+      .pipe(switchMap(() => this.turnierplanApi.invoke(getUsers)))
       .subscribe({
         next: (users) => {
           this.users = users;

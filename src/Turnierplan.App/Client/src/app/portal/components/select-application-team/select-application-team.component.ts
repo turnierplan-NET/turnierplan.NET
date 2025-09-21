@@ -62,7 +62,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.isLoadingPlanningRealms = true;
 
-    this.planningRealmService.getPlanningRealms({ organizationId: this.organizationId }).subscribe({
+    this.turnierplanApi.invoke(getPlanningRealms, { organizationId: this.organizationId }).subscribe({
       next: (result) => {
         this.planningRealms = result;
         this.isLoadingPlanningRealms = false;
@@ -93,7 +93,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
         switchMap((id) => {
           this.isLoadingPlanningRealmDetail = true;
 
-          return this.planningRealmService.getPlanningRealm({ id: id });
+          return this.turnierplanApi.invoke(getPlanningRealm, { id: id });
         }),
         catchError(() => of(undefined))
       )
@@ -110,7 +110,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
         switchMap(() => {
           this.isLoadingApplications = true;
 
-          return this.applicationsService.getApplications({
+          return this.turnierplanApi.invoke(getApplications, {
             planningRealmId: this.planningRealmDetail!.id,
             page: this.applicationsCurrentPage,
             pageSize: this.applicationsPageSize,

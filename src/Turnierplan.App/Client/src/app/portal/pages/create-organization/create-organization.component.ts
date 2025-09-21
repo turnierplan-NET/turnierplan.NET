@@ -42,8 +42,8 @@ export class CreateOrganizationComponent implements OnInit {
   protected confirmButtonClicked(): void {
     if (this.organizationName.valid && !this.loadingState.isLoading) {
       this.loadingState = { isLoading: true };
-      this.organizationService
-        .createOrganization({ body: { name: this.organizationName.value } })
+      this.turnierplanApi
+        .invoke(createOrganization, { body: { name: this.organizationName.value } })
         .pipe(switchMap((organization) => from(this.router.navigate(['../../organization', organization.id], { relativeTo: this.route }))))
         .subscribe({
           next: () => {

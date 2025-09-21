@@ -81,7 +81,7 @@ export class ManageApplicationsComponent implements OnDestroy {
         combineLatestWith(this.reload$),
         tap(() => (this.isLoading = true)),
         switchMap(([filter, _]) => {
-          return this.applicationsService.getApplications({
+          return this.turnierplanApi.invoke(getApplications, {
             planningRealmId: this.planningRealm.id,
             page: this.currentPage,
             pageSize: this.pageSize,
@@ -167,8 +167,8 @@ export class ManageApplicationsComponent implements OnDestroy {
       .pipe(
         tap(() => (this.updatingNotesOfApplicationId = application.id)),
         switchMap((notes) =>
-          this.applicationsService
-            .setApplicationNotes({
+          this.turnierplanApi
+            .invoke(setApplicationNotes, {
               planningRealmId: this.planningRealm.id,
               applicationId: application.id,
               body: {
@@ -195,8 +195,8 @@ export class ManageApplicationsComponent implements OnDestroy {
   }
 
   protected renameTeam(applicationId: number, applicationTeam: ApplicationTeamDto, name: string): void {
-    this.applicationTeamsService
-      .setApplicationTeamName({
+    this.turnierplanApi
+      .invoke(setApplicationTeamName, {
         planningRealmId: this.planningRealm.id,
         applicationId: applicationId,
         applicationTeamId: applicationTeam.id,

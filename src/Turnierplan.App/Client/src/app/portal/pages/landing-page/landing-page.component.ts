@@ -48,8 +48,8 @@ export class LandingPageComponent implements OnInit {
   public ngOnInit(): void {
     this.titleService.setTitleTranslated('Portal.LandingPage.Title');
 
-    this.organizationService
-      .getOrganizations()
+    this.turnierplanApi
+      .invoke(getOrganizations)
       .pipe(take(1))
       .subscribe({
         next: (result) => {

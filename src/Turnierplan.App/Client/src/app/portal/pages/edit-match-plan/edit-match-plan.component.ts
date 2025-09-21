@@ -92,9 +92,9 @@ export class EditMatchPlanComponent implements OnInit, OnDestroy, DiscardChanges
 
           this.loadingState = { isLoading: true };
 
-          return this.tournamentService.getTournament({ id: this.tournamentId }).pipe(
+          return this.turnierplanApi.invoke(getTournament, { id: this.tournamentId }).pipe(
             combineLatestWith(
-              this.tournamentService.getTournamentTeamSelectors({
+              this.turnierplanApi.invoke(getTournamentTeamSelectors, {
                 id: this.tournamentId,
                 languageCode: this.translateService.getCurrentLang()
               })
@@ -145,8 +145,8 @@ export class EditMatchPlanComponent implements OnInit, OnDestroy, DiscardChanges
 
     this.loadingState = { isLoading: true };
 
-    this.tournamentService
-      .setTournamentMatchPlan({
+    this.turnierplanApi
+      .invoke(setTournamentMatchPlan, {
         id: this.tournamentId,
         body: { matches: this.currentState }
       })
