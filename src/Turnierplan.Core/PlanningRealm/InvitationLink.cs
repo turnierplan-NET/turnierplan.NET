@@ -110,9 +110,9 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
             throw new TurnierplanException("Cannot assign an image from another organization.");
         }
 
-        if (provided.Type != ImageType.SquareLargeLogo)
+        if (provided.Type != ImageType.Logo)
         {
-            throw new TurnierplanException($"Cannot assign image because the image's type is not the expected type '{ImageType.SquareLargeLogo}'.");
+            throw new TurnierplanException($"Cannot assign image because the image's type is not the expected type '{ImageType.Logo}'.");
         }
 
         apply();

@@ -53,8 +53,8 @@ internal sealed class SetTournamentPresentationConfigurationEndpoint : EndpointB
                 CustomContent = request.Configuration.Header2.CustomContent?.Trim()
             },
             ShowResults = request.Configuration.ShowResults,
-            ShowPrimaryLogo = request.Configuration.ShowOrganizerLogo,
-            ShowSecondaryLogo = request.Configuration.ShowSponsorLogo
+            ShowPrimaryLogo = request.Configuration.ShowPrimaryLogo,
+            ShowSecondaryLogo = request.Configuration.ShowSecondaryLogo
         };
 
         await repository.UnitOfWork.SaveChangesAsync(cancellationToken);

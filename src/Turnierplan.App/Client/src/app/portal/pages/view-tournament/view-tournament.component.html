@@ -292,29 +292,29 @@
                   <div class="d-flex flex-column flex-md-row gap-2">
                     <tp-image-widget
                       class="flex-md-grow-1"
-                      [currentImage]="images.organizerLogo"
-                      [imageAlt]="'OrganizerLogo'"
-                      [imageType]="ImageType.SquareLargeLogo"
+                      [currentImage]="images.primaryLogo"
+                      [imageAlt]="'PrimaryLogo'"
+                      [imageType]="ImageType.Logo"
                       [organizationId]="tournament.organizationId"
-                      (imageChange)="setImage('organizerLogo', $event?.id)"
+                      (imageChange)="setImage('primaryLogo', $event?.id)"
                       (imageDelete)="loadTournamentImages()"
                       (apiError)="loadingState = { isLoading: false, error: $event }" />
                     <tp-image-widget
                       class="flex-md-grow-1"
-                      [currentImage]="images.sponsorLogo"
-                      [imageAlt]="'SponsorLogo'"
-                      [imageType]="ImageType.SquareLargeLogo"
+                      [currentImage]="images.secondaryLogo"
+                      [imageAlt]="'SecondaryLogo'"
+                      [imageType]="ImageType.Logo"
                       [organizationId]="tournament.organizationId"
-                      (imageChange)="setImage('sponsorLogo', $event?.id)"
+                      (imageChange)="setImage('secondaryLogo', $event?.id)"
                       (imageDelete)="loadTournamentImages()"
                       (apiError)="loadingState = { isLoading: false, error: $event }" />
                     <tp-image-widget
                       class="flex-md-grow-1"
-                      [currentImage]="images.sponsorBanner"
-                      [imageAlt]="'SponsorBanner'"
-                      [imageType]="ImageType.SponsorBanner"
+                      [currentImage]="images.bannerImage"
+                      [imageAlt]="'Banner'"
+                      [imageType]="ImageType.Banner"
                       [organizationId]="tournament.organizationId"
-                      (imageChange)="setImage('sponsorBanner', $event?.id)"
+                      (imageChange)="setImage('bannerImage', $event?.id)"
                       (imageDelete)="loadTournamentImages()"
                       (apiError)="loadingState = { isLoading: false, error: $event }" />
                   </div>

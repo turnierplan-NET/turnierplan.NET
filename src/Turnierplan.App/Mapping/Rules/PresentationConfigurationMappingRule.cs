@@ -21,8 +21,8 @@ internal sealed class PresentationConfigurationMappingRule : MappingRuleBase<Pre
                 CustomContent = source.Header2.CustomContent
             },
             ShowResults = source.ShowResults,
-            ShowOrganizerLogo = source.ShowPrimaryLogo,
-            ShowSponsorLogo = source.ShowSecondaryLogo
+            ShowPrimaryLogo = source.ShowPrimaryLogo,
+            ShowSecondaryLogo = source.ShowSecondaryLogo
         };
     }
 }

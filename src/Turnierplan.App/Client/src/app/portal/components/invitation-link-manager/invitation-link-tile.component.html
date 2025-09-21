@@ -84,7 +84,7 @@
         <tp-image-widget
           [currentImage]="invitationLink.primaryLogo"
           [imageAlt]="'PrimaryLogo'"
-          [imageType]="ImageType.SquareLargeLogo"
+          [imageType]="ImageType.Logo"
           [organizationId]="planningRealm.organizationId"
           [allowChanging]="writeAllowed"
           (imageChange)="setImage('primaryLogo', $event)"
@@ -93,7 +93,7 @@
         <tp-image-widget
           [currentImage]="invitationLink.secondaryLogo"
           [imageAlt]="'SecondaryLogo'"
-          [imageType]="ImageType.SquareLargeLogo"
+          [imageType]="ImageType.Logo"
           [organizationId]="planningRealm.organizationId"
           [allowChanging]="writeAllowed"
           (imageChange)="setImage('secondaryLogo', $event)"

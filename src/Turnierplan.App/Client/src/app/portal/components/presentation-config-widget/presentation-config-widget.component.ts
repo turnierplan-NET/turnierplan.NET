@@ -41,8 +41,8 @@ export class PresentationConfigWidgetComponent {
   protected header1CustomContent = '';
   protected header2CustomContent = '';
   protected showResults: ResultsMode = ResultsMode.Default;
-  protected showOrganizerLogo = true;
-  protected showSponsorLogo = true;
+  protected showPrimaryLogo = true;
+  protected showSecondaryLogo = true;
 
   protected saveAttempted = false;
   protected hasUnsavedChanges = false;
@@ -98,8 +98,8 @@ export class PresentationConfigWidgetComponent {
           customContent: this.header2CustomContent.trim().length > 0 ? this.header2CustomContent : undefined
         },
         showResults: this.showResults,
-        showOrganizerLogo: this.showOrganizerLogo,
-        showSponsorLogo: this.showSponsorLogo
+        showPrimaryLogo: this.showPrimaryLogo,
+        showSecondaryLogo: this.showSecondaryLogo
       }
     };
 
@@ -161,7 +161,7 @@ export class PresentationConfigWidgetComponent {
     this.header1CustomContent = value.header1.customContent ?? '';
     this.header2CustomContent = value.header2.customContent ?? '';
     this.showResults = value.showResults;
-    this.showOrganizerLogo = value.showOrganizerLogo;
-    this.showSponsorLogo = value.showSponsorLogo;
+    this.showPrimaryLogo = value.showPrimaryLogo;
+    this.showSecondaryLogo = value.showSecondaryLogo;
   }
 }

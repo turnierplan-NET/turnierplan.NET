@@ -246,19 +246,19 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         Venue?._tournaments.Add(this);
     }
 
-    public void SetPrimaryLogo(Image.Image? organizerLogo)
+    public void SetPrimaryLogo(Image.Image? primaryLogo)
     {
-        CheckImageTypeAndSetImage(organizerLogo, ImageType.SquareLargeLogo, () => PrimaryLogo = organizerLogo);
+        CheckImageTypeAndSetImage(primaryLogo, ImageType.Logo, () => PrimaryLogo = primaryLogo);
     }
 
-    public void SetSecondaryLogo(Image.Image? sponsorLogo)
+    public void SetSecondaryLogo(Image.Image? secondaryLogo)
     {
-        CheckImageTypeAndSetImage(sponsorLogo, ImageType.SquareLargeLogo, () => SecondaryLogo = sponsorLogo);
+        CheckImageTypeAndSetImage(secondaryLogo, ImageType.Logo, () => SecondaryLogo = secondaryLogo);
     }
 
-    public void SetBannerImage(Image.Image? sponsorBanner)
+    public void SetBannerImage(Image.Image? bannerImage)
     {
-        CheckImageTypeAndSetImage(sponsorBanner, ImageType.SponsorBanner, () => BannerImage = sponsorBanner);
+        CheckImageTypeAndSetImage(bannerImage, ImageType.Banner, () => BannerImage = bannerImage);
     }
 
     public void ShiftToTimezone(TimeZoneInfo timeZone)
