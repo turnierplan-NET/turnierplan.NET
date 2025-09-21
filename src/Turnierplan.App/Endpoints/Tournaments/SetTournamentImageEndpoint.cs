@@ -65,14 +65,14 @@ internal sealed class SetTournamentImageEndpoint : EndpointBase
 
         switch (request.Target)
         {
-            case SetTournamentImageEndpointRequest.SetTournamentImageEndpointRequestTarget.OrganizerLogo:
-                tournament.SetOrganizerLogo(image);
+            case SetTournamentImageEndpointRequest.SetTournamentImageEndpointRequestTarget.PrimaryLogo:
+                tournament.SetPrimaryLogo(image);
                 break;
-            case SetTournamentImageEndpointRequest.SetTournamentImageEndpointRequestTarget.SponsorLogo:
-                tournament.SetSponsorLogo(image);
+            case SetTournamentImageEndpointRequest.SetTournamentImageEndpointRequestTarget.SecondaryLogo:
+                tournament.SetSecondaryLogo(image);
                 break;
-            case SetTournamentImageEndpointRequest.SetTournamentImageEndpointRequestTarget.SponsorBanner:
-                tournament.SetSponsorBanner(image);
+            case SetTournamentImageEndpointRequest.SetTournamentImageEndpointRequestTarget.BannerImage:
+                tournament.SetBannerImage(image);
                 break;
             default:
                 // This cannot happen because it's prevented by the validator
@@ -92,9 +92,9 @@ internal sealed class SetTournamentImageEndpoint : EndpointBase
 
         public enum SetTournamentImageEndpointRequestTarget
         {
-            OrganizerLogo,
-            SponsorLogo,
-            SponsorBanner
+            PrimaryLogo,
+            SecondaryLogo,
+            BannerImage
         }
     }
 

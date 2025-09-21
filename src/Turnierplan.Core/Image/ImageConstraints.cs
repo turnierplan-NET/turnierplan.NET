@@ -2,8 +2,8 @@ namespace Turnierplan.Core.Image;
 
 public sealed class ImageConstraints
 {
-    private static readonly ImageConstraints __squareLargeLogoConstraints = new(true);
-    private static readonly ImageConstraints __sponsorBannerConstraints = new(false, 3, 5);
+    private static readonly ImageConstraints __logoConstraints = new(true);
+    private static readonly ImageConstraints __bannerConstraints = new(false, 3, 5);
 
     private readonly bool _mustBeSquare;
     private readonly float? _minimumAspectRatio;
@@ -56,8 +56,8 @@ public sealed class ImageConstraints
     {
         return imageType switch
         {
-            ImageType.SquareLargeLogo => __squareLargeLogoConstraints,
-            ImageType.SponsorBanner => __sponsorBannerConstraints,
+            ImageType.Logo => __logoConstraints,
+            ImageType.Banner => __bannerConstraints,
             _ => throw new ArgumentOutOfRangeException(nameof(imageType), imageType, "Invalid image type specified.")
         };
     }

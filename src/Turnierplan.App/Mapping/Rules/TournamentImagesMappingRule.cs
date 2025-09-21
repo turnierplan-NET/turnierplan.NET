@@ -10,12 +10,12 @@ internal sealed class TournamentImagesMappingRule : MappingRuleBase<Tournament, 
         return new TournamentImagesDto
         {
             TournamentId = source.PublicId,
-            HasOrganizerLogo = source.OrganizerLogo is not null,
-            HasSponsorLogo = source.SponsorLogo is not null,
-            HasSponsorBanner = source.SponsorBanner is not null,
-            OrganizerLogo = mapper.MapNullable<ImageDto>(source.OrganizerLogo),
-            SponsorLogo = mapper.MapNullable<ImageDto>(source.SponsorLogo),
-            SponsorBanner = mapper.MapNullable<ImageDto>(source.SponsorBanner)
+            HasPrimaryLogo = source.PrimaryLogo is not null,
+            HasSecondaryLogo = source.SecondaryLogo is not null,
+            HasBannerImage = source.BannerImage is not null,
+            PrimaryLogo = mapper.MapNullable<ImageDto>(source.PrimaryLogo),
+            SecondaryLogo = mapper.MapNullable<ImageDto>(source.SecondaryLogo),
+            BannerImage = mapper.MapNullable<ImageDto>(source.BannerImage)
         };
     }
 }

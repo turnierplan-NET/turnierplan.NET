@@ -68,17 +68,17 @@ public sealed class TournamentEntityTypeConfiguration : IEntityTypeConfiguration
             x.OwnsOne(y => y.Header2);
         });
 
-        builder.HasOne<Image>(x => x.OrganizerLogo)
+        builder.HasOne<Image>(x => x.PrimaryLogo)
             .WithMany()
             .OnDelete(DeleteBehavior.SetNull)
             .IsRequired(false);
 
-        builder.HasOne<Image>(x => x.SponsorLogo)
+        builder.HasOne<Image>(x => x.SecondaryLogo)
             .WithMany()
             .OnDelete(DeleteBehavior.SetNull)
             .IsRequired(false);
 
-        builder.HasOne<Image>(x => x.SponsorBanner)
+        builder.HasOne<Image>(x => x.BannerImage)
             .WithMany()
             .OnDelete(DeleteBehavior.SetNull)
             .IsRequired(false);

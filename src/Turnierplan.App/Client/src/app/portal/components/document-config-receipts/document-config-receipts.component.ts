@@ -45,7 +45,8 @@ export class DocumentConfigReceiptsComponent extends DocumentConfigComponent<Rec
       headerInfo: [config.headerInfo],
       signatureLocation: [config.signatureLocation],
       signatureRecipient: [config.signatureRecipient],
-      showSponsorLogo: [config.showSponsorLogo],
+      showPrimaryLogo: [config.showPrimaryLogo],
+      showSecondaryLogo: [config.showSecondaryLogo],
       combineSimilarTeams: [config.combineSimilarTeams]
     });
   }

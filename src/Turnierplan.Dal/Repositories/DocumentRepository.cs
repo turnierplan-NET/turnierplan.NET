@@ -20,9 +20,9 @@ internal sealed class DocumentRepository(TurnierplanContext context) : Repositor
             query = query.Include(x => x.Tournament.Matches);
             query = query.Include(x => x.Tournament.Venue);
 
-            query = query.Include(x => x.Tournament.OrganizerLogo);
-            query = query.Include(x => x.Tournament.SponsorLogo);
-            query = query.Include(x => x.Tournament.SponsorBanner);
+            query = query.Include(x => x.Tournament.PrimaryLogo);
+            query = query.Include(x => x.Tournament.SecondaryLogo);
+            query = query.Include(x => x.Tournament.BannerImage);
 
             query = query.AsSplitQuery();
         }

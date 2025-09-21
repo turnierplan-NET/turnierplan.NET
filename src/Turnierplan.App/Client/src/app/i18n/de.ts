@@ -423,7 +423,8 @@ export const de = {
             SignatureRecipientTooltip:
               'Wenn angegeben, wird dieser Zahlungsempfänger im Bereich der Unterschrift angegeben. Als Standard steht dort "(Turnierleitung)".',
             SignatureRecipientInvalid: 'Der angegebene Text ist ungültig.',
-            ShowSponsorLogo: 'Sponsorlogo abbilden (falls vorhanden)',
+            ShowPrimaryLogo: 'Hauptlogo abbilden (falls vorhanden)',
+            ShowSecondaryLogo: 'zweites Logo abbilden (falls vorhanden)',
             CombineSimilarTeams: 'Mannschaften mit ähnlichem Namen kombinieren',
             CombineSimilarTeamsTooltip:
               'Mannschaften, welche sich nur durch eine bis zu dreistellige Zahl am Ende des Namens unterscheiden, werden auf eine Quittung gedruckt. (römische Zahlen bis 10 werden unterstützt)',
@@ -508,8 +509,8 @@ export const de = {
             OnlyMatchOutcomes: 'Nur Spielergebnisse, keine Gruppenergebnisse',
             NoResults: 'Gar keine Ergebnisse anzeigen'
           },
-          ShowOrganizerLogo: 'Veranstalter-Logo darstellen',
-          ShowSponsorLogo: 'Sponsoren-Logo darstellen',
+          ShowPrimaryLogo: 'Hauptlogo darstellen',
+          ShowSecondaryLogo: 'zweites Logo darstellen',
           SaveForbidden: 'Sie dürfen keine Änderungen an den Einstellungen machen.',
           SuccessToast: {
             Title: 'Einstellungen gespeichert',
@@ -1122,11 +1123,9 @@ export const de = {
       Public: 'Öffentlich'
     },
     ImageAlt: {
-      OrganizerLogo: 'Veranstalter-Logo',
-      SponsorLogo: 'Sponsor-Logo',
-      SponsorBanner: 'Sponsor-Banner',
       PrimaryLogo: 'Hauptlogo',
-      SecondaryLogo: 'zweites Logo'
+      SecondaryLogo: 'zweites Logo',
+      Banner: 'Banner'
     },
     ImageChooser: {
       Title: 'Bild hochladen oder auswählen',
@@ -1135,9 +1134,8 @@ export const de = {
       Upload: 'Hochladen',
       UploadFailed: 'Das Bild konnte nicht hochgeladen werden. Prüfen Sie die Maße und die maximale Dateigröße.',
       Constraints: {
-        SquareLargeLogo:
-          'Das Bild muss quadratisch sein mit einer Auflösung zwischen 50x50 und 3000x3000 Pixel. Die maximale Dateigröße beträgt 8 MB.',
-        SponsorBanner:
+        Logo: 'Das Bild muss quadratisch sein mit einer Auflösung zwischen 50x50 und 3000x3000 Pixel. Die maximale Dateigröße beträgt 8 MB.',
+        Banner:
           'Das Bild muss mindestens 50px hoch sein und darf maximal 3000px breit sein. Das Seitenverhältnis muss zwischen 3:1 und 5:1 liegen. Die maximale Dateigröße beträgt 8 MB.'
       },
       DetailView: {

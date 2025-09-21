@@ -14,10 +14,10 @@ public sealed record PresentationConfiguration
     public ResultsMode ShowResults { get; set; } = ResultsMode.Default;
 
     [JsonPropertyName("ol")]
-    public bool ShowOrganizerLogo { get; set; } = true;
+    public bool ShowPrimaryLogo { get; set; } = true;
 
     [JsonPropertyName("sl")]
-    public bool ShowSponsorLogo { get; set; } = true;
+    public bool ShowSecondaryLogo { get; set; } = true;
 
     public sealed record HeaderLine
     {

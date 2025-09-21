@@ -730,7 +730,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     });
   }
 
-  protected setImage(whichImage: 'organizerLogo' | 'sponsorLogo' | 'sponsorBanner', imageId?: string): void {
+  protected setImage(whichImage: 'primaryLogo' | 'secondaryLogo' | 'bannerImage', imageId?: string): void {
     if (!this.tournament || !this.images || this.isUpdatingImage) {
       return;
     }
@@ -744,9 +744,9 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     const tournamentId = this.tournament.id;
 
     const mappedTarget = {
-      organizerLogo: SetTournamentImageEndpointRequestTarget.OrganizerLogo,
-      sponsorLogo: SetTournamentImageEndpointRequestTarget.SponsorLogo,
-      sponsorBanner: SetTournamentImageEndpointRequestTarget.SponsorBanner
+      primaryLogo: SetTournamentImageEndpointRequestTarget.PrimaryLogo,
+      secondaryLogo: SetTournamentImageEndpointRequestTarget.SecondaryLogo,
+      bannerImage: SetTournamentImageEndpointRequestTarget.BannerImage
     }[whichImage];
 
     this.tournamentService

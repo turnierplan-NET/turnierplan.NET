@@ -54,7 +54,7 @@ public sealed class AccessValidatorTest
         }
 
         Test(() => new ApiKey(organization, "Test", null, DateTime.MaxValue));
-        Test(() => new Image(organization, "Test", ImageType.SquareLargeLogo, "", 0, 1, 1));
+        Test(() => new Image(organization, "Test", ImageType.Logo, "", 0, 1, 1));
         Test(() => new Folder(organization, "Test"));
         Test(() => new Tournament(organization, "Test", Visibility.Public));
         Test(() => new Venue(organization, "Test", ""));
@@ -129,7 +129,7 @@ public sealed class AccessValidatorTest
         }
 
         Test(() => new ApiKey(organization, "Test", null, DateTime.MaxValue));
-        Test(() => new Image(organization, "Test", ImageType.SquareLargeLogo, "", 0, 1, 1));
+        Test(() => new Image(organization, "Test", ImageType.Logo, "", 0, 1, 1));
         Test(() => new Folder(organization, "Test"));
         Test(() => new Tournament(organization, "Test", Visibility.Public));
         Test(() => new Venue(organization, "Test", ""));
