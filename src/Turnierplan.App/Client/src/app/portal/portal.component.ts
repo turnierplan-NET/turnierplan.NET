@@ -19,7 +19,7 @@ import { E2eDirective } from '../core/directives/e2e.directive';
 
 echarts.use([BarChart, GridComponent, CanvasRenderer, TooltipComponent]);
 
-type UserInfoAction = 'EditUserInfo' | 'ChangePassword' | 'Logout';
+type UserInfoAction = 'ChangePassword' | 'Logout';
 
 @Component({
   templateUrl: './portal.component.html',
@@ -83,8 +83,6 @@ export class PortalComponent implements OnInit, OnDestroy {
 
   protected getUserInfoActionIcon(action: UserInfoAction): string {
     switch (action) {
-      case 'EditUserInfo':
-        return 'bi-person-vcard';
       case 'ChangePassword':
         return 'bi-key';
       case 'Logout':
@@ -94,9 +92,6 @@ export class PortalComponent implements OnInit, OnDestroy {
 
   protected userInfoActionClicked(action: UserInfoAction): void {
     switch (action) {
-      case 'EditUserInfo':
-        this.authenticationService.openEditUserInfoForm();
-        break;
       case 'ChangePassword':
         this.authenticationService.openChangePasswordForm();
         break;

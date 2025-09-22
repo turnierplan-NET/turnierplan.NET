@@ -45,8 +45,8 @@ internal sealed class UpdateUserEndpoint : EndpointBase
             }
         }
 
-        user.UserName = request.UserName;
-        user.FullName = request.FullName;
+        user.UserName = request.UserName.Trim();
+        user.FullName = request.FullName?.Trim();
         user.IsAdministrator = request.IsAdministrator;
 
         user.SetEmailAddress(request.EMail);

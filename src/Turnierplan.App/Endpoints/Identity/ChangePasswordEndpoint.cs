@@ -55,7 +55,7 @@ internal sealed class ChangePasswordEndpoint : IdentityEndpointBase<ChangePasswo
             });
         }
 
-        var user = await userRepository.GetByEmailAsync(request.EMail);
+        var user = await userRepository.GetByUserNameAsync(request.UserName);
 
         if (user is null)
         {
@@ -95,7 +95,7 @@ internal sealed class ChangePasswordEndpoint : IdentityEndpointBase<ChangePasswo
 
     public sealed record ChangePasswordEndpointRequest
     {
-        public required string EMail { get; init; }
+        public required string UserName { get; init; }
 
         public required string CurrentPassword { get; init; }
 
@@ -124,9 +124,8 @@ internal sealed class ChangePasswordEndpoint : IdentityEndpointBase<ChangePasswo
 
         private Validator()
         {
-            RuleFor(x => x.EMail)
-                .NotEmpty()
-                .EmailAddress();
+            RuleFor(x => x.UserName)
+                .NotEmpty();
 
             RuleFor(x => x.CurrentPassword)
                 .NotEmpty();

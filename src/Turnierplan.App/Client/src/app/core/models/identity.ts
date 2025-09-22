@@ -1,5 +1,6 @@
 export interface AuthenticatedUser {
   id: string;
-  displayName: string;
-  emailAddress: string;
+  userName: string;
+  fullName?: string;
+  emailAddress?: string;
 }

@@ -8,14 +8,14 @@ import { TurnierplanApi } from '../../api/turnierplan-api';
 import { login } from '../../api/fn/identity/login';
 import { NullableOfChangePasswordFailedReason } from '../../api/models/nullable-of-change-password-failed-reason';
 import { changePassword } from '../../api/fn/identity/change-password';
-import { updateUserData } from '../../api/fn/identity/update-user-data';
 import { refresh } from '../../api/fn/identity/refresh';
 import { logout } from '../../api/fn/identity/logout';
 
 interface TurnierplanAccessToken {
   exp: number;
   mail: string;
-  name: string;
+  userName: string;
+  fullName: string;
   adm?: string;
   uid: string;
 }
@@ -29,6 +29,7 @@ interface TurnierplanRefreshToken {
 export class AuthenticationService implements OnDestroy {
   private static readonly localStorageUserIdKey = 'tp_id_userId';
   private static readonly localStorageUserNameKey = 'tp_id_userName';
+  private static readonly localStorageUserFullNameKey = 'tp_id_userFullName';
   private static readonly localStorageUserEMailKey = 'tp_id_userEMail';
   private static readonly localStorageUserAdministratorKey = 'tp_id_userAdmin';
   private static readonly localStorageAccessTokenExpiryKey = 'tp_id_accTokenExp';
@@ -50,10 +51,16 @@ export class AuthenticationService implements OnDestroy {
   ) {
     const storedUserId = this.readUserIdFromLocalStorage();
     const storedUserName = this.readUserNameFromLocalStorage();
+    const storedUserFullName = this.readUserFullNameFromLocalStorage();
     const storedUserEMail = this.readUserEMailFromLocalStorage();
 
-    if (storedUserId && storedUserName && storedUserEMail) {
-      this.authentication$.next({ id: storedUserId, displayName: storedUserName, emailAddress: storedUserEMail });
+    if (storedUserId && storedUserName) {
+      this.authentication$.next({
+        id: storedUserId,
+        userName: storedUserName,
+        fullName: storedUserFullName,
+        emailAddress: storedUserEMail
+      });
     }
   }
 
@@ -72,7 +79,8 @@ export class AuthenticationService implements OnDestroy {
 
           this.updateLocalStorageCache(
             decodedAccessToken.uid,
-            decodedAccessToken.name,
+            decodedAccessToken.userName,
+            decodedAccessToken.fullName,
             decodedAccessToken.mail,
             decodedAccessToken.adm === 'true',
             decodedAccessToken.exp,
@@ -81,7 +89,8 @@ export class AuthenticationService implements OnDestroy {
 
           this.authentication$.next({
             id: decodedAccessToken.uid,
-            displayName: decodedAccessToken.name,
+            userName: decodedAccessToken.userName,
+            fullName: decodedAccessToken.fullName,
             emailAddress: decodedAccessToken.mail
           });
 
@@ -95,10 +104,6 @@ export class AuthenticationService implements OnDestroy {
 
   public logout(): void {
     this.logoutAndClearData(() => window.location.assign('/')).subscribe();
-  }
-
-  public openEditUserInfoForm(): void {
-    void this.router.navigate(['portal/user-info'], { queryParams: { redirect_to: this.router.url } });
   }
 
   public openChangePasswordForm(): void {
@@ -132,14 +137,14 @@ export class AuthenticationService implements OnDestroy {
   }
 
   public changePassword(
-    userEmail: string,
+    userName: string,
     newPassword: string,
     currentPassword: string
   ): Observable<'success' | 'failure' | NullableOfChangePasswordFailedReason> {
     return this.turnierplanApi
       .invoke(changePassword, {
         body: {
-          eMail: userEmail,
+          userName: userName,
           newPassword: newPassword,
           currentPassword: currentPassword
         }
@@ -161,22 +166,6 @@ export class AuthenticationService implements OnDestroy {
           }
         })
       );
-  }
-
-  public changeUserInformation(userName: string, emailAddress: string): Observable<'success' | 'emailVerificationPending' | 'failure'> {
-    return this.turnierplanApi.invoke(updateUserData, { body: { userName: userName, eMail: emailAddress } }).pipe(
-      catchError(() => of(undefined)),
-      map((result) => {
-        if (result?.success !== true) {
-          return 'failure';
-        }
-
-        this.updateLocalStorageCacheUserInformationOnly(userName, emailAddress);
-        this.authentication$.next({ id: this.readUserIdFromLocalStorage()!, displayName: userName, emailAddress: emailAddress });
-
-        return 'success';
-      })
-    );
   }
 
   private ensureAccessTokenUnprotected(): Observable<boolean> {
@@ -212,7 +201,8 @@ export class AuthenticationService implements OnDestroy {
 
             this.updateLocalStorageCache(
               decodedAccessToken.uid,
-              decodedAccessToken.name,
+              decodedAccessToken.userName,
+              decodedAccessToken.fullName,
               decodedAccessToken.mail,
               decodedAccessToken.adm === 'true',
               decodedAccessToken.exp,
@@ -221,7 +211,8 @@ export class AuthenticationService implements OnDestroy {
 
             this.authentication$.next({
               id: decodedAccessToken.uid,
-              displayName: decodedAccessToken.name,
+              userName: decodedAccessToken.userName,
+              fullName: decodedAccessToken.fullName,
               emailAddress: decodedAccessToken.mail
             });
 
@@ -269,6 +260,10 @@ export class AuthenticationService implements OnDestroy {
     return localStorage.getItem(AuthenticationService.localStorageUserNameKey) ?? undefined;
   }
 
+  private readUserFullNameFromLocalStorage(): string | undefined {
+    return localStorage.getItem(AuthenticationService.localStorageUserFullNameKey) ?? undefined;
+  }
+
   private readUserEMailFromLocalStorage(): string | undefined {
     return localStorage.getItem(AuthenticationService.localStorageUserEMailKey) ?? undefined;
   }
@@ -292,23 +287,24 @@ export class AuthenticationService implements OnDestroy {
   private updateLocalStorageCache(
     userId: string,
     userName: string,
-    userEMail: string,
+    userFullName: string | undefined,
+    userEMail: string | undefined,
     userIsAdmin: boolean,
     accessTokenExpiry: number,
     refreshTokenExpiry: number
   ): void {
     localStorage.setItem(AuthenticationService.localStorageUserIdKey, userId);
     localStorage.setItem(AuthenticationService.localStorageUserNameKey, userName);
-    localStorage.setItem(AuthenticationService.localStorageUserEMailKey, userEMail);
+    localStorage.setItem(AuthenticationService.localStorageUserFullNameKey, userFullName ?? '');
+    localStorage.setItem(AuthenticationService.localStorageUserEMailKey, userEMail ?? '');
     localStorage.setItem(AuthenticationService.localStorageUserAdministratorKey, `${userIsAdmin}`);
 
     localStorage.setItem(AuthenticationService.localStorageAccessTokenExpiryKey, `${accessTokenExpiry}`);
     localStorage.setItem(AuthenticationService.localStorageRefreshTokenExpiryKey, `${refreshTokenExpiry}`);
   }
 
-  private updateLocalStorageCacheUserInformationOnly(userName: string, userEMail: string): void {
+  private updateLocalStorageCacheUserNameOnly(userName: string): void {
     localStorage.setItem(AuthenticationService.localStorageUserNameKey, userName);
-    localStorage.setItem(AuthenticationService.localStorageUserEMailKey, userEMail);
   }
 
   private updateLocalStorageCacheRefreshTokenExpiryOnly(refreshTokenExpiry: number): void {

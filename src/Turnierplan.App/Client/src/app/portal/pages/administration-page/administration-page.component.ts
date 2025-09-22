@@ -147,8 +147,8 @@ export class AdministrationPageComponent implements OnInit {
     const formValue = this.editUserForm.getRawValue();
     const request: UpdateUserEndpointRequest = {
       userName: formValue.userName,
-      fullName: (formValue.fullName ?? '').length > 0 ? formValue.fullName : null,
-      eMail: formValue.eMail,
+      fullName: (formValue.fullName ?? '').trim().length > 0 ? formValue.fullName : null,
+      eMail: (formValue.eMail ?? '').trim().length > 0 ? formValue.eMail : null,
       isAdministrator: formValue.isAdministrator,
       updatePassword: formValue.updatePassword,
       password: formValue.updatePassword ? formValue.password : undefined

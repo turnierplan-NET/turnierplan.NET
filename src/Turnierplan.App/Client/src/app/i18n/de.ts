@@ -47,11 +47,6 @@ export const de = {
         Title: 'Nutzerdaten aktualisiert',
         Message: 'Ihr Benutzerinformationen wurden gespeichert.'
       },
-      EmailVerificationPendingToast: {
-        Title: 'E-Mail muss bestätigt werden',
-        Message:
-          'Ihr Benutzerinformationen wurden gespeichert. Klicken Sie auf den Link in der Mail, welche wir Ihnen geschickt haben, um die neue E-Mail zu bestätigen.'
-      },
       Back: 'Abbrechen',
       Submit: 'Speichern'
     },
@@ -85,7 +80,6 @@ export const de = {
     UserInfoPopover: {
       Text: 'Sie sind angemeldet als:\n<strong>{{userName}}</strong>',
       Administration: 'Administration',
-      EditUserInfo: 'Benutzerinformation',
       ChangePassword: 'Passwort ändern',
       Logout: 'Abmelden'
     },
@@ -117,8 +111,8 @@ export const de = {
       NewUser: 'Neuer Benutzer',
       Users: {
         TableLabel: 'Benutzer in dieser turnierplan.NET-Instanz',
-        Id: 'ID',
-        Name: 'Name',
+        UserName: 'Login-ID',
+        FullName: 'Name',
         EMail: 'E-Mail',
         CreatedAt: 'Erstellt am',
         LastPasswordChange: 'Letzte Passwortänderung',
@@ -127,8 +121,9 @@ export const de = {
       EditUser: {
         Title: 'Benutzer bearbeiten',
         Info: 'Ändern Sie die Informationen eines bestehenden Benutzers. Beachten Sie, dass der betroffene Nutzer diese Änderungen unter Umständen nicht direkt sieht.',
-        Name: 'Name:',
-        NameInvalid: 'Der Name eines neuen Nutzers darf nicht leer sein.',
+        UserName: 'Login-ID:',
+        UserNameInvalid: 'Die Login-ID eines Nutzers darf nicht leer sein.',
+        FullName: 'Name:',
         Email: 'E-Mailadresse',
         EmailInvalid: 'Die eingegebene E-Mailadresse ist ungültig.',
         IsAdministrator: 'Administrator',
@@ -155,11 +150,11 @@ export const de = {
       Title: 'Neuen Benutzer',
       LongTitle: 'Neuen Benutzer erstellen',
       Form: {
-        UserName: 'Name',
+        UserName: 'Login-ID:',
         UserNameInvalid: 'Der Name eines neuen Nutzers darf nicht leer sein.',
-        Email: 'E-Mailadresse',
+        Email: 'E-Mailadresse:',
         EmailInvalid: 'Die eingegebene E-Mailadresse ist ungültig.',
-        Password: 'Passwort',
+        Password: 'Passwort:',
         PasswordInvalid: 'Das eingegebene Passwort ist ungültig.'
       },
       UserNotice: 'Der erstellte Nutzer kann sich unmittelbar danach mit E-Mail und Passwort anmelden.',

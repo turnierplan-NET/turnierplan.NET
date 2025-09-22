@@ -43,9 +43,9 @@ internal sealed class CreateUserEndpoint : EndpointBase
             }
         }
 
-        var user = new User(request.UserName)
+        var user = new User(request.UserName.Trim())
         {
-            FullName = request.FullName
+            FullName = request.FullName?.Trim()
         };
 
         if (request.EMail is not null)

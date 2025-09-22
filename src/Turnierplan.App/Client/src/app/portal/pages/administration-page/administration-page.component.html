@@ -16,7 +16,6 @@
           <table class="table" [attr.aria-label]="'Portal.Administration.Users.TableLabel' | translate">
             <thead>
               <tr>
-                <th translate="Portal.Administration.Users.Id"></th>
                 <th translate="Portal.Administration.Users.UserName"></th>
                 <th translate="Portal.Administration.Users.FullName"></th>
                 <th translate="Portal.Administration.Users.EMail"></th>
@@ -30,7 +29,6 @@
               @for (user of users; track user) {
                 @let isCurrentUser = user.id === currentUserId;
                 <tr>
-                  <td class="align-middle small text-secondary">{{ user.id }}</td>
                   <td class="align-middle">{{ user.userName }}</td>
                   <td class="align-middle">{{ user.fullName ?? '' }}</td>
                   <td class="align-middle">{{ user.eMail ?? '' }}</td>
@@ -76,14 +74,26 @@
       <form [formGroup]="editUserForm">
         <div class="form-group mb-3">
           @let userNameControl = editUserForm.get('userName')!;
-          <label class="form-label" for="userName" translate="Portal.Administration.EditUser.Name"></label>
+          <label class="form-label" for="userName" translate="Portal.Administration.EditUser.UserName"></label>
           <input
             class="form-control"
             id="userName"
             type="text"
             formControlName="userName"
             [ngClass]="userNameControl.dirty ? (userNameControl.invalid ? 'is-invalid' : 'is-valid') : ''" />
-          <div class="invalid-feedback" translate="Portal.Administration.EditUser.NameInvalid"></div>
+          <div class="invalid-feedback" translate="Portal.Administration.EditUser.UserNameInvalid"></div>
+        </div>
+
+        <div class="form-group mb-3">
+          @let fullNameControl = editUserForm.get('fullName')!;
+          <label class="form-label" for="fullName" translate="Portal.Administration.EditUser.FullName"></label>
+          <input
+            class="form-control"
+            id="fullName"
+            type="text"
+            formControlName="fullName"
+            [ngClass]="fullNameControl.dirty ? (fullNameControl.invalid ? 'is-invalid' : 'is-valid') : ''" />
+          <div class="invalid-feedback" translate="Portal.Administration.EditUser.FullNameInvalid"></div>
         </div>
 
         <div class="form-group mb-3">

@@ -11,6 +11,7 @@ import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { createUser } from '../../../api/fn/users/create-user';
+import { CreateUserEndpointRequest } from '../../../api/models/create-user-endpoint-request';
 
 @Component({
   templateUrl: './create-user.component.html',
@@ -30,7 +31,7 @@ export class CreateUserComponent implements OnInit {
 
   protected form = new FormGroup({
     userName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    eMail: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+    eMail: new FormControl('', { nonNullable: false, validators: [Validators.email] }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] })
   });
 
@@ -60,8 +61,16 @@ export class CreateUserComponent implements OnInit {
   protected confirmButtonClicked(): void {
     if (this.form.valid && !this.loadingState.isLoading) {
       this.loadingState = { isLoading: true };
+
+      const formValue = this.form.getRawValue();
+      const body: CreateUserEndpointRequest = {
+        userName: formValue.userName,
+        eMail: (formValue.eMail ?? '').trim().length > 0 ? formValue.eMail : null,
+        password: formValue.password
+      };
+
       this.turnierplanApi
-        .invoke(createUser, { body: this.form.getRawValue() })
+        .invoke(createUser, { body: body })
         .pipe(switchMap(() => from(this.router.navigate(['../..'], { relativeTo: this.route }))))
         .subscribe({
           next: () => {
