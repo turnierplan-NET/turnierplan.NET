@@ -105,10 +105,6 @@ export class AdministrationPageComponent implements OnInit {
   }
 
   protected editButtonClicked(id: string, template: TemplateRef<unknown>): void {
-    if (id === this.currentUserId) {
-      return;
-    }
-
     this.userSelectedForEditing = this.users.find((x) => x.id === id);
 
     if (this.userSelectedForEditing) {
@@ -123,6 +119,12 @@ export class AdministrationPageComponent implements OnInit {
 
       this.editUserForm.get('password')!.disable();
       this.editUserForm.markAsPristine({ onlySelf: false });
+
+      if (id === this.currentUserId) {
+        this.editUserForm.get('isAdministrator')!.disable();
+      } else {
+        this.editUserForm.get('isAdministrator')!.enable();
+      }
 
       this.currentOffcanvas = this.offcanvasService.open(template, { position: 'end' });
     }

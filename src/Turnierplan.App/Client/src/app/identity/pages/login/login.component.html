@@ -1,13 +1,13 @@
 <div class="fs-3 mb-4" translate="Identity.Login.Title"></div>
 
 <div class="form-group mb-2">
-  <label class="form-label" for="email" translate="Identity.Login.EMail"></label>
+  <label class="form-label" for="userName" translate="Identity.Login.UserName"></label>
   <input
     class="form-control"
-    id="email"
-    type="email"
-    [tpE2E]="'login-page-email-field'"
-    [(ngModel)]="email"
+    id="userName"
+    type="text"
+    [tpE2E]="'login-page-userName-field'"
+    [(ngModel)]="userName"
     (keyup.enter)="attemptLogin()" />
 </div>
 

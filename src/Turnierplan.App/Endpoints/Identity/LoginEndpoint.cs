@@ -40,7 +40,7 @@ internal sealed class LoginEndpoint : IdentityEndpointBase<LoginEndpoint.LoginEn
             return result;
         }
 
-        var user = await userRepository.GetByEmailAsync(request.EMail);
+        var user = await userRepository.GetByUserNameAsync(request.UserName);
 
         if (user is null)
         {
@@ -80,7 +80,7 @@ internal sealed class LoginEndpoint : IdentityEndpointBase<LoginEndpoint.LoginEn
 
     public sealed record LoginEndpointRequest
     {
-        public required string EMail { get; init; }
+        public required string UserName { get; init; }
 
         public required string Password { get; init; }
     }
@@ -100,9 +100,8 @@ internal sealed class LoginEndpoint : IdentityEndpointBase<LoginEndpoint.LoginEn
 
         private Validator()
         {
-            RuleFor(x => x.EMail)
-                .NotEmpty()
-                .EmailAddress();
+            RuleFor(x => x.UserName)
+                .NotEmpty();
 
             RuleFor(x => x.Password)
                 .NotEmpty();

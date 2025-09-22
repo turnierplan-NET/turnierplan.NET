@@ -43,6 +43,7 @@ internal static class WebApplicationExtensions
 
             var initialUser = new User(initialUserName)
             {
+                FullName = "Administrator",
                 IsAdministrator = true
             };
 

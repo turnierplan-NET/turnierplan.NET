@@ -21,6 +21,7 @@ internal sealed class UpdateUserEndpoint : EndpointBase
         [FromBody] UpdateUserEndpointRequest request,
         IPasswordHasher<User> passwordHasher,
         IUserRepository repository,
+        HttpContext httpContext,
         CancellationToken cancellationToken)
     {
         if (!Validator.Instance.ValidateAndGetResult(request, out var result))
@@ -43,6 +44,11 @@ internal sealed class UpdateUserEndpoint : EndpointBase
             {
                 return Results.BadRequest("The specified email address is already taken.");
             }
+        }
+
+        if (httpContext.GetCurrentUserIdOrThrow() == user.Id && !request.IsAdministrator)
+        {
+            return Results.BadRequest("Cannot take away the administrator privilege of the requesting user.");
         }
 
         user.UserName = request.UserName.Trim();

@@ -69,8 +69,8 @@ export class AuthenticationService implements OnDestroy {
     this.destroyed$.complete();
   }
 
-  public login(email: string, password: string): Observable<'success' | 'failure'> {
-    return this.turnierplanApi.invoke(login, { body: { eMail: email, password: password } }).pipe(
+  public login(userName: string, password: string): Observable<'success' | 'failure'> {
+    return this.turnierplanApi.invoke(login, { body: { userName: userName, password: password } }).pipe(
       catchError(() => of(undefined)),
       map((result) => {
         if (result && result.success && result.accessToken && result.refreshToken) {

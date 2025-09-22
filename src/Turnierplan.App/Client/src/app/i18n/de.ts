@@ -37,22 +37,9 @@ export const de = {
       Back: 'Abbrechen',
       Submit: 'Speichern'
     },
-    ChangeUserInfo: {
-      Title: 'Benutzerprofil',
-      UserName: 'Nutzername:',
-      EMail: 'E-Mail Adresse:',
-      ChangeEmailNotice: 'Wenn Sie Ihre E-Mail Adresse ändern, müssen Sie sich ab sofort mit dieser neuen E-Mail Adresse anmelden.',
-      RequestFailed: 'Bei der Bearbeitung der Anfrage ist ein Fehler aufgetreten.',
-      SuccessToast: {
-        Title: 'Nutzerdaten aktualisiert',
-        Message: 'Ihr Benutzerinformationen wurden gespeichert.'
-      },
-      Back: 'Abbrechen',
-      Submit: 'Speichern'
-    },
     Login: {
       Title: 'Anmelden',
-      EMail: 'E-Mail Adresse:',
+      UserName: 'Login-ID:',
       Password: 'Passwort:',
       CookieNotice: 'Wenn Sie sich anmelden, wird ihre aktive Sitzung in einem Cookie gespeichert.',
       Submit: 'Anmelden',

@@ -40,19 +40,20 @@
                     }
                   </td>
                   <td>
-                    <div class="d-flex flex-row gap-2" [ngClass]="{ 'tp-cursor-not-allowed': isCurrentUser }">
+                    <div class="d-flex flex-row gap-2">
                       <tp-action-button
                         [icon]="'pencil'"
                         [type]="'outline-secondary'"
                         [mode]="'IconOnly'"
-                        [disabled]="isCurrentUser"
                         (buttonClick)="editButtonClicked(user.id, editUserCanvas)" />
-                      <tp-action-button
-                        [icon]="'trash'"
-                        [type]="'outline-danger'"
-                        [mode]="'IconOnly'"
-                        [disabled]="isCurrentUser"
-                        (buttonClick)="deleteButtonClicked(user.id, deleteConfirmationCanvas)" />
+                      <div [ngClass]="{ 'tp-cursor-not-allowed': isCurrentUser }">
+                        <tp-action-button
+                          [icon]="'trash'"
+                          [type]="'outline-danger'"
+                          [mode]="'IconOnly'"
+                          [disabled]="isCurrentUser"
+                          (buttonClick)="deleteButtonClicked(user.id, deleteConfirmationCanvas)" />
+                      </div>
                     </div>
                   </td>
                 </tr>
