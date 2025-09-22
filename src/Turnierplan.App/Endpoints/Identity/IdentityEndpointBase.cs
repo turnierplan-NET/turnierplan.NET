@@ -34,11 +34,20 @@ internal abstract class IdentityEndpointBase<TResponse> : EndpointBase<TResponse
         else
         {
             claims.Add(new Claim(ClaimTypes.TokenType, JwtTokenTypes.Access));
-            claims.Add(new Claim(ClaimTypes.DisplayName, user.Name));
-            claims.Add(new Claim(ClaimTypes.EMailAddress, user.EMail));
             claims.Add(new Claim(ClaimTypes.UserId, user.Id.ToString()));
+            claims.Add(new Claim(ClaimTypes.UserName, user.UserName));
             claims.Add(new Claim(ClaimTypes.PrincipalId, user.PrincipalId.ToString()));
             claims.Add(new Claim(ClaimTypes.PrincipalKind, nameof(PrincipalKind.User)));
+
+            if (!string.IsNullOrWhiteSpace(user.FullName))
+            {
+                claims.Add(new Claim(ClaimTypes.FullName, user.FullName));
+            }
+
+            if (!string.IsNullOrWhiteSpace(user.EMail))
+            {
+                claims.Add(new Claim(ClaimTypes.EMailAddress, user.EMail));
+            }
 
             if (user.IsAdministrator)
             {

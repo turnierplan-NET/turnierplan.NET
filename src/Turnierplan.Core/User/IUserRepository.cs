@@ -10,5 +10,7 @@ public interface IUserRepository : IRepository<User, Guid>
 
     Task<User?> GetByPrincipalIdAsync(Guid id);
 
+    Task<User?> GetByUserNameAsync(string userName);
+
     Task<User?> GetByEmailAsync(string email);
 }

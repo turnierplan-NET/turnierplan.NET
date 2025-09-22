@@ -2,30 +2,33 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.User;
 
+// TODO: change default admin user behavior to use userName instead of email
+
 public sealed class User : Entity<Guid>
 {
-    public User(string name, string email)
+    public User(string userName)
     {
-        email = email.Trim();
 
         Id = Guid.NewGuid();
         PrincipalId = Guid.NewGuid();
         CreatedAt = DateTime.UtcNow;
-        Name = name;
-        EMail = email;
-        NormalizedEMail = NormalizeEmail(email);
+        UserName = userName;
+        FullName = null;
+        EMail = null;
+        NormalizedEMail = null;
         PasswordHash = string.Empty;
         IsAdministrator = false;
         LastPasswordChange = DateTime.MinValue;
         SecurityStamp = Guid.Empty;
     }
 
-    internal User(Guid id, Guid principalId, DateTime createdAt, string name, string eMail, string normalizedEMail, string passwordHash, bool isAdministrator, DateTime lastPasswordChange, Guid securityStamp)
+    internal User(Guid id, Guid principalId, DateTime createdAt, string userName, string? fullName, string? eMail, string? normalizedEMail, string passwordHash, bool isAdministrator, DateTime lastPasswordChange, Guid securityStamp)
     {
         Id = id;
         PrincipalId = principalId;
         CreatedAt = createdAt;
-        Name = name;
+        UserName = userName;
+        FullName = fullName;
         EMail = eMail;
         NormalizedEMail = normalizedEMail;
         PasswordHash = passwordHash;
@@ -40,11 +43,13 @@ public sealed class User : Entity<Guid>
 
     public DateTime CreatedAt { get; }
 
-    public string Name { get; set; }
+    public string UserName { get; set; }
 
-    public string EMail { get; private set; }
+    public string? FullName { get; set; }
 
-    public string NormalizedEMail { get; private set; }
+    public string? EMail { get; private set; }
+
+    public string? NormalizedEMail { get; private set; }
 
     public string PasswordHash { get; private set; }
 
@@ -68,10 +73,21 @@ public sealed class User : Entity<Guid>
         SecurityStamp = Guid.NewGuid();
     }
 
-    public void UpdateEmail(string newEmail)
+    public void SetEmailAddress(string? newEmail)
     {
-        EMail = newEmail;
-        NormalizedEMail = NormalizeEmail(newEmail);
+        if (newEmail is null)
+        {
+            EMail = null;
+            NormalizedEMail = null;
+        }
+        else
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(newEmail);
+
+            EMail = newEmail.Trim();
+            NormalizedEMail = NormalizeEmail(newEmail);
+        }
+
         SecurityStamp = Guid.NewGuid();
     }
 

@@ -30,14 +30,28 @@ internal sealed class CreateUserEndpoint : EndpointBase
             return result;
         }
 
-        var existingUser = await repository.GetByEmailAsync(request.EMail);
-
-        if (existingUser is not null)
+        if (await repository.GetByUserNameAsync(request.UserName) is not null)
         {
-            return Results.BadRequest("The specified email address is already taken.");
+            return Results.BadRequest("The specified user name is already taken.");
         }
 
-        var user = new User(request.UserName, request.EMail);
+        if (!string.IsNullOrWhiteSpace(request.EMail))
+        {
+            if (await repository.GetByEmailAsync(request.EMail) is not null)
+            {
+                return Results.BadRequest("The specified email address is already taken.");
+            }
+        }
+
+        var user = new User(request.UserName)
+        {
+            FullName = request.FullName
+        };
+
+        if (request.EMail is not null)
+        {
+            user.SetEmailAddress(request.EMail);
+        }
 
         user.UpdatePassword(passwordHasher.HashPassword(user, request.Password));
 
@@ -51,7 +65,9 @@ internal sealed class CreateUserEndpoint : EndpointBase
     {
         public required string UserName { get; init; }
 
-        public required string EMail { get; init; }
+        public string? FullName { get; init; }
+
+        public string? EMail { get; init; }
 
         public required string Password { get; init; }
     }
@@ -65,8 +81,14 @@ internal sealed class CreateUserEndpoint : EndpointBase
             RuleFor(x => x.UserName)
                 .NotEmpty();
 
+            RuleFor(x => x.FullName)
+                .NotEmpty()
+                .When(x => x.FullName is not null);
+
             RuleFor(x => x.EMail)
-                .EmailAddress();
+                .NotEmpty()
+                .EmailAddress()
+                .When(x => x.EMail is not null);
 
             RuleFor(x => x.Password)
                 .NotEmpty();

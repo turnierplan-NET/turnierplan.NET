@@ -35,22 +35,21 @@ internal sealed class UpdateUserEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!user.NormalizedEMail.Equals(User.NormalizeEmail(request.EMail)))
+        if (request.EMail is not null && !Equals(user.NormalizedEMail, User.NormalizeEmail(request.EMail)))
         {
             // If the email address ought to be changed, check that no other user uses that email address
 
-            var existingUserWithNewEmail = await repository.GetByEmailAsync(request.EMail);
-
-            if (existingUserWithNewEmail is not null)
+            if (await repository.GetByEmailAsync(request.EMail) is not null)
             {
                 return Results.BadRequest("The specified email address is already taken.");
             }
         }
 
-        user.Name = request.UserName;
+        user.UserName = request.UserName;
+        user.FullName = request.FullName;
         user.IsAdministrator = request.IsAdministrator;
 
-        user.UpdateEmail(request.EMail);
+        user.SetEmailAddress(request.EMail);
 
         if (request.UpdatePassword)
         {
@@ -66,7 +65,9 @@ internal sealed class UpdateUserEndpoint : EndpointBase
     {
         public required string UserName { get; init; }
 
-        public required string EMail { get; init; }
+        public string? FullName { get; init; }
+
+        public string? EMail { get; init; }
 
         public bool IsAdministrator { get; init; }
 
@@ -84,8 +85,14 @@ internal sealed class UpdateUserEndpoint : EndpointBase
             RuleFor(x => x.UserName)
                 .NotEmpty();
 
+            RuleFor(x => x.FullName)
+                .NotEmpty()
+                .When(x => x.FullName is not null);
+
             RuleFor(x => x.EMail)
-                .EmailAddress();
+                .NotEmpty()
+                .EmailAddress()
+                .When(x => x.EMail is not null);
 
             RuleFor(x => x.Password)
                 .Null()

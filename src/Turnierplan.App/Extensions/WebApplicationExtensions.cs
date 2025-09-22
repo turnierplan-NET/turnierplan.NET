@@ -36,13 +36,12 @@ internal static class WebApplicationExtensions
 
             var overwriteInitialUserPassword = !string.IsNullOrWhiteSpace(options.InitialUserPassword);
 
-            var initialUserName = string.IsNullOrWhiteSpace(options.InitialUserName) ? "Administrator" : options.InitialUserName;
-            var initialUserEmail = string.IsNullOrWhiteSpace(options.InitialUserEmail) ? "admin@example.com" : options.InitialUserEmail;
+            var initialUserName = string.IsNullOrWhiteSpace(options.InitialUserName) ? "admin" : options.InitialUserName;
             var initialUserPassword = overwriteInitialUserPassword ? options.InitialUserPassword! : Guid.NewGuid().ToString();
 
             var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
 
-            var initialUser = new User(initialUserName, initialUserEmail)
+            var initialUser = new User(initialUserName)
             {
                 IsAdministrator = true
             };
@@ -55,11 +54,11 @@ internal static class WebApplicationExtensions
             if (overwriteInitialUserPassword)
             {
                 // Don't log the password if it was specified using an environment variable
-                logger.LogInformation("An initial user \"{Name}\" was created. You can log in using \"{Email}\" and the password \"****\" (set by environment variable). This is NOT recommended in a production environment!", initialUserName, initialUserEmail);
+                logger.LogInformation("An initial user was created: You can log in using \"{Name}\" and the password \"****\" (set by environment variable). This is NOT recommended in a production environment!", initialUserName);
             }
             else
             {
-                logger.LogInformation("An initial user \"{Name}\" was created. You can log in using \"{Email}\" and the password \"{Password}\". IMMEDIATELY change this password when running in a production environment!", initialUserName, initialUserEmail, initialUserPassword);
+                logger.LogInformation("An initial user was created: You can log in using \"{Name}\" and the password \"{Password}\". IMMEDIATELY change this password when running in a production environment!", initialUserName, initialUserPassword);
             }
         }
         else

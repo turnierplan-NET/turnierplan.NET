@@ -11,7 +11,8 @@ internal sealed class UserMappingRule : MappingRuleBase<User, UserDto>
         {
             Id = source.Id,
             CreatedAt = source.CreatedAt,
-            Name = source.Name,
+            UserName = source.UserName,
+            FullName = source.FullName,
             EMail = source.EMail,
             LastPasswordChange = source.LastPasswordChange,
             IsAdministrator = source.IsAdministrator

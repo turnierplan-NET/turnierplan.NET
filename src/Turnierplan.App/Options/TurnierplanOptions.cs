@@ -14,7 +14,5 @@ internal sealed record TurnierplanOptions
 
     public string? InitialUserName { get; init; }
 
-    public string? InitialUserEmail { get; init; }
-
     public string? InitialUserPassword { get; init; }
 }

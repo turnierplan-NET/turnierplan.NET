@@ -39,35 +39,14 @@ internal sealed class UpdateUserDataEndpoint : IdentityEndpointBase<UpdateUserDa
             return Results.Unauthorized();
         }
 
-        user.Name = request.UserName;
-
-        if (!user.NormalizedEMail.Equals(User.NormalizeEmail(request.EMail)))
-        {
-            // Check if the email address is already taken
-
-            var existingUser = await userRepository.GetByEmailAsync(request.EMail);
-
-            if (existingUser is not null)
-            {
-                return Results.Ok(new UpdateUserDataEndpointResponse
-                {
-                    Success = false
-                });
-            }
-
-            user.UpdateEmail(request.EMail);
-        }
+        user.FullName = request.FullName;
 
         await userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-        // Give the user a new
-        //  - access token which includes the updated username & email claims
-        //  - refresh token because the one he currently holds is invalidated due to the updated security stamp
+        // Give the user a new access token which includes the updated username claim
         var accessToken = CreateTokenForUser(user, false);
-        var refreshToken = CreateTokenForUser(user, true);
 
         AddResponseCookieForToken(context, accessToken, false);
-        AddResponseCookieForToken(context, refreshToken, true);
 
         return Results.Ok(new UpdateUserDataEndpointResponse
         {
@@ -77,9 +56,7 @@ internal sealed class UpdateUserDataEndpoint : IdentityEndpointBase<UpdateUserDa
 
     public sealed record UpdateUserDataEndpointRequest
     {
-        public required string UserName { get; init; }
-
-        public required string EMail { get; init; }
+        public string? FullName { get; init; }
     }
 
     public sealed record UpdateUserDataEndpointResponse
@@ -93,12 +70,9 @@ internal sealed class UpdateUserDataEndpoint : IdentityEndpointBase<UpdateUserDa
 
         private Validator()
         {
-            RuleFor(x => x.UserName)
-                .NotEmpty();
-
-            RuleFor(x => x.EMail)
+            RuleFor(x => x.FullName)
                 .NotEmpty()
-                .EmailAddress();
+                .When(x => x.FullName is not null);
         }
     }
 }
