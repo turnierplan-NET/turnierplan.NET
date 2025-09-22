@@ -24,8 +24,6 @@ public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.CreatedAt)
             .IsRequired();
 
-        // TODO: Add migration
-
         builder.Property(x => x.UserName)
             .IsRequired();
 

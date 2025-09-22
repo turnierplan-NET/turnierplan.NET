@@ -2,8 +2,6 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.User;
 
-// TODO: change default admin user behavior to use userName instead of email
-
 public sealed class User : Entity<Guid>
 {
     public User(string userName)
