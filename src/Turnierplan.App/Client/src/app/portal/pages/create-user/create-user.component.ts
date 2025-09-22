@@ -31,6 +31,7 @@ export class CreateUserComponent implements OnInit {
 
   protected form = new FormGroup({
     userName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    fullName: new FormControl('', { nonNullable: false }),
     eMail: new FormControl('', { nonNullable: false, validators: [Validators.email] }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] })
   });
@@ -44,6 +45,10 @@ export class CreateUserComponent implements OnInit {
 
   protected get userNameControl(): AbstractControl {
     return this.form.get('userName')!;
+  }
+
+  protected get fullNameControl(): AbstractControl {
+    return this.form.get('fullName')!;
   }
 
   protected get eMailControl(): AbstractControl {
@@ -65,6 +70,7 @@ export class CreateUserComponent implements OnInit {
       const formValue = this.form.getRawValue();
       const body: CreateUserEndpointRequest = {
         userName: formValue.userName,
+        fullName: (formValue.fullName ?? '').trim().length > 0 ? formValue.fullName : null,
         eMail: (formValue.eMail ?? '').trim().length > 0 ? formValue.eMail : null,
         password: formValue.password
       };

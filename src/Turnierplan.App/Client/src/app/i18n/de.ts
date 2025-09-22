@@ -139,6 +139,7 @@ export const de = {
       Form: {
         UserName: 'Login-ID:',
         UserNameInvalid: 'Der Name eines neuen Nutzers darf nicht leer sein.',
+        FullName: 'Name:',
         Email: 'E-Mailadresse:',
         EmailInvalid: 'Die eingegebene E-Mailadresse ist ungültig.',
         Password: 'Passwort:',
