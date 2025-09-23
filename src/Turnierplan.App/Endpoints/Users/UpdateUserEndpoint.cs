@@ -36,6 +36,8 @@ internal sealed class UpdateUserEndpoint : EndpointBase
             return Results.NotFound();
         }
 
+        // TODO Add proper check whether user name is already taken (similar to create user endpoint)
+
         if (request.EMail is not null && !Equals(user.NormalizedEMail, User.NormalizeEmail(request.EMail)))
         {
             // If the email address ought to be changed, check that no other user uses that email address

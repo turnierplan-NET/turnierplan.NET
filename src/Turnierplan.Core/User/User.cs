@@ -41,7 +41,7 @@ public sealed class User : Entity<Guid>
 
     public DateTime CreatedAt { get; }
 
-    public string UserName { get; set; }
+    public string UserName { get; set; } // TODO: Add normalized user name
 
     public string? FullName { get; set; }
 

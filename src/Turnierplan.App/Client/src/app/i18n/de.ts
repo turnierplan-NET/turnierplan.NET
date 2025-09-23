@@ -39,7 +39,7 @@ export const de = {
     },
     Login: {
       Title: 'Anmelden',
-      UserName: 'Login-ID:',
+      UserName: 'Benutzername:',
       Password: 'Passwort:',
       CookieNotice: 'Wenn Sie sich anmelden, wird ihre aktive Sitzung in einem Cookie gespeichert.',
       Submit: 'Anmelden',
@@ -98,7 +98,7 @@ export const de = {
       NewUser: 'Neuer Benutzer',
       Users: {
         TableLabel: 'Benutzer in dieser turnierplan.NET-Instanz',
-        UserName: 'Login-ID',
+        UserName: 'Benutzername',
         FullName: 'Name',
         EMail: 'E-Mail',
         CreatedAt: 'Erstellt am',
@@ -108,8 +108,8 @@ export const de = {
       EditUser: {
         Title: 'Benutzer bearbeiten',
         Info: 'Ändern Sie die Informationen eines bestehenden Benutzers. Beachten Sie, dass der betroffene Nutzer diese Änderungen unter Umständen nicht direkt sieht.',
-        UserName: 'Login-ID:',
-        UserNameInvalid: 'Die Login-ID eines Nutzers darf nicht leer sein.',
+        UserName: 'Benutzername:',
+        UserNameInvalid: 'Der Benutzername eines Nutzers darf nicht leer sein.',
         FullName: 'Name:',
         Email: 'E-Mailadresse',
         EmailInvalid: 'Die eingegebene E-Mailadresse ist ungültig.',
@@ -137,7 +137,7 @@ export const de = {
       Title: 'Neuen Benutzer',
       LongTitle: 'Neuen Benutzer erstellen',
       Form: {
-        UserName: 'Login-ID:',
+        UserName: 'Benutzername:',
         UserNameInvalid: 'Der Name eines neuen Nutzers darf nicht leer sein.',
         FullName: 'Name:',
         Email: 'E-Mailadresse:',
@@ -145,7 +145,7 @@ export const de = {
         Password: 'Passwort:',
         PasswordInvalid: 'Das eingegebene Passwort ist ungültig.'
       },
-      UserNotice: 'Der erstellte Nutzer kann sich unmittelbar danach mit E-Mail und Passwort anmelden.',
+      UserNotice: 'Der erstellte Nutzer kann sich unmittelbar danach mit Benutzername und Passwort anmelden.',
       Submit: 'Erstellen'
     },
     CreateOrganization: {
