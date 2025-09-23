@@ -1230,7 +1230,7 @@ export const de = {
         SelectedRole: 'Gewählte Rolle:',
         SearchPrincipalPlaceholder: {
           ApiKey: 'ID des API-Schlüssels eingeben',
-          User: 'E-Mailadresse des Nutzers eingeben'
+          User: 'Benutzername oder E-Mailadresse des Nutzers eingeben'
         },
         SearchPrincipalButton: 'Suchen & hinzufügen',
         CreatingRoleAssignment: 'Die Rollenzuweisung wird erstellt',

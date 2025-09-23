@@ -79,7 +79,7 @@ export class RbacAddAssignmentComponent implements OnDestroy {
       scopeId: this.targetScopeId,
       role: this.selectedRole,
       apiKeyId: this.selectedPrincipalKind === PrincipalKind.ApiKey ? this.searchPrincipalInput.trim() : null,
-      userEmail: this.selectedPrincipalKind === PrincipalKind.User ? this.searchPrincipalInput.trim() : null
+      userNameOrEmail: this.selectedPrincipalKind === PrincipalKind.User ? this.searchPrincipalInput.trim() : null
     };
 
     this.turnierplanApi
