@@ -27,7 +27,7 @@ public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.UserName)
             .IsRequired();
 
-        builder.HasIndex(x => x.UserName)
+        builder.HasIndex(x => x.NormalizedUserName)
             .IsUnique();
 
         builder.Property(x => x.FullName)
