@@ -16,11 +16,11 @@ namespace Turnierplan.Dal.Migrations
             // post-migration: Only UserName is required column, FullName and EMail are optional
 
             // migration steps:
-            //   1. Create new required "UserName" column with a placeholder default value
-            //   2. Update all users and set the "UserName" to the current value of the "EMail" column
+            //   1. Create new required "UserName" and "NormalizedUserName" columns with a placeholder default value
+            //   2. Update all users and set the "UserName" to the current value of the "EMail" column & set "NormalizedUserName" to upper-case variant
             //   3. Rename the previous "Name" column to "FullName" and make that column optional
             //   4. Make the "EMail" and "NormalizedEMail" columns optional
-            //   5. Create the unique index on the "UserName" column
+            //   5. Create the unique index on the "NormalizedUserName" column
 
             // step 1:
             migrationBuilder.AddColumn<string>(
@@ -31,9 +31,18 @@ namespace Turnierplan.Dal.Migrations
                 nullable: false,
                 defaultValue: "x");
 
+            migrationBuilder.AddColumn<string>(
+                name: "NormalizedUserName",
+                schema: "turnierplan",
+                table: "Users",
+                type: "text",
+                nullable: false,
+                defaultValue: "x");
+
             // step 2:
             migrationBuilder.Sql("""
 UPDATE turnierplan."Users" SET "UserName" = "EMail";
+UPDATE turnierplan."Users" SET "NormalizedUserName" = UPPER("EMail");
 """);
 
             // step 3:
@@ -73,10 +82,10 @@ UPDATE turnierplan."Users" SET "UserName" = "EMail";
 
             // step 5:
             migrationBuilder.CreateIndex(
-                name: "IX_Users_UserName",
+                name: "IX_Users_NormalizedUserName",
                 schema: "turnierplan",
                 table: "Users",
-                column: "UserName",
+                column: "NormalizedUserName",
                 unique: true);
         }
 
@@ -89,14 +98,14 @@ UPDATE turnierplan."Users" SET "UserName" = "EMail";
             // post-migration: Name & EMail are both required columns
 
             // migration steps:
-            //   1. Delete the unique index on the "UserName" column
+            //   1. Delete the unique index on the "NormalizedUserName" column
             //   2. Make the "EMail" and "NormalizedEMail" columns required
             //   3. Rename the previous "FullName" column to "Name" and make that column required
-            //   4. Delete the "UserName" column
+            //   4. Delete the "UserName" and "NormalizedUserName" columns
 
             // step 1:
             migrationBuilder.DropIndex(
-                name: "IX_Users_UserName",
+                name: "IX_Users_NormalizedUserName",
                 schema: "turnierplan",
                 table: "Users");
 
@@ -144,6 +153,11 @@ UPDATE turnierplan."Users" SET "UserName" = "EMail";
             // step 4:
             migrationBuilder.DropColumn(
                 name: "UserName",
+                schema: "turnierplan",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "NormalizedUserName",
                 schema: "turnierplan",
                 table: "Users");
         }
