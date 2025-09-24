@@ -897,6 +897,10 @@ namespace Turnierplan.Dal.Migrations
                     b.Property<string>("NormalizedEMail")
                         .HasColumnType("text");
 
+                    b.Property<string>("NormalizedUserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("text");
@@ -916,10 +920,10 @@ namespace Turnierplan.Dal.Migrations
                     b.HasIndex("NormalizedEMail")
                         .IsUnique();
 
-                    b.HasIndex("PrincipalId")
+                    b.HasIndex("NormalizedUserName")
                         .IsUnique();
 
-                    b.HasIndex("UserName")
+                    b.HasIndex("PrincipalId")
                         .IsUnique();
 
                     b.ToTable("Users", "turnierplan");

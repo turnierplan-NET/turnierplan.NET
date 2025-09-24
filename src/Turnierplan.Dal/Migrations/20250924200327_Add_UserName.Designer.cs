@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20250922154958_Add_UserName")]
+    [Migration("20250924200327_Add_UserName")]
     partial class Add_UserName
     {
         /// <inheritdoc />
@@ -900,6 +900,10 @@ namespace Turnierplan.Dal.Migrations
                     b.Property<string>("NormalizedEMail")
                         .HasColumnType("text");
 
+                    b.Property<string>("NormalizedUserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("text");
@@ -919,10 +923,10 @@ namespace Turnierplan.Dal.Migrations
                     b.HasIndex("NormalizedEMail")
                         .IsUnique();
 
-                    b.HasIndex("PrincipalId")
+                    b.HasIndex("NormalizedUserName")
                         .IsUnique();
 
-                    b.HasIndex("UserName")
+                    b.HasIndex("PrincipalId")
                         .IsUnique();
 
                     b.ToTable("Users", "turnierplan");
