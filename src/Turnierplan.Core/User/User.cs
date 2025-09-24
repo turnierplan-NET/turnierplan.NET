@@ -11,6 +11,7 @@ public sealed class User : Entity<Guid>
         PrincipalId = Guid.NewGuid();
         CreatedAt = DateTime.UtcNow;
         UserName = userName;
+        NormalizedUserName = Normalize(userName);
         FullName = null;
         EMail = null;
         NormalizedEMail = null;
@@ -20,12 +21,13 @@ public sealed class User : Entity<Guid>
         SecurityStamp = Guid.Empty;
     }
 
-    internal User(Guid id, Guid principalId, DateTime createdAt, string userName, string? fullName, string? eMail, string? normalizedEMail, string passwordHash, bool isAdministrator, DateTime lastPasswordChange, Guid securityStamp)
+    internal User(Guid id, Guid principalId, DateTime createdAt, string userName, string normalizedUserName, string? fullName, string? eMail, string? normalizedEMail, string passwordHash, bool isAdministrator, DateTime lastPasswordChange, Guid securityStamp)
     {
         Id = id;
         PrincipalId = principalId;
         CreatedAt = createdAt;
         UserName = userName;
+        NormalizedUserName = normalizedUserName;
         FullName = fullName;
         EMail = eMail;
         NormalizedEMail = normalizedEMail;
@@ -41,7 +43,9 @@ public sealed class User : Entity<Guid>
 
     public DateTime CreatedAt { get; }
 
-    public string UserName { get; set; } // TODO: Add normalized user name
+    public string UserName { get; private set; }
+
+    public string NormalizedUserName { get; private set; }
 
     public string? FullName { get; set; }
 
@@ -71,6 +75,12 @@ public sealed class User : Entity<Guid>
         SecurityStamp = Guid.NewGuid();
     }
 
+    public void SetUserName(string userName)
+    {
+        UserName = userName;
+        NormalizedUserName = Normalize(userName);
+    }
+
     public void SetEmailAddress(string? newEmail)
     {
         if (newEmail is null)
@@ -83,11 +93,11 @@ public sealed class User : Entity<Guid>
             ArgumentException.ThrowIfNullOrWhiteSpace(newEmail);
 
             EMail = newEmail.Trim();
-            NormalizedEMail = NormalizeEmail(newEmail);
+            NormalizedEMail = Normalize(newEmail);
         }
 
         SecurityStamp = Guid.NewGuid();
     }
 
-    public static string NormalizeEmail(string email) => email.Trim().ToUpper();
+    public static string Normalize(string value) => value.Trim().ToUpper();
 }

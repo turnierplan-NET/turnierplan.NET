@@ -36,9 +36,12 @@ internal sealed class UpdateUserEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        // TODO Add proper check whether user name is already taken (similar to create user endpoint)
+        if (!user.NormalizedUserName.Equals(User.Normalize(request.UserName)) && await repository.GetByUserNameAsync(request.UserName) is not null)
+        {
+            return Results.BadRequest("The specified user name is already taken.");
+        }
 
-        if (request.EMail is not null && !Equals(user.NormalizedEMail, User.NormalizeEmail(request.EMail)))
+        if (request.EMail is not null && !Equals(user.NormalizedEMail, User.Normalize(request.EMail)))
         {
             // If the email address ought to be changed, check that no other user uses that email address
 
@@ -53,10 +56,10 @@ internal sealed class UpdateUserEndpoint : EndpointBase
             return Results.BadRequest("Cannot take away the administrator privilege of the requesting user.");
         }
 
-        user.UserName = request.UserName.Trim();
         user.FullName = request.FullName?.Trim();
         user.IsAdministrator = request.IsAdministrator;
 
+        user.SetUserName(request.UserName.Trim());
         user.SetEmailAddress(request.EMail);
 
         if (request.UpdatePassword)

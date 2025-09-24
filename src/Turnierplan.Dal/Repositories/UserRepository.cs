@@ -23,14 +23,16 @@ internal sealed class UserRepository(TurnierplanContext context) : RepositoryBas
 
     public Task<User?> GetByUserNameAsync(string userName)
     {
+        var normalizedUserName = User.Normalize(userName);
+
         return DbSet
-            .Where(x => x.UserName.Equals(userName))
+            .Where(x => x.NormalizedUserName.Equals(normalizedUserName))
             .FirstOrDefaultAsync();
     }
 
     public Task<User?> GetByEmailAsync(string email)
     {
-        var normalizedEMail = User.NormalizeEmail(email);
+        var normalizedEMail = User.Normalize(email);
 
         return DbSet
             .Where(x => x.NormalizedEMail != null && x.NormalizedEMail.Equals(normalizedEMail))
@@ -39,10 +41,10 @@ internal sealed class UserRepository(TurnierplanContext context) : RepositoryBas
 
     public Task<User?> GetByUserNameOrEmailAsync(string userNameOrEmail)
     {
-        var normalizedEMail = User.NormalizeEmail(userNameOrEmail);
+        var normalizedUserNameOrEmail = User.Normalize(userNameOrEmail);
 
         return DbSet
-            .Where(x => x.UserName.Equals(userNameOrEmail) || (x.NormalizedEMail != null && x.NormalizedEMail.Equals(normalizedEMail)))
+            .Where(x => x.NormalizedUserName.Equals(normalizedUserNameOrEmail) || (x.NormalizedEMail != null && x.NormalizedEMail.Equals(normalizedUserNameOrEmail)))
             .FirstOrDefaultAsync();
     }
 }
