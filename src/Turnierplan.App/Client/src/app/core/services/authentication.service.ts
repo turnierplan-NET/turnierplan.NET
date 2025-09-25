@@ -35,6 +35,16 @@ export class AuthenticationService implements OnDestroy {
   private static readonly localStorageAccessTokenExpiryKey = 'tp_id_accTokenExp';
   private static readonly localStorageRefreshTokenExpiryKey = 'tp_id_rfsTokenExp';
 
+  private static readonly allLocalStorageKeys = [
+    AuthenticationService.localStorageUserIdKey,
+    AuthenticationService.localStorageUserNameKey,
+    AuthenticationService.localStorageUserFullNameKey,
+    AuthenticationService.localStorageUserEMailKey,
+    AuthenticationService.localStorageUserAdministratorKey,
+    AuthenticationService.localStorageAccessTokenExpiryKey,
+    AuthenticationService.localStorageRefreshTokenExpiryKey
+  ]
+
   // Clock skew should be as short as possible, but still long enough that a request to the token
   // refresh endpoint can complete even in the case of a bad connection or unfavorable conditions.
   private static readonly tokenExpiryCheckClockSkewSeconds = 10;
@@ -313,15 +323,7 @@ export class AuthenticationService implements OnDestroy {
   private logoutAndClearData(navigateTo?: () => void): Observable<void> {
     const logout$ = this.turnierplanApi.invoke(logout).pipe(
       catchError(() => of(undefined)),
-      tap(() => {
-        localStorage.removeItem(AuthenticationService.localStorageUserIdKey);
-        localStorage.removeItem(AuthenticationService.localStorageUserNameKey);
-        localStorage.removeItem(AuthenticationService.localStorageUserFullNameKey);
-        localStorage.removeItem(AuthenticationService.localStorageUserEMailKey);
-        localStorage.removeItem(AuthenticationService.localStorageUserAdministratorKey);
-        localStorage.removeItem(AuthenticationService.localStorageAccessTokenExpiryKey);
-        localStorage.removeItem(AuthenticationService.localStorageRefreshTokenExpiryKey);
-      }),
+      tap(() => AuthenticationService.allLocalStorageKeys.forEach(key => localStorage.removeItem(key))),
       map(() => void 0)
     );
 
