@@ -178,9 +178,12 @@ export class AuthenticationService implements OnDestroy {
     }
 
     const logoutWithRedirect = (): Observable<boolean> => {
+      // Store userName in variable because logoutAndClearData() removes it from local storage
+      const userName = this.readUserNameFromLocalStorage();
+
       return this.logoutAndClearData(() => {
         void this.router.navigate(['/portal/login'], {
-          queryParams: { redirect_to: this.router.url, email: this.readUserEMailFromLocalStorage() }
+          queryParams: { redirect_to: this.router.url, user_name : userName }
         });
       }).pipe(map(() => false));
     };
@@ -303,10 +306,6 @@ export class AuthenticationService implements OnDestroy {
     localStorage.setItem(AuthenticationService.localStorageRefreshTokenExpiryKey, `${refreshTokenExpiry}`);
   }
 
-  private updateLocalStorageCacheUserNameOnly(userName: string): void {
-    localStorage.setItem(AuthenticationService.localStorageUserNameKey, userName);
-  }
-
   private updateLocalStorageCacheRefreshTokenExpiryOnly(refreshTokenExpiry: number): void {
     localStorage.setItem(AuthenticationService.localStorageRefreshTokenExpiryKey, `${refreshTokenExpiry}`);
   }
@@ -315,8 +314,11 @@ export class AuthenticationService implements OnDestroy {
     const logout$ = this.turnierplanApi.invoke(logout).pipe(
       catchError(() => of(undefined)),
       tap(() => {
+        localStorage.removeItem(AuthenticationService.localStorageUserIdKey);
         localStorage.removeItem(AuthenticationService.localStorageUserNameKey);
+        localStorage.removeItem(AuthenticationService.localStorageUserFullNameKey);
         localStorage.removeItem(AuthenticationService.localStorageUserEMailKey);
+        localStorage.removeItem(AuthenticationService.localStorageUserAdministratorKey);
         localStorage.removeItem(AuthenticationService.localStorageAccessTokenExpiryKey);
         localStorage.removeItem(AuthenticationService.localStorageRefreshTokenExpiryKey);
       }),
