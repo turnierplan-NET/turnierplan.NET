@@ -15,7 +15,7 @@ export const turnierplan = {
     newOrganizationButton: 'landing-page-new-organization-button'
   },
   loginPage: {
-    emailField: 'login-page-email-field',
+    userNameField: 'login-page-user-name-field',
     loginButton: 'login-page-login-button',
     passwordField: 'login-page-password-field'
   },

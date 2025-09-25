@@ -29,7 +29,7 @@ internal sealed class GetPrincipalNameEndpoint : EndpointBase<GetPrincipalNameEn
                 break;
             case PrincipalKind.User:
                 var user = await userRepository.GetByPrincipalIdAsync(principalId);
-                name = user?.Name;
+                name = user?.UserName;
                 break;
             default:
                 return Results.BadRequest("Invalid principal kind specified.");

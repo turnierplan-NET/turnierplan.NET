@@ -53,7 +53,8 @@ export class AdministrationPageComponent implements OnInit {
 
   protected editUserForm = new FormGroup({
     userName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    eMail: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+    fullName: new FormControl('', { nonNullable: false }),
+    eMail: new FormControl('', { nonNullable: false, validators: [Validators.email] }),
     isAdministrator: new FormControl(false, { nonNullable: true }),
     updatePassword: new FormControl(false, { nonNullable: true }),
     password: new FormControl('', { validators: [Validators.required] })
@@ -104,16 +105,13 @@ export class AdministrationPageComponent implements OnInit {
   }
 
   protected editButtonClicked(id: string, template: TemplateRef<unknown>): void {
-    if (id === this.currentUserId) {
-      return;
-    }
-
     this.userSelectedForEditing = this.users.find((x) => x.id === id);
 
     if (this.userSelectedForEditing) {
       this.editUserForm.setValue({
-        userName: this.userSelectedForEditing.name,
-        eMail: this.userSelectedForEditing.eMail,
+        userName: this.userSelectedForEditing.userName,
+        fullName: this.userSelectedForEditing.fullName ?? '',
+        eMail: this.userSelectedForEditing.eMail ?? '',
         isAdministrator: this.userSelectedForEditing.isAdministrator,
         updatePassword: false,
         password: ''
@@ -121,6 +119,12 @@ export class AdministrationPageComponent implements OnInit {
 
       this.editUserForm.get('password')!.disable();
       this.editUserForm.markAsPristine({ onlySelf: false });
+
+      if (id === this.currentUserId) {
+        this.editUserForm.get('isAdministrator')!.disable();
+      } else {
+        this.editUserForm.get('isAdministrator')!.enable();
+      }
 
       this.currentOffcanvas = this.offcanvasService.open(template, { position: 'end' });
     }
@@ -145,7 +149,8 @@ export class AdministrationPageComponent implements OnInit {
     const formValue = this.editUserForm.getRawValue();
     const request: UpdateUserEndpointRequest = {
       userName: formValue.userName,
-      eMail: formValue.eMail,
+      fullName: (formValue.fullName ?? '').trim().length > 0 ? formValue.fullName : null,
+      eMail: (formValue.eMail ?? '').trim().length > 0 ? formValue.eMail : null,
       isAdministrator: formValue.isAdministrator,
       updatePassword: formValue.updatePassword,
       password: formValue.updatePassword ? formValue.password : undefined

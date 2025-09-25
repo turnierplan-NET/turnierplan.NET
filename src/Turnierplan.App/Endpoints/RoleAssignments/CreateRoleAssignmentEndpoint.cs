@@ -126,9 +126,9 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
             return apiKey?.AsPrincipal();
         }
 
-        if (request.UserEmail is not null)
+        if (request.UserNameOrEmail is not null)
         {
-            var user = await userRepository.GetByEmailAsync(request.UserEmail);
+            var user = await userRepository.GetByUserNameOrEmailAsync(request.UserNameOrEmail);
 
             return user?.AsPrincipal();
         }
@@ -144,7 +144,7 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
 
         public required PublicId? ApiKeyId { get; init; }
 
-        public required string? UserEmail { get; init; }
+        public required string? UserNameOrEmail { get; init; }
     }
 
     private sealed class Validator : AbstractValidator<CreateRoleAssignmentEndpointRequest>
@@ -160,8 +160,8 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
                 .IsInEnum();
 
             RuleFor(x => x)
-                .Must(x => x.ApiKeyId is null ^ x.UserEmail is null)
-                .WithMessage($"Exactly only one of {nameof(CreateRoleAssignmentEndpointRequest.ApiKeyId)} and {nameof(CreateRoleAssignmentEndpointRequest.UserEmail)} must be specified.");
+                .Must(x => x.ApiKeyId is null ^ x.UserNameOrEmail is null)
+                .WithMessage($"Exactly only one of {nameof(CreateRoleAssignmentEndpointRequest.ApiKeyId)} and {nameof(CreateRoleAssignmentEndpointRequest.UserNameOrEmail)} must be specified.");
         }
     }
 }

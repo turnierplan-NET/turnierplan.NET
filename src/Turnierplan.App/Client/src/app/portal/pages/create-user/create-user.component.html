@@ -14,14 +14,23 @@
     </div>
 
     <div class="mb-3">
+      <label for="create_user_full_name" class="form-label" translate="Portal.CreateUser.Form.FullName"></label>
+      <input
+        id="create_user_full_name"
+        type="text"
+        class="form-control"
+        formControlName="fullName"
+        [ngClass]="fullNameControl.dirty || fullNameControl.touched ? (fullNameControl.invalid ? 'is-invalid' : 'is-valid') : ''" />
+      <div class="invalid-feedback" translate="Portal.CreateUser.Form.FullNameInvalid"></div>
+    </div>
+
+    <div class="mb-3">
       <label for="create_user_email" class="form-label" translate="Portal.CreateUser.Form.Email"></label>
       <input
         id="create_user_email"
         type="email"
         class="form-control"
         formControlName="eMail"
-        [required]="true"
-        [minlength]="1"
         [ngClass]="eMailControl.dirty || eMailControl.touched ? (eMailControl.invalid ? 'is-invalid' : 'is-valid') : ''" />
       <div class="invalid-feedback" translate="Portal.CreateUser.Form.EmailInvalid"></div>
     </div>

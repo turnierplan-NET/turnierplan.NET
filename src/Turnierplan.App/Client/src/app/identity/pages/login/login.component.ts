@@ -14,7 +14,7 @@ import { E2eDirective } from '../../../core/directives/e2e.directive';
   imports: [TranslateDirective, FormsModule, SmallSpinnerComponent, NgClass, E2eDirective]
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  protected email: string = '';
+  protected userName: string = '';
   protected password: string = '';
 
   protected isLoading = false;
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     } else {
       this.route.queryParamMap.pipe(takeUntil(this.destroyed$)).subscribe((params) => {
         this.redirectTarget = params.get('redirect_to') ?? '/portal';
-        this.email = params.get('email') ?? this.email;
+        this.userName = params.get('user_name') ?? params.get('email') ?? '';
       });
     }
   }
@@ -46,13 +46,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   protected attemptLogin(): void {
-    if (this.isLoading || this.email.trim().length === 0 || this.password.length === 0) {
+    if (this.isLoading || this.userName.trim().length === 0 || this.password.length === 0) {
       return;
     }
 
     this.isLoading = true;
 
-    this.authenticationService.login(this.email, this.password).subscribe((result) => {
+    this.authenticationService.login(this.userName, this.password).subscribe((result) => {
       switch (result) {
         case 'success':
           void this.router.navigate([this.redirectTarget]);

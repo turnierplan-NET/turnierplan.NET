@@ -24,14 +24,23 @@ public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.CreatedAt)
             .IsRequired();
 
-        builder.Property(x => x.Name)
+        builder.Property(x => x.UserName)
             .IsRequired();
+
+        builder.Property(x => x.NormalizedUserName)
+            .IsRequired();
+
+        builder.HasIndex(x => x.NormalizedUserName)
+            .IsUnique();
+
+        builder.Property(x => x.FullName)
+            .IsRequired(false);
 
         builder.Property(x => x.EMail)
-            .IsRequired();
+            .IsRequired(false);
 
         builder.Property(x => x.NormalizedEMail)
-            .IsRequired();
+            .IsRequired(false);
 
         builder.HasIndex(x => x.NormalizedEMail)
             .IsUnique();

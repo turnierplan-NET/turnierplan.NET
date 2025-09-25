@@ -11,7 +11,7 @@ Cypress.Commands.add('getx', (id) => {
 Cypress.Commands.add('login', () => {
   cy.visit('/portal/login');
 
-  cy.getx(turnierplan.loginPage.emailField).type('admin@example.com');
+  cy.getx(turnierplan.loginPage.userNameField).type('admin');
   cy.getx(turnierplan.loginPage.passwordField).type('P@ssw0rd');
   cy.getx(turnierplan.loginPage.loginButton).click();
 });

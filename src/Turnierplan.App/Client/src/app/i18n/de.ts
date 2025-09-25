@@ -25,7 +25,7 @@ export const de = {
         EmptyOrExtraWhitespace: 'Geben Sie ein neues Passwort an, welches keine Leerzeichen am Anfang oder Ende hat.',
         PasswordsDoNotMatch: 'Die beiden Passwörter stimmen nicht überein.',
         InsecurePassword:
-          'Das neue Passwort muss folgende Kriterien erfüllen:<ul><li>min. 10 Zeichen lang</li><li>min. 1 Großbuchstabe</li><li>min. 1 Kleinbuchstabe</li><li>min. 1 Ziffer</li><li>min. 1 Sonderzeichen</li></ul>',
+          'Das neue Passwort muss folgende Kriterien erfüllen:<ul><li>min. 8 Zeichen lang</li><li>min. 1 Buchstabe</li><li>min. 1 Ziffer</li><li>min. 1 Sonderzeichen</li></ul>',
         InvalidCredentials: 'Das aktuelle Passwort ist falsch.',
         NewPasswordEqualsCurrent: 'Das neue Passwort darf nicht dem bisherigen Passwort entsprechen.',
         UnexpectedError: 'Bei der Bearbeitung der Anfrage ist ein Fehler aufgetreten.'
@@ -37,27 +37,9 @@ export const de = {
       Back: 'Abbrechen',
       Submit: 'Speichern'
     },
-    ChangeUserInfo: {
-      Title: 'Benutzerprofil',
-      UserName: 'Nutzername:',
-      EMail: 'E-Mail Adresse:',
-      ChangeEmailNotice: 'Wenn Sie Ihre E-Mail Adresse ändern, müssen Sie sich ab sofort mit dieser neuen E-Mail Adresse anmelden.',
-      RequestFailed: 'Bei der Bearbeitung der Anfrage ist ein Fehler aufgetreten.',
-      SuccessToast: {
-        Title: 'Nutzerdaten aktualisiert',
-        Message: 'Ihr Benutzerinformationen wurden gespeichert.'
-      },
-      EmailVerificationPendingToast: {
-        Title: 'E-Mail muss bestätigt werden',
-        Message:
-          'Ihr Benutzerinformationen wurden gespeichert. Klicken Sie auf den Link in der Mail, welche wir Ihnen geschickt haben, um die neue E-Mail zu bestätigen.'
-      },
-      Back: 'Abbrechen',
-      Submit: 'Speichern'
-    },
     Login: {
       Title: 'Anmelden',
-      EMail: 'E-Mail Adresse:',
+      UserName: 'Benutzername:',
       Password: 'Passwort:',
       CookieNotice: 'Wenn Sie sich anmelden, wird ihre aktive Sitzung in einem Cookie gespeichert.',
       Submit: 'Anmelden',
@@ -85,7 +67,6 @@ export const de = {
     UserInfoPopover: {
       Text: 'Sie sind angemeldet als:\n<strong>{{userName}}</strong>',
       Administration: 'Administration',
-      EditUserInfo: 'Benutzerinformation',
       ChangePassword: 'Passwort ändern',
       Logout: 'Abmelden'
     },
@@ -117,8 +98,8 @@ export const de = {
       NewUser: 'Neuer Benutzer',
       Users: {
         TableLabel: 'Benutzer in dieser turnierplan.NET-Instanz',
-        Id: 'ID',
-        Name: 'Name',
+        UserName: 'Benutzername',
+        FullName: 'Name',
         EMail: 'E-Mail',
         CreatedAt: 'Erstellt am',
         LastPasswordChange: 'Letzte Passwortänderung',
@@ -127,8 +108,9 @@ export const de = {
       EditUser: {
         Title: 'Benutzer bearbeiten',
         Info: 'Ändern Sie die Informationen eines bestehenden Benutzers. Beachten Sie, dass der betroffene Nutzer diese Änderungen unter Umständen nicht direkt sieht.',
-        Name: 'Name:',
-        NameInvalid: 'Der Name eines neuen Nutzers darf nicht leer sein.',
+        UserName: 'Benutzername:',
+        UserNameInvalid: 'Der Benutzername eines Nutzers darf nicht leer sein.',
+        FullName: 'Name:',
         Email: 'E-Mailadresse',
         EmailInvalid: 'Die eingegebene E-Mailadresse ist ungültig.',
         IsAdministrator: 'Administrator',
@@ -155,14 +137,15 @@ export const de = {
       Title: 'Neuen Benutzer',
       LongTitle: 'Neuen Benutzer erstellen',
       Form: {
-        UserName: 'Name',
+        UserName: 'Benutzername:',
         UserNameInvalid: 'Der Name eines neuen Nutzers darf nicht leer sein.',
-        Email: 'E-Mailadresse',
+        FullName: 'Name:',
+        Email: 'E-Mailadresse:',
         EmailInvalid: 'Die eingegebene E-Mailadresse ist ungültig.',
-        Password: 'Passwort',
+        Password: 'Passwort:',
         PasswordInvalid: 'Das eingegebene Passwort ist ungültig.'
       },
-      UserNotice: 'Der erstellte Nutzer kann sich unmittelbar danach mit E-Mail und Passwort anmelden.',
+      UserNotice: 'Der erstellte Nutzer kann sich unmittelbar danach mit Benutzername und Passwort anmelden.',
       Submit: 'Erstellen'
     },
     CreateOrganization: {
@@ -1247,7 +1230,7 @@ export const de = {
         SelectedRole: 'Gewählte Rolle:',
         SearchPrincipalPlaceholder: {
           ApiKey: 'ID des API-Schlüssels eingeben',
-          User: 'E-Mailadresse des Nutzers eingeben'
+          User: 'Benutzername oder E-Mailadresse des Nutzers eingeben'
         },
         SearchPrincipalButton: 'Suchen & hinzufügen',
         CreatingRoleAssignment: 'Die Rollenzuweisung wird erstellt',

@@ -1,5 +1,5 @@
 <header class="tp-header shadow-sm position-sticky top-0">
-  <div class="container h-100 d-flex flex-row align-items-center">
+  <div class="container h-100 d-flex flex-row align-items-stretch">
     <a class="d-flex flex-row align-items-center" routerLink="/portal" [tpE2E]="'header-logo-link'">
       <img class="tp-header-logo me-3" src="./assets/turnierplan-logo.png" alt="turnierplan.NET Logo" />
       <span class="text-white fw-bold fs-5 d-none d-md-block" translate="Application.Name"></span>
@@ -8,22 +8,34 @@
     @if (currentUser) {
       <div class="tp-user-info px-2 d-flex flex-row align-items-center tp-cursor-pointer" [ngbPopover]="userInfoPopover">
         <span class="tp-user-claims text-white d-flex flex-column align-items-end">
-          <span class="fw-bold">{{ currentUser.displayName }}</span>
-          <span>{{ currentUser.emailAddress }}</span>
+          @if (currentUser.fullName) {
+            <span class="fw-bold">{{ currentUser.fullName }}</span>
+            <span>
+              <span>{{ currentUser.userName }}</span>
+              @if (currentUser.emailAddress) {
+                <span>&nbsp;&middot;&nbsp;</span>
+                <span>{{ currentUser.emailAddress }}</span>
+              }
+            </span>
+          } @else {
+            <span class="fw-bold">{{ currentUser.userName }}</span>
+            @if (currentUser.emailAddress) {
+              <span>{{ currentUser.emailAddress }}</span>
+            }
+          }
         </span>
         <ng-template #userInfoPopover>
           <div
             class="tp-text-pre-wrap mb-3"
-            [innerHTML]="'Portal.UserInfoPopover.Text' | translate: { userName: currentUser.displayName }"></div>
+            [innerHTML]="'Portal.UserInfoPopover.Text' | translate: { userName: currentUser.fullName ?? currentUser.userName }"></div>
           <ng-container *tpIsAdministrator>
             <div class="d-flex flex-row tp-cursor-pointer mt-1" [routerLink]="'/portal/administration'">
               <i class="bi bi-gear me-2" aria-hidden="true"></i>
               <span class="text-decoration-underline" [translate]="'Portal.UserInfoPopover.Administration'"></span>
             </div>
           </ng-container>
-          <ng-container [ngTemplateOutlet]="userInfoAction" [ngTemplateOutletContext]="{ isFirst: true, action: 'EditUserInfo' }" />
-          <ng-container [ngTemplateOutlet]="userInfoAction" [ngTemplateOutletContext]="{ isFirst: false, action: 'ChangePassword' }" />
-          <ng-container [ngTemplateOutlet]="userInfoAction" [ngTemplateOutletContext]="{ isFirst: false, action: 'Logout' }" />
+          <ng-container [ngTemplateOutlet]="userInfoAction" [ngTemplateOutletContext]="{ action: 'ChangePassword' }" />
+          <ng-container [ngTemplateOutlet]="userInfoAction" [ngTemplateOutletContext]="{ action: 'Logout' }" />
         </ng-template>
         <ng-template #userInfoAction let-action="action">
           <div class="d-flex flex-row tp-cursor-pointer mt-1" (click)="userInfoActionClicked(action)">

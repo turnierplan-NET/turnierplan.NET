@@ -4,28 +4,31 @@ namespace Turnierplan.Core.User;
 
 public sealed class User : Entity<Guid>
 {
-    public User(string name, string email)
+    public User(string userName)
     {
-        email = email.Trim();
 
         Id = Guid.NewGuid();
         PrincipalId = Guid.NewGuid();
         CreatedAt = DateTime.UtcNow;
-        Name = name;
-        EMail = email;
-        NormalizedEMail = NormalizeEmail(email);
+        UserName = userName;
+        NormalizedUserName = Normalize(userName);
+        FullName = null;
+        EMail = null;
+        NormalizedEMail = null;
         PasswordHash = string.Empty;
         IsAdministrator = false;
         LastPasswordChange = DateTime.MinValue;
         SecurityStamp = Guid.Empty;
     }
 
-    internal User(Guid id, Guid principalId, DateTime createdAt, string name, string eMail, string normalizedEMail, string passwordHash, bool isAdministrator, DateTime lastPasswordChange, Guid securityStamp)
+    internal User(Guid id, Guid principalId, DateTime createdAt, string userName, string normalizedUserName, string? fullName, string? eMail, string? normalizedEMail, string passwordHash, bool isAdministrator, DateTime lastPasswordChange, Guid securityStamp)
     {
         Id = id;
         PrincipalId = principalId;
         CreatedAt = createdAt;
-        Name = name;
+        UserName = userName;
+        NormalizedUserName = normalizedUserName;
+        FullName = fullName;
         EMail = eMail;
         NormalizedEMail = normalizedEMail;
         PasswordHash = passwordHash;
@@ -40,11 +43,15 @@ public sealed class User : Entity<Guid>
 
     public DateTime CreatedAt { get; }
 
-    public string Name { get; set; }
+    public string UserName { get; private set; }
 
-    public string EMail { get; private set; }
+    public string NormalizedUserName { get; private set; }
 
-    public string NormalizedEMail { get; private set; }
+    public string? FullName { get; set; }
+
+    public string? EMail { get; private set; }
+
+    public string? NormalizedEMail { get; private set; }
 
     public string PasswordHash { get; private set; }
 
@@ -68,12 +75,29 @@ public sealed class User : Entity<Guid>
         SecurityStamp = Guid.NewGuid();
     }
 
-    public void UpdateEmail(string newEmail)
+    public void SetUserName(string userName)
     {
-        EMail = newEmail;
-        NormalizedEMail = NormalizeEmail(newEmail);
+        UserName = userName.Trim();
+        NormalizedUserName = Normalize(userName);
+    }
+
+    public void SetEmailAddress(string? newEmail)
+    {
+        if (newEmail is null)
+        {
+            EMail = null;
+            NormalizedEMail = null;
+        }
+        else
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(newEmail);
+
+            EMail = newEmail.Trim();
+            NormalizedEMail = Normalize(newEmail);
+        }
+
         SecurityStamp = Guid.NewGuid();
     }
 
-    public static string NormalizeEmail(string email) => email.Trim().ToUpper();
+    public static string Normalize(string value) => value.Trim().ToUpper();
 }

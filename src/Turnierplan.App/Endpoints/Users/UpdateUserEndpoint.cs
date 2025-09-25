@@ -21,6 +21,7 @@ internal sealed class UpdateUserEndpoint : EndpointBase
         [FromBody] UpdateUserEndpointRequest request,
         IPasswordHasher<User> passwordHasher,
         IUserRepository repository,
+        HttpContext httpContext,
         CancellationToken cancellationToken)
     {
         if (!Validator.Instance.ValidateAndGetResult(request, out var result))
@@ -35,22 +36,31 @@ internal sealed class UpdateUserEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!user.NormalizedEMail.Equals(User.NormalizeEmail(request.EMail)))
+        if (!user.NormalizedUserName.Equals(User.Normalize(request.UserName)) && await repository.GetByUserNameAsync(request.UserName) is not null)
+        {
+            return Results.BadRequest("The specified user name is already taken.");
+        }
+
+        if (request.EMail is not null && !Equals(user.NormalizedEMail, User.Normalize(request.EMail)))
         {
             // If the email address ought to be changed, check that no other user uses that email address
 
-            var existingUserWithNewEmail = await repository.GetByEmailAsync(request.EMail);
-
-            if (existingUserWithNewEmail is not null)
+            if (await repository.GetByEmailAsync(request.EMail) is not null)
             {
                 return Results.BadRequest("The specified email address is already taken.");
             }
         }
 
-        user.Name = request.UserName;
+        if (httpContext.GetCurrentUserIdOrThrow() == user.Id && !request.IsAdministrator)
+        {
+            return Results.BadRequest("Cannot take away the administrator privilege of the requesting user.");
+        }
+
+        user.FullName = request.FullName?.Trim();
         user.IsAdministrator = request.IsAdministrator;
 
-        user.UpdateEmail(request.EMail);
+        user.SetUserName(request.UserName);
+        user.SetEmailAddress(request.EMail);
 
         if (request.UpdatePassword)
         {
@@ -66,7 +76,9 @@ internal sealed class UpdateUserEndpoint : EndpointBase
     {
         public required string UserName { get; init; }
 
-        public required string EMail { get; init; }
+        public string? FullName { get; init; }
+
+        public string? EMail { get; init; }
 
         public bool IsAdministrator { get; init; }
 
@@ -84,8 +96,14 @@ internal sealed class UpdateUserEndpoint : EndpointBase
             RuleFor(x => x.UserName)
                 .NotEmpty();
 
+            RuleFor(x => x.FullName)
+                .NotEmpty()
+                .When(x => x.FullName is not null);
+
             RuleFor(x => x.EMail)
-                .EmailAddress();
+                .NotEmpty()
+                .EmailAddress()
+                .When(x => x.EMail is not null);
 
             RuleFor(x => x.Password)
                 .Null()
