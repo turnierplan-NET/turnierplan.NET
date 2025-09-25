@@ -14,11 +14,11 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
     internal readonly GroupParticipantComparer _groupParticipantComparer;
     internal int? _nextEntityId;
 
-    internal readonly List<RoleAssignment<Tournament>> _roleAssignments = new();
-    internal readonly List<Team> _teams = new();
-    internal readonly List<Group> _groups = new();
-    internal readonly List<Match> _matches = new();
-    internal readonly List<Document.Document> _documents = new();
+    internal readonly List<RoleAssignment<Tournament>> _roleAssignments = [];
+    internal readonly List<Team> _teams = [];
+    internal readonly List<Group> _groups = [];
+    internal readonly List<Match> _matches = [];
+    internal readonly List<Document.Document> _documents = [];
 
     public Tournament(Organization.Organization organization, string name, Visibility visibility)
     {

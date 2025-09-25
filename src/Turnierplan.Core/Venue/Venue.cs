@@ -5,8 +5,8 @@ namespace Turnierplan.Core.Venue;
 
 public sealed class Venue : Entity<long>, IEntityWithRoleAssignments<Venue>, IEntityWithOrganization
 {
-    internal readonly List<RoleAssignment<Venue>> _roleAssignments = new();
-    internal readonly List<Tournament.Tournament> _tournaments = new();
+    internal readonly List<RoleAssignment<Venue>> _roleAssignments = [];
+    internal readonly List<Tournament.Tournament> _tournaments = [];
 
     public Venue(Organization.Organization organization, string name, string description)
     {
@@ -43,9 +43,9 @@ public sealed class Venue : Entity<long>, IEntityWithRoleAssignments<Venue>, IEn
 
     public string Description { get; set; }
 
-    public List<string> AddressDetails { get; set; } = new();
+    public List<string> AddressDetails { get; set; } = [];
 
-    public List<string> ExternalLinks { get; set; } = new();
+    public List<string> ExternalLinks { get; set; } = [];
 
     public IReadOnlyList<Tournament.Tournament> Tournaments => _tournaments.AsReadOnly();
 

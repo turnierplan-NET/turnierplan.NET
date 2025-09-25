@@ -4,7 +4,7 @@ namespace Turnierplan.Core.PlanningRealm;
 
 public sealed class Application : Entity<long>
 {
-    internal readonly List<ApplicationTeam> _teams = new();
+    internal readonly List<ApplicationTeam> _teams = [];
 
     internal Application(long id, int tag, DateTime createdAt, string notes, string contact, string? contactEmail, string? contactTelephone, string? comment)
     {

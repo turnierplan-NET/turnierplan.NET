@@ -15,19 +15,19 @@ public sealed class ConfigureTournamentEndpointTest
             Id = null,
             AlphabeticalId = 'A',
             DisplayName = null,
-            Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
-            {
-                new()
+            Teams =
+            [
+                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                 {
                     Id = null,
                     Name = "Test 1"
                 },
-                new()
+                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry()
                 {
                     Id = null,
                     Name = "Test 2"
                 }
-            }
+            ]
         }
     ];
 
@@ -38,39 +38,39 @@ public sealed class ConfigureTournamentEndpointTest
             Id = null,
             AlphabeticalId = 'A',
             DisplayName = null,
-            Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
-            {
-                new()
+            Teams =
+            [
+                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                 {
                     Id = null,
                     Name = "Test 1"
                 },
-                new()
+                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                 {
                     Id = null,
                     Name = "Test 2"
                 },
-                new()
+                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                 {
                     Id = null,
                     Name = "Test 3"
                 },
-                new()
+                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                 {
                     Id = null,
                     Name = "Test 4"
                 },
-                new()
+                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                 {
                     Id = null,
                     Name = "Test 5"
                 },
-                new()
+                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                 {
                     Id = null,
                     Name = "Test 6"
                 }
-            }
+            ]
         }
     ];
 
@@ -111,38 +111,38 @@ public sealed class ConfigureTournamentEndpointTest
                 Id = null,
                 AlphabeticalId = 'A',
                 DisplayName = null,
-                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
-                {
-                    new()
+                Teams =
+                [
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = "Test 1"
                     },
-                    new()
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = "Test 2"
                     }
-                }
+                ]
             },
             new()
             {
                 Id = null,
                 AlphabeticalId = 'A',
                 DisplayName = null,
-                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
-                {
-                    new()
+                Teams =
+                [
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = "Test 3"
                     },
-                    new()
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = "Test 4"
                     }
-                }
+                ]
             }
         };
 
@@ -171,38 +171,38 @@ public sealed class ConfigureTournamentEndpointTest
                 Id = 1,
                 AlphabeticalId = 'A',
                 DisplayName = null,
-                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
-                {
-                    new()
+                Teams =
+                [
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = "Test 1"
                     },
-                    new()
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = "Test 2"
                     }
-                }
+                ]
             },
             new()
             {
                 Id = 1,
                 AlphabeticalId = 'B',
                 DisplayName = null,
-                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
-                {
-                    new()
+                Teams =
+                [
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = "Test 3"
                     },
-                    new()
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = "Test 4"
                     }
-                }
+                ]
             }
         };
 
@@ -231,38 +231,38 @@ public sealed class ConfigureTournamentEndpointTest
                 Id = 1,
                 AlphabeticalId = 'A',
                 DisplayName = null,
-                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
-                {
-                    new()
+                Teams =
+                [
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = "Test 1"
                     },
-                    new()
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = 1,
                         Name = "Test 2"
                     }
-                }
+                ]
             },
             new()
             {
                 Id = 2,
                 AlphabeticalId = 'B',
                 DisplayName = null,
-                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
-                {
-                    new()
+                Teams =
+                [
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = 1,
                         Name = "Test 1"
                     },
-                    new()
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = 3,
                         Name = "Test 2"
                     }
-                }
+                ]
             }
         };
 
@@ -295,19 +295,19 @@ public sealed class ConfigureTournamentEndpointTest
                 Id = null,
                 AlphabeticalId = alphabeticalId,
                 DisplayName = null,
-                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
-                {
-                    new()
+                Teams =
+                [
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = "Test 1"
                     },
-                    new()
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = "Test 2"
                     }
-                }
+                ]
             }
         };
 
@@ -340,19 +340,19 @@ public sealed class ConfigureTournamentEndpointTest
                 Id = null,
                 AlphabeticalId = 'A',
                 DisplayName = displayName,
-                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
-                {
-                    new()
+                Teams =
+                [
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = "Test 1"
                     },
-                    new()
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = "Test 2"
                     }
-                }
+                ]
             }
         };
 
@@ -441,19 +441,19 @@ public sealed class ConfigureTournamentEndpointTest
                 Id = null,
                 AlphabeticalId = 'A',
                 DisplayName = null,
-                Teams = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry[]
-                {
-                    new()
+                Teams =
+                [
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = teamName
                     },
-                    new()
+                    new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                     {
                         Id = null,
                         Name = "Other"
                     }
-                }
+                ]
             }
         };
 

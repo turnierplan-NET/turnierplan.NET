@@ -59,7 +59,7 @@ public static class MatchPlanDefinitions
                     return new GroupMatchDefinition.MatchDefinition(teamIdA, teamIdB);
                 });
 
-                return new GroupMatchDefinition.MatchBlock(matches.ToImmutableArray());
+                return new GroupMatchDefinition.MatchBlock([..matches]);
             });
             __groupMatchDefinitions[model.TeamCount] = new GroupMatchDefinition(matchBlocks);
         }

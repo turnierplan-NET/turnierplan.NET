@@ -6,7 +6,7 @@ namespace Turnierplan.Core.PlanningRealm;
 
 public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 {
-    internal readonly List<InvitationLinkEntry> _entries = new();
+    internal readonly List<InvitationLinkEntry> _entries = [];
 
     internal InvitationLink(long id, PublicId.PublicId publicId, string name, string? title, string? description, string colorCode, bool isActive, DateTime? validUntil, string? contactPerson, string? contactEmail, string? contactTelephone)
     {
@@ -60,7 +60,7 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 
     public Image.Image? SecondaryLogo { get; internal set; }
 
-    public List<ExternalLink> ExternalLinks { get; set; } = new();
+    public List<ExternalLink> ExternalLinks { get; set; } = [];
 
     public IReadOnlyList<InvitationLinkEntry> Entries => _entries.AsReadOnly();
 

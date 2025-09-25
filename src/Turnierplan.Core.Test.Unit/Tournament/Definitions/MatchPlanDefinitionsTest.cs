@@ -112,11 +112,9 @@ public sealed class MatchPlanDefinitionsTest
 
         // Assert
         definition.Should().NotBeNull();
-        definition!.Should().BeEquivalentTo(new FinalsMatchDefinition(new FinalsMatchDefinition.MatchDefinition[]
-        {
-            new(new AbstractTeamSelector(false, 0, 1, null),
-                new AbstractTeamSelector(false, 0, 2, null))
-        }));
+        definition!.Should().BeEquivalentTo(new FinalsMatchDefinition([
+            new FinalsMatchDefinition.MatchDefinition(new AbstractTeamSelector(false, 0, 1, null), new AbstractTeamSelector(false, 0, 2, null))
+        ]));
     }
 
     [Fact]
@@ -127,14 +125,10 @@ public sealed class MatchPlanDefinitionsTest
 
         // Assert
         definition.Should().NotBeNull();
-        definition!.Should().BeEquivalentTo(new FinalsMatchDefinition(new FinalsMatchDefinition.MatchDefinition[]
-        {
-            new(new AbstractTeamSelector(false, 0, 1, null),
-                new AbstractTeamSelector(false, 1, 1, null)),
-
-            new(new AbstractTeamSelector(false, 2, 1, null),
-                new AbstractTeamSelector(true, null, 2, 0))
-        }));
+        definition!.Should().BeEquivalentTo(new FinalsMatchDefinition([
+            new FinalsMatchDefinition.MatchDefinition(new AbstractTeamSelector(false, 0, 1, null), new AbstractTeamSelector(false, 1, 1, null)),
+            new FinalsMatchDefinition.MatchDefinition(new AbstractTeamSelector(false, 2, 1, null), new AbstractTeamSelector(true, null, 2, 0))
+        ]));
     }
 
     [Fact]
@@ -145,19 +139,11 @@ public sealed class MatchPlanDefinitionsTest
 
         // Assert
         definition.Should().NotBeNull();
-        definition!.Should().BeEquivalentTo(new FinalsMatchDefinition(new FinalsMatchDefinition.MatchDefinition[]
-        {
-            new(new AbstractTeamSelector(false, 0, 1, null),
-                new AbstractTeamSelector(false, 1, 1, null)),
-
-            new(new AbstractTeamSelector(false, 2, 1, null),
-                new AbstractTeamSelector(true, null, 2, 0)),
-
-            new(new AbstractTeamSelector(false, 3, 1, null),
-                new AbstractTeamSelector(true, null, 2, 1)),
-
-            new(new AbstractTeamSelector(false, 4, 1, null),
-                new AbstractTeamSelector(true, null, 2, 2))
-        }));
+        definition.Should().BeEquivalentTo(new FinalsMatchDefinition([
+            new FinalsMatchDefinition.MatchDefinition(new AbstractTeamSelector(false, 0, 1, null), new AbstractTeamSelector(false, 1, 1, null)),
+            new FinalsMatchDefinition.MatchDefinition(new AbstractTeamSelector(false, 2, 1, null), new AbstractTeamSelector(true, null, 2, 0)),
+            new FinalsMatchDefinition.MatchDefinition(new AbstractTeamSelector(false, 3, 1, null), new AbstractTeamSelector(true, null, 2, 1)),
+            new FinalsMatchDefinition.MatchDefinition(new AbstractTeamSelector(false, 4, 1, null), new AbstractTeamSelector(true, null, 2, 2))
+        ]));
     }
 }

@@ -5,10 +5,10 @@ namespace Turnierplan.Core.PlanningRealm;
 
 public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<PlanningRealm>, IEntityWithOrganization
 {
-    internal readonly List<RoleAssignment<PlanningRealm>> _roleAssignments = new();
-    internal readonly List<TournamentClass> _tournamentClasses = new();
-    internal readonly List<InvitationLink> _invitationLinks = new();
-    internal readonly List<Application> _applications = new();
+    internal readonly List<RoleAssignment<PlanningRealm>> _roleAssignments = [];
+    internal readonly List<TournamentClass> _tournamentClasses = [];
+    internal readonly List<InvitationLink> _invitationLinks = [];
+    internal readonly List<Application> _applications = [];
 
     public PlanningRealm(Organization.Organization organization, string name)
     {
