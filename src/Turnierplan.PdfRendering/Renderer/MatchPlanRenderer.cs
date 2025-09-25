@@ -193,7 +193,7 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
 
                                 var url = GetPublicTournamentUrl(tournament.PublicId);
 
-                                row.ConstantItem(3.0f, Unit.Centimetre).SkiaSharpCanvas((canvas, size) =>
+                                row.ConstantItem(3.0f, Unit.Centimetre).SkiaSharpSvgCanvas((canvas, size) =>
                                 {
                                     using var qr = new QRCodeGenerator();
                                     var data = qr.CreateQrCode(url, ECCLevel.M, quietZoneSize: 1);

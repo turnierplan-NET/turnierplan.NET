@@ -22,7 +22,7 @@ public sealed class ConfigureTournamentEndpointTest
                     Id = null,
                     Name = "Test 1"
                 },
-                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry()
+                new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestTeamEntry
                 {
                     Id = null,
                     Name = "Test 2"
@@ -390,7 +390,7 @@ public sealed class ConfigureTournamentEndpointTest
     {
         var groups = teamsPerGroup.Select((x, index) =>
         {
-            return new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestGroupEntry()
+            return new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequestGroupEntry
             {
                 Id = null,
                 AlphabeticalId = (char)('A' + index),

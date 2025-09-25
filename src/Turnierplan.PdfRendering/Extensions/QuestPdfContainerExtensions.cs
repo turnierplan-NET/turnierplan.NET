@@ -20,9 +20,9 @@ internal static class QuestPdfContainerExtensions
     }
 
     /// <remarks>
-    /// This code is taken from https://www.questpdf.com/concepts/skia-sharp-integration.html
+    /// This code is taken from <see href="https://www.questpdf.com/api-reference/skiasharp-integration.html#helper-script"/>, last viewed on 2025-09-26
     /// </remarks>
-    public static void SkiaSharpCanvas(this IContainer container, Action<SKCanvas, Size> drawOnCanvas)
+    public static void SkiaSharpSvgCanvas(this IContainer container, Action<SKCanvas, Size> drawOnCanvas)
     {
         container.Svg(size =>
         {
@@ -35,26 +35,6 @@ internal static class QuestPdfContainerExtensions
 
             var svgData = stream.ToArray();
             return Encoding.UTF8.GetString(svgData);
-        });
-    }
-
-    /// <remarks>
-    /// This code is taken from https://www.questpdf.com/concepts/skia-sharp-integration.html
-    /// </remarks>
-    public static void SkiaSharpRasterized(this IContainer container, Action<SKCanvas, Size> drawOnCanvas)
-    {
-        container.Image(payload =>
-        {
-            using var bitmap = new SKBitmap(payload.ImageSize.Width, payload.ImageSize.Height);
-
-            using (var canvas = new SKCanvas(bitmap))
-            {
-                var scalingFactor = payload.Dpi / (float)DocumentSettings.DefaultRasterDpi;
-                canvas.Scale(scalingFactor);
-                drawOnCanvas(canvas, payload.AvailableSpace);
-            }
-
-            return bitmap.Encode(SKEncodedImageFormat.Png, 100).ToArray();
         });
     }
 }
