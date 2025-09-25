@@ -15,7 +15,7 @@ public sealed class LocalizationProviderTest
         // logged messages to be 0 which indicates no problems during initialization occurred.
         logger.NumberOfLogMessages.Should().Be(0);
 
-        localizationProvider.GetAvailableLanguages().Should().BeEquivalentTo(["de"]);
+        localizationProvider.GetAvailableLanguages().Should().BeEquivalentTo("de");
 
         localizationProvider.TryGetLocalization("de", out var de).Should().BeTrue();
         de.Should().BeOfType<InMemoryLocalization>().Subject.Culture.Should().Be(CultureInfo.GetCultureInfo("de"));

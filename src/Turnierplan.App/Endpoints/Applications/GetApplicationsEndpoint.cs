@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Helpers;
 using Turnierplan.App.Mapping;
@@ -97,12 +98,12 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
                 // tag. However, the user might also want to search for a specific telephone number or email address via
                 // these 6 digits. This is considered in the search logic below.
                 int? searchTag = _searchTerm.Length == 6 && _searchTerm.All(char.IsNumber)
-                    ? int.Parse(_searchTerm)
+                    ? int.Parse(_searchTerm, CultureInfo.InvariantCulture)
                     : null;
 
                 // If the search term starts with an exclamation mark, the rest is interpreted as an exact id match on an application team.
                 long? searchApplicationTeamId = _searchTerm.Length >= 2 && _searchTerm[0] == '!' && _searchTerm.Skip(1).All(char.IsNumber)
-                    ? int.Parse(_searchTerm[1..])
+                    ? int.Parse(_searchTerm[1..], CultureInfo.InvariantCulture)
                     : null;
 
                 applications = applications.Where(x =>

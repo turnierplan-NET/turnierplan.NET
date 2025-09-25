@@ -122,8 +122,8 @@ public sealed class TurnierplanAdapterTest
                     AlphabeticalId = 'A',
                     DisplayName = "Gruppe A",
                     HasCustomDisplayName = false,
-                    Participants = new[]
-                    {
+                    Participants =
+                    [
                         new GroupParticipant
                         {
                             TeamId = 1,
@@ -175,7 +175,7 @@ public sealed class TurnierplanAdapterTest
                                 Points = 0
                             }
                         }
-                    }
+                    ]
                 }
             ],
             Matches = [

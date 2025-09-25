@@ -5,13 +5,13 @@ namespace Turnierplan.Core.Organization;
 
 public sealed class Organization : Entity<long>, IEntityWithRoleAssignments<Organization>
 {
-    internal readonly List<RoleAssignment<Organization>> _roleAssignments = new();
-    internal readonly List<ApiKey.ApiKey> _apiKeys = new();
-    internal readonly List<Folder.Folder> _folders = new();
-    internal readonly List<Image.Image> _images = new();
-    internal readonly List<PlanningRealm.PlanningRealm> _planningRealms = new();
-    internal readonly List<Tournament.Tournament> _tournaments = new();
-    internal readonly List<Venue.Venue> _venues = new();
+    internal readonly List<RoleAssignment<Organization>> _roleAssignments = [];
+    internal readonly List<ApiKey.ApiKey> _apiKeys = [];
+    internal readonly List<Folder.Folder> _folders = [];
+    internal readonly List<Image.Image> _images = [];
+    internal readonly List<PlanningRealm.PlanningRealm> _planningRealms = [];
+    internal readonly List<Tournament.Tournament> _tournaments = [];
+    internal readonly List<Venue.Venue> _venues = [];
 
     public Organization(string name)
     {

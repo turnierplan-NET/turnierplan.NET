@@ -10,7 +10,5 @@ public sealed record ApiKeyUsageDto
 
     public required int BucketCount { get; init; }
 
-    public required List<Entry> Entries { get; init; }
-
-    public sealed record Entry(int BucketIndex, int Count);
+    public required List<ApiKeyUsageBucketDto> Buckets { get; init; }
 }

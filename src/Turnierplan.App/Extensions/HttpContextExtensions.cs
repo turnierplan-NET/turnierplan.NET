@@ -31,14 +31,14 @@ internal static class HttpContextExtensions
 
         foreach (var claim in context.User.Claims)
         {
-            if (claim.Type.Equals(ClaimTypes.PrincipalKind))
+            switch (claim.Type)
             {
-                kind = Enum.Parse<PrincipalKind>(claim.Value);
-            }
-
-            if (claim.Type.Equals(ClaimTypes.PrincipalId))
-            {
-                principalId = Guid.Parse(claim.Value);
+                case ClaimTypes.PrincipalKind:
+                    kind = Enum.Parse<PrincipalKind>(claim.Value);
+                    break;
+                case ClaimTypes.PrincipalId:
+                    principalId = Guid.Parse(claim.Value);
+                    break;
             }
         }
 

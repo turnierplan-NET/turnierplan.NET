@@ -193,7 +193,7 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
 
                                 var url = GetPublicTournamentUrl(tournament.PublicId);
 
-                                row.ConstantItem(3.0f, Unit.Centimetre).SkiaSharpCanvas((canvas, size) =>
+                                row.ConstantItem(3.0f, Unit.Centimetre).SkiaSharpSvgCanvas((canvas, size) =>
                                 {
                                     using var qr = new QRCodeGenerator();
                                     var data = qr.CreateQrCode(url, ECCLevel.M, quietZoneSize: 1);
@@ -351,7 +351,7 @@ file static class MatchPlanQuestPdfExtensions
         for (var i = 0; i < groupsArray.Length; i += 2)
         {
             var groupLeft = groupsArray[i];
-            var groupRight = (i + 1) < groupsArray.Length ? groupsArray[i + 1] : null;
+            var groupRight = i + 1 < groupsArray.Length ? groupsArray[i + 1] : null;
 
             if (groupRight is not null)
             {
@@ -555,8 +555,8 @@ file static class MatchPlanQuestPdfExtensions
                 var participant = participants[i];
                 var isLast = i == participants.Count - 1;
 
-                table.Cell().BorderLeft(2).BorderBottom(isLast ? 2 : (showResultColumns ? 0.5f : 0)).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(insertOutcomes ? $"{participant.Statistics.Position}." : $"{i + 1}.");
-                table.Cell().BorderRight(2).BorderBottom(isLast ? 2 : (showResultColumns ? 0.5f : 0)).BorderColor(Colors.Black).Padding(2).Text(participant.Team.Name);
+                table.Cell().BorderLeft(2).BorderBottom(isLast ? 2 : showResultColumns ? 0.5f : 0).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(insertOutcomes ? $"{participant.Statistics.Position}." : $"{i + 1}.");
+                table.Cell().BorderRight(2).BorderBottom(isLast ? 2 : showResultColumns ? 0.5f : 0).BorderColor(Colors.Black).Padding(2).Text(participant.Team.Name);
 
                 if (showResultColumns)
                 {

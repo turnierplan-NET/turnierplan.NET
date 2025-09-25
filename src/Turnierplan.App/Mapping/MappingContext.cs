@@ -9,5 +9,5 @@ internal record struct MappingContext
         Localization = localization;
     }
 
-    public ILocalization Localization { get; init; }
+    public ILocalization Localization { get; }
 }

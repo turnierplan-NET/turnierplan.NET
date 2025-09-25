@@ -12,7 +12,7 @@ public sealed class TeamLink : Entity<long>
 
         if (planningRealm.Organization is null || planningRealm.Organization != tournament.Organization)
         {
-            throw new ArgumentException($"Both the planning realm and the tournament must belong to the same organization which may not be null.");
+            throw new ArgumentException("Both the planning realm and the tournament must belong to the same organization which may not be null.");
         }
 
         Id = 0;

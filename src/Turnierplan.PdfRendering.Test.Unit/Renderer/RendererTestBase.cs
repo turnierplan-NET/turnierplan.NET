@@ -114,6 +114,10 @@ public abstract partial class RendererTestBase<TRenderer>
         public Task<Stream> GetImageAsync(Image image) => throw new NotSupportedException();
 
         public Task<bool> DeleteImageAsync(Image image) => throw new NotSupportedException();
+
+        public void Dispose()
+        {
+        }
     }
 
     private sealed class TestApplicationUrlProvider : IApplicationUrlProvider

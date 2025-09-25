@@ -9,20 +9,24 @@ namespace Turnierplan.PdfRendering.Extensions;
 
 internal static class QuestPdfContainerExtensions
 {
-    public static ImageDescriptor Image(this IContainer container, Image image, IImageStorage imageStorage)
+    public static void Image(this IContainer container, Image image, IImageStorage imageStorage)
     {
+        // Waiting for the task to complete is not ideal. However, attempting to use async
+        // inside the QuestPDF document structure is probably a much bigger nightmare...
         var task = imageStorage.GetImageAsync(image);
         task.Wait();
+
         var stream = task.Result;
-        var descriptor = container.Image(stream);
+        container.Image(stream);
+
+        // Dispose the stream (at this point, QuestPDF has read the stream content into an internal buffer)
         stream.Dispose();
-        return descriptor;
     }
 
     /// <remarks>
-    /// This code is taken from https://www.questpdf.com/concepts/skia-sharp-integration.html
+    /// This code is taken from <see href="https://www.questpdf.com/api-reference/skiasharp-integration.html#helper-script"/>, last viewed on 2025-09-26
     /// </remarks>
-    public static void SkiaSharpCanvas(this IContainer container, Action<SKCanvas, Size> drawOnCanvas)
+    public static void SkiaSharpSvgCanvas(this IContainer container, Action<SKCanvas, Size> drawOnCanvas)
     {
         container.Svg(size =>
         {
@@ -35,26 +39,6 @@ internal static class QuestPdfContainerExtensions
 
             var svgData = stream.ToArray();
             return Encoding.UTF8.GetString(svgData);
-        });
-    }
-
-    /// <remarks>
-    /// This code is taken from https://www.questpdf.com/concepts/skia-sharp-integration.html
-    /// </remarks>
-    public static void SkiaSharpRasterized(this IContainer container, Action<SKCanvas, Size> drawOnCanvas)
-    {
-        container.Image(payload =>
-        {
-            using var bitmap = new SKBitmap(payload.ImageSize.Width, payload.ImageSize.Height);
-
-            using (var canvas = new SKCanvas(bitmap))
-            {
-                var scalingFactor = payload.Dpi / (float)DocumentSettings.DefaultRasterDpi;
-                canvas.Scale(scalingFactor);
-                drawOnCanvas(canvas, payload.AvailableSpace);
-            }
-
-            return bitmap.Encode(SKEncodedImageFormat.Png, 100).ToArray();
         });
     }
 }

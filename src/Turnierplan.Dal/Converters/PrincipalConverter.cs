@@ -31,6 +31,6 @@ internal sealed partial class PrincipalConverter : ValueConverter<Principal, str
         return new Principal(kind, principalId);
     }
 
-    [GeneratedRegex(@"^(?<Kind>ApiKey|User):(?<PrincipalId>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$")]
+    [GeneratedRegex("^(?<Kind>ApiKey|User):(?<PrincipalId>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$")]
     private static partial Regex PrincipalRegex();
 }

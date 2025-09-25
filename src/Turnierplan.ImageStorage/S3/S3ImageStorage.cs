@@ -144,6 +144,11 @@ internal sealed class S3ImageStorage : IImageStorage
         return false;
     }
 
+    public void Dispose()
+    {
+        _client.Dispose();
+    }
+
     private static string GetObjectKey(Image image)
     {
         return $"images/{image.CreatedAt.Year}/{image.CreatedAt.Month:D2}/{image.ResourceIdentifier}.{image.FileType}";

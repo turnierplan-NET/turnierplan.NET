@@ -358,28 +358,18 @@ public sealed class GroupParticipantComparerTest
         var sortedReverse = teamsShuffled.OrderDescending(comparer);
 
         // Assert
-#pragma warning disable CA1861 // Avoid constant arrays as arguments
         if (team3OutOfCompetition)
         {
             // Team with id 3 should be last (or first when reversing)
-            sorted.Select(x => x.Team.Id).Should().BeEquivalentTo(
-                new[] { 8, 6, 1, 7, 3 },
-                options => options.WithStrictOrdering());
-            sortedReverse.Select(x => x.Team.Id).Should().BeEquivalentTo(
-                new[] { 3, 7, 1, 6, 8 },
-                options => options.WithStrictOrdering());
+            sorted.Select(x => x.Team.Id).Should().BeEquivalentTo([8, 6, 1, 7, 3], options => options.WithStrictOrdering());
+            sortedReverse.Select(x => x.Team.Id).Should().BeEquivalentTo([3, 7, 1, 6, 8], options => options.WithStrictOrdering());
         }
         else
         {
             // Team with id 3 is sorted "normally"
-            sorted.Select(x => x.Team.Id).Should().BeEquivalentTo(
-                new[] { 8, 6, 3, 1, 7 },
-                options => options.WithStrictOrdering());
-            sortedReverse.Select(x => x.Team.Id).Should().BeEquivalentTo(
-                new[] { 7, 1, 3, 6, 8 },
-                options => options.WithStrictOrdering());
+            sorted.Select(x => x.Team.Id).Should().BeEquivalentTo([8, 6, 3, 1, 7], options => options.WithStrictOrdering());
+            sortedReverse.Select(x => x.Team.Id).Should().BeEquivalentTo([7, 1, 3, 6, 8], options => options.WithStrictOrdering());
         }
-#pragma warning restore CA1861
     }
 
     private static GroupParticipantComparer CreateTestComparer(params TeamComparisonMode[] comparisonModes) => CreateTestComparer([], comparisonModes);

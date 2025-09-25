@@ -5,8 +5,8 @@ namespace Turnierplan.Core.ApiKey;
 
 public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>, IEntityWithOrganization
 {
-    internal readonly List<RoleAssignment<ApiKey>> _roleAssignments = new();
-    internal readonly List<ApiKeyRequest> _requests = new();
+    internal readonly List<RoleAssignment<ApiKey>> _roleAssignments = [];
+    internal readonly List<ApiKeyRequest> _requests = [];
 
     public ApiKey(Organization.Organization organization, string name, string? description, DateTime expiryDate)
     {

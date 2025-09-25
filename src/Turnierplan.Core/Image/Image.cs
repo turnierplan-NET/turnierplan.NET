@@ -6,7 +6,7 @@ namespace Turnierplan.Core.Image;
 
 public sealed class Image : Entity<long>, IEntityWithRoleAssignments<Image>, IEntityWithOrganization
 {
-    internal readonly List<RoleAssignment<Image>> _roleAssignments = new();
+    internal readonly List<RoleAssignment<Image>> _roleAssignments = [];
 
     public Image(Organization.Organization organization, string name, ImageType type, string fileType, long fileSize, ushort width, ushort height)
     {

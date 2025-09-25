@@ -41,14 +41,9 @@ internal sealed class UpdateUserEndpoint : EndpointBase
             return Results.BadRequest("The specified user name is already taken.");
         }
 
-        if (request.EMail is not null && !Equals(user.NormalizedEMail, User.Normalize(request.EMail)))
+        if (request.EMail is not null && !Equals(user.NormalizedEMail, User.Normalize(request.EMail)) && await repository.GetByEmailAsync(request.EMail) is not null)
         {
-            // If the email address ought to be changed, check that no other user uses that email address
-
-            if (await repository.GetByEmailAsync(request.EMail) is not null)
-            {
-                return Results.BadRequest("The specified email address is already taken.");
-            }
+            return Results.BadRequest("The specified email address is already taken.");
         }
 
         if (httpContext.GetCurrentUserIdOrThrow() == user.Id && !request.IsAdministrator)

@@ -41,6 +41,14 @@ public sealed class AccessValidatorTest
         organization.AddRoleAssignment(Role.Reader, principal);
         organization.AddRoleAssignment(Role.Contributor, otherPrincipal);
 
+        Test(() => new ApiKey(organization, "Test", null, DateTime.MaxValue));
+        Test(() => new Image(organization, "Test", ImageType.Logo, "", 0, 1, 1));
+        Test(() => new Folder(organization, "Test"));
+        Test(() => new Tournament(organization, "Test", Visibility.Public));
+        Test(() => new Venue(organization, "Test", ""));
+
+        return;
+
         void Test<T>(Func<T> factory)
             where T : Entity<long>, IEntityWithRoleAssignments<T>
         {
@@ -52,12 +60,6 @@ public sealed class AccessValidatorTest
             AccessValidator.IsActionAllowed(target, Actions.GenericRead, otherPrincipal).Should().BeTrue();
             AccessValidator.IsActionAllowed(target, Actions.GenericWrite, otherPrincipal).Should().BeTrue();
         }
-
-        Test(() => new ApiKey(organization, "Test", null, DateTime.MaxValue));
-        Test(() => new Image(organization, "Test", ImageType.Logo, "", 0, 1, 1));
-        Test(() => new Folder(organization, "Test"));
-        Test(() => new Tournament(organization, "Test", Visibility.Public));
-        Test(() => new Venue(organization, "Test", ""));
     }
 
     [Fact]
@@ -114,6 +116,14 @@ public sealed class AccessValidatorTest
         organization.AddRoleAssignment(Role.Reader, principal);
         organization.AddRoleAssignment(Role.Contributor, otherPrincipal);
 
+        Test(() => new ApiKey(organization, "Test", null, DateTime.MaxValue));
+        Test(() => new Image(organization, "Test", ImageType.Logo, "", 0, 1, 1));
+        Test(() => new Folder(organization, "Test"));
+        Test(() => new Tournament(organization, "Test", Visibility.Public));
+        Test(() => new Venue(organization, "Test", ""));
+
+        return;
+
         void Test<T>(Func<T> factory)
             where T : Entity<long>, IEntityWithRoleAssignments<T>
         {
@@ -127,12 +137,6 @@ public sealed class AccessValidatorTest
             AccessValidator.AddAvailableRoles(target, resultSet, otherPrincipal);
             resultSet.Should().BeEquivalentTo([Role.Contributor]);
         }
-
-        Test(() => new ApiKey(organization, "Test", null, DateTime.MaxValue));
-        Test(() => new Image(organization, "Test", ImageType.Logo, "", 0, 1, 1));
-        Test(() => new Folder(organization, "Test"));
-        Test(() => new Tournament(organization, "Test", Visibility.Public));
-        Test(() => new Venue(organization, "Test", ""));
     }
 
     [Fact]

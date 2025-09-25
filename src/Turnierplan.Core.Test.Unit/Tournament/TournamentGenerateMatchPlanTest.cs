@@ -11,7 +11,7 @@ public sealed class TournamentGenerateMatchPlanTest
 
     private static readonly ScheduleConfig __scheduleConfig = new()
     {
-        FirstMatchKickoff = Kickoff(12, 0),
+        FirstMatchKickoff = KickoffAt(12, 0),
         GroupPhaseNumberOfCourts = 1,
         GroupPhasePlayTime = 10.Minutes(),
         GroupPhasePauseTime = 1.Minutes(),
@@ -52,9 +52,9 @@ public sealed class TournamentGenerateMatchPlanTest
                 FinalsRoundConfig = null
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 0))
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 0))
             ]
         },
         {
@@ -71,13 +71,13 @@ public sealed class TournamentGenerateMatchPlanTest
                 FinalsRoundConfig = null
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 0)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 33), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 0)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 55), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2))
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 33), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 55), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2))
             ]
         },
         {
@@ -94,17 +94,17 @@ public sealed class TournamentGenerateMatchPlanTest
                 FinalsRoundConfig = null
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 0)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 33), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 0)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 55), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 33), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 55), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 6), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 17), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 28), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 0))
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 6), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 17), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 28), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 0))
             ]
         },
         {
@@ -121,20 +121,20 @@ public sealed class TournamentGenerateMatchPlanTest
                 FinalsRoundConfig = null
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 22), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 33), 0, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 33), 0, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 3)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 55), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(13, 6), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 2)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(13, 17), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 55), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(13, 6), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 2)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(13, 17), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 3)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 28), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 39), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(13, 50), 0, new GroupDefinitionSelector(__groupIds[1], 3), new GroupDefinitionSelector(__groupIds[1], 0)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(14, 1), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2))
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 28), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 39), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(13, 50), 0, new GroupDefinitionSelector(__groupIds[1], 3), new GroupDefinitionSelector(__groupIds[1], 0)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(14, 1), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2))
             ]
         },
         {
@@ -152,20 +152,20 @@ public sealed class TournamentGenerateMatchPlanTest
                 FinalsRoundConfig = null
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 0), 1, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 11), 1, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 0), 1, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 11), 1, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 3)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 22), 1, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 2)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 33), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 33), 1, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 22), 1, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 33), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 33), 1, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 3)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 44), 1, new GroupDefinitionSelector(__groupIds[1], 3), new GroupDefinitionSelector(__groupIds[1], 0)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 55), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 55), 1, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2))
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 44), 1, new GroupDefinitionSelector(__groupIds[1], 3), new GroupDefinitionSelector(__groupIds[1], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 55), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 55), 1, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2))
             ]
         },
         {
@@ -183,14 +183,14 @@ public sealed class TournamentGenerateMatchPlanTest
                 FinalsRoundConfig = null
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 1, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 1, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 11), 2, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 11), 2, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 33), 1, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 33), 2, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2))
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 33), 1, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 33), 2, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2))
             ]
         },
         {
@@ -228,17 +228,17 @@ public sealed class TournamentGenerateMatchPlanTest
                 FinalsRoundConfig = null
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 22), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 33), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 55), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 33), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 55), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 6), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 17), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(13, 28), 0, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 0))
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 6), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 17), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(13, 28), 0, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 0))
             ]
         },
         {
@@ -255,18 +255,18 @@ public sealed class TournamentGenerateMatchPlanTest
                 FinalsRoundConfig = null
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 11), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 11), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 33), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 33), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 55), 0, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 55), 0, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 0)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 6), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 17), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 28), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2))
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 6), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 17), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 28), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2))
             ]
         },
         {
@@ -289,8 +289,8 @@ public sealed class TournamentGenerateMatchPlanTest
                 }
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(null, 0, 1, Kickoff(12, 11), 0, new GroupResultsSelector(__groupIds[0], 1), new GroupResultsSelector(__groupIds[0], 2))
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(null, 0, 1, KickoffAt(12, 11), 0, new GroupResultsSelector(__groupIds[0], 1), new GroupResultsSelector(__groupIds[0], 2))
             ]
         },
         {
@@ -316,8 +316,8 @@ public sealed class TournamentGenerateMatchPlanTest
                 }
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(null, 0, 1, Kickoff(12, 20), 0, new GroupResultsSelector(__groupIds[0], 1), new GroupResultsSelector(__groupIds[0], 2))
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(null, 0, 1, KickoffAt(12, 20), 0, new GroupResultsSelector(__groupIds[0], 1), new GroupResultsSelector(__groupIds[0], 2))
             ]
         },
         {
@@ -343,14 +343,14 @@ public sealed class TournamentGenerateMatchPlanTest
                 }
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 33), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 55), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(null, null, 3, Kickoff(13, 6), 0, new GroupResultsSelector(__groupIds[0], 3), new GroupResultsSelector(__groupIds[0], 4)),
-                new MatchExpectation(null, 0, 1, Kickoff(13, 23), 0, new GroupResultsSelector(__groupIds[0], 1), new GroupResultsSelector(__groupIds[0], 2))
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 33), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 55), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(null, null, 3, KickoffAt(13, 6), 0, new GroupResultsSelector(__groupIds[0], 3), new GroupResultsSelector(__groupIds[0], 4)),
+                new MatchExpectation(null, 0, 1, KickoffAt(13, 23), 0, new GroupResultsSelector(__groupIds[0], 1), new GroupResultsSelector(__groupIds[0], 2))
             ]
         },
         {
@@ -373,16 +373,16 @@ public sealed class TournamentGenerateMatchPlanTest
                 }
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 33), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 55), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(null, 1, null, Kickoff(13, 6), 0, new GroupResultsSelector(__groupIds[0], 1), new GroupResultsSelector(__groupIds[0], 4)),
-                new MatchExpectation(null, 1, null, Kickoff(13, 23), 0, new GroupResultsSelector(__groupIds[0], 2), new GroupResultsSelector(__groupIds[0], 3)),
-                new MatchExpectation(null, null, 3, Kickoff(13, 40), 0, new MatchSelector(7, MatchSelector.Mode.Loser), new MatchSelector(8, MatchSelector.Mode.Loser)),
-                new MatchExpectation(null, 0, 1, Kickoff(13, 57), 0, new MatchSelector(7, MatchSelector.Mode.Winner), new MatchSelector(8, MatchSelector.Mode.Winner))
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 33), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 55), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(null, 1, null, KickoffAt(13, 6), 0, new GroupResultsSelector(__groupIds[0], 1), new GroupResultsSelector(__groupIds[0], 4)),
+                new MatchExpectation(null, 1, null, KickoffAt(13, 23), 0, new GroupResultsSelector(__groupIds[0], 2), new GroupResultsSelector(__groupIds[0], 3)),
+                new MatchExpectation(null, null, 3, KickoffAt(13, 40), 0, new MatchSelector(7, MatchSelector.Mode.Loser), new MatchSelector(8, MatchSelector.Mode.Loser)),
+                new MatchExpectation(null, 0, 1, KickoffAt(13, 57), 0, new MatchSelector(7, MatchSelector.Mode.Winner), new MatchSelector(8, MatchSelector.Mode.Winner))
             ]
         },
         {
@@ -409,45 +409,45 @@ public sealed class TournamentGenerateMatchPlanTest
                 }
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 22), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 33), 0, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 11), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 33), 0, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 3)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 4), new GroupDefinitionSelector(__groupIds[0], 0)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 55), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(13, 6), 0, new GroupDefinitionSelector(__groupIds[1], 4), new GroupDefinitionSelector(__groupIds[1], 0)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(13, 17), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 4), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 55), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(13, 6), 0, new GroupDefinitionSelector(__groupIds[1], 4), new GroupDefinitionSelector(__groupIds[1], 0)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(13, 17), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 28), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 4)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 39), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 0)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(13, 50), 0, new GroupDefinitionSelector(__groupIds[1], 3), new GroupDefinitionSelector(__groupIds[1], 4)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(14, 1), 0, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 28), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 4)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 39), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(13, 50), 0, new GroupDefinitionSelector(__groupIds[1], 3), new GroupDefinitionSelector(__groupIds[1], 4)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(14, 1), 0, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 0)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(14, 12), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 4)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(14, 23), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(14, 34), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 4)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(14, 45), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(14, 12), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 4)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(14, 23), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(14, 34), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 4)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(14, 45), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 3)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(14, 56), 0, new GroupDefinitionSelector(__groupIds[0], 4), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(15, 7), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(15, 18), 0, new GroupDefinitionSelector(__groupIds[1], 4), new GroupDefinitionSelector(__groupIds[1], 2)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(15, 29), 0, new GroupDefinitionSelector(__groupIds[1], 3), new GroupDefinitionSelector(__groupIds[1], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(14, 56), 0, new GroupDefinitionSelector(__groupIds[0], 4), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(15, 7), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(15, 18), 0, new GroupDefinitionSelector(__groupIds[1], 4), new GroupDefinitionSelector(__groupIds[1], 2)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(15, 29), 0, new GroupDefinitionSelector(__groupIds[1], 3), new GroupDefinitionSelector(__groupIds[1], 1)),
 
                 // 21-24
-                new MatchExpectation(null, 2, null, Kickoff(15, 40), 0, new GroupResultsSelector(__groupIds[0], 1), new GroupResultsSelector(__groupIds[1], 4)),
-                new MatchExpectation(null, 2, null, Kickoff(15, 57), 0, new GroupResultsSelector(__groupIds[0], 2), new GroupResultsSelector(__groupIds[1], 3)),
-                new MatchExpectation(null, 2, null, Kickoff(16, 14), 0, new GroupResultsSelector(__groupIds[0], 3), new GroupResultsSelector(__groupIds[1], 2)),
-                new MatchExpectation(null, 2, null, Kickoff(16, 31), 0, new GroupResultsSelector(__groupIds[0], 4), new GroupResultsSelector(__groupIds[1], 1)),
+                new MatchExpectation(null, 2, null, KickoffAt(15, 40), 0, new GroupResultsSelector(__groupIds[0], 1), new GroupResultsSelector(__groupIds[1], 4)),
+                new MatchExpectation(null, 2, null, KickoffAt(15, 57), 0, new GroupResultsSelector(__groupIds[0], 2), new GroupResultsSelector(__groupIds[1], 3)),
+                new MatchExpectation(null, 2, null, KickoffAt(16, 14), 0, new GroupResultsSelector(__groupIds[0], 3), new GroupResultsSelector(__groupIds[1], 2)),
+                new MatchExpectation(null, 2, null, KickoffAt(16, 31), 0, new GroupResultsSelector(__groupIds[0], 4), new GroupResultsSelector(__groupIds[1], 1)),
 
                 // 25-26
-                new MatchExpectation(null, 1, null, Kickoff(16, 48), 0, new MatchSelector(21, MatchSelector.Mode.Winner), new MatchSelector(22, MatchSelector.Mode.Winner)),
-                new MatchExpectation(null, 1, null, Kickoff(17, 5), 0, new MatchSelector(23, MatchSelector.Mode.Winner), new MatchSelector(24, MatchSelector.Mode.Winner)),
+                new MatchExpectation(null, 1, null, KickoffAt(16, 48), 0, new MatchSelector(21, MatchSelector.Mode.Winner), new MatchSelector(22, MatchSelector.Mode.Winner)),
+                new MatchExpectation(null, 1, null, KickoffAt(17, 5), 0, new MatchSelector(23, MatchSelector.Mode.Winner), new MatchSelector(24, MatchSelector.Mode.Winner)),
 
                 // 27-29
-                new MatchExpectation(null, null, 5, Kickoff(17, 22), 0, new GroupResultsSelector(__groupIds[0], 5), new GroupResultsSelector(__groupIds[1], 5)),
-                new MatchExpectation(null, null, 3, Kickoff(17, 39), 0, new MatchSelector(25, MatchSelector.Mode.Loser), new MatchSelector(26, MatchSelector.Mode.Loser)),
-                new MatchExpectation(null, 0, 1, Kickoff(17, 56), 0, new MatchSelector(25, MatchSelector.Mode.Winner), new MatchSelector(26, MatchSelector.Mode.Winner))
+                new MatchExpectation(null, null, 5, KickoffAt(17, 22), 0, new GroupResultsSelector(__groupIds[0], 5), new GroupResultsSelector(__groupIds[1], 5)),
+                new MatchExpectation(null, null, 3, KickoffAt(17, 39), 0, new MatchSelector(25, MatchSelector.Mode.Loser), new MatchSelector(26, MatchSelector.Mode.Loser)),
+                new MatchExpectation(null, 0, 1, KickoffAt(17, 56), 0, new MatchSelector(25, MatchSelector.Mode.Winner), new MatchSelector(26, MatchSelector.Mode.Winner))
             ]
         },
         {
@@ -474,45 +474,45 @@ public sealed class TournamentGenerateMatchPlanTest
                 }
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 1, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 11), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 11), 1, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 1, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 11), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 11), 1, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 3)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 4), new GroupDefinitionSelector(__groupIds[0], 0)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 22), 1, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 33), 0, new GroupDefinitionSelector(__groupIds[1], 4), new GroupDefinitionSelector(__groupIds[1], 0)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 33), 1, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 4), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 22), 1, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 33), 0, new GroupDefinitionSelector(__groupIds[1], 4), new GroupDefinitionSelector(__groupIds[1], 0)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 33), 1, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 4)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 44), 1, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 0)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 55), 0, new GroupDefinitionSelector(__groupIds[1], 3), new GroupDefinitionSelector(__groupIds[1], 4)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 55), 1, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 4)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 44), 1, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 55), 0, new GroupDefinitionSelector(__groupIds[1], 3), new GroupDefinitionSelector(__groupIds[1], 4)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 55), 1, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 0)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 6), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 4)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 6), 1, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 3)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(13, 17), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 4)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(13, 17), 1, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 3)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 6), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 4)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 6), 1, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 3)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(13, 17), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 4)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(13, 17), 1, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 3)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 28), 0, new GroupDefinitionSelector(__groupIds[0], 4), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(13, 28), 1, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(13, 39), 0, new GroupDefinitionSelector(__groupIds[1], 4), new GroupDefinitionSelector(__groupIds[1], 2)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(13, 39), 1, new GroupDefinitionSelector(__groupIds[1], 3), new GroupDefinitionSelector(__groupIds[1], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 28), 0, new GroupDefinitionSelector(__groupIds[0], 4), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(13, 28), 1, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(13, 39), 0, new GroupDefinitionSelector(__groupIds[1], 4), new GroupDefinitionSelector(__groupIds[1], 2)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(13, 39), 1, new GroupDefinitionSelector(__groupIds[1], 3), new GroupDefinitionSelector(__groupIds[1], 1)),
 
                 // 21-24
-                new MatchExpectation(null, 2, null, Kickoff(13, 50), 0, new GroupResultsSelector(__groupIds[0], 1), new GroupResultsSelector(__groupIds[1], 4)),
-                new MatchExpectation(null, 2, null, Kickoff(13, 50), 1, new GroupResultsSelector(__groupIds[0], 2), new GroupResultsSelector(__groupIds[1], 3)),
-                new MatchExpectation(null, 2, null, Kickoff(13, 50), 2, new GroupResultsSelector(__groupIds[0], 3), new GroupResultsSelector(__groupIds[1], 2)),
-                new MatchExpectation(null, 2, null, Kickoff(14, 07), 0, new GroupResultsSelector(__groupIds[0], 4), new GroupResultsSelector(__groupIds[1], 1)),
+                new MatchExpectation(null, 2, null, KickoffAt(13, 50), 0, new GroupResultsSelector(__groupIds[0], 1), new GroupResultsSelector(__groupIds[1], 4)),
+                new MatchExpectation(null, 2, null, KickoffAt(13, 50), 1, new GroupResultsSelector(__groupIds[0], 2), new GroupResultsSelector(__groupIds[1], 3)),
+                new MatchExpectation(null, 2, null, KickoffAt(13, 50), 2, new GroupResultsSelector(__groupIds[0], 3), new GroupResultsSelector(__groupIds[1], 2)),
+                new MatchExpectation(null, 2, null, KickoffAt(14, 07), 0, new GroupResultsSelector(__groupIds[0], 4), new GroupResultsSelector(__groupIds[1], 1)),
 
                 // 25-26
-                new MatchExpectation(null, 1, null, Kickoff(14, 24), 0, new MatchSelector(21, MatchSelector.Mode.Winner), new MatchSelector(22, MatchSelector.Mode.Winner)),
-                new MatchExpectation(null, 1, null, Kickoff(14, 24), 1, new MatchSelector(23, MatchSelector.Mode.Winner), new MatchSelector(24, MatchSelector.Mode.Winner)),
+                new MatchExpectation(null, 1, null, KickoffAt(14, 24), 0, new MatchSelector(21, MatchSelector.Mode.Winner), new MatchSelector(22, MatchSelector.Mode.Winner)),
+                new MatchExpectation(null, 1, null, KickoffAt(14, 24), 1, new MatchSelector(23, MatchSelector.Mode.Winner), new MatchSelector(24, MatchSelector.Mode.Winner)),
 
                 // 27-29
-                new MatchExpectation(null, null, 5, Kickoff(14, 41), 0, new GroupResultsSelector(__groupIds[0], 5), new GroupResultsSelector(__groupIds[1], 5)),
-                new MatchExpectation(null, null, 3, Kickoff(14, 41), 1, new MatchSelector(25, MatchSelector.Mode.Loser), new MatchSelector(26, MatchSelector.Mode.Loser)),
-                new MatchExpectation(null, 0, 1, Kickoff(14, 58), 0, new MatchSelector(25, MatchSelector.Mode.Winner), new MatchSelector(26, MatchSelector.Mode.Winner))
+                new MatchExpectation(null, null, 5, KickoffAt(14, 41), 0, new GroupResultsSelector(__groupIds[0], 5), new GroupResultsSelector(__groupIds[1], 5)),
+                new MatchExpectation(null, null, 3, KickoffAt(14, 41), 1, new MatchSelector(25, MatchSelector.Mode.Loser), new MatchSelector(26, MatchSelector.Mode.Loser)),
+                new MatchExpectation(null, 0, 1, KickoffAt(14, 58), 0, new MatchSelector(25, MatchSelector.Mode.Winner), new MatchSelector(26, MatchSelector.Mode.Winner))
             ]
         },
         {
@@ -541,21 +541,21 @@ public sealed class TournamentGenerateMatchPlanTest
                 }
             },
             [
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 11), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 11), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 33), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 33), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2)),
 
-                new MatchExpectation(__groupIds[0], null, null, Kickoff(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 0)),
-                new MatchExpectation(__groupIds[1], null, null, Kickoff(12, 55), 0, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 55), 0, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 0)),
 
-                new MatchExpectation(null, 1, null, Kickoff(13, 6), 0, new GroupResultsNthRankedSelector([__groupIds[0], __groupIds[1]], 0, 1), new GroupResultsNthRankedSelector([__groupIds[0], __groupIds[1]], 1, 2)),
-                new MatchExpectation(null, 1, null, Kickoff(13, 23), 0, new GroupResultsNthRankedSelector([__groupIds[0], __groupIds[1]], 1, 1), new GroupResultsNthRankedSelector([__groupIds[0], __groupIds[1]], 0, 2)),
+                new MatchExpectation(null, 1, null, KickoffAt(13, 6), 0, new GroupResultsNthRankedSelector([__groupIds[0], __groupIds[1]], 0, 1), new GroupResultsNthRankedSelector([__groupIds[0], __groupIds[1]], 1, 2)),
+                new MatchExpectation(null, 1, null, KickoffAt(13, 23), 0, new GroupResultsNthRankedSelector([__groupIds[0], __groupIds[1]], 1, 1), new GroupResultsNthRankedSelector([__groupIds[0], __groupIds[1]], 0, 2)),
 
-                new MatchExpectation(null, 0, 1, Kickoff(13, 40), 0, new MatchSelector(7, MatchSelector.Mode.Winner), new MatchSelector(8, MatchSelector.Mode.Winner))
+                new MatchExpectation(null, 0, 1, KickoffAt(13, 40), 0, new MatchSelector(7, MatchSelector.Mode.Winner), new MatchSelector(8, MatchSelector.Mode.Winner))
             ]
-        },
+        }
 
         // The following test cases were removed when switching from standard team selectors to abstract team selectors in the FinalsRoundConfig:
         //    > One group with 8 teams with only a finals round (basically, a K/O tournament)
@@ -818,7 +818,7 @@ public sealed class TournamentGenerateMatchPlanTest
     }
 
     /// <remarks>Helper method to simplify the creation of <see cref="DateTime"/> objects.</remarks>
-    private static DateTime Kickoff(int hours, int minutes) => new(2024, 1, 1, hours, minutes, 0);
+    private static DateTime KickoffAt(int hours, int minutes) => new(2024, 1, 1, hours, minutes, 0);
 
     private static Core.Tournament.Tournament CreateTestTournament(int[] teamsPerGroup)
     {

@@ -37,7 +37,7 @@ internal sealed class GetApiKeyUsageEndpoint : EndpointBase<ApiKeyUsageDto>
             return Results.Forbid();
         }
 
-        (TimeSpan bucketWidth, var bucketCount) = GetBucketProperties(rangeDays);
+        var (bucketWidth, bucketCount) = GetBucketProperties(rangeDays);
         var timeRange = bucketWidth * bucketCount;
 
         var endTime = new DateTime((long)(Math.Ceiling((double)DateTime.UtcNow.Ticks / bucketWidth.Ticks) * bucketWidth.Ticks), DateTimeKind.Utc);
@@ -57,8 +57,12 @@ internal sealed class GetApiKeyUsageEndpoint : EndpointBase<ApiKeyUsageDto>
             TimeFrameEnd = endTime,
             BucketWidthSeconds = (int)bucketWidth.TotalSeconds,
             BucketCount = bucketCount,
-            Entries = requestsGroupedIntoBuckets
-                .Select(bucket => new ApiKeyUsageDto.Entry(bucket.Key, bucket.Count()))
+            Buckets = requestsGroupedIntoBuckets
+                .Select(bucket => new ApiKeyUsageBucketDto
+                {
+                    BucketIndex = bucket.Key,
+                    Count = bucket.Count()
+                })
                 .ToList()
         });
     }

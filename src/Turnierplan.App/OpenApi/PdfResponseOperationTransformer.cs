@@ -40,8 +40,8 @@ internal sealed class PdfResponseOperationTransformer : IOpenApiOperationTransfo
 
 internal static class PdfResponseOperationTransformerExtensions
 {
-    public static RouteHandlerBuilder ProducesPdf(this RouteHandlerBuilder builder)
+    public static void ProducesPdf(this RouteHandlerBuilder builder)
     {
-        return builder.Produces<PdfResponseOperationTransformer.PdfResponse>();
+        builder.Produces<PdfResponseOperationTransformer.PdfResponse>();
     }
 }

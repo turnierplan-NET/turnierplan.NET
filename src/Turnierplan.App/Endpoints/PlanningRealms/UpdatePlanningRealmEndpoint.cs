@@ -138,8 +138,6 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
     {
         foreach (var requestTournamentClass in request.TournamentClasses)
         {
-            TournamentClass tournamentClass;
-
             if (requestTournamentClass.Id.HasValue)
             {
                 var result = planningRealm.TournamentClasses.FirstOrDefault(x => x.Id == requestTournamentClass.Id);
@@ -150,12 +148,11 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
                     return false;
                 }
 
-                tournamentClass = result;
-                tournamentClass.Name = requestTournamentClass.Name.Trim();
+                result.Name = requestTournamentClass.Name.Trim();
             }
             else
             {
-                tournamentClass = planningRealm.AddTournamentClass(requestTournamentClass.Name.Trim());
+                planningRealm.AddTournamentClass(requestTournamentClass.Name.Trim());
             }
         }
 

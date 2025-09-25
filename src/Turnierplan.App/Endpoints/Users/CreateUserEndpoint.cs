@@ -35,12 +35,9 @@ internal sealed class CreateUserEndpoint : EndpointBase
             return Results.BadRequest("The specified user name is already taken.");
         }
 
-        if (!string.IsNullOrWhiteSpace(request.EMail))
+        if (!string.IsNullOrWhiteSpace(request.EMail) && await repository.GetByEmailAsync(request.EMail) is not null)
         {
-            if (await repository.GetByEmailAsync(request.EMail) is not null)
-            {
-                return Results.BadRequest("The specified email address is already taken.");
-            }
+            return Results.BadRequest("The specified email address is already taken.");
         }
 
         var user = new User(request.UserName.Trim())

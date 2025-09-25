@@ -2,7 +2,7 @@ using Turnierplan.Core.Image;
 
 namespace Turnierplan.ImageStorage;
 
-public interface IImageStorage
+public interface IImageStorage : IDisposable
 {
     string GetFullImageUrl(Image image);
 

@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
@@ -102,9 +103,13 @@ internal sealed class LocalImageStorage : ILocalImageStorage
         });
     }
 
+    public void Dispose()
+    {
+    }
+
     private string GetImageFullPath(Image image)
     {
-        return Path.Combine(_storagePath, image.CreatedAt.Year.ToString(), GetImageFileName(image));
+        return Path.Combine(_storagePath, image.CreatedAt.Year.ToString(CultureInfo.InvariantCulture), GetImageFileName(image));
     }
 
     private static string GetImageFileName(Image image)

@@ -14,11 +14,11 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
     internal readonly GroupParticipantComparer _groupParticipantComparer;
     internal int? _nextEntityId;
 
-    internal readonly List<RoleAssignment<Tournament>> _roleAssignments = new();
-    internal readonly List<Team> _teams = new();
-    internal readonly List<Group> _groups = new();
-    internal readonly List<Match> _matches = new();
-    internal readonly List<Document.Document> _documents = new();
+    internal readonly List<RoleAssignment<Tournament>> _roleAssignments = [];
+    internal readonly List<Team> _teams = [];
+    internal readonly List<Group> _groups = [];
+    internal readonly List<Match> _matches = [];
+    internal readonly List<Document.Document> _documents = [];
 
     public Tournament(Organization.Organization organization, string name, Visibility visibility)
     {
@@ -566,14 +566,6 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             team.Ranking = null;
         }
 
-        void AttemptToAssignRankingToTeam(Team? team, int ranking)
-        {
-            if (team is not null)
-            {
-                team.Ranking = ranking;
-            }
-        }
-
         foreach (var match in _matches.Where(x => x.PlayoffPosition is not null))
         {
             matchesWithRankingInfluence.Add(match);
@@ -592,8 +584,18 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             }
 
             // If the match is not finished, the winning/losing team is null and no ranking will be assigned
-            AttemptToAssignRankingToTeam(match.GetWinningTeam(), winnerRanking);
-            AttemptToAssignRankingToTeam(match.GetLosingTeam(), loserRanking);
+            var winningTeam = match.GetWinningTeam();
+            var losingTeam = match.GetLosingTeam();
+
+            if (winningTeam is not null)
+            {
+                winningTeam.Ranking = winnerRanking;
+            }
+
+            if (losingTeam is not null)
+            {
+                losingTeam.Ranking = loserRanking;
+            }
 
             undefinedRankings.Remove(winnerRanking);
             undefinedRankings.Remove(loserRanking);

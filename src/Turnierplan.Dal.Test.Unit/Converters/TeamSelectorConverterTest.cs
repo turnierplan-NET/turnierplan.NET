@@ -15,12 +15,12 @@ public sealed class TeamSelectorConverterTest
         { new GroupDefinitionSelector(17, 4), "G17/4" },
 
         // GroupResultsNthRankedSelector
-        { new GroupResultsNthRankedSelector(new[] {1, 2, 3 }, 1, 1), "N1,2,3/1/1" },
-        { new GroupResultsNthRankedSelector(new[] {1, 2, 3 }, 2, 5), "N1,2,3/2/5" },
-        { new GroupResultsNthRankedSelector(new[] {1, 2, 3 }, 3, 9), "N1,2,3/3/9" },
-        { new GroupResultsNthRankedSelector(new[] {1, 2, 3 }, 4, 7), "N1,2,3/4/7" },
-        { new GroupResultsNthRankedSelector(new[] {1, 2}, 4, 7), "N1,2/4/7" },
-        { new GroupResultsNthRankedSelector(new[] {1}, 4, 7), "N1/4/7" },
+        { new GroupResultsNthRankedSelector([1, 2, 3], 1, 1), "N1,2,3/1/1" },
+        { new GroupResultsNthRankedSelector([1, 2, 3], 2, 5), "N1,2,3/2/5" },
+        { new GroupResultsNthRankedSelector([1, 2, 3], 3, 9), "N1,2,3/3/9" },
+        { new GroupResultsNthRankedSelector([1, 2, 3], 4, 7), "N1,2,3/4/7" },
+        { new GroupResultsNthRankedSelector([1, 2], 4, 7), "N1,2/4/7" },
+        { new GroupResultsNthRankedSelector([1], 4, 7), "N1/4/7" },
 
         // GroupResultsSelector
         { new GroupResultsSelector(1, 1), "R1/1" },
@@ -39,9 +39,8 @@ public sealed class TeamSelectorConverterTest
         { new StaticTeamSelector(8), "T8" }
     };
 
-    public static readonly TheoryData<string> InvalidTestCases = new()
-    {
-        // GroupDefinitionSelector
+    public static readonly TheoryData<string> InvalidTestCases =
+    [
         "G1/",
         "G/1",
         "G11",
@@ -76,7 +75,7 @@ public sealed class TeamSelectorConverterTest
         "A",
         "1",
         "1/1"
-    };
+    ];
 
     [Theory]
     [MemberData(nameof(ValidTestCases))]

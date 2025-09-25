@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace Turnierplan.Core.Tournament.Definitions;
 
@@ -59,7 +58,7 @@ public static class MatchPlanDefinitions
                     return new GroupMatchDefinition.MatchDefinition(teamIdA, teamIdB);
                 });
 
-                return new GroupMatchDefinition.MatchBlock(matches.ToImmutableArray());
+                return new GroupMatchDefinition.MatchBlock([..matches]);
             });
             __groupMatchDefinitions[model.TeamCount] = new GroupMatchDefinition(matchBlocks);
         }
