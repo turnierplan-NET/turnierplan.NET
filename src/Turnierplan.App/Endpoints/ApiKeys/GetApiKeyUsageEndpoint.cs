@@ -57,8 +57,12 @@ internal sealed class GetApiKeyUsageEndpoint : EndpointBase<ApiKeyUsageDto>
             TimeFrameEnd = endTime,
             BucketWidthSeconds = (int)bucketWidth.TotalSeconds,
             BucketCount = bucketCount,
-            Entries = requestsGroupedIntoBuckets
-                .Select(bucket => new ApiKeyUsageDto.Entry(bucket.Key, bucket.Count()))
+            Buckets = requestsGroupedIntoBuckets
+                .Select(bucket => new ApiKeyUsageBucketDto
+                {
+                    BucketIndex = bucket.Key,
+                    Count = bucket.Count()
+                })
                 .ToList()
         });
     }
