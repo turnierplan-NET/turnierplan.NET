@@ -24,7 +24,7 @@ public sealed class MatchPlanDefinitionsTest
 
         // Assert
         definition.Should().NotBeNull();
-        definition!.BlockCount.Should().Be(1);
+        definition.BlockCount.Should().Be(1);
         definition.MatchBlocks.Should().BeEquivalentTo(new GroupMatchDefinition.MatchBlock[]
         {
             new([new GroupMatchDefinition.MatchDefinition(0, 1)])
@@ -76,7 +76,7 @@ public sealed class MatchPlanDefinitionsTest
 
         // Assert
         definition.Should().NotBeNull();
-        definition!.BlockCount.Should().Be(3);
+        definition.BlockCount.Should().Be(3);
         definition.MatchBlocks.Should().BeEquivalentTo(new GroupMatchDefinition.MatchBlock[]
         {
             new([
@@ -112,7 +112,7 @@ public sealed class MatchPlanDefinitionsTest
 
         // Assert
         definition.Should().NotBeNull();
-        definition!.Should().BeEquivalentTo(new FinalsMatchDefinition([
+        definition.Should().BeEquivalentTo(new FinalsMatchDefinition([
             new FinalsMatchDefinition.MatchDefinition(new AbstractTeamSelector(false, 0, 1, null), new AbstractTeamSelector(false, 0, 2, null))
         ]));
     }
@@ -125,7 +125,7 @@ public sealed class MatchPlanDefinitionsTest
 
         // Assert
         definition.Should().NotBeNull();
-        definition!.Should().BeEquivalentTo(new FinalsMatchDefinition([
+        definition.Should().BeEquivalentTo(new FinalsMatchDefinition([
             new FinalsMatchDefinition.MatchDefinition(new AbstractTeamSelector(false, 0, 1, null), new AbstractTeamSelector(false, 1, 1, null)),
             new FinalsMatchDefinition.MatchDefinition(new AbstractTeamSelector(false, 2, 1, null), new AbstractTeamSelector(true, null, 2, 0))
         ]));
