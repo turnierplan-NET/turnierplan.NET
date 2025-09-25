@@ -36,11 +36,11 @@ public sealed class MatchPlanDefinitionsTest
     {
         var definitions = MatchPlanDefinitions.GetAllGroupMatchDefinitions().ToList();
 
-        foreach ((var teamCount, GroupMatchDefinition definition) in definitions)
+        foreach (var (teamCount, definition) in definitions)
         {
             var allMatches = definition.MatchBlocks.SelectMany(x => x.Matches).ToList();
 
-            var expectedNumberOfMatches = (teamCount * (teamCount - 1)) / 2;
+            var expectedNumberOfMatches = teamCount * (teamCount - 1) / 2;
             allMatches.Count.Should().Be(expectedNumberOfMatches);
 
             for (var i = 0; i < teamCount; i++)

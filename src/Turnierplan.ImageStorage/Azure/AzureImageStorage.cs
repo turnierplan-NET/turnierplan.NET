@@ -135,6 +135,10 @@ internal sealed class AzureImageStorage : IImageStorage
         return false;
     }
 
+    public void Dispose()
+    {
+    }
+
     private static string GetBlobName(Image image)
     {
         return $"{image.CreatedAt.Year}/{image.CreatedAt.Month:D2}/{image.ResourceIdentifier}.{image.FileType}";

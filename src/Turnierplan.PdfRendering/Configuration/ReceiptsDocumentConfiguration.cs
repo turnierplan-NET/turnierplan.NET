@@ -39,7 +39,7 @@ public sealed record ReceiptsDocumentConfiguration : IDocumentConfiguration
             return Amounts[1];
         }
 
-        if (Amounts.TryGetValue(teamCount, out AmountEntry? result))
+        if (Amounts.TryGetValue(teamCount, out var result))
         {
             return result;
         }

@@ -49,7 +49,7 @@ internal sealed class GetFolderStatisticsEndpoint : EndpointBase<FolderStatistic
 
         foreach (var tournament in folder.Tournaments)
         {
-            foreach (var match in tournament.Matches.Where(x => x.IsFinished && x.OutcomeType is not MatchOutcomeType.SpecialScoring))
+            foreach (var match in tournament.Matches.Where(x => x is { IsFinished: true, OutcomeType: not MatchOutcomeType.SpecialScoring }))
             {
                 var goalsA = match.ScoreA ?? 0;
                 var goalsB = match.ScoreB ?? 0;

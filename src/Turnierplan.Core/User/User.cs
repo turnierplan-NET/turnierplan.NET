@@ -1,3 +1,4 @@
+using System.Globalization;
 using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.User;
@@ -99,5 +100,5 @@ public sealed class User : Entity<Guid>
         SecurityStamp = Guid.NewGuid();
     }
 
-    public static string Normalize(string value) => value.Trim().ToUpper();
+    public static string Normalize(string value) => value.Trim().ToUpper(CultureInfo.InvariantCulture);
 }

@@ -17,7 +17,7 @@ public sealed class TournamentTest
         var tournament = TestTournament.Default;
         tournament._matches.Add(new Match(1, 1, new NullSelector(), new NullSelector(), null!)
         {
-            Kickoff = DateTime.Parse(originalUtcKickoffTime).ToUniversalTime()
+            Kickoff = DateTime.Parse(originalUtcKickoffTime, CultureInfo.InvariantCulture).ToUniversalTime()
         });
 
         // Act

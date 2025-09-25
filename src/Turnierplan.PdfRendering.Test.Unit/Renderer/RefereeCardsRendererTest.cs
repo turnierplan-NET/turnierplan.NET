@@ -29,7 +29,7 @@ public sealed class RefereeCardsRendererTest(ITestOutputHelper testOutputHelper)
                 GroupRoundConfig = new GroupRoundConfig
                 {
                     GroupMatchOrder = GroupMatchOrder.Sequential,
-                    GroupPhaseRounds = i,
+                    GroupPhaseRounds = i
                 }
             });
 

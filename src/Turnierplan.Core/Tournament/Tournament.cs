@@ -566,14 +566,6 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             team.Ranking = null;
         }
 
-        void AttemptToAssignRankingToTeam(Team? team, int ranking)
-        {
-            if (team is not null)
-            {
-                team.Ranking = ranking;
-            }
-        }
-
         foreach (var match in _matches.Where(x => x.PlayoffPosition is not null))
         {
             matchesWithRankingInfluence.Add(match);
@@ -592,8 +584,18 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             }
 
             // If the match is not finished, the winning/losing team is null and no ranking will be assigned
-            AttemptToAssignRankingToTeam(match.GetWinningTeam(), winnerRanking);
-            AttemptToAssignRankingToTeam(match.GetLosingTeam(), loserRanking);
+            var winningTeam = match.GetWinningTeam();
+            var losingTeam = match.GetLosingTeam();
+
+            if (winningTeam is not null)
+            {
+                winningTeam.Ranking = winnerRanking;
+            }
+
+            if (losingTeam is not null)
+            {
+                losingTeam.Ranking = loserRanking;
+            }
 
             undefinedRankings.Remove(winnerRanking);
             undefinedRankings.Remove(loserRanking);

@@ -37,7 +37,7 @@ internal sealed class GetApiKeyUsageEndpoint : EndpointBase<ApiKeyUsageDto>
             return Results.Forbid();
         }
 
-        (TimeSpan bucketWidth, var bucketCount) = GetBucketProperties(rangeDays);
+        var (bucketWidth, bucketCount) = GetBucketProperties(rangeDays);
         var timeRange = bucketWidth * bucketCount;
 
         var endTime = new DateTime((long)(Math.Ceiling((double)DateTime.UtcNow.Ticks / bucketWidth.Ticks) * bucketWidth.Ticks), DateTimeKind.Utc);

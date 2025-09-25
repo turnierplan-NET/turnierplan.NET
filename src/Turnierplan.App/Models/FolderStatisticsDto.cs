@@ -69,7 +69,7 @@ public sealed record FolderStatisticsDto
         internal int Difference { get; }
     }
 
-    public sealed record OutcomeDistributionEntry(Outcome Outcome, int Count);
+    public sealed record OutcomeDistributionEntry(Outcome Outcome, int Count); // TODO separate records
 
     public sealed record PageViewEntry(PublicId TournamentId, string TournamentName, int PublicPageViews);
 

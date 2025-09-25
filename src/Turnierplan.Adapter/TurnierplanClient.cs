@@ -132,7 +132,7 @@ public sealed class TurnierplanClient : IDisposable
             throw new TurnierplanClientException($"Server returned an empty '{TurnierplanVersionHeaderName}' header.");
         }
 
-        if (!serverVersion.Equals(__turnierplanAdapterVersion))
+        if (!serverVersion.Equals(__turnierplanAdapterVersion, StringComparison.Ordinal))
         {
             throw new TurnierplanClientException($"Server version '{serverVersion}' does not match the Turnierplan.Adapter version '{__turnierplanAdapterVersion}'.");
         }
@@ -147,11 +147,6 @@ public sealed class TurnierplanClient : IDisposable
 
         var data = await response.Content.ReadFromJsonAsync<T>(__serializerOptions).ConfigureAwait(false);
 
-        if (data is null)
-        {
-            throw new TurnierplanClientException($"Failed to deserialize API response of type '{typeof(T).Name}'.");
-        }
-
-        return data;
+        return data ?? throw new TurnierplanClientException($"Failed to deserialize API response of type '{typeof(T).Name}'.");
     }
 }
