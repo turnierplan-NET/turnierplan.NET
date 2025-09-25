@@ -25,7 +25,7 @@ export const de = {
         EmptyOrExtraWhitespace: 'Geben Sie ein neues Passwort an, welches keine Leerzeichen am Anfang oder Ende hat.',
         PasswordsDoNotMatch: 'Die beiden Passwörter stimmen nicht überein.',
         InsecurePassword:
-          'Das neue Passwort muss folgende Kriterien erfüllen:<ul><li>min. 10 Zeichen lang</li><li>min. 1 Großbuchstabe</li><li>min. 1 Kleinbuchstabe</li><li>min. 1 Ziffer</li><li>min. 1 Sonderzeichen</li></ul>',
+          'Das neue Passwort muss folgende Kriterien erfüllen:<ul><li>min. 8 Zeichen lang</li><li>min. 1 Buchstabe</li><li>min. 1 Ziffer</li><li>min. 1 Sonderzeichen</li></ul>',
         InvalidCredentials: 'Das aktuelle Passwort ist falsch.',
         NewPasswordEqualsCurrent: 'Das neue Passwort darf nicht dem bisherigen Passwort entsprechen.',
         UnexpectedError: 'Bei der Bearbeitung der Anfrage ist ein Fehler aufgetreten.'

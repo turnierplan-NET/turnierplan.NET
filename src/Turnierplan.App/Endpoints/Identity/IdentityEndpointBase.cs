@@ -95,9 +95,8 @@ internal abstract class IdentityEndpointBase<TResponse> : EndpointBase<TResponse
     /// Password is considered secure only if all the following conditions are met:
     /// <ul>
     /// <li>Does not start or end with white-space</li>
-    /// <li>Length is at least 10 characters</li>
-    /// <li>Contains at least one upper-case ASCII letter</li>
-    /// <li>Contains at least one lower-case ASCII letter</li>
+    /// <li>Length is at least 8 characters</li>
+    /// <li>Contains at least one letter</li>
     /// <li>Contains at least one digit</li>
     /// <li>Contains at least one punctuation or symbol character</li>
     /// </ul>
@@ -108,17 +107,16 @@ internal abstract class IdentityEndpointBase<TResponse> : EndpointBase<TResponse
 
         password = password.Trim();
 
-        if (lengthBeforeTrim != password.Length || password.Length < 10)
+        if (lengthBeforeTrim != password.Length || password.Length < 8)
         {
             return true;
         }
 
-        var upper = password.Count(char.IsAsciiLetterUpper);
-        var lower = password.Count(char.IsAsciiLetterLower);
+        var letter = password.Count(char.IsAsciiLetter);
         var digits = password.Count(char.IsDigit);
         var punctuation = password.Count(char.IsPunctuation);
         var symbols = password.Count(char.IsSymbol);
 
-        return upper == 0 || lower == 0 || digits == 0 || (punctuation == 0 && symbols == 0);
+        return letter == 0 || digits == 0 || (punctuation == 0 && symbols == 0);
     }
 }
