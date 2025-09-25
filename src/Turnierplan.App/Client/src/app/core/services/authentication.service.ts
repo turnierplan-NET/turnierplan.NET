@@ -43,7 +43,7 @@ export class AuthenticationService implements OnDestroy {
     AuthenticationService.localStorageUserAdministratorKey,
     AuthenticationService.localStorageAccessTokenExpiryKey,
     AuthenticationService.localStorageRefreshTokenExpiryKey
-  ]
+  ];
 
   // Clock skew should be as short as possible, but still long enough that a request to the token
   // refresh endpoint can complete even in the case of a bad connection or unfavorable conditions.
@@ -193,7 +193,7 @@ export class AuthenticationService implements OnDestroy {
 
       return this.logoutAndClearData(() => {
         void this.router.navigate(['/portal/login'], {
-          queryParams: { redirect_to: this.router.url, user_name : userName }
+          queryParams: { redirect_to: this.router.url, user_name: userName }
         });
       }).pipe(map(() => false));
     };
@@ -323,7 +323,7 @@ export class AuthenticationService implements OnDestroy {
   private logoutAndClearData(navigateTo?: () => void): Observable<void> {
     const logout$ = this.turnierplanApi.invoke(logout).pipe(
       catchError(() => of(undefined)),
-      tap(() => AuthenticationService.allLocalStorageKeys.forEach(key => localStorage.removeItem(key))),
+      tap(() => AuthenticationService.allLocalStorageKeys.forEach((key) => localStorage.removeItem(key))),
       map(() => void 0)
     );
 
