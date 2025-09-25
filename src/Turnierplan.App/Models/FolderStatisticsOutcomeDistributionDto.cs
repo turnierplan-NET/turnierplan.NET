@@ -2,13 +2,7 @@ namespace Turnierplan.App.Models;
 
 public sealed record FolderStatisticsOutcomeDistributionDto
 {
-    internal FolderStatisticsOutcomeDistributionDto(FolderStatisticsOutcomeDto outcome, int count)
-    {
-        Outcome = outcome;
-        Count = count;
-    }
+    public required FolderStatisticsOutcomeDto Outcome { get; init;  }
 
-    public FolderStatisticsOutcomeDto Outcome { get; }
-
-    public int Count { get; }
+    public required int Count { get; init;  }
 }

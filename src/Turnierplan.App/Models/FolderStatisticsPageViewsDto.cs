@@ -1,20 +1,12 @@
 using Turnierplan.Core.PublicId;
-using Turnierplan.Core.Tournament;
 
 namespace Turnierplan.App.Models;
 
 public sealed record FolderStatisticsPageViewsDto
 {
-    internal FolderStatisticsPageViewsDto(Tournament tournament)
-    {
-        TournamentId = tournament.PublicId;
-        TournamentName = tournament.Name;
-        PublicPageViews = tournament.PublicPageViews;
-    }
+    public required PublicId TournamentId { get; init; }
 
-    public PublicId TournamentId { get; }
+    public required string TournamentName { get; init; }
 
-    public string TournamentName { get; }
-
-    public int PublicPageViews { get; }
+    public required int PublicPageViews { get; init; }
 }

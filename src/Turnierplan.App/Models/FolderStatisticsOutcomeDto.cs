@@ -4,7 +4,7 @@ namespace Turnierplan.App.Models;
 
 public sealed record FolderStatisticsOutcomeDto
 {
-    public FolderStatisticsOutcomeDto(int scoreA, int scoreB)
+    internal FolderStatisticsOutcomeDto(int scoreA, int scoreB)
     {
         if (scoreA < scoreB)
         {

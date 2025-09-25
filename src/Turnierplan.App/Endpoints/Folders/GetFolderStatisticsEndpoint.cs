@@ -84,7 +84,7 @@ internal sealed class GetFolderStatisticsEndpoint : EndpointBase<FolderStatistic
 
         var outcomeDistribution = outcomes
             .GroupBy(x => x)
-            .Select(x => new FolderStatisticsOutcomeDistributionDto(x.Key, x.Count()))
+            .Select(x => new FolderStatisticsOutcomeDistributionDto { Outcome = x.Key, Count = x.Count() })
             .OrderByDescending(x => x.Count)
             .ThenByDescending(x => x.Outcome.Difference)
             .ThenByDescending(x => x.Outcome.ScoreA)
@@ -93,7 +93,12 @@ internal sealed class GetFolderStatisticsEndpoint : EndpointBase<FolderStatistic
         var decidingMatches = folder.Tournaments.SelectMany(x => x.Matches).Where(x => x.IsDecidingMatch).ToList();
 
         var pageViewEntries = folder.Tournaments
-            .Select(x => new FolderStatisticsPageViewsDto(x))
+            .Select(x => new FolderStatisticsPageViewsDto
+            {
+                TournamentId = x.PublicId,
+                TournamentName = x.Name,
+                PublicPageViews = x.PublicPageViews
+            })
             .OrderByDescending(x => x.PublicPageViews)
             .ToList();
         var numberOfPageViews = pageViewEntries.Sum(x => x.PublicPageViews);
@@ -120,7 +125,12 @@ internal sealed class GetFolderStatisticsEndpoint : EndpointBase<FolderStatistic
             AveragePublicPageViewsPerTournament = DivideSafe(numberOfPageViews, numberOfTournaments),
             TournamentPageViews = pageViewEntries,
             OutcomeDistribution = outcomeDistribution,
-            GoalDistributionExcludedTournaments = goalDistributionExcludedTournaments.Select(x => new FolderStatisticsExcludedTournamentDto(x)).ToList()
+            GoalDistributionExcludedTournaments = goalDistributionExcludedTournaments
+                .Select(x => new FolderStatisticsExcludedTournamentDto
+                {
+                    TournamentId = x.PublicId,
+                    TournamentName = x.Name
+                }).ToList()
         };
 
         return Results.Ok(statisticsDto);
