@@ -45,7 +45,7 @@ internal sealed class GetFolderStatisticsEndpoint : EndpointBase<FolderStatistic
 
         var numberOfGoals = 0;
         var maximumGoalsPerMatch = 0;
-        var outcomes = new List<FolderStatisticsDto.Outcome>();
+        var outcomes = new List<FolderStatisticsOutcomeDto>();
 
         foreach (var tournament in folder.Tournaments)
         {
@@ -73,7 +73,7 @@ internal sealed class GetFolderStatisticsEndpoint : EndpointBase<FolderStatistic
                     (goalsA, goalsB) = (goalsB, goalsA);
                 }
 
-                outcomes.Add(new FolderStatisticsDto.Outcome(goalsA, goalsB));
+                outcomes.Add(new FolderStatisticsOutcomeDto(goalsA, goalsB));
             }
         }
 
@@ -84,7 +84,7 @@ internal sealed class GetFolderStatisticsEndpoint : EndpointBase<FolderStatistic
 
         var outcomeDistribution = outcomes
             .GroupBy(x => x)
-            .Select(x => new FolderStatisticsDto.OutcomeDistributionEntry(x.Key, x.Count()))
+            .Select(x => new FolderStatisticsOutcomeDistributionDto(x.Key, x.Count()))
             .OrderByDescending(x => x.Count)
             .ThenByDescending(x => x.Outcome.Difference)
             .ThenByDescending(x => x.Outcome.ScoreA)
@@ -93,7 +93,7 @@ internal sealed class GetFolderStatisticsEndpoint : EndpointBase<FolderStatistic
         var decidingMatches = folder.Tournaments.SelectMany(x => x.Matches).Where(x => x.IsDecidingMatch).ToList();
 
         var pageViewEntries = folder.Tournaments
-            .Select(x => new FolderStatisticsDto.PageViewEntry(x.PublicId, x.Name, x.PublicPageViews))
+            .Select(x => new FolderStatisticsPageViewsDto(x))
             .OrderByDescending(x => x.PublicPageViews)
             .ToList();
         var numberOfPageViews = pageViewEntries.Sum(x => x.PublicPageViews);
@@ -112,7 +112,7 @@ internal sealed class GetFolderStatisticsEndpoint : EndpointBase<FolderStatistic
             NumberOfGoals = numberOfGoals,
             AverageGoalsPerMatch = DivideSafe(numberOfGoals, numberOfFinishedMatchesFromTournamentsWithAtLeastOneGoal),
             MostGoalsPerMatch = maximumGoalsPerMatch,
-            MostSignificantOutcome = mostSignificantOutcome ?? new FolderStatisticsDto.Outcome(0, 0),
+            MostSignificantOutcome = mostSignificantOutcome ?? new FolderStatisticsOutcomeDto(0, 0),
             NumberOfDecidingMatches = decidingMatches.Count,
             NumberOfPenaltyShootouts = decidingMatches.Count(x => x.OutcomeType is MatchOutcomeType.AfterPenalties),
             NumberOfOverTimes = decidingMatches.Count(x => x.OutcomeType is MatchOutcomeType.AfterOvertime),
@@ -120,7 +120,7 @@ internal sealed class GetFolderStatisticsEndpoint : EndpointBase<FolderStatistic
             AveragePublicPageViewsPerTournament = DivideSafe(numberOfPageViews, numberOfTournaments),
             TournamentPageViews = pageViewEntries,
             OutcomeDistribution = outcomeDistribution,
-            GoalDistributionExcludedTournaments = goalDistributionExcludedTournaments.Select(x => new FolderStatisticsDto.ExcludedTournamentEntry(x.PublicId, x.Name)).ToList()
+            GoalDistributionExcludedTournaments = goalDistributionExcludedTournaments.Select(x => new FolderStatisticsExcludedTournamentDto(x)).ToList()
         };
 
         return Results.Ok(statisticsDto);
