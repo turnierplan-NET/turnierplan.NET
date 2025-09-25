@@ -77,7 +77,7 @@ public sealed class User : Entity<Guid>
 
     public void SetUserName(string userName)
     {
-        UserName = userName;
+        UserName = userName.Trim();
         NormalizedUserName = Normalize(userName);
     }
 
