@@ -1,12 +1,15 @@
+$background-color: #2c3a3d;
+$background-image: 'identity-2025.03.jpg';
+
 @media (width >= 900px) {
   .background {
-    background-color: #001a25;
+    background-color: $background-color;
     height: 100vh;
     margin: 0;
   }
 
   .identity-image {
-    background: url('/assets/identity-image.jpg') center;
+    background: url('/assets/' + $background-image) center;
     background-size: cover;
     width: 300px;
     border-top-left-radius: 1em;
@@ -28,10 +31,10 @@
 
 @media (width <= 900px) {
   .background {
-    background: url('/assets/identity-image.jpg') center;
-    background-size: cover;
+    background-color: $background-color;
     height: 100vh;
     margin: 0;
+    padding: 0 1em;
   }
 
   .identity-image {
@@ -39,7 +42,6 @@
   }
 
   .identity-content {
-    margin: 0 1em;
     border-radius: 0.75em;
   }
 
