@@ -9,14 +9,18 @@ namespace Turnierplan.PdfRendering.Extensions;
 
 internal static class QuestPdfContainerExtensions
 {
-    public static ImageDescriptor Image(this IContainer container, Image image, IImageStorage imageStorage)
+    public static void Image(this IContainer container, Image image, IImageStorage imageStorage)
     {
+        // Waiting for the task to complete is not ideal. However, attempting to use async
+        // inside the QuestPDF document structure is probably a much bigger nightmare...
         var task = imageStorage.GetImageAsync(image);
         task.Wait();
+
         var stream = task.Result;
-        var descriptor = container.Image(stream);
+        container.Image(stream);
+
+        // Dispose the stream (at this point, QuestPDF has read the stream content into an internal buffer)
         stream.Dispose();
-        return descriptor;
     }
 
     /// <remarks>

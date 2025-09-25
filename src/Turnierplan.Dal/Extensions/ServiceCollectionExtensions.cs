@@ -22,7 +22,7 @@ namespace Turnierplan.Dal.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddTurnierplanDataAccessLayer(this IServiceCollection services, IConfiguration configuration)
+    public static void AddTurnierplanDataAccessLayer(this IServiceCollection services, IConfiguration configuration)
     {
         string? inMemoryDatabaseName = null;
 
@@ -81,7 +81,5 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRoleAssignmentRepository<PlanningRealm>, PlanningRealmRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Tournament>, TournamentRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Venue>, VenueRoleAssignmentRepository>();
-
-        return services;
     }
 }
