@@ -9,7 +9,7 @@ $background-image: 'identity-2025.03.jpg';
   }
 
   .identity-image {
-    background: url('/assets/identitypage/' + $background-image) center;
+    background: url('/assets/' + $background-image) center;
     background-size: cover;
     width: 300px;
     border-top-left-radius: 1em;
