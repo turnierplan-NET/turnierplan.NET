@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     } else {
       this.route.queryParamMap.pipe(takeUntil(this.destroyed$)).subscribe((params) => {
         this.redirectTarget = params.get('redirect_to') ?? '/portal';
-        this.userName = params.get('user_name') ?? this.userName;
+        this.userName = params.get('user_name') ?? params.get('email') ?? '';
       });
     }
   }
