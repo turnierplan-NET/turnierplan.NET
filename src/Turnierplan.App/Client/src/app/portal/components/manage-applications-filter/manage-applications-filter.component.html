@@ -20,6 +20,12 @@
         [options]="invitationLinkFilterOptions"
         [specialOption]="{ value: invitationLinkSpecialValue, label: 'ohne Anmeldelink' }"
         [(selected)]="invitationLink" />
+
+      <tp-multi-select-filter
+        [title]="'Portal.ViewPlanningRealm.Applications.FilterPanel.Labels'"
+        [idPrefix]="'label'"
+        [options]="labelFilterOptions"
+        [(selected)]="label" />
     </div>
   </div>
 

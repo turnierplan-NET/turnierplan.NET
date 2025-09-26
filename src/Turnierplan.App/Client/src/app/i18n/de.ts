@@ -1016,6 +1016,7 @@ export const de = {
           SearchTerm: 'Suchbegriff (Tag, Name, E-Mail, ...)',
           TournamentClasses: 'Turnierklassen',
           InvitationLinks: 'Anmeldelinks',
+          Labels: 'Label',
           Search: 'Suchen',
           Reset: 'Filter zurücksetzen'
         },

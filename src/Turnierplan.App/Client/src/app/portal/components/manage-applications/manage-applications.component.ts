@@ -155,7 +155,8 @@ export class ManageApplicationsComponent implements OnDestroy {
     this.filterRequested.emit({
       searchTerm: `${applicationTag}`,
       tournamentClass: [],
-      invitationLink: []
+      invitationLink: [],
+      label: []
     });
   }
 
