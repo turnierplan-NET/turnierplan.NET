@@ -995,6 +995,18 @@ export const de = {
         ShowApplications: 'Anmeldungen anzeigen'
       },
       Labels: {
+        Name: 'Name',
+        Rename: {
+          Title: 'Label umbenennen',
+          EnterNewName: 'Geben Sie den neuen Namen ein. Dieses Label bleibt weiterhin zugewiesen.',
+          RequiredFeedback: 'Der Name darf nicht leer sein'
+        },
+        ChangeDescription: {
+          Title: 'Beschreibung ändern',
+          EnterNewName: 'Geben Sie die neue Beschreibung ein.',
+          EmptyAllowed: 'Die Beschreibung darf leergelassen werden'
+        },
+        Description: 'Beschreibung',
         NoLabels: 'Es sind aktuell keine Labels vorhanden.',
         LabelsInfo: 'Labels können verwendet werden, um angemeldete Mannschaften zu kategorisieren und zu filtern.'
       },

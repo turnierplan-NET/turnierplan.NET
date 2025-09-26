@@ -1,22 +1,52 @@
+@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
+
 <table class="table">
   <thead>
     <tr>
+      <th translate="Portal.ViewPlanningRealm.Labels.Name" style="width: 1px"></th>
+      <th translate="Portal.ViewPlanningRealm.Labels.Description"></th>
       <th></th>
+      @if (writeAllowed) {
+        <th style="width: 1px"></th>
+      }
     </tr>
   </thead>
 
   <tbody>
     @for (label of planningRealm.labels; track label.id) {
       <tr>
-        <td>{{ label.id }} {{ label.name }} "{{ label.description }}" #{{ label.colorCode }}</td>
+        <td class="text-nowrap">
+          <tp-label [label]="label" />
+          <tp-rename-button
+            class="ms-2 me-4"
+            [translationKey]="'Portal.ViewPlanningRealm.Labels.Rename'"
+            [displayLabel]="false"
+            [current]="label.name"
+            [reducedFootprint]="true"
+            (renamed)="setLabelName(label.id, $event)" />
+        </td>
+        <td>
+          <span>{{ label.description }}</span>
+          <tp-rename-button
+            [class]="{ 'ms-2': label.description.trim().length > 0 }"
+            [translationKey]="'Portal.ViewPlanningRealm.Labels.ChangeDescription'"
+            [displayLabel]="false"
+            [current]="label.description"
+            [allowReset]="true"
+            [reducedFootprint]="true"
+            (renamed)="setLabelDescription(label.id, $event)" />
+        </td>
+        <!-- TODO: Display number of teams + option to jump off and set the filter -->
+        <td></td>
+        <td></td>
       </tr>
     } @empty {
       <tr>
-        <td [translate]="'Portal.ViewPlanningRealm.Labels.NoLabels'"></td>
+        <td [attr.colspan]="writeAllowed ? 4 : 3" [translate]="'Portal.ViewPlanningRealm.Labels.NoLabels'"></td>
       </tr>
     }
     <tr>
-      <td class="small text-secondary">
+      <td [attr.colspan]="writeAllowed ? 4 : 3" class="small text-secondary">
         <i class="bi bi-info-circle me-2"></i>
         <span [translate]="'Portal.ViewPlanningRealm.Labels.LabelsInfo'"></span>
       </td>
