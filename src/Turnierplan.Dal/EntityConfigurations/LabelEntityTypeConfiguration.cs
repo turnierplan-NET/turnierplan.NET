@@ -4,11 +4,11 @@ using Turnierplan.Core.PlanningRealm;
 
 namespace Turnierplan.Dal.EntityConfigurations;
 
-public sealed class ApplicationTeamLabelEntityTypeConfiguration : IEntityTypeConfiguration<ApplicationTeamLabel>
+public sealed class LabelEntityTypeConfiguration : IEntityTypeConfiguration<Label>
 {
-    public void Configure(EntityTypeBuilder<ApplicationTeamLabel> builder)
+    public void Configure(EntityTypeBuilder<Label> builder)
     {
-        builder.ToTable("ApplicationTeamLabels", TurnierplanContext.Schema);
+        builder.ToTable("Labels", TurnierplanContext.Schema);
 
         builder.HasKey(x => x.Id);
 

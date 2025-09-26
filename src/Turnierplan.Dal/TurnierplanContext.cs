@@ -40,7 +40,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<ApplicationTeam> ApplicationTeams { get; set; } = null!;
 
-    public DbSet<ApplicationTeamLabel> ApplicationTeamLabels { get; set; } = null!;
+    public DbSet<Label> Labels { get; set; } = null!;
 
     public DbSet<Document> Documents { get; set; } = null!;
 
@@ -155,7 +155,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new ApiKeyRequestEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ApplicationEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ApplicationTeamEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new ApplicationTeamLabelEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new LabelEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new DocumentEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new FolderEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new GroupEntityTypeConfiguration());

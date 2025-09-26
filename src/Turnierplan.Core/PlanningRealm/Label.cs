@@ -2,9 +2,9 @@ using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.PlanningRealm;
 
-public sealed class ApplicationTeamLabel : Entity<long>
+public sealed class Label : Entity<long>
 {
-    internal ApplicationTeamLabel(long id, string name, bool isSystemCreated, string colorCode)
+    internal Label(long id, string name, bool isSystemCreated, string colorCode)
     {
         Id = id;
         Name = name;
@@ -12,7 +12,7 @@ public sealed class ApplicationTeamLabel : Entity<long>
         ColorCode = colorCode;
     }
 
-    internal ApplicationTeamLabel(string name, bool isSystemCreated)
+    internal Label(string name, bool isSystemCreated)
     {
         Id = 0;
         Name = name;

@@ -9,7 +9,7 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
     internal readonly List<TournamentClass> _tournamentClasses = [];
     internal readonly List<InvitationLink> _invitationLinks = [];
     internal readonly List<Application> _applications = [];
-    internal readonly List<ApplicationTeamLabel> _applicationTeamLabels = [];
+    internal readonly List<Label> _labels = [];
 
     public PlanningRealm(Organization.Organization organization, string name)
     {
@@ -50,7 +50,7 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
 
     public IReadOnlyList<Application> Applications => _applications.AsReadOnly();
 
-    public IReadOnlyList<ApplicationTeamLabel> ApplicationTeamLabels => _applicationTeamLabels.AsReadOnly();
+    public IReadOnlyList<Label> Labels => _labels.AsReadOnly();
 
     public RoleAssignment<PlanningRealm> AddRoleAssignment(Role role, Principal principal)
     {
