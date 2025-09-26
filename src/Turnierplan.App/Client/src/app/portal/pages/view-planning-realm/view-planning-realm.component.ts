@@ -35,6 +35,7 @@ import { getPlanningRealm } from '../../../api/fn/planning-realms/get-planning-r
 import { createApplication } from '../../../api/fn/applications/create-application';
 import { updatePlanningRealm } from '../../../api/fn/planning-realms/update-planning-realm';
 import { deletePlanningRealm } from '../../../api/fn/planning-realms/delete-planning-realm';
+import { LabelsManagerComponent } from '../../components/labels-manager/labels-manager.component';
 
 export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
 
@@ -56,7 +57,8 @@ export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealm
     ManageApplicationsFilterComponent,
     RbacWidgetComponent,
     DeleteWidgetComponent,
-    ManageApplicationsComponent
+    ManageApplicationsComponent,
+    LabelsManagerComponent
   ]
 })
 export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardChangesDetector {
@@ -104,6 +106,11 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       id: 1,
       title: 'Portal.ViewPlanningRealm.Pages.InvitationLinks',
       icon: 'bi-link-45deg'
+    },
+    {
+      id: 4,
+      title: 'Portal.ViewPlanningRealm.Pages.Labels',
+      icon: 'bi-tags'
     },
     {
       id: ViewPlanningRealmComponent.ApplicationsManagerPageId,
@@ -198,7 +205,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       next: (name) => {
         this.updateFunction((planningRealm) => {
           planningRealm.invitationLinks.push({
-            colorCode: this.getColorCode(),
+            colorCode: this.getColorCodeForInvitationLink(),
             isActive: true,
             contactEmail: null,
             contactPerson: null,
@@ -214,6 +221,22 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
             secondaryLogo: null,
             title: null,
             validUntil: null
+          });
+
+          return true;
+        });
+      }
+    });
+  }
+
+  protected addLabel(): void {
+    this.openModalForEnteringName('NewInvitationLink', true).subscribe({
+      next: (name) => {
+        this.updateFunction((planningRealm) => {
+          planningRealm.labels.push({
+            colorCode: this.getColorCodeForLabel(),
+            id: this.nextId--,
+            name: name.trim()
           });
 
           return true;
@@ -301,6 +324,11 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
           maxTeamsPerRegistration: y.maxTeamsPerRegistration,
           allowNewRegistrations: y.allowNewRegistrations
         }))
+      })),
+      labels: this.planningRealm.labels.map((x) => ({
+        id: x.id < 0 ? null : x.id,
+        name: x.name,
+        colorCode: x.colorCode
       }))
     };
 
@@ -387,7 +415,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     return ref.closed.pipe(map((x) => x as string));
   }
 
-  private getColorCode(): string {
+  private getColorCodeForInvitationLink(): string {
     if (!this.planningRealm) {
       return 'aaaaaa';
     }
@@ -402,5 +430,10 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     }
 
     return availableColorCodes[Math.floor(Math.random() * availableColorCodes.length)];
+  }
+
+  private getColorCodeForLabel(): string {
+    return 'aaaaaa';
+    //TODO Implement
   }
 }

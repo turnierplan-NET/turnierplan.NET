@@ -882,12 +882,14 @@ export const de = {
       Pages: {
         TournamentClasses: 'Turnierklassen',
         InvitationLinks: 'Anmeldelinks',
+        Labels: 'Label',
         Applications: 'Anmeldungen',
         Settings: 'Einstellungen'
       },
       Badges: {
         TournamentClassesCount: 'Turnierklassen',
-        InvitationLinksCount: 'Anmeldelinks'
+        InvitationLinksCount: 'Anmeldelinks',
+        LabelsCount: 'Labels'
       },
       NewTournamentClass: {
         Title: 'Neue Turnierklasse',
@@ -902,6 +904,9 @@ export const de = {
         Alert: 'Das Anmeldeformular ist noch eine frühe Version und sollte noch nicht für den produktiven Einsatz verwendet werden!',
         RequiredFeedback: 'Der Name darf nicht leer sein',
         Confirm: 'Erstellen'
+      },
+      NewLabel: {
+        Title: 'Neues Label'
       },
       AddApplication: {
         Title: 'Neue Anmeldung',
@@ -986,6 +991,10 @@ export const de = {
         DeleteNotPossible:
           'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.',
         ShowApplications: 'Anmeldungen anzeigen'
+      },
+      Labels: {
+        NoLabels: 'Es sind aktuell keine Labels vorhanden.',
+        LabelsInfo: 'Labels können verwendet werden, um angemeldete Mannschaften zu kategorisieren und zu filtern.'
       },
       SaveToViewApplications: 'Speichern Sie die offenen Änderungen, um die Anmeldungen zu sehen und neue Anmeldungen hinzuzufügen.',
       Applications: {

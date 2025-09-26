@@ -1,0 +1,25 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (label of planningRealm.labels; track label.id) {
+      <tr>
+        <td>{{ label.id }} {{ label.name }} #{{ label.colorCode }}</td>
+      </tr>
+    } @empty {
+      <tr>
+        <td [translate]="'Portal.ViewPlanningRealm.Labels.NoLabels'"></td>
+      </tr>
+    }
+    <tr>
+      <td class="small text-secondary">
+        <i class="bi bi-info-circle me-2"></i>
+        <span [translate]="'Portal.ViewPlanningRealm.Labels.LabelsInfo'"></span>
+      </td>
+    </tr>
+  </tbody>
+</table>

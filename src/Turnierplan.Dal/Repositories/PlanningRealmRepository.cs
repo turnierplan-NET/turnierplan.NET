@@ -45,7 +45,7 @@ internal sealed class PlanningRealmRepository(TurnierplanContext context) : Repo
         {
             query = query.Include(x => x.Applications).ThenInclude(x => x.SourceLink);
             query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.Class);
-            query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.Labels).ThenInclude(x => x.Name);
+            query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.Labels);
             query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.TeamLink);
         }
 
@@ -53,7 +53,7 @@ internal sealed class PlanningRealmRepository(TurnierplanContext context) : Repo
         {
             query = query.Include(x => x.Applications).ThenInclude(x => x.SourceLink);
             query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.Class);
-            query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.Labels).ThenInclude(x => x.Name);
+            query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.Labels);
             query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.TeamLink).ThenInclude(x => x!.Team).ThenInclude(x => x.Tournament).ThenInclude(x => x.Folder);
         }
 
