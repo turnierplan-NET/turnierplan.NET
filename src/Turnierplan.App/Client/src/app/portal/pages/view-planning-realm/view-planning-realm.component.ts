@@ -87,7 +87,6 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     '#D1E0FF',
     '#DAD1FF',
     '#FFD1FB',
-    '#A3A3A3',
     '#D1D1D1',
     '#FFFFFF'
   ];
