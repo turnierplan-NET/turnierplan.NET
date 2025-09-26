@@ -3,20 +3,30 @@
     <div class="modal-title" [translate]="'Portal.LabelsSelect.Title'"></div>
     <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
   </div>
-  <div class="modal-body d-flex flex-column gap-2">
-    @for (label of availableLabels; track label.id) {
-      <div class="d-flex flex-row gap-2">
-        <div class="form-check">
-          <input
-            type="checkbox"
-            id="select_label_{{ label.id }}"
-            class="form-check-input"
-            [ngModel]="selectedLabelIds.has(label.id)"
-            (ngModelChange)="setLabelSelected(label.id, $event)" />
-        </div>
-        <tp-label [label]="label" />
-      </div>
-    } @empty {
+  <div class="modal-body" [class]="{ 'p-0': availableLabels.length > 0 }">
+    @if (availableLabels.length > 0) {
+      <table class="table table-sm table-hover">
+        <tbody>
+          @for (label of availableLabels; track label.id) {
+            <tr class="tp-cursor-pointer" (click)="labelsSelected[label.id] = !labelsSelected[label.id]">
+              <td class="ps-3 p-1" style="width: 1px">
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    id="select_label_{{ label.id }}"
+                    class="form-check-input"
+                    [(ngModel)]="labelsSelected[label.id]"
+                    (ngModelChange)="labelsSelected[label.id] = $event" />
+                </div>
+              </td>
+              <td>
+                <tp-label [label]="label" />
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
       <div class="text-secondary" [translate]="'Portal.LabelsSelect.NoLabels'"></div>
     }
   </div>

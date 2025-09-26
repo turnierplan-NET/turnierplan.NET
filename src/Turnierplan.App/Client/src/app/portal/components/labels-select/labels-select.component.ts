@@ -13,7 +13,7 @@ import { LabelComponent } from '../label/label.component';
 export class LabelsSelectComponent {
   protected isInitialized = false;
   protected availableLabels: LabelDto[] = [];
-  protected selectedLabelIds = new Set<number>();
+  protected labelsSelected: { [key: string]: boolean } = {};
 
   constructor(protected readonly modal: NgbActiveModal) {}
 
@@ -23,20 +23,16 @@ export class LabelsSelectComponent {
     }
 
     this.availableLabels = availableLabels;
-    this.selectedLabelIds = new Set<number>(selectedLabelIds);
+    this.labelsSelected = {};
+
+    for (const label of this.availableLabels) {
+      this.labelsSelected[label.id] = selectedLabelIds.some((x) => x === label.id);
+    }
 
     this.isInitialized = true;
   }
 
-  protected setLabelSelected(id: number, selected: boolean): void {
-    if (selected) {
-      this.selectedLabelIds.add(id);
-    } else {
-      this.selectedLabelIds.delete(id);
-    }
-  }
-
   protected save(): void {
-    this.modal.close([...this.selectedLabelIds]);
+    this.modal.close(this.availableLabels.map((label) => label.id).filter((id) => this.labelsSelected[id]));
   }
 }
