@@ -55,7 +55,11 @@
         </td>
         @if (writeAllowed) {
           <td>
-            <tp-delete-button (confirmed)="deleteLabel(label.id)" />
+            <tp-action-button
+              [type]="'outline-danger'"
+              [icon]="'trash'"
+              [mode]="'IconOnly'"
+              (buttonClick)="deleteLabel(deleteConfirmModal, label.id)" />
           </td>
         }
       </tr>
@@ -85,5 +89,22 @@
         [style]="{ width: '2em', height: '2em', 'background-color': color }"
         (click)="setLabelColor(labelId, color)"></div>
     }
+  </div>
+</ng-template>
+
+<ng-template #deleteConfirmModal>
+  <div class="modal-header">
+    <div class="modal-title" [translate]="'Portal.ViewPlanningRealm.Labels.DeleteWarning.Title'"></div>
+  </div>
+  <div class="modal-body">
+    <div [translate]="'Portal.ViewPlanningRealm.Labels.DeleteWarning.Text'"></div>
+  </div>
+  <div class="modal-footer">
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="confirmDeleteModal?.dismiss()" />
+    <tp-action-button
+      [type]="'danger'"
+      [icon]="'trash'"
+      [title]="'Portal.DeleteWidget.DeleteConfirm'"
+      (buttonClick)="confirmDeleteClicked()" />
   </div>
 </ng-template>

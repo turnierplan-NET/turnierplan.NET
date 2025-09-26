@@ -1009,7 +1009,11 @@ export const de = {
         },
         Description: 'Beschreibung',
         NoLabels: 'Es sind aktuell keine Labels vorhanden.',
-        LabelsInfo: 'Labels können verwendet werden, um angemeldete Mannschaften zu kategorisieren und zu filtern.'
+        LabelsInfo: 'Labels können verwendet werden, um angemeldete Mannschaften zu kategorisieren und zu filtern.',
+        DeleteWarning: {
+          Title: 'Label löschen',
+          Text: 'Wenn Sie ein Label löschen, wird dieses Label von allen Mannschaften entfernt, bei denen dieses Label aktuell zugewiesen ist. Dies kann nicht rückgängig gemacht werden!'
+        }
       },
       SaveToViewApplications: 'Speichern Sie die offenen Änderungen, um die Anmeldungen zu sehen und neue Anmeldungen hinzuzufügen.',
       Applications: {
