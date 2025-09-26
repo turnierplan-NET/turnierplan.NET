@@ -81,6 +81,7 @@
             <td class="align-correctly">{{ application.contact }}</td>
             <td class="align-correctly">
               @if (application.contactEmail) {
+                <!-- TODO: Add copy to clipboard button -->
                 <a href="mailto:{{ application.contactEmail }}">{{ application.contactEmail }}</a>
               }
             </td>
