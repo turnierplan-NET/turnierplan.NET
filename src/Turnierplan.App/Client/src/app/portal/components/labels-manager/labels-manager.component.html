@@ -36,8 +36,17 @@
             [reducedFootprint]="true"
             (renamed)="setLabelDescription(label.id, $event)" />
         </td>
-        <!-- TODO: Display number of teams + option to jump off and set the filter -->
-        <td></td>
+        <td>
+          @if (label.id > 0) {
+            <!-- Navigation to search is not possible if this label has not been saved yet -->
+            <tp-action-button
+              *tpIsActionAllowed="[planningRealm.id, Actions.ManageApplications]"
+              [type]="'light'"
+              [icon]="'search'"
+              [mode]="'IconOnly'"
+              (buttonClick)="searchApplicationsClicked(label.id)" />
+          }
+        </td>
         <td></td>
       </tr>
     } @empty {

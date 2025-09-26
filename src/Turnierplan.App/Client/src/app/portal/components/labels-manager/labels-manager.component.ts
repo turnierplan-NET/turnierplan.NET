@@ -8,10 +8,12 @@ import { AuthorizationService } from '../../../core/services/authorization.servi
 import { AsyncPipe } from '@angular/common';
 import { LabelComponent } from '../label/label.component';
 import { RenameButtonComponent } from '../rename-button/rename-button.component';
+import { ActionButtonComponent } from '../action-button/action-button.component';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 
 @Component({
   selector: 'tp-labels-manager',
-  imports: [TranslateDirective, AsyncPipe, LabelComponent, RenameButtonComponent],
+  imports: [TranslateDirective, AsyncPipe, LabelComponent, RenameButtonComponent, ActionButtonComponent, IsActionAllowedDirective],
   templateUrl: './labels-manager.component.html'
 })
 export class LabelsManagerComponent {
@@ -53,6 +55,19 @@ export class LabelsManagerComponent {
       label.description = description;
 
       return true;
+    });
+  }
+
+  protected searchApplicationsClicked(id: number): void {
+    if (id < 0) {
+      return;
+    }
+
+    this.filterRequested.emit({
+      searchTerm: '',
+      invitationLink: [],
+      tournamentClass: [],
+      label: [id]
     });
   }
 }

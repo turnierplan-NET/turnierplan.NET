@@ -35,6 +35,7 @@ export class ManageApplicationsFilterComponent {
     this.searchTerm = value.searchTerm;
     this.tournamentClass = value.tournamentClass;
     this.invitationLink = value.invitationLink;
+    this.label = value.label;
   }
 
   @Output()
