@@ -1035,7 +1035,8 @@ export const de = {
           NotesTooltip: 'In dieser Spalte können Sie eigene Notizen hinzufügen.',
           TournamentClass: 'Turnierklasse',
           TeamName: 'Mannschaftsname',
-          Tournament: 'Turnier'
+          Tournament: 'Turnier',
+          Labels: 'Label'
         },
         NoSourceLinkTooltip: 'Diese Anmeldung wurde manuell angelegt',
         SourceLinkTooltip: 'Diese Anmeldung wurde mit dem Anmeldelink "{{name}}" angelegt',
@@ -1044,6 +1045,7 @@ export const de = {
           InfoText: 'Geben Sie Ihre Notizen für die Anmeldung ein:',
           Confirm: 'Speichern'
         },
+        NoLabels: 'keine Labels',
         NoLinkedTournament: 'kein Turnier verknüpft',
         RenameTeam: {
           Title: 'Mannschaft umbenennen',

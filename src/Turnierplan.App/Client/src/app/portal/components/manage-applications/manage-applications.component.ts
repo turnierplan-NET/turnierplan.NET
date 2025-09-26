@@ -27,6 +27,8 @@ import { ApplicationDto } from '../../../api/models/application-dto';
 import { setApplicationNotes } from '../../../api/fn/applications/set-application-notes';
 import { PublicId } from '../../../api/models/public-id';
 import { setApplicationTeamName } from '../../../api/fn/application-teams/set-application-team-name';
+import { LabelDto } from '../../../api/models/label-dto';
+import { LabelComponent } from '../label/label.component';
 
 @Component({
   selector: 'tp-manage-applications',
@@ -45,7 +47,8 @@ import { setApplicationTeamName } from '../../../api/fn/application-teams/set-ap
     TranslateDatePipe,
     PaginationComponent,
     RenameButtonComponent,
-    NgStyle
+    NgStyle,
+    LabelComponent
   ]
 })
 export class ManageApplicationsComponent implements OnDestroy {
@@ -137,6 +140,10 @@ export class ManageApplicationsComponent implements OnDestroy {
 
   protected getInvitationLink(id: number): InvitationLinkDto {
     return this.planningRealm.invitationLinks.find((x) => x.id === id)!;
+  }
+
+  protected getLabel(id: number): LabelDto {
+    return this.planningRealm.labels.find((x) => x.id === id)!;
   }
 
   protected isTeamVisible(team: ApplicationTeamDto): boolean {
