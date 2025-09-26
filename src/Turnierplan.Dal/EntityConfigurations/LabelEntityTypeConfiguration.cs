@@ -18,9 +18,6 @@ public sealed class LabelEntityTypeConfiguration : IEntityTypeConfiguration<Labe
         builder.Property(x => x.Name)
             .IsRequired();
 
-        builder.Property(x => x.IsSystemCreated)
-            .IsRequired();
-
         builder.Property(x => x.ColorCode)
             .IsRequired();
     }

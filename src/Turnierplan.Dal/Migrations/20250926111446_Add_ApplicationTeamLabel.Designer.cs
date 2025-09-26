@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20250926104112_Add_ApplicationTeamLabel")]
+    [Migration("20250926111446_Add_ApplicationTeamLabel")]
     partial class Add_ApplicationTeamLabel
     {
         /// <inheritdoc />
@@ -452,9 +452,6 @@ namespace Turnierplan.Dal.Migrations
                     b.Property<string>("ColorCode")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsSystemCreated")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()

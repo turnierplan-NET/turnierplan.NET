@@ -20,8 +20,6 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
         Organization = organization;
         CreatedAt = DateTime.UtcNow;
         Name = name;
-
-        // TODO: Add some default labels?
     }
 
     internal PlanningRealm(long id, PublicId.PublicId publicId, DateTime createdAt, string name)
@@ -92,6 +90,14 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
         return application;
     }
 
+    public Label AddLabel(string name)
+    {
+        var label = new Label(name);
+        _labels.Add(label);
+
+        return label;
+    }
+
     public void RemoveTournamentClass(TournamentClass tournamentClass)
     {
         _tournamentClasses.Remove(tournamentClass);
@@ -100,6 +106,16 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
     public void RemoveInvitationLink(InvitationLink invitationLink)
     {
         _invitationLinks.Remove(invitationLink);
+    }
+
+    public void RemoveLabel(Label label)
+    {
+        foreach (var team in _applications.SelectMany(x => x._teams))
+        {
+            team._labels.Remove(label);
+        }
+
+        _labels.Remove(label);
     }
 
     private int GenerateApplicationTag()

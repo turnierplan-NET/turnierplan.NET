@@ -25,7 +25,5 @@ public sealed class ApplicationTeamEntityTypeConfiguration : IEntityTypeConfigur
 
         builder.HasMany(x => x.Labels)
             .WithMany();
-
-       // builder.Metadata.FindNavigation(nameof(ApplicationTeam.Labels))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }
