@@ -996,6 +996,7 @@ export const de = {
       },
       Labels: {
         Name: 'Name',
+        ColorPicker: 'Farbe wählen',
         Rename: {
           Title: 'Label umbenennen',
           EnterNewName: 'Geben Sie den neuen Namen ein. Dieses Label bleibt weiterhin zugewiesen.',

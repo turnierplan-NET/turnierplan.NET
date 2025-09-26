@@ -17,8 +17,14 @@
       <tr>
         <td class="text-nowrap">
           <tp-label [label]="label" />
+          <i
+            class="ms-2 bi bi-palette tp-cursor-pointer"
+            [ngbPopover]="colorPickerPopover"
+            [popoverTitle]="colorPickerPopoverTitle"
+            [popoverContext]="{ labelId: label.id }"
+            [container]="'body'"></i>
           <tp-rename-button
-            class="ms-2 me-4"
+            class="ms-1 me-4"
             [translationKey]="'Portal.ViewPlanningRealm.Labels.Rename'"
             [displayLabel]="false"
             [current]="label.name"
@@ -62,3 +68,18 @@
     </tr>
   </tbody>
 </table>
+
+<ng-template #colorPickerPopoverTitle>
+  <div class="fw-bold" [translate]="'Portal.ViewPlanningRealm.Labels.ColorPicker'"></div>
+</ng-template>
+
+<ng-template #colorPickerPopover let-labelId="labelId">
+  <div class="d-flex flex-row gap-2">
+    @for (color of availableColors; track color) {
+      <div
+        class="tp-cursor-pointer border shadow-sm"
+        [style]="{ width: '2em', height: '2em', 'background-color': color }"
+        (click)="setLabelColor(labelId, color)"></div>
+    }
+  </div>
+</ng-template>

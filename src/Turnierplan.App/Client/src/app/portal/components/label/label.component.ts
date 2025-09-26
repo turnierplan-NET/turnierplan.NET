@@ -7,26 +7,24 @@ import { LabelDto } from '../../../api/models/label-dto';
   templateUrl: './label.component.html'
 })
 export class LabelComponent {
-  protected _label!: LabelDto;
-  protected _borderColor: string = '000';
-  protected _textColor: string = '000';
-
   @Input()
-  public set label(value: LabelDto) {
-    this._label = value;
-    this.processColor();
+  public label!: LabelDto;
+
+  protected getBorderColor(color: string): string {
+    const rgb = this.toRgb(color);
+    return rgb.map((v) => this.toHex((v * 4) / 5)).join('');
   }
 
-  private processColor(): void {
-    const rgb = [
-      parseInt(this._label.colorCode.substring(0, 2), 16),
-      parseInt(this._label.colorCode.substring(2, 4), 16),
-      parseInt(this._label.colorCode.substring(4, 6), 16)
-    ];
+  protected getTextColor(color: string): string {
+    const rgb = this.toRgb(color);
+    return (rgb[0] + rgb[1] + rgb[2]) / 3 > 170 ? '000' : 'fff';
+  }
 
-    const toHex = (v: number): string => Math.floor(v).toString(16).padStart(2, '0');
+  private toRgb(color: string): [number, number, number] {
+    return [parseInt(color.substring(0, 2), 16), parseInt(color.substring(2, 4), 16), parseInt(color.substring(4, 6), 16)];
+  }
 
-    this._borderColor = rgb.map((v) => toHex((v * 4) / 5)).join('');
-    this._textColor = (rgb[0] + rgb[1] + rgb[2]) / 3 > 170 ? '000' : 'fff';
+  private toHex(value: number): string {
+    return Math.floor(value).toString(16).padStart(2, '0');
   }
 }

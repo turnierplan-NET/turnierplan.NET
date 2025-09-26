@@ -2,9 +2,9 @@
   class="py-1 px-2 rounded-pill"
   [style]="{
     'font-size': '0.8em',
-    'background-color': '#' + _label.colorCode,
-    color: '#' + _textColor,
-    border: '1px solid #' + _borderColor
+    'background-color': '#' + label.colorCode,
+    color: '#' + getTextColor(label.colorCode),
+    border: '1px solid #' + getBorderColor(label.colorCode)
   }"
-  >{{ _label.name }}</span
+  >{{ label.name }}</span
 >

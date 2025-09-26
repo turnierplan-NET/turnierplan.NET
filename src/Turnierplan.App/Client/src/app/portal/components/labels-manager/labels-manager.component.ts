@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
-import { UpdatePlanningRealmFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
+import { UpdatePlanningRealmFunc, ViewPlanningRealmComponent } from '../../pages/view-planning-realm/view-planning-realm.component';
 import { ApplicationsFilter } from '../../models/applications-filter';
 import { TranslateDirective } from '@ngx-translate/core';
 import { Actions } from '../../../generated/actions';
@@ -10,10 +10,19 @@ import { LabelComponent } from '../label/label.component';
 import { RenameButtonComponent } from '../rename-button/rename-button.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
+import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'tp-labels-manager',
-  imports: [TranslateDirective, AsyncPipe, LabelComponent, RenameButtonComponent, ActionButtonComponent, IsActionAllowedDirective],
+  imports: [
+    TranslateDirective,
+    AsyncPipe,
+    LabelComponent,
+    RenameButtonComponent,
+    ActionButtonComponent,
+    IsActionAllowedDirective,
+    NgbPopoverModule
+  ],
   templateUrl: './labels-manager.component.html'
 })
 export class LabelsManagerComponent {
@@ -27,6 +36,7 @@ export class LabelsManagerComponent {
   public filterRequested = new EventEmitter<ApplicationsFilter>();
 
   protected readonly Actions = Actions;
+  protected readonly availableColors = ViewPlanningRealmComponent.DefaultLabelColorCodes;
 
   constructor(protected readonly authorizationService: AuthorizationService) {}
 
@@ -53,6 +63,21 @@ export class LabelsManagerComponent {
       }
 
       label.description = description;
+
+      return true;
+    });
+  }
+
+  protected setLabelColor(id: any, color: string): void {
+    this.updatePlanningRealm((planningRealm) => {
+      const label = planningRealm.labels.find((x) => x.id == id);
+
+      if (!label) {
+        return false;
+      }
+
+      // The color comes with the '#' CSS prefix
+      label.colorCode = color.substring(1);
 
       return true;
     });

@@ -79,7 +79,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   ];
 
   // Note: The color codes are written with '#' such that the IDE detects it as a color code and displays the color preview.
-  private static readonly DefaultLabelColorCodes: string[] = [
+  public static readonly DefaultLabelColorCodes: string[] = [
     '#FFD1D1',
     '#FFFAD1',
     '#E1FFD1',
