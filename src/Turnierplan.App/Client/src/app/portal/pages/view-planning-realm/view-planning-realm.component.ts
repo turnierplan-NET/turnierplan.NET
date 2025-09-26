@@ -62,19 +62,34 @@ export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealm
   ]
 })
 export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardChangesDetector {
+  // Note: The color codes are written with '#' such that the IDE detects it as a color code and displays the color preview.
   private static readonly DefaultInvitationLinkColorCodes: string[] = [
-    'ff9900',
-    'ff5500',
-    'bb5500',
-    '55bb00',
-    'ff0055',
-    'bb0055',
-    '5500ff',
-    '9900bb',
-    '00bb99',
-    '0099ff',
-    '0099bb',
-    '0055bb'
+    '#ff9900',
+    '#ff5500',
+    '#bb5500',
+    '#55bb00',
+    '#ff0055',
+    '#bb0055',
+    '#5500ff',
+    '#9900bb',
+    '#00bb99',
+    '#0099ff',
+    '#0099bb',
+    '#0055bb'
+  ];
+
+  // Note: The color codes are written with '#' such that the IDE detects it as a color code and displays the color preview.
+  private static readonly DefaultLabelColorCodes: string[] = [
+    '#FFD1D1',
+    '#FFFAD1',
+    '#E1FFD1',
+    '#D1FDFF',
+    '#D1E0FF',
+    '#DAD1FF',
+    '#FFD1FB',
+    '#A3A3A3',
+    '#D1D1D1',
+    '#FFFFFF'
   ];
 
   public static readonly ApplicationsManagerPageId = 2;
@@ -423,19 +438,31 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     }
 
     const planningRealm = this.planningRealm;
-    let availableColorCodes = ViewPlanningRealmComponent.DefaultInvitationLinkColorCodes.filter(
+    let availableColorCodes = ViewPlanningRealmComponent.DefaultInvitationLinkColorCodes.map((x) => x.substring(1)).filter(
       (color) => !planningRealm.invitationLinks.some((x) => x.colorCode === color)
     );
 
     if (availableColorCodes.length === 0) {
-      availableColorCodes = ViewPlanningRealmComponent.DefaultInvitationLinkColorCodes;
+      availableColorCodes = ViewPlanningRealmComponent.DefaultInvitationLinkColorCodes.map((x) => x.substring(1));
     }
 
     return availableColorCodes[Math.floor(Math.random() * availableColorCodes.length)];
   }
 
   private getColorCodeForLabel(): string {
-    return 'aaaaaa';
-    //TODO Implement
+    if (!this.planningRealm) {
+      return 'aaaaaa';
+    }
+
+    const planningRealm = this.planningRealm;
+    let availableColorCodes = ViewPlanningRealmComponent.DefaultLabelColorCodes.map((x) => x.substring(1)).filter(
+      (color) => !planningRealm.labels.some((x) => x.colorCode === color)
+    );
+
+    if (availableColorCodes.length === 0) {
+      availableColorCodes = ViewPlanningRealmComponent.DefaultLabelColorCodes.map((x) => x.substring(1));
+    }
+
+    return availableColorCodes[Math.floor(Math.random() * availableColorCodes.length)];
   }
 }
