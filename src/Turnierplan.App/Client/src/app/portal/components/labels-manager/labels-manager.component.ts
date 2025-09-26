@@ -11,7 +11,6 @@ import { RenameButtonComponent } from '../rename-button/rename-button.component'
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { NgbModal, NgbModalRef, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
-import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 
 @Component({
   selector: 'tp-labels-manager',
@@ -22,8 +21,7 @@ import { DeleteButtonComponent } from '../delete-button/delete-button.component'
     RenameButtonComponent,
     ActionButtonComponent,
     IsActionAllowedDirective,
-    NgbPopoverModule,
-    DeleteButtonComponent
+    NgbPopoverModule
   ],
   templateUrl: './labels-manager.component.html'
 })

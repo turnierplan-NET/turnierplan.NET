@@ -893,7 +893,7 @@ export const de = {
       },
       NewTournamentClass: {
         Title: 'Neue Turnierklasse',
-        InfoText: 'Geben Sie den Namen für die neue Turnierklasse ein.',
+        InfoText: 'Geben Sie den Namen für die neue Turnierklasse ein:',
         RequiredFeedback: 'Der Name darf nicht leer sein',
         Confirm: 'Erstellen'
       },
@@ -907,7 +907,7 @@ export const de = {
       },
       NewLabel: {
         Title: 'Neues Label',
-        InfoText: 'Geben Sie den Namen für das neue Label ein.',
+        InfoText: 'Geben Sie den Namen für das neue Label ein:',
         Confirm: 'Erstellen'
       },
       AddApplication: {

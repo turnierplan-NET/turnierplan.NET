@@ -436,16 +436,10 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       return 'aaaaaa';
     }
 
-    const planningRealm = this.planningRealm;
-    let availableColorCodes = ViewPlanningRealmComponent.DefaultInvitationLinkColorCodes.map((x) => x.substring(1)).filter(
-      (color) => !planningRealm.invitationLinks.some((x) => x.colorCode === color)
+    return ViewPlanningRealmComponent.getColorCode(
+      ViewPlanningRealmComponent.DefaultInvitationLinkColorCodes,
+      this.planningRealm.invitationLinks
     );
-
-    if (availableColorCodes.length === 0) {
-      availableColorCodes = ViewPlanningRealmComponent.DefaultInvitationLinkColorCodes.map((x) => x.substring(1));
-    }
-
-    return availableColorCodes[Math.floor(Math.random() * availableColorCodes.length)];
   }
 
   private getColorCodeForLabel(): string {
@@ -453,13 +447,14 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       return 'aaaaaa';
     }
 
-    const planningRealm = this.planningRealm;
-    let availableColorCodes = ViewPlanningRealmComponent.DefaultLabelColorCodes.map((x) => x.substring(1)).filter(
-      (color) => !planningRealm.labels.some((x) => x.colorCode === color)
-    );
+    return ViewPlanningRealmComponent.getColorCode(ViewPlanningRealmComponent.DefaultLabelColorCodes, this.planningRealm.labels);
+  }
+
+  private static getColorCode(from: string[], currentlyUsed: { colorCode: string }[]): string {
+    let availableColorCodes = from.map((x) => x.substring(1)).filter((color) => !currentlyUsed.some((x) => x.colorCode === color));
 
     if (availableColorCodes.length === 0) {
-      availableColorCodes = ViewPlanningRealmComponent.DefaultLabelColorCodes.map((x) => x.substring(1));
+      availableColorCodes = from.map((x) => x.substring(1));
     }
 
     return availableColorCodes[Math.floor(Math.random() * availableColorCodes.length)];
