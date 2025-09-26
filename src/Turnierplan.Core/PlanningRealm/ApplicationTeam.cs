@@ -4,6 +4,8 @@ namespace Turnierplan.Core.PlanningRealm;
 
 public sealed class ApplicationTeam : Entity<long>
 {
+    internal readonly List<ApplicationTeamLabel> _labels = [];
+
     internal ApplicationTeam(long id, string name)
     {
         Id = id;
@@ -25,6 +27,8 @@ public sealed class ApplicationTeam : Entity<long>
     public Application Application { get; internal set; } = null!;
 
     public TournamentClass Class { get; internal set; } = null!;
+
+    public IReadOnlyList<ApplicationTeamLabel> Labels => _labels.AsReadOnly();
 
     public TeamLink? TeamLink { get; internal set; }
 

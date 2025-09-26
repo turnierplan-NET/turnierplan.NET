@@ -9,6 +9,7 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
     internal readonly List<TournamentClass> _tournamentClasses = [];
     internal readonly List<InvitationLink> _invitationLinks = [];
     internal readonly List<Application> _applications = [];
+    internal readonly List<ApplicationTeamLabel> _applicationTeamLabels = [];
 
     public PlanningRealm(Organization.Organization organization, string name)
     {
@@ -19,6 +20,8 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
         Organization = organization;
         CreatedAt = DateTime.UtcNow;
         Name = name;
+
+        // TODO: Add some default labels?
     }
 
     internal PlanningRealm(long id, PublicId.PublicId publicId, DateTime createdAt, string name)
@@ -46,6 +49,8 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
     public IReadOnlyList<InvitationLink> InvitationLinks => _invitationLinks.AsReadOnly();
 
     public IReadOnlyList<Application> Applications => _applications.AsReadOnly();
+
+    public IReadOnlyList<ApplicationTeamLabel> ApplicationTeamLabels => _applicationTeamLabels.AsReadOnly();
 
     public RoleAssignment<PlanningRealm> AddRoleAssignment(Role role, Principal principal)
     {
