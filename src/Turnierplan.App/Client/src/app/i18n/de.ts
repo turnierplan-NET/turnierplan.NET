@@ -1162,6 +1162,10 @@ export const de = {
       NoFilter: 'keine Filter verfügbar',
       NoFurtherFilter: 'keine weiteren Filter verfügbar'
     },
+    LabelsSelect: {
+      Title: 'Label wählen',
+      NoLabels: 'In diesem Turnierplaner existieren keine Label'
+    },
     ErrorPage: {
       Title: 'Fehler',
       ResourceNotFound: 'Die angeforderte Resource existiert nicht oder Sie\nhaben keine Berechtigung, diese Resource aufzurufen.',

@@ -7,11 +7,11 @@ using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.App.Endpoints.ApplicationTeams;
 
-internal sealed class SetApplicationTeamNameEndpoint : EndpointBase
+internal sealed class SetApplicationTeamLabelsEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Patch;
 
-    protected override string Route => "/api/planning-realms/{planningRealmId}/applications/{applicationId:int}/teams/{applicationTeamId:int}/name";
+    protected override string Route => "/api/planning-realms/{planningRealmId}/applications/{applicationId:int}/teams/{applicationTeamId:int}/labels";
 
     protected override Delegate Handler => Handle;
 
@@ -19,7 +19,7 @@ internal sealed class SetApplicationTeamNameEndpoint : EndpointBase
         [FromRoute] PublicId planningRealmId,
         [FromRoute] long applicationId,
         [FromRoute] long applicationTeamId,
-        [FromBody] SetApplicationTeamNameEndpointRequest request,
+        [FromBody] SetApplicationTeamLabelsEndpointRequest request,
         IPlanningRealmRepository planningRealmRepository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
@@ -29,8 +29,7 @@ internal sealed class SetApplicationTeamNameEndpoint : EndpointBase
             return result;
         }
 
-        // Note: We muse use 'ApplicationsWithTeamsAndTournamentLinks' because if a team link exists, the tournament team must also be renamed
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.ApplicationsWithTeamsAndTournamentLinks);
+        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.ApplicationsWithTeams | IPlanningRealmRepository.Includes.Labels);
 
         if (planningRealm is null)
         {
@@ -56,26 +55,43 @@ internal sealed class SetApplicationTeamNameEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        applicationTeam.SetName(request.Name);
+        // The code becomes simpler if we just clear all labels and re-add the desired ones
+        applicationTeam.RemoveAllLabels();
+
+        foreach (var labelId in request.LabelIds)
+        {
+            var label = planningRealm.Labels.FirstOrDefault(x => x.Id == labelId);
+
+            if (label is null)
+            {
+                return Results.NotFound();
+            }
+
+            applicationTeam.AddLabel(label);
+        }
 
         await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }
 
-    public sealed record SetApplicationTeamNameEndpointRequest
+    public sealed record SetApplicationTeamLabelsEndpointRequest
     {
-        public required string Name { get; init; }
+        public required long[] LabelIds { get; init; }
     }
 
-    private sealed class Validator : AbstractValidator<SetApplicationTeamNameEndpointRequest>
+    private sealed class Validator : AbstractValidator<SetApplicationTeamLabelsEndpointRequest>
     {
         public static readonly Validator Instance = new();
 
         private Validator()
         {
-            RuleFor(x => x.Name)
-                .NotEmpty();
+            RuleForEach(x => x.LabelIds)
+                .GreaterThanOrEqualTo(1);
+
+            RuleFor(x => x.LabelIds)
+                .Must(x => x.Distinct().Count() == x.Length)
+                .WithMessage($"{nameof(SetApplicationTeamLabelsEndpointRequest.LabelIds)} must not contain duplicate values.");
         }
     }
 }

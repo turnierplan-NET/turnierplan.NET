@@ -131,13 +131,18 @@
                               [reducedFootprint]="true"
                               (renamed)="renameTeam(application.id, team, $event)" />
                           </td>
-                          <td>
-                            @for (labelId of team.labelIds; track labelId) {
-                              <tp-label [label]="getLabel(labelId)" />
+                          <td class="align-middle">
+                            @for (labelId of team.labelIds; track labelId; let isFirst = $first) {
+                              <tp-label [class]="{ 'ms-1': !isFirst }" [label]="getLabel(labelId)" />
                             } @empty {
                               <span
                                 class="fst-italic small text-secondary text-nowrap"
                                 [translate]="'Portal.ViewPlanningRealm.Applications.NoLabels'"></span>
+                            }
+                            @if (updatingLabelsOfApplicationTeamId === team.id) {
+                              <tp-small-spinner class="ms-2" />
+                            } @else {
+                              <i class="bi bi-pencil tp-cursor-pointer ms-2" (click)="editTeamLabels(application.id, team)"></i>
                             }
                           </td>
                           <td class="align-middle">

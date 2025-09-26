@@ -1,3 +1,4 @@
+using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.PlanningRealm;
@@ -40,5 +41,20 @@ public sealed class ApplicationTeam : Entity<long>
         {
             TeamLink.Team.Name = name.Trim();
         }
+    }
+
+    public void AddLabel(Label label)
+    {
+        if (_labels.Contains(label))
+        {
+            throw new TurnierplanException("The specified label is already assigned to this application team.");
+        }
+
+        _labels.Add(label);
+    }
+
+    public void RemoveAllLabels()
+    {
+        _labels.Clear();
     }
 }

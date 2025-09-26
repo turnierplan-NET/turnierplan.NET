@@ -29,6 +29,8 @@ import { PublicId } from '../../../api/models/public-id';
 import { setApplicationTeamName } from '../../../api/fn/application-teams/set-application-team-name';
 import { LabelDto } from '../../../api/models/label-dto';
 import { LabelComponent } from '../label/label.component';
+import { LabelsSelectComponent } from '../labels-select/labels-select.component';
+import { setApplicationTeamLabels } from '../../../api/fn/application-teams/set-application-team-labels';
 
 @Component({
   selector: 'tp-manage-applications',
@@ -72,6 +74,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   protected result?: PaginationResultDtoOfApplicationDto;
   protected showTeamsApplicationId?: number;
   protected updatingNotesOfApplicationId?: number;
+  protected updatingLabelsOfApplicationTeamId?: number;
 
   private readonly filter$ = new ReplaySubject<ApplicationsFilter>();
   private readonly reload$ = new BehaviorSubject<undefined>(undefined);
@@ -226,6 +229,42 @@ export class ManageApplicationsComponent implements OnDestroy {
       .subscribe({
         next: () => {
           applicationTeam.name = name;
+        },
+        error: (error) => {
+          this.errorOccured.emit(error);
+        }
+      });
+  }
+
+  protected editTeamLabels(applicationId: number, applicationTeam: ApplicationTeamDto): void {
+    const ref = this.modalService.open(LabelsSelectComponent, {
+      centered: true,
+      size: 'md',
+      fullscreen: 'md',
+      backdrop: 'static'
+    });
+
+    const component = ref.componentInstance as LabelsSelectComponent;
+    component.init(this.planningRealm.labels, applicationTeam.labelIds);
+
+    ref.closed
+      .pipe(
+        tap(() => (this.updatingLabelsOfApplicationTeamId = applicationTeam.id)),
+        switchMap((labelIds) =>
+          this.turnierplanApi
+            .invoke(setApplicationTeamLabels, {
+              planningRealmId: this.planningRealm.id,
+              applicationId: applicationId,
+              applicationTeamId: applicationTeam.id,
+              body: { labelIds: labelIds }
+            })
+            .pipe(map(() => labelIds))
+        )
+      )
+      .subscribe({
+        next: (labelIds: number[]) => {
+          applicationTeam.labelIds = labelIds;
+          this.updatingLabelsOfApplicationTeamId = undefined;
         },
         error: (error) => {
           this.errorOccured.emit(error);

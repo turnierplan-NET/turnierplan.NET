@@ -1,0 +1,27 @@
+@if (isInitialized) {
+  <div class="modal-header">
+    <div class="modal-title" [translate]="'Portal.LabelsSelect.Title'"></div>
+    <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
+  </div>
+  <div class="modal-body d-flex flex-column gap-2">
+    @for (label of availableLabels; track label.id) {
+      <div class="d-flex flex-row gap-2">
+        <div class="form-check">
+          <input
+            type="checkbox"
+            id="select_label_{{ label.id }}"
+            class="form-check-input"
+            [ngModel]="selectedLabelIds.has(label.id)"
+            (ngModelChange)="setLabelSelected(label.id, $event)" />
+        </div>
+        <tp-label [label]="label" />
+      </div>
+    } @empty {
+      <div class="text-secondary" [translate]="'Portal.LabelsSelect.NoLabels'"></div>
+    }
+  </div>
+  <div class="modal-footer">
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
+    <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" [disabled]="availableLabels.length === 0" (buttonClick)="save()" />
+  </div>
+}
