@@ -11,6 +11,7 @@ import { RenameButtonComponent } from '../rename-button/rename-button.component'
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
+import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 
 @Component({
   selector: 'tp-labels-manager',
@@ -21,7 +22,8 @@ import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
     RenameButtonComponent,
     ActionButtonComponent,
     IsActionAllowedDirective,
-    NgbPopoverModule
+    NgbPopoverModule,
+    DeleteButtonComponent
   ],
   templateUrl: './labels-manager.component.html'
 })
@@ -78,6 +80,20 @@ export class LabelsManagerComponent {
 
       // The color comes with the '#' CSS prefix
       label.colorCode = color.substring(1);
+
+      return true;
+    });
+  }
+
+  protected deleteLabel(id: number): void {
+    this.updatePlanningRealm((planningRealm) => {
+      const index = planningRealm.labels.findIndex((x) => x.id === id);
+
+      if (index === -1) {
+        return false;
+      }
+
+      planningRealm.labels.splice(index, 1);
 
       return true;
     });

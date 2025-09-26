@@ -15,7 +15,7 @@
   <tbody>
     @for (label of planningRealm.labels; track label.id) {
       <tr>
-        <td class="text-nowrap">
+        <td class="text-nowrap align-middle">
           <tp-label [label]="label" />
           <i
             class="ms-2 bi bi-palette tp-cursor-pointer"
@@ -31,7 +31,7 @@
             [reducedFootprint]="true"
             (renamed)="setLabelName(label.id, $event)" />
         </td>
-        <td>
+        <td class="align-middle">
           <span>{{ label.description }}</span>
           <tp-rename-button
             [class]="{ 'ms-2': label.description.trim().length > 0 }"
@@ -53,7 +53,11 @@
               (buttonClick)="searchApplicationsClicked(label.id)" />
           }
         </td>
-        <td></td>
+        @if (writeAllowed) {
+          <td>
+            <tp-delete-button (confirmed)="deleteLabel(label.id)" />
+          </td>
+        }
       </tr>
     } @empty {
       <tr>

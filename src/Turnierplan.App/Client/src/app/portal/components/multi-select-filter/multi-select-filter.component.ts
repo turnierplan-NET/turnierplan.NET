@@ -32,6 +32,10 @@ export class MultiSelectFilterComponent {
   @Input()
   public set selected(value: unknown[]) {
     this._selected = value.filter((value) => value === this.specialOption?.value || this.options.some((option) => option.value === value));
+
+    if (this._selected.length !== value.length) {
+      this.selectedChange.emit(this._selected);
+    }
   }
 
   @Output()
