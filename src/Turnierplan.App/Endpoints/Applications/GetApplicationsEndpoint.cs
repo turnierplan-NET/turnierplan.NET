@@ -24,6 +24,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
         [FromQuery] string? searchTerm,
         [FromQuery] string[] tournamentClass,
         [FromQuery] string[] invitationLink,
+        [FromQuery] string[] label,
         IPlanningRealmRepository planningRealmRepository,
         IAccessValidator accessValidator,
         IMapper mapper)
@@ -38,6 +39,11 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
             return Results.BadRequest("Invalid invitation link filter provided.");
         }
 
+        if (!IdBasedFilterWithoutNone.TryParse(label, out var labelFilter))
+        {
+            return Results.BadRequest("Invalid label filter provided.");
+        }
+
         var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.TournamentClasses | IPlanningRealmRepository.Includes.ApplicationsWithTeamsAndTournamentLinks);
 
         if (planningRealm is null)
@@ -50,7 +56,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
             return Results.Forbid();
         }
 
-        var queryLogic = new QueryLogic(page, pageSize, searchTerm, tournamentClassFilter, invitationLinkFilter);
+        var queryLogic = new QueryLogic(page, pageSize, searchTerm, tournamentClassFilter, invitationLinkFilter, labelFilter);
         var result = queryLogic.Process(planningRealm, mapper);
 
         return Results.Ok(result);
@@ -65,31 +71,45 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
         private readonly string? _searchTerm;
         private readonly IdBasedFilterWithoutNone? _tournamentClassFilter;
         private readonly IdBasedFilterWithNone? _invitationLinkFilter;
+        private readonly IdBasedFilterWithoutNone? _labelFilter;
 
-        public QueryLogic(int? page, int? pageSize, string? searchTerm, IdBasedFilterWithoutNone? tournamentClassFilter, IdBasedFilterWithNone? invitationLinkFilter)
+        public QueryLogic(
+            int? page,
+            int? pageSize,
+            string? searchTerm,
+            IdBasedFilterWithoutNone? tournamentClassFilter,
+            IdBasedFilterWithNone? invitationLinkFilter,
+            IdBasedFilterWithoutNone? labelFilter)
         {
             _page = page ?? 0;
             _pageSize = pageSize ?? DefaultPageSize;
             _searchTerm = searchTerm?.Trim();
             _tournamentClassFilter = tournamentClassFilter;
             _invitationLinkFilter = invitationLinkFilter;
+            _labelFilter = labelFilter;
         }
 
         public PaginationResultDto<ApplicationDto> Process(PlanningRealm planningRealm, IMapper mapper)
         {
             var applications = planningRealm.Applications.AsEnumerable();
 
-            if (_tournamentClassFilter.HasValue)
+            if (_tournamentClassFilter is not null)
             {
                 applications = applications.Where(application =>
                     application.Teams.Any(team => _tournamentClassFilter.Value.IncludeWithId.Contains(team.Class.Id)));
             }
 
-            if (_invitationLinkFilter.HasValue)
+            if (_invitationLinkFilter is not null)
             {
                 applications = applications.Where(application => application.SourceLink is null
                     ? _invitationLinkFilter.Value.IncludeWithNone
                     : _invitationLinkFilter.Value.IncludeWithId.Contains(application.SourceLink.Id));
+            }
+
+            if (_labelFilter is not null)
+            {
+                applications = applications.Where(application =>
+                    application.Teams.Any(team => team.Labels.Any(label => _labelFilter.Value.IncludeWithId.Contains(label.Id))));
             }
 
             if (!string.IsNullOrWhiteSpace(_searchTerm))
