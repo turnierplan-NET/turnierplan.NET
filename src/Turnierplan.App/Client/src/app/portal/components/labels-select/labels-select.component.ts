@@ -32,6 +32,12 @@ export class LabelsSelectComponent {
     this.isInitialized = true;
   }
 
+  protected clear(): void {
+    for (const label of this.availableLabels) {
+      this.labelsSelected[label.id] = false;
+    }
+  }
+
   protected save(): void {
     this.modal.close(this.availableLabels.map((label) => label.id).filter((id) => this.labelsSelected[id]));
   }

@@ -31,6 +31,8 @@
     }
   </div>
   <div class="modal-footer">
+    <tp-action-button [type]="'outline-danger'" [title]="'Portal.LabelsSelect.Clear'" (buttonClick)="clear()" />
+    <span class="flex-grow-1"></span>
     <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
     <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" [disabled]="availableLabels.length === 0" (buttonClick)="save()" />
   </div>

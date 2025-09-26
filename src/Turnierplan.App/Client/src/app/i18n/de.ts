@@ -1164,7 +1164,8 @@ export const de = {
     },
     LabelsSelect: {
       Title: 'Label wählen',
-      NoLabels: 'In diesem Turnierplaner existieren keine Label'
+      NoLabels: 'In diesem Turnierplaner existieren keine Label',
+      Clear: 'Alle entfernen'
     },
     ErrorPage: {
       Title: 'Fehler',
