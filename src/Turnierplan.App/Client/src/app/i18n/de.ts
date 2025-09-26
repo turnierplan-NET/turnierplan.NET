@@ -906,7 +906,9 @@ export const de = {
         Confirm: 'Erstellen'
       },
       NewLabel: {
-        Title: 'Neues Label'
+        Title: 'Neues Label',
+        InfoText: 'Geben Sie den Namen für das neue Label ein.',
+        Confirm: 'Erstellen'
       },
       AddApplication: {
         Title: 'Neue Anmeldung',

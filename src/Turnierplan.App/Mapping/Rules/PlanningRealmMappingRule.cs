@@ -53,6 +53,7 @@ internal sealed class PlanningRealmMappingRule : MappingRuleBase<PlanningRealm, 
             {
                 Id = x.Id,
                 Name = x.Name,
+                Description = x.Description,
                 ColorCode = x.ColorCode
             }).ToArray()
         };

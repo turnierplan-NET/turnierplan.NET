@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20250926111446_Add_ApplicationTeamLabel")]
+    [Migration("20250926114700_Add_ApplicationTeamLabel")]
     partial class Add_ApplicationTeamLabel
     {
         /// <inheritdoc />
@@ -450,6 +450,10 @@ namespace Turnierplan.Dal.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("ColorCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
 

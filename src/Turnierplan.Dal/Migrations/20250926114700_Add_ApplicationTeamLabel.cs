@@ -19,6 +19,7 @@ namespace Turnierplan.Dal.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
                     ColorCode = table.Column<string>(type: "text", nullable: false),
                     PlanningRealmId = table.Column<long>(type: "bigint", nullable: false)
                 },

@@ -279,6 +279,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
             }
 
             label.ColorCode = requestLabel.ColorCode;
+            label.Description = requestLabel.Description.Trim();
         }
 
         error = null;
@@ -450,6 +451,8 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
 
         public required string Name { get; init; }
 
+        public required string Description { get; init; }
+
         public required string ColorCode { get; init; }
     }
 
@@ -537,6 +540,9 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
                 {
                     link.RuleFor(x => x.Name)
                         .NotEmpty();
+
+                    link.RuleFor(x => x.Description)
+                        .NotNull();
 
                     link.RuleFor(x => x.ColorCode)
                         .Length(6)

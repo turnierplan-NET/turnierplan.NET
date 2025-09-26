@@ -8,7 +8,7 @@
   <tbody>
     @for (label of planningRealm.labels; track label.id) {
       <tr>
-        <td>{{ label.id }} {{ label.name }} #{{ label.colorCode }}</td>
+        <td>{{ label.id }} {{ label.name }} "{{ label.description }}" #{{ label.colorCode }}</td>
       </tr>
     } @empty {
       <tr>

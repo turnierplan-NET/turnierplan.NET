@@ -230,11 +230,12 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   }
 
   protected addLabel(): void {
-    this.openModalForEnteringName('NewInvitationLink', true).subscribe({
+    this.openModalForEnteringName('NewLabel').subscribe({
       next: (name) => {
         this.updateFunction((planningRealm) => {
           planningRealm.labels.push({
             colorCode: this.getColorCodeForLabel(),
+            description: '',
             id: this.nextId--,
             name: name.trim()
           });
@@ -328,6 +329,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       labels: this.planningRealm.labels.map((x) => ({
         id: x.id < 0 ? null : x.id,
         name: x.name,
+        description: x.description,
         colorCode: x.colorCode
       }))
     };
