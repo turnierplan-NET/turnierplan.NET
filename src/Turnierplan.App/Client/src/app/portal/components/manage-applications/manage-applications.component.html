@@ -81,7 +81,8 @@
             <td class="align-correctly">{{ application.contact }}</td>
             <td class="align-correctly">
               @if (application.contactEmail) {
-                <a href="mailto:{{ application.contactEmail }}">{{ application.contactEmail }}</a>
+                <a href="mailto:{{ application.contactEmail }}" class="me-2">{{ application.contactEmail }}</a>
+                <tp-copy-to-clipboard [value]="application.contactEmail" />
               }
             </td>
             <td class="align-correctly">{{ application.contactTelephone ?? '' }}</td>
