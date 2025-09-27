@@ -21,7 +21,11 @@ export class LabelComponent {
   }
 
   private toRgb(color: string): [number, number, number] {
-    return [parseInt(color.substring(0, 2), 16), parseInt(color.substring(2, 4), 16), parseInt(color.substring(4, 6), 16)];
+    return [
+      Number.parseInt(color.substring(0, 2), 16),
+      Number.parseInt(color.substring(2, 4), 16),
+      Number.parseInt(color.substring(4, 6), 16)
+    ];
   }
 
   private toHex(value: number): string {
