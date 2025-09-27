@@ -1,4 +1,5 @@
 import { Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
+import { map, Observable, of } from 'rxjs';
 
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Action } from '../../../generated/actions';
@@ -58,7 +59,6 @@ export class PageFrameComponent implements OnInit, OnChanges {
   @ContentChild('fullWidthContent')
   public fullWidthContent?: TemplateRef<unknown>;
 
-  protected readonly history = history;
   protected currentTabId?: number;
 
   constructor(
@@ -98,19 +98,37 @@ export class PageFrameComponent implements OnInit, OnChanges {
 
   public toggleNavigationTab(id: number): void {
     const navigationTab = this.navigationTabs?.find((x) => x.id === id);
+
     if (!navigationTab) {
       return;
     }
 
-    if (this.rememberNavigationTab) {
-      if (this.contextEntityId) {
-        this.localStorageService.setNavigationTab(this.contextEntityId, navigationTab.id);
-      } else {
-        console.error('Cannot retrieve active navigation tab because [contextEntityId] is not set.');
-      }
+    let navigationTab$: Observable<PageFrameNavigationTab>;
+
+    if (navigationTab.authorization && this.contextEntityId) {
+      navigationTab$ = this.authorizationService.isActionAllowed$(this.contextEntityId, navigationTab.authorization).pipe(
+        map((isAllowed) => {
+          // The following assumes that the first tab is always accessible which is generally true at the moment
+          return isAllowed ? navigationTab : this.navigationTabs![0];
+        })
+      );
+    } else {
+      navigationTab$ = of(navigationTab);
     }
 
-    this.currentTabId = navigationTab.id;
-    this.navigationTabSelected.emit(navigationTab);
+    navigationTab$.subscribe({
+      next: (switchToTab) => {
+        if (this.rememberNavigationTab) {
+          if (this.contextEntityId) {
+            this.localStorageService.setNavigationTab(this.contextEntityId, switchToTab.id);
+          } else {
+            console.error('Cannot retrieve active navigation tab because [contextEntityId] is not set.');
+          }
+        }
+
+        this.currentTabId = switchToTab.id;
+        this.navigationTabSelected.emit(switchToTab);
+      }
+    });
   }
 }
