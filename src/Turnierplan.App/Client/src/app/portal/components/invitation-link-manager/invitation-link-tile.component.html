@@ -164,7 +164,7 @@
                     @if (invitationLink.id > 0) {
                       <!-- Navigation to search is not possible if this invitation link has not been saved yet -->
                       <tp-action-button
-                        *tpIsActionAllowed="[planningRealm.id, Actions.ManageApplications]"
+                        *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsRead]"
                         [type]="'light'"
                         [icon]="'search'"
                         [mode]="'IconOnly'"
@@ -249,7 +249,7 @@
       <!-- Navigation to search is not possible if this invitation link has not been saved yet -->
       <span class="flex-grow-1"></span>
       <tp-action-button
-        *tpIsActionAllowed="[planningRealm.id, Actions.ManageApplications]"
+        *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsRead]"
         [type]="'outline-secondary'"
         [icon]="'search'"
         [title]="'Portal.ViewPlanningRealm.InvitationLink.ShowApplications'"

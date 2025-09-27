@@ -55,7 +55,7 @@
           }
         </td>
         @if (showLinkColumn) {
-          <td class="text-nowrap">
+          <td class="text-nowrap align-middle">
             @if (team.teamLink) {
               <div class="d-flex flex-row align-items-center gap-2 pe-3">
                 <span>{{ team.teamLink.tournamentClassName }}</span>
@@ -68,7 +68,7 @@
                   [icon]="'box-arrow-up-right'"
                   [mode]="'IconOnly'"
                   [type]="'outline-secondary'"
-                  *tpIsActionAllowed="[team.teamLink.planningRealmId, Actions.ManageApplications]"
+                  *tpIsActionAllowed="[team.teamLink.planningRealmId, Actions.ApplicationsRead]"
                   (buttonClick)="navigateToPlanningRealm(team.teamLink.planningRealmId, team.teamLink.applicationTeamId)" />
               </div>
             }

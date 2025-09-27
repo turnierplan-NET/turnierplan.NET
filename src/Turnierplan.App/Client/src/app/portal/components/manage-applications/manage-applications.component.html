@@ -1,3 +1,5 @@
+@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
+
 @if (isLoading) {
   <div class="mt-4">
     <tp-loading-indicator [marginY]="false" />
@@ -94,7 +96,7 @@
               <div>
                 @if (updatingNotesOfApplicationId === application.id) {
                   <tp-small-spinner />
-                } @else {
+                } @else if (writeAllowed) {
                   @let isCurrentlyUpdating = updatingNotesOfApplicationId !== undefined;
                   <i
                     class="bi bi-pencil"
@@ -124,13 +126,16 @@
                         <tr>
                           <td class="align-middle">{{ getTournamentClassName(team.tournamentClassId) }}</td>
                           <td class="align-middle">
-                            <span class="me-2">{{ team.name }}</span>
-                            <tp-rename-button
-                              translationKey="Portal.ViewPlanningRealm.Applications.RenameTeam"
-                              [current]="team.name"
-                              [displayLabel]="false"
-                              [reducedFootprint]="true"
-                              (renamed)="renameTeam(application.id, team, $event)" />
+                            <span>{{ team.name }}</span>
+                            @if (writeAllowed) {
+                              <tp-rename-button
+                                class="ms-2"
+                                translationKey="Portal.ViewPlanningRealm.Applications.RenameTeam"
+                                [current]="team.name"
+                                [displayLabel]="false"
+                                [reducedFootprint]="true"
+                                (renamed)="renameTeam(application.id, team, $event)" />
+                            }
                           </td>
                           <td class="align-middle">
                             @for (labelId of team.labelIds; track labelId; let isFirst = $first) {
@@ -142,7 +147,7 @@
                             }
                             @if (updatingLabelsOfApplicationTeamId === team.id) {
                               <tp-small-spinner class="ms-2" />
-                            } @else {
+                            } @else if (writeAllowed) {
                               <i class="bi bi-pencil tp-cursor-pointer ms-2" (click)="editTeamLabels(application.id, team)"></i>
                             }
                           </td>

@@ -51,7 +51,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ManageApplications))
+        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsRead))
         {
             return Results.Forbid();
         }

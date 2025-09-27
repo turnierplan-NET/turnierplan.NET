@@ -1207,7 +1207,8 @@ export const de = {
         Contributor: 'Mitwirkender',
         Reader: 'Leser',
         Reporter: 'Turnierdurchführung',
-        ApplicationOfficer: 'Anmeldungsbeauftragter'
+        ApplicationOfficer: 'Mitwirkender für Anmeldungen',
+        ApplicationReader: 'Leser für Anmeldungen'
       },
       RoleDescription: {
         Owner: 'Der Benutzer kann sämtliche Änderungen durchführen inkl. Änderungen an Zugriffsrechten.',
@@ -1215,7 +1216,8 @@ export const de = {
         Reader: 'Der Benutzer kann sämtliche Informationen lesen aber keine Änderungen durchführen.',
         Reporter:
           'Der Benutzer kann Spielergebnisse eintragen und löschen sowie Änderungen an der Startgebühr und Priorität der Mannschaften durchführen.',
-        ApplicationOfficer: 'Der Benutzer kann Anmeldungen im Turnierplaner anschauen, hinzufügen und bearbeiten.'
+        ApplicationOfficer: 'Der Benutzer kann Anmeldungen im Turnierplaner anschauen, hinzufügen und bearbeiten.',
+        ApplicationReader: 'Der Benutzer kann Anmeldungen im Turnierplaner anschauen aber keine Änderungen durchführen.'
       },
       PrincipalKind: {
         ApiKey: 'API-Schlüssel',

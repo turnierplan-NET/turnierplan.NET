@@ -58,7 +58,6 @@ export class PageFrameComponent implements OnInit, OnChanges {
   @ContentChild('fullWidthContent')
   public fullWidthContent?: TemplateRef<unknown>;
 
-  protected readonly history = history;
   protected currentTabId?: number;
 
   constructor(
@@ -98,19 +97,37 @@ export class PageFrameComponent implements OnInit, OnChanges {
 
   public toggleNavigationTab(id: number): void {
     const navigationTab = this.navigationTabs?.find((x) => x.id === id);
+
     if (!navigationTab) {
       return;
     }
 
+    if (navigationTab.authorization && this.contextEntityId) {
+      this.authorizationService.isActionAllowed$(this.contextEntityId, navigationTab.authorization).subscribe({
+        next: (isAllowed) => {
+          if (isAllowed) {
+            this.toggleNavigationTabImpl(navigationTab);
+          } else {
+            // The following assumes that the first tab is always accessible which is generally true at the moment
+            this.toggleNavigationTabImpl(this.navigationTabs![0]);
+          }
+        }
+      });
+    } else {
+      this.toggleNavigationTabImpl(navigationTab);
+    }
+  }
+
+  private toggleNavigationTabImpl(tab: PageFrameNavigationTab): void {
     if (this.rememberNavigationTab) {
       if (this.contextEntityId) {
-        this.localStorageService.setNavigationTab(this.contextEntityId, navigationTab.id);
+        this.localStorageService.setNavigationTab(this.contextEntityId, tab.id);
       } else {
-        console.error('Cannot retrieve active navigation tab because [contextEntityId] is not set.');
+        console.error('Cannot save active navigation tab because [contextEntityId] is not set.');
       }
     }
 
-    this.currentTabId = navigationTab.id;
-    this.navigationTabSelected.emit(navigationTab);
+    this.currentTabId = tab.id;
+    this.navigationTabSelected.emit(tab);
   }
 }

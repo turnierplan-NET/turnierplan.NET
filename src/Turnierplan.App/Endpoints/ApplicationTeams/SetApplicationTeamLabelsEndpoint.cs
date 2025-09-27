@@ -36,7 +36,7 @@ internal sealed class SetApplicationTeamLabelsEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ManageApplications))
+        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsWrite))
         {
             return Results.Forbid();
         }

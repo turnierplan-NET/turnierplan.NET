@@ -37,7 +37,7 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ManageApplications))
+        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsWrite))
         {
             return Results.Forbid();
         }

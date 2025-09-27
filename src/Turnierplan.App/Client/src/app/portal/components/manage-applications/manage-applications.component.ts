@@ -10,7 +10,7 @@ import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
-import { NgClass, NgStyle } from '@angular/common';
+import { AsyncPipe, NgClass, NgStyle } from '@angular/common';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { ViewTournamentComponent } from '../../pages/view-tournament/view-tournament.component';
@@ -31,6 +31,8 @@ import { LabelDto } from '../../../api/models/label-dto';
 import { LabelComponent } from '../label/label.component';
 import { LabelsSelectComponent } from '../labels-select/labels-select.component';
 import { setApplicationTeamLabels } from '../../../api/fn/application-teams/set-application-team-labels';
+import { Actions } from '../../../generated/actions';
+import { AuthorizationService } from '../../../core/services/authorization.service';
 
 @Component({
   selector: 'tp-manage-applications',
@@ -50,7 +52,8 @@ import { setApplicationTeamLabels } from '../../../api/fn/application-teams/set-
     PaginationComponent,
     RenameButtonComponent,
     NgStyle,
-    LabelComponent
+    LabelComponent,
+    AsyncPipe
   ]
 })
 export class ManageApplicationsComponent implements OnDestroy {
@@ -68,6 +71,8 @@ export class ManageApplicationsComponent implements OnDestroy {
   @Output()
   public filterRequested = new EventEmitter<ApplicationsFilter>();
 
+  protected readonly Actions = Actions;
+
   protected currentPage = 0;
   protected pageSize = 15;
   protected isLoading = false;
@@ -82,6 +87,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   private tournamentClassFilter: number[] = [];
 
   constructor(
+    protected readonly authorizationService: AuthorizationService,
     private readonly turnierplanApi: TurnierplanApi,
     private readonly modalService: NgbModal,
     private readonly localStorageService: LocalStorageService,

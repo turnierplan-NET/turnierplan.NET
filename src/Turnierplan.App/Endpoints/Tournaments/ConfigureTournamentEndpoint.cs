@@ -72,7 +72,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
                 return Results.BadRequest("Planning realm must belong to the same organization as the tournament.");
             }
 
-            if (!accessValidator.IsActionAllowed(planningRealm, Actions.ManageApplications))
+            if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsWrite))
             {
                 return Results.Forbid();
             }
