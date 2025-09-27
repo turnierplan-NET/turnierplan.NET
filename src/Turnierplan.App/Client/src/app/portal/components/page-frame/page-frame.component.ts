@@ -1,5 +1,4 @@
 import { Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
 
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Action } from '../../../generated/actions';
@@ -103,32 +102,32 @@ export class PageFrameComponent implements OnInit, OnChanges {
       return;
     }
 
-    let navigationTab$: Observable<PageFrameNavigationTab>;
-
     if (navigationTab.authorization && this.contextEntityId) {
-      navigationTab$ = this.authorizationService.isActionAllowed$(this.contextEntityId, navigationTab.authorization).pipe(
-        map((isAllowed) => {
-          // The following assumes that the first tab is always accessible which is generally true at the moment
-          return isAllowed ? navigationTab : this.navigationTabs![0];
-        })
-      );
-    } else {
-      navigationTab$ = of(navigationTab);
-    }
-
-    navigationTab$.subscribe({
-      next: (switchToTab) => {
-        if (this.rememberNavigationTab) {
-          if (this.contextEntityId) {
-            this.localStorageService.setNavigationTab(this.contextEntityId, switchToTab.id);
+      this.authorizationService.isActionAllowed$(this.contextEntityId, navigationTab.authorization).subscribe({
+        next: (isAllowed) => {
+          if (isAllowed) {
+            this.toggleNavigationTabImpl(navigationTab);
           } else {
-            console.error('Cannot retrieve active navigation tab because [contextEntityId] is not set.');
+            // The following assumes that the first tab is always accessible which is generally true at the moment
+            this.toggleNavigationTabImpl(this.navigationTabs![0]);
           }
         }
+      });
+    } else {
+      this.toggleNavigationTabImpl(navigationTab);
+    }
+  }
 
-        this.currentTabId = switchToTab.id;
-        this.navigationTabSelected.emit(switchToTab);
+  private toggleNavigationTabImpl(tab: PageFrameNavigationTab): void {
+    if (this.rememberNavigationTab) {
+      if (this.contextEntityId) {
+        this.localStorageService.setNavigationTab(this.contextEntityId, tab.id);
+      } else {
+        console.error('Cannot save active navigation tab because [contextEntityId] is not set.');
       }
-    });
+    }
+
+    this.currentTabId = tab.id;
+    this.navigationTabSelected.emit(tab);
   }
 }
