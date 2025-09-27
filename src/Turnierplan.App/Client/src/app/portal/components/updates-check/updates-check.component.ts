@@ -36,7 +36,7 @@ export class UpdatesCheckComponent implements OnInit {
   }
 
   private getMostRecentReleaseVersion(): Observable<string | undefined> {
-    if (!environment.production) {
+    if (!environment.doUpdatesCheck) {
       return of(environment.version);
     }
 

@@ -3,5 +3,6 @@
   defaultTitle: 'turnierplan.NET',
   version: '1.0.0',
   originOverwrite: undefined,
-  includeE2EData: true
+  includeE2EData: true,
+  doUpdatesCheck: false
 };
