@@ -385,7 +385,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
   }
 
   protected moveTeam(team: TemporaryTeam, from: TemporaryGroup, to: TemporaryGroup): void {
-    const index = from.teams.findIndex((x) => x === team);
+    const index = from.teams.indexOf(team);
     from.teams.splice(index, 1);
     to.teams.push(team);
 
@@ -632,7 +632,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
       return;
     }
 
-    if (!this.currentFinalRound || this.availableFinalRounds.findIndex((x) => x === this.currentFinalRound) === -1) {
+    if (!this.currentFinalRound || this.availableFinalRounds.indexOf(this.currentFinalRound) === -1) {
       this.currentFinalRound = this.availableFinalRounds[0];
     }
 
