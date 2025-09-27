@@ -130,7 +130,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       id: ViewPlanningRealmComponent.ApplicationsManagerPageId,
       title: 'Portal.ViewPlanningRealm.Pages.Applications',
       icon: 'bi-card-checklist',
-      authorization: Actions.ManageApplications
+      authorization: Actions.ApplicationsRead
     },
     {
       id: 3,

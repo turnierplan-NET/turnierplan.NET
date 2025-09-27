@@ -1,5 +1,7 @@
 @let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
 
+<!-- TODO: Hide buttons if write not allowed -->
+
 <table class="table">
   <thead>
     <tr>
