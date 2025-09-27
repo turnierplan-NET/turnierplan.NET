@@ -108,7 +108,7 @@ export class DocumentConfigReceiptsComponent extends DocumentConfigComponent<Rec
     // For now, we simply find the lowest number that is not currently a key in the map.
     const existingEntries = this.amountKeys.map((x) => +x);
     let newEntry = 2;
-    while (existingEntries.some((x) => x === newEntry)) {
+    while (existingEntries.includes(newEntry)) {
       newEntry++;
     }
 

@@ -204,7 +204,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   }
 
   protected isTeamDisabled(id: number): boolean {
-    return this.usedApplicationTeamIds.some((x) => x === id);
+    return this.usedApplicationTeamIds.includes(id);
   }
 
   private emitSelectedTeams(): void {
@@ -212,9 +212,6 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   }
 
   private isTeamVisible(team: ApplicationTeamDto): boolean {
-    return (
-      this.applicationsFilter.tournamentClass.length === 0 ||
-      this.applicationsFilter.tournamentClass.some((x) => x === team.tournamentClassId)
-    );
+    return this.applicationsFilter.tournamentClass.length === 0 || this.applicationsFilter.tournamentClass.includes(team.tournamentClassId);
   }
 }
