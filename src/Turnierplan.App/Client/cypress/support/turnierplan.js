@@ -34,7 +34,10 @@ export const turnierplan = {
   configureTournamentPage: {
     addGroupButton: 'configure-tournament-page-add-group-button',
     shuffleGroupsButton: 'configure-tournament-page-shuffle-groups-button',
-    addTeamButton: (alphabeticalId) => ['configure-tournament-page-add-group-button', alphabeticalId]
+    addTeamButton: (alphabeticalId) => ['configure-tournament-page-add-group-button', alphabeticalId],
+    enableFinalsRound: 'configure-tournament-page-enable-finals-round',
+    firstFinalsRound: 'configure-tournament-page-first-finals-round',
+    submitButton: 'configure-tournament-page-submit-button'
   },
   addTeamDialog: {
     teamNameField: 'add-team-dialog-team-name-field',

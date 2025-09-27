@@ -26,7 +26,16 @@ it('create, configure and conduct a basic tournament', () => {
       addTeam('B', teamNames[6]);
       addTeam('B', teamNames[7]);
 
-      cy.getx(turnierplan.configureTournamentPage.shuffleGroupsButton).click();
+      // enable finals round with semi-finals
+      cy.getx(turnierplan.configureTournamentPage.enableFinalsRound).check();
+      cy.getx(turnierplan.configureTournamentPage.firstFinalsRound).select('SemiFinal');
+
+      // submit
+      cy.getx(turnierplan.configureTournamentPage.submitButton).click();
+
+      // check for success toast
+      cy.contains('Turnier wurde aktualisiert');
+      cy.contains('Die Änderungen am Turnier wurden erfolgreich durchgeführt und gespeichert');
     });
   });
 });

@@ -48,6 +48,7 @@
       <tp-action-button
         [type]="'success'"
         [title]="'Portal.ConfigureTournament.Submit'"
+        [tpE2E]="'configure-tournament-page-submit-button'"
         [disabled]="!canSave"
         (buttonClick)="saveButtonClicked()" />
     </div>
@@ -312,6 +313,7 @@
         id="enableFinalsRound"
         type="checkbox"
         [(ngModel)]="enableFinalsRound"
+        [tpE2E]="'configure-tournament-page-enable-finals-round'"
         (ngModelChange)="markDirty()" />
       <label
         class="form-check-label"
@@ -327,6 +329,7 @@
           <select
             class="form-select"
             [(ngModel)]="currentFinalRound"
+            [tpE2E]="'configure-tournament-page-first-finals-round'"
             (ngModelChange)="determineAvailableAdditionalPlayoffMatches(); markDirty()">
             @for (option of availableFinalRounds; track option) {
               <option [value]="option">
