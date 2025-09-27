@@ -50,7 +50,7 @@
           @if (label.id > 0) {
             <!-- Navigation to search is not possible if this label has not been saved yet -->
             <tp-action-button
-              *tpIsActionAllowed="[planningRealm.id, Actions.ManageApplications]"
+              *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsRead]"
               [type]="'light'"
               [icon]="'search'"
               [mode]="'IconOnly'"
