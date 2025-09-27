@@ -42,8 +42,7 @@ internal static class Actions
     /// <summary>
     /// Any action that adds or modifies applications in a planning realm.
     /// </summary>
-    public static readonly Action ManageApplications = new(Role.Owner, Role.Contributor, Role.ApplicationOfficer);
-    // TODO Rename -> ApplicationWrite
+    public static readonly Action ApplicationsWrite = new(Role.Owner, Role.Contributor, Role.ApplicationOfficer);
 
     /// <summary>
     /// Any action that queries applications in a planning realm.
