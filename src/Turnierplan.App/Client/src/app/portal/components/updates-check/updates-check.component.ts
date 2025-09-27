@@ -48,7 +48,7 @@ export class UpdatesCheckComponent implements OnInit {
       try {
         const parsed = JSON.parse(localStorageValue) as VersionCache;
         const cacheExpiry = parsed.timestamp + cacheMaxAgeMilliseconds;
-        if (new Date().getTime() < cacheExpiry) {
+        if (Date.now() < cacheExpiry) {
           return of(parsed.version);
         }
       } catch (e) {
@@ -64,7 +64,7 @@ export class UpdatesCheckComponent implements OnInit {
           localStorageKey,
           JSON.stringify({
             version: version,
-            timestamp: new Date().getTime()
+            timestamp: Date.now()
           } as VersionCache)
         );
       })

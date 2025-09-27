@@ -247,14 +247,14 @@ export class AuthenticationService implements OnDestroy {
     const expiry = this.readAccessTokenExpiryFromLocalStorage();
 
     // Add some clock skew to prevent race condition
-    return expiry === undefined || expiry * 1000 < new Date().getTime() + AuthenticationService.tokenExpiryCheckClockSkewSeconds * 1000;
+    return expiry === undefined || expiry * 1000 < Date.now() + AuthenticationService.tokenExpiryCheckClockSkewSeconds * 1000;
   }
 
   private isRefreshTokenExpired(): boolean {
     const expiry = this.readRefreshTokenExpiryFromLocalStorage();
 
     // Add some clock skew to prevent race condition
-    return expiry === undefined || expiry * 1000 < new Date().getTime() + AuthenticationService.tokenExpiryCheckClockSkewSeconds * 1000;
+    return expiry === undefined || expiry * 1000 < Date.now() + AuthenticationService.tokenExpiryCheckClockSkewSeconds * 1000;
   }
 
   private decodeAccessToken(token: string): TurnierplanAccessToken {

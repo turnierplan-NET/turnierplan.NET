@@ -13,7 +13,7 @@ export class E2eDirective {
       return;
     }
 
-    this.elementRef.nativeElement.setAttribute('data-cy', E2eDirective.transformValue(value));
+    this.elementRef.nativeElement.dataset.cy = E2eDirective.transformValue(value);
   }
 
   private static transformValue(value: string | (string | number)[]): string {
