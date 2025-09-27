@@ -6,7 +6,7 @@ public sealed class Application : Entity<long>
 {
     internal readonly List<ApplicationTeam> _teams = [];
 
-    internal Application(long id, int tag, DateTime createdAt, string notes, string contact, string? contactEmail, string? contactTelephone, string? comment)
+    internal Application(long id, int tag, DateTime createdAt, string notes, string contact, string? contactEmail, string? contactTelephone, string? comment, Guid? formSession)
     {
         Id = id;
         Tag = tag;
@@ -16,6 +16,7 @@ public sealed class Application : Entity<long>
         ContactEmail = contactEmail;
         ContactTelephone = contactTelephone;
         Comment = comment;
+        FormSession = formSession;
     }
 
     internal Application(PlanningRealm planningRealm, InvitationLink? sourceLink, int tag, string contact)
@@ -48,6 +49,8 @@ public sealed class Application : Entity<long>
     public string? ContactTelephone { get; set; }
 
     public string? Comment { get; set; }
+
+    public Guid? FormSession { get; set; }
 
     public IReadOnlyList<ApplicationTeam> Teams => _teams.AsReadOnly();
 

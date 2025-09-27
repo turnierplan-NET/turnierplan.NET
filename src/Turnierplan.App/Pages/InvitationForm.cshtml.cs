@@ -7,11 +7,13 @@ namespace Turnierplan.App.Pages;
 
 public sealed class InvitationForm : PageModel
 {
-    private readonly IInvitationLinkRepository _repository;
+    private readonly IInvitationLinkRepository _invitationLinkRepository;
+    private readonly IApplicationRepository _applicationRepository;
 
-    public InvitationForm(IInvitationLinkRepository repository)
+    public InvitationForm(IInvitationLinkRepository invitationLinkRepository, IApplicationRepository applicationRepository)
     {
-        _repository = repository;
+        _invitationLinkRepository = invitationLinkRepository;
+        _applicationRepository = applicationRepository;
     }
 
     [BindProperty(SupportsGet = true)]
@@ -42,14 +44,14 @@ public sealed class InvitationForm : PageModel
             return;
         }
 
-        var formSessionId = GetFormValue("form_session_id");
+        var formSessionIdValue = GetFormValue("form_session_id");
         var contactPerson = GetFormValue("contact_person");
         var contactEMail = GetFormValue("contact_email");
         var contactTelephoneNr = GetFormValue("contact_tel");
         var teamName = GetFormValue("team_name");
         var comment = GetFormValue("comment");
 
-        if (!Guid.TryParse(formSessionId, out _) || contactPerson is null || contactEMail is null || teamName is null)
+        if (!Guid.TryParse(formSessionIdValue, out var formSessionId) || contactPerson is null || contactEMail is null || teamName is null)
         {
             State = SubmissionState.SubmissionFailedBecauseFormIncomplete;
             return;
@@ -84,13 +86,18 @@ public sealed class InvitationForm : PageModel
             return;
         }
 
-        // TODO: Check that there exists no other application with the same formSessionId
+        if (await _applicationRepository.GetByFormSessionAsync(formSessionId) is not null)
+        {
+            State = SubmissionState.SubmissionFailedBecauseAlreadySubmitted;
+            return;
+        }
 
         var application = Data.PlanningRealm.AddApplication(Data, contactPerson);
 
         application.ContactEmail = contactEMail;
         application.ContactTelephone = contactTelephoneNr;
         application.Comment = comment;
+        application.FormSession = formSessionId;
 
         foreach (var (entry, count) in teamCounts)
         {
@@ -101,7 +108,7 @@ public sealed class InvitationForm : PageModel
             }
         }
 
-        await _repository.UnitOfWork.SaveChangesAsync();
+        await _invitationLinkRepository.UnitOfWork.SaveChangesAsync();
 
         State = SubmissionState.SubmissionSuccessful;
     }
@@ -124,7 +131,7 @@ public sealed class InvitationForm : PageModel
             return;
         }
 
-        var invitationLink = await _repository.GetByPublicIdAsync(publicId);
+        var invitationLink = await _invitationLinkRepository.GetByPublicIdAsync(publicId);
 
         if (invitationLink is null || !invitationLink.IsActive)
         {
@@ -154,6 +161,7 @@ public sealed class InvitationForm : PageModel
         SubmissionFailedBecauseLinkExpired,
         SubmissionFailedBecauseFormIncomplete,
         SubmissionFailedBecauseFormTeamsInvalid,
-        SubmissionFailedBecauseFormTeamsEmpty
+        SubmissionFailedBecauseFormTeamsEmpty,
+        SubmissionFailedBecauseAlreadySubmitted
     }
 }

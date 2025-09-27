@@ -50,6 +50,9 @@
                     case InvitationForm.SubmissionState.SubmissionFailedBecauseFormTeamsEmpty:
                         <span>Es wurden keine Mannschaften angegeben.</span>
                         break;
+                    case InvitationForm.SubmissionState.SubmissionFailedBecauseAlreadySubmitted:
+                        <span>Ihre Anmeldung wurde bereits abgeschickt und verarbeitet.</span>
+                        break;
                     default:
                         <span>Ein unbekannter Fehler ist aufgetreten.</span>
                         break;

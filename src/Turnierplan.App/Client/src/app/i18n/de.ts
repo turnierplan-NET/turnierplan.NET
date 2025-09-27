@@ -1207,14 +1207,14 @@ export const de = {
         Contributor: 'Mitwirkender',
         Reader: 'Leser',
         Reporter: 'Turnierdurchführung',
-        ApplicationOfficer: 'ApplicationOfficer' // TODO: Add translated name
+        ApplicationOfficer: 'Anmeldungsbeauftragter'
       },
       RoleDescription: {
         Owner: 'Der Benutzer kann sämtliche Änderungen durchführen inkl. Änderungen an Zugriffsrechten.',
         Contributor: 'Der Benutzer kann sämtliche Änderungen durchführen ausgenommen Änderungen an Zugriffsrechten.',
         Reader: 'Der Benutzer kann sämtliche Informationen lesen aber keine Änderungen durchführen.',
         Reporter:
-          'Der Benutzer kann Spielergebnisse melden und löschen sowie Änderungen an der Startgebühr und Priorität der Mannschaften durchführen.',
+          'Der Benutzer kann Spielergebnisse eintragen und löschen sowie Änderungen an der Startgebühr und Priorität der Mannschaften durchführen.',
         ApplicationOfficer: 'Der Benutzer kann Anmeldungen im Turnierplaner anschauen, hinzufügen und bearbeiten.'
       },
       PrincipalKind: {
