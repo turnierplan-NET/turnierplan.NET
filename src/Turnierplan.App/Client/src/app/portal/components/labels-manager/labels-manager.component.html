@@ -1,7 +1,5 @@
 @let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
 
-<!-- TODO: Hide buttons if write not allowed -->
-
 <table class="table">
   <thead>
     <tr>
@@ -19,30 +17,34 @@
       <tr>
         <td class="text-nowrap align-middle">
           <tp-label [label]="label" />
-          <i
-            class="ms-2 bi bi-palette tp-cursor-pointer"
-            [ngbPopover]="colorPickerPopover"
-            [popoverTitle]="colorPickerPopoverTitle"
-            [popoverContext]="{ labelId: label.id }"
-            [container]="'body'"></i>
-          <tp-rename-button
-            class="ms-1 me-4"
-            [translationKey]="'Portal.ViewPlanningRealm.Labels.Rename'"
-            [displayLabel]="false"
-            [current]="label.name"
-            [reducedFootprint]="true"
-            (renamed)="setLabelName(label.id, $event)" />
+          @if (writeAllowed) {
+            <i
+              class="ms-2 bi bi-palette tp-cursor-pointer"
+              [ngbPopover]="colorPickerPopover"
+              [popoverTitle]="colorPickerPopoverTitle"
+              [popoverContext]="{ labelId: label.id }"
+              [container]="'body'"></i>
+            <tp-rename-button
+              class="ms-1 me-4"
+              [translationKey]="'Portal.ViewPlanningRealm.Labels.Rename'"
+              [displayLabel]="false"
+              [current]="label.name"
+              [reducedFootprint]="true"
+              (renamed)="setLabelName(label.id, $event)" />
+          }
         </td>
         <td class="align-middle">
           <span>{{ label.description }}</span>
-          <tp-rename-button
-            [class]="{ 'ms-2': label.description.trim().length > 0 }"
-            [translationKey]="'Portal.ViewPlanningRealm.Labels.ChangeDescription'"
-            [displayLabel]="false"
-            [current]="label.description"
-            [allowReset]="true"
-            [reducedFootprint]="true"
-            (renamed)="setLabelDescription(label.id, $event)" />
+          @if (writeAllowed) {
+            <tp-rename-button
+              [class]="{ 'ms-2': label.description.trim().length > 0 }"
+              [translationKey]="'Portal.ViewPlanningRealm.Labels.ChangeDescription'"
+              [displayLabel]="false"
+              [current]="label.description"
+              [allowReset]="true"
+              [reducedFootprint]="true"
+              (renamed)="setLabelDescription(label.id, $event)" />
+          }
         </td>
         <td>
           @if (label.id > 0) {
