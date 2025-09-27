@@ -9,7 +9,7 @@
     @for (ranking of rankings; track ranking.position) {
       <tr>
         <td>{{ ranking.position }}</td>
-        <td>{{ ranking.team }}</td>
+        <td [tpE2E]="['view-tournament-page-ranking-team-name', ranking.position]">{{ ranking.team }}</td>
       </tr>
     } @empty {
       <tr>

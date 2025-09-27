@@ -3,5 +3,6 @@ export const environment = {
   defaultTitle: 'turnierplan.NET',
   version: '0.0.0',
   originOverwrite: 'http://localhost:45000',
-  includeE2EData: true
+  includeE2EData: true,
+  doUpdatesCheck: false
 };

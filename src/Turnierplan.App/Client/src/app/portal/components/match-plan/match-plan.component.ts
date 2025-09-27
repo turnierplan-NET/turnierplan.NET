@@ -8,6 +8,7 @@ import { LiveIndicatorComponent } from '../live-indicator/live-indicator.compone
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { NullableOfMatchOutcomeType } from '../../../api/models/nullable-of-match-outcome-type';
 import { MatchType } from '../../../api/models/match-type';
+import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 // IDEA: This interface should probably be moved to a separate .ts file as long as it is referenced by other components
 export interface MatchView {
@@ -49,7 +50,7 @@ interface MatchViewGrouping {
   selector: 'tp-match-plan',
   templateUrl: './match-plan.component.html',
   styleUrls: ['./match-plan.component.scss'],
-  imports: [NgClass, TranslateDirective, SmallSpinnerComponent, LiveIndicatorComponent, TranslatePipe, TranslateDatePipe]
+  imports: [NgClass, TranslateDirective, SmallSpinnerComponent, LiveIndicatorComponent, TranslatePipe, TranslateDatePipe, E2eDirective]
 })
 export class MatchPlanComponent implements OnChanges {
   @Input()

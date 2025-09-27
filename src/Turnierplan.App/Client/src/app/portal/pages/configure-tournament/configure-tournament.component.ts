@@ -36,6 +36,7 @@ import { FinalsPhaseConfigurationDto } from '../../../api/models/finals-phase-co
 import { AdditionalPlayoffDto } from '../../../api/models/additional-playoff-dto';
 import { ConfigureTournamentEndpointRequestGroupEntry } from '../../../api/models/configure-tournament-endpoint-request-group-entry';
 import { ConfigureTournamentEndpointRequestTeamEntry } from '../../../api/models/configure-tournament-endpoint-request-team-entry';
+import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 interface TemporaryGroup {
   id?: number;
@@ -89,7 +90,8 @@ interface TemporaryAdditionalPlayoff {
     TranslatePipe,
     AbstractTeamSelectorPipe,
     NgbPopover,
-    RenameButtonComponent
+    RenameButtonComponent,
+    E2eDirective
   ]
 })
 export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardChangesDetector {

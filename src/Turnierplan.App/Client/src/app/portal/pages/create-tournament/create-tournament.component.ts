@@ -19,6 +19,7 @@ import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { getOrganization } from '../../../api/fn/organizations/get-organization';
 import { getFolders } from '../../../api/fn/folders/get-folders';
 import { createTournament } from '../../../api/fn/tournaments/create-tournament';
+import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 
@@ -34,7 +35,8 @@ type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
     TooltipIconComponent,
     VisibilitySelectorComponent,
     ActionButtonComponent,
-    TranslatePipe
+    TranslatePipe,
+    E2eDirective
   ]
 })
 export class CreateTournamentComponent implements OnDestroy {

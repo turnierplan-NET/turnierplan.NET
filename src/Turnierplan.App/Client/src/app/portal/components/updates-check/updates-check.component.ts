@@ -36,7 +36,8 @@ export class UpdatesCheckComponent implements OnInit {
   }
 
   private getMostRecentReleaseVersion(): Observable<string | undefined> {
-    if (!environment.production) {
+    if (!environment.doUpdatesCheck) {
+      // Don't spam GitHub API when running locally or during e2e tests
       return of(environment.version);
     }
 

@@ -27,7 +27,10 @@
         </tr>
       }
       @for (match of matchGroup.matches; track match) {
-        <tr [ngClass]="{ 'tp-cursor-pointer': allowReporting }" (click)="allowReporting && matchClick.emit(match.id)">
+        <tr
+          [ngClass]="{ 'tp-cursor-pointer': allowReporting }"
+          [tpE2E]="['view-tournament-page-match-plan-match-row', match.index]"
+          (click)="allowReporting && matchClick.emit(match.id)">
           <td class="text-center align-middle">{{ match.index }}</td>
           <td class="text-center align-middle">{{ match.group }}</td>
           @if (showCourtColumn) {

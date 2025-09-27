@@ -48,6 +48,7 @@
       <tp-action-button
         [type]="'success'"
         [title]="'Portal.ConfigureTournament.Submit'"
+        [tpE2E]="'configure-tournament-page-submit-button'"
         [disabled]="!canSave"
         (buttonClick)="saveButtonClicked()" />
     </div>
@@ -106,6 +107,7 @@
                 [icon]="'plus-circle'"
                 [type]="'outline-primary'"
                 [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.Button'"
+                [tpE2E]="['configure-tournament-page-add-group-button', group.alphabeticalId]"
                 (buttonClick)="addTeam(group)" />
               <span class="flex-grow-1"></span>
               @if (group.teams.length > 0) {
@@ -197,11 +199,13 @@
       [icon]="'shuffle'"
       [disabled]="totalTeamCount <= 1"
       [title]="'Portal.ConfigureTournament.Sections.Participants.ShuffleGroupsButton'"
+      [tpE2E]="'configure-tournament-page-shuffle-groups-button'"
       (buttonClick)="shuffleGroups()" />
     <tp-action-button
       [type]="'outline-primary'"
       [icon]="'plus-circle'"
       [title]="'Portal.ConfigureTournament.Sections.Participants.AddGroupButton'"
+      [tpE2E]="'configure-tournament-page-add-group-button'"
       (buttonClick)="addGroup()" />
   </div>
 </ng-template>
@@ -309,6 +313,7 @@
         id="enableFinalsRound"
         type="checkbox"
         [(ngModel)]="enableFinalsRound"
+        [tpE2E]="'configure-tournament-page-enable-finals-round'"
         (ngModelChange)="markDirty()" />
       <label
         class="form-check-label"
@@ -324,6 +329,7 @@
           <select
             class="form-select"
             [(ngModel)]="currentFinalRound"
+            [tpE2E]="'configure-tournament-page-first-finals-round'"
             (ngModelChange)="determineAvailableAdditionalPlayoffMatches(); markDirty()">
             @for (option of availableFinalRounds; track option) {
               <option [value]="option">
