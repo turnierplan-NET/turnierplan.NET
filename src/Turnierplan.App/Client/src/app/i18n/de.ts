@@ -1207,8 +1207,8 @@ export const de = {
         Contributor: 'Mitwirkender',
         Reader: 'Leser',
         Reporter: 'Turnierdurchführung',
-        ApplicationOfficer: 'Anmeldungsbeauftragter',
-        ApplicationReader: 'ApplicationReader' // TODO: Naming
+        ApplicationOfficer: 'Mitwirkender für Anmeldungen',
+        ApplicationReader: 'Leser für Anmeldungen'
       },
       RoleDescription: {
         Owner: 'Der Benutzer kann sämtliche Änderungen durchführen inkl. Änderungen an Zugriffsrechten.',
