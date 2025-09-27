@@ -54,14 +54,14 @@ export class MultiSelectFilterComponent {
   }
 
   protected isValueSelected(value: unknown): boolean {
-    return this._selected.some((x) => x === value);
+    return this._selected.includes(value);
   }
 
   protected setValueSelected(value: unknown, isSelected: boolean): void {
     let updated = false;
 
     if (isSelected) {
-      if (!this._selected.some((x) => x === value)) {
+      if (!this._selected.includes(value)) {
         this._selected.push(value);
         updated = true;
       }

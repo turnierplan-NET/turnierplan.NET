@@ -131,7 +131,9 @@ export class MatchTreeComponent implements OnChanges, AfterViewInit {
         this.columns.at(-1)!.dependencyIds.push(...dependentMatchIds);
         this.columns.push({ index: this.columns.length, matches: [...dependantMatches], dependencyIds: [] });
 
-        dependantMatches.forEach((match) => includedMatchIds.push(match.id));
+        for (const match of dependantMatches) {
+          includedMatchIds.push(match.id);
+        }
 
         dependantMatches = [];
         dependentMatchIds = [];

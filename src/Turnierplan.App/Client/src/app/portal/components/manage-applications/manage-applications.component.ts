@@ -150,7 +150,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   }
 
   protected isTeamVisible(team: ApplicationTeamDto): boolean {
-    return this.tournamentClassFilter.length === 0 || this.tournamentClassFilter.some((x) => x === team.tournamentClassId);
+    return this.tournamentClassFilter.length === 0 || this.tournamentClassFilter.includes(team.tournamentClassId);
   }
 
   protected getNumberOfVisibleTeams(application: ApplicationDto): number {

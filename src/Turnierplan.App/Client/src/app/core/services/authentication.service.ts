@@ -247,14 +247,14 @@ export class AuthenticationService implements OnDestroy {
     const expiry = this.readAccessTokenExpiryFromLocalStorage();
 
     // Add some clock skew to prevent race condition
-    return expiry === undefined || expiry * 1000 < new Date().getTime() + AuthenticationService.tokenExpiryCheckClockSkewSeconds * 1000;
+    return expiry === undefined || expiry * 1000 < Date.now() + AuthenticationService.tokenExpiryCheckClockSkewSeconds * 1000;
   }
 
   private isRefreshTokenExpired(): boolean {
     const expiry = this.readRefreshTokenExpiryFromLocalStorage();
 
     // Add some clock skew to prevent race condition
-    return expiry === undefined || expiry * 1000 < new Date().getTime() + AuthenticationService.tokenExpiryCheckClockSkewSeconds * 1000;
+    return expiry === undefined || expiry * 1000 < Date.now() + AuthenticationService.tokenExpiryCheckClockSkewSeconds * 1000;
   }
 
   private decodeAccessToken(token: string): TurnierplanAccessToken {
@@ -323,7 +323,11 @@ export class AuthenticationService implements OnDestroy {
   private logoutAndClearData(navigateTo?: () => void): Observable<void> {
     const logout$ = this.turnierplanApi.invoke(logout).pipe(
       catchError(() => of(undefined)),
-      tap(() => AuthenticationService.allLocalStorageKeys.forEach((key) => localStorage.removeItem(key))),
+      tap(() => {
+        for (const key of AuthenticationService.allLocalStorageKeys) {
+          localStorage.removeItem(key);
+        }
+      }),
       map(() => void 0)
     );
 

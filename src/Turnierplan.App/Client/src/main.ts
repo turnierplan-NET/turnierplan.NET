@@ -23,7 +23,7 @@ const routes: Routes = [
     children: [
       {
         matcher: (url: UrlSegment[]) =>
-          url.length > 0 && ['change-password', 'login', 'user-info'].some((x) => x === url[0].path) ? { consumed: [] } : null,
+          url.length > 0 && ['change-password', 'login', 'user-info'].includes(url[0].path) ? { consumed: [] } : null,
         title: environment.defaultTitle,
         loadChildren: () => import('./app/identity/identity.routes').then((m) => m.identityRoutes)
       },

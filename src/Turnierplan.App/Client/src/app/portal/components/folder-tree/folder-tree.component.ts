@@ -42,14 +42,18 @@ export class FolderTreeComponent {
     treeData.push(root);
 
     // Add all tournaments w/o folder to the root node
-    tournaments.filter((x) => x.folderId === undefined).forEach((tournament) => root.tournaments.push(tournament));
+    for (const tournament of tournaments) {
+      if (tournament.folderId === undefined) {
+        root.tournaments.push(tournament);
+      }
+    }
 
     // Get all distinct folders
     const allFolders = FolderTreeComponent.detectFolders(tournaments);
     allFolders.sort((a, b) => a.name.localeCompare(b.name));
 
     // Add all tournaments with folder to the corresponding folder node
-    allFolders.forEach((folder) => {
+    for (const folder of allFolders) {
       const folderTournaments = tournaments.filter((tournament) => tournament.folderId === folder.id);
       folderTournaments.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -64,7 +68,7 @@ export class FolderTreeComponent {
       };
 
       treeData.push(folderEntry);
-    });
+    }
 
     return treeData;
   }

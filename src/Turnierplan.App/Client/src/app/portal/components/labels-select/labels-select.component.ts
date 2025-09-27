@@ -26,7 +26,7 @@ export class LabelsSelectComponent {
     this.labelsSelected = {};
 
     for (const label of this.availableLabels) {
-      this.labelsSelected[label.id] = selectedLabelIds.some((x) => x === label.id);
+      this.labelsSelected[label.id] = selectedLabelIds.includes(label.id);
     }
 
     this.isInitialized = true;
