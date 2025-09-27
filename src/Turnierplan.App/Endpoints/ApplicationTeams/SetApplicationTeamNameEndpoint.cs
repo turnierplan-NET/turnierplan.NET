@@ -29,7 +29,7 @@ internal sealed class SetApplicationTeamNameEndpoint : EndpointBase
             return result;
         }
 
-        // Note: We muse use 'ApplicationsWithTeamsAndTournamentLinks' because if a team link exists, the tournament team must also be renamed
+        // Note: We must use 'ApplicationsWithTeamsAndTournamentLinks' because if a team link exists, the tournament team must also be renamed
         var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.ApplicationsWithTeamsAndTournamentLinks);
 
         if (planningRealm is null)
