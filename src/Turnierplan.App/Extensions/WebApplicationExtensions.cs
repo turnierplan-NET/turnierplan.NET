@@ -12,7 +12,7 @@ internal static class WebApplicationExtensions
 {
     public static async Task InitializeDatabaseAsync(this WebApplication app)
     {
-        if (string.IsNullOrWhiteSpace(app.Configuration.GetDatabaseConnectionString()))
+        if (string.IsNullOrWhiteSpace(app.Configuration.GetDatabaseConnectionString()) && !app.Configuration.UseInMemoryDatabase())
         {
             return;
         }
