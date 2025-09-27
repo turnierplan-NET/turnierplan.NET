@@ -1,4 +1,5 @@
 import { Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
+import { take } from 'rxjs';
 
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Action } from '../../../generated/actions';
@@ -103,16 +104,19 @@ export class PageFrameComponent implements OnInit, OnChanges {
     }
 
     if (navigationTab.authorization && this.contextEntityId) {
-      this.authorizationService.isActionAllowed$(this.contextEntityId, navigationTab.authorization).subscribe({
-        next: (isAllowed) => {
-          if (isAllowed) {
-            this.toggleNavigationTabImpl(navigationTab);
-          } else {
-            // The following assumes that the first tab is always accessible which is generally true at the moment
-            this.toggleNavigationTabImpl(this.navigationTabs![0]);
+      this.authorizationService
+        .isActionAllowed$(this.contextEntityId, navigationTab.authorization)
+        .pipe(take(1))
+        .subscribe({
+          next: (isAllowed) => {
+            if (isAllowed) {
+              this.toggleNavigationTabImpl(navigationTab);
+            } else {
+              // The following assumes that the first tab is always accessible which is generally true at the moment
+              this.toggleNavigationTabImpl(this.navigationTabs![0]);
+            }
           }
-        }
-      });
+        });
     } else {
       this.toggleNavigationTabImpl(navigationTab);
     }
