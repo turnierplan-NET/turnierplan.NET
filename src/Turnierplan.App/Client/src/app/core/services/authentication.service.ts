@@ -323,7 +323,11 @@ export class AuthenticationService implements OnDestroy {
   private logoutAndClearData(navigateTo?: () => void): Observable<void> {
     const logout$ = this.turnierplanApi.invoke(logout).pipe(
       catchError(() => of(undefined)),
-      tap(() => AuthenticationService.allLocalStorageKeys.forEach((key) => localStorage.removeItem(key))),
+      tap(() => {
+        for (const key of AuthenticationService.allLocalStorageKeys) {
+          localStorage.removeItem(key);
+        }
+      }),
       map(() => void 0)
     );
 

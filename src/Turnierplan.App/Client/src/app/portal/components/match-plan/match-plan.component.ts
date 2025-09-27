@@ -97,7 +97,7 @@ export class MatchPlanComponent implements OnChanges {
       matches: []
     };
 
-    this.matches.forEach((match) => {
+    for (const match of this.matches) {
       this.matchCount++;
       const isCorrectGroup = currentGroup.title.displayName === match.type.displayName;
 
@@ -114,7 +114,7 @@ export class MatchPlanComponent implements OnChanges {
       if (match.kickoff !== undefined && new Date(match.kickoff).getSeconds() !== 0) {
         this.showKickoffWithSeconds = true;
       }
-    });
+    }
 
     this.showCourtColumn = new Set(this.matches.map((x) => x.court)).size > 1;
 

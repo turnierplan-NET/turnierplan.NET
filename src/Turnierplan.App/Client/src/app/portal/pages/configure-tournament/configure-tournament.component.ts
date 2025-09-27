@@ -152,9 +152,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
   }
 
   protected get totalTeamCount(): number {
-    let count = 0;
-    this.groups.forEach((x) => (count += x.teams.length));
-    return count;
+    return this.groups.reduce((sum, group) => sum + group.teams.length, 0);
   }
 
   protected get isGroupPhaseCourtsInvalid(): boolean {
