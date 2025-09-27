@@ -32,11 +32,20 @@ public sealed class ApplicationEntityTypeConfiguration : IEntityTypeConfiguratio
         builder.Property(x => x.Contact)
             .IsRequired();
 
-        builder.Property(x => x.ContactEmail);
+        builder.Property(x => x.ContactEmail)
+            .IsRequired(false);
 
-        builder.Property(x => x.ContactTelephone);
+        builder.Property(x => x.ContactTelephone)
+            .IsRequired(false);
 
-        builder.Property(x => x.Comment);
+        builder.Property(x => x.Comment)
+            .IsRequired(false);
+
+        builder.Property(x => x.FormSession)
+            .IsRequired(false);
+
+        builder.HasIndex(x => x.FormSession)
+            .IsUnique();
 
         builder.HasMany(x => x.Teams)
             .WithOne(x => x.Application)
