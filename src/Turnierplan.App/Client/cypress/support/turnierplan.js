@@ -42,5 +42,19 @@ export const turnierplan = {
   addTeamDialog: {
     teamNameField: 'add-team-dialog-team-name-field',
     confirmButton: 'add-team-dialog-confirm-button'
+  },
+  viewTournamentPage: {
+    rankingsPageId: 3,
+    matchPlan: {
+      matchRow: (index) => ['view-tournament-page-match-plan-match-row', index]
+    },
+    ranking: {
+      teamName: (position) => ['view-tournament-page-ranking-team-name', position]
+    }
+  },
+  editMatchDialog: {
+    scoreAField: 'edit-match-dialog-score-a-field',
+    scoreBField: 'edit-match-dialog-score-b-field',
+    saveButton: 'edit-match-dialog-save-button'
   }
 };

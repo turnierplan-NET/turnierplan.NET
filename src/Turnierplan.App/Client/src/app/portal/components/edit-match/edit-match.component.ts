@@ -15,6 +15,7 @@ import { NullableOfMatchOutcomeType } from '../../../api/models/nullable-of-matc
 import { SetMatchOutcomeEndpointRequest } from '../../../api/models/set-match-outcome-endpoint-request';
 import { MatchType } from '../../../api/models/match-type';
 import { MatchState } from '../../../api/models/match-state';
+import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 @Component({
   templateUrl: './edit-match.component.html',
@@ -26,7 +27,8 @@ import { MatchState } from '../../../api/models/match-state';
     AlertComponent,
     ActionButtonComponent,
     LiveIndicatorComponent,
-    TranslateDatePipe
+    TranslateDatePipe,
+    E2eDirective
   ]
 })
 export class EditMatchComponent implements OnDestroy, AfterViewInit {

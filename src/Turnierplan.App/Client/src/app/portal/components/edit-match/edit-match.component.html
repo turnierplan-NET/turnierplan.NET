@@ -37,6 +37,7 @@
             min="0"
             step="1"
             [(ngModel)]="scoreTeamA"
+            [tpE2E]="'edit-match-dialog-score-a-field'"
             (keydown.enter)="closeModal('save')"
             #inputScoreA />
           <i class="bi bi-chevron-down tp-cursor-pointer" (click)="scoreTeamA >= 1 && (scoreTeamA = scoreTeamA - 1)"></i>
@@ -53,6 +54,7 @@
             min="0"
             step="1"
             [(ngModel)]="scoreTeamB"
+            [tpE2E]="'edit-match-dialog-score-b-field'"
             (keydown.enter)="closeModal('save')" />
           <i class="bi bi-chevron-down tp-cursor-pointer" (click)="scoreTeamB >= 1 && (scoreTeamB = scoreTeamB - 1)"></i>
         </div>
@@ -101,7 +103,11 @@
     <span translate="Portal.ViewTournament.EditMatchDialog.SaveLiveSuffix"></span>
   </button>
 
-  <tp-action-button [type]="'success'" [title]="'Portal.ViewTournament.EditMatchDialog.SaveFinished'" (buttonClick)="closeModal('save')" />
+  <tp-action-button
+    [type]="'success'"
+    [title]="'Portal.ViewTournament.EditMatchDialog.SaveFinished'"
+    [tpE2E]="'edit-match-dialog-save-button'"
+    (buttonClick)="closeModal('save')" />
 </div>
 
 <ng-template #matchInfoColumn let-name="name" let-value="value">
