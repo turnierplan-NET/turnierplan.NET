@@ -70,8 +70,10 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
 
         if (!TryDeleteNoLongerNeededTournamentClasses(planningRealm, request, out error)
             || !TryDeleteNoLongerNeededInvitationLinks(planningRealm, request, out error)
+            || !TryDeleteNoLongerNeededLabels(planningRealm, request, out error)
             || !TryCreateOrUpdateTournamentClasses(planningRealm, request, out error)
-            || !TryCreateOrUpdateInvitationLinks(planningRealm, request, out error))
+            || !TryCreateOrUpdateInvitationLinks(planningRealm, request, out error)
+            || !TryCreateOrUpdateLabels(planningRealm, request, out error))
         {
             return false;
         }
@@ -128,6 +130,22 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
             }
 
             planningRealm.RemoveInvitationLink(invitationLink);
+        }
+
+        error = null;
+        return true;
+    }
+
+    private static bool TryDeleteNoLongerNeededLabels(PlanningRealm planningRealm, UpdatePlanningRealmEndpointRequest request, [NotNullWhen(false)] out string? error)
+    {
+        foreach (var label in planningRealm.Labels.ToList())
+        {
+            var shouldDelete = request.Labels.None(x => x.Id == label.Id);
+
+            if (shouldDelete)
+            {
+                planningRealm.RemoveLabel(label);
+            }
         }
 
         error = null;
@@ -236,6 +254,38 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         return true;
     }
 
+    private static bool TryCreateOrUpdateLabels(PlanningRealm planningRealm, UpdatePlanningRealmEndpointRequest request, [NotNullWhen(false)] out string? error)
+    {
+        foreach (var requestLabel in request.Labels)
+        {
+            Label label;
+
+            if (requestLabel.Id.HasValue)
+            {
+                var result = planningRealm.Labels.FirstOrDefault(x => x.Id == requestLabel.Id);
+
+                if (result is null)
+                {
+                    error = $"There exists no label with id {requestLabel.Id}.";
+                    return false;
+                }
+
+                label = result;
+                label.Name = requestLabel.Name.Trim();
+            }
+            else
+            {
+                label = planningRealm.AddLabel(requestLabel.Name.Trim());
+            }
+
+            label.ColorCode = requestLabel.ColorCode;
+            label.Description = requestLabel.Description.Trim();
+        }
+
+        error = null;
+        return true;
+    }
+
     private static async Task<IResult?> UpdateInvitationLinkImagesAsync(
         IImageRepository imageRepository,
         IAccessValidator accessValidator,
@@ -332,6 +382,8 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         public required UpdatePlanningRealmEndpointRequestTournamentClass[] TournamentClasses { get; init; }
 
         public required UpdatePlanningRealmEndpointRequestInvitationLink[] InvitationLinks { get; init; }
+
+        public required UpdatePlanningRealmEndpointRequestLabel[] Labels { get; init; }
     }
 
     public sealed record UpdatePlanningRealmEndpointRequestTournamentClass
@@ -391,6 +443,17 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         public required string Name { get; init; }
 
         public required string Url { get; init; }
+    }
+
+    public sealed record UpdatePlanningRealmEndpointRequestLabel
+    {
+        public long? Id { get; init; }
+
+        public required string Name { get; init; }
+
+        public required string Description { get; init; }
+
+        public required string ColorCode { get; init; }
     }
 
     internal sealed class Validator : AbstractValidator<UpdatePlanningRealmEndpointRequest>
@@ -470,6 +533,21 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
                                 .NotEmpty()
                                 .Matches(ExternalLinkRegex());
                         });
+                });
+
+            RuleForEach(x => x.Labels)
+                .ChildRules(link =>
+                {
+                    link.RuleFor(x => x.Name)
+                        .NotEmpty();
+
+                    link.RuleFor(x => x.Description)
+                        .NotNull();
+
+                    link.RuleFor(x => x.ColorCode)
+                        .Length(6)
+                        .Must(x => x.All(char.IsAsciiHexDigit))
+                        .NotEmpty();
                 });
         }
     }

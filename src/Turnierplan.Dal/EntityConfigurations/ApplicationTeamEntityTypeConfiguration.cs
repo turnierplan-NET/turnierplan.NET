@@ -22,5 +22,8 @@ public sealed class ApplicationTeamEntityTypeConfiguration : IEntityTypeConfigur
 
         builder.Property(x => x.Name)
             .IsRequired();
+
+        builder.HasMany(x => x.Labels)
+            .WithMany();
     }
 }

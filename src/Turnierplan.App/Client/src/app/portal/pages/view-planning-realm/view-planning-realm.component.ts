@@ -35,6 +35,7 @@ import { getPlanningRealm } from '../../../api/fn/planning-realms/get-planning-r
 import { createApplication } from '../../../api/fn/applications/create-application';
 import { updatePlanningRealm } from '../../../api/fn/planning-realms/update-planning-realm';
 import { deletePlanningRealm } from '../../../api/fn/planning-realms/delete-planning-realm';
+import { LabelsManagerComponent } from '../../components/labels-manager/labels-manager.component';
 
 export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
 
@@ -56,23 +57,38 @@ export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealm
     ManageApplicationsFilterComponent,
     RbacWidgetComponent,
     DeleteWidgetComponent,
-    ManageApplicationsComponent
+    ManageApplicationsComponent,
+    LabelsManagerComponent
   ]
 })
 export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardChangesDetector {
+  // Note: The color codes are written with '#' such that the IDE detects it as a color code and displays the color preview.
   private static readonly DefaultInvitationLinkColorCodes: string[] = [
-    'ff9900',
-    'ff5500',
-    'bb5500',
-    '55bb00',
-    'ff0055',
-    'bb0055',
-    '5500ff',
-    '9900bb',
-    '00bb99',
-    '0099ff',
-    '0099bb',
-    '0055bb'
+    '#ff9900',
+    '#ff5500',
+    '#bb5500',
+    '#55bb00',
+    '#ff0055',
+    '#bb0055',
+    '#5500ff',
+    '#9900bb',
+    '#00bb99',
+    '#0099ff',
+    '#0099bb',
+    '#0055bb'
+  ];
+
+  // Note: The color codes are written with '#' such that the IDE detects it as a color code and displays the color preview.
+  public static readonly DefaultLabelColorCodes: string[] = [
+    '#FFD1D1',
+    '#FFFAD1',
+    '#E1FFD1',
+    '#D1FDFF',
+    '#D1E0FF',
+    '#DAD1FF',
+    '#FFD1FB',
+    '#D1D1D1',
+    '#FFFFFF'
   ];
 
   public static readonly ApplicationsManagerPageId = 2;
@@ -104,6 +120,11 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       id: 1,
       title: 'Portal.ViewPlanningRealm.Pages.InvitationLinks',
       icon: 'bi-link-45deg'
+    },
+    {
+      id: 4,
+      title: 'Portal.ViewPlanningRealm.Pages.Labels',
+      icon: 'bi-tags'
     },
     {
       id: ViewPlanningRealmComponent.ApplicationsManagerPageId,
@@ -198,7 +219,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       next: (name) => {
         this.updateFunction((planningRealm) => {
           planningRealm.invitationLinks.push({
-            colorCode: this.getColorCode(),
+            colorCode: this.getColorCodeForInvitationLink(),
             isActive: true,
             contactEmail: null,
             contactPerson: null,
@@ -214,6 +235,23 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
             secondaryLogo: null,
             title: null,
             validUntil: null
+          });
+
+          return true;
+        });
+      }
+    });
+  }
+
+  protected addLabel(): void {
+    this.openModalForEnteringName('NewLabel').subscribe({
+      next: (name) => {
+        this.updateFunction((planningRealm) => {
+          planningRealm.labels.push({
+            colorCode: this.getColorCodeForLabel(),
+            description: '',
+            id: this.nextId--,
+            name: name.trim()
           });
 
           return true;
@@ -301,6 +339,12 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
           maxTeamsPerRegistration: y.maxTeamsPerRegistration,
           allowNewRegistrations: y.allowNewRegistrations
         }))
+      })),
+      labels: this.planningRealm.labels.map((x) => ({
+        id: x.id < 0 ? null : x.id,
+        name: x.name,
+        description: x.description,
+        colorCode: x.colorCode
       }))
     };
 
@@ -387,18 +431,30 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     return ref.closed.pipe(map((x) => x as string));
   }
 
-  private getColorCode(): string {
+  private getColorCodeForInvitationLink(): string {
     if (!this.planningRealm) {
       return 'aaaaaa';
     }
 
-    const planningRealm = this.planningRealm;
-    let availableColorCodes = ViewPlanningRealmComponent.DefaultInvitationLinkColorCodes.filter(
-      (color) => !planningRealm.invitationLinks.some((x) => x.colorCode === color)
+    return ViewPlanningRealmComponent.getColorCode(
+      ViewPlanningRealmComponent.DefaultInvitationLinkColorCodes,
+      this.planningRealm.invitationLinks
     );
+  }
+
+  private getColorCodeForLabel(): string {
+    if (!this.planningRealm) {
+      return 'aaaaaa';
+    }
+
+    return ViewPlanningRealmComponent.getColorCode(ViewPlanningRealmComponent.DefaultLabelColorCodes, this.planningRealm.labels);
+  }
+
+  private static getColorCode(from: string[], currentlyUsed: { colorCode: string }[]): string {
+    let availableColorCodes = from.map((x) => x.substring(1)).filter((color) => !currentlyUsed.some((x) => x.colorCode === color));
 
     if (availableColorCodes.length === 0) {
-      availableColorCodes = ViewPlanningRealmComponent.DefaultInvitationLinkColorCodes;
+      availableColorCodes = from.map((x) => x.substring(1));
     }
 
     return availableColorCodes[Math.floor(Math.random() * availableColorCodes.length)];

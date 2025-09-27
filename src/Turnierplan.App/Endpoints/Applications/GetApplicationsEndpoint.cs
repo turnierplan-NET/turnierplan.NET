@@ -24,18 +24,24 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
         [FromQuery] string? searchTerm,
         [FromQuery] string[] tournamentClass,
         [FromQuery] string[] invitationLink,
+        [FromQuery] string[] label,
         IPlanningRealmRepository planningRealmRepository,
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        if (!TournamentClassFilter.TryParseTournamentClassFilter(tournamentClass, out var tournamentClassFilter))
+        if (!IdBasedFilterWithoutNone.TryParse(tournamentClass, out var tournamentClassFilter))
         {
             return Results.BadRequest("Invalid tournament class filter provided.");
         }
 
-        if (!InvitationLinkFilter.TryParseInvitationLinkFilter(invitationLink, out var invitationLinkFilter))
+        if (!IdBasedFilterWithNone.TryParse(invitationLink, out var invitationLinkFilter))
         {
             return Results.BadRequest("Invalid invitation link filter provided.");
+        }
+
+        if (!IdBasedFilterWithoutNone.TryParse(label, out var labelFilter))
+        {
+            return Results.BadRequest("Invalid label filter provided.");
         }
 
         var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.TournamentClasses | IPlanningRealmRepository.Includes.ApplicationsWithTeamsAndTournamentLinks);
@@ -50,7 +56,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
             return Results.Forbid();
         }
 
-        var queryLogic = new QueryLogic(page, pageSize, searchTerm, tournamentClassFilter, invitationLinkFilter);
+        var queryLogic = new QueryLogic(page, pageSize, searchTerm, tournamentClassFilter, invitationLinkFilter, labelFilter);
         var result = queryLogic.Process(planningRealm, mapper);
 
         return Results.Ok(result);
@@ -63,33 +69,47 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
         private readonly int _page;
         private readonly int _pageSize;
         private readonly string? _searchTerm;
-        private readonly TournamentClassFilter? _tournamentClassFilter;
-        private readonly InvitationLinkFilter? _invitationLinkFilter;
+        private readonly IdBasedFilterWithoutNone? _tournamentClassFilter;
+        private readonly IdBasedFilterWithNone? _invitationLinkFilter;
+        private readonly IdBasedFilterWithoutNone? _labelFilter;
 
-        public QueryLogic(int? page, int? pageSize, string? searchTerm, TournamentClassFilter? tournamentClassFilter, InvitationLinkFilter? invitationLinkFilter)
+        public QueryLogic(
+            int? page,
+            int? pageSize,
+            string? searchTerm,
+            IdBasedFilterWithoutNone? tournamentClassFilter,
+            IdBasedFilterWithNone? invitationLinkFilter,
+            IdBasedFilterWithoutNone? labelFilter)
         {
             _page = page ?? 0;
             _pageSize = pageSize ?? DefaultPageSize;
             _searchTerm = searchTerm?.Trim();
             _tournamentClassFilter = tournamentClassFilter;
             _invitationLinkFilter = invitationLinkFilter;
+            _labelFilter = labelFilter;
         }
 
         public PaginationResultDto<ApplicationDto> Process(PlanningRealm planningRealm, IMapper mapper)
         {
             var applications = planningRealm.Applications.AsEnumerable();
 
-            if (_tournamentClassFilter.HasValue)
+            if (_tournamentClassFilter is not null)
             {
                 applications = applications.Where(application =>
-                    application.Teams.Any(team => _tournamentClassFilter.Value.IncludeWithTournamentClassId.Contains(team.Class.Id)));
+                    application.Teams.Any(team => _tournamentClassFilter.Value.IncludeWithId.Contains(team.Class.Id)));
             }
 
-            if (_invitationLinkFilter.HasValue)
+            if (_invitationLinkFilter is not null)
             {
                 applications = applications.Where(application => application.SourceLink is null
-                    ? _invitationLinkFilter.Value.IncludeWithoutInvitationLink
-                    : _invitationLinkFilter.Value.IncludeWithInvitationLinkId.Contains(application.SourceLink.Id));
+                    ? _invitationLinkFilter.Value.IncludeWithNone
+                    : _invitationLinkFilter.Value.IncludeWithId.Contains(application.SourceLink.Id));
+            }
+
+            if (_labelFilter is not null)
+            {
+                applications = applications.Where(application =>
+                    application.Teams.Any(team => team.Labels.Any(label => _labelFilter.Value.IncludeWithId.Contains(label.Id))));
             }
 
             if (!string.IsNullOrWhiteSpace(_searchTerm))
@@ -133,9 +153,9 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
         }
     }
 
-    private record struct TournamentClassFilter(long[] IncludeWithTournamentClassId)
+    private record struct IdBasedFilterWithoutNone(long[] IncludeWithId)
     {
-        public static bool TryParseTournamentClassFilter(string[] queryParameters, out TournamentClassFilter? filter)
+        public static bool TryParse(string[] queryParameters, out IdBasedFilterWithoutNone? filter)
         {
             var sanitized = queryParameters
                 .Where(x => !string.IsNullOrWhiteSpace(x))
@@ -148,13 +168,13 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
                 return true;
             }
 
-            var includeWithTournamentClassId = new List<long>();
+            var includeWithId = new List<long>();
 
             foreach (var value in sanitized)
             {
                 if (long.TryParse(value, out var longValue))
                 {
-                    includeWithTournamentClassId.Add(longValue);
+                    includeWithId.Add(longValue);
                 }
                 else
                 {
@@ -163,14 +183,14 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
                 }
             }
 
-            filter = new TournamentClassFilter(includeWithTournamentClassId.ToArray());
+            filter = new IdBasedFilterWithoutNone(includeWithId.ToArray());
             return true;
         }
     }
 
-    private record struct InvitationLinkFilter(bool IncludeWithoutInvitationLink, long[] IncludeWithInvitationLinkId)
+    private record struct IdBasedFilterWithNone(bool IncludeWithNone, long[] IncludeWithId)
     {
-        public static bool TryParseInvitationLinkFilter(string[] queryParameters, out InvitationLinkFilter? filter)
+        public static bool TryParse(string[] queryParameters, out IdBasedFilterWithNone? filter)
         {
             var sanitized = queryParameters
                 .Where(x => !string.IsNullOrWhiteSpace(x))
@@ -183,18 +203,18 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
                 return true;
             }
 
-            var includeWithoutInvitationLink = false;
-            var includeWithInvitationLinkId = new List<long>();
+            var includeWithNone = false;
+            var includeWithId = new List<long>();
 
             foreach (var value in sanitized)
             {
                 if (value.Equals("none", StringComparison.Ordinal))
                 {
-                    includeWithoutInvitationLink = true;
+                    includeWithNone = true;
                 }
                 else if (long.TryParse(value, out var longValue))
                 {
-                    includeWithInvitationLinkId.Add(longValue);
+                    includeWithId.Add(longValue);
                 }
                 else
                 {
@@ -203,7 +223,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
                 }
             }
 
-            filter = new InvitationLinkFilter(includeWithoutInvitationLink, includeWithInvitationLinkId.ToArray());
+            filter = new IdBasedFilterWithNone(includeWithNone, includeWithId.ToArray());
             return true;
         }
     }

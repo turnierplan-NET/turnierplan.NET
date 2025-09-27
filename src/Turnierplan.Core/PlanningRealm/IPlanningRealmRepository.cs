@@ -13,10 +13,11 @@ public interface IPlanningRealmRepository : IRepositoryWithPublicId<PlanningReal
         TournamentClasses = 1,
         InvitationLinks = 2,
         Applications = 4,
+        Labels = 8,
 
-        All = TournamentClasses | InvitationLinks | Applications,
+        All = TournamentClasses | InvitationLinks | Applications | Labels,
 
-        ApplicationsWithTeams = 8,
-        ApplicationsWithTeamsAndTournamentLinks = 16
+        ApplicationsWithTeams = 16,
+        ApplicationsWithTeamsAndTournamentLinks = 32
     }
 }

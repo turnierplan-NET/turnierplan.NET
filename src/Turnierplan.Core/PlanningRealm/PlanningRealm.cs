@@ -9,6 +9,7 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
     internal readonly List<TournamentClass> _tournamentClasses = [];
     internal readonly List<InvitationLink> _invitationLinks = [];
     internal readonly List<Application> _applications = [];
+    internal readonly List<Label> _labels = [];
 
     public PlanningRealm(Organization.Organization organization, string name)
     {
@@ -46,6 +47,8 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
     public IReadOnlyList<InvitationLink> InvitationLinks => _invitationLinks.AsReadOnly();
 
     public IReadOnlyList<Application> Applications => _applications.AsReadOnly();
+
+    public IReadOnlyList<Label> Labels => _labels.AsReadOnly();
 
     public RoleAssignment<PlanningRealm> AddRoleAssignment(Role role, Principal principal)
     {
@@ -87,6 +90,14 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
         return application;
     }
 
+    public Label AddLabel(string name)
+    {
+        var label = new Label(name);
+        _labels.Add(label);
+
+        return label;
+    }
+
     public void RemoveTournamentClass(TournamentClass tournamentClass)
     {
         _tournamentClasses.Remove(tournamentClass);
@@ -95,6 +106,16 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
     public void RemoveInvitationLink(InvitationLink invitationLink)
     {
         _invitationLinks.Remove(invitationLink);
+    }
+
+    public void RemoveLabel(Label label)
+    {
+        foreach (var team in _applications.SelectMany(x => x._teams))
+        {
+            team._labels.Remove(label);
+        }
+
+        _labels.Remove(label);
     }
 
     private int GenerateApplicationTag()

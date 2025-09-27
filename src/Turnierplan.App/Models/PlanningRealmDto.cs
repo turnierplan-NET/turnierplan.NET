@@ -15,4 +15,6 @@ public sealed record PlanningRealmDto
     public required TournamentClassDto[] TournamentClasses { get; init; }
 
     public required InvitationLinkDto[] InvitationLinks { get; init; }
+
+    public required LabelDto[] Labels { get; init; }
 }

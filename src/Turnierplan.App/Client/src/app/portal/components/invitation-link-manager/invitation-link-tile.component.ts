@@ -337,7 +337,8 @@ export class InvitationLinkTileComponent {
     this.filterRequested.emit({
       searchTerm: '',
       invitationLink: [this.invitationLink.id],
-      tournamentClass: tournamentClassId === undefined ? [] : [tournamentClassId]
+      tournamentClass: tournamentClassId === undefined ? [] : [tournamentClassId],
+      label: []
     });
   }
 

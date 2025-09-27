@@ -79,7 +79,8 @@ export class TournamentClassManagerComponent {
     this.filterRequested.emit({
       searchTerm: '',
       invitationLink: [],
-      tournamentClass: [id]
+      tournamentClass: [id],
+      label: []
     });
   }
 }

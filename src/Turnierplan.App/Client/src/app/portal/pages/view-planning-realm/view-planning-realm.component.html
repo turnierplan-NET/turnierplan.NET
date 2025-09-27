@@ -28,6 +28,15 @@
               [icon]="'plus-circle'"
               (buttonClick)="addInvitationLink()" />
           }
+          @case (4) {
+            <!-- Labels page -->
+            <tp-action-button
+              *tpIsActionAllowed="[planningRealm.id, Actions.GenericWrite]"
+              [title]="'Portal.ViewPlanningRealm.NewLabel.Title'"
+              [type]="'outline-success'"
+              [icon]="'plus-circle'"
+              (buttonClick)="addLabel()" />
+          }
           @case (2) {
             <!-- Applications page -->
             @let canAddApplications = !_hasUnsavedChanges && planningRealm.tournamentClasses.length > 0;
@@ -94,6 +103,18 @@
                     }
                   </div>
                 }
+              </div>
+            }
+            @case (4) {
+              <!-- Labels page -->
+              <div class="card-header d-flex flex-row align-items-center">
+                <tp-badge context="ViewPlanningRealm" label="LabelsCount" [value]="planningRealm.labels.length" />
+              </div>
+              <div class="card-body p-0">
+                <tp-labels-manager
+                  [planningRealm]="planningRealm"
+                  [updatePlanningRealm]="updateFunction"
+                  (filterRequested)="navigateToApplicationsWithFilter($event)" />
               </div>
             }
             @case (2) {

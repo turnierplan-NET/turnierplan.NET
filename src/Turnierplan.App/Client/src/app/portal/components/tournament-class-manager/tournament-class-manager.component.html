@@ -52,7 +52,7 @@
       </tr>
     } @empty {
       <tr>
-        <td colspan="3" translate="Portal.ViewPlanningRealm.TournamentClasses.NoTournamentClasses"></td>
+        <td [attr.colspan]="writeAllowed ? 6 : 4" translate="Portal.ViewPlanningRealm.TournamentClasses.NoTournamentClasses"></td>
       </tr>
     }
   </tbody>

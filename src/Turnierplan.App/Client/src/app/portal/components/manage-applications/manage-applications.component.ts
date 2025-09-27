@@ -27,6 +27,10 @@ import { ApplicationDto } from '../../../api/models/application-dto';
 import { setApplicationNotes } from '../../../api/fn/applications/set-application-notes';
 import { PublicId } from '../../../api/models/public-id';
 import { setApplicationTeamName } from '../../../api/fn/application-teams/set-application-team-name';
+import { LabelDto } from '../../../api/models/label-dto';
+import { LabelComponent } from '../label/label.component';
+import { LabelsSelectComponent } from '../labels-select/labels-select.component';
+import { setApplicationTeamLabels } from '../../../api/fn/application-teams/set-application-team-labels';
 
 @Component({
   selector: 'tp-manage-applications',
@@ -45,7 +49,8 @@ import { setApplicationTeamName } from '../../../api/fn/application-teams/set-ap
     TranslateDatePipe,
     PaginationComponent,
     RenameButtonComponent,
-    NgStyle
+    NgStyle,
+    LabelComponent
   ]
 })
 export class ManageApplicationsComponent implements OnDestroy {
@@ -69,6 +74,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   protected result?: PaginationResultDtoOfApplicationDto;
   protected showTeamsApplicationId?: number;
   protected updatingNotesOfApplicationId?: number;
+  protected updatingLabelsOfApplicationTeamId?: number;
 
   private readonly filter$ = new ReplaySubject<ApplicationsFilter>();
   private readonly reload$ = new BehaviorSubject<undefined>(undefined);
@@ -139,6 +145,10 @@ export class ManageApplicationsComponent implements OnDestroy {
     return this.planningRealm.invitationLinks.find((x) => x.id === id)!;
   }
 
+  protected getLabel(id: number): LabelDto {
+    return this.planningRealm.labels.find((x) => x.id === id)!;
+  }
+
   protected isTeamVisible(team: ApplicationTeamDto): boolean {
     return this.tournamentClassFilter.length === 0 || this.tournamentClassFilter.some((x) => x === team.tournamentClassId);
   }
@@ -155,7 +165,8 @@ export class ManageApplicationsComponent implements OnDestroy {
     this.filterRequested.emit({
       searchTerm: `${applicationTag}`,
       tournamentClass: [],
-      invitationLink: []
+      invitationLink: [],
+      label: []
     });
   }
 
@@ -218,6 +229,42 @@ export class ManageApplicationsComponent implements OnDestroy {
       .subscribe({
         next: () => {
           applicationTeam.name = name;
+        },
+        error: (error) => {
+          this.errorOccured.emit(error);
+        }
+      });
+  }
+
+  protected editTeamLabels(applicationId: number, applicationTeam: ApplicationTeamDto): void {
+    const ref = this.modalService.open(LabelsSelectComponent, {
+      centered: true,
+      size: 'md',
+      fullscreen: 'md',
+      backdrop: 'static'
+    });
+
+    const component = ref.componentInstance as LabelsSelectComponent;
+    component.init(this.planningRealm.labels, applicationTeam.labelIds);
+
+    ref.closed
+      .pipe(
+        tap(() => (this.updatingLabelsOfApplicationTeamId = applicationTeam.id)),
+        switchMap((labelIds) =>
+          this.turnierplanApi
+            .invoke(setApplicationTeamLabels, {
+              planningRealmId: this.planningRealm.id,
+              applicationId: applicationId,
+              applicationTeamId: applicationTeam.id,
+              body: { labelIds: labelIds }
+            })
+            .pipe(map(() => labelIds))
+        )
+      )
+      .subscribe({
+        next: (labelIds: number[]) => {
+          applicationTeam.labelIds = labelIds;
+          this.updatingLabelsOfApplicationTeamId = undefined;
         },
         error: (error) => {
           this.errorOccured.emit(error);

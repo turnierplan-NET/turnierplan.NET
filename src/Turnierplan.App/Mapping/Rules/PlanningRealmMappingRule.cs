@@ -48,6 +48,13 @@ internal sealed class PlanningRealmMappingRule : MappingRuleBase<PlanningRealm, 
                     NumberOfTeams = source.Applications.Where(z => z.SourceLink == x).SelectMany(z => z.Teams).Count(z => z.Class == y.Class)
                 }).ToArray(),
                 NumberOfApplications = source.Applications.Count(y => y.SourceLink == x)
+            }).ToArray(),
+            Labels = source.Labels.Select(x => new LabelDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Description = x.Description,
+                ColorCode = x.ColorCode
             }).ToArray()
         };
     }

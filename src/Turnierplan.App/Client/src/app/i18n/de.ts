@@ -882,16 +882,18 @@ export const de = {
       Pages: {
         TournamentClasses: 'Turnierklassen',
         InvitationLinks: 'Anmeldelinks',
+        Labels: 'Label',
         Applications: 'Anmeldungen',
         Settings: 'Einstellungen'
       },
       Badges: {
         TournamentClassesCount: 'Turnierklassen',
-        InvitationLinksCount: 'Anmeldelinks'
+        InvitationLinksCount: 'Anmeldelinks',
+        LabelsCount: 'Labels'
       },
       NewTournamentClass: {
         Title: 'Neue Turnierklasse',
-        InfoText: 'Geben Sie den Namen für die neue Turnierklasse ein.',
+        InfoText: 'Geben Sie den Namen für die neue Turnierklasse ein:',
         RequiredFeedback: 'Der Name darf nicht leer sein',
         Confirm: 'Erstellen'
       },
@@ -901,6 +903,11 @@ export const de = {
           'Geben Sie den Namen für den neuen Anmeldelink ein. Der angegebene Name wird nicht auf dem Anmeldeformular sichtbar sein.',
         Alert: 'Das Anmeldeformular ist noch eine frühe Version und sollte noch nicht für den produktiven Einsatz verwendet werden!',
         RequiredFeedback: 'Der Name darf nicht leer sein',
+        Confirm: 'Erstellen'
+      },
+      NewLabel: {
+        Title: 'Neues Label',
+        InfoText: 'Geben Sie den Namen für das neue Label ein:',
         Confirm: 'Erstellen'
       },
       AddApplication: {
@@ -987,12 +994,34 @@ export const de = {
           'Dieser Anmeldelink kann nicht gelöscht werden, da es bereits Anmeldungen gibt, welche über diesen Link durchgeführt wurden.',
         ShowApplications: 'Anmeldungen anzeigen'
       },
+      Labels: {
+        Name: 'Name',
+        ColorPicker: 'Farbe wählen',
+        Rename: {
+          Title: 'Label umbenennen',
+          EnterNewName: 'Geben Sie den neuen Namen ein. Dieses Label bleibt weiterhin zugewiesen.',
+          RequiredFeedback: 'Der Name darf nicht leer sein'
+        },
+        ChangeDescription: {
+          Title: 'Beschreibung ändern',
+          EnterNewName: 'Geben Sie die neue Beschreibung ein.',
+          EmptyAllowed: 'Die Beschreibung darf leergelassen werden'
+        },
+        Description: 'Beschreibung',
+        NoLabels: 'Es sind aktuell keine Labels vorhanden.',
+        LabelsInfo: 'Labels können verwendet werden, um angemeldete Mannschaften zu kategorisieren und zu filtern.',
+        DeleteWarning: {
+          Title: 'Label löschen',
+          Text: 'Wenn Sie ein Label löschen, wird dieses Label von allen Mannschaften entfernt, bei denen dieses Label aktuell zugewiesen ist. Dies kann nicht rückgängig gemacht werden!'
+        }
+      },
       SaveToViewApplications: 'Speichern Sie die offenen Änderungen, um die Anmeldungen zu sehen und neue Anmeldungen hinzuzufügen.',
       Applications: {
         FilterPanel: {
           SearchTerm: 'Suchbegriff (Tag, Name, E-Mail, ...)',
           TournamentClasses: 'Turnierklassen',
           InvitationLinks: 'Anmeldelinks',
+          Labels: 'Label',
           Search: 'Suchen',
           Reset: 'Filter zurücksetzen'
         },
@@ -1010,7 +1039,8 @@ export const de = {
           NotesTooltip: 'In dieser Spalte können Sie eigene Notizen hinzufügen.',
           TournamentClass: 'Turnierklasse',
           TeamName: 'Mannschaftsname',
-          Tournament: 'Turnier'
+          Tournament: 'Turnier',
+          Labels: 'Label'
         },
         NoSourceLinkTooltip: 'Diese Anmeldung wurde manuell angelegt',
         SourceLinkTooltip: 'Diese Anmeldung wurde mit dem Anmeldelink "{{name}}" angelegt',
@@ -1019,6 +1049,7 @@ export const de = {
           InfoText: 'Geben Sie Ihre Notizen für die Anmeldung ein:',
           Confirm: 'Speichern'
         },
+        NoLabels: 'keine Labels',
         NoLinkedTournament: 'kein Turnier verknüpft',
         RenameTeam: {
           Title: 'Mannschaft umbenennen',
@@ -1134,6 +1165,11 @@ export const de = {
       Reset: 'Filter zurücksetzen',
       NoFilter: 'keine Filter verfügbar',
       NoFurtherFilter: 'keine weiteren Filter verfügbar'
+    },
+    LabelsSelect: {
+      Title: 'Label wählen',
+      NoLabels: 'In diesem Turnierplaner existieren keine Label',
+      Clear: 'Alle entfernen'
     },
     ErrorPage: {
       Title: 'Fehler',
