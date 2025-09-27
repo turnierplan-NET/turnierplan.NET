@@ -16,15 +16,18 @@ export class ManageApplicationsFilterComponent {
   protected searchTerm: string = '';
   protected tournamentClass: number[] = [];
   protected invitationLink: InvitationLinkFilterValue[] = [];
+  protected label: number[] = [];
 
   protected tournamentClassFilterOptions: MultiSelectFilterOption[] = [];
   protected invitationLinkFilterOptions: MultiSelectFilterOption[] = [];
   protected invitationLinkSpecialValue: InvitationLinkFilterValue = 'none';
+  protected labelFilterOptions: MultiSelectFilterOption[] = [];
 
   @Input()
   public set planningRealm(value: PlanningRealmDto) {
     this.tournamentClassFilterOptions = value.tournamentClasses.map((x) => ({ value: x.id, label: x.name }));
     this.invitationLinkFilterOptions = value.invitationLinks.map((x) => ({ value: x.id, label: x.name }));
+    this.labelFilterOptions = value.labels.map((x) => ({ value: x.id, label: x.name }));
   }
 
   @Input()
@@ -32,6 +35,7 @@ export class ManageApplicationsFilterComponent {
     this.searchTerm = value.searchTerm;
     this.tournamentClass = value.tournamentClass;
     this.invitationLink = value.invitationLink;
+    this.label = value.label;
   }
 
   @Output()
@@ -41,7 +45,8 @@ export class ManageApplicationsFilterComponent {
     this.filterChange.emit({
       searchTerm: this.searchTerm,
       tournamentClass: this.tournamentClass,
-      invitationLink: this.invitationLink
+      invitationLink: this.invitationLink,
+      label: this.label
     });
   }
 

@@ -21,7 +21,8 @@ internal sealed class GetPlanningRealmEndpoint : EndpointBase<PlanningRealmDto>
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        var planningRealm = await repository.GetByPublicIdAsync(id, IPlanningRealmRepository.Includes.All);
+        // Note: We must use 'ApplicationsWithTeams' in order to have access to the number of applications/teams per invitation link/tournament class
+        var planningRealm = await repository.GetByPublicIdAsync(id, IPlanningRealmRepository.Includes.All | IPlanningRealmRepository.Includes.ApplicationsWithTeams);
 
         if (planningRealm is null)
         {

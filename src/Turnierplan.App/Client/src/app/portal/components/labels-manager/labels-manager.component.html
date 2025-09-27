@@ -1,0 +1,110 @@
+@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
+
+<table class="table">
+  <thead>
+    <tr>
+      <th translate="Portal.ViewPlanningRealm.Labels.Name" style="width: 1px"></th>
+      <th translate="Portal.ViewPlanningRealm.Labels.Description"></th>
+      <th></th>
+      @if (writeAllowed) {
+        <th style="width: 1px"></th>
+      }
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (label of planningRealm.labels; track label.id) {
+      <tr>
+        <td class="text-nowrap align-middle">
+          <tp-label [label]="label" />
+          <i
+            class="ms-2 bi bi-palette tp-cursor-pointer"
+            [ngbPopover]="colorPickerPopover"
+            [popoverTitle]="colorPickerPopoverTitle"
+            [popoverContext]="{ labelId: label.id }"
+            [container]="'body'"></i>
+          <tp-rename-button
+            class="ms-1 me-4"
+            [translationKey]="'Portal.ViewPlanningRealm.Labels.Rename'"
+            [displayLabel]="false"
+            [current]="label.name"
+            [reducedFootprint]="true"
+            (renamed)="setLabelName(label.id, $event)" />
+        </td>
+        <td class="align-middle">
+          <span>{{ label.description }}</span>
+          <tp-rename-button
+            [class]="{ 'ms-2': label.description.trim().length > 0 }"
+            [translationKey]="'Portal.ViewPlanningRealm.Labels.ChangeDescription'"
+            [displayLabel]="false"
+            [current]="label.description"
+            [allowReset]="true"
+            [reducedFootprint]="true"
+            (renamed)="setLabelDescription(label.id, $event)" />
+        </td>
+        <td>
+          @if (label.id > 0) {
+            <!-- Navigation to search is not possible if this label has not been saved yet -->
+            <tp-action-button
+              *tpIsActionAllowed="[planningRealm.id, Actions.ManageApplications]"
+              [type]="'light'"
+              [icon]="'search'"
+              [mode]="'IconOnly'"
+              (buttonClick)="searchApplicationsClicked(label.id)" />
+          }
+        </td>
+        @if (writeAllowed) {
+          <td>
+            <tp-action-button
+              [type]="'outline-danger'"
+              [icon]="'trash'"
+              [mode]="'IconOnly'"
+              (buttonClick)="deleteLabel(deleteConfirmModal, label.id)" />
+          </td>
+        }
+      </tr>
+    } @empty {
+      <tr>
+        <td [attr.colspan]="writeAllowed ? 4 : 3" [translate]="'Portal.ViewPlanningRealm.Labels.NoLabels'"></td>
+      </tr>
+    }
+    <tr>
+      <td [attr.colspan]="writeAllowed ? 4 : 3" class="small text-secondary">
+        <i class="bi bi-info-circle me-2"></i>
+        <span [translate]="'Portal.ViewPlanningRealm.Labels.LabelsInfo'"></span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #colorPickerPopoverTitle>
+  <div class="fw-bold" [translate]="'Portal.ViewPlanningRealm.Labels.ColorPicker'"></div>
+</ng-template>
+
+<ng-template #colorPickerPopover let-labelId="labelId">
+  <div class="d-flex flex-row gap-2">
+    @for (color of availableColors; track color) {
+      <div
+        class="tp-cursor-pointer border shadow-sm"
+        [style]="{ width: '2em', height: '2em', 'background-color': color }"
+        (click)="setLabelColor(labelId, color)"></div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #deleteConfirmModal>
+  <div class="modal-header">
+    <div class="modal-title" [translate]="'Portal.ViewPlanningRealm.Labels.DeleteWarning.Title'"></div>
+  </div>
+  <div class="modal-body">
+    <div [translate]="'Portal.ViewPlanningRealm.Labels.DeleteWarning.Text'"></div>
+  </div>
+  <div class="modal-footer">
+    <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="confirmDeleteModal?.dismiss()" />
+    <tp-action-button
+      [type]="'danger'"
+      [icon]="'trash'"
+      [title]="'Portal.DeleteWidget.DeleteConfirm'"
+      (buttonClick)="confirmDeleteClicked()" />
+  </div>
+</ng-template>

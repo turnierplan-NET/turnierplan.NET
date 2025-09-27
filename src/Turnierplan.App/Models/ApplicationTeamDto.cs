@@ -8,5 +8,7 @@ public sealed record ApplicationTeamDto
 
     public required string Name { get; init; }
 
+    public required long[] LabelIds { get; init; }
+
     public required ApplicationTeamLinkedTournamentDto? LinkedTournament { get; init; }
 }
