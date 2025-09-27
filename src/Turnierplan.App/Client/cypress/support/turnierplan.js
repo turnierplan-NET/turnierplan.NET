@@ -20,10 +20,24 @@ export const turnierplan = {
     passwordField: 'login-page-password-field'
   },
   pageFrame: {
-    navigationTab: (id) => `page-frame-navigation-tab-${id}`,
+    navigationTab: (id) => ['page-frame-navigation-tab', id],
     title: 'page-frame-title'
   },
   viewOrganizationPage: {
-    settingsPageId: 3
+    settingsPageId: 3,
+    newTournamentButton: 'view-organization-page-new-tournament-button'
+  },
+  createTournamentPage: {
+    confirmButton: 'create-tournament-page-confirm-button',
+    tournamentNameField: 'create-tournament-page-tournament-name-field'
+  },
+  configureTournamentPage: {
+    addGroupButton: 'configure-tournament-page-add-group-button',
+    shuffleGroupsButton: 'configure-tournament-page-shuffle-groups-button',
+    addTeamButton: (alphabeticalId) => ['configure-tournament-page-add-group-button', alphabeticalId]
+  },
+  addTeamDialog: {
+    teamNameField: 'add-team-dialog-team-name-field',
+    confirmButton: 'add-team-dialog-confirm-button'
   }
 };

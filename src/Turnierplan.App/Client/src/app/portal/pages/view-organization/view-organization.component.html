@@ -12,6 +12,7 @@
           @case (0) {
             <tp-action-button
               *tpIsActionAllowed="[organization.id, Actions.GenericWrite]"
+              [tpE2E]="'view-organization-page-new-tournament-button'"
               [title]="'Portal.ViewOrganization.NewTournament'"
               [type]="'outline-success'"
               [icon]="'plus-circle'"

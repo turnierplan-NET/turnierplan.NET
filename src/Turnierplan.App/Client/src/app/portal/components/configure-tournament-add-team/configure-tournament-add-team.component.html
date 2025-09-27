@@ -21,6 +21,7 @@
             id="content"
             autofocus
             [(ngModel)]="addTeamName"
+            [tpE2E]="'add-team-dialog-team-name-field'"
             [placeholder]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.NewTeam.TeamNamePlaceholder' | translate"
             [ngClass]="{ 'is-invalid': confirmAttempted && addTeamNameInvalid }"
             (keyup.enter)="confirm()" />
@@ -61,6 +62,7 @@
     <tp-action-button
       [type]="'success'"
       [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.Confirm'"
+      [tpE2E]="'add-team-dialog-confirm-button'"
       (buttonClick)="confirm()" />
   }
 </div>

@@ -106,6 +106,7 @@
                 [icon]="'plus-circle'"
                 [type]="'outline-primary'"
                 [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.Button'"
+                [tpE2E]="['configure-tournament-page-add-group-button', group.alphabeticalId]"
                 (buttonClick)="addTeam(group)" />
               <span class="flex-grow-1"></span>
               @if (group.teams.length > 0) {
@@ -197,11 +198,13 @@
       [icon]="'shuffle'"
       [disabled]="totalTeamCount <= 1"
       [title]="'Portal.ConfigureTournament.Sections.Participants.ShuffleGroupsButton'"
+      [tpE2E]="'configure-tournament-page-shuffle-groups-button'"
       (buttonClick)="shuffleGroups()" />
     <tp-action-button
       [type]="'outline-primary'"
       [icon]="'plus-circle'"
       [title]="'Portal.ConfigureTournament.Sections.Participants.AddGroupButton'"
+      [tpE2E]="'configure-tournament-page-add-group-button'"
       (buttonClick)="addGroup()" />
   </div>
 </ng-template>

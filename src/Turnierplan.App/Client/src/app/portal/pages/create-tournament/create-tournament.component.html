@@ -4,6 +4,7 @@
     id="createTournament_name"
     type="text"
     class="form-control"
+    [tpE2E]="'create-tournament-page-tournament-name-field'"
     [formControl]="tournamentName"
     [required]="true"
     [minlength]="1"
@@ -122,6 +123,7 @@
 
   <div class="d-flex flex-row justify-content-end">
     <tp-action-button
+      [tpE2E]="'create-tournament-page-confirm-button'"
       [type]="'success'"
       [title]="'Portal.CreateTournament.Submit'"
       [disabled]="tournamentName.invalid"

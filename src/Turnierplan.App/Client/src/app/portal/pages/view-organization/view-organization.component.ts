@@ -41,6 +41,7 @@ import { deleteOrganization } from '../../../api/fn/organizations/delete-organiz
 import { deleteApiKey } from '../../../api/fn/api-keys/delete-api-key';
 import { setApiKeyStatus } from '../../../api/fn/api-keys/set-api-key-status';
 import { getApiKeys } from '../../../api/fn/api-keys/get-api-keys';
+import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 @Component({
   templateUrl: './view-organization.component.html',
@@ -67,7 +68,8 @@ import { getApiKeys } from '../../../api/fn/api-keys/get-api-keys';
     AsyncPipe,
     TranslatePipe,
     TranslateDatePipe,
-    IdWidgetComponent
+    IdWidgetComponent,
+    E2eDirective
   ]
 })
 export class ViewOrganizationComponent implements OnInit, OnDestroy {
