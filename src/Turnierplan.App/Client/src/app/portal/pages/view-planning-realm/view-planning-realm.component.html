@@ -39,19 +39,21 @@
           }
           @case (2) {
             <!-- Applications page -->
-            @let canAddApplications = !_hasUnsavedChanges && planningRealm.tournamentClasses.length > 0;
-            @if (!canAddApplications) {
-              <tp-tooltip-icon
-                [margin]="false"
-                [icon]="'question-circle'"
-                [tooltipText]="'Portal.ViewPlanningRealm.AddApplication.TournamentClassRequired'" />
-            }
-            <tp-action-button
-              [title]="'Portal.ViewPlanningRealm.AddApplication.Title'"
-              [disabled]="!canAddApplications"
-              [type]="'outline-success'"
-              [icon]="'plus-circle'"
-              (buttonClick)="addApplication()" />
+            <ng-container *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsWrite]">
+              @let canAddApplications = !_hasUnsavedChanges && planningRealm.tournamentClasses.length > 0;
+              @if (!canAddApplications) {
+                <tp-tooltip-icon
+                  [margin]="false"
+                  [icon]="'question-circle'"
+                  [tooltipText]="'Portal.ViewPlanningRealm.AddApplication.TournamentClassRequired'" />
+              }
+              <tp-action-button
+                [title]="'Portal.ViewPlanningRealm.AddApplication.Title'"
+                [disabled]="!canAddApplications"
+                [type]="'outline-success'"
+                [icon]="'plus-circle'"
+                (buttonClick)="addApplication()" />
+            </ng-container>
           }
           @case (3) {
             <tp-rename-button
