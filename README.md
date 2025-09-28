@@ -148,7 +148,7 @@ The following environment variables must be set to enable access key authenticat
 | Environment Variable          | Description                                      |
 |-------------------------------|--------------------------------------------------|
 | `ImageStorage__UseAccountKey` | Set to `true` to use account key authentication. |
-| `ImageStorage__ContainerName` | The name of the blob container.                  |
+| `ImageStorage__AccountKey`    | The value of the account key.                    |
 
 #### Authenticate using client secret
 

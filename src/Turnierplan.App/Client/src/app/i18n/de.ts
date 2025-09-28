@@ -64,11 +64,14 @@ export const de = {
       CtrlEnter: 'Strg. + Enter zum Speichern',
       PaginationRange: 'Zeige {{start}} - {{end}} von {{total}}'
     },
-    UserInfoPopover: {
-      Text: 'Sie sind angemeldet als:\n<strong>{{userName}}</strong>',
-      Administration: 'Administration',
-      ChangePassword: 'Passwort ändern',
-      Logout: 'Abmelden'
+    Header: {
+      Administrator: 'Administrator',
+      UserInfoPopover: {
+        Text: 'Sie sind angemeldet als:\n<strong>{{userName}}</strong>',
+        Administration: 'Administration',
+        ChangePassword: 'Passwort ändern',
+        Logout: 'Abmelden'
+      }
     },
     LandingPage: {
       Title: 'Startseite',
@@ -78,8 +81,6 @@ export const de = {
       Badges: {
         OrganizationCount: 'Organisationen'
       },
-      AdministratorWarning:
-        'Sie sind mit einem Administrator-Konto angemeldet und haben unbeschränkten Zugriff auf alle Organisationen - auch die von anderen Benutzern.',
       NoOrganizations:
         'Sie sind keinen Organisationen zugehörig.\nErstellen Sie eine neue Organisation, um Turniere anzulegen und zu bearbeiten',
       NewOrganization: 'Neue Organisation',

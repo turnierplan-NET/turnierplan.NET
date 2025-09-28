@@ -34,7 +34,7 @@
                   <td class="align-middle">{{ user.eMail ?? '' }}</td>
                   <td class="align-middle small">{{ user.createdAt | translateDate: 'medium' }}</td>
                   <td class="align-middle small">{{ user.lastPasswordChange | translateDate: 'medium' }}</td>
-                  <td class="align-middle text-center">
+                  <td class="align-middle">
                     @if (user.isAdministrator) {
                       <i class="bi bi-check-circle"></i>
                     }

@@ -6,6 +6,10 @@
     </a>
     <span class="flex-grow-1"></span>
     @if (currentUser) {
+      <span
+        *tpIsAdministrator
+        class="align-self-center badge rounded-pill text-bg-danger me-4"
+        [translate]="'Portal.Header.Administrator'"></span>
       <div class="tp-user-info px-2 d-flex flex-row align-items-center tp-cursor-pointer" [ngbPopover]="userInfoPopover">
         <span class="tp-user-claims text-white d-flex flex-column align-items-end">
           @if (currentUser.fullName) {
@@ -27,11 +31,13 @@
         <ng-template #userInfoPopover>
           <div
             class="tp-text-pre-wrap mb-3"
-            [innerHTML]="'Portal.UserInfoPopover.Text' | translate: { userName: currentUser.fullName ?? currentUser.userName }"></div>
+            [innerHTML]="
+              'Portal.Header.UserInfoPopover.Text' | translate: { userName: currentUser.fullName ?? currentUser.userName }
+            "></div>
           <ng-container *tpIsAdministrator>
             <div class="d-flex flex-row tp-cursor-pointer mt-1" [routerLink]="'/portal/administration'">
               <i class="bi bi-gear me-2" aria-hidden="true"></i>
-              <span class="text-decoration-underline" [translate]="'Portal.UserInfoPopover.Administration'"></span>
+              <span class="text-decoration-underline" [translate]="'Portal.Header.UserInfoPopover.Administration'"></span>
             </div>
           </ng-container>
           <ng-container [ngTemplateOutlet]="userInfoAction" [ngTemplateOutletContext]="{ action: 'ChangePassword' }" />
@@ -40,7 +46,7 @@
         <ng-template #userInfoAction let-action="action">
           <div class="d-flex flex-row tp-cursor-pointer mt-1" (click)="userInfoActionClicked(action)">
             <i class="bi me-2" [ngClass]="getUserInfoActionIcon(action)" aria-hidden="true"></i>
-            <span class="text-decoration-underline" [translate]="'Portal.UserInfoPopover.' + action"></span>
+            <span class="text-decoration-underline" [translate]="'Portal.Header.UserInfoPopover.' + action"></span>
           </div>
         </ng-template>
       </div>

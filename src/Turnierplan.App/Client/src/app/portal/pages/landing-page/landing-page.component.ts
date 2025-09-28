@@ -7,7 +7,6 @@ import { TitleService } from '../../services/title.service';
 import { IsAdministratorDirective } from '../../directives/is-administrator.directive';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 import { RouterLink } from '@angular/router';
-import { AlertComponent } from '../../components/alert/alert.component';
 import { IllustrationComponent } from '../../components/illustration/illustration.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { BadgeComponent } from '../../components/badge/badge.component';
@@ -25,7 +24,6 @@ import { getOrganizations } from '../../../api/fn/organizations/get-organization
     IsAdministratorDirective,
     ActionButtonComponent,
     RouterLink,
-    AlertComponent,
     IllustrationComponent,
     TranslateDirective,
     BadgeComponent,
