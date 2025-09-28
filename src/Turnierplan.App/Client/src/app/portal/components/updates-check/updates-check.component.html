@@ -10,7 +10,7 @@
   </div>
 } @else if (latestVersion === currentVersion) {
   <div class="border rounded-3 p-3 d-flex flex-row align-items-center gap-2 updates-tile-up-to-date">
-    <i class="bi bi-check-lg text-success"></i>
+    <i class="bi bi-shield-check text-success"></i>
     <span [innerHTML]="'Portal.UpdatesCheck.UpToDate' | translate: { version: currentVersion }"></span>
     <span class="flex-grow-1"></span>
     <a
