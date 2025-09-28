@@ -81,7 +81,6 @@ export const de = {
       Badges: {
         OrganizationCount: 'Organisationen'
       },
-      // TODO: Pdf preview not working
       NoOrganizations:
         'Sie sind keinen Organisationen zugehörig.\nErstellen Sie eine neue Organisation, um Turniere anzulegen und zu bearbeiten',
       NewOrganization: 'Neue Organisation',
