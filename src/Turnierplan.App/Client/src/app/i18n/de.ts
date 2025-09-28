@@ -64,11 +64,14 @@ export const de = {
       CtrlEnter: 'Strg. + Enter zum Speichern',
       PaginationRange: 'Zeige {{start}} - {{end}} von {{total}}'
     },
-    UserInfoPopover: {
-      Text: 'Sie sind angemeldet als:\n<strong>{{userName}}</strong>',
-      Administration: 'Administration',
-      ChangePassword: 'Passwort ändern',
-      Logout: 'Abmelden'
+    Header: {
+      Administrator: 'Administrator',
+      UserInfoPopover: {
+        Text: 'Sie sind angemeldet als:\n<strong>{{userName}}</strong>',
+        Administration: 'Administration',
+        ChangePassword: 'Passwort ändern',
+        Logout: 'Abmelden'
+      }
     },
     LandingPage: {
       Title: 'Startseite',
