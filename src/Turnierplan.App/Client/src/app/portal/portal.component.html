@@ -6,7 +6,7 @@
     </a>
     <span class="flex-grow-1"></span>
     @if (currentUser) {
-      <span class="align-self-center badge rounded-pill text-bg-warning me-4" [translate]="'Portal.Header.Administrator'"></span>
+      <span class="align-self-center badge rounded-pill text-bg-danger me-4" [translate]="'Portal.Header.Administrator'"></span>
       <div class="tp-user-info px-2 d-flex flex-row align-items-center tp-cursor-pointer" [ngbPopover]="userInfoPopover">
         <span class="tp-user-claims text-white d-flex flex-column align-items-end">
           @if (currentUser.fullName) {
