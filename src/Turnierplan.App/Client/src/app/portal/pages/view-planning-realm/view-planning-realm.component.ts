@@ -21,7 +21,7 @@ import { UnsavedChangesAlertComponent } from '../../components/unsaved-changes-a
 import { BadgeComponent } from '../../components/badge/badge.component';
 import { TournamentClassManagerComponent } from '../../components/tournament-class-manager/tournament-class-manager.component';
 import { TranslateDirective } from '@ngx-translate/core';
-import { InvitationLinkTileComponent } from '../../components/invitation-link-manager/invitation-link-tile.component';
+import { InvitationLinkTileComponent } from '../../components/invitation-link-tile/invitation-link-tile.component';
 import { AlertComponent } from '../../components/alert/alert.component';
 import { ManageApplicationsFilterComponent } from '../../components/manage-applications-filter/manage-applications-filter.component';
 import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
