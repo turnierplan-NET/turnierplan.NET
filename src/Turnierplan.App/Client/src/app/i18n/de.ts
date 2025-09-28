@@ -78,6 +78,8 @@ export const de = {
       Badges: {
         OrganizationCount: 'Organisationen'
       },
+      // TODO: Improved admin warning
+      // TODO: Pdf preview not working
       AdministratorWarning:
         'Sie sind mit einem Administrator-Konto angemeldet und haben unbeschränkten Zugriff auf alle Organisationen - auch die von anderen Benutzern.',
       NoOrganizations:
