@@ -118,7 +118,6 @@ await app.RunAsync();
 // Public class definition is required for functional tests
 public sealed partial class Program;
 
-// TODO: Wenn Anmeldung erstellt wird, die Anzahl in der Turnierklassen-Übersicht aktualisieren
 // TODO: Button, um alle EMail Adressen zu kopieren in der aktuellen Anmeldungs Übersicht
 // TODO: Möglichkeit, Anmeldungen zu löschen
 // TODO: Möglichkeit, nachträglich Mannscahft zu Anmeldung hinzuzufügen
