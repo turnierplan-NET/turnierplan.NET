@@ -19,7 +19,14 @@
           <th style="width: 1px" translate="Portal.ViewPlanningRealm.Applications.TableHeader.CreatedAt"></th>
           <th style="width: 1px" translate="Portal.ViewPlanningRealm.Applications.TableHeader.TeamCount"></th>
           <th style="width: 15%" translate="Portal.ViewPlanningRealm.Applications.TableHeader.Contact"></th>
-          <th style="width: 20%" translate="Portal.ViewPlanningRealm.Applications.TableHeader.ContactEmail"></th>
+          <th style="width: 20%">
+            <span class="me-2" translate="Portal.ViewPlanningRealm.Applications.TableHeader.ContactEmail"></span>
+            @if (combinedEmailAddresses && combinedEmailAddresses.length > 0) {
+              <tp-copy-to-clipboard
+                [tooltipOverwrite]="'Portal.ViewPlanningRealm.Applications.TableHeader.CopyAllEmailAddresses'"
+                [value]="combinedEmailAddresses" />
+            }
+          </th>
           <th style="width: 15%" translate="Portal.ViewPlanningRealm.Applications.TableHeader.ContactTelephone"></th>
           <th style="width: 20%">
             <span translate="Portal.ViewPlanningRealm.Applications.TableHeader.Comment"></span>

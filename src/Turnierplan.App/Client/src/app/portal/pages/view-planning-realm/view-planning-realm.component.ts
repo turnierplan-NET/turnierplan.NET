@@ -280,12 +280,23 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       .pipe(
         tap(() => (this.loadingState = { isLoading: true })),
         switchMap((request: CreateApplicationEndpointRequest) =>
-          this.turnierplanApi.invoke(createApplication, { planningRealmId: planningRealmId, body: request })
+          this.turnierplanApi.invoke(createApplication, { planningRealmId: planningRealmId, body: request }).pipe(map(() => request))
         )
       )
       .subscribe({
-        next: () => {
+        next: (request: CreateApplicationEndpointRequest) => {
           this.loadingState = { isLoading: false };
+
+          // Modify the planning realm stored in the client to account for the newly added teams. By doing this "hack" we can prevent
+          // a separate request for querying the entire planning realm when only the "numberOfTeams" property has changed.
+          if (this.planningRealm) {
+            for (const entry of request.entries) {
+              const tournamentClass = this.planningRealm.tournamentClasses?.find((x) => x.id === entry.tournamentClassId);
+              if (tournamentClass) {
+                tournamentClass.numberOfTeams += entry.numberOfTeams;
+              }
+            }
+          }
         },
         error: (error) => {
           this.loadingState = { isLoading: false, error: error };

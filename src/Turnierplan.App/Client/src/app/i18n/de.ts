@@ -578,7 +578,7 @@ export const de = {
         SelectTournament: 'Wählen Sie einen Turnier, welches ein Dokument beinhaltet.'
       },
       EditMatchDialog: {
-        Title: 'Spielergebnis melden',
+        Title: 'Spielergebnis eintragen',
         Index: 'Nr.',
         Kickoff: 'Anstoß',
         Type: 'Spieltyp',
@@ -1033,6 +1033,7 @@ export const de = {
           TeamCount: 'Teams',
           Contact: 'Kontaktperson',
           ContactEmail: 'E-Mail',
+          CopyAllEmailAddresses: 'Alle E-Mailadressen auf dieser Seite in die Zwischenablage kopieren',
           ContactTelephone: 'Telefon-Nr.',
           Comment: 'Bemerkung',
           CommentTooltip: 'Die Bemerkung wurde bei der Anmeldung mitgeschickt und kann nicht bearbeitet werden.',

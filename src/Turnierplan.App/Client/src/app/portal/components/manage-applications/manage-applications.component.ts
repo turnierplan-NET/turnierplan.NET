@@ -77,6 +77,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   protected pageSize = 15;
   protected isLoading = false;
   protected result?: PaginationResultDtoOfApplicationDto;
+  protected combinedEmailAddresses?: string = undefined;
   protected showTeamsApplicationId?: number;
   protected updatingNotesOfApplicationId?: number;
   protected updatingLabelsOfApplicationTeamId?: number;
@@ -116,6 +117,15 @@ export class ManageApplicationsComponent implements OnDestroy {
         next: (result) => {
           this.result = result;
           this.isLoading = false;
+
+          if (result.items.length === 0) {
+            this.combinedEmailAddresses = undefined;
+          } else {
+            this.combinedEmailAddresses = result.items
+              .map((application) => application.contactEmail)
+              .filter((mail) => !!mail)
+              .join(' ');
+          }
 
           if (result.items.length === 1) {
             this.showTeamsApplicationId = result.items[0].id;

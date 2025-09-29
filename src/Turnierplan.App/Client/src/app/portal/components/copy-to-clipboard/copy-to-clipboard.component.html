@@ -1,5 +1,8 @@
 @if (copyToClipboardPressed) {
   <i class="bi bi-check-lg text-success"></i>
 } @else {
-  <i class="bi bi-copy tp-cursor-pointer" [ngbTooltip]="'Portal.General.CopyToClipboard' | translate" (click)="copyToClipboard()"></i>
+  <i
+    class="bi bi-copy tp-cursor-pointer"
+    [ngbTooltip]="tooltipOverwrite ?? 'Portal.General.CopyToClipboard' | translate"
+    (click)="copyToClipboard()"></i>
 }
