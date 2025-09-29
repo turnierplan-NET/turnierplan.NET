@@ -578,7 +578,7 @@ export const de = {
         SelectTournament: 'Wählen Sie einen Turnier, welches ein Dokument beinhaltet.'
       },
       EditMatchDialog: {
-        Title: 'Spielergebnis melden',
+        Title: 'Spielergebnis eintragen',
         Index: 'Nr.',
         Kickoff: 'Anstoß',
         Type: 'Spieltyp',
