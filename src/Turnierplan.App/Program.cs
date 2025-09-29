@@ -117,6 +117,3 @@ await app.RunAsync();
 
 // Public class definition is required for functional tests
 public sealed partial class Program;
-
-// TODO: Möglichkeit, Anmeldungen zu löschen
-// TODO: Möglichkeit, nachträglich Mannscahft zu Anmeldung hinzuzufügen
