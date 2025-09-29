@@ -11,6 +11,9 @@ export class CopyToClipboardComponent {
   @Input()
   public value: string | number = '';
 
+  @Input()
+  public tooltipOverwrite?: string;
+
   protected copyToClipboardPressed = false;
 
   protected copyToClipboard(): void {
