@@ -18,6 +18,8 @@ import { getPlanningRealms } from '../../../api/fn/planning-realms/get-planning-
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { getPlanningRealm } from '../../../api/fn/planning-realms/get-planning-realm';
 import { getApplications } from '../../../api/fn/applications/get-applications';
+import { LabelDto } from '../../../api/models/label-dto';
+import { LabelComponent } from '../label/label.component';
 
 export type SelectApplicationTeamResult = {
   name: string;
@@ -36,7 +38,8 @@ export type SelectApplicationTeamResult = {
     ManageApplicationsFilterComponent,
     TooltipIconComponent,
     PaginationComponent,
-    TranslateDatePipe
+    TranslateDatePipe,
+    LabelComponent
   ],
   templateUrl: './select-application-team.component.html',
   styleUrl: './select-application-team.component.scss'
@@ -177,6 +180,10 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
 
   protected getTournamentClassName(id: number): string {
     return this.planningRealmDetail?.tournamentClasses.find((x) => x.id === id)?.name ?? '';
+  }
+
+  protected getLabel(id: number): LabelDto {
+    return this.planningRealmDetail?.labels.find((x) => x.id === id)!;
   }
 
   protected filterTeams(teams: ApplicationTeamDto[]): ApplicationTeamDto[] {
