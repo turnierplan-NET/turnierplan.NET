@@ -17,7 +17,7 @@ $background-image: 'identity-2025.03.jpg';
   }
 
   .identity-content {
-    width: 550px;
+    width: 575px;
     min-height: 600px;
     border-top-right-radius: 1em;
     border-bottom-right-radius: 1em;
@@ -34,7 +34,6 @@ $background-image: 'identity-2025.03.jpg';
     background-color: $background-color;
     height: 100vh;
     margin: 0;
-    padding: 0 1em;
   }
 
   .identity-image {
@@ -42,6 +41,7 @@ $background-image: 'identity-2025.03.jpg';
   }
 
   .identity-content {
+    width: min(calc(100vw - 4em), 575px);
     border-radius: 0.75em;
   }
 
