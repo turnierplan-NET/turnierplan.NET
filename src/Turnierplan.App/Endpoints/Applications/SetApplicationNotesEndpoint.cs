@@ -40,7 +40,7 @@ internal sealed class SetApplicationNotesEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        application.Notes = request.Notes.Trim();
+        application.SetNotes(request.Notes);
 
         await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 

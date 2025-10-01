@@ -29,6 +29,11 @@ public sealed class ApplicationEntityTypeConfiguration : IEntityTypeConfiguratio
         builder.Property(x => x.Notes)
             .IsRequired();
 
+        builder.OwnsMany(x => x.NotesHistory, x =>
+        {
+            x.ToJson();
+        });
+
         builder.Property(x => x.Contact)
             .IsRequired();
 

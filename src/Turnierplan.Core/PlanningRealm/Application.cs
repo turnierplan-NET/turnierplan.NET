@@ -4,6 +4,7 @@ namespace Turnierplan.Core.PlanningRealm;
 
 public sealed class Application : Entity<long>
 {
+    internal readonly List<string> _notesHistory = [];
     internal readonly List<ApplicationTeam> _teams = [];
 
     internal Application(long id, int tag, DateTime createdAt, string notes, string contact, string? contactEmail, string? contactTelephone, string? comment, Guid? formSession)
@@ -40,7 +41,9 @@ public sealed class Application : Entity<long>
 
     public DateTime CreatedAt { get; }
 
-    public string Notes { get; set; }
+    public string Notes { get; private set; }
+
+    public IReadOnlyList<string> NotesHistory => _notesHistory.AsReadOnly();
 
     public string Contact { get; set; }
 
@@ -58,5 +61,17 @@ public sealed class Application : Entity<long>
     {
         var team = new ApplicationTeam(this, tournamentClass, name);
         _teams.Add(team);
+    }
+
+    public void SetNotes(string notes)
+    {
+        notes = notes.Trim();
+
+        if (!Notes.ToLower().Equals(notes.ToLower()))
+        {
+            _notesHistory.Add(Notes);
+        }
+
+        Notes = notes;
     }
 }
