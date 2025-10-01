@@ -69,9 +69,21 @@ public sealed class Application : Entity<long>
 
         if (!Notes.ToLower().Equals(notes.ToLower()))
         {
-            _notesHistory.Add(Notes);
+            SaveCurrentNotesToHistory();
         }
 
         Notes = notes;
+    }
+
+    private void SaveCurrentNotesToHistory()
+    {
+        if (Notes.Length == 0 && _notesHistory.Count == 0)
+        {
+            // When the notes are added for the first time, there is no need
+            // to save the current notes (empty string) to the history.
+            return;
+        }
+
+        _notesHistory.Add(Notes);
     }
 }
