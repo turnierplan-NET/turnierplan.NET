@@ -1,4 +1,11 @@
 <div class="p-3">
+  <div class="mb-3">
+    <tp-action-button
+      [title]="'Portal.General.Cancel'"
+      [icon]="'x-circle'"
+      [type]="'outline-secondary'"
+      (buttonClick)="offcanvas.close()" />
+  </div>
   <div class="fs-4 fw-bold mb-3" translate="Portal.RbacManagement.OffcanvasTitle"></div>
   @if (isLoadingRoleAssignments) {
     <div class="d-flex flex-row gap-2">

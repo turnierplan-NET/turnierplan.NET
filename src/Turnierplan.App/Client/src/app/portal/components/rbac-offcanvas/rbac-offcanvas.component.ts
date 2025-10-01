@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { finalize, Observable, Subject } from 'rxjs';
 import { NotificationService } from '../../../core/services/notification.service';
-import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveOffcanvas, NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { RbacAddAssignmentComponent } from '../rbac-add-assignment/rbac-add-assignment.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
@@ -46,6 +46,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
   private targetIsOrganization: boolean = false;
 
   constructor(
+    protected readonly offcanvas: NgbActiveOffcanvas,
     private readonly turnierplanApi: TurnierplanApi,
     private readonly notificationService: NotificationService,
     private readonly modalService: NgbModal
