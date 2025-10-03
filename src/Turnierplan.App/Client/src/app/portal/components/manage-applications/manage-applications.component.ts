@@ -33,6 +33,7 @@ import { LabelsSelectComponent } from '../labels-select/labels-select.component'
 import { setApplicationTeamLabels } from '../../../api/fn/application-teams/set-application-team-labels';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
+import { ApplicationChangeLogComponent } from '../application-change-log/application-change-log.component';
 
 @Component({
   selector: 'tp-manage-applications',
@@ -225,6 +226,18 @@ export class ManageApplicationsComponent implements OnDestroy {
           this.errorOccured.emit(error);
         }
       });
+  }
+
+  protected showApplicationChangeLog(application: ApplicationDto): void {
+    const ref = this.modalService.open(ApplicationChangeLogComponent, {
+      centered: true,
+      size: 'lg',
+      fullscreen: 'lg',
+      backdrop: 'static'
+    });
+
+    const component = ref.componentInstance as ApplicationChangeLogComponent;
+    component.init(application);
   }
 
   protected navigateToTournament(tournamentId: PublicId): void {
