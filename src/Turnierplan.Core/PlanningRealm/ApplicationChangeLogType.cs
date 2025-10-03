@@ -10,8 +10,5 @@ public enum ApplicationChangeLogType
     ContactTelephoneChanged = 4,
     CommentChanged = 5,
     TeamAdded = 6,
-    TeamRenamed = 7,
-    TeamRemoved = 8
+    TeamRenamed = 7
 }
-
-// TODO: Add the remaining change logs at the correct locations

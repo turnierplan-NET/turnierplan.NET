@@ -63,6 +63,9 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
             }
         }
 
+        // don't add change log entries for the previously changed properties & added teams
+        application.ClearChangeLog();
+
         await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.Ok(mapper.Map<ApplicationDto>(application));

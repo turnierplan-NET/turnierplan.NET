@@ -7,17 +7,23 @@ public sealed class Application : Entity<long>
     internal readonly List<ApplicationChangeLog> _changeLog = [];
     internal readonly List<ApplicationTeam> _teams = [];
 
+    private string _contact;
+    private string? _contactEmail;
+    private string? _contactTelephone;
+    private string? _comment;
+
     internal Application(long id, int tag, DateTime createdAt, string notes, string contact, string? contactEmail, string? contactTelephone, string? comment, Guid? formSession)
     {
         Id = id;
         Tag = tag;
         CreatedAt = createdAt;
         Notes = notes;
-        Contact = contact;
-        ContactEmail = contactEmail;
-        ContactTelephone = contactTelephone;
-        Comment = comment;
         FormSession = formSession;
+
+        _contact = contact;
+        _contactEmail = contactEmail;
+        _contactTelephone = contactTelephone;
+        _comment = comment;
     }
 
     internal Application(PlanningRealm planningRealm, InvitationLink? sourceLink, int tag, string contact)
@@ -28,7 +34,8 @@ public sealed class Application : Entity<long>
         Tag = tag;
         CreatedAt = DateTime.UtcNow;
         Notes = string.Empty;
-        Contact = contact;
+
+        _contact = contact;
     }
 
     public override long Id { get; protected set; }
@@ -45,13 +52,69 @@ public sealed class Application : Entity<long>
 
     public string Notes { get; private set; }
 
-    public string Contact { get; set; }
+    public string Contact
+    {
+        get => _contact;
+        set
+        {
+            var trimmed = value.Trim();
 
-    public string? ContactEmail { get; set; }
+            if (!_contact.Equals(trimmed))
+            {
+                AddChangeLog(ApplicationChangeLogType.ContactChanged, _contact, trimmed);
+            }
 
-    public string? ContactTelephone { get; set; }
+            _contact = value;
+        }
+    }
 
-    public string? Comment { get; set; }
+    public string? ContactEmail
+    {
+        get => _contactEmail;
+        set
+        {
+            var trimmed = value?.Trim();
+
+            if (!Equals(_contactEmail, trimmed))
+            {
+                AddChangeLog(ApplicationChangeLogType.ContactEmailChanged, _contactEmail, trimmed);
+            }
+
+            _contactEmail = value;
+        }
+    }
+
+    public string? ContactTelephone
+    {
+        get => _contactTelephone;
+        set
+        {
+            var trimmed = value?.Trim();
+
+            if (!Equals(_contactTelephone, trimmed))
+            {
+                AddChangeLog(ApplicationChangeLogType.ContactTelephoneChanged, _contactTelephone, trimmed);
+            }
+
+            _contactTelephone = value;
+        }
+    }
+
+    public string? Comment
+    {
+        get => _comment;
+        set
+        {
+            var trimmed = value?.Trim();
+
+            if (!Equals(_comment, trimmed))
+            {
+                AddChangeLog(ApplicationChangeLogType.CommentChanged, _comment, trimmed);
+            }
+
+            _comment = value;
+        }
+    }
 
     public Guid? FormSession { get; set; }
 
@@ -61,6 +124,8 @@ public sealed class Application : Entity<long>
     {
         var team = new ApplicationTeam(this, tournamentClass, name);
         _teams.Add(team);
+
+        AddChangeLog(ApplicationChangeLogType.TeamAdded, null, name);
     }
 
     public void SetNotes(string notes)
@@ -75,7 +140,12 @@ public sealed class Application : Entity<long>
         Notes = notes;
     }
 
-    private void AddChangeLog(ApplicationChangeLogType type, string? oldValue, string? newValue)
+    public void ClearChangeLog()
+    {
+        _changeLog.Clear();
+    }
+
+    internal void AddChangeLog(ApplicationChangeLogType type, string? oldValue, string? newValue)
     {
         _changeLog.Add(new ApplicationChangeLog(this, type, oldValue, newValue));
     }
