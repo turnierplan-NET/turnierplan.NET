@@ -69,9 +69,14 @@ public sealed class Application : Entity<long>
 
         if (!Notes.Equals(notes))
         {
-            // TODO: Add entry to the change log
+            AddChangeLog(ApplicationChangeLogType.NotesChanged, Notes, notes);
         }
 
         Notes = notes;
+    }
+
+    private void AddChangeLog(ApplicationChangeLogType type, string? oldValue, string? newValue)
+    {
+        _changeLog.Add(new ApplicationChangeLog(this, type, oldValue, newValue));
     }
 }
