@@ -20,7 +20,7 @@
         <td class="align-middle">{{ tournamentClass.name }}</td>
         <td class="align-middle">{{ getNumberOfReferencingLinks(tournamentClass.id) }}</td>
         <td class="align-middle">{{ tournamentClass.numberOfTeams }}</td>
-        <td>
+        <td class="align-middle">
           @if (tournamentClass.id > 0) {
             <!-- Navigation to search is not possible if this tournament class has not been saved yet -->
             <tp-action-button

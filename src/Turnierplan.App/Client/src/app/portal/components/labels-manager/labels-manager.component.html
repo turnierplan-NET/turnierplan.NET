@@ -46,7 +46,7 @@
               (renamed)="setLabelDescription(label.id, $event)" />
           }
         </td>
-        <td>
+        <td class="align-middle">
           @if (label.id > 0) {
             <!-- Navigation to search is not possible if this label has not been saved yet -->
             <tp-action-button
@@ -58,7 +58,7 @@
           }
         </td>
         @if (writeAllowed) {
-          <td>
+          <td class="align-middle">
             <tp-action-button
               [type]="'outline-danger'"
               [icon]="'trash'"
