@@ -156,6 +156,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new ApiKeyEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ApiKeyRequestEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ApplicationEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ApplicationChangeLogEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ApplicationTeamEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new LabelEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new DocumentEntityTypeConfiguration());

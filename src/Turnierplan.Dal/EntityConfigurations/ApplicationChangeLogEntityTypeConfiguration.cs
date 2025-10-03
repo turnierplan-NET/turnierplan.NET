@@ -17,5 +17,14 @@ public sealed class ApplicationChangeLogEntityTypeConfiguration : IEntityTypeCon
 
         builder.Property(x => x.Timestamp)
             .IsRequired();
+
+        builder.Property(x => x.Type)
+            .IsRequired();
+
+        builder.Property(x => x.OldValue)
+            .IsRequired(false);
+
+        builder.Property(x => x.NewValue)
+            .IsRequired(false);
     }
 }
