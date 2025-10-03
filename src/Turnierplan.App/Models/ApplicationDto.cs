@@ -12,8 +12,6 @@ public sealed record ApplicationDto
 
     public required string Notes { get; set; }
 
-    public required string[] NotesHistory { get; set; }
-
     public required string Contact { get; set; }
 
     public required string? ContactEmail { get; set; }

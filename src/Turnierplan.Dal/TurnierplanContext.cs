@@ -38,6 +38,8 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<Application> Applications { get; set; } = null!;
 
+    public DbSet<ApplicationChangeLog> ApplicationChangeLogs { get; set; } = null!;
+
     public DbSet<ApplicationTeam> ApplicationTeams { get; set; } = null!;
 
     public DbSet<Label> Labels { get; set; } = null!;

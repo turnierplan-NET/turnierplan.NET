@@ -4,7 +4,7 @@ namespace Turnierplan.Core.PlanningRealm;
 
 public sealed class Application : Entity<long>
 {
-    internal readonly List<string> _notesHistory = [];
+    internal readonly List<ApplicationChangeLog> _changeLog = [];
     internal readonly List<ApplicationTeam> _teams = [];
 
     internal Application(long id, int tag, DateTime createdAt, string notes, string contact, string? contactEmail, string? contactTelephone, string? comment, Guid? formSession)
@@ -41,9 +41,9 @@ public sealed class Application : Entity<long>
 
     public DateTime CreatedAt { get; }
 
-    public string Notes { get; private set; }
+    public IReadOnlyList<ApplicationChangeLog> ChangeLog => _changeLog.AsReadOnly();
 
-    public IReadOnlyList<string> NotesHistory => _notesHistory.AsReadOnly();
+    public string Notes { get; private set; }
 
     public string Contact { get; set; }
 
@@ -67,23 +67,11 @@ public sealed class Application : Entity<long>
     {
         notes = notes.Trim();
 
-        if (!Notes.ToLower().Equals(notes.ToLower()))
+        if (!Notes.Equals(notes))
         {
-            SaveCurrentNotesToHistory();
+            // TODO: Add entry to the change log
         }
 
         Notes = notes;
-    }
-
-    private void SaveCurrentNotesToHistory()
-    {
-        if (Notes.Length == 0 && _notesHistory.Count == 0)
-        {
-            // When the notes are added for the first time, there is no need
-            // to save the current notes (empty string) to the history.
-            return;
-        }
-
-        _notesHistory.Add(Notes);
     }
 }

@@ -14,7 +14,6 @@ internal sealed class ApplicationMappingRule : MappingRuleBase<Application, Appl
             Tag = source.Tag,
             CreatedAt = source.CreatedAt,
             Notes = source.Notes,
-            NotesHistory = source.NotesHistory.ToArray(),
             Contact = source.Contact,
             ContactEmail = source.ContactEmail,
             ContactTelephone = source.ContactTelephone,

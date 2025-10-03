@@ -304,10 +304,6 @@ namespace Turnierplan.Dal.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.PrimitiveCollection<string[]>("NotesHistory")
-                        .IsRequired()
-                        .HasColumnType("text[]");
-
                     b.Property<long>("PlanningRealmId")
                         .HasColumnType("bigint");
 
