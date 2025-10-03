@@ -237,7 +237,14 @@ export class ManageApplicationsComponent implements OnDestroy {
     });
 
     const component = ref.componentInstance as ApplicationChangeLogComponent;
-    component.init(application);
+    component.init(this.planningRealm.id, application);
+
+    component.error$.subscribe({
+      next: (value) => {
+        ref.close();
+        this.errorOccured.emit(value);
+      }
+    });
   }
 
   protected navigateToTournament(tournamentId: PublicId): void {

@@ -44,6 +44,9 @@ internal sealed class GetApplicationChangeLogEndpoint : EndpointBase<IEnumerable
 
         var changeLog = await applicationChangeLogRepository.GetByApplicationIdAsync(application.Id);
 
+        // most recent change log comes first in the result list
+        changeLog.Sort((x, y) => Math.Sign(y.Timestamp.Ticks - x.Timestamp.Ticks));
+
         return Results.Ok(mapper.MapCollection<ApplicationChangeLogDto>(changeLog));
     }
 }
