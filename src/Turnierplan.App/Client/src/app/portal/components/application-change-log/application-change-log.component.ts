@@ -1,23 +1,33 @@
 import { Component, OnDestroy } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { ApplicationDto } from '../../../api/models/application-dto';
 import { ApplicationChangeLogDto } from '../../../api/models/application-change-log-dto';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { Observable, Subject } from 'rxjs';
 import { getApplicationChangeLog } from '../../../api/fn/applications/get-application-change-log';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { LoadingStateDirective } from '../../directives/loading-state.directive';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { ApplicationChangeLogType } from '../../../api/models/application-change-log-type';
 
 @Component({
   selector: 'tp-application-change-log',
-  imports: [],
+  imports: [TranslatePipe, TranslateDirective, LoadingStateDirective, TranslateDatePipe, NgClass],
   templateUrl: './application-change-log.component.html',
   styleUrl: './application-change-log.component.scss'
 })
 export class ApplicationChangeLogComponent implements OnDestroy {
   protected isLoadingChangeLog = true;
   protected changeLog: ApplicationChangeLogDto[] = [];
+  protected applicationCreatedAt: string = '';
 
   private readonly errorSubject$ = new Subject<unknown>();
 
-  constructor(private readonly turnierplanApi: TurnierplanApi) {}
+  constructor(
+    protected readonly modal: NgbActiveModal,
+    private readonly turnierplanApi: TurnierplanApi
+  ) {}
 
   public get error$(): Observable<unknown> {
     return this.errorSubject$.asObservable();
@@ -28,6 +38,8 @@ export class ApplicationChangeLogComponent implements OnDestroy {
   }
 
   public init(planningRealmId: string, application: ApplicationDto): void {
+    this.applicationCreatedAt = application.createdAt;
+
     this.turnierplanApi.invoke(getApplicationChangeLog, { planningRealmId: planningRealmId, applicationId: application.id }).subscribe({
       next: (result) => {
         this.changeLog = result;
@@ -37,5 +49,19 @@ export class ApplicationChangeLogComponent implements OnDestroy {
         this.errorSubject$.next(error);
       }
     });
+  }
+
+  protected getChangeLogIcon(type: ApplicationChangeLogType): string {
+    switch (type) {
+      case ApplicationChangeLogType.NotesChanged:
+      case ApplicationChangeLogType.CommentChanged:
+      case ApplicationChangeLogType.ContactChanged:
+      case ApplicationChangeLogType.ContactEmailChanged:
+      case ApplicationChangeLogType.ContactTelephoneChanged:
+      case ApplicationChangeLogType.TeamRenamed:
+        return 'bi-pencil-square';
+      case ApplicationChangeLogType.TeamAdded:
+        return 'bi-dash-square-dotted';
+    }
   }
 }

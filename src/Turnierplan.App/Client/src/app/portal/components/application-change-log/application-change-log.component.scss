@@ -1,0 +1,10 @@
+:host {
+  // Set min-height to prevent size reduction of the dialog upon switching to loading indicator.
+  // 480px is the combined height of the loading indicator and its y margin.
+  min-height: 480px;
+}
+
+.value-display {
+  flex-basis: 50%;
+  min-height: calc(2rem + 2px); // ensure the correct height of only old value or new value is empty
+}
