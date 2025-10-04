@@ -35,13 +35,22 @@ public sealed class ApplicationTeam : Entity<long>
 
     public void SetName(string name)
     {
-        Name = name.Trim();
+        name = name.Trim();
+
+        if (!Name.Equals(name))
+        {
+            Application.AddChangeLog(ApplicationChangeLogType.TeamRenamed, Name, name);
+        }
+
+        Name = name;
 
         if (TeamLink is not null)
         {
-            TeamLink.Team.Name = name.Trim();
+            TeamLink.Team.Name = name;
         }
     }
+
+    // TODO: Change log for labels?
 
     public void AddLabel(Label label)
     {

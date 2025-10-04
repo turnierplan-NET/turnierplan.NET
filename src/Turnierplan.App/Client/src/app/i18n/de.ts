@@ -1062,7 +1062,21 @@ export const de = {
         HiddenTeamsTooltip: 'Diese Anmeldung beinhaltet weitere Mannschaften, welche nicht den Filterkriterien entsprechen',
         HiddenTeams: '{{count}} weitere Mannschaft(en) werden aufgrund Ihrer Filterkriterien nicht angezeigt.',
         HiddenTeamsShowAll: 'alle anzeigen',
-        NoResults: 'Es gibt keine Anmeldungen, welche den angegebenen Filterkriterien entsprechen.'
+        ChangeLogTooltip: 'Bisherige Änderungen an dieser Anmeldung anzeigen',
+        NoResults: 'Es gibt keine Anmeldungen, welche den angegebenen Filterkriterien entsprechen.',
+        ChangeLog: {
+          Title: 'Änderungshistorie',
+          ApplicationCreated: 'Anmeldung erstellt',
+          Types: {
+            NotesChanged: 'Notizen bearbeitet',
+            ContactChanged: 'Kontaktperson geändert',
+            ContactEmailChanged: 'Kontakt E-Mail geändert',
+            ContactTelephoneChanged: 'Kontakt Telefon-Nr. geändert',
+            CommentChanged: 'Bemerkung geändert',
+            TeamAdded: 'Mannschaft hinzugefügt',
+            TeamRenamed: 'Mannschaft umbenannt'
+          }
+        }
       },
       Settings: {
         Rename: {

@@ -26,6 +26,12 @@ public sealed class ApplicationEntityTypeConfiguration : IEntityTypeConfiguratio
         builder.Property(x => x.CreatedAt)
             .IsRequired();
 
+        builder.HasMany(x => x.ChangeLog)
+            .WithOne(x => x.Application)
+            .HasForeignKey("ApplicationId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
         builder.Property(x => x.Notes)
             .IsRequired();
 
