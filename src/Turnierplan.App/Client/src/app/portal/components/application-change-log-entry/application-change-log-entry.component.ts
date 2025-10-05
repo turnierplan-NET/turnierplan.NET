@@ -51,6 +51,7 @@ export class ApplicationChangeLogEntryComponent {
       case ApplicationChangeLogType.LabelAdded:
       case ApplicationChangeLogType.LabelRemoved: {
         this.changeLogIcon = 'bi-tags';
+        this.teamName = propertyValue(ApplicationChangeLogProperty.TeamName);
         this.mockLabel = {
           id: 0,
           name: propertyValue(ApplicationChangeLogProperty.LabelName),

@@ -10,15 +10,15 @@
     </span>
 
     @if (changeLogType === ApplicationChangeLogType.LabelAdded) {
-      <div class="d-flex flex-row align-items-center gap-2">
+      <div class="d-flex flex-row align-items-center gap-1">
         <tp-label [label]="mockLabel!" />
-        <span [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.LabelAdded'"></span>
+        <span class="ms-1" [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.LabelAdded'"></span>
         <span class="text-decoration-underline">{{ teamName }}</span>
       </div>
     } @else if (changeLogType === ApplicationChangeLogType.LabelRemoved) {
-      <div class="d-flex flex-row align-items-center gap-2">
+      <div class="d-flex flex-row align-items-center gap-1">
         <tp-label [label]="mockLabel!" />
-        <span [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.LabelRemoved'"></span>
+        <span class="ms-1" [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.LabelRemoved'"></span>
         <span class="text-decoration-underline">{{ teamName }}</span>
       </div>
     } @else if (changeLogType === ApplicationChangeLogType.TeamAdded) {
