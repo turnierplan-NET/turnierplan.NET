@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Turnierplan.App.Constants;
 using Turnierplan.App.Options;
 using Turnierplan.Core.User;
 using Turnierplan.Dal;
@@ -22,26 +23,76 @@ internal static class WebApplicationExtensions
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<DatabaseMigrator>>();
         var context = scope.ServiceProvider.GetRequiredService<TurnierplanContext>();
 
-        await EnsureNoDowngradeAsync(context);
-
         if (context.Database.IsNpgsql())
         {
             // If the database is in-memory, no migration is necessary
             await context.Database.MigrateAsync();
         }
 
+        await EnsureNoDowngradeAsync(logger, context);
+        await EnsureInitialUserCreatedAsync(scope.ServiceProvider, logger, context);
+    }
+
+    private static async Task EnsureNoDowngradeAsync(ILogger<DatabaseMigrator> logger, TurnierplanContext context)
+    {
+        const string schema = TurnierplanContext.Schema;
+
+        if (!TurnierplanVersion.IsVersionAvailable)
+        {
+            throw new InvalidOperationException("Downgrade check failed because the current version is not available.");
+        }
+
+        await context.Database.BeginTransactionAsync();
+
+        /* The version check works by creating a special table which stores all turnierplan.NET versions that have ever
+         * been run on this database along with the corresponding timestamp. Then, we try to insert a new row with the
+         * current version - doing nothing if a row for that specific version already exists. Finally, we query the row
+         * with the most recent version. If that version does not match the version we are currently running a version
+         * downgrade has occurred, and we stop the application from continuing execution. */
+
+#pragma warning disable EF1002
+        await context.Database.ExecuteSqlRawAsync($"""
+CREATE TABLE IF NOT EXISTS {schema}."__TPVersionHistory" (
+    "Version"   text NOT NULL UNIQUE,
+    "Major"     integer NOT NULL,
+    "Minor"     integer NOT NULL,
+    "Patch"     integer NOT NULL,
+    "Timestamp" timestamp with time zone NOT NULL
+);
+
+INSERT INTO {schema}."__TPVersionHistory" ("Version", "Major", "Minor", "Patch", "Timestamp")
+    VALUES ('{TurnierplanVersion.Version}', {TurnierplanVersion.Major}, {TurnierplanVersion.Minor}, {TurnierplanVersion.Patch}, now())
+    ON CONFLICT DO NOTHING;
+""");
+#pragma warning restore EF1002
+
+        var mostRecentVersion = await context.Database.SqlQueryRaw<string>($"""
+SELECT "Version" AS "Value" FROM {schema}."__TPVersionHistory" ORDER BY "Major" DESC, "Minor" DESC, "Patch" DESC
+""").FirstAsync();
+
+        if (!mostRecentVersion.Equals(TurnierplanVersion.Version))
+        {
+            logger.LogCritical("Detected version downgrade from '{MostRecentVersion}' to '{CurrentVersion}'.", mostRecentVersion, TurnierplanVersion.Version);
+            Environment.Exit(1);
+        }
+
+        await context.Database.CommitTransactionAsync();
+    }
+
+    private static async Task EnsureInitialUserCreatedAsync(IServiceProvider serviceProvider, ILogger<DatabaseMigrator> logger, TurnierplanContext context)
+    {
         var userCount = await context.Users.CountAsync();
 
         if (userCount == 0)
         {
-            var options = scope.ServiceProvider.GetRequiredService<IOptions<TurnierplanOptions>>().Value;
+            var options = serviceProvider.GetRequiredService<IOptions<TurnierplanOptions>>().Value;
 
             var overwriteInitialUserPassword = !string.IsNullOrWhiteSpace(options.InitialUserPassword);
 
             var initialUserName = string.IsNullOrWhiteSpace(options.InitialUserName) ? "admin" : options.InitialUserName;
             var initialUserPassword = overwriteInitialUserPassword ? options.InitialUserPassword! : Guid.NewGuid().ToString();
 
-            var passwordHasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
+            var passwordHasher = serviceProvider.GetRequiredService<IPasswordHasher<User>>();
 
             var initialUser = new User(initialUserName)
             {
@@ -68,13 +119,6 @@ internal static class WebApplicationExtensions
         {
             logger.LogInformation("Database contains {UserCount} user(s). No administrator account was created.", userCount);
         }
-    }
-
-    private static async Task EnsureNoDowngradeAsync(TurnierplanContext context)
-    {
-        var database = context.Database;
-
-        // timestamp with time zone
     }
 
     private sealed record DatabaseMigrator;
