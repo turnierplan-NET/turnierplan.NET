@@ -4,6 +4,15 @@ namespace Turnierplan.Core.Test.Unit.PlanningRealm;
 
 public sealed class ApplicationTest
 {
+
+
+    [Fact]
+    public void Application()
+    {
+        
+    }
+    
+    
     // TODO: Implement new tests
 #if false
     [Fact]

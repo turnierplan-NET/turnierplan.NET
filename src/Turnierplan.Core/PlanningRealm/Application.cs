@@ -145,11 +145,11 @@ public sealed class Application : Entity<long>
         _changeLog.Clear();
     }
 
-    internal void AddChangeLog(ApplicationChangeLogType type, string previousValue, string newValue)
+    internal void AddChangeLog(ApplicationChangeLogType type, string? previousValue, string? newValue)
     {
         AddChangeLog(type, [
-            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.PreviousValue, previousValue),
-            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.NewValue, newValue)
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.PreviousValue, previousValue ?? string.Empty),
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.NewValue, newValue ?? string.Empty)
         ]);
     }
 
