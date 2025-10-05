@@ -232,7 +232,8 @@ export class ManageApplicationsComponent implements OnDestroy {
     const ref = this.modalService.open(ApplicationChangeLogComponent, {
       centered: true,
       size: 'lg',
-      fullscreen: 'lg'
+      fullscreen: 'lg',
+      scrollable: true
     });
 
     const component = ref.componentInstance as ApplicationChangeLogComponent;

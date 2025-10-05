@@ -10,10 +10,12 @@ import { LoadingStateDirective } from '../../directives/loading-state.directive'
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { ApplicationChangeLogType } from '../../../api/models/application-change-log-type';
 import { ApplicationChangeLogProperty } from '../../../api/models/application-change-log-property';
+import { LabelDto } from '../../../api/models/label-dto';
+import { LabelComponent } from '../label/label.component';
 
 @Component({
   selector: 'tp-application-change-log',
-  imports: [TranslateDirective, LoadingStateDirective, TranslateDatePipe],
+  imports: [TranslateDirective, LoadingStateDirective, TranslateDatePipe, LabelComponent],
   templateUrl: './application-change-log.component.html',
   styleUrl: './application-change-log.component.scss'
 })
@@ -46,6 +48,7 @@ export class ApplicationChangeLogComponent implements OnDestroy {
     this.turnierplanApi.invoke(getApplicationChangeLog, { planningRealmId: planningRealmId, applicationId: application.id }).subscribe({
       next: (result) => {
         this.changeLog = result;
+        this.changeLog.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
         this.isLoadingChangeLog = false;
       },
       error: (error) => {
@@ -56,6 +59,16 @@ export class ApplicationChangeLogComponent implements OnDestroy {
 
   protected getPropertyValue(entry: ApplicationChangeLogDto, type: ApplicationChangeLogProperty): string {
     return entry.properties.find((x) => x.type === type)?.value ?? '';
+  }
+
+  protected getMockLabelForChangeLog(entry: ApplicationChangeLogDto): LabelDto {
+    console.log('XHI');
+    return {
+      id: 0,
+      name: this.getPropertyValue(entry, ApplicationChangeLogProperty.LabelName),
+      colorCode: this.getPropertyValue(entry, ApplicationChangeLogProperty.LabelColorCode),
+      description: ''
+    };
   }
 
   protected getChangeLogIcon(type: ApplicationChangeLogType): string {

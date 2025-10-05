@@ -1078,7 +1078,9 @@ export const de = {
             TeamRemoved: 'Mannschaft entfernt',
             LabelAdded: 'Label hinzugefügt',
             LabelRemoved: 'Label entfernt'
-          }
+          },
+          LabelAdded: 'hinzugefügt zur der Mannschaft:',
+          LabelRemoved: 'entfernt von der Mannschaft:'
         }
       },
       Settings: {
