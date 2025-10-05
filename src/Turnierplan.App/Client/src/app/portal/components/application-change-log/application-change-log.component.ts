@@ -8,21 +8,15 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateDirective } from '@ngx-translate/core';
 import { LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
-import { ApplicationChangeLogType } from '../../../api/models/application-change-log-type';
-import { ApplicationChangeLogProperty } from '../../../api/models/application-change-log-property';
-import { LabelDto } from '../../../api/models/label-dto';
-import { LabelComponent } from '../label/label.component';
+import { ApplicationChangeLogEntryComponent } from '../application-change-log-entry/application-change-log-entry.component';
 
 @Component({
   selector: 'tp-application-change-log',
-  imports: [TranslateDirective, LoadingStateDirective, TranslateDatePipe, LabelComponent],
+  imports: [TranslateDirective, LoadingStateDirective, TranslateDatePipe, ApplicationChangeLogEntryComponent],
   templateUrl: './application-change-log.component.html',
   styleUrl: './application-change-log.component.scss'
 })
 export class ApplicationChangeLogComponent implements OnDestroy {
-  protected readonly ApplicationChangeLogType = ApplicationChangeLogType;
-  protected readonly ApplicationChangeLogProperty = ApplicationChangeLogProperty;
-
   protected isLoadingChangeLog = true;
   protected changeLog: ApplicationChangeLogDto[] = [];
   protected applicationCreatedAt: string = '';
@@ -55,37 +49,5 @@ export class ApplicationChangeLogComponent implements OnDestroy {
         this.errorSubject$.next(error);
       }
     });
-  }
-
-  protected getPropertyValue(entry: ApplicationChangeLogDto, type: ApplicationChangeLogProperty): string {
-    return entry.properties.find((x) => x.type === type)?.value ?? '';
-  }
-
-  protected getMockLabelForChangeLog(entry: ApplicationChangeLogDto): LabelDto {
-    return {
-      id: 0,
-      name: this.getPropertyValue(entry, ApplicationChangeLogProperty.LabelName),
-      colorCode: this.getPropertyValue(entry, ApplicationChangeLogProperty.LabelColorCode),
-      description: ''
-    };
-  }
-
-  protected getChangeLogIcon(type: ApplicationChangeLogType): string {
-    switch (type) {
-      case ApplicationChangeLogType.NotesChanged:
-      case ApplicationChangeLogType.CommentChanged:
-      case ApplicationChangeLogType.ContactChanged:
-      case ApplicationChangeLogType.ContactEmailChanged:
-      case ApplicationChangeLogType.ContactTelephoneChanged:
-      case ApplicationChangeLogType.TeamRenamed:
-        return 'bi-pencil-square';
-      case ApplicationChangeLogType.TeamAdded:
-        return 'bi-plus-square';
-      case ApplicationChangeLogType.TeamRemoved:
-        return 'bi-dash-square';
-      case ApplicationChangeLogType.LabelAdded:
-      case ApplicationChangeLogType.LabelRemoved:
-        return 'bi-tags';
-    }
   }
 }

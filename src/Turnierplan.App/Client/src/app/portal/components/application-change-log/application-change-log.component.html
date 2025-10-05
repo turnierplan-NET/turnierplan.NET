@@ -5,46 +5,7 @@
   </div>
   <div class="overflow-y-scroll p-3 gap-3 d-flex flex-column align-items-stretch">
     @for (entry of changeLog; track entry.id; let index = $index) {
-      <div class="d-flex flex-row align-items-center gap-3">
-        <i class="bi" [class]="getChangeLogIcon(entry.type)"></i>
-        <div class="flex-grow-1 d-flex flex-column gap-1 align-items-stretch">
-          <span class="small">
-            <span>#{{ changeLog.length - index + 1 }}</span>
-            <span class="mx-1">&middot;</span>
-            <span>{{ entry.timestamp | translateDate }}</span>
-            <span class="mx-1">&middot;</span>
-            <span [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.Types.' + entry.type"></span>
-          </span>
-
-          @if (entry.type === ApplicationChangeLogType.LabelAdded) {
-            @let mockLabel = getMockLabelForChangeLog(entry);
-            <div class="d-flex flex-row align-items-center gap-2">
-              <tp-label [label]="mockLabel" />
-              <span [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.LabelAdded'"></span>
-              <span class="text-decoration-underline">{{ getPropertyValue(entry, ApplicationChangeLogProperty.TeamName) }}</span>
-            </div>
-          } @else if (entry.type === ApplicationChangeLogType.LabelRemoved) {
-            @let mockLabel = getMockLabelForChangeLog(entry);
-            <div class="d-flex flex-row align-items-center gap-2">
-              <tp-label [label]="mockLabel" />
-              <span [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.LabelRemoved'"></span>
-              <span class="text-decoration-underline">{{ getPropertyValue(entry, ApplicationChangeLogProperty.TeamName) }}</span>
-            </div>
-          } @else if (entry.type === ApplicationChangeLogType.TeamAdded) {
-            <!-- TODO: Implement with the following issue: https://github.com/turnierplan-NET/turnierplan.NET/issues/192 -->
-          } @else {
-            <div class="d-flex flex-row align-items-start gap-2">
-              <span class="value-display p-1 border text-danger flex-grow-0">{{
-                getPropertyValue(entry, ApplicationChangeLogProperty.PreviousValue)
-              }}</span>
-              <span class="mt-1 bi bi-arrow-right"></span>
-              <span class="value-display p-1 border text-success flex-grow-0">{{
-                getPropertyValue(entry, ApplicationChangeLogProperty.NewValue)
-              }}</span>
-            </div>
-          }
-        </div>
-      </div>
+      <tp-application-change-log-entry [index]="changeLog.length - index + 1" [entry]="entry" />
       <hr class="my-0" style="opacity: 0.1" />
     }
 
