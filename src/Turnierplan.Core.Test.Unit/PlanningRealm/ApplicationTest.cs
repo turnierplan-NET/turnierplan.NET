@@ -4,60 +4,91 @@ namespace Turnierplan.Core.Test.Unit.PlanningRealm;
 
 public sealed class ApplicationTest
 {
-
+    private readonly Application _application = new(null!, null, 0, string.Empty);
 
     [Fact]
-    public void Application()
+    public void Application___When_Notes_Are_Set___Change_Log_Is_Created()
     {
-        
+        _application.ChangeLog.Should().BeEmpty();
+
+        SetPropertyAndAssertChangeLogCreated(value => _application.Notes = value!, isNullable: false, ApplicationChangeLogType.NotesChanged);
+
+        _application.ChangeLog.Should().NotBeEmpty();
     }
-    
-    
-    // TODO: Implement new tests
-#if false
+
     [Fact]
-    public void Application___SetNotes___History_Is_Kept_Correctly()
+    public void Application___When_Contact_Is_Set___Change_Log_Is_Created()
     {
-        var application = new Application(null!, null, 0, string.Empty);
+        _application.ChangeLog.Should().BeEmpty();
 
-        application.Notes.Should().BeEmpty();
-        application.NotesHistory.Should().BeEmpty();
+        SetPropertyAndAssertChangeLogCreated(value => _application.Contact = value!, isNullable: false, ApplicationChangeLogType.ContactChanged);
 
-        // notes are set for the first time
-        application.SetNotes("Test");
-
-        application.Notes.Should().Be("Test");
-        application.NotesHistory.Should().BeEmpty();
-
-        // notes are updated for the first time
-        application.SetNotes("Hello");
-
-        application.Notes.Should().Be("Hello");
-        application.NotesHistory.Should().BeEquivalentTo(["Test"], opt => opt.WithStrictOrdering());
-
-        // make the 'H' lower case
-        application.SetNotes("hello");
-
-        application.Notes.Should().Be("hello");
-        application.NotesHistory.Should().BeEquivalentTo(["Test"], opt => opt.WithStrictOrdering());
-
-        // notes are updated to something different
-        application.SetNotes("Hello2");
-
-        application.Notes.Should().Be("Hello2");
-        application.NotesHistory.Should().BeEquivalentTo(["Test", "hello"], opt => opt.WithStrictOrdering());
-
-        // whitespace is automatically trimmed
-        application.SetNotes("  Hello2   ");
-
-        application.Notes.Should().Be("Hello2");
-        application.NotesHistory.Should().BeEquivalentTo(["Test", "hello"], opt => opt.WithStrictOrdering());
-
-        // notes are updated to something different
-        application.SetNotes("Hello World");
-
-        application.Notes.Should().Be("Hello World");
-        application.NotesHistory.Should().BeEquivalentTo(["Test", "hello", "Hello2"], opt => opt.WithStrictOrdering());
+        _application.ChangeLog.Should().NotBeEmpty();
     }
-#endif
+
+    [Fact]
+    public void Application___When_ContactEmail_Is_Set___Change_Log_Is_Created()
+    {
+        _application.ChangeLog.Should().BeEmpty();
+
+        SetPropertyAndAssertChangeLogCreated(value => _application.ContactEmail = value, isNullable: false, ApplicationChangeLogType.ContactEmailChanged);
+
+        _application.ChangeLog.Should().NotBeEmpty();
+    }
+
+    [Fact]
+    public void Application___When_ContactTelephone_Is_Set___Change_Log_Is_Created()
+    {
+        _application.ChangeLog.Should().BeEmpty();
+
+        SetPropertyAndAssertChangeLogCreated(value => _application.ContactTelephone = value, isNullable: false, ApplicationChangeLogType.ContactTelephoneChanged);
+
+        _application.ChangeLog.Should().NotBeEmpty();
+    }
+
+    [Fact]
+    public void Application___When_Comment_Is_Set___Change_Log_Is_Created()
+    {
+        _application.ChangeLog.Should().BeEmpty();
+
+        SetPropertyAndAssertChangeLogCreated(value => _application.Comment = value, isNullable: false, ApplicationChangeLogType.CommentChanged);
+
+        _application.ChangeLog.Should().NotBeEmpty();
+    }
+
+    private void SetPropertyAndAssertChangeLogCreated(Action<string?> set, bool isNullable, ApplicationChangeLogType expectedChangeLogType)
+    {
+        set("Test");
+
+        _application.ChangeLog.Should().HaveCount(1);
+        var entry = _application.ChangeLog[^1];
+        entry.Type.Should().Be(expectedChangeLogType);
+        entry.Properties.Should().HaveCount(2);
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.PreviousValue).Value.Should().Be(string.Empty);
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.NewValue).Value.Should().Be("Test");
+
+        set("Test   ");
+        _application.ChangeLog.Should().HaveCount(1);
+
+        set("Hello");
+
+        _application.ChangeLog.Should().HaveCount(2);
+        entry = _application.ChangeLog[^1];
+        entry.Type.Should().Be(expectedChangeLogType);
+        entry.Properties.Should().HaveCount(2);
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.PreviousValue).Value.Should().Be("Test");
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.NewValue).Value.Should().Be("Hello");
+
+        if (isNullable)
+        {
+            set(null);
+
+            _application.ChangeLog.Should().HaveCount(3);
+            entry = _application.ChangeLog[^1];
+            entry.Type.Should().Be(expectedChangeLogType);
+            entry.Properties.Should().HaveCount(2);
+            entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.PreviousValue).Value.Should().Be("Hello");
+            entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.NewValue).Value.Should().Be(string.Empty);
+        }
+    }
 }

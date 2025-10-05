@@ -7,6 +7,7 @@ public sealed class Application : Entity<long>
     internal readonly List<ApplicationChangeLog> _changeLog = [];
     internal readonly List<ApplicationTeam> _teams = [];
 
+    private string _notes;
     private string _contact;
     private string? _contactEmail;
     private string? _contactTelephone;
@@ -17,9 +18,9 @@ public sealed class Application : Entity<long>
         Id = id;
         Tag = tag;
         CreatedAt = createdAt;
-        Notes = notes;
         FormSession = formSession;
 
+        _notes = notes;
         _contact = contact;
         _contactEmail = contactEmail;
         _contactTelephone = contactTelephone;
@@ -33,8 +34,8 @@ public sealed class Application : Entity<long>
         SourceLink = sourceLink;
         Tag = tag;
         CreatedAt = DateTime.UtcNow;
-        Notes = string.Empty;
 
+        _notes = string.Empty;
         _contact = contact;
     }
 
@@ -50,7 +51,21 @@ public sealed class Application : Entity<long>
 
     public IReadOnlyList<ApplicationChangeLog> ChangeLog => _changeLog.AsReadOnly();
 
-    public string Notes { get; private set; }
+    public string Notes
+    {
+        get => _notes;
+        set
+        {
+            var trimmed = value.Trim();
+
+            if (!_notes.Equals(trimmed))
+            {
+                AddChangeLog(ApplicationChangeLogType.NotesChanged, _notes, trimmed);
+            }
+
+            _notes = trimmed;
+        }
+    }
 
     public string Contact
     {
@@ -64,7 +79,7 @@ public sealed class Application : Entity<long>
                 AddChangeLog(ApplicationChangeLogType.ContactChanged, _contact, trimmed);
             }
 
-            _contact = value;
+            _contact = trimmed;
         }
     }
 
@@ -80,7 +95,7 @@ public sealed class Application : Entity<long>
                 AddChangeLog(ApplicationChangeLogType.ContactEmailChanged, _contactEmail, trimmed);
             }
 
-            _contactEmail = value;
+            _contactEmail = trimmed;
         }
     }
 
@@ -96,7 +111,7 @@ public sealed class Application : Entity<long>
                 AddChangeLog(ApplicationChangeLogType.ContactTelephoneChanged, _contactTelephone, trimmed);
             }
 
-            _contactTelephone = value;
+            _contactTelephone = trimmed;
         }
     }
 
@@ -112,7 +127,7 @@ public sealed class Application : Entity<long>
                 AddChangeLog(ApplicationChangeLogType.CommentChanged, _comment, trimmed);
             }
 
-            _comment = value;
+            _comment = trimmed;
         }
     }
 
@@ -126,18 +141,6 @@ public sealed class Application : Entity<long>
         _teams.Add(team);
 
         AddChangeLog(ApplicationChangeLogType.TeamAdded, [new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TeamName, team.Name)]);
-    }
-
-    public void SetNotes(string notes)
-    {
-        notes = notes.Trim();
-
-        if (!Notes.Equals(notes))
-        {
-            AddChangeLog(ApplicationChangeLogType.NotesChanged, Notes, notes);
-        }
-
-        Notes = notes;
     }
 
     public void ClearChangeLog()
