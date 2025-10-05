@@ -145,13 +145,25 @@ public sealed class Application : Entity<long>
         _changeLog.Clear();
     }
 
-    internal void AddChangeLog(ApplicationChangeLogType type, string? oldValue, string? newValue)
+    internal void AddChangeLog(ApplicationChangeLogType type, string? previousValue, string? newValue)
     {
-        _changeLog.Add(new ApplicationChangeLog(this, type, oldValue, newValue, null));
+        var properties = new Dictionary<ApplicationChangeLogProperty, string>();
+
+        if (previousValue is not null)
+        {
+            properties[ApplicationChangeLogProperty.PreviousValue] = previousValue;
+        }
+
+        if (newValue is not null)
+        {
+            properties[ApplicationChangeLogProperty.NewValue] = newValue;
+        }
+
+        AddChangeLog(type, properties);
     }
 
-    internal void AddChangeLog(ApplicationChangeLogType type, Dictionary<string, string> parameters)
+    internal void AddChangeLog(ApplicationChangeLogType type, Dictionary<ApplicationChangeLogProperty, string> properties)
     {
-        _changeLog.Add(new ApplicationChangeLog(this, type, null, null, parameters));
+        _changeLog.Add(new ApplicationChangeLog(this, type, properties));
     }
 }

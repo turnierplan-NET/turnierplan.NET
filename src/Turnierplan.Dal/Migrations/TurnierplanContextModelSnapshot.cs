@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Dal;
 
 #nullable disable
@@ -336,13 +337,8 @@ namespace Turnierplan.Dal.Migrations
                     b.Property<long>("ApplicationId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("NewValue")
-                        .HasColumnType("text");
-
-                    b.Property<string>("OldValue")
-                        .HasColumnType("text");
-
-                    b.Property<IReadOnlyDictionary<string, string>>("Properties")
+                    b.Property<IReadOnlyDictionary<ApplicationChangeLogProperty, string>>("Properties")
+                        .IsRequired()
                         .HasColumnType("jsonb");
 
                     b.Property<DateTime>("Timestamp")

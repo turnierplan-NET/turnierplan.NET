@@ -10,5 +10,7 @@ public enum ApplicationChangeLogType
     ContactTelephoneChanged = 4,
     CommentChanged = 5,
     TeamAdded = 6,
-    TeamRenamed = 7
+    TeamRenamed = 7,
+    LabelAdded = 8,
+    LabelRemoved = 9
 }

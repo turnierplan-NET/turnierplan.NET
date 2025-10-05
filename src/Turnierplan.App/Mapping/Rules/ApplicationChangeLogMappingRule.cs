@@ -12,8 +12,7 @@ internal sealed class ApplicationChangeLogMappingRule : MappingRuleBase<Applicat
             Id = source.Id,
             Timestamp = source.Timestamp,
             Type = source.Type,
-            OldValue = source.OldValue,
-            NewValue = source.NewValue
+            AdditionalProperties = source.Properties.ToDictionary()
         };
     }
 }

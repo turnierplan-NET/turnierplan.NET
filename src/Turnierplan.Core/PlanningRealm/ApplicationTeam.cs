@@ -50,8 +50,6 @@ public sealed class ApplicationTeam : Entity<long>
         }
     }
 
-    // TODO: Change log for labels?
-
     public void AddLabel(Label label)
     {
         if (_labels.Contains(label))
@@ -60,10 +58,31 @@ public sealed class ApplicationTeam : Entity<long>
         }
 
         _labels.Add(label);
+
+        AddChangeLogForLabelEvent(isAdded: true, label);
     }
 
-    public void RemoveAllLabels()
+    public void RemoveLabel(Label label)
     {
-        _labels.Clear();
+        var isRemoved = _labels.Remove(label);
+
+        if (isRemoved)
+        {
+            AddChangeLogForLabelEvent(isAdded: false, label);
+        }
+    }
+
+    private void AddChangeLogForLabelEvent(bool isAdded, Label label)
+    {
+        var type = isAdded ? ApplicationChangeLogType.LabelAdded : ApplicationChangeLogType.LabelRemoved;
+
+        var properties = new Dictionary<ApplicationChangeLogProperty, string>
+        {
+            [ApplicationChangeLogProperty.LabelName] = label.Name,
+            [ApplicationChangeLogProperty.LabelColorCode] = label.ColorCode,
+            [ApplicationChangeLogProperty.TeamName] = Name
+        };
+
+        Application.AddChangeLog(type, properties);
     }
 }
