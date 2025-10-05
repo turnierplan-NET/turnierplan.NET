@@ -6,7 +6,8 @@ public enum ApplicationChangeLogProperty
 
     PreviousValue = 1,
     NewValue = 2,
-    LabelName = 3,
-    LabelColorCode = 4,
-    TeamName = 5
+    LabelId = 3,
+    LabelName = 4,
+    LabelColorCode = 5,
+    TeamName = 6
 }

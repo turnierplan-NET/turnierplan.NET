@@ -77,6 +77,7 @@ public sealed class ApplicationTeam : Entity<long>
         var type = isAdded ? ApplicationChangeLogType.LabelAdded : ApplicationChangeLogType.LabelRemoved;
 
         Application.AddChangeLog(type, [
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.LabelId, $"{label.Id}"),
             new ApplicationChangeLog.Property(ApplicationChangeLogProperty.LabelName, label.Name),
             new ApplicationChangeLog.Property(ApplicationChangeLogProperty.LabelColorCode, label.ColorCode),
             new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TeamName, Name),
