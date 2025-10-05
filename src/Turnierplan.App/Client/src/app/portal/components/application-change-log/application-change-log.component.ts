@@ -68,7 +68,9 @@ export class ApplicationChangeLogComponent implements OnDestroy {
       case ApplicationChangeLogType.TeamRenamed:
         return 'bi-pencil-square';
       case ApplicationChangeLogType.TeamAdded:
-        return 'bi-dash-square-dotted';
+        return 'bi-plus-square';
+      case ApplicationChangeLogType.TeamRemoved:
+        return 'bi-dash-square';
       case ApplicationChangeLogType.LabelAdded:
       case ApplicationChangeLogType.LabelRemoved:
         return 'bi-tags';
