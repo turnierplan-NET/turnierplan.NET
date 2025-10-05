@@ -147,6 +147,11 @@ public sealed class Application : Entity<long>
 
     internal void AddChangeLog(ApplicationChangeLogType type, string? oldValue, string? newValue)
     {
-        _changeLog.Add(new ApplicationChangeLog(this, type, oldValue, newValue));
+        _changeLog.Add(new ApplicationChangeLog(this, type, oldValue, newValue, null));
+    }
+
+    internal void AddChangeLog(ApplicationChangeLogType type, Dictionary<string, string> parameters)
+    {
+        _changeLog.Add(new ApplicationChangeLog(this, type, null, null, parameters));
     }
 }

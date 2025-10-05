@@ -342,6 +342,9 @@ namespace Turnierplan.Dal.Migrations
                     b.Property<string>("OldValue")
                         .HasColumnType("text");
 
+                    b.Property<IReadOnlyDictionary<string, string>>("Properties")
+                        .HasColumnType("jsonb");
+
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp with time zone");
 

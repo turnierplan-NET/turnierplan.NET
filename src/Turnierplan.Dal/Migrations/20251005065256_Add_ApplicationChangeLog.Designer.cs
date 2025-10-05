@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20251003190828_Add_ApplicationChangeLog")]
+    [Migration("20251005065256_Add_ApplicationChangeLog")]
     partial class Add_ApplicationChangeLog
     {
         /// <inheritdoc />
@@ -344,6 +344,9 @@ namespace Turnierplan.Dal.Migrations
 
                     b.Property<string>("OldValue")
                         .HasColumnType("text");
+
+                    b.Property<IReadOnlyDictionary<string, string>>("Properties")
+                        .HasColumnType("jsonb");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp with time zone");

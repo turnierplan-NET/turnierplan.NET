@@ -26,5 +26,9 @@ public sealed class ApplicationChangeLogEntityTypeConfiguration : IEntityTypeCon
 
         builder.Property(x => x.NewValue)
             .IsRequired(false);
+
+        builder.Property(x => x.Properties)
+            .HasColumnType("jsonb")
+            .IsRequired(false);
     }
 }

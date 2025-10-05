@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -23,7 +24,8 @@ namespace Turnierplan.Dal.Migrations
                     Timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
                     OldValue = table.Column<string>(type: "text", nullable: true),
-                    NewValue = table.Column<string>(type: "text", nullable: true)
+                    NewValue = table.Column<string>(type: "text", nullable: true),
+                    Properties = table.Column<IReadOnlyDictionary<string, string>>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
