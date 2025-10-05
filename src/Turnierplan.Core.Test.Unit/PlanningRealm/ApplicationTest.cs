@@ -91,19 +91,44 @@ public sealed class ApplicationTest
     [Fact]
     public void Application___When_Team_Is_Removed___Change_Log_Is_Created()
     {
+        _application.ChangeLog.Should().BeEmpty();
+
         // TODO: Implement with the following issue: https://github.com/turnierplan-NET/turnierplan.NET/issues/192
     }
 
     [Fact]
-    public void Application___When_Label_Is_Added___Change_Log_Is_Created()
+    public void Application___When_Label_Is_Added_Or_Removed___Change_Log_Is_Created()
     {
-        // todo
-    }
+        _application.ChangeLog.Should().BeEmpty();
 
-    [Fact]
-    public void Application___When_Label_Is_Removed___Change_Log_Is_Created()
-    {
-        // todo
+        var team = _application.AddTeam(null!, "TestTeam");
+        var label = new Label(123, "TestLabel", string.Empty, "c81fa9");
+        _application.ChangeLog.Should().HaveCount(1);
+
+        team.AddLabel(label);
+
+        // simulate label being changed intermittently
+        label.Name = "TestLabel2";
+        label.ColorCode = "aaaaaa";
+
+        team.RemoveLabel(label);
+
+        _application.ChangeLog.Should().HaveCount(3);
+        var entry = _application.ChangeLog[^2]; // label was added
+        entry.Type.Should().Be(ApplicationChangeLogType.LabelAdded);
+        entry.Properties.Should().HaveCount(4);
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.LabelId).Value.Should().Be("123");
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.LabelName).Value.Should().Be("TestLabel");
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.LabelColorCode).Value.Should().Be("c81fa9");
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.TeamName).Value.Should().Be("TestTeam");
+
+        entry = _application.ChangeLog[^1]; // label was removed
+        entry.Type.Should().Be(ApplicationChangeLogType.LabelRemoved);
+        entry.Properties.Should().HaveCount(4);
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.LabelId).Value.Should().Be("123");
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.LabelName).Value.Should().Be("TestLabel2");
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.LabelColorCode).Value.Should().Be("aaaaaa");
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.TeamName).Value.Should().Be("TestTeam");
     }
 
     private void SetPropertyAndAssertChangeLogCreated(Action<string?> set, bool isNullable, ApplicationChangeLogType expectedChangeLogType)
