@@ -1,14 +1,19 @@
+using System.Text.Json.Serialization;
 using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.PlanningRealm;
 
 public sealed class ApplicationChangeLog : Entity<long>
 {
+    internal readonly List<Property> _properties;
+
     internal ApplicationChangeLog(long id, DateTime timestamp, ApplicationChangeLogType type)
     {
         Id = id;
         Timestamp = timestamp;
         Type = type;
+
+        _properties = [];
     }
 
     internal ApplicationChangeLog(Application application, ApplicationChangeLogType type, IEnumerable<Property> properties)
@@ -17,7 +22,8 @@ public sealed class ApplicationChangeLog : Entity<long>
         Application = application;
         Timestamp = DateTime.UtcNow;
         Type = type;
-        Properties = [..properties];
+
+        _properties = [..properties];
     }
 
     public override long Id { get; protected set; }
@@ -28,7 +34,7 @@ public sealed class ApplicationChangeLog : Entity<long>
 
     public ApplicationChangeLogType Type { get; }
 
-    public IReadOnlyList<Property> Properties { get; internal set; }
+    public IReadOnlyList<Property> Properties => _properties.AsReadOnly();
 
-    public sealed record Property(ApplicationChangeLogProperty Type, string Value);
+    public sealed record Property([property:JsonPropertyName("t")] ApplicationChangeLogProperty Type, [property:JsonPropertyName("v")] string Value);
 }

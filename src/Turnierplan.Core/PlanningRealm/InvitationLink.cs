@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.SeedWork;
@@ -118,5 +119,5 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
         apply();
     }
 
-    public sealed record ExternalLink(string Name, string Url);
+    public sealed record ExternalLink([property:JsonPropertyName("n")] string Name, [property:JsonPropertyName("u")] string Url);
 }

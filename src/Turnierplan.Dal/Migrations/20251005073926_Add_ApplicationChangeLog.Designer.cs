@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20251005072803_Add_ApplicationChangeLog")]
+    [Migration("20251005073926_Add_ApplicationChangeLog")]
     partial class Add_ApplicationChangeLog
     {
         /// <inheritdoc />
@@ -1156,11 +1156,13 @@ namespace Turnierplan.Dal.Migrations
                                 .HasColumnType("integer");
 
                             b1.Property<int>("Type")
-                                .HasColumnType("integer");
+                                .HasColumnType("integer")
+                                .HasAnnotation("Relational:JsonPropertyName", "t");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("text");
+                                .HasColumnType("text")
+                                .HasAnnotation("Relational:JsonPropertyName", "v");
 
                             b1.HasKey("ApplicationChangeLogId", "__synthesizedOrdinal");
 
@@ -1225,11 +1227,13 @@ namespace Turnierplan.Dal.Migrations
 
                             b1.Property<string>("Name")
                                 .IsRequired()
-                                .HasColumnType("text");
+                                .HasColumnType("text")
+                                .HasAnnotation("Relational:JsonPropertyName", "n");
 
                             b1.Property<string>("Url")
                                 .IsRequired()
-                                .HasColumnType("text");
+                                .HasColumnType("text")
+                                .HasAnnotation("Relational:JsonPropertyName", "u");
 
                             b1.HasKey("InvitationLinkId", "__synthesizedOrdinal");
 

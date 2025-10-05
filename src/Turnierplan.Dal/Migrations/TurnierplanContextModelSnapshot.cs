@@ -1153,11 +1153,13 @@ namespace Turnierplan.Dal.Migrations
                                 .HasColumnType("integer");
 
                             b1.Property<int>("Type")
-                                .HasColumnType("integer");
+                                .HasColumnType("integer")
+                                .HasAnnotation("Relational:JsonPropertyName", "t");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
-                                .HasColumnType("text");
+                                .HasColumnType("text")
+                                .HasAnnotation("Relational:JsonPropertyName", "v");
 
                             b1.HasKey("ApplicationChangeLogId", "__synthesizedOrdinal");
 
@@ -1222,11 +1224,13 @@ namespace Turnierplan.Dal.Migrations
 
                             b1.Property<string>("Name")
                                 .IsRequired()
-                                .HasColumnType("text");
+                                .HasColumnType("text")
+                                .HasAnnotation("Relational:JsonPropertyName", "n");
 
                             b1.Property<string>("Url")
                                 .IsRequired()
-                                .HasColumnType("text");
+                                .HasColumnType("text")
+                                .HasAnnotation("Relational:JsonPropertyName", "u");
 
                             b1.HasKey("InvitationLinkId", "__synthesizedOrdinal");
 

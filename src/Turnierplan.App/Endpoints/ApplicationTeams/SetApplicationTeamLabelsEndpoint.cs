@@ -55,8 +55,8 @@ internal sealed class SetApplicationTeamLabelsEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        var labelsToAdd = request.LabelIds.Where(id => !applicationTeam.Labels.Any(label => label.Id == id));
-        var labelsToRemove = applicationTeam.Labels.Where(label => !request.LabelIds.Contains(label.Id));
+        var labelsToAdd = request.LabelIds.Where(id => !applicationTeam.Labels.Any(label => label.Id == id)).ToList();
+        var labelsToRemove = applicationTeam.Labels.Where(label => !request.LabelIds.Contains(label.Id)).ToList();
 
         foreach (var label in labelsToRemove)
         {
