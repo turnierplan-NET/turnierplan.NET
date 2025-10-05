@@ -22,6 +22,8 @@ internal static class WebApplicationExtensions
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<DatabaseMigrator>>();
         var context = scope.ServiceProvider.GetRequiredService<TurnierplanContext>();
 
+        await EnsureNoDowngradeAsync(context);
+
         if (context.Database.IsNpgsql())
         {
             // If the database is in-memory, no migration is necessary
@@ -66,6 +68,13 @@ internal static class WebApplicationExtensions
         {
             logger.LogInformation("Database contains {UserCount} user(s). No administrator account was created.", userCount);
         }
+    }
+
+    private static async Task EnsureNoDowngradeAsync(TurnierplanContext context)
+    {
+        var database = context.Database;
+
+        // timestamp with time zone
     }
 
     private sealed record DatabaseMigrator;
