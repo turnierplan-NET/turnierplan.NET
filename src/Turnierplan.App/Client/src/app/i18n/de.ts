@@ -1074,7 +1074,10 @@ export const de = {
             ContactTelephoneChanged: 'Kontakt Telefon-Nr. geändert',
             CommentChanged: 'Bemerkung geändert',
             TeamAdded: 'Mannschaft hinzugefügt',
-            TeamRenamed: 'Mannschaft umbenannt'
+            TeamRenamed: 'Mannschaft umbenannt',
+            TeamRemoved: 'Mannschaft entfernt',
+            LabelAdded: 'Label hinzugefügt',
+            LabelRemoved: 'Label entfernt'
           }
         }
       },
