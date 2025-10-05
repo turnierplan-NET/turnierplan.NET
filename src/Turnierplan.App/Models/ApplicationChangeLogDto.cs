@@ -10,5 +10,5 @@ public sealed record ApplicationChangeLogDto
 
     public required ApplicationChangeLogType Type { get; init; }
 
-    public required Dictionary<ApplicationChangeLogProperty, string> AdditionalProperties { get; init; }
+    public required ApplicationChangeLogPropertyDto[] Properties { get; init; }
 }

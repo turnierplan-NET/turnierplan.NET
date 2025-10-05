@@ -1,23 +1,26 @@
 import { Component, OnDestroy } from '@angular/core';
-import { NgClass } from '@angular/common';
 import { ApplicationDto } from '../../../api/models/application-dto';
 import { ApplicationChangeLogDto } from '../../../api/models/application-change-log-dto';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { Observable, Subject } from 'rxjs';
 import { getApplicationChangeLog } from '../../../api/fn/applications/get-application-change-log';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { TranslateDirective } from '@ngx-translate/core';
 import { LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { ApplicationChangeLogType } from '../../../api/models/application-change-log-type';
+import { ApplicationChangeLogProperty } from '../../../api/models/application-change-log-property';
 
 @Component({
   selector: 'tp-application-change-log',
-  imports: [TranslatePipe, TranslateDirective, LoadingStateDirective, TranslateDatePipe, NgClass],
+  imports: [TranslateDirective, LoadingStateDirective, TranslateDatePipe],
   templateUrl: './application-change-log.component.html',
   styleUrl: './application-change-log.component.scss'
 })
 export class ApplicationChangeLogComponent implements OnDestroy {
+  protected readonly ApplicationChangeLogType = ApplicationChangeLogType;
+  protected readonly ApplicationChangeLogProperty = ApplicationChangeLogProperty;
+
   protected isLoadingChangeLog = true;
   protected changeLog: ApplicationChangeLogDto[] = [];
   protected applicationCreatedAt: string = '';
@@ -51,6 +54,10 @@ export class ApplicationChangeLogComponent implements OnDestroy {
     });
   }
 
+  protected getPropertyValue(entry: ApplicationChangeLogDto, type: ApplicationChangeLogProperty): string {
+    return entry.properties.find((x) => x.type === type)?.value ?? '';
+  }
+
   protected getChangeLogIcon(type: ApplicationChangeLogType): string {
     switch (type) {
       case ApplicationChangeLogType.NotesChanged:
@@ -62,6 +69,9 @@ export class ApplicationChangeLogComponent implements OnDestroy {
         return 'bi-pencil-square';
       case ApplicationChangeLogType.TeamAdded:
         return 'bi-dash-square-dotted';
+      case ApplicationChangeLogType.LabelAdded:
+      case ApplicationChangeLogType.LabelRemoved:
+        return 'bi-tags';
     }
   }
 }

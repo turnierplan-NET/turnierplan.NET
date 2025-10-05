@@ -76,13 +76,10 @@ public sealed class ApplicationTeam : Entity<long>
     {
         var type = isAdded ? ApplicationChangeLogType.LabelAdded : ApplicationChangeLogType.LabelRemoved;
 
-        var properties = new Dictionary<ApplicationChangeLogProperty, string>
-        {
-            [ApplicationChangeLogProperty.LabelName] = label.Name,
-            [ApplicationChangeLogProperty.LabelColorCode] = label.ColorCode,
-            [ApplicationChangeLogProperty.TeamName] = Name
-        };
-
-        Application.AddChangeLog(type, properties);
+        Application.AddChangeLog(type, [
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.LabelName, label.Name),
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.LabelColorCode, label.ColorCode),
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TeamName, Name),
+        ]);
     }
 }

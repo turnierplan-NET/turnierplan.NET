@@ -12,7 +12,11 @@ internal sealed class ApplicationChangeLogMappingRule : MappingRuleBase<Applicat
             Id = source.Id,
             Timestamp = source.Timestamp,
             Type = source.Type,
-            AdditionalProperties = source.Properties.ToDictionary()
+            Properties = source.Properties.Select(x => new ApplicationChangeLogPropertyDto
+            {
+                Type = x.Type,
+                Value = x.Value
+            }).ToArray()
         };
     }
 }

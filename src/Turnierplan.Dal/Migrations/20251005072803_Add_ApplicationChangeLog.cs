@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Turnierplan.Core.PlanningRealm;
 
 #nullable disable
 
@@ -24,7 +22,7 @@ namespace Turnierplan.Dal.Migrations
                     ApplicationId = table.Column<long>(type: "bigint", nullable: false),
                     Timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
-                    Properties = table.Column<IReadOnlyDictionary<ApplicationChangeLogProperty, string>>(type: "jsonb", nullable: false)
+                    Properties = table.Column<string>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {

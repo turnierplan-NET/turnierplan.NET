@@ -125,7 +125,7 @@ public sealed class Application : Entity<long>
         var team = new ApplicationTeam(this, tournamentClass, name);
         _teams.Add(team);
 
-        AddChangeLog(ApplicationChangeLogType.TeamAdded, null, name);
+        AddChangeLog(ApplicationChangeLogType.TeamAdded, [new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TeamName, team.Name)]);
     }
 
     public void SetNotes(string notes)
@@ -145,24 +145,15 @@ public sealed class Application : Entity<long>
         _changeLog.Clear();
     }
 
-    internal void AddChangeLog(ApplicationChangeLogType type, string? previousValue, string? newValue)
+    internal void AddChangeLog(ApplicationChangeLogType type, string previousValue, string newValue)
     {
-        var properties = new Dictionary<ApplicationChangeLogProperty, string>();
-
-        if (previousValue is not null)
-        {
-            properties[ApplicationChangeLogProperty.PreviousValue] = previousValue;
-        }
-
-        if (newValue is not null)
-        {
-            properties[ApplicationChangeLogProperty.NewValue] = newValue;
-        }
-
-        AddChangeLog(type, properties);
+        AddChangeLog(type, [
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.PreviousValue, previousValue),
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.NewValue, newValue)
+        ]);
     }
 
-    internal void AddChangeLog(ApplicationChangeLogType type, Dictionary<ApplicationChangeLogProperty, string> properties)
+    internal void AddChangeLog(ApplicationChangeLogType type, IEnumerable<ApplicationChangeLog.Property> properties)
     {
         _changeLog.Add(new ApplicationChangeLog(this, type, properties));
     }

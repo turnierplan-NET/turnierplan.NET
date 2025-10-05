@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Dal;
 
 #nullable disable
@@ -336,10 +335,6 @@ namespace Turnierplan.Dal.Migrations
 
                     b.Property<long>("ApplicationId")
                         .HasColumnType("bigint");
-
-                    b.Property<IReadOnlyDictionary<ApplicationChangeLogProperty, string>>("Properties")
-                        .IsRequired()
-                        .HasColumnType("jsonb");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp with time zone");
@@ -1148,7 +1143,35 @@ namespace Turnierplan.Dal.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsMany("Turnierplan.Core.PlanningRealm.ApplicationChangeLog+Property", "Properties", b1 =>
+                        {
+                            b1.Property<long>("ApplicationChangeLogId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("ApplicationChangeLogId", "__synthesizedOrdinal");
+
+                            b1.ToTable("ApplicationChangeLogs", "turnierplan");
+
+                            b1.ToJson("Properties");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ApplicationChangeLogId");
+                        });
+
                     b.Navigation("Application");
+
+                    b.Navigation("Properties");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.PlanningRealm.ApplicationTeam", b =>

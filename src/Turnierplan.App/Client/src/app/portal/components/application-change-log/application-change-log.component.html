@@ -27,11 +27,22 @@
             <span class="mx-1">&middot;</span>
             <span [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.Types.' + entry.type"></span>
           </span>
-          @if (entry.oldValue || entry.newValue) {
+
+          @if (entry.type === ApplicationChangeLogType.LabelAdded) {
+            <!-- TODO -->
+          } @else if (entry.type === ApplicationChangeLogType.LabelRemoved) {
+            <!-- TODO -->
+          } @else if (entry.type === ApplicationChangeLogType.TeamAdded) {
+            <!-- TODO -->
+          } @else {
             <div class="d-flex flex-row align-items-start gap-2">
-              <span class="value-display p-1 border text-danger flex-grow-0">{{ entry.oldValue ?? '' }}</span>
+              <span class="value-display p-1 border text-danger flex-grow-0">{{
+                getPropertyValue(entry, ApplicationChangeLogProperty.PreviousValue)
+              }}</span>
               <span class="mt-1 bi bi-arrow-right"></span>
-              <span class="value-display p-1 border text-success flex-grow-0">{{ entry.newValue ?? '' }}</span>
+              <span class="value-display p-1 border text-success flex-grow-0">{{
+                getPropertyValue(entry, ApplicationChangeLogProperty.NewValue)
+              }}</span>
             </div>
           }
         </div>
