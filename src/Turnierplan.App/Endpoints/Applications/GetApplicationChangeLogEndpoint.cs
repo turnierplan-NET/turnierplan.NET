@@ -1,25 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
+using Turnierplan.App.Mapping;
+using Turnierplan.App.Models;
 using Turnierplan.App.Security;
 using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.App.Endpoints.Applications;
 
-internal sealed class SetApplicationNotesEndpoint : EndpointBase
+internal sealed class GetApplicationChangeLogEndpoint : EndpointBase<IEnumerable<ApplicationChangeLogDto>>
 {
-    protected override HttpMethod Method => HttpMethod.Patch;
+    protected override HttpMethod Method => HttpMethod.Get;
 
-    protected override string Route => "/api/planning-realms/{planningRealmId}/applications/{applicationId:int}/notes";
+    protected override string Route => "/api/planning-realms/{planningRealmId}/applications/{applicationId:int}/changelog";
 
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
         [FromRoute] PublicId planningRealmId,
         [FromRoute] long applicationId,
-        [FromBody] SetApplicationNotesEndpointRequest request,
         IPlanningRealmRepository planningRealmRepository,
         IAccessValidator accessValidator,
-        CancellationToken cancellationToken)
+        IApplicationChangeLogRepository applicationChangeLogRepository,
+        IMapper mapper)
     {
         var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.Applications);
 
@@ -28,7 +30,7 @@ internal sealed class SetApplicationNotesEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsWrite))
+        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsRead))
         {
             return Results.Forbid();
         }
@@ -40,15 +42,11 @@ internal sealed class SetApplicationNotesEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        application.Notes = request.Notes;
+        var changeLog = await applicationChangeLogRepository.GetByApplicationIdAsync(application.Id);
 
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        // the oldest change log comes first in the result list
+        changeLog.Sort((x, y) => Math.Sign(x.Timestamp.Ticks - y.Timestamp.Ticks));
 
-        return Results.NoContent();
-    }
-
-    public sealed record SetApplicationNotesEndpointRequest
-    {
-        public required string Notes { get; init; }
+        return Results.Ok(mapper.MapCollection<ApplicationChangeLogDto>(changeLog));
     }
 }

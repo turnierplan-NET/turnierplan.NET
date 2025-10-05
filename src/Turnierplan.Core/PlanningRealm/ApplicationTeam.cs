@@ -35,11 +35,18 @@ public sealed class ApplicationTeam : Entity<long>
 
     public void SetName(string name)
     {
-        Name = name.Trim();
+        name = name.Trim();
+
+        if (!Name.Equals(name))
+        {
+            Application.AddChangeLog(ApplicationChangeLogType.TeamRenamed, Name, name);
+        }
+
+        Name = name;
 
         if (TeamLink is not null)
         {
-            TeamLink.Team.Name = name.Trim();
+            TeamLink.Team.Name = name;
         }
     }
 
@@ -51,10 +58,29 @@ public sealed class ApplicationTeam : Entity<long>
         }
 
         _labels.Add(label);
+
+        AddChangeLogForLabelEvent(isAdded: true, label);
     }
 
-    public void RemoveAllLabels()
+    public void RemoveLabel(Label label)
     {
-        _labels.Clear();
+        var isRemoved = _labels.Remove(label);
+
+        if (isRemoved)
+        {
+            AddChangeLogForLabelEvent(isAdded: false, label);
+        }
+    }
+
+    private void AddChangeLogForLabelEvent(bool isAdded, Label label)
+    {
+        var type = isAdded ? ApplicationChangeLogType.LabelAdded : ApplicationChangeLogType.LabelRemoved;
+
+        Application.AddChangeLog(type, [
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.LabelId, $"{label.Id}"),
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.LabelName, label.Name),
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.LabelColorCode, label.ColorCode),
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TeamName, Name),
+        ]);
     }
 }

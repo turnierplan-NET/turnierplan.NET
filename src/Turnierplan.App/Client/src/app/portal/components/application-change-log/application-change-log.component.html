@@ -1,0 +1,23 @@
+<ng-container *tpLoadingState="{ isLoading: isLoadingChangeLog }">
+  <div class="modal-header">
+    <div class="modal-title" translate="Portal.ViewPlanningRealm.Applications.ChangeLog.Title"></div>
+    <button type="button" class="btn-close" (click)="modal.close()"></button>
+  </div>
+  <div class="overflow-y-scroll p-3 gap-3 d-flex flex-column align-items-stretch">
+    @for (entry of changeLog; track entry.id; let index = $index) {
+      <tp-application-change-log-entry [index]="changeLog.length - index + 1" [entry]="entry" />
+      <hr class="my-0" style="opacity: 0.1" />
+    }
+
+    <div class="d-flex flex-row align-items-center gap-3">
+      <i class="bi bi-stars"></i>
+      <span class="small">
+        <span>#1</span>
+        <span class="mx-1">&middot;</span>
+        <span>{{ applicationCreatedAt | translateDate }}</span>
+        <span class="mx-1">&middot;</span>
+        <span [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.ApplicationCreated'"></span>
+      </span>
+    </div>
+  </div>
+</ng-container>

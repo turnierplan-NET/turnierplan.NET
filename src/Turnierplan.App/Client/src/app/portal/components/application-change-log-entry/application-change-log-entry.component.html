@@ -1,0 +1,36 @@
+<div class="d-flex flex-row align-items-center gap-3">
+  <i class="bi" [class]="changeLogIcon"></i>
+  <div class="flex-grow-1 d-flex flex-column gap-1 align-items-stretch">
+    <span class="small">
+      <span>#{{ index }}</span>
+      <span class="mx-1">&middot;</span>
+      <span>{{ changeLogTimestamp | translateDate }}</span>
+      <span class="mx-1">&middot;</span>
+      <span [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.Types.' + changeLogType"></span>
+    </span>
+
+    @if (changeLogType === ApplicationChangeLogType.LabelAdded) {
+      <div class="d-flex flex-row align-items-center gap-1">
+        <tp-label [label]="mockLabel!" />
+        <span class="ms-1" [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.LabelAdded'"></span>
+        <span class="text-decoration-underline">{{ teamName }}</span>
+      </div>
+    } @else if (changeLogType === ApplicationChangeLogType.LabelRemoved) {
+      <div class="d-flex flex-row align-items-center gap-1">
+        <tp-label [label]="mockLabel!" />
+        <span class="ms-1" [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.LabelRemoved'"></span>
+        <span class="text-decoration-underline">{{ teamName }}</span>
+      </div>
+    } @else if (changeLogType === ApplicationChangeLogType.TeamAdded) {
+      <!-- TODO: Implement with the following issue: https://github.com/turnierplan-NET/turnierplan.NET/issues/192 -->
+    } @else if (changeLogType === ApplicationChangeLogType.TeamRemoved) {
+      <!-- TODO: Implement with the following issue: https://github.com/turnierplan-NET/turnierplan.NET/issues/192 -->
+    } @else {
+      <div class="d-flex flex-row align-items-start gap-2">
+        <span class="value-display p-1 border text-danger flex-grow-0">{{ previousValue }}</span>
+        <span class="mt-1 bi bi-arrow-right"></span>
+        <span class="value-display p-1 border text-success flex-grow-0">{{ newValue }}</span>
+      </div>
+    }
+  </div>
+</div>

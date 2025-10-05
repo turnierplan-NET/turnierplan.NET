@@ -108,6 +108,9 @@ public sealed class InvitationForm : PageModel
             }
         }
 
+        // don't add change log entries for the previously changed properties & added teams
+        application.ClearChangeLog();
+
         await _invitationLinkRepository.UnitOfWork.SaveChangesAsync();
 
         State = SubmissionState.SubmissionSuccessful;

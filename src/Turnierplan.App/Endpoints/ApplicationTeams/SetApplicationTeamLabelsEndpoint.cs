@@ -55,10 +55,15 @@ internal sealed class SetApplicationTeamLabelsEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        // The code becomes simpler if we just clear all labels and re-add the desired ones
-        applicationTeam.RemoveAllLabels();
+        var labelsToAdd = request.LabelIds.Where(id => !applicationTeam.Labels.Any(label => label.Id == id)).ToList();
+        var labelsToRemove = applicationTeam.Labels.Where(label => !request.LabelIds.Contains(label.Id)).ToList();
 
-        foreach (var labelId in request.LabelIds)
+        foreach (var label in labelsToRemove)
+        {
+            applicationTeam.RemoveLabel(label);
+        }
+
+        foreach (var labelId in labelsToAdd)
         {
             var label = planningRealm.Labels.FirstOrDefault(x => x.Id == labelId);
 

@@ -6,19 +6,19 @@ public sealed record ApplicationDto
 
     public required long? SourceLinkId { get; init; }
 
-    public required int Tag { get; set; }
+    public required int Tag { get; init; }
 
-    public required DateTime CreatedAt { get; set; }
+    public required DateTime CreatedAt { get; init; }
 
-    public required string Notes { get; set; }
+    public required string Notes { get; init; }
 
-    public required string Contact { get; set; }
+    public required string Contact { get; init; }
 
-    public required string? ContactEmail { get; set; }
+    public required string? ContactEmail { get; init; }
 
-    public required string? ContactTelephone { get; set; }
+    public required string? ContactTelephone { get; init; }
 
-    public required string? Comment { get; set; }
+    public required string? Comment { get; init; }
 
     public required ApplicationTeamDto[] Teams { get; init; }
 }
