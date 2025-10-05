@@ -56,6 +56,56 @@ public sealed class ApplicationTest
         _application.ChangeLog.Should().NotBeEmpty();
     }
 
+    [Fact]
+    public void Application___When_Team_Is_Added___Change_Log_Is_Created()
+    {
+        _application.ChangeLog.Should().BeEmpty();
+
+        _application.AddTeam(null!, "TestTeam");
+
+        _application.ChangeLog.Should().HaveCount(1);
+        var entry = _application.ChangeLog[^1];
+        entry.Type.Should().Be(ApplicationChangeLogType.TeamAdded);
+        entry.Properties.Should().HaveCount(1);
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.TeamName).Value.Should().Be("TestTeam");
+    }
+
+    [Fact]
+    public void Application___When_Team_Is_Renamed___Change_Log_Is_Created()
+    {
+        _application.ChangeLog.Should().BeEmpty();
+
+        var team = _application.AddTeam(null!, "TestTeam");
+        _application.ChangeLog.Should().HaveCount(1);
+
+        team.SetName("TestTeam2");
+
+        _application.ChangeLog.Should().HaveCount(2);
+        var entry = _application.ChangeLog[^1];
+        entry.Type.Should().Be(ApplicationChangeLogType.TeamRenamed);
+        entry.Properties.Should().HaveCount(2);
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.PreviousValue).Value.Should().Be("TestTeam");
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.NewValue).Value.Should().Be("TestTeam2");
+    }
+
+    [Fact]
+    public void Application___When_Team_Is_Removed___Change_Log_Is_Created()
+    {
+        // TODO: Implement with the following issue: https://github.com/turnierplan-NET/turnierplan.NET/issues/192
+    }
+
+    [Fact]
+    public void Application___When_Label_Is_Added___Change_Log_Is_Created()
+    {
+        // todo
+    }
+
+    [Fact]
+    public void Application___When_Label_Is_Removed___Change_Log_Is_Created()
+    {
+        // todo
+    }
+
     private void SetPropertyAndAssertChangeLogCreated(Action<string?> set, bool isNullable, ApplicationChangeLogType expectedChangeLogType)
     {
         set("Test");

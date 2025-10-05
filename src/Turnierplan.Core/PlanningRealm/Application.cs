@@ -135,12 +135,14 @@ public sealed class Application : Entity<long>
 
     public IReadOnlyList<ApplicationTeam> Teams => _teams.AsReadOnly();
 
-    public void AddTeam(TournamentClass tournamentClass, string name)
+    public ApplicationTeam AddTeam(TournamentClass tournamentClass, string name)
     {
         var team = new ApplicationTeam(this, tournamentClass, name);
         _teams.Add(team);
 
         AddChangeLog(ApplicationChangeLogType.TeamAdded, [new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TeamName, team.Name)]);
+
+        return team;
     }
 
     public void ClearChangeLog()
