@@ -62,7 +62,6 @@ export class ApplicationChangeLogComponent implements OnDestroy {
   }
 
   protected getMockLabelForChangeLog(entry: ApplicationChangeLogDto): LabelDto {
-    console.log('XHI');
     return {
       id: 0,
       name: this.getPropertyValue(entry, ApplicationChangeLogProperty.LabelName),
