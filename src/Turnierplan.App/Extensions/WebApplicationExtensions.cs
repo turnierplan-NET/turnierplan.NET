@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Npgsql;
 using Turnierplan.App.Constants;
 using Turnierplan.App.Options;
 using Turnierplan.Core.User;
@@ -52,7 +53,11 @@ internal static class WebApplicationExtensions
          * with the most recent version. If that version does not match the version we are currently running a version
          * downgrade has occurred, and we stop the application from continuing execution. */
 
-#pragma warning disable EF1002
+        var versionParameter = new NpgsqlParameter("version", TurnierplanVersion.Version);
+        var majorParameter = new NpgsqlParameter("major", TurnierplanVersion.Major);
+        var minorParameter = new NpgsqlParameter("minor", TurnierplanVersion.Minor);
+        var patchParameter = new NpgsqlParameter("patch", TurnierplanVersion.Patch);
+
         await context.Database.ExecuteSqlRawAsync($"""
 CREATE TABLE IF NOT EXISTS {schema}."__TPVersionHistory" (
     "Version"   text NOT NULL UNIQUE,
@@ -63,18 +68,20 @@ CREATE TABLE IF NOT EXISTS {schema}."__TPVersionHistory" (
 );
 
 INSERT INTO {schema}."__TPVersionHistory" ("Version", "Major", "Minor", "Patch", "Timestamp")
-    VALUES ('{TurnierplanVersion.Version}', {TurnierplanVersion.Major}, {TurnierplanVersion.Minor}, {TurnierplanVersion.Patch}, now())
+    VALUES (@version, @major, @minor, @patch, now())
     ON CONFLICT DO NOTHING;
-""");
-#pragma warning restore EF1002
+""", versionParameter, majorParameter, minorParameter, patchParameter);
 
-        var mostRecentVersion = await context.Database.SqlQueryRaw<string>($"""
-SELECT "Version" AS "Value" FROM {schema}."__TPVersionHistory" ORDER BY "Major" DESC, "Minor" DESC, "Patch" DESC
-""").FirstAsync();
+        var mostRecentVersion = await context.Database.SqlQueryRaw<VersionHistory>(
+                $"SELECT * FROM {schema}.\"__TPVersionHistory\"")
+            .OrderByDescending(x => x.Major)
+            .ThenByDescending(x => x.Minor)
+            .ThenByDescending(x => x.Patch)
+            .FirstAsync();
 
-        if (!mostRecentVersion.Equals(TurnierplanVersion.Version))
+        if (!mostRecentVersion.Version.Equals(TurnierplanVersion.Version))
         {
-            logger.LogCritical("Detected version downgrade from '{MostRecentVersion}' to '{CurrentVersion}'.", mostRecentVersion, TurnierplanVersion.Version);
+            logger.LogCritical("Detected version downgrade from '{MostRecentVersion}' to '{CurrentVersion}'.", mostRecentVersion.Version, TurnierplanVersion.Version);
             Environment.Exit(1);
         }
 
@@ -124,4 +131,6 @@ SELECT "Version" AS "Value" FROM {schema}."__TPVersionHistory" ORDER BY "Major" 
     }
 
     private sealed record DatabaseMigrator;
+
+    private sealed record VersionHistory(string Version, int Major, int Minor, int Patch);
 }
