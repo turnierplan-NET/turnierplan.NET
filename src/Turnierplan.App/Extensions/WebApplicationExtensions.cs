@@ -46,7 +46,7 @@ internal static class WebApplicationExtensions
         /* The version check works by creating a special table which stores all turnierplan.NET versions that have ever
          * been run on this database along with the corresponding timestamp. Then, we try to insert a new row with the
          * current version - doing nothing if a row for that specific version already exists. Finally, we query the row
-         * with the most recent version. If that version does not match the version we are currently running a version
+         * with the most recent version. If that version does not match the version we are currently running, a version
          * downgrade has occurred, and we stop the application from continuing execution. */
 
         // The transaction is necessary because otherwise, we will save invalid
