@@ -1067,7 +1067,6 @@ export const de = {
         ChangeLog: {
           Title: 'Änderungshistorie',
           ApplicationCreated: 'Anmeldung erstellt',
-          EmptyText: 'leer',
           Types: {
             NotesChanged: 'Notizen bearbeitet',
             ContactChanged: 'Kontaktperson geändert',
@@ -1080,6 +1079,7 @@ export const de = {
             LabelAdded: 'Label hinzugefügt',
             LabelRemoved: 'Label entfernt'
           },
+          EmptyText: 'leer',
           LabelAdded: 'hinzugefügt zur Mannschaft',
           LabelRemoved: 'entfernt von der Mannschaft'
         }
