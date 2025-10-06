@@ -45,13 +45,15 @@ internal static class WebApplicationExtensions
             throw new InvalidOperationException("Downgrade check failed because the current version is not available.");
         }
 
-        await context.Database.BeginTransactionAsync();
-
         /* The version check works by creating a special table which stores all turnierplan.NET versions that have ever
          * been run on this database along with the corresponding timestamp. Then, we try to insert a new row with the
          * current version - doing nothing if a row for that specific version already exists. Finally, we query the row
          * with the most recent version. If that version does not match the version we are currently running a version
          * downgrade has occurred, and we stop the application from continuing execution. */
+
+        // The transaction is necessary because otherwise, we will save invalid
+        // version history entries to the database in the case of a version downgrade.
+        await context.Database.BeginTransactionAsync();
 
         var versionParameter = new NpgsqlParameter("version", TurnierplanVersion.Version);
         var majorParameter = new NpgsqlParameter("major", TurnierplanVersion.Major);
@@ -83,8 +85,11 @@ INSERT INTO {schema}."__TPVersionHistory" ("Version", "Major", "Minor", "Patch",
         {
             logger.LogCritical("Detected version downgrade from '{MostRecentVersion}' to '{CurrentVersion}'.", mostRecentVersion.Version, TurnierplanVersion.Version);
             Environment.Exit(1);
+
+            return;
         }
 
+        // Commit only after we know that the current version is "valid"
         await context.Database.CommitTransactionAsync();
     }
 
