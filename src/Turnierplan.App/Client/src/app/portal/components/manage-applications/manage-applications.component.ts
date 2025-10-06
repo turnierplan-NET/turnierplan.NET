@@ -129,11 +129,20 @@ export class ManageApplicationsComponent implements OnDestroy {
           }
 
           if (result.items.length === 1) {
+            // if the page contains 1 item, always expand it immediately
+            this.expandedApplications = {};
             this.expandedApplications[result.items[0].id] = true;
-          } else {
-            for (const application of result.items) {
-              if (!(application.id in this.expandedApplications)) {
-                this.expandedApplications[application.id] = false;
+          } else if (result.items.length > 0) {
+            // if the page contains more than 1 item, expand all items that were previously expanded and are still visible
+            const currentlyExpandedIds = Object.keys(this.expandedApplications)
+              .map((id) => +id)
+              .filter((id) => this.expandedApplications[id]);
+
+            this.expandedApplications = {};
+
+            for (const id of currentlyExpandedIds) {
+              if (result.items.some((x) => x.id === id)) {
+                this.expandedApplications[id] = true;
               }
             }
           }
