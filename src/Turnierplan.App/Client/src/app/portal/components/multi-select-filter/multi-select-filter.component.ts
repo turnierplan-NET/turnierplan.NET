@@ -46,7 +46,7 @@ export class MultiSelectFilterComponent {
   }
 
   protected get allSelected(): boolean {
-    return this.selectedCount === 0 || this.selectedCount == this.totalCount;
+    return this.selectedCount === 0;
   }
 
   protected get selectedCount(): number {
