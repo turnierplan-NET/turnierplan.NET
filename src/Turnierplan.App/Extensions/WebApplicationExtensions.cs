@@ -28,13 +28,13 @@ internal static class WebApplicationExtensions
         {
             // If the database is in-memory, no migration or downgrade check is necessary
             await context.Database.MigrateAsync();
-            await EnsureNoDowngradeAsync(logger, context);
+            await EnsureNoDowngradeAsync(context, logger);
         }
 
-        await EnsureInitialUserCreatedAsync(scope.ServiceProvider, logger, context);
+        await EnsureInitialUserCreatedAsync(scope.ServiceProvider, context, logger);
     }
 
-    private static async Task EnsureNoDowngradeAsync(ILogger<DatabaseMigrator> logger, TurnierplanContext context)
+    private static async Task EnsureNoDowngradeAsync(TurnierplanContext context, ILogger<DatabaseMigrator> logger)
     {
         const string schema = TurnierplanContext.Schema;
 
@@ -72,8 +72,7 @@ INSERT INTO {schema}."__TPVersionHistory" ("Version", "Major", "Minor", "Patch",
     ON CONFLICT DO NOTHING;
 """, versionParameter, majorParameter, minorParameter, patchParameter);
 
-        var mostRecentVersion = await context.Database.SqlQueryRaw<VersionHistory>(
-                $"SELECT * FROM {schema}.\"__TPVersionHistory\"")
+        var mostRecentVersion = await context.Database.SqlQueryRaw<VersionHistory>($"SELECT * FROM {schema}.\"__TPVersionHistory\"")
             .OrderByDescending(x => x.Major)
             .ThenByDescending(x => x.Minor)
             .ThenByDescending(x => x.Patch)
@@ -91,7 +90,7 @@ INSERT INTO {schema}."__TPVersionHistory" ("Version", "Major", "Minor", "Patch",
         await context.Database.CommitTransactionAsync();
     }
 
-    private static async Task EnsureInitialUserCreatedAsync(IServiceProvider serviceProvider, ILogger<DatabaseMigrator> logger, TurnierplanContext context)
+    private static async Task EnsureInitialUserCreatedAsync(IServiceProvider serviceProvider, TurnierplanContext context, ILogger<DatabaseMigrator> logger)
     {
         var userCount = await context.Users.CountAsync();
 
