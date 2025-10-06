@@ -1067,6 +1067,7 @@ export const de = {
         ChangeLog: {
           Title: 'Änderungshistorie',
           ApplicationCreated: 'Anmeldung erstellt',
+          EmptyText: 'leer',
           Types: {
             NotesChanged: 'Notizen bearbeitet',
             ContactChanged: 'Kontaktperson geändert',

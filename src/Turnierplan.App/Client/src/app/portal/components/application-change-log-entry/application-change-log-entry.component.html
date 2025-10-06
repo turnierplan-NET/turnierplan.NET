@@ -27,9 +27,23 @@
       <!-- TODO: Implement with the following issue: https://github.com/turnierplan-NET/turnierplan.NET/issues/192 -->
     } @else {
       <div class="d-flex flex-row align-items-start gap-2">
-        <span class="value-display p-1 border text-danger flex-grow-0">{{ previousValue }}</span>
+        @if (previousValue !== undefined && previousValue.length > 0) {
+          <span class="value-display p-1 border text-danger flex-grow-0">{{ previousValue }}</span>
+        } @else {
+          <span
+            class="value-display p-1 border text-secondary fst-italic flex-grow-0"
+            [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.EmptyText'"></span>
+        }
+
         <span class="mt-1 bi bi-arrow-right"></span>
-        <span class="value-display p-1 border text-success flex-grow-0">{{ newValue }}</span>
+
+        @if (newValue !== undefined && newValue.length > 0) {
+          <span class="value-display p-1 border text-danger flex-grow-0">{{ newValue }}</span>
+        } @else {
+          <span
+            class="value-display p-1 border text-secondary fst-italic flex-grow-0"
+            [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.EmptyText'"></span>
+        }
       </div>
     }
   </div>
