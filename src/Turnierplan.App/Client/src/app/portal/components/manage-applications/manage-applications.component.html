@@ -13,9 +13,15 @@
         <tr>
           <th colspan="3">
             @if (allApplicationsExpanded) {
-              <i class="ms-2 bi bi-chevron-bar-contract tp-cursor-pointer" [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.CollapseAllTooltip' | translate" (click)="setAllApplicationsExpanded(false)"></i>
+              <i
+                class="ms-2 bi bi-chevron-bar-contract tp-cursor-pointer"
+                [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.CollapseAllTooltip' | translate"
+                (click)="setAllApplicationsExpanded(false)"></i>
             } @else {
-              <i class="ms-2 bi bi-chevron-bar-expand tp-cursor-pointer" [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.ExpandAllTooltip' | translate" (click)="setAllApplicationsExpanded(true)"></i>
+              <i
+                class="ms-2 bi bi-chevron-bar-expand tp-cursor-pointer"
+                [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.ExpandAllTooltip' | translate"
+                (click)="setAllApplicationsExpanded(true)"></i>
             }
           </th>
           <th style="width: 1px">
