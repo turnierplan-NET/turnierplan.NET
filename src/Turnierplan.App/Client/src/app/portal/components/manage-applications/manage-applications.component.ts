@@ -79,7 +79,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   protected isLoading = false;
   protected result?: PaginationResultDtoOfApplicationDto;
   protected combinedEmailAddresses?: string = undefined;
-  protected showTeamsApplicationId?: number;
+  protected expandedApplications: { [key: number]: boolean } = {};
   protected updatingNotesOfApplicationId?: number;
   protected updatingLabelsOfApplicationTeamId?: number;
 
@@ -129,9 +129,13 @@ export class ManageApplicationsComponent implements OnDestroy {
           }
 
           if (result.items.length === 1) {
-            this.showTeamsApplicationId = result.items[0].id;
-          } else if (this.showTeamsApplicationId !== undefined && !result.items.some((x) => x.id === this.showTeamsApplicationId)) {
-            this.showTeamsApplicationId = undefined;
+            this.expandedApplications[result.items[0].id] = true;
+          } else {
+            for (const application of result.items) {
+              if (!(application.id in this.expandedApplications)) {
+                this.expandedApplications[application.id] = false;
+              }
+            }
           }
         },
         error: (error) => {
