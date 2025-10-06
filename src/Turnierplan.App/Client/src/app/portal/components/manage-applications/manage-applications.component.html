@@ -11,7 +11,13 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th colspan="3"></th>
+          <th colspan="3">
+            @if (allApplicationsExpanded) {
+              <i class="ms-2 bi bi-chevron-bar-contract tp-cursor-pointer" [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.CollapseAllTooltip' | translate" (click)="setAllApplicationsExpanded(false)"></i>
+            } @else {
+              <i class="ms-2 bi bi-chevron-bar-expand tp-cursor-pointer" [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.ExpandAllTooltip' | translate" (click)="setAllApplicationsExpanded(true)"></i>
+            }
+          </th>
           <th style="width: 1px">
             <span translate="Portal.ViewPlanningRealm.Applications.TableHeader.Tag"></span>
             <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.Applications.TableHeader.TagTooltip'" />
@@ -52,7 +58,7 @@
                 [mode]="'IconOnly'"
                 [icon]="showApplicationTeams ? 'chevron-bar-contract' : 'chevron-bar-expand'"
                 [type]="'outline-secondary'"
-                (buttonClick)="expandedApplications[application.id] = !showApplicationTeams" />
+                (buttonClick)="setApplicationExpanded(application.id, !showApplicationTeams)" />
             </td>
             <td class="text-center align-correctly">{{ result.currentPage * result.itemsPerPage + i + 1 }}</td>
             <td class="text-center align-correctly">

@@ -80,6 +80,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   protected result?: PaginationResultDtoOfApplicationDto;
   protected combinedEmailAddresses?: string = undefined;
   protected expandedApplications: { [key: number]: boolean } = {};
+  protected allApplicationsExpanded: boolean = false;
   protected updatingNotesOfApplicationId?: number;
   protected updatingLabelsOfApplicationTeamId?: number;
 
@@ -146,6 +147,8 @@ export class ManageApplicationsComponent implements OnDestroy {
               }
             }
           }
+
+          this.determineAllApplicationsExpanded();
         },
         error: (error) => {
           this.errorOccured.emit(error);
@@ -319,5 +322,27 @@ export class ManageApplicationsComponent implements OnDestroy {
           this.errorOccured.emit(error);
         }
       });
+  }
+
+  protected setAllApplicationsExpanded(expanded: boolean): void {
+    this.expandedApplications = {};
+
+    if (this.result) {
+      for (const application of this.result.items) {
+        this.expandedApplications[application.id] = expanded;
+      }
+    }
+
+    this.allApplicationsExpanded = expanded;
+  }
+
+  protected setApplicationExpanded(id: number, expanded: boolean): void {
+    this.expandedApplications[id] = expanded;
+
+    this.determineAllApplicationsExpanded();
+  }
+
+  private determineAllApplicationsExpanded(): void {
+    this.allApplicationsExpanded = !!this.result && !this.result.items.some((x) => !this.expandedApplications[x.id]);
   }
 }
