@@ -1044,6 +1044,8 @@ export const de = {
           Tournament: 'Turnier',
           Labels: 'Label'
         },
+        ExpandAllTooltip: 'alle expandieren',
+        CollapseAllTooltip: 'alle zusammenklappen',
         NoSourceLinkTooltip: 'Diese Anmeldung wurde manuell angelegt',
         SourceLinkTooltip: 'Diese Anmeldung wurde mit dem Anmeldelink "{{name}}" angelegt',
         EditNotes: {

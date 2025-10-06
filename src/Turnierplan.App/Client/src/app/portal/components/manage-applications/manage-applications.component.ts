@@ -79,7 +79,8 @@ export class ManageApplicationsComponent implements OnDestroy {
   protected isLoading = false;
   protected result?: PaginationResultDtoOfApplicationDto;
   protected combinedEmailAddresses?: string = undefined;
-  protected showTeamsApplicationId?: number;
+  protected expandedApplications: { [key: number]: boolean } = {};
+  protected allApplicationsExpanded: boolean = false;
   protected updatingNotesOfApplicationId?: number;
   protected updatingLabelsOfApplicationTeamId?: number;
 
@@ -129,10 +130,25 @@ export class ManageApplicationsComponent implements OnDestroy {
           }
 
           if (result.items.length === 1) {
-            this.showTeamsApplicationId = result.items[0].id;
-          } else if (this.showTeamsApplicationId !== undefined && !result.items.some((x) => x.id === this.showTeamsApplicationId)) {
-            this.showTeamsApplicationId = undefined;
+            // if the page contains 1 item, always expand it immediately
+            this.expandedApplications = {};
+            this.expandedApplications[result.items[0].id] = true;
+          } else if (result.items.length > 0) {
+            // if the page contains more than 1 item, expand all items that were previously expanded and are still visible
+            const currentlyExpandedIds = Object.keys(this.expandedApplications)
+              .map((id) => +id)
+              .filter((id) => this.expandedApplications[id]);
+
+            this.expandedApplications = {};
+
+            for (const id of currentlyExpandedIds) {
+              if (result.items.some((x) => x.id === id)) {
+                this.expandedApplications[id] = true;
+              }
+            }
           }
+
+          this.determineAllApplicationsExpanded();
         },
         error: (error) => {
           this.errorOccured.emit(error);
@@ -306,5 +322,27 @@ export class ManageApplicationsComponent implements OnDestroy {
           this.errorOccured.emit(error);
         }
       });
+  }
+
+  protected setAllApplicationsExpanded(expanded: boolean): void {
+    this.expandedApplications = {};
+
+    if (this.result) {
+      for (const application of this.result.items) {
+        this.expandedApplications[application.id] = expanded;
+      }
+    }
+
+    this.allApplicationsExpanded = expanded;
+  }
+
+  protected setApplicationExpanded(id: number, expanded: boolean): void {
+    this.expandedApplications[id] = expanded;
+
+    this.determineAllApplicationsExpanded();
+  }
+
+  private determineAllApplicationsExpanded(): void {
+    this.allApplicationsExpanded = !!this.result && !this.result.items.some((x) => !this.expandedApplications[x.id]);
   }
 }
