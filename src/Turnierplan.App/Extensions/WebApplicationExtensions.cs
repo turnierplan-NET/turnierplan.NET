@@ -25,11 +25,13 @@ internal static class WebApplicationExtensions
 
         if (context.Database.IsNpgsql())
         {
-            // If the database is in-memory, no migration is necessary
+            // If the database is in-memory, no migration or downgrade check is necessary
+
             await context.Database.MigrateAsync();
+
+            await EnsureNoDowngradeAsync(logger, context);
         }
 
-        await EnsureNoDowngradeAsync(logger, context);
         await EnsureInitialUserCreatedAsync(scope.ServiceProvider, logger, context);
     }
 
