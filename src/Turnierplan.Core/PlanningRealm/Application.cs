@@ -145,6 +145,14 @@ public sealed class Application : Entity<long>
         return team;
     }
 
+    public void RemoveTeam(ApplicationTeam team)
+    {
+        _teams.Remove(team);
+        team.Application = null!;
+
+        AddChangeLog(ApplicationChangeLogType.TeamRemoved, [new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TeamName, team.Name)]);
+    }
+
     public void ClearChangeLog()
     {
         _changeLog.Clear();
