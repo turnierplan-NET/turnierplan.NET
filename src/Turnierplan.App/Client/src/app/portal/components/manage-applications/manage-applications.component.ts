@@ -34,6 +34,8 @@ import { setApplicationTeamLabels } from '../../../api/fn/application-teams/set-
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { ApplicationChangeLogComponent } from '../application-change-log/application-change-log.component';
+import { DeleteButtonComponent } from '../delete-button/delete-button.component';
+import { deleteApplicationTeam } from '../../../api/fn/application-teams/delete-application-team';
 
 @Component({
   selector: 'tp-manage-applications',
@@ -54,7 +56,8 @@ import { ApplicationChangeLogComponent } from '../application-change-log/applica
     RenameButtonComponent,
     NgStyle,
     LabelComponent,
-    AsyncPipe
+    AsyncPipe,
+    DeleteButtonComponent
   ]
 })
 export class ManageApplicationsComponent implements OnDestroy {
@@ -317,6 +320,25 @@ export class ManageApplicationsComponent implements OnDestroy {
         next: (labelIds: number[]) => {
           applicationTeam.labelIds = labelIds;
           this.updatingLabelsOfApplicationTeamId = undefined;
+        },
+        error: (error) => {
+          this.errorOccured.emit(error);
+        }
+      });
+  }
+
+  protected deleteTeam(applicationId: number, applicationTeamId: number): void {
+    this.isLoading = true;
+
+    this.turnierplanApi
+      .invoke(deleteApplicationTeam, {
+        planningRealmId: this.planningRealm.id,
+        applicationId: applicationId,
+        applicationTeamId: applicationTeamId
+      })
+      .subscribe({
+        next: () => {
+          this.reload$.next(undefined); // reload will eventually set isLoading to false
         },
         error: (error) => {
           this.errorOccured.emit(error);

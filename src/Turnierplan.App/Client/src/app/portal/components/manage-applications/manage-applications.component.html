@@ -144,6 +144,7 @@
                       <th translate="Portal.ViewPlanningRealm.Applications.TableHeader.TeamName"></th>
                       <th translate="Portal.ViewPlanningRealm.Applications.TableHeader.Labels"></th>
                       <th translate="Portal.ViewPlanningRealm.Applications.TableHeader.Tournament"></th>
+                      <th style="width: 1px"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -194,12 +195,22 @@
                                 translate="Portal.ViewPlanningRealm.Applications.NoLinkedTournament"></span>
                             }
                           </td>
+                          <td class="align-middle px-2">
+                            <tp-delete-button [reducedFootprint]="true" (confirmed)="deleteTeam(application.id, team.id)" />
+                          </td>
                         </tr>
                       }
+                    } @empty {
+                      <tr>
+                        <td colspan="5">
+                          <span class="fst-italic small text-secondary" translate="Portal.ViewPlanningRealm.Applications.NoTeams"></span>
+                        </td>
+                      </tr>
                     }
+
                     @if (hiddenTeamsCount > 0) {
                       <tr>
-                        <td colspan="4">
+                        <td colspan="5">
                           <span
                             class="fst-italic small text-secondary"
                             translate="Portal.ViewPlanningRealm.Applications.HiddenTeams"

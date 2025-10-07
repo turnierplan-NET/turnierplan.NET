@@ -9,7 +9,7 @@ internal sealed class DeleteApplicationTeamEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Delete;
 
-    protected override string Route => "/api/planning-realms/{planningRealmId}/applications/{applicationId:int}/teams/{applicationTeamId:int}/labels";
+    protected override string Route => "/api/planning-realms/{planningRealmId}/applications/{applicationId:int}/teams/{applicationTeamId:int}";
 
     protected override Delegate Handler => Handle;
 
