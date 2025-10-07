@@ -1078,7 +1078,7 @@ export const de = {
             CommentChanged: 'Bemerkung geändert',
             TeamAdded: 'Mannschaft hinzugefügt',
             TeamRenamed: 'Mannschaft umbenannt',
-            TeamRemoved: 'Mannschaft entfernt',
+            TeamRemoved: 'Mannschaft gelöscht',
             LabelAdded: 'Label hinzugefügt',
             LabelRemoved: 'Label entfernt'
           },

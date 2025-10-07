@@ -39,12 +39,12 @@ export class ApplicationChangeLogEntryComponent {
         break;
       }
       case ApplicationChangeLogType.TeamAdded: {
-        this.changeLogIcon = 'bi-plus-square';
+        this.changeLogIcon = 'bi-plus-circle';
         this.teamName = propertyValue(ApplicationChangeLogProperty.TeamName);
         break;
       }
       case ApplicationChangeLogType.TeamRemoved: {
-        this.changeLogIcon = 'bi-dash-square';
+        this.changeLogIcon = 'bi-trash';
         this.teamName = propertyValue(ApplicationChangeLogProperty.TeamName);
         break;
       }
