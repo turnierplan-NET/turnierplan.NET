@@ -1061,6 +1061,7 @@ export const de = {
             'Geben Sie den neuen Mannschaftsnamen ein. Wenn diese Mannschaft einem Turnier hinzugefügt wurde, wird die Mannschaft im Turnier automatisch mit umbenannt.',
           RequiredFeedback: 'Der Mannschaftsname darf nicht leer sein'
         },
+        NoTeams: 'Diese Anmeldung beinhaltet keine Mannschaften.',
         HiddenTeamsTooltip: 'Diese Anmeldung beinhaltet weitere Mannschaften, welche nicht den Filterkriterien entsprechen',
         HiddenTeams: '{{count}} weitere Mannschaft(en) werden aufgrund Ihrer Filterkriterien nicht angezeigt.',
         HiddenTeamsShowAll: 'alle anzeigen',
@@ -1077,7 +1078,7 @@ export const de = {
             CommentChanged: 'Bemerkung geändert',
             TeamAdded: 'Mannschaft hinzugefügt',
             TeamRenamed: 'Mannschaft umbenannt',
-            TeamRemoved: 'Mannschaft entfernt',
+            TeamRemoved: 'Mannschaft gelöscht',
             LabelAdded: 'Label hinzugefügt',
             LabelRemoved: 'Label entfernt'
           },

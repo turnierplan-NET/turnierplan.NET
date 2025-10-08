@@ -22,9 +22,9 @@
         <span class="text-decoration-underline">{{ teamName }}</span>
       </div>
     } @else if (changeLogType === ApplicationChangeLogType.TeamAdded) {
-      <!-- TODO: Implement with the following issue: https://github.com/turnierplan-NET/turnierplan.NET/issues/192 -->
+      <span class="value-display p-1 border text-success flex-grow-0">{{ teamName }}</span>
     } @else if (changeLogType === ApplicationChangeLogType.TeamRemoved) {
-      <!-- TODO: Implement with the following issue: https://github.com/turnierplan-NET/turnierplan.NET/issues/192 -->
+      <span class="value-display p-1 border text-danger flex-grow-0">{{ teamName }}</span>
     } @else {
       <div class="d-flex flex-row align-items-start gap-2">
         @if (previousValue !== undefined && previousValue.length > 0) {
@@ -38,7 +38,7 @@
         <span class="mt-1 bi bi-arrow-right"></span>
 
         @if (newValue !== undefined && newValue.length > 0) {
-          <span class="value-display p-1 border text-danger flex-grow-0">{{ newValue }}</span>
+          <span class="value-display p-1 border text-success flex-grow-0">{{ newValue }}</span>
         } @else {
           <span
             class="value-display p-1 border text-secondary fst-italic flex-grow-0"
