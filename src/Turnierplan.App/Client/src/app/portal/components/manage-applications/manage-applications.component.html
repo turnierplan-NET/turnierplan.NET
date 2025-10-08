@@ -93,11 +93,15 @@
             </td>
             <td class="text-nowrap align-correctly">{{ application.createdAt | translateDate: 'short' }}</td>
             <td class="align-correctly">
-              <span>{{ visibleTeamsCount }}</span>
-              @if (visibleTeamsCount !== application.teams.length) {
-                <tp-tooltip-icon
-                  [icon]="'exclamation-diamond'"
-                  [tooltipText]="'Portal.ViewPlanningRealm.Applications.HiddenTeamsTooltip'" />
+              @if (application.teams.length === 0) {
+                <span class="fw-bold text-warning">0</span>
+              } @else {
+                <span>{{ visibleTeamsCount }}</span>
+                @if (visibleTeamsCount !== application.teams.length) {
+                  <tp-tooltip-icon
+                    [icon]="'exclamation-diamond'"
+                    [tooltipText]="'Portal.ViewPlanningRealm.Applications.HiddenTeamsTooltip'" />
+                }
               }
             </td>
             <td class="align-correctly">{{ application.contact }}</td>
