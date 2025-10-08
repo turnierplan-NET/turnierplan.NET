@@ -93,7 +93,17 @@ public sealed class ApplicationTest
     {
         _application.ChangeLog.Should().BeEmpty();
 
-        // TODO: Implement with the following issue: https://github.com/turnierplan-NET/turnierplan.NET/issues/192
+        var team = _application.AddTeam(null!, "TestTeam");
+        team.SetName("TestTeam2");
+        _application.ChangeLog.Should().HaveCount(2);
+
+        _application.RemoveTeam(team);
+
+        _application.ChangeLog.Should().HaveCount(3);
+        var entry = _application.ChangeLog[^1];
+        entry.Type.Should().Be(ApplicationChangeLogType.TeamRemoved);
+        entry.Properties.Should().HaveCount(1);
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.TeamName).Value.Should().Be("TestTeam2");
     }
 
     [Fact]
