@@ -1,3 +1,4 @@
+using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.PlanningRealm;
@@ -147,6 +148,11 @@ public sealed class Application : Entity<long>
 
     public void RemoveTeam(ApplicationTeam team)
     {
+        if (team.TeamLink is not null)
+        {
+            throw new TurnierplanException("Removing a team is not allowed while it is linked to a tournament.");
+        }
+
         _teams.Remove(team);
         team.Application = null!;
 

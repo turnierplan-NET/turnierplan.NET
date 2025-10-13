@@ -1055,6 +1055,7 @@ export const de = {
         },
         NoLabels: 'keine Labels',
         NoLinkedTournament: 'kein Turnier verknüpft',
+        CannotDeleteTeamWhileLinked: 'Die Mannschaft kann nicht gelöscht werden, solange sie an einem Turnier teilnimmt.',
         RenameTeam: {
           Title: 'Mannschaft umbenennen',
           EnterNewName:

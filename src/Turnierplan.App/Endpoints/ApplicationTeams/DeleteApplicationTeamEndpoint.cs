@@ -47,6 +47,11 @@ internal sealed class DeleteApplicationTeamEndpoint : EndpointBase
             return Results.NotFound();
         }
 
+        if (applicationTeam.TeamLink is not null)
+        {
+            return Results.BadRequest("Cannot delete team while the team link is not null.");
+        }
+
         application.RemoveTeam(applicationTeam);
 
         await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);

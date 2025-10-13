@@ -200,7 +200,13 @@
                             }
                           </td>
                           <td class="align-middle px-2">
-                            <tp-delete-button [reducedFootprint]="true" (confirmed)="deleteTeam(application.id, team.id)" />
+                            @if (team.linkedTournament) {
+                              <tp-tooltip-icon
+                                [margin]="false"
+                                [tooltipText]="'Portal.ViewPlanningRealm.Applications.CannotDeleteTeamWhileLinked'" />
+                            } @else {
+                              <tp-delete-button [reducedFootprint]="true" (confirmed)="deleteTeam(application.id, team.id)" />
+                            }
                           </td>
                         </tr>
                       }
