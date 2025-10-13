@@ -1095,11 +1095,15 @@ export const de = {
             TeamRenamed: 'Mannschaft umbenannt',
             TeamRemoved: 'Mannschaft gelöscht',
             LabelAdded: 'Label hinzugefügt',
-            LabelRemoved: 'Label entfernt'
+            LabelRemoved: 'Label entfernt',
+            TeamLinkCreated: 'Verknpüfung mit Turnier erstellt',
+            TeamLinkDestroyed: 'Verknpüfung mit Turnier aufgehoben'
           },
           EmptyText: 'leer',
           LabelAdded: 'hinzugefügt zur Mannschaft',
-          LabelRemoved: 'entfernt von der Mannschaft'
+          LabelRemoved: 'entfernt von der Mannschaft',
+          TeamLinkCreated: 'nimmt nun an folgendem Turnier teil:',
+          TeamLinkDestroyed: 'nimmt nun nicht mehr an folgendem Turnier teil:'
         }
       },
       Settings: {

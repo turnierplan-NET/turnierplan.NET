@@ -13,5 +13,7 @@ public enum ApplicationChangeLogType
     TeamRenamed = 7,
     TeamRemoved = 8,
     LabelAdded = 9,
-    LabelRemoved = 10
+    LabelRemoved = 10,
+    TeamLinkCreated = 11,
+    TeamLinkDestroyed = 12
 }

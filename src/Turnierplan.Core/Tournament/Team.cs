@@ -63,6 +63,11 @@ public sealed class Team : Entity<int>
         Name = applicationTeam.Name;
 
         applicationTeam.TeamLink = TeamLink;
+
+        applicationTeam.Application.AddChangeLog(ApplicationChangeLogType.TeamLinkCreated, [
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TeamName, applicationTeam.Name),
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TournamentName, Tournament.Name)
+        ]);
     }
 
     public void UnlinkApplicationTeam()
@@ -70,6 +75,11 @@ public sealed class Team : Entity<int>
         if (TeamLink is not null)
         {
             TeamLink.ApplicationTeam.TeamLink = null;
+
+            TeamLink.ApplicationTeam.Application.AddChangeLog(ApplicationChangeLogType.TeamLinkDestroyed, [
+                new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TeamName, Name),
+                new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TournamentName, Tournament.Name)
+            ]);
         }
 
         TeamLink = null;
