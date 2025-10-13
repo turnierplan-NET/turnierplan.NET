@@ -4,13 +4,16 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'tp-tournament-edit-warning',
-  templateUrl: './tournament-edit-warning.component.html',
+  selector: 'tp-confirmation-alert',
+  templateUrl: './confirmation-alert.component.html',
   imports: [AlertComponent, TranslateDirective, FormsModule]
 })
-export class TournamentEditWarningComponent {
+export class ConfirmationAlertComponent {
   @Input()
   public translationKey!: string;
+
+  @Input()
+  public textParameters: { [key: string]: any } = {};
 
   @Input()
   public accepted: boolean = false;

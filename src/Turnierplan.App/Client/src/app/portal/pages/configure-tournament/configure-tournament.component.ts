@@ -11,7 +11,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
-import { TournamentEditWarningComponent } from '../../components/tournament-edit-warning/tournament-edit-warning.component';
+import { ConfirmationAlertComponent } from '../../components/confirmation-alert/confirmation-alert.component';
 import { NgTemplateOutlet, NgClass, DatePipe } from '@angular/common';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 import { FormsModule } from '@angular/forms';
@@ -77,7 +77,7 @@ interface TemporaryAdditionalPlayoff {
     LoadingStateDirective,
     PageFrameComponent,
     TranslateDirective,
-    TournamentEditWarningComponent,
+    ConfirmationAlertComponent,
     NgTemplateOutlet,
     NgClass,
     ActionButtonComponent,
