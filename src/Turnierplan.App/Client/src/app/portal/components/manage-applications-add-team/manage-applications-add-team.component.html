@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <div class="modal-title" [translate]="'Portal.ViewPlanningRealm.Applications.AddTeam.Title'"></div>
+  <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
+</div>
+<div class="modal-body d-flex flex-column">
+  <div class="form-group mb-2">
+    <label class="form-label" for="tournament_class" [translate]="'Portal.ViewPlanningRealm.Applications.AddTeam.TournamentClass'"></label>
+    <select class="form-select" [(ngModel)]="tournamentClassId">
+      @for (tournamentClass of tournamentClasses; track tournamentClass.id) {
+        <option [value]="tournamentClass.id">{{ tournamentClass.name }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label" for="team_name" [translate]="'Portal.ViewPlanningRealm.Applications.AddTeam.TeamName'"></label>
+    <input class="form-control" type="text" id="team_name" [(ngModel)]="teamName" [class]="{ 'is-invalid': showError }" />
+
+    @if (showError) {
+      <div class="invalid-feedback" [translate]="'Portal.ViewPlanningRealm.Applications.AddTeam.TeamNameRequired'"></div>
+    }
+  </div>
+</div>
+<div class="modal-footer">
+  <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
+  <tp-action-button [type]="'success'" [title]="'Portal.ViewPlanningRealm.Applications.AddTeam.Confirm'" (buttonClick)="confirm()" />
+</div>

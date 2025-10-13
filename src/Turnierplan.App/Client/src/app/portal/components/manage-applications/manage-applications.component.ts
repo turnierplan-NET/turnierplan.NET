@@ -34,6 +34,11 @@ import { setApplicationTeamLabels } from '../../../api/fn/application-teams/set-
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { ApplicationChangeLogComponent } from '../application-change-log/application-change-log.component';
+import { DeleteButtonComponent } from '../delete-button/delete-button.component';
+import { deleteApplicationTeam } from '../../../api/fn/application-teams/delete-application-team';
+import { ManageApplicationsAddTeamComponent } from '../manage-applications-add-team/manage-applications-add-team.component';
+import { CreateApplicationTeamEndpointRequest } from '../../../api/models/create-application-team-endpoint-request';
+import { createApplicationTeam } from '../../../api/fn/application-teams/create-application-team';
 
 @Component({
   selector: 'tp-manage-applications',
@@ -54,7 +59,8 @@ import { ApplicationChangeLogComponent } from '../application-change-log/applica
     RenameButtonComponent,
     NgStyle,
     LabelComponent,
-    AsyncPipe
+    AsyncPipe,
+    DeleteButtonComponent
   ]
 })
 export class ManageApplicationsComponent implements OnDestroy {
@@ -268,6 +274,37 @@ export class ManageApplicationsComponent implements OnDestroy {
     void this.router.navigate(['/portal/tournament/', tournamentId]);
   }
 
+  protected addTeam(applicationId: number): void {
+    const ref = this.modalService.open(ManageApplicationsAddTeamComponent, {
+      centered: true,
+      size: 'md',
+      fullscreen: 'md'
+    });
+
+    const component = ref.componentInstance as ManageApplicationsAddTeamComponent;
+    component.init(this.planningRealm);
+
+    ref.closed
+      .pipe(
+        tap(() => (this.isLoading = true)),
+        switchMap((request: CreateApplicationTeamEndpointRequest) =>
+          this.turnierplanApi.invoke(createApplicationTeam, {
+            planningRealmId: this.planningRealm.id,
+            applicationId: applicationId,
+            body: request
+          })
+        )
+      )
+      .subscribe({
+        next: () => {
+          this.reload$.next(undefined); // reload will eventually set isLoading to false
+        },
+        error: (error) => {
+          this.errorOccured.emit(error);
+        }
+      });
+  }
+
   protected renameTeam(applicationId: number, applicationTeam: ApplicationTeamDto, name: string): void {
     this.turnierplanApi
       .invoke(setApplicationTeamName, {
@@ -317,6 +354,25 @@ export class ManageApplicationsComponent implements OnDestroy {
         next: (labelIds: number[]) => {
           applicationTeam.labelIds = labelIds;
           this.updatingLabelsOfApplicationTeamId = undefined;
+        },
+        error: (error) => {
+          this.errorOccured.emit(error);
+        }
+      });
+  }
+
+  protected deleteTeam(applicationId: number, applicationTeamId: number): void {
+    this.isLoading = true;
+
+    this.turnierplanApi
+      .invoke(deleteApplicationTeam, {
+        planningRealmId: this.planningRealm.id,
+        applicationId: applicationId,
+        applicationTeamId: applicationTeamId
+      })
+      .subscribe({
+        next: () => {
+          this.reload$.next(undefined); // reload will eventually set isLoading to false
         },
         error: (error) => {
           this.errorOccured.emit(error);
