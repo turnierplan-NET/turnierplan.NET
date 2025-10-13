@@ -286,6 +286,7 @@ export class ManageApplicationsComponent implements OnDestroy {
 
     ref.closed
       .pipe(
+        tap(() => (this.isLoading = true)),
         switchMap((request: CreateApplicationTeamEndpointRequest) =>
           this.turnierplanApi.invoke(createApplicationTeam, {
             planningRealmId: this.planningRealm.id,
@@ -296,7 +297,7 @@ export class ManageApplicationsComponent implements OnDestroy {
       )
       .subscribe({
         next: () => {
-          this.reload$.next(undefined);
+          this.reload$.next(undefined); // reload will eventually set isLoading to false
         },
         error: (error) => {
           this.errorOccured.emit(error);
