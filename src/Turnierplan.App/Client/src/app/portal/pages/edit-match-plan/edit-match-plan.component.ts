@@ -10,7 +10,7 @@ import { LoadingState, LoadingStateDirective } from '../../directives/loading-st
 import { LocalStorageService } from '../../services/local-storage.service';
 import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
-import { TournamentEditWarningComponent } from '../../components/tournament-edit-warning/tournament-edit-warning.component';
+import { ConfirmationAlertComponent } from '../../components/confirmation-alert/confirmation-alert.component';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 import { FormsModule } from '@angular/forms';
 import { NgClass, DatePipe } from '@angular/common';
@@ -40,7 +40,7 @@ type ExtendedMatchEntry = SetTournamentMatchPlanEndpointRequestEntry & {
     LoadingStateDirective,
     PageFrameComponent,
     TranslateDirective,
-    TournamentEditWarningComponent,
+    ConfirmationAlertComponent,
     DndDropzoneDirective,
     DndDraggableDirective,
     DndHandleDirective,

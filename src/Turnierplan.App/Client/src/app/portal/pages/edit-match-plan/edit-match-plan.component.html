@@ -5,7 +5,7 @@
   [backLink]="'..'">
   <div translate="Portal.EditMatchPlan.Subtitle"></div>
   @if (displayEditWarning) {
-    <tp-tournament-edit-warning [translationKey]="'Portal.EditMatchPlan.DestructiveWarning'" [(accepted)]="editWarningAccepted" />
+    <tp-confirmation-alert [translationKey]="'Portal.EditMatchPlan.DestructiveWarning'" [(accepted)]="editWarningAccepted" />
   }
 
   <hr />

@@ -91,7 +91,7 @@
   </form>
   @if (explicitConfirmationRequired) {
     <hr />
-    <tp-tournament-edit-warning
+    <tp-confirmation-alert
       [translationKey]="'Portal.ViewPlanningRealm.AddApplication.ExplicitConfirmation'"
       [(accepted)]="explicitConfirmationGiven"
       [textParameters]="{ teamCount: explicitConfirmationTeamCount }" />

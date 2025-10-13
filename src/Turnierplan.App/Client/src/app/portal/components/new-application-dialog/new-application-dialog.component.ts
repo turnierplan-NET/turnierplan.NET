@@ -8,7 +8,7 @@ import { AlertComponent } from '../alert/alert.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
 import { CreateApplicationEndpointRequest } from '../../../api/models/create-application-endpoint-request';
-import { TournamentEditWarningComponent } from '../tournament-edit-warning/tournament-edit-warning.component';
+import { ConfirmationAlertComponent } from '../confirmation-alert/confirmation-alert.component';
 
 const numberOfTeamsValidator = () => {
   return (formArray: AbstractControl): { [key: string]: any } | null => {
@@ -34,7 +34,7 @@ const numberOfTeamsValidator = () => {
     NgClass,
     AlertComponent,
     ActionButtonComponent,
-    TournamentEditWarningComponent
+    ConfirmationAlertComponent
   ]
 })
 export class NewApplicationDialogComponent implements OnDestroy {
