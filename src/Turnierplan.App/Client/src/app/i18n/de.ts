@@ -1061,6 +1061,11 @@ export const de = {
             'Geben Sie den neuen Mannschaftsnamen ein. Wenn diese Mannschaft einem Turnier hinzugefügt wurde, wird die Mannschaft im Turnier automatisch mit umbenannt.',
           RequiredFeedback: 'Der Mannschaftsname darf nicht leer sein'
         },
+        AddTeam: {
+          Button: 'Mannschaft hinzufügen',
+          Title: 'Mannschaft zur Anmeldung hinzufügen',
+          Confirm: 'Hinzufügen'
+        },
         NoTeams: 'Diese Anmeldung beinhaltet keine Mannschaften.',
         HiddenTeamsTooltip: 'Diese Anmeldung beinhaltet weitere Mannschaften, welche nicht den Filterkriterien entsprechen',
         HiddenTeams: '{{count}} weitere Mannschaft(en) werden aufgrund Ihrer Filterkriterien nicht angezeigt.',

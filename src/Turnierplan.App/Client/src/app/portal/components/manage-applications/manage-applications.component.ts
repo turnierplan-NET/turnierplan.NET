@@ -36,6 +36,7 @@ import { AuthorizationService } from '../../../core/services/authorization.servi
 import { ApplicationChangeLogComponent } from '../application-change-log/application-change-log.component';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { deleteApplicationTeam } from '../../../api/fn/application-teams/delete-application-team';
+import { ManageApplicationsAddTeamComponent } from '../manage-applications-add-team/manage-applications-add-team.component';
 
 @Component({
   selector: 'tp-manage-applications',
@@ -269,6 +270,17 @@ export class ManageApplicationsComponent implements OnDestroy {
   protected navigateToTournament(tournamentId: PublicId): void {
     this.localStorageService.setNavigationTab(tournamentId, ViewTournamentComponent.TeamListPageId);
     void this.router.navigate(['/portal/tournament/', tournamentId]);
+  }
+
+  protected addTeam(applicationId: number): void {
+    const ref = this.modalService.open(ManageApplicationsAddTeamComponent, {
+      centered: true,
+      size: 'lg',
+      fullscreen: 'lg'
+    });
+
+    const component = ref.componentInstance as ManageApplicationsAddTeamComponent;
+    component.init(/* todo */);
   }
 
   protected renameTeam(applicationId: number, applicationTeam: ApplicationTeamDto, name: string): void {
