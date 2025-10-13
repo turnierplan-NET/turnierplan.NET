@@ -81,13 +81,27 @@
 
       @if (entries.touched && entries.invalid) {
         <div class="mt-4">
-          <tp-alert [type]="'danger'" [icon]="'exclamation-triangle'" [text]="'Portal.ViewPlanningRealm.AddApplication.NoTeamsAlert'" />
+          <tp-alert
+            [type]="'danger'"
+            [icon]="'exclamation-triangle'"
+            [text]="'Portal.ViewPlanningRealm.AddApplication.InvalidNumberOfTeamsAlert'" />
         </div>
       }
     </div>
   </form>
+  @if (explicitConfirmationRequired) {
+    <hr />
+    <tp-tournament-edit-warning
+      [translationKey]="'Portal.ViewPlanningRealm.AddApplication.ExplicitConfirmation'"
+      [(accepted)]="explicitConfirmationGiven"
+      [textParameters]="{ teamCount: explicitConfirmationTeamCount }" />
+  }
 </div>
 <div class="modal-footer">
   <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
-  <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" (buttonClick)="submit()" />
+  <tp-action-button
+    [type]="'success'"
+    [title]="'Portal.General.Save'"
+    (buttonClick)="submit()"
+    [disabled]="form.invalid || (explicitConfirmationRequired && !explicitConfirmationGiven)" />
 </div>

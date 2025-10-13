@@ -923,7 +923,13 @@ export const de = {
         Name: 'Verein / Mannschaftsname:',
         NameInvalid: 'Der Mannschaftsname muss angegeben werden',
         Teams: 'Mannschaften:',
-        NoTeamsAlert: 'Es muss mindestens eine Mannschaft in einer Turnierklasse angegeben werden'
+        InvalidNumberOfTeamsAlert:
+          'Es muss mindestens eine Mannschaft in einer Turnierklasse angegeben werden und es dürfen insgesamt maximal 30 Mannschaften eingegeben werden.',
+        ExplicitConfirmation: {
+          Alert: 'Achtung:',
+          Text: 'Sie sind im Begriff, eine Anmeldung mit {{teamCount}} Mannschaften zu erstellen.',
+          CheckboxLabel: 'Ich habe den Hinweis gelesen und möchte die Anmeldung erstellen'
+        }
       },
       TournamentClasses: {
         Name: 'Name',

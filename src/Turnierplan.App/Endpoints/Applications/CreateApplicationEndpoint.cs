@@ -121,6 +121,14 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
                 })
                 .WithMessage("There may only be one entry for each tournament class id.");
 
+            RuleFor(x => x.Entries)
+                .Must(entries =>
+                {
+                    var totalTeamCount = entries.Sum(x => x.NumberOfTeams);
+                    return totalTeamCount <= 30;
+                })
+                .WithMessage("The total number of teams must be at most 30.");
+
             RuleForEach(x => x.Entries)
                 .ChildRules(entry =>
                 {

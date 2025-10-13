@@ -13,6 +13,9 @@ export class TournamentEditWarningComponent {
   public translationKey!: string;
 
   @Input()
+  public textParameters: { [key: string]: any } = {};
+
+  @Input()
   public accepted: boolean = false;
 
   @Output()
