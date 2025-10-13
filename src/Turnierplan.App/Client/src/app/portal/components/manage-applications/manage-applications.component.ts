@@ -37,6 +37,8 @@ import { ApplicationChangeLogComponent } from '../application-change-log/applica
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { deleteApplicationTeam } from '../../../api/fn/application-teams/delete-application-team';
 import { ManageApplicationsAddTeamComponent } from '../manage-applications-add-team/manage-applications-add-team.component';
+import { CreateApplicationTeamEndpointRequest } from '../../../api/models/create-application-team-endpoint-request';
+import { createApplicationTeam } from '../../../api/fn/application-teams/create-application-team';
 
 @Component({
   selector: 'tp-manage-applications',
@@ -275,12 +277,31 @@ export class ManageApplicationsComponent implements OnDestroy {
   protected addTeam(applicationId: number): void {
     const ref = this.modalService.open(ManageApplicationsAddTeamComponent, {
       centered: true,
-      size: 'lg',
-      fullscreen: 'lg'
+      size: 'md',
+      fullscreen: 'md'
     });
 
     const component = ref.componentInstance as ManageApplicationsAddTeamComponent;
-    component.init(/* todo */);
+    component.init(this.planningRealm);
+
+    ref.closed
+      .pipe(
+        switchMap((request: CreateApplicationTeamEndpointRequest) =>
+          this.turnierplanApi.invoke(createApplicationTeam, {
+            planningRealmId: this.planningRealm.id,
+            applicationId: applicationId,
+            body: request
+          })
+        )
+      )
+      .subscribe({
+        next: () => {
+          this.reload$.next(undefined);
+        },
+        error: (error) => {
+          this.errorOccured.emit(error);
+        }
+      });
   }
 
   protected renameTeam(applicationId: number, applicationTeam: ApplicationTeamDto, name: string): void {

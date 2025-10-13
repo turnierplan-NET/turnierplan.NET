@@ -1065,7 +1065,10 @@ export const de = {
         AddTeam: {
           Button: 'Mannschaft hinzufügen',
           Title: 'Mannschaft zur Anmeldung hinzufügen',
-          Confirm: 'Hinzufügen'
+          Confirm: 'Hinzufügen',
+          TournamentClass: 'Turnierklasse:',
+          TeamName: 'Mannschaftsname:',
+          TeamNameRequired: 'Der Mannschaftsname darf nicht leer sein'
         },
         NoTeams: 'Diese Anmeldung beinhaltet keine Mannschaften.',
         HiddenTeamsTooltip: 'Diese Anmeldung beinhaltet weitere Mannschaften, welche nicht den Filterkriterien entsprechen',
