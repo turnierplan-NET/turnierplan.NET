@@ -20,7 +20,7 @@ export class ManageApplicationsAddTeamComponent {
   constructor(protected readonly modal: NgbActiveModal) {}
 
   public init(planningRealm: PlanningRealmDto): void {
-    this.tournamentClasses = planningRealm.tournamentClasses.sort((a, b) => a.name.localeCompare(b.name));
+    this.tournamentClasses = [...planningRealm.tournamentClasses].sort((a, b) => a.name.localeCompare(b.name));
     this.tournamentClassId = this.tournamentClasses[0].id;
   }
 
