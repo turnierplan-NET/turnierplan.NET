@@ -25,6 +25,18 @@
       <span class="value-display p-1 border text-success flex-grow-0">{{ teamName }}</span>
     } @else if (changeLogType === ApplicationChangeLogType.TeamRemoved) {
       <span class="value-display p-1 border text-danger flex-grow-0">{{ teamName }}</span>
+    } @else if (changeLogType === ApplicationChangeLogType.TeamLinkCreated) {
+      <div class="d-flex flex-row align-items-center gap-1">
+        <span class="text-decoration-underline">{{ teamName }}</span>
+        <span class="ms-1" [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.TeamLinkCreated'"></span>
+        <span class="ms-1 text-decoration-underline">{{ tournamentName }}</span>
+      </div>
+    } @else if (changeLogType === ApplicationChangeLogType.TeamLinkDestroyed) {
+      <div class="d-flex flex-row align-items-center gap-1">
+        <span class="text-decoration-underline">{{ teamName }}</span>
+        <span class="ms-1" [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.TeamLinkDestroyed'"></span>
+        <span class="ms-1 text-decoration-underline">{{ tournamentName }}</span>
+      </div>
     } @else {
       <div class="d-flex flex-row align-items-start gap-2">
         @if (previousValue !== undefined && previousValue.length > 0) {

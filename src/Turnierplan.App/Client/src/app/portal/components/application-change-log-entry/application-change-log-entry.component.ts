@@ -60,6 +60,18 @@ export class ApplicationChangeLogEntryComponent {
         };
         break;
       }
+      case ApplicationChangeLogType.TeamLinkCreated: {
+        this.changeLogIcon = 'bi-link-45deg';
+        this.teamName = propertyValue(ApplicationChangeLogProperty.TeamName);
+        this.tournamentName = propertyValue(ApplicationChangeLogProperty.TournamentName);
+        break;
+      }
+      case ApplicationChangeLogType.TeamLinkDestroyed: {
+        this.changeLogIcon = 'bi-lightning-charge';
+        this.teamName = propertyValue(ApplicationChangeLogProperty.TeamName);
+        this.tournamentName = propertyValue(ApplicationChangeLogProperty.TournamentName);
+        break;
+      }
     }
   }
 
@@ -73,4 +85,5 @@ export class ApplicationChangeLogEntryComponent {
   protected newValue?: string;
   protected teamName?: string;
   protected mockLabel?: LabelDto;
+  protected tournamentName?: string;
 }

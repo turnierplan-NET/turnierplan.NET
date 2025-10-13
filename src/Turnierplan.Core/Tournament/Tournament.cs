@@ -210,6 +210,8 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     public void RemoveTeam(Team team)
     {
+        team.UnlinkApplicationTeam();
+
         _teams.Remove(team);
     }
 
