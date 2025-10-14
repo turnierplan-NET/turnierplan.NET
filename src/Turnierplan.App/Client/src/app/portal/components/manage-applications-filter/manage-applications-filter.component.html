@@ -7,7 +7,7 @@
       [(ngModel)]="searchTerm"
       (keyup.enter)="emitFilter()" />
 
-    <div class="d-flex flex-row gap-2">
+    <div class="d-flex flex-column flex-md-row gap-2">
       <tp-multi-select-filter
         [title]="'Portal.ViewPlanningRealm.Applications.FilterPanel.TournamentClasses'"
         [idPrefix]="'tournament_class'"
@@ -31,7 +31,7 @@
 
   <div class="mx-2 my-1 border-end border-secondary-subtle"></div>
 
-  <div class="pe-2 d-flex flex-row align-items-center gap-1">
+  <div class="pe-2 d-flex flex-column-reverse flex-md-row justify-content-center justify-content-md-start align-items-center gap-1">
     <tp-action-button
       [type]="'outline-secondary'"
       [icon]="'x-circle'"
