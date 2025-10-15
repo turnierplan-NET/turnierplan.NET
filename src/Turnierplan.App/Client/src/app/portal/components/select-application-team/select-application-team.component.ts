@@ -55,6 +55,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   protected applicationsCurrentPage = 0;
   protected applicationsPageSize = 10;
   protected applications?: PaginationResultDtoOfApplicationDto;
+  protected visibleTeamWithExistingLinkIds: number[] = [];
   protected currentSelection: SelectApplicationTeamResult = [];
 
   @Input()
@@ -138,6 +139,13 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
         next: (result) => {
           this.isLoadingApplications = false;
           this.applications = result;
+
+          if (result) {
+            this.visibleTeamWithExistingLinkIds = result.items
+              .flatMap((x) => x.teams)
+              .filter((x) => x.linkedTournament !== undefined)
+              .map((x) => x.id);
+          }
         }
       });
   }
@@ -211,7 +219,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   }
 
   protected isTeamDisabled(id: number): boolean {
-    return this.usedApplicationTeamIds.includes(id);
+    return this.usedApplicationTeamIds.includes(id) || this.visibleTeamWithExistingLinkIds.includes(id);
   }
 
   private emitSelectedTeams(): void {
