@@ -75,6 +75,11 @@ public sealed class Application : Entity<long>
         {
             var trimmed = value.Trim();
 
+            if (trimmed.Length == 0)
+            {
+                throw new TurnierplanException("Contact must be a non-empty string");
+            }
+
             if (!_contact.Equals(trimmed))
             {
                 AddChangeLog(ApplicationChangeLogType.ContactChanged, _contact, trimmed);
@@ -90,6 +95,11 @@ public sealed class Application : Entity<long>
         set
         {
             var trimmed = value?.Trim();
+
+            if (trimmed is not null && trimmed.Length == 0)
+            {
+                throw new TurnierplanException("Contact email must be null or a non-empty string");
+            }
 
             if (!Equals(_contactEmail, trimmed))
             {
@@ -107,6 +117,11 @@ public sealed class Application : Entity<long>
         {
             var trimmed = value?.Trim();
 
+            if (trimmed is not null && trimmed.Length == 0)
+            {
+                throw new TurnierplanException("Contact telephone must be null or a non-empty string");
+            }
+
             if (!Equals(_contactTelephone, trimmed))
             {
                 AddChangeLog(ApplicationChangeLogType.ContactTelephoneChanged, _contactTelephone, trimmed);
@@ -122,6 +137,11 @@ public sealed class Application : Entity<long>
         set
         {
             var trimmed = value?.Trim();
+
+            if (trimmed is not null && trimmed.Length == 0)
+            {
+                throw new TurnierplanException("Comment must be null or a non-empty string");
+            }
 
             if (!Equals(_comment, trimmed))
             {

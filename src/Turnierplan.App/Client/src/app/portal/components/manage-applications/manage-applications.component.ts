@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { ApplicationsFilter, applicationsFilterToQueryParameters } from '../../models/applications-filter';
-import { BehaviorSubject, combineLatestWith, ReplaySubject, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, combineLatestWith, Observable, ReplaySubject, switchMap, tap } from 'rxjs';
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
 import { NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { map } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import { ActionButtonComponent } from '../action-button/action-button.component'
 import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { AsyncPipe, NgClass, NgStyle } from '@angular/common';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { ViewTournamentComponent } from '../../pages/view-tournament/view-tournament.component';
@@ -39,6 +40,14 @@ import { deleteApplicationTeam } from '../../../api/fn/application-teams/delete-
 import { ManageApplicationsAddTeamComponent } from '../manage-applications-add-team/manage-applications-add-team.component';
 import { CreateApplicationTeamEndpointRequest } from '../../../api/models/create-application-team-endpoint-request';
 import { createApplicationTeam } from '../../../api/fn/application-teams/create-application-team';
+import { StrictHttpResponse } from '../../../api/strict-http-response';
+import { SetApplicationNotesEndpointRequest } from '../../../api/models/set-application-notes-endpoint-request';
+import { SetApplicationContactEndpointRequest } from '../../../api/models/set-application-contact-endpoint-request';
+import { setApplicationContact } from '../../../api/fn/applications/set-application-contact';
+import { SetApplicationContactEmailEndpointRequest } from '../../../api/models/set-application-contact-email-endpoint-request';
+import { setApplicationContactEmail } from '../../../api/fn/applications/set-application-contact-email';
+import { SetApplicationContactTelephoneEndpointRequest } from '../../../api/models/set-application-contact-telephone-endpoint-request';
+import { setApplicationContactTelephone } from '../../../api/fn/applications/set-application-contact-telephone';
 
 @Component({
   selector: 'tp-manage-applications',
@@ -87,6 +96,10 @@ export class ManageApplicationsComponent implements OnDestroy {
   protected combinedEmailAddresses?: string = undefined;
   protected expandedApplications: { [key: number]: boolean } = {};
   protected allApplicationsExpanded: boolean = false;
+
+  protected updatingContactOfApplicationId?: number;
+  protected updatingContactEmailOfApplicationId?: number;
+  protected updatingContactTelephoneOfApplicationId?: number;
   protected updatingNotesOfApplicationId?: number;
   protected updatingLabelsOfApplicationTeamId?: number;
 
@@ -126,14 +139,7 @@ export class ManageApplicationsComponent implements OnDestroy {
           this.result = result;
           this.isLoading = false;
 
-          if (result.items.length === 0) {
-            this.combinedEmailAddresses = undefined;
-          } else {
-            this.combinedEmailAddresses = result.items
-              .map((application) => application.contactEmail)
-              .filter((mail) => !!mail)
-              .join(' ');
-          }
+          this.evaluateCombinedEmailAddresses();
 
           if (result.items.length === 1) {
             // if the page contains 1 item, always expand it immediately
@@ -200,6 +206,16 @@ export class ManageApplicationsComponent implements OnDestroy {
     return application.teams.filter((team) => !this.isTeamVisible(team)).length;
   }
 
+  protected isUpdatingAnyApplication(): boolean {
+    return (
+      this.updatingContactOfApplicationId !== undefined ||
+      this.updatingContactEmailOfApplicationId !== undefined ||
+      this.updatingContactTelephoneOfApplicationId !== undefined ||
+      this.updatingNotesOfApplicationId !== undefined ||
+      this.updatingLabelsOfApplicationTeamId !== undefined
+    );
+  }
+
   protected setFilterToApplicationTag(applicationTag: number): void {
     this.filterRequested.emit({
       searchTerm: `${applicationTag}`,
@@ -210,44 +226,62 @@ export class ManageApplicationsComponent implements OnDestroy {
   }
 
   protected editApplicationNotes(application: ApplicationDto): void {
-    if (this.updatingNotesOfApplicationId !== undefined) {
-      return;
-    }
+    this.patchApplicationData<SetApplicationNotesEndpointRequest>(
+      'EditNotes',
+      true,
+      false,
+      application.id,
+      application.notes,
+      setApplicationNotes,
+      (value) => ({ notes: value }) as SetApplicationNotesEndpointRequest,
+      (value) => (this.updatingNotesOfApplicationId = value),
+      (value) => (application.notes = value)
+    );
+  }
 
-    const ref = this.modalService.open(TextInputDialogComponent, {
-      centered: true,
-      size: 'lg',
-      fullscreen: 'lg',
-      backdrop: 'static'
-    });
+  protected editApplicationContact(application: ApplicationDto): void {
+    this.patchApplicationData<SetApplicationContactEndpointRequest>(
+      'EditContact',
+      false,
+      true,
+      application.id,
+      application.contact,
+      setApplicationContact,
+      (value) => ({ contact: value }) as SetApplicationContactEndpointRequest,
+      (value) => (this.updatingContactOfApplicationId = value),
+      (value) => (application.contact = value)
+    );
+  }
 
-    const component = ref.componentInstance as TextInputDialogComponent;
-    component.init('Portal.ViewPlanningRealm.Applications.EditNotes', application.notes, true, false);
+  protected editApplicationContactEmail(application: ApplicationDto): void {
+    this.patchApplicationData<SetApplicationContactEmailEndpointRequest>(
+      'EditContactEmail',
+      false,
+      false,
+      application.id,
+      application.contactEmail ?? '',
+      setApplicationContactEmail,
+      (value) => ({ contactEmail: value.length > 0 ? value : null }) as SetApplicationContactEmailEndpointRequest,
+      (value) => (this.updatingContactEmailOfApplicationId = value),
+      (value) => {
+        application.contactEmail = value.length > 0 ? value : null;
+        this.evaluateCombinedEmailAddresses();
+      }
+    );
+  }
 
-    ref.closed
-      .pipe(
-        tap(() => (this.updatingNotesOfApplicationId = application.id)),
-        switchMap((notes) =>
-          this.turnierplanApi
-            .invoke(setApplicationNotes, {
-              planningRealmId: this.planningRealm.id,
-              applicationId: application.id,
-              body: {
-                notes: notes
-              }
-            })
-            .pipe(map(() => notes))
-        )
-      )
-      .subscribe({
-        next: (notes: string) => {
-          application.notes = notes;
-          this.updatingNotesOfApplicationId = undefined;
-        },
-        error: (error) => {
-          this.errorOccured.emit(error);
-        }
-      });
+  protected editApplicationContactTelephone(application: ApplicationDto): void {
+    this.patchApplicationData<SetApplicationContactTelephoneEndpointRequest>(
+      'EditContactTelephone',
+      false,
+      false,
+      application.id,
+      application.contactTelephone ?? '',
+      setApplicationContactTelephone,
+      (value) => ({ contactTelephone: value.length > 0 ? value : null }) as SetApplicationContactTelephoneEndpointRequest,
+      (value) => (this.updatingContactTelephoneOfApplicationId = value),
+      (value) => (application.contactTelephone = value.length > 0 ? value : null)
+    );
   }
 
   protected showApplicationChangeLog(application: ApplicationDto): void {
@@ -326,6 +360,10 @@ export class ManageApplicationsComponent implements OnDestroy {
   }
 
   protected editTeamLabels(applicationId: number, applicationTeam: ApplicationTeamDto): void {
+    if (this.isUpdatingAnyApplication()) {
+      return;
+    }
+
     const ref = this.modalService.open(LabelsSelectComponent, {
       centered: true,
       size: 'md',
@@ -398,7 +436,72 @@ export class ManageApplicationsComponent implements OnDestroy {
     this.determineAllApplicationsExpanded();
   }
 
+  private patchApplicationData<TRequestBody>(
+    translationKey: string,
+    textArea: boolean,
+    isRequired: boolean,
+    applicationId: number,
+    currentValue: string,
+    apiFunction: (
+      http: HttpClient,
+      rootUrl: string,
+      params: { planningRealmId: string; applicationId: number; body: TRequestBody },
+      context?: HttpContext
+    ) => Observable<StrictHttpResponse<void>>,
+    requestBodyFactory: (value: string) => TRequestBody,
+    trackingCallback: (value: number | undefined) => void,
+    successCallback: (value: string) => void
+  ): void {
+    // this method is analogous to the endpoint base class in the backend
+
+    if (this.isUpdatingAnyApplication()) {
+      return;
+    }
+
+    const ref = this.modalService.open(TextInputDialogComponent, {
+      centered: true,
+      size: textArea ? 'lg' : 'md',
+      fullscreen: textArea ? 'lg' : 'md',
+      backdrop: 'static'
+    });
+
+    const component = ref.componentInstance as TextInputDialogComponent;
+    component.init(`Portal.ViewPlanningRealm.Applications.${translationKey}`, currentValue, textArea, isRequired);
+
+    ref.closed
+      .pipe(
+        tap(() => trackingCallback(applicationId)),
+        switchMap((value) =>
+          this.turnierplanApi
+            .invoke(apiFunction, {
+              planningRealmId: this.planningRealm.id,
+              applicationId: applicationId,
+              body: requestBodyFactory(value)
+            })
+            .pipe(map(() => value))
+        )
+      )
+      .subscribe({
+        next: (value: string) => {
+          successCallback(value);
+          trackingCallback(undefined);
+        },
+        error: (error) => {
+          this.errorOccured.emit(error);
+        }
+      });
+  }
+
   private determineAllApplicationsExpanded(): void {
     this.allApplicationsExpanded = !!this.result && !this.result.items.some((x) => !this.expandedApplications[x.id]);
+  }
+
+  private evaluateCombinedEmailAddresses(): void {
+    if (!this.result || this.result.items.length === 0) {
+      this.combinedEmailAddresses = undefined;
+    } else {
+      const uniqueAddresses = [...new Set(this.result.items.map((application) => application.contactEmail).filter((mail) => !!mail))];
+      this.combinedEmailAddresses = uniqueAddresses.length <= 1 ? undefined : uniqueAddresses.join(' ');
+    }
   }
 }
