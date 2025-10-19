@@ -56,6 +56,7 @@
           @let showApplicationTeams = expandedApplications[application.id];
           @let visibleTeamsCount = getNumberOfVisibleTeams(application);
           @let hiddenTeamsCount = getNumberOfHiddenTeams(application);
+          @let isCurrentlyUpdating = isUpdatingAnyApplication();
 
           <tr style="height: 48px">
             <!-- height is set to 48px to prevent "jumping" when expanding/collapsing the teams list -->
@@ -104,14 +105,52 @@
                 }
               }
             </td>
-            <td class="align-correctly">{{ application.contact }}</td>
+            <td class="align-correctly">
+              <span>{{ application.contact }}</span>
+              @if (updatingContactOfApplicationId === application.id) {
+                <tp-small-spinner class="ms-2" />
+              } @else if (writeAllowed) {
+                <i
+                  class="ms-2 bi bi-pencil"
+                  [ngClass]="{ 'tp-cursor-not-allowed': isCurrentlyUpdating, 'tp-cursor-pointer': !isCurrentlyUpdating }"
+                  (click)="editApplicationContact(application)"></i>
+              }
+            </td>
             <td class="align-correctly">
               @if (application.contactEmail) {
                 <a href="mailto:{{ application.contactEmail }}" class="me-2">{{ application.contactEmail }}</a>
                 <tp-copy-to-clipboard [value]="application.contactEmail" />
               }
+              @if (updatingContactEmailOfApplicationId === application.id) {
+                <tp-small-spinner class="ms-2" />
+              } @else if (writeAllowed) {
+                <i
+                  class="ms-2 bi bi-pencil"
+                  [ngClass]="{
+                    'tp-cursor-not-allowed': isCurrentlyUpdating,
+                    'tp-cursor-pointer': !isCurrentlyUpdating,
+                    'ms-2': !!application.contactEmail
+                  }"
+                  (click)="editApplicationContactEmail(application)"></i>
+              }
             </td>
-            <td class="align-correctly">{{ application.contactTelephone ?? '' }}</td>
+            <td class="align-correctly">
+              @if (application.contactTelephone) {
+                <span>{{ application.contactTelephone }}</span>
+              }
+              @if (updatingContactTelephoneOfApplicationId === application.id) {
+                <tp-small-spinner class="ms-2" />
+              } @else if (writeAllowed) {
+                <i
+                  class="bi bi-pencil"
+                  [ngClass]="{
+                    'tp-cursor-not-allowed': isCurrentlyUpdating,
+                    'tp-cursor-pointer': !isCurrentlyUpdating,
+                    'ms-2': !!application.contactTelephone
+                  }"
+                  (click)="editApplicationContactTelephone(application)"></i>
+              }
+            </td>
             <td class="align-correctly">{{ application.comment ?? '' }}</td>
             <td class="align-correctly">
               @if (application.notes.length > 0) {
@@ -121,11 +160,9 @@
                 @if (updatingNotesOfApplicationId === application.id) {
                   <tp-small-spinner />
                 } @else if (writeAllowed) {
-                  @let isCurrentlyUpdating = updatingNotesOfApplicationId !== undefined;
                   <i
                     class="bi bi-pencil"
                     [ngClass]="{ 'tp-cursor-not-allowed': isCurrentlyUpdating, 'tp-cursor-pointer': !isCurrentlyUpdating }"
-                    [ngbTooltip]="isCurrentlyUpdating ? undefined : ('Portal.ViewPlanningRealm.Applications.EditNotes.Title' | translate)"
                     (click)="editApplicationNotes(application)"></i>
                 }
               </div>
@@ -179,7 +216,10 @@
                             @if (updatingLabelsOfApplicationTeamId === team.id) {
                               <tp-small-spinner class="ms-2" />
                             } @else if (writeAllowed) {
-                              <i class="bi bi-pencil tp-cursor-pointer ms-2" (click)="editTeamLabels(application.id, team)"></i>
+                              <i
+                                class="ms-2 bi bi-pencil"
+                                [ngClass]="{ 'tp-cursor-not-allowed': isCurrentlyUpdating, 'tp-cursor-pointer': !isCurrentlyUpdating }"
+                                (click)="editTeamLabels(application.id, team)"></i>
                             }
                           </td>
                           <td class="align-middle">

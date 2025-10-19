@@ -1059,6 +1059,21 @@ export const de = {
           InfoText: 'Geben Sie Ihre Notizen für die Anmeldung ein:',
           Confirm: 'Speichern'
         },
+        EditContact: {
+          Title: 'Kontaktperson bearbeiten',
+          InfoText: 'Geben Sie die Kontaktperson von dieser Anmeldung ein:',
+          Confirm: 'Speichern'
+        },
+        EditContactEmail: {
+          Title: 'Kontakt E-Mail bearbeiten',
+          InfoText: 'Geben Sie die E-Mailadresse von dieser Anmeldung ein:',
+          Confirm: 'Speichern'
+        },
+        EditContactTelephone: {
+          Title: 'Kontakt Telefon-Nr. bearbeiten',
+          InfoText: 'Geben Sie die Telefonnummer von dieser Anmeldung ein:',
+          Confirm: 'Speichern'
+        },
         NoLabels: 'keine Labels',
         NoLinkedTournament: 'kein Turnier verknüpft',
         CannotDeleteTeamWhileLinked: 'Die Mannschaft kann nicht gelöscht werden, solange sie an einem Turnier teilnimmt.',
