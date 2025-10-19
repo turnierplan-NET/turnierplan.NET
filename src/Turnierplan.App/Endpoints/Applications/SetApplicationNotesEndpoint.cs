@@ -1,50 +1,14 @@
-using Microsoft.AspNetCore.Mvc;
-using Turnierplan.App.Security;
 using Turnierplan.Core.PlanningRealm;
-using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.App.Endpoints.Applications;
 
-internal sealed class SetApplicationNotesEndpoint : EndpointBase
+internal sealed class SetApplicationNotesEndpoint : PatchApplicationEndpointBase<SetApplicationNotesEndpoint.SetApplicationNotesEndpointRequest>
 {
-    protected override HttpMethod Method => HttpMethod.Patch;
+    protected override string RouteSuffix => "notes";
 
-    protected override string Route => "/api/planning-realms/{planningRealmId}/applications/{applicationId:int}/notes";
-
-    protected override Delegate Handler => Handle;
-
-    private static async Task<IResult> Handle(
-        [FromRoute] PublicId planningRealmId,
-        [FromRoute] long applicationId,
-        [FromBody] SetApplicationNotesEndpointRequest request,
-        IPlanningRealmRepository planningRealmRepository,
-        IAccessValidator accessValidator,
-        CancellationToken cancellationToken)
+    protected override void UpdateApplication(Application application, SetApplicationNotesEndpointRequest request)
     {
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.Applications);
-
-        if (planningRealm is null)
-        {
-            return Results.NotFound();
-        }
-
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsWrite))
-        {
-            return Results.Forbid();
-        }
-
-        var application = planningRealm.Applications.FirstOrDefault(x => x.Id == applicationId);
-
-        if (application is null)
-        {
-            return Results.NotFound();
-        }
-
         application.Notes = request.Notes;
-
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
-
-        return Results.NoContent();
     }
 
     public sealed record SetApplicationNotesEndpointRequest
