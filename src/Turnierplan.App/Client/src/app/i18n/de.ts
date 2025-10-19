@@ -1062,6 +1062,7 @@ export const de = {
         EditContact: {
           Title: 'Kontaktperson bearbeiten',
           InfoText: 'Geben Sie die Kontaktperson von dieser Anmeldung ein:',
+          RequiredFeedback: 'Die Kontaktperson darf nicht leer sein',
           Confirm: 'Speichern'
         },
         EditContactEmail: {
