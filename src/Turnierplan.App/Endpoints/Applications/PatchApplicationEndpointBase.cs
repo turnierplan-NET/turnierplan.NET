@@ -1,4 +1,6 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
 using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
@@ -15,6 +17,11 @@ internal abstract class PatchApplicationEndpointBase<TRequest> : EndpointBase
 
     protected abstract string RouteSuffix { get; }
 
+    /// <remarks>
+    /// Named <c>RequestValidator</c> instead of <c>Validator</c> to avoid errors in subclasses when they declare a nested <c>Validator</c> class.
+    /// </remarks>
+    protected abstract IValidator<TRequest> RequestValidator { get; }
+
     protected abstract void UpdateApplication(Application application, TRequest request);
 
     private async Task<IResult> Handle(
@@ -25,6 +32,11 @@ internal abstract class PatchApplicationEndpointBase<TRequest> : EndpointBase
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
+        if (!RequestValidator.ValidateAndGetResult(request, out var result))
+        {
+            return result;
+        }
+
         var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.Applications);
 
         if (planningRealm is null)

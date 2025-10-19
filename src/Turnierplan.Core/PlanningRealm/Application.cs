@@ -75,6 +75,11 @@ public sealed class Application : Entity<long>
         {
             var trimmed = value.Trim();
 
+            if (trimmed.Length == 0)
+            {
+                throw new TurnierplanException("Contact must be a non-empty string");
+            }
+
             if (!_contact.Equals(trimmed))
             {
                 AddChangeLog(ApplicationChangeLogType.ContactChanged, _contact, trimmed);
