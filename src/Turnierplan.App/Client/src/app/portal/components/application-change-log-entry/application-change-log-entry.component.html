@@ -22,7 +22,20 @@
         <span class="text-decoration-underline">{{ teamName }}</span>
       </div>
     } @else if (changeLogType === ApplicationChangeLogType.TeamAdded) {
-      <span class="value-display p-1 border text-success flex-grow-0">{{ teamName }}</span>
+      @if (tournamentClassName && tournamentClassName.length > 0) {
+        <!-- tournament class name was not saved until 2025.4.0 -->
+        <div class="d-flex flex-row gap-2">
+          <span class="value-display p-1 border flex-grow-0">
+            <i
+              class="bi-x-diamond me-2"
+              [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.ChangeLog.TournamentClassTooltip' | translate"></i>
+            <span>{{ tournamentClassName }}</span>
+          </span>
+          <span class="value-display p-1 border text-success flex-grow-0">{{ teamName }}</span>
+        </div>
+      } @else {
+        <span class="value-display p-1 border text-success flex-grow-0">{{ teamName }}</span>
+      }
     } @else if (changeLogType === ApplicationChangeLogType.TeamRemoved) {
       <span class="value-display p-1 border text-danger flex-grow-0">{{ teamName }}</span>
     } @else if (changeLogType === ApplicationChangeLogType.TeamLinkCreated) {
