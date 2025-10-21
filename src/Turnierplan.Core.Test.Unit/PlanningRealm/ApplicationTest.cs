@@ -61,13 +61,15 @@ public sealed class ApplicationTest
     {
         _application.ChangeLog.Should().BeEmpty();
 
-        _application.AddTeam(null!, "TestTeam");
+        var tournamentClass = new TournamentClass("TestClass");
+        _application.AddTeam(tournamentClass, "TestTeam");
 
         _application.ChangeLog.Should().HaveCount(1);
         var entry = _application.ChangeLog[^1];
         entry.Type.Should().Be(ApplicationChangeLogType.TeamAdded);
-        entry.Properties.Should().HaveCount(1);
+        entry.Properties.Should().HaveCount(2);
         entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.TeamName).Value.Should().Be("TestTeam");
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.TournamentClassName).Value.Should().Be("TestClass");
     }
 
     [Fact]
@@ -75,7 +77,8 @@ public sealed class ApplicationTest
     {
         _application.ChangeLog.Should().BeEmpty();
 
-        var team = _application.AddTeam(null!, "TestTeam");
+        var tournamentClass = new TournamentClass("TestClass");
+        var team = _application.AddTeam(tournamentClass, "TestTeam");
         _application.ChangeLog.Should().HaveCount(1);
 
         team.SetName("TestTeam2");
@@ -93,7 +96,8 @@ public sealed class ApplicationTest
     {
         _application.ChangeLog.Should().BeEmpty();
 
-        var team = _application.AddTeam(null!, "TestTeam");
+        var tournamentClass = new TournamentClass("TestClass");
+        var team = _application.AddTeam(tournamentClass, "TestTeam");
         team.SetName("TestTeam2");
         _application.ChangeLog.Should().HaveCount(2);
 
@@ -102,8 +106,9 @@ public sealed class ApplicationTest
         _application.ChangeLog.Should().HaveCount(3);
         var entry = _application.ChangeLog[^1];
         entry.Type.Should().Be(ApplicationChangeLogType.TeamRemoved);
-        entry.Properties.Should().HaveCount(1);
+        entry.Properties.Should().HaveCount(2);
         entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.TeamName).Value.Should().Be("TestTeam2");
+        entry.Properties.Single(x => x.Type is ApplicationChangeLogProperty.TournamentClassName).Value.Should().Be("TestClass");
     }
 
     [Fact]
@@ -111,7 +116,8 @@ public sealed class ApplicationTest
     {
         _application.ChangeLog.Should().BeEmpty();
 
-        var team = _application.AddTeam(null!, "TestTeam");
+        var tournamentClass = new TournamentClass("TestClass");
+        var team = _application.AddTeam(tournamentClass, "TestTeam");
         var label = new Label(123, "TestLabel", string.Empty, "c81fa9");
         _application.ChangeLog.Should().HaveCount(1);
 
