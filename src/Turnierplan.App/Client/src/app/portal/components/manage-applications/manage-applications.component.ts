@@ -322,16 +322,25 @@ export class ManageApplicationsComponent implements OnDestroy {
       .pipe(
         tap(() => (this.isLoading = true)),
         switchMap((request: CreateApplicationTeamEndpointRequest) =>
-          this.turnierplanApi.invoke(createApplicationTeam, {
-            planningRealmId: this.planningRealm.id,
-            applicationId: applicationId,
-            body: request
-          })
+          this.turnierplanApi
+            .invoke(createApplicationTeam, {
+              planningRealmId: this.planningRealm.id,
+              applicationId: applicationId,
+              body: request
+            })
+            .pipe(map(() => request.tournamentClassId))
         )
       )
       .subscribe({
-        next: () => {
+        next: (tournamentClassId: number) => {
           this.reload$.next(undefined); // reload will eventually set isLoading to false
+
+          // Modify the planning realm stored in the client to account for the newly added team. By doing this "hack" we can prevent
+          // a separate request for querying the entire planning realm when only the "numberOfTeams" property has changed.
+          const tournamentClass = this.planningRealm.tournamentClasses?.find((x) => x.id === tournamentClassId);
+          if (tournamentClass) {
+            tournamentClass.numberOfTeams++;
+          }
         },
         error: (error) => {
           this.errorOccured.emit(error);
