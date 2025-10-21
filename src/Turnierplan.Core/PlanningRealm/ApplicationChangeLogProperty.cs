@@ -10,5 +10,6 @@ public enum ApplicationChangeLogProperty
     LabelName = 4,
     LabelColorCode = 5,
     TeamName = 6,
-    TournamentName = 7
+    TournamentName = 7,
+    TournamentClassName = 8
 }

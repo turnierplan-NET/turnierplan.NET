@@ -161,7 +161,10 @@ public sealed class Application : Entity<long>
         var team = new ApplicationTeam(this, tournamentClass, name);
         _teams.Add(team);
 
-        AddChangeLog(ApplicationChangeLogType.TeamAdded, [new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TeamName, team.Name)]);
+        AddChangeLog(ApplicationChangeLogType.TeamAdded, [
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TeamName, team.Name),
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TournamentClassName, tournamentClass.Name)
+        ]);
 
         return team;
     }

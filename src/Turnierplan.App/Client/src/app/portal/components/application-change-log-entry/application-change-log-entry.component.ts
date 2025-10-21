@@ -5,11 +5,12 @@ import { ApplicationChangeLogType } from '../../../api/models/application-change
 import { ApplicationChangeLogProperty } from '../../../api/models/application-change-log-property';
 import { ApplicationChangeLogDto } from '../../../api/models/application-change-log-dto';
 import { LabelDto } from '../../../api/models/label-dto';
-import { TranslateDirective } from '@ngx-translate/core';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'tp-application-change-log-entry',
-  imports: [LabelComponent, TranslateDatePipe, TranslateDirective],
+  imports: [LabelComponent, TranslateDatePipe, TranslateDirective, NgbTooltip, TranslatePipe],
   templateUrl: './application-change-log-entry.component.html',
   styleUrl: './application-change-log-entry.component.scss'
 })
@@ -41,6 +42,7 @@ export class ApplicationChangeLogEntryComponent {
       case ApplicationChangeLogType.TeamAdded: {
         this.changeLogIcon = 'bi-plus-circle';
         this.teamName = propertyValue(ApplicationChangeLogProperty.TeamName);
+        this.tournamentClassName = propertyValue(ApplicationChangeLogProperty.TournamentClassName);
         break;
       }
       case ApplicationChangeLogType.TeamRemoved: {
@@ -86,4 +88,5 @@ export class ApplicationChangeLogEntryComponent {
   protected teamName?: string;
   protected mockLabel?: LabelDto;
   protected tournamentName?: string;
+  protected tournamentClassName?: string;
 }

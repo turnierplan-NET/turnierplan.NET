@@ -1115,6 +1115,7 @@ export const de = {
             TeamLinkCreated: 'Verknpüfung mit Turnier erstellt',
             TeamLinkDestroyed: 'Verknpüfung mit Turnier aufgehoben'
           },
+          TournamentClassTooltip: 'Turnierklasse',
           EmptyText: 'leer',
           LabelAdded: 'hinzugefügt zur Mannschaft',
           LabelRemoved: 'entfernt von der Mannschaft',
