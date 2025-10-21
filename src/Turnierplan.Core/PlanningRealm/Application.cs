@@ -179,7 +179,10 @@ public sealed class Application : Entity<long>
         _teams.Remove(team);
         team.Application = null!;
 
-        AddChangeLog(ApplicationChangeLogType.TeamRemoved, [new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TeamName, team.Name)]);
+        AddChangeLog(ApplicationChangeLogType.TeamRemoved, [
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TeamName, team.Name),
+            new ApplicationChangeLog.Property(ApplicationChangeLogProperty.TournamentClassName, team.Class.Name)
+        ]);
     }
 
     public void ClearChangeLog()
