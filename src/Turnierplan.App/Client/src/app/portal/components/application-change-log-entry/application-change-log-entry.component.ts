@@ -48,6 +48,7 @@ export class ApplicationChangeLogEntryComponent {
       case ApplicationChangeLogType.TeamRemoved: {
         this.changeLogIcon = 'bi-trash';
         this.teamName = propertyValue(ApplicationChangeLogProperty.TeamName);
+        this.tournamentClassName = propertyValue(ApplicationChangeLogProperty.TournamentClassName);
         break;
       }
       case ApplicationChangeLogType.LabelAdded:
