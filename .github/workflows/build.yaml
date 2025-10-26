@@ -6,15 +6,21 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v2
-        with: 
+        with:
           fetch-depth: 0
       - name: 'Extract turnierplan.NET version'
         id: extract-version
         shell: pwsh
         run: |
+          $LatestTag = git describe --tags --abbrev=0 --match=[0-9]*.[0-9]*.[0-9]*
           $VersionXmlContent = Get-Content -Path "version.xml" -Raw
           $Version = [regex]::Match($VersionXmlContent, '<Version>(\d+\.\d+\.\d+)</Version>').Groups[1].Value
+          Write-Host "Last git tag: $LatestTag"
           Write-Host "Detected version: $Version"
+          if ($Version -eq $LatestTag) {
+            Write-Host "Version equals latest tag, failing workflow!"
+            exit 1
+          }
           Add-Content -Path $env:GITHUB_OUTPUT -Value "turnierplan_version=$Version"
         working-directory: './src'
     outputs:
@@ -48,7 +54,7 @@ jobs:
           context: ./src
           file: ./src/Turnierplan.App/Dockerfile
           push: true
-          tags: "${{ github.ref == 'refs/heads/main' && 'ghcr.io/turnierplan-net/turnierplan:latest,' || '' }}ghcr.io/turnierplan-net/turnierplan:${{ needs.extract-version.outputs.turnierplan_version }}"
+          tags: 'ghcr.io/turnierplan-net/turnierplan:latest,ghcr.io/turnierplan-net/turnierplan:${{ needs.extract-version.outputs.turnierplan_version }}'
 
   nuget-package:
     name: 'Build NuGet package'
