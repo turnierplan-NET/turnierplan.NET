@@ -81,7 +81,7 @@
       @let numberOfColumns = groups.length > 1 ? 6 : 5;
       @for (group of groups; track group.alphabeticalId; let groupIndex = $index) {
         <tr>
-          <td [attr.colspan]="numberOfColumns" class="bg-light">
+          <td [attr.colspan]="numberOfColumns" class="bg-body-tertiary">
             <div class="d-flex flex-row gap-2 align-items-center">
               @let hasCustomDisplayName = group.displayName.length;
               @if (hasCustomDisplayName) {

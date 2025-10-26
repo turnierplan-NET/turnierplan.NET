@@ -58,7 +58,7 @@
             }
           </div>
           @for (day of view.days; track day.date) {
-            <div class="border timetable-row d-flex flex-column">
+            <div class="border tp-bg-check-pattern d-flex flex-column">
               @for (row of day.rows; track row; let isFirst = $first) {
                 <div class="d-flex flex-row" [ngStyle]="{ height: '3.5em', 'margin-top': isFirst ? '0' : '0.25em' }">
                   @for (entry of row.entries; track entry.tournament.id; let isFirst = $first) {
@@ -68,7 +68,7 @@
                         isFirst ? undefined : ('Portal.FolderTimetable.Break' | translate: { minutes: entry.columnsSpacing })
                       "></div>
                     <a
-                      class="px-3 overflow-hidden timetable-tournament tp-cursor-pointer d-flex flex-row align-items-center text-decoration-none"
+                      class="px-3 overflow-hidden bg-success-subtle text-body border border-success-subtle tp-cursor-pointer d-flex flex-row align-items-center text-decoration-none"
                       href="./portal/tournament/{{ entry.tournament.id }}"
                       target="{{ openInNewTab ? '_blank' : '_self' }}"
                       [ngStyle]="{ width: entry.columnsCount * view.percentPerColumn + '%' }"

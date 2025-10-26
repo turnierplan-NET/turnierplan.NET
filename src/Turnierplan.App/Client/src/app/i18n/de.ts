@@ -73,6 +73,10 @@ export const de = {
         Logout: 'Abmelden'
       }
     },
+    ColorThemeSelector: {
+      Light: 'Hell',
+      Dark: 'Dunkel'
+    },
     LandingPage: {
       Title: 'Startseite',
       Pages: {

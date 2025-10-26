@@ -15,7 +15,7 @@
         @if (selectedNode) {
           @for (entry of selectedNode.tournaments; track entry.id; let isLast = $last) {
             <div
-              class="invisible-button overflow-hidden text-nowrap tp-cursor-pointer d-flex flex-row align-items-center gap-2 px-2 py-1"
+              class="tp-invisible-button overflow-hidden text-nowrap tp-cursor-pointer d-flex flex-row align-items-center gap-2 px-2 py-1"
               [ngClass]="{ 'fw-bold': entry.id === selectedTournamentId, 'border-bottom': !isLast }"
               (click)="selectTournament(entry.id)">
               <i class="bi bi-trophy"></i>
@@ -34,7 +34,7 @@
       } @else {
         @for (document of documents; track document.id; let isLast = $last) {
           <div
-            class="invisible-button overflow-hidden text-nowrap tp-cursor-pointer d-flex flex-row align-items-center gap-2 px-2 py-1"
+            class="tp-invisible-button overflow-hidden text-nowrap tp-cursor-pointer d-flex flex-row align-items-center gap-2 px-2 py-1"
             [ngClass]="{ 'border-bottom': !isLast }"
             (click)="selectDocument(document.id)">
             <i class="bi bi-file-earmark-ruled"></i>

@@ -65,6 +65,14 @@ export class LocalStorageService {
     return this.getValueFromLocalStorage(`tp_selectApplicationTeamPlanningRealmId_${organizationId}`, (x) => x);
   }
 
+  public setColorTheme(theme: string): void {
+    localStorage.setItem(`tp_colorTheme`, theme);
+  }
+
+  public getColorTheme(): string | undefined {
+    return this.getValueFromLocalStorage(`tp_colorTheme`, (x) => x);
+  }
+
   private getValueFromLocalStorage<T>(key: string, parser: (value: string) => T): T | undefined {
     const value = localStorage.getItem(key);
     return value !== null && value.length > 0 ? parser(value) : undefined;
