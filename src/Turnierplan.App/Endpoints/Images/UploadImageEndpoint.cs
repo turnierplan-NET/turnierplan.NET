@@ -127,7 +127,7 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
 
         var scaleFactor = (float)maxWidth / imageData.Width;
         var destinationSize = new SKImageInfo(maxWidth, (int)(imageData.Height * scaleFactor));
-        var scaledImage = imageData.Resize(destinationSize, SKFilterQuality.Medium);
+        var scaledImage = imageData.Resize(destinationSize, new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear));
 
         imageData.Dispose();
 
