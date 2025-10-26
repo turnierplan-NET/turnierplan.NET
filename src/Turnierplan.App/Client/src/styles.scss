@@ -18,6 +18,12 @@ body {
   overflow-y: scroll;
 }
 
+@include bootstrap.color-mode(dark) {
+  body {
+    background-color: #212529 !important;
+  }
+}
+
 .tp-text-pre-wrap {
   white-space: pre-wrap;
 }
@@ -132,6 +138,12 @@ body {
   }
 }
 
+@include bootstrap.color-mode(dark) {
+  .tp-header {
+    background: linear-gradient(30deg, #001a25, #333);
+  }
+}
+
 .tp-footer {
   background: #f7f7f7;
   box-shadow: 0 -5px 5px -5px #ccc;
@@ -154,6 +166,13 @@ body {
     content: '|';
     font-weight: normal !important;
     padding: 0 0.35em;
+  }
+}
+
+@include bootstrap.color-mode(dark) {
+  .tp-footer {
+    background: #1f1f1f !important;
+    box-shadow: 0 -5px 5px -5px #222;
   }
 }
 
