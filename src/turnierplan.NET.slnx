@@ -1,0 +1,21 @@
+<Solution>
+  <Folder Name="/Solution Files/">
+    <File Path="docker-compose.yml" />
+    <File Path="version.xml" />
+  </Folder>
+  <Folder Name="/Test/">
+    <Project Path="Turnierplan.Adapter.Test.Functional/Turnierplan.Adapter.Test.Functional.csproj" />
+    <Project Path="Turnierplan.App.Test.Unit/Turnierplan.App.Test.Unit.csproj" />
+    <Project Path="Turnierplan.Core.Test.Unit/Turnierplan.Core.Test.Unit.csproj" />
+    <Project Path="Turnierplan.Dal.Test.Unit/Turnierplan.Dal.Test.Unit.csproj" />
+    <Project Path="Turnierplan.Localization.Test.Unit/Turnierplan.Localization.Test.Unit.csproj" />
+    <Project Path="Turnierplan.PdfRendering.Test.Unit/Turnierplan.PdfRendering.Test.Unit.csproj" />
+  </Folder>
+  <Project Path="Turnierplan.Adapter/Turnierplan.Adapter.csproj" />
+  <Project Path="Turnierplan.App/Turnierplan.App.csproj" />
+  <Project Path="Turnierplan.Core/Turnierplan.Core.csproj" />
+  <Project Path="Turnierplan.Dal/Turnierplan.Dal.csproj" />
+  <Project Path="Turnierplan.ImageStorage/Turnierplan.ImageStorage.csproj" />
+  <Project Path="Turnierplan.Localization/Turnierplan.Localization.csproj" />
+  <Project Path="Turnierplan.PdfRendering/Turnierplan.PdfRendering.csproj" />
+</Solution>
