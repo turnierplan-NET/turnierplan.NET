@@ -58,7 +58,10 @@
         @for (image of existingImages; track image.id) {
           <div
             class="border shadow-sm image-tile position-relative"
-            [ngClass]="{ 'border-success current': image.id === currentImageId, 'hover-override': image.id === hoverOverrideImageId }">
+            [ngClass]="{
+              'border-success bg-success-subtle': image.id === currentImageId,
+              'hover-override': image.id === hoverOverrideImageId
+            }">
             <div
               class="hover-buttons d-none position-absolute flex-row align-items-center justify-content-center gap-2"
               style="top: 0; left: 0">

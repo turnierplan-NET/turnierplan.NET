@@ -7,10 +7,6 @@
   font-family: system-ui, 'Segoe UI', sans-serif !important;
 }
 
-.font-monospace {
-  font-family: monospace !important;
-}
-
 body {
   background-color: #fff;
   font-optical-sizing: auto;
@@ -206,6 +202,21 @@ ul.pagination {
 @include bootstrap.color-mode(dark) {
   .tp-invisible-button:hover {
     background: lighten(bootstrap.$body-color, 5%) !important;
+  }
+}
+
+.tp-monospace-box {
+  background: #eee;
+  padding: 2px 5px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  font-size: 0.9em;
+}
+
+@include bootstrap.color-mode(dark) {
+  .tp-monospace-box {
+    background: lighten(bootstrap.$body-color, 7%) !important;
+    border-color: bootstrap.$secondary !important;
   }
 }
 
