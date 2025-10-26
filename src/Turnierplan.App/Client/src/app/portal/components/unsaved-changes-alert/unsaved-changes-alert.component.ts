@@ -4,8 +4,6 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 
-// TODO: Fix style in dark mode
-
 @Component({
   selector: 'tp-unsaved-changes-alert',
   templateUrl: './unsaved-changes-alert.component.html',
@@ -44,7 +42,7 @@ export class UnsavedChangesAlertComponent implements OnInit, OnDestroy {
     this.wrapperDiv.nativeElement.style.transform = `translateY(${translateY}px)`;
 
     let shadow = Math.floor(Math.min(translateY / 3, 15));
-    this.wrapperDiv.nativeElement.style.boxShadow = `0 0 ${shadow}px 5px #fff`;
+    this.wrapperDiv.nativeElement.style.boxShadow = `0 0 ${shadow}px 5px #fff`; // TODO: box shadow color depending on dark mode
 
     let margin = Math.floor(Math.min(translateY / 4, 10));
     this.wrapperDiv.nativeElement.style.marginLeft = `${margin}px`;
