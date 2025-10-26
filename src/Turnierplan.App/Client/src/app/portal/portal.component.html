@@ -30,10 +30,12 @@
         </span>
         <ng-template #userInfoPopover>
           <div
-            class="tp-text-pre-wrap mb-3"
+            class="tp-text-pre-wrap mb-4"
             [innerHTML]="
               'Portal.Header.UserInfoPopover.Text' | translate: { userName: currentUser.fullName ?? currentUser.userName }
             "></div>
+          <tp-color-theme-selector />
+          <div class="mb-4"><!-- empty div for spacing --></div>
           <ng-container *tpIsAdministrator>
             <div class="d-flex flex-row tp-cursor-pointer mt-1" [routerLink]="'/portal/administration'">
               <i class="bi bi-gear me-2" aria-hidden="true"></i>

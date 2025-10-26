@@ -113,7 +113,7 @@
               <tp-small-spinner />
             } @else if (team.entryFeePaidAt) {
               <i class="bi bi-check-circle-fill text-success"></i>
-              <span class="small text-secondary">
+              <span class="small">
                 <span translate="Portal.ViewTournament.Teams.EntryFeePaid.PaidAt"></span>
                 <span class="ms-1">{{ team.entryFeePaidAt | translateDate: 'medium' }}</span>
               </span>
@@ -128,7 +128,7 @@
               }
             } @else {
               <i class="bi bi-x-circle text-danger"></i>
-              <span class="small text-secondary" translate="Portal.ViewTournament.Teams.EntryFeePaid.NotPaid"></span>
+              <span class="small" translate="Portal.ViewTournament.Teams.EntryFeePaid.NotPaid"></span>
               @if (tournamentConductAllowed) {
                 <tp-action-button
                   icon="cash-coin"

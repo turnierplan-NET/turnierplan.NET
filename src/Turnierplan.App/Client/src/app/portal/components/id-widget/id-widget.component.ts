@@ -6,8 +6,7 @@ import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 @Component({
   selector: 'tp-id-widget',
   imports: [TranslateDirective, CopyToClipboardComponent, TooltipIconComponent],
-  templateUrl: './id-widget.component.html',
-  styleUrl: 'id-widget.component.scss'
+  templateUrl: './id-widget.component.html'
 })
 export class IdWidgetComponent {
   @Input()

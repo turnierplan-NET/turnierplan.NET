@@ -13,9 +13,10 @@
       <hr class="d-lg-none my-3" />
       <div class="w-lg-50 pe-2 d-flex flex-column">
         @if (selectedNode) {
-          @for (entry of selectedNode.tournaments; track entry.id) {
+          @for (entry of selectedNode.tournaments; track entry.id; let isLast = $last) {
             <div
-              class="invisible-button overflow-hidden text-nowrap tp-cursor-pointer d-flex flex-row align-items-center gap-2 px-2 py-1"
+              class="tp-invisible-button overflow-hidden text-nowrap tp-cursor-pointer d-flex flex-row align-items-center gap-2 px-2 py-1"
+              [class]="{ 'border-bottom': !isLast }"
               (click)="modal.close(entry.id)">
               <i class="bi bi-trophy"></i>
               <span>{{ entry.name }}</span>

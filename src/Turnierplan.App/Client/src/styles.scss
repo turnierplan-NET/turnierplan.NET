@@ -7,15 +7,17 @@
   font-family: system-ui, 'Segoe UI', sans-serif !important;
 }
 
-.font-monospace {
-  font-family: monospace !important;
-}
-
 body {
   background-color: #fff;
   font-optical-sizing: auto;
   font-variation-settings: 'wdth' 100;
   overflow-y: scroll;
+}
+
+@include bootstrap.color-mode(dark) {
+  body {
+    background-color: #212529 !important;
+  }
 }
 
 .tp-text-pre-wrap {
@@ -132,6 +134,12 @@ body {
   }
 }
 
+@include bootstrap.color-mode(dark) {
+  .tp-header {
+    background: linear-gradient(30deg, #001a25, #333);
+  }
+}
+
 .tp-footer {
   background: #f7f7f7;
   box-shadow: 0 -5px 5px -5px #ccc;
@@ -157,6 +165,13 @@ body {
   }
 }
 
+@include bootstrap.color-mode(dark) {
+  .tp-footer {
+    background: #1f1f1f !important;
+    box-shadow: 0 -5px 5px -5px #222;
+  }
+}
+
 @include bootstrap.media-breakpoint-up(lg) {
   .w-lg-50 {
     width: 50%;
@@ -178,4 +193,64 @@ body {
 
 ul.pagination {
   margin-bottom: 0;
+}
+
+.tp-invisible-button:hover {
+  background: #f7f7f7;
+}
+
+@include bootstrap.color-mode(dark) {
+  .tp-invisible-button:hover {
+    background: #2c3237ff !important;
+  }
+}
+
+.tp-monospace-box {
+  background: #eee;
+  padding: 2px 5px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  font-size: 0.9em;
+}
+
+@include bootstrap.color-mode(dark) {
+  .tp-monospace-box {
+    background: #31373d !important;
+    border-color: bootstrap.$secondary !important;
+  }
+}
+
+.tp-bg-check-pattern {
+  background-image: linear-gradient(to left, #f7f7f7 1px, transparent 1px), linear-gradient(to top, #f7f7f7 1px, transparent 1px);
+  background-size: 1em 1em;
+}
+
+@include bootstrap.color-mode(dark) {
+  .tp-bg-check-pattern {
+    background-image: linear-gradient(to left, #444 1px, transparent 1px), linear-gradient(to top, #444 1px, transparent 1px) !important;
+  }
+}
+
+// dark-mode specific CSS which cannot be specified in the components due to view encapsulation
+
+@include bootstrap.color-mode(dark) {
+  .updates-tile-loading {
+    background: linear-gradient(3deg, #222, #5b717c) !important;
+  }
+
+  .updates-tile-error {
+    background: linear-gradient(3deg, #222, #b18383) !important;
+  }
+
+  .updates-tile-up-to-date {
+    background: linear-gradient(3deg, #222, #59754b) !important;
+  }
+
+  .updates-tile-outdated {
+    background: linear-gradient(3deg, #222, #9e78a3) !important;
+
+    i {
+      color: #e744ff !important;
+    }
+  }
 }

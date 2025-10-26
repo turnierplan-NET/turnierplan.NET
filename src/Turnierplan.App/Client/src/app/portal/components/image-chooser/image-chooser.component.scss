@@ -3,10 +3,6 @@
 }
 
 .image-tile {
-  &.current {
-    background: repeating-linear-gradient(135deg, #e5f3e6, #e5f3e6 10px, #daf1db 10px, #daf1db 20px);
-  }
-
   &:hover,
   &.hover-override {
     border-color: #333 !important;

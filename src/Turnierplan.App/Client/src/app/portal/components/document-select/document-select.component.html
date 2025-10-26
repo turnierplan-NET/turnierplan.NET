@@ -5,13 +5,17 @@
   </div>
   <div class="modal-body d-flex flex-column gap-2">
     <div class="mb-4" translate="Portal.ViewTournament.AddDocumentDialog.Info"></div>
-    <div class="d-flex flex-row flex-wrap gap-3">
-      @for (entry of documentTypes; track entry) {
-        <div class="paper tp-cursor-pointer d-flex flex-column align-items-center justify-content-center" (click)="selected(entry.type)">
-          <div class="earmark"></div>
-          <span class="fw-bold">{{ entry.displayName }}</span>
-        </div>
-      }
-    </div>
+    <table class="table table-hover table-bordered">
+      <tbody>
+        @for (entry of documentTypes; track entry) {
+          <tr>
+            <td class="tp-cursor-pointer" (click)="selected(entry.type)">
+              <i class="bi bi-file-earmark"></i>
+              <span class="ms-2">{{ entry.displayName }}</span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
   </div>
 </ng-container>
