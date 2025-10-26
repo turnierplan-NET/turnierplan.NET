@@ -16,6 +16,7 @@ import { BarChart } from 'echarts/charts';
 import { GridComponent, TooltipComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 import { E2eDirective } from '../core/directives/e2e.directive';
+import { ColorThemeSelectorComponent } from './components/color-theme-selector/color-theme-selector.component';
 
 echarts.use([BarChart, GridComponent, CanvasRenderer, TooltipComponent]);
 
@@ -34,7 +35,8 @@ type UserInfoAction = 'ChangePassword' | 'Logout';
     RouterOutlet,
     FooterComponent,
     TranslatePipe,
-    E2eDirective
+    E2eDirective,
+    ColorThemeSelectorComponent
   ],
   providers: [provideEchartsCore({ echarts })]
 })
