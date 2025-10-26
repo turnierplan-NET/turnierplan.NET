@@ -2,10 +2,11 @@ import { Component, inject } from '@angular/core';
 import { ColorTheme, ColorThemeService } from '../../../core/services/color-theme.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Visibility } from '../../../api/models/visibility';
+import { TranslateDirective } from '@ngx-translate/core';
 
 @Component({
   selector: 'tp-color-theme-selector',
-  imports: [],
+  imports: [TranslateDirective],
   templateUrl: './color-theme-selector.component.html'
 })
 export class ColorThemeSelectorComponent {

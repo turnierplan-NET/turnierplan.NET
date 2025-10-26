@@ -9,7 +9,7 @@
     (click)="setTheme('light')" />
   <label class="btn btn-{{ buttonType }}" for="light_mode">
     <i class="bi bi-sun-fill"></i>
-    <span class="ms-2">Light</span>
+    <span class="ms-2" [translate]="'Portal.ColorThemeSelector.Light'"></span>
   </label>
 
   <input
@@ -22,6 +22,6 @@
     (click)="setTheme('dark')" />
   <label class="btn btn-{{ buttonType }}" for="dark_mode">
     <i class="bi bi-moon-stars-fill"></i>
-    <span class="ms-2">Dark</span>
+    <span class="ms-2" [translate]="'Portal.ColorThemeSelector.Dark'"></span>
   </label>
 </div>
