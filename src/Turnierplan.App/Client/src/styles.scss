@@ -220,6 +220,17 @@ ul.pagination {
   }
 }
 
+.tp-bg-check-pattern {
+  background-image: linear-gradient(to left, #f7f7f7 1px, transparent 1px), linear-gradient(to top, #f7f7f7 1px, transparent 1px);
+  background-size: 1em 1em;
+}
+
+@include bootstrap.color-mode(dark) {
+  .tp-bg-check-pattern {
+    background-image: linear-gradient(to left, #444 1px, transparent 1px), linear-gradient(to top, #444 1px, transparent 1px) !important;
+  }
+}
+
 // dark-mode specific CSS which cannot be specified in the components due to view encapsulation
 
 @include bootstrap.color-mode(dark) {
