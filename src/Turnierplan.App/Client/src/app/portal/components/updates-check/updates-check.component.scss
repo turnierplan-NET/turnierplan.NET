@@ -1,17 +1,19 @@
+// Note: This component has dark-mode-specific CSS in styles.scss
+
 .updates-tile-loading {
-  background: linear-gradient(3deg, #ffffff, #ccefff);
+  background: linear-gradient(3deg, #fff, #ccefff);
 }
 
 .updates-tile-error {
-  background: linear-gradient(3deg, #ffffff, #ffe1e1);
+  background: linear-gradient(3deg, #fff, #ffe1e1);
 }
 
 .updates-tile-up-to-date {
-  background: linear-gradient(3deg, #ffffff, #d3e6cb);
+  background: linear-gradient(3deg, #fff, #d3e6cb);
 }
 
 .updates-tile-outdated {
-  background: linear-gradient(3deg, #ffffff, #e7c2ec);
+  background: linear-gradient(3deg, #fff, #e7c2ec);
 
   i {
     color: #9200a5;

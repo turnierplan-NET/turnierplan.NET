@@ -198,3 +198,27 @@ body {
 ul.pagination {
   margin-bottom: 0;
 }
+
+// dark-mode specific CSS which cannot be specified in the components due to view encapsulation
+
+@include bootstrap.color-mode(dark) {
+  .updates-tile-loading {
+    background: linear-gradient(3deg, #222, #5b717c) !important;
+  }
+
+  .updates-tile-error {
+    background: linear-gradient(3deg, #222, #b18383) !important;
+  }
+
+  .updates-tile-up-to-date {
+    background: linear-gradient(3deg, #222, #789c67) !important;
+  }
+
+  .updates-tile-outdated {
+    background: linear-gradient(3deg, #222, #9e78a3) !important;
+
+    i {
+      color: #e744ff !important;
+    }
+  }
+}
