@@ -22,9 +22,9 @@ export class UnsavedChangesAlertComponent implements OnInit, AfterViewInit, OnDe
   protected wrapperDiv!: ElementRef<HTMLDivElement>;
 
   private readonly colorThemeService = inject(ColorThemeService);
-
   private readonly destroyed$ = new Subject<void>();
   private readonly eventListener = () => this.update();
+
   private currentTranslateY = 0;
   private shadowColor = '#fff';
 

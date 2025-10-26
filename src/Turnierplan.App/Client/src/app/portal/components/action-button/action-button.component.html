@@ -1,12 +1,20 @@
 @if (mode === 'IconLeftAndText') {
-  <button type="button" class="btn btn-sm btn-{{ blubbType }} text-nowrap" [ngClass]="{ disabled: disabled }" (click)="buttonClick.emit()">
+  <button
+    type="button"
+    class="btn btn-sm btn-{{ processedType }} text-nowrap"
+    [ngClass]="{ disabled: disabled }"
+    (click)="buttonClick.emit()">
     @if (icon) {
       <i class="bi bi-{{ icon }}" aria-hidden="true"></i>
     }
     <span [translate]="title" [translateParams]="titleParams" [ngClass]="{ 'ms-2': icon }"></span>
   </button>
 } @else if (mode === 'IconRightAndText') {
-  <button type="button" class="btn btn-sm btn-{{ blubbType }} text-nowrap" [ngClass]="{ disabled: disabled }" (click)="buttonClick.emit()">
+  <button
+    type="button"
+    class="btn btn-sm btn-{{ processedType }} text-nowrap"
+    [ngClass]="{ disabled: disabled }"
+    (click)="buttonClick.emit()">
     <span [translate]="title" [translateParams]="titleParams" [ngClass]="{ 'me-2': icon }"></span>
     @if (icon) {
       <i class="bi bi-{{ icon }}" aria-hidden="true"></i>
@@ -15,7 +23,7 @@
 } @else if (mode === 'IconOnly' && icon) {
   <button
     type="button"
-    class="btn btn-sm btn-{{ blubbType }}"
+    class="btn btn-sm btn-{{ processedType }}"
     [ngClass]="{ disabled: disabled }"
     [attr.aria-label]="title | translate: titleParams"
     (click)="buttonClick.emit()">

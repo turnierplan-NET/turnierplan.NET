@@ -9,15 +9,10 @@ export type ColorTheme = 'light' | 'dark';
 })
 export class ColorThemeService {
   private readonly localStorageService = inject(LocalStorageService);
-
   private readonly themeSubject$ = new ReplaySubject<ColorTheme>(1);
 
   public get theme$(): Observable<ColorTheme> {
     return this.themeSubject$.asObservable();
-  }
-
-  public get isLightMode$(): Observable<boolean> {
-    return this.themeSubject$.pipe(map((theme) => theme === 'light'));
   }
 
   public get isDarkMode$(): Observable<boolean> {

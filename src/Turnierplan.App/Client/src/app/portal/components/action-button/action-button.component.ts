@@ -10,7 +10,7 @@ import { Subject, takeUntil } from 'rxjs';
   imports: [NgClass, TranslateDirective, TranslatePipe]
 })
 export class ActionButtonComponent implements OnInit, OnDestroy {
-  protected blubbType: string = '';
+  protected processedType: string = '';
 
   @Input()
   public icon?: string;
@@ -42,11 +42,11 @@ export class ActionButtonComponent implements OnInit, OnDestroy {
       // These four button styles are converted to the outline / non-outline secondary version.
       this.colorThemeService.isDarkMode$.pipe(takeUntil(this.destroyed$)).subscribe({
         next: (isDarkMode) => {
-          this.blubbType = isDarkMode ? this.type.replace(/dark|light/, 'secondary') : this.type;
+          this.processedType = isDarkMode ? this.type.replace(/dark|light/, 'secondary') : this.type;
         }
       });
     } else {
-      this.blubbType = this.type;
+      this.processedType = this.type;
     }
   }
 
