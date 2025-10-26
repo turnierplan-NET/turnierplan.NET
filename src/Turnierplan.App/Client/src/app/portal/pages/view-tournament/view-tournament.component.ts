@@ -222,7 +222,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (tournament) => {
           this.setTournament(tournament);
-          this.loadingState = { isLoading: false };
+          this.loadingState = { isLoading: true };
         },
         error: (error) => {
           this.loadingState = { isLoading: false, error: error };
