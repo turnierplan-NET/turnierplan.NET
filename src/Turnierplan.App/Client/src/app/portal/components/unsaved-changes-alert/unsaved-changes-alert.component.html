@@ -1,6 +1,5 @@
-<!-- z-index must be < 1000, otherwise we would end up above the modal backdrop -->
 <!-- position relative is required for the combination of z-index / transform to work -->
-<div style="z-index: 800; position: relative" #wrapperDiv>
+<div style="position: relative" #wrapperDiv>
   <tp-alert [type]="'primary'" [icon]="'exclamation-circle'">
     <span class="flex-grow-1" translate="Portal.General.UnsavedChanges"></span>
     @if (inProgress) {

@@ -3,35 +3,3 @@
   // 480px is the combined height of the loading indicator and its y margin.
   min-height: 480px;
 }
-
-// The document preview should have the same aspect ratio as DIN pages. Therefore, we need a factor
-// by which we divide the DIN A4 measurements in cm to get usable values in em.
-$factor: 2.6;
-
-.paper {
-  background: #fefefe;
-  box-shadow: 1px 1px 3px rgb(0 0 0 / 20%);
-  height: calc(29.7em / $factor);
-  position: relative;
-  width: calc(21em / $factor);
-
-  .earmark {
-    border-color: #f6f6f6 #fff;
-    border-style: solid;
-    border-width: 0 0 1.6em 1.6em;
-    box-shadow:
-      -2px -2px 0 2px rgb(255 255 255),
-      1px 1px 3px rgb(0 0 0 / 20%); // First shadow hides corner shadow of paper, second shadow adds earmark shadow
-    left: 0;
-    position: absolute;
-    top: 0;
-  }
-
-  &:hover {
-    background: #f7f7f7;
-
-    .earmark {
-      border-color: #f0f0f0 #fff;
-    }
-  }
-}
