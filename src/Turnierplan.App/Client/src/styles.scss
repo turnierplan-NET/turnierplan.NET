@@ -199,6 +199,16 @@ ul.pagination {
   margin-bottom: 0;
 }
 
+.tp-invisible-button:hover {
+  background: #f7f7f7;
+}
+
+@include bootstrap.color-mode(dark) {
+  .tp-invisible-button:hover {
+    background: lighten(bootstrap.$body-color, 5%) !important;
+  }
+}
+
 // dark-mode specific CSS which cannot be specified in the components due to view encapsulation
 
 @include bootstrap.color-mode(dark) {
