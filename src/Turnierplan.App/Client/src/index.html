@@ -13,6 +13,12 @@
     <meta name="apple-mobile-web-app-title" content="turnierplan.NET" />
     <link rel="manifest" href="/site.webmanifest" />
   </head>
+  <script>
+    const colorTheme = localStorage.getItem('tp_colorTheme');
+    if (colorTheme) {
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+    }
+  </script>
   <body>
     <noscript>
       <h1 style="color: red">
