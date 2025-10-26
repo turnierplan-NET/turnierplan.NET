@@ -201,7 +201,7 @@ ul.pagination {
 
 @include bootstrap.color-mode(dark) {
   .tp-invisible-button:hover {
-    background: lighten(bootstrap.$body-color, 5%) !important;
+    background: #2c3237ff !important;
   }
 }
 
@@ -215,7 +215,7 @@ ul.pagination {
 
 @include bootstrap.color-mode(dark) {
   .tp-monospace-box {
-    background: lighten(bootstrap.$body-color, 7%) !important;
+    background: #31373d !important;
     border-color: bootstrap.$secondary !important;
   }
 }

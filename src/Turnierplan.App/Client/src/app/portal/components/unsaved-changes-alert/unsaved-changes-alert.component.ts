@@ -4,6 +4,8 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 
+// TODO: Fix style in dark mode
+
 @Component({
   selector: 'tp-unsaved-changes-alert',
   templateUrl: './unsaved-changes-alert.component.html',
