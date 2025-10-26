@@ -29,5 +29,5 @@ export class ActionButtonComponent {
   @Output()
   public buttonClick = new EventEmitter<void>();
 
-  // TODO: Replace btn-outline-dark with btn-outline-secondary (or light btn?) if dark mode is active
+  // TODO: Replace btn-outline-dark with btn-outline-secondary (or light btn?) if dark mode is active | Also btn-light in plannign realm page
 }
