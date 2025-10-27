@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ToastrService } from 'ngx-toastr';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
-  constructor(
-    private readonly toastr: ToastrService,
-    private readonly translator: TranslateService
-  ) {}
+  constructor(private readonly translator: TranslateService) {}
 
   public showNotification(
     type: 'success' | 'warning' | 'error' | 'info',
@@ -17,13 +13,14 @@ export class NotificationService {
     titleParams: { [key: string]: string } = {},
     messageParams: { [key: string]: string } = {}
   ): void {
-    this.toastr[type](
-      (this.translator.instant(message, messageParams) ?? message) as string,
-      (this.translator.instant(title, titleParams) ?? title) as string,
-      {
-        timeOut: timeout,
-        closeButton: true
-      }
-    );
+    alert(message);
+    // this.toastr[type](
+    //   (this.translator.instant(message, messageParams) ?? message) as string,
+    //   (this.translator.instant(title, titleParams) ?? title) as string,
+    //   {
+    //     timeOut: timeout,
+    //     closeButton: true
+    //   }
+    // );
   }
 }
