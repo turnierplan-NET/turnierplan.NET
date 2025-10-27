@@ -1,0 +1,10 @@
+@for (notification of notificationService.notifications$ | async; track notification.id) {
+  <ngb-toast
+    [class]="'mb-2 bg-' + notification.type + '-subtle'"
+    [header]="notification.title"
+    [autohide]="true"
+    [delay]="7500"
+    (hidden)="notificationService.removeNotification(notification.id)"
+    >{{ notification.body }}</ngb-toast
+  >
+}

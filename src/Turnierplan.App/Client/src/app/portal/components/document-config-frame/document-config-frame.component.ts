@@ -123,7 +123,7 @@ export class DocumentConfigFrameComponent implements AfterViewInit {
       },
       error: () => {
         this.notificationService.showNotification(
-          'error',
+          'danger',
           'Portal.ViewTournament.Documents.ConfigureModal.UpdateFailedToast.Title',
           'Portal.ViewTournament.Documents.ConfigureModal.UpdateFailedToast.Message'
         );
