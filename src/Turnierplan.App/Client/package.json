@@ -27,7 +27,6 @@
     "e2e:run": "npx cypress run"
   },
   "dependencies": {
-    "@angular/animations": "~20.3.7",
     "@angular/common": "~20.3.7",
     "@angular/compiler": "~20.3.7",
     "@angular/core": "~20.3.7",
@@ -47,7 +46,6 @@
     "ng2-pdfjs-viewer": "~25.0.13",
     "ngx-drag-drop": "~20.0.1",
     "ngx-echarts": "~20.0.2",
-    "ngx-toastr": "~19.1.0",
     "rxjs": "~7.8.2",
     "zone.js": "~0.15.1"
   },

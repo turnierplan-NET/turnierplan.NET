@@ -97,13 +97,13 @@ export class RbacAddAssignmentComponent implements OnDestroy {
         error: (error: { status?: number }) => {
           if (error.status === 400) {
             this.notificationService.showNotification(
-              'error',
+              'danger',
               'Portal.RbacManagement.AddRoleAssignment.PrincipalNotFoundToast.Title',
               'Portal.RbacManagement.AddRoleAssignment.PrincipalNotFoundToast.Message'
             );
           } else if (error.status === 409) {
             this.notificationService.showNotification(
-              'error',
+              'danger',
               'Portal.RbacManagement.AddRoleAssignment.AssignmentAlreadyExists.Title',
               'Portal.RbacManagement.AddRoleAssignment.AssignmentAlreadyExists.Message'
             );

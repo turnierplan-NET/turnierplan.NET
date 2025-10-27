@@ -9,12 +9,10 @@ import { authenticationInterceptor } from './app/core/interceptors/authenticatio
 import { rolesInterceptor } from './app/core/interceptors/roles.interceptor';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, Routes, UrlSegment } from '@angular/router';
 import { TranslateLoader, TranslationObject, provideTranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
 import { de as languageDE } from './app/i18n/de';
-import { provideToastr } from 'ngx-toastr';
 import { AppComponent } from './app/app.component';
 
 const routes: Routes = [
@@ -63,8 +61,6 @@ bootstrapApplication(AppComponent, {
     provideTranslateService({
       loader: provideTranslateLoader(ImmediateTranslateLoader)
     }),
-    provideToastr({ positionClass: 'toast-bottom-left' }),
-    provideAnimations(),
     provideRouter(routes)
   ]
 }).catch((err) => console.error(err));
