@@ -21,6 +21,11 @@
       <span class="ms-1" translate="Footer.GitHub"></span>
     </a>
   </span>
+  @if (colorThemeSelector) {
+    <span class="footer-item">
+      <tp-color-theme-selector [mode]="'icon'" />
+    </span>
+  }
   <span class="footer-item">
     <a target="_blank" href="https://github.com/turnierplan-NET/turnierplan.NET/releases/tag/{{ version }}" rel="noopener">
       <span [ngClass]="{ 'fw-bold text-warning': isDevelopment }">v{{ version }}</span>
