@@ -16,7 +16,7 @@ import { BarChart } from 'echarts/charts';
 import { GridComponent, TooltipComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 import { E2eDirective } from '../core/directives/e2e.directive';
-import { ColorThemeSelectorComponent } from './components/color-theme-selector/color-theme-selector.component';
+import { ColorThemeSelectorComponent } from '../core/components/color-theme-selector/color-theme-selector.component';
 
 echarts.use([BarChart, GridComponent, CanvasRenderer, TooltipComponent]);
 
