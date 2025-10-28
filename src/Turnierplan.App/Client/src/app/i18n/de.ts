@@ -75,7 +75,8 @@ export const de = {
     },
     ColorThemeSelector: {
       Light: 'Hell',
-      Dark: 'Dunkel'
+      Dark: 'Dunkel',
+      SwitchModes: 'Farbmodus umschalten'
     },
     LandingPage: {
       Title: 'Startseite',

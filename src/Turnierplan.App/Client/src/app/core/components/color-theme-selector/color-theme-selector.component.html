@@ -1,0 +1,41 @@
+@if (mode === 'default') {
+  <div class="btn-group btn-group-sm" role="group">
+    <input
+      type="radio"
+      class="btn-check"
+      name="color_theme_selector"
+      id="light_mode"
+      autocomplete="off"
+      [checked]="currentTheme === 'light'"
+      (click)="setTheme('light')" />
+    <label class="btn btn-{{ buttonType }}" for="light_mode">
+      <i class="bi bi-sun-fill"></i>
+      <span class="ms-2" [translate]="'Portal.ColorThemeSelector.Light'"></span>
+    </label>
+
+    <input
+      type="radio"
+      class="btn-check"
+      name="color_theme_selector"
+      id="dark_mode"
+      autocomplete="off"
+      [checked]="currentTheme === 'dark'"
+      (click)="setTheme('dark')" />
+    <label class="btn btn-{{ buttonType }}" for="dark_mode">
+      <i class="bi bi-moon-stars-fill"></i>
+      <span class="ms-2" [translate]="'Portal.ColorThemeSelector.Dark'"></span>
+    </label>
+  </div>
+} @else if (mode === 'icon') {
+  @if (currentTheme === 'light') {
+    <i
+      class="tp-cursor-pointer bi bi-sun-fill"
+      [ngbTooltip]="'Portal.ColorThemeSelector.SwitchModes' | translate"
+      (click)="setTheme('dark')"></i>
+  } @else if (currentTheme === 'dark') {
+    <i
+      class="tp-cursor-pointer bi bi-moon-stars-fill"
+      [ngbTooltip]="'Portal.ColorThemeSelector.SwitchModes' | translate"
+      (click)="setTheme('light')"></i>
+  }
+}
