@@ -37,8 +37,7 @@ public sealed class TournamentFullscreen : PageModel
             return;
         }
 
-        const ITournamentRepository.Includes includes = ITournamentRepository.Includes.GameRelevant | ITournamentRepository.Includes.Images;
-        var tournament = await _repository.GetByPublicIdAsync(publicId, includes);
+        var tournament = await _repository.GetByPublicIdAsync(publicId, ITournamentRepository.Includes.GameRelevant | ITournamentRepository.Includes.Images);
 
         if (tournament is null || !tournament.IsPublic)
         {
