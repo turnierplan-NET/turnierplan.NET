@@ -17,6 +17,9 @@ public sealed class TournamentFullscreen : PageModel
     [BindProperty(SupportsGet = true)]
     public string? Id { get; set; }
 
+    [BindProperty(SupportsGet = true)]
+    public int? AutoReload { get; set; }
+
     public Turnierplan.Core.Tournament.Tournament? Data { get; private set; }
 
     public async Task OnGetAsync()
