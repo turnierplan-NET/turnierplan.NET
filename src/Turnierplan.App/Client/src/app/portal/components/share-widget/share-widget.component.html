@@ -2,8 +2,14 @@
 
 <div class="mb-3" [translate]="translationKey + '.Link'"></div>
 
+@if (supportsAutoReload) {
+  <div class="mb-3">
+    <!-- TODO: Add toggle button and number input + localStorage persistence for the configurable auto-reload delay (=> probably separate component). -->
+  </div>
+}
+
 <div [ngClass]="{ 'mb-3': showQrCode || viewsCounter !== undefined }">
-  <tp-share-link [resourcePath]="resourcePath" #shareLink />
+  <tp-share-link [resourcePath]="resourcePath + autoReloadPathSuffix" #shareLink />
 </div>
 
 @if (showQrCode || viewsCounter !== undefined) {
@@ -13,7 +19,7 @@
         <div class="mb-1" [translate]="translationKey + '.QrCode'"></div>
 
         <div class="d-flex flex-row">
-          <div class="d-flex flex-column align-items-center">
+          <div class="d-flex flex-column align-items-center gap-2">
             <qrcode
               [qrdata]="shareLink.resourceUrl"
               [elementType]="'canvas'"

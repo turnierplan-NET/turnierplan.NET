@@ -23,8 +23,15 @@ export class ShareWidgetComponent {
   @Input()
   public resourcePath: string = '';
 
+  @Input()
+  public supportsAutoReload = false;
+
+  @Input()
+  public autoReloadMinInterval: number = 3;
+
   protected downloadName?: string;
   protected qrCodeUrl?: SafeUrl;
+  protected autoReloadPathSuffix = '';
 
   @Input()
   public set resourceName(value: string) {
