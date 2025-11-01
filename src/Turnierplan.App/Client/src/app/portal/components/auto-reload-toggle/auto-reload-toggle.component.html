@@ -20,7 +20,7 @@
         style="width: 6em"
         class="form-control form-control-sm"
         type="number"
-        min="1"
+        [min]="minimumInterval"
         step="1"
         id="autoReloadInterval"
         [ngModel]="config.autoReloadInterval"

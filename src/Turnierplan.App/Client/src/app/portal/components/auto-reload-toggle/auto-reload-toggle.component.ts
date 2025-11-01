@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { AutoReloadConfig } from '../../models/auto-reload-config';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +12,9 @@ const defaultConfig: AutoReloadConfig = { enableAutoReload: true, autoReloadInte
   templateUrl: './auto-reload-toggle.component.html'
 })
 export class AutoReloadToggleComponent implements OnInit {
+  @Input({ required: true })
+  public minimumInterval!: number;
+
   @Output()
   public pathSuffixChanged = new EventEmitter<string>();
 
@@ -32,7 +35,7 @@ export class AutoReloadToggleComponent implements OnInit {
       if (!this.config.autoReloadInterval) {
         this.config.autoReloadInterval = defaultConfig.autoReloadInterval;
       }
-      this.pathSuffixChanged.emit(`&autoReload=${this.config.autoReloadInterval}`);
+      this.pathSuffixChanged.emit(`&autoReload=${Math.max(this.config.autoReloadInterval, this.minimumInterval)}`);
     } else {
       this.pathSuffixChanged.emit('');
     }

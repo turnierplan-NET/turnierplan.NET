@@ -4,7 +4,7 @@
 
 @if (supportsAutoReload) {
   <div class="mb-3">
-    <tp-auto-reload-toggle (pathSuffixChanged)="autoReloadPathSuffix = $event" />
+    <tp-auto-reload-toggle [minimumInterval]="autoReloadMinInterval" (pathSuffixChanged)="autoReloadPathSuffix = $event" />
   </div>
 }
 
