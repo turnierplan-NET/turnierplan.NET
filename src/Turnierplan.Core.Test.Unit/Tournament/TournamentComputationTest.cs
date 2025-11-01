@@ -605,10 +605,12 @@ public sealed class TournamentComputationTest
         tournament._teams.Single(x => x.Name.Equals("Team 5")).Ranking.Should().Be(7);
         tournament._teams.Single(x => x.Name.Equals("Team 1")).Ranking.Should().Be(8);
 
-        // Assert ranking from non qualified teams: 3, 4, 8, 12
+        // Assert ranking from non-qualified teams: 3, 4, 8, 12
         tournament._teams.Single(x => x.Name.Equals("Team 12")).Ranking.Should().Be(9);
         tournament._teams.Single(x => x.Name.Equals("Team 8")).Ranking.Should().Be(10);
         tournament._teams.Single(x => x.Name.Equals("Team 3")).Ranking.Should().Be(11);
         tournament._teams.Single(x => x.Name.Equals("Team 4")).Ranking.Should().Be(12);
     }
+
+    // TODO: Add tests corresponding to the edge-cases handled by the ranking calculation change
 }
