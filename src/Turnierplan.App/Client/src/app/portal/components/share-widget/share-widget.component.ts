@@ -4,11 +4,12 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { ShareLinkComponent } from '../share-link/share-link.component';
 import { QRCodeComponent } from 'angularx-qrcode';
+import { AutoReloadToggleComponent } from '../auto-reload-toggle/auto-reload-toggle.component';
 
 @Component({
   selector: 'tp-share-widget',
   templateUrl: './share-widget.component.html',
-  imports: [TranslateDirective, NgClass, ShareLinkComponent, QRCodeComponent]
+  imports: [TranslateDirective, NgClass, ShareLinkComponent, QRCodeComponent, AutoReloadToggleComponent]
 })
 export class ShareWidgetComponent {
   @Input()
@@ -23,8 +24,15 @@ export class ShareWidgetComponent {
   @Input()
   public resourcePath: string = '';
 
+  @Input()
+  public supportsAutoReload = false;
+
+  @Input()
+  public autoReloadMinInterval: number = 3;
+
   protected downloadName?: string;
   protected qrCodeUrl?: SafeUrl;
+  protected autoReloadPathSuffix = '';
 
   @Input()
   public set resourceName(value: string) {

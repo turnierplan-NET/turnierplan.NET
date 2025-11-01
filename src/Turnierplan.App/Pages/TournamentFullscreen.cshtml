@@ -75,9 +75,16 @@
             const shadowStrength = window.scrollY > 100 ? 1 : (window.scrollY < 10 ? 0 : ((window.scrollY - 10) / 90));
             document.getElementById("header-information").style['box-shadow'] = `0 0 8px rgba(0, 0, 0, ${shadowStrength})`;
         };
-        const now = new Date();
-        setTimeout(() => {
-            window.location.reload();
-        }, Math.max(60000 - now.getSeconds() * 1000 - now.getMilliseconds(), 5000));
     </script>
+
+    @if (Model.AutoReload.HasValue)
+    {
+        var autoReloadMilliseconds = Math.Max(Model.AutoReload.Value, 3) * 1000;
+
+        <script>
+            const delayUntilReload = @autoReloadMilliseconds - (Date.now() % @autoReloadMilliseconds);
+            console.log(`This page will be reloaded in ${delayUntilReload} ms`)
+            setTimeout(() => { window.location.reload(); }, delayUntilReload);
+        </script>
+    }
 }

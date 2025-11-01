@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApplicationsFilter, defaultApplicationsFilter } from '../models/applications-filter';
+import { AutoReloadConfig } from '../models/auto-reload-config';
 
 @Injectable({ providedIn: 'root' })
 export class LocalStorageService {
@@ -71,6 +72,14 @@ export class LocalStorageService {
 
   public getColorTheme(): string | undefined {
     return this.getValueFromLocalStorage(`tp_colorTheme`, (x) => x);
+  }
+
+  public setAutoReloadConfig(config: AutoReloadConfig): void {
+    localStorage.setItem(`tp_autoReloadConfig`, JSON.stringify(config));
+  }
+
+  public getAutoReloadConfig(): AutoReloadConfig | undefined {
+    return this.getValueFromLocalStorage(`tp_autoReloadConfig`, (x) => JSON.parse(x) as AutoReloadConfig);
   }
 
   private getValueFromLocalStorage<T>(key: string, parser: (value: string) => T): T | undefined {
