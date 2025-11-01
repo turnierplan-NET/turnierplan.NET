@@ -560,6 +560,11 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     private void ComputeRanking()
     {
+        
+    }
+
+    private void ComputeRanking_OLD() // TODO: Remove before merging PR
+    {
         var matchesWithRankingInfluence = new HashSet<Match>();
         var undefinedRankings = Enumerable.Range(1, _teams.Count).ToList();
 
