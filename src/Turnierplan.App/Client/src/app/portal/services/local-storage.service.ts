@@ -78,7 +78,7 @@ export class LocalStorageService {
     localStorage.setItem(`tp_autoReloadConfig`, JSON.stringify(config));
   }
 
-  public getShareWidgetAutoReloadInterval(): AutoReloadConfig | undefined {
+  public getAutoReloadConfig(): AutoReloadConfig | undefined {
     return this.getValueFromLocalStorage(`tp_autoReloadConfig`, (x) => JSON.parse(x) as AutoReloadConfig);
   }
 

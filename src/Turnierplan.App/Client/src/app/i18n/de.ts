@@ -477,7 +477,12 @@ export const de = {
         },
         FullscreenLink: {
           Title: 'Anzeigetafel',
-          Link: 'Der folgende Link ist empfohlen, wenn Sie für Ihre Besucher eine Anzeigetafel mit aktuellen Ergebnissen präsentieren. Die Seite ist für die Betrachtung im Vollbild-Modus optimiert und kann sich automatisch in einem festgelegten Abstand aktualisieren.'
+          Link: 'Der folgende Link ist empfohlen, wenn Sie für Ihre Besucher eine Anzeigetafel mit aktuellen Ergebnissen präsentieren. Die Seite ist für die Betrachtung im Vollbild-Modus optimiert und kann sich automatisch in einem festgelegten Abstand aktualisieren.',
+          AutoReloadConfig: {
+            Enabled: 'Automatisch aktualisieren',
+            Interval: 'Intervall:',
+            Seconds: 'Sekunden'
+          }
         },
         Settings: 'Einstellungen',
         SettingsInfo: 'Konfigurieren Sie, wie die Turniere öffentlich präsentiert werden.',
