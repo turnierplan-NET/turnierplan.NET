@@ -16,9 +16,6 @@ export class FooterComponent {
   public contentOnly = false;
 
   @Input()
-  public colorThemeSelector = false;
-
-  @Input()
   public footerStyle: string = '';
 
   protected get version(): string {
