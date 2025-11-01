@@ -4,7 +4,7 @@
 
 @if (supportsAutoReload) {
   <div class="mb-3">
-    <!-- TODO: Add toggle button and number input + localStorage persistence for the configurable auto-reload delay (=> probably separate component). -->
+    <tp-auto-reload-toggle (pathSuffixChanged)="autoReloadPathSuffix = $event" />
   </div>
 }
 

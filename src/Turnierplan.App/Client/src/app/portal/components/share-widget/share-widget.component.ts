@@ -4,11 +4,12 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { ShareLinkComponent } from '../share-link/share-link.component';
 import { QRCodeComponent } from 'angularx-qrcode';
+import { AutoReloadToggleComponent } from '../auto-reload-toggle/auto-reload-toggle.component';
 
 @Component({
   selector: 'tp-share-widget',
   templateUrl: './share-widget.component.html',
-  imports: [TranslateDirective, NgClass, ShareLinkComponent, QRCodeComponent]
+  imports: [TranslateDirective, NgClass, ShareLinkComponent, QRCodeComponent, AutoReloadToggleComponent]
 })
 export class ShareWidgetComponent {
   @Input()
