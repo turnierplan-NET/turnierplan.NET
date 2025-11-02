@@ -588,15 +588,8 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             var winningTeam = match.GetWinningTeam();
             var losingTeam = match.GetLosingTeam();
 
-            if (winningTeam is not null)
-            {
-                Ranking.AddRanking(winnerRanking, winningTeam);
-            }
-
-            if (losingTeam is not null)
-            {
-                Ranking.AddRanking(loserRanking, losingTeam);
-            }
+            Ranking.AddRanking(winnerRanking, winningTeam);
+            Ranking.AddRanking(loserRanking, losingTeam);
 
             undefinedRankings.Remove(winnerRanking);
             undefinedRankings.Remove(loserRanking);
@@ -656,6 +649,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             }
         }
 
+        // TODO: Improve how this works when implementing #2 / #247
         Ranking.FinalizeRanking();
     }
 

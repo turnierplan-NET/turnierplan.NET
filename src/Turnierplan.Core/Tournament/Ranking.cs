@@ -31,25 +31,13 @@ public sealed class Ranking : IEnumerable<RankingPosition>
         _positions.Clear();
     }
 
-    internal void AddRanking(int position, Team team)
+    internal void AddRanking(int position, Team? team)
     {
         _positions.Add(new RankingPosition(position, team));
     }
 
     internal void FinalizeRanking()
     {
-        // TODO: Improve how this works when implementing #2 / #247
-
-        var maxPosition = _positions.Max(x => x.Position);
-
-        for (var i = 1; i <= maxPosition; i++)
-        {
-            if (!_positions.Any(x => x.Position == i))
-            {
-                _positions.Add(new RankingPosition(i, null));
-            }
-        }
-
         _positions.Sort((a, b) => a.Position - b.Position);
     }
 }
