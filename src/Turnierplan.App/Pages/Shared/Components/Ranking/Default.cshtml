@@ -10,7 +10,7 @@
     <tbody>
     @foreach (var ranking in Model.Tournament.Ranking)
     {
-        <tr>
+        <tr class="ranking-@ranking.Position">
             <td class="ps-3">@(ranking.Position).</td>
             <td style="word-break: break-word;">@(ranking.Team?.Name ?? string.Empty)</td>
         </tr>
