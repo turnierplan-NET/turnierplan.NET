@@ -93,6 +93,8 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     public IReadOnlyList<Document.Document> Documents => _documents.AsReadOnly();
 
+    public Ranking Ranking { get; } = new();
+
     public DateTime? StartTimestamp
     {
         get
@@ -563,10 +565,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         var matchesWithRankingInfluence = new HashSet<Match>();
         var undefinedRankings = Enumerable.Range(1, _teams.Count).ToList();
 
-        foreach (var team in _teams)
-        {
-            team.Ranking = null;
-        }
+        Ranking.Reset();
 
         foreach (var match in _matches.Where(x => x.PlayoffPosition is not null))
         {
@@ -591,12 +590,12 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
             if (winningTeam is not null)
             {
-                winningTeam.Ranking = winnerRanking;
+                Ranking.AddRanking(winnerRanking, winningTeam);
             }
 
             if (losingTeam is not null)
             {
-                losingTeam.Ranking = loserRanking;
+                Ranking.AddRanking(loserRanking, losingTeam);
             }
 
             undefinedRankings.Remove(winnerRanking);
@@ -653,9 +652,11 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
             foreach (var participant in sortedTeams)
             {
-                participant.Team.Ranking = undefinedRankings[undefinedRankingsIndex++];
+                Ranking.AddRanking(undefinedRankings[undefinedRankingsIndex++], participant.Team);
             }
         }
+
+        Ranking.FinalizeRanking();
     }
 
     private void GenerateGroupMatches(GroupRoundConfig? config, out int matchIndexOffset)

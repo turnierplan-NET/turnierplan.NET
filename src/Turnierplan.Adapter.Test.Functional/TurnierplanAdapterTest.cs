@@ -11,17 +11,8 @@ using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.RoleAssignment;
-using Turnierplan.Core.Tournament;
 using Turnierplan.Dal;
-using Group = Turnierplan.Adapter.Models.Group;
-using GroupParticipant = Turnierplan.Adapter.Models.GroupParticipant;
-using Match = Turnierplan.Adapter.Models.Match;
-using MatchOutcomeType = Turnierplan.Core.Tournament.MatchOutcomeType;
 using MatchType = Turnierplan.Adapter.Enums.MatchType;
-using Team = Turnierplan.Adapter.Models.Team;
-using TeamGroupStatistics = Turnierplan.Adapter.Models.TeamGroupStatistics;
-using Tournament = Turnierplan.Core.Tournament.Tournament;
-using Visibility = Turnierplan.Core.Tournament.Visibility;
 
 namespace Turnierplan.Adapter.Test.Functional;
 
@@ -341,8 +332,8 @@ public sealed class TurnierplanAdapterTest
 
         var folder = new Folder(organization, "TestFolder");
 
-        var tournament1 = new Tournament(organization, "T1", Visibility.Private);
-        var tournament2 = new Tournament(organization, "T2", Visibility.Public);
+        var tournament1 = new Turnierplan.Core.Tournament.Tournament(organization, "T1", Core.Tournament.Visibility.Private);
+        var tournament2 = new Turnierplan.Core.Tournament.Tournament(organization, "T2", Core.Tournament.Visibility.Public);
 
         tournament1.SetFolder(folder);
         tournament2.SetFolder(folder);
@@ -358,19 +349,19 @@ public sealed class TurnierplanAdapterTest
             tournament2.AddGroupParticipant(group, team2);
             tournament2.AddGroupParticipant(group, team3, 2);
 
-            tournament2.GenerateMatchPlan(new MatchPlanConfiguration
+            tournament2.GenerateMatchPlan(new Turnierplan.Core.Tournament.MatchPlanConfiguration
             {
-                GroupRoundConfig = new GroupRoundConfig
+                GroupRoundConfig = new Turnierplan.Core.Tournament.GroupRoundConfig
                 {
-                    GroupMatchOrder = GroupMatchOrder.Alternating,
+                    GroupMatchOrder = Core.Tournament.GroupMatchOrder.Alternating,
                     GroupPhaseRounds = 1
                 },
                 FinalsRoundConfig = null,
                 ScheduleConfig = null
             });
 
-            tournament2.Matches[0].SetOutcome(false, 2, 3, MatchOutcomeType.Standard);
-            tournament2.Matches[1].SetOutcome(true, 1, 1, MatchOutcomeType.AfterOvertime);
+            tournament2.Matches[0].SetOutcome(false, 2, 3, Core.Tournament.MatchOutcomeType.Standard);
+            tournament2.Matches[1].SetOutcome(true, 1, 1, Core.Tournament.MatchOutcomeType.AfterOvertime);
 
             tournament2.IncrementPublicPageViews();
             tournament2.IncrementPublicPageViews();

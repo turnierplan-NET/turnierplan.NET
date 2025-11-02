@@ -23,8 +23,6 @@ public sealed class TeamEntityTypeConfiguration : IEntityTypeConfiguration<Team>
 
         builder.Property(x => x.EntryFeePaidAt);
 
-        builder.Ignore(x => x.Ranking);
-
         builder.HasMany<GroupParticipant>()
             .WithOne(x => x.Team)
             .HasForeignKey("TournamentId", "TeamId")

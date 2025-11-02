@@ -152,32 +152,63 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
                                     columns.RelativeColumn(0.93f);
                                 });
 
-                                var numberOfRankings = tournament.Teams.Count;
-                                for (var ranking = 1; ranking <= numberOfRankings; ranking++)
+                                string GetCellBackground(int ranking)
                                 {
-                                    var team = configuration.Outcomes is MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes
-                                        ? tournament.Teams.FirstOrDefault(x => x.Ranking.HasValue && x.Ranking.Value == ranking)?.Name ?? string.Empty
-                                        : string.Empty;
-
-                                    var background = ranking switch
+                                    return ranking switch
                                     {
                                         1 => "ffd700",
                                         2 => "c9c9c9",
                                         3 => "f49e4c",
                                         _ => "ffffff"
                                     };
+                                }
 
-                                    table.Cell().Background(background)
-                                        .BorderLeft(2)
-                                        .BorderTop(ranking == 1 ? 2 : 0.5f)
-                                        .BorderBottom(ranking == numberOfRankings ? 2 : 0.5f)
-                                        .BorderColor(Colors.Black).Padding(2).Text($"{ranking}.").AlignEnd();
+                                if (configuration.Outcomes is MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes)
+                                {
+                                    var positions = tournament.Ranking.Positions;
 
-                                    table.Cell().Background(background)
-                                        .BorderRight(2)
-                                        .BorderTop(ranking == 1 ? 2 : 0.5f)
-                                        .BorderBottom(ranking == numberOfRankings ? 2 : 0.5f)
-                                        .BorderColor(Colors.Black).Padding(2).Text(team);
+                                    for (var i = 0; i < positions.Count; i++)
+                                    {
+                                        var entry = positions[i];
+                                        var background = GetCellBackground(entry.Position);
+                                        var isFirst = i == 0;
+                                        var isLast = i == positions.Count - 1;
+
+                                        table.Cell().Background(background)
+                                            .BorderLeft(2)
+                                            .BorderTop(isFirst ? 2 : 0.5f)
+                                            .BorderBottom(isLast ? 2 : 0.5f)
+                                            .BorderColor(Colors.Black).Padding(2).Text($"{entry.Position}.").AlignEnd();
+
+                                        table.Cell().Background(background)
+                                            .BorderRight(2)
+                                            .BorderTop(isFirst ? 2 : 0.5f)
+                                            .BorderBottom(isLast ? 2 : 0.5f)
+                                            .BorderColor(Colors.Black).Padding(2).Text(entry.Team?.Name ?? string.Empty);
+                                    }
+                                }
+                                else
+                                {
+                                    var numberOfRankings = tournament.Teams.Count;
+
+                                    for (var ranking = 1; ranking <= numberOfRankings; ranking++)
+                                    {
+                                        var background = GetCellBackground(ranking);
+                                        var isFirst = ranking == 1;
+                                        var isLast = ranking == numberOfRankings;
+
+                                        table.Cell().Background(background)
+                                            .BorderLeft(2)
+                                            .BorderTop(isFirst ? 2 : 0.5f)
+                                            .BorderBottom(isLast ? 2 : 0.5f)
+                                            .BorderColor(Colors.Black).Padding(2).Text($"{ranking}.").AlignEnd();
+
+                                        table.Cell().Background(background)
+                                            .BorderRight(2)
+                                            .BorderTop(isFirst ? 2 : 0.5f)
+                                            .BorderBottom(isLast ? 2 : 0.5f)
+                                            .BorderColor(Colors.Black).Padding(2);
+                                    }
                                 }
                             });
                         });
