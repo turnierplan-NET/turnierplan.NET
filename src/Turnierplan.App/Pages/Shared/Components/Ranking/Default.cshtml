@@ -12,7 +12,7 @@
     {
         var team = Model.Tournament.Teams.FirstOrDefault(x => x.Ranking == ranking);
 
-        <tr>
+        <tr class="ranking-@ranking">
             <td class="ps-3">@(ranking).</td>
             <td style="word-break: break-word;">@(team?.Name ?? string.Empty)</td>
         </tr>
