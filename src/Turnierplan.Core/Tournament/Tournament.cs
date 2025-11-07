@@ -93,6 +93,8 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     public IReadOnlyList<Document.Document> Documents => _documents.AsReadOnly();
 
+    public Ranking Ranking { get; } = new();
+
     public DateTime? StartTimestamp
     {
         get
@@ -568,10 +570,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         var matchesWithRankingInfluence = new HashSet<Match>();
         var undefinedRankings = Enumerable.Range(1, _teams.Count).ToList();
 
-        foreach (var team in _teams)
-        {
-            team.Ranking = null;
-        }
+        Ranking.Reset();
 
         foreach (var match in _matches.Where(x => x.PlayoffPosition is not null))
         {
@@ -594,15 +593,8 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             var winningTeam = match.GetWinningTeam();
             var losingTeam = match.GetLosingTeam();
 
-            if (winningTeam is not null)
-            {
-                winningTeam.Ranking = winnerRanking;
-            }
-
-            if (losingTeam is not null)
-            {
-                losingTeam.Ranking = loserRanking;
-            }
+            Ranking.AddRanking(winnerRanking, winningTeam);
+            Ranking.AddRanking(loserRanking, losingTeam);
 
             undefinedRankings.Remove(winnerRanking);
             undefinedRankings.Remove(loserRanking);
@@ -612,6 +604,11 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             || matchesWithRankingInfluence.Any(x => x.TeamA is null || x.TeamB is null)
             || _matches.Where(x => x.IsGroupMatch).Any(x => !x.IsFinished))
         {
+            foreach (var position in undefinedRankings)
+            {
+                Ranking.AddRanking(position, null);
+            }
+
             return;
         }
 
@@ -658,9 +655,17 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
             foreach (var participant in sortedTeams)
             {
-                participant.Team.Ranking = undefinedRankings[undefinedRankingsIndex++];
+                Ranking.AddRanking(undefinedRankings[undefinedRankingsIndex++], participant.Team);
             }
         }
+
+        for (var i = undefinedRankingsIndex; i < undefinedRankings.Count; i++)
+        {
+            Ranking.AddRanking(undefinedRankings[i], null);
+        }
+
+        // TODO: Improve how this works when implementing #2 / #247
+        Ranking.FinalizeRanking();
     }
 
     private void GenerateGroupMatches(GroupRoundConfig? config, out int matchIndexOffset)

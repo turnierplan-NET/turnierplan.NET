@@ -32,3 +32,15 @@ html, body, .overlay-background {
 .btn {
   border-radius: 0 !important;
 }
+
+tr.ranking-1 > td {
+  background: #fff9d9 !important;
+}
+
+tr.ranking-2 > td {
+  background: #efefef !important;
+}
+
+tr.ranking-3 > td {
+  background: #f1e1d6 !important;
+}
