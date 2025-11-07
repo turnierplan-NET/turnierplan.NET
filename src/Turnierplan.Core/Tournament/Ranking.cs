@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Turnierplan.Core.Tournament;
 
@@ -40,21 +39,4 @@ public sealed class Ranking : IEnumerable<RankingPosition>
     {
         _positions.Sort((a, b) => a.Position - b.Position);
     }
-}
-
-public sealed record RankingPosition
-{
-    public RankingPosition(int position, Team? team)
-    {
-        Position = position;
-        IsDefined = team is not null;
-        Team = team;
-    }
-
-    public int Position { get; }
-
-    [MemberNotNullWhen(true, nameof(Team))]
-    public bool IsDefined { get; }
-
-    public Team? Team { get; }
 }
