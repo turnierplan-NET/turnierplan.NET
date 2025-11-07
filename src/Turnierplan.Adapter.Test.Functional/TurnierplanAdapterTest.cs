@@ -47,7 +47,7 @@ public sealed class TurnierplanAdapterTest
                 Name = "T1",
                 OrganizationName = "TestOrg",
                 FolderName = "TestFolder",
-                Visibility = Enums.Visibility.Private
+                Visibility = Visibility.Private
             },
             new TournamentHeader
             {
@@ -55,21 +55,21 @@ public sealed class TurnierplanAdapterTest
                 Name = "T2",
                 OrganizationName = "TestOrg",
                 FolderName = "TestFolder",
-                Visibility = Enums.Visibility.Public
+                Visibility = Visibility.Public
             }
         ]);
 
         var tournament1 = await client.GetTournament(seedingResult.Tournament1Id);
         var tournament2 = await client.GetTournament(seedingResult.Tournament2Id);
 
-        tournament1.Should().BeEquivalentTo(new Turnierplan.Adapter.Models.Tournament
+        tournament1.Should().BeEquivalentTo(new Tournament
         {
             Id = seedingResult.Tournament1Id,
             Name = "T1",
             OrganizationName = "TestOrg",
             FolderName = "TestFolder",
             VenueName = null,
-            Visibility = Enums.Visibility.Private,
+            Visibility = Visibility.Private,
             PublicPageViews = 0,
             Teams = [],
             Groups = [],
@@ -77,14 +77,14 @@ public sealed class TurnierplanAdapterTest
             Rankings = []
         });
 
-        tournament2.Should().BeEquivalentTo(new Turnierplan.Adapter.Models.Tournament
+        tournament2.Should().BeEquivalentTo(new Tournament
         {
             Id = seedingResult.Tournament2Id,
             Name = "T2",
             OrganizationName = "TestOrg",
             FolderName = "TestFolder",
             VenueName = null,
-            Visibility = Enums.Visibility.Public,
+            Visibility = Visibility.Public,
             PublicPageViews = 3,
             Teams = [
                 new Team
@@ -200,7 +200,7 @@ public sealed class TurnierplanAdapterTest
                         Score = 3
                     },
                     State = MatchState.Finished,
-                    OutcomeType = Enums.MatchOutcomeType.Standard
+                    OutcomeType = MatchOutcomeType.Standard
                 },
                 new Match
                 {
@@ -232,7 +232,7 @@ public sealed class TurnierplanAdapterTest
                         Score = 1
                     },
                     State = MatchState.CurrentlyPlaying,
-                    OutcomeType = Enums.MatchOutcomeType.AfterOvertime
+                    OutcomeType = MatchOutcomeType.AfterOvertime
                 },
                 new Match
                 {

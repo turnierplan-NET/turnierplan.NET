@@ -599,6 +599,11 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             || matchesWithRankingInfluence.Any(x => x.TeamA is null || x.TeamB is null)
             || _matches.Where(x => x.IsGroupMatch).Any(x => !x.IsFinished))
         {
+            foreach (var position in undefinedRankings)
+            {
+                Ranking.AddRanking(position, null);
+            }
+
             return;
         }
 
@@ -649,8 +654,12 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             }
         }
 
+        for (var i = undefinedRankingsIndex; i < undefinedRankings.Count; i++)
+        {
+            Ranking.AddRanking(undefinedRankings[i], null);
+        }
+
         // TODO: Improve how this works when implementing #2 / #247
-        //       Ensure there exists a ranking (even when empty) for every position
         Ranking.FinalizeRanking();
     }
 
