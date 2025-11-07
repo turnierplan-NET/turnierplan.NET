@@ -38,5 +38,6 @@ public sealed class Ranking : IEnumerable<RankingPosition>
     internal void FinalizeRanking()
     {
         _positions.Sort((a, b) => a.Position - b.Position);
+        // TODO: Ensure no missing rankings - maybe not necessary with new algorithm (see #2 / #247)
     }
 }
