@@ -165,7 +165,6 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
 
                                 if (configuration.Outcomes is MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes)
                                 {
-                                    // TODO: Ensure it's not possible that rankings are missing in certain situations
                                     var positions = tournament.Ranking.Positions;
 
                                     for (var i = 0; i < positions.Count; i++)

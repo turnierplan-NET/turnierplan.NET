@@ -650,6 +650,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         }
 
         // TODO: Improve how this works when implementing #2 / #247
+        //       Ensure there exists a ranking (even when empty) for every position
         Ranking.FinalizeRanking();
     }
 
