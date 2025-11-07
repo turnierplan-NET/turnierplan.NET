@@ -8,13 +8,11 @@
     </tr>
     </thead>
     <tbody>
-    @for (var ranking = 1; ranking <= Model.Tournament.Teams.Count; ranking++)
+    @foreach (var ranking in Model.Tournament.Ranking)
     {
-        var team = Model.Tournament.Teams.FirstOrDefault(x => x.Ranking == ranking);
-
-        <tr class="ranking-@ranking">
-            <td class="ps-3">@(ranking).</td>
-            <td style="word-break: break-word;">@(team?.Name ?? string.Empty)</td>
+        <tr class="ranking-@ranking.Position">
+            <td class="ps-3">@(ranking.Position).</td>
+            <td style="word-break: break-word;">@(ranking.Team?.Name ?? string.Empty)</td>
         </tr>
     }
     </tbody>

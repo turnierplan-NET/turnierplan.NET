@@ -35,8 +35,6 @@ public sealed class Team : Entity<int>
 
     public DateTime? EntryFeePaidAt { get; set; }
 
-    public int? Ranking { get; internal set; }
-
     public void SetName(string name)
     {
         if (TeamLink is not null)
