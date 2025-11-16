@@ -5,9 +5,7 @@ namespace Turnierplan.Core.Test.Unit.Tournament.TeamSelectors;
 
 public abstract class TeamSelectorTestBase
 {
-    private Core.Tournament.Tournament? _testTournament;
-
-    protected Core.Tournament.Tournament TestTournament => _testTournament ??= MakeTestTournament();
+    protected Core.Tournament.Tournament TestTournament => field ??= MakeTestTournament();
 
     private static Core.Tournament.Tournament MakeTestTournament()
     {
