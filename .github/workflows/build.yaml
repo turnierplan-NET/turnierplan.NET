@@ -64,10 +64,10 @@ jobs:
       - extract-version
     steps:
       - uses: actions/checkout@v2
-      - name: 'Setup .NET SDK 9.x'
+      - name: 'Setup .NET SDK 10.x'
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '9.x'
+          dotnet-version: '10.x'
       - name: 'Restore .NET solution'
         run: 'dotnet restore'
         working-directory: './src'
