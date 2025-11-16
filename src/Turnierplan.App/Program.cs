@@ -51,6 +51,7 @@ builder.Services.AddOpenApi("turnierplan", options =>
 {
     options.AddOperationTransformer<PdfResponseOperationTransformer>();
     options.AddSchemaTransformer<EnumSchemaTransformer>();
+    options.AddSchemaTransformer<NumberSchemaTransformer>();
 });
 
 builder.Services.Configure<JsonOptions>(configure =>

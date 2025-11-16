@@ -8,7 +8,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NgClass } from '@angular/common';
-import { NullableOfChangePasswordFailedReason } from '../../../api/models/nullable-of-change-password-failed-reason';
+import {ChangePasswordFailedReason} from "../../../api/models/change-password-failed-reason";
 
 enum PasswordChangeFailedReason {
   EmptyOrExtraWhitespace = 'EmptyOrExtraWhitespace',
@@ -97,15 +97,15 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
             void this.router.navigate([this.redirectTarget]);
 
             break;
-          case NullableOfChangePasswordFailedReason.InsecurePassword:
+          case ChangePasswordFailedReason.InsecurePassword:
             this.isLoading = false;
             this.failedReason = PasswordChangeFailedReason.InsecurePassword;
             break;
-          case NullableOfChangePasswordFailedReason.InvalidCredentials:
+          case ChangePasswordFailedReason.InvalidCredentials:
             this.isLoading = false;
             this.failedReason = PasswordChangeFailedReason.InvalidCredentials;
             break;
-          case NullableOfChangePasswordFailedReason.NewPasswordEqualsCurrent:
+          case ChangePasswordFailedReason.NewPasswordEqualsCurrent:
             this.isLoading = false;
             this.failedReason = PasswordChangeFailedReason.NewPasswordEqualsCurrent;
             break;

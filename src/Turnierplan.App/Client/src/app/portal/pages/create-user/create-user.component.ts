@@ -31,8 +31,8 @@ export class CreateUserComponent implements OnInit {
 
   protected form = new FormGroup({
     userName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    fullName: new FormControl('', { nonNullable: false }),
-    eMail: new FormControl('', { nonNullable: false, validators: [Validators.email] }),
+    fullName: new FormControl('', { nonNullable: true }),
+    eMail: new FormControl('', { nonNullable: true, validators: [Validators.email] }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] })
   });
 
@@ -70,8 +70,8 @@ export class CreateUserComponent implements OnInit {
       const formValue = this.form.getRawValue();
       const body: CreateUserEndpointRequest = {
         userName: formValue.userName,
-        fullName: (formValue.fullName ?? '').trim().length > 0 ? formValue.fullName : null,
-        eMail: (formValue.eMail ?? '').trim().length > 0 ? formValue.eMail : null,
+        fullName: (formValue.fullName ?? '').trim().length > 0 ? formValue.fullName : undefined,
+        eMail: (formValue.eMail ?? '').trim().length > 0 ? formValue.eMail : undefined,
         password: formValue.password
       };
 
