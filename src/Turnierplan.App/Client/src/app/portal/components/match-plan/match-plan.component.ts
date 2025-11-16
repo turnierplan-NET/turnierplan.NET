@@ -6,9 +6,9 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { LiveIndicatorComponent } from '../live-indicator/live-indicator.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
-import { NullableOfMatchOutcomeType } from '../../../api/models/nullable-of-match-outcome-type';
 import { MatchType } from '../../../api/models/match-type';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
+import { MatchOutcomeType } from '../../../api/models/match-outcome-type';
 
 // IDEA: This interface should probably be moved to a separate .ts file as long as it is referenced by other components
 export interface MatchView {
@@ -27,7 +27,7 @@ export interface MatchView {
   isLive: boolean;
   scoreA?: number;
   scoreB?: number;
-  outcomeType?: NullableOfMatchOutcomeType;
+  outcomeType?: MatchOutcomeType;
   // IDEA: The properties below should probably be extracted from this interface
   scoreAccumulated?: number;
   showLoadingIndicator: boolean;

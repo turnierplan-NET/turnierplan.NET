@@ -9,10 +9,10 @@ import { SmallSpinnerComponent } from '../../../core/components/small-spinner/sm
 import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { SetTournamentFolderEndpointRequest } from '../../../api/models/set-tournament-folder-endpoint-request';
-import { NullableOfPublicId } from '../../../api/models/nullable-of-public-id';
 import { FolderDto } from '../../../api/models/folder-dto';
 import { getFolders } from '../../../api/fn/folders/get-folders';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { PublicId } from '../../../api/models/public-id';
 
 type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 
@@ -35,7 +35,7 @@ export class MoveTournamentToFolderComponent {
   protected isSaving = false;
   protected isLoading = true;
 
-  protected currentFolderId?: NullableOfPublicId;
+  protected currentFolderId?: PublicId;
   protected currentFolderName?: string;
   protected availableFolders?: FolderDto[] = undefined;
 
@@ -52,7 +52,7 @@ export class MoveTournamentToFolderComponent {
     return !!this.availableFolders && this.availableFolders.length === 0;
   }
 
-  public initialize(organizationId: string, currentFolderId: NullableOfPublicId | undefined, currentFolderName: string | undefined): void {
+  public initialize(organizationId: string, currentFolderId: PublicId | undefined, currentFolderName: string | undefined): void {
     this.currentFolderId = currentFolderId;
     this.currentFolderName = currentFolderName;
 

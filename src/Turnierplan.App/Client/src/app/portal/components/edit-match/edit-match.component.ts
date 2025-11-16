@@ -11,11 +11,11 @@ import { AlertComponent } from '../alert/alert.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { LiveIndicatorComponent } from '../live-indicator/live-indicator.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
-import { NullableOfMatchOutcomeType } from '../../../api/models/nullable-of-match-outcome-type';
 import { SetMatchOutcomeEndpointRequest } from '../../../api/models/set-match-outcome-endpoint-request';
 import { MatchType } from '../../../api/models/match-type';
 import { MatchState } from '../../../api/models/match-state';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
+import { MatchOutcomeType } from '../../../api/models/match-outcome-type';
 
 @Component({
   templateUrl: './edit-match.component.html',
@@ -38,10 +38,10 @@ export class EditMatchComponent implements OnDestroy, AfterViewInit {
   public readonly onSubmit$ = new Subject<SetMatchOutcomeEndpointRequest>();
 
   protected readonly matchOutcomeTypes = [
-    NullableOfMatchOutcomeType.Standard,
-    NullableOfMatchOutcomeType.AfterOvertime,
-    NullableOfMatchOutcomeType.AfterPenalties,
-    NullableOfMatchOutcomeType.SpecialScoring
+    MatchOutcomeType.Standard,
+    MatchOutcomeType.AfterOvertime,
+    MatchOutcomeType.AfterPenalties,
+    MatchOutcomeType.SpecialScoring
   ];
 
   protected match?: MatchView;
@@ -54,7 +54,7 @@ export class EditMatchComponent implements OnDestroy, AfterViewInit {
 
   protected scoreTeamA: number = 0;
   protected scoreTeamB: number = 0;
-  protected outcomeType: NullableOfMatchOutcomeType = NullableOfMatchOutcomeType.Standard;
+  protected outcomeType: MatchOutcomeType = MatchOutcomeType.Standard;
 
   constructor(protected readonly modal: NgbActiveModal) {}
 
@@ -77,7 +77,7 @@ export class EditMatchComponent implements OnDestroy, AfterViewInit {
       !match.isLive && (match.scoreA !== undefined || match.scoreB !== undefined || match.outcomeType !== undefined);
     this.scoreTeamA = match.scoreA ?? 0;
     this.scoreTeamB = match.scoreB ?? 0;
-    this.outcomeType = match.outcomeType ?? NullableOfMatchOutcomeType.Standard;
+    this.outcomeType = match.outcomeType ?? MatchOutcomeType.Standard;
   }
 
   protected closeModal(action: 'cancel' | 'clear' | 'save' | 'saveLive'): void {

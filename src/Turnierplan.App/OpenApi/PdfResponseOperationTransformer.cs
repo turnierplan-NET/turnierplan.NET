@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.OpenApi;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace Turnierplan.App.OpenApi;
 
@@ -14,17 +14,17 @@ internal sealed class PdfResponseOperationTransformer : IOpenApiOperationTransfo
     {
         var pdfResponseType = typeof(PdfResponse);
 
-        if (context.Description.SupportedResponseTypes.Any(x => x.Type == pdfResponseType))
+        if (context.Description.SupportedResponseTypes.Any(x => x.Type == pdfResponseType) && operation.Responses is not null)
         {
             operation.Responses["200"] = new OpenApiResponse
             {
-                Content =
+                Content = new Dictionary<string, OpenApiMediaType>
                 {
-                    ["application/pdf"] = new OpenApiMediaType
+                    ["application/pdf"] = new()
                     {
                         Schema = new OpenApiSchema
                         {
-                            Type = "string",
+                            Type = JsonSchemaType.String,
                             Format = "binary"
                         }
                     }
