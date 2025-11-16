@@ -264,7 +264,7 @@ export class ManageApplicationsComponent implements OnDestroy {
       (value) => ({ contactEmail: value.length > 0 ? value : null }) as SetApplicationContactEmailEndpointRequest,
       (value) => (this.updatingContactEmailOfApplicationId = value),
       (value) => {
-        application.contactEmail = value.length > 0 ? value : null;
+        application.contactEmail = value.length > 0 ? value : undefined;
         this.evaluateCombinedEmailAddresses();
       }
     );
@@ -280,7 +280,7 @@ export class ManageApplicationsComponent implements OnDestroy {
       setApplicationContactTelephone,
       (value) => ({ contactTelephone: value.length > 0 ? value : null }) as SetApplicationContactTelephoneEndpointRequest,
       (value) => (this.updatingContactTelephoneOfApplicationId = value),
-      (value) => (application.contactTelephone = value.length > 0 ? value : null)
+      (value) => (application.contactTelephone = value.length > 0 ? value : undefined)
     );
   }
 

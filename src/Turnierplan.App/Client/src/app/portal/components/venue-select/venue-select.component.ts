@@ -8,9 +8,9 @@ import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgClass } from '@angular/common';
 import { VenueDto } from '../../../api/models/venue-dto';
-import { NullableOfPublicId } from '../../../api/models/nullable-of-public-id';
 import { getVenues } from '../../../api/fn/venues/get-venues';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { PublicId } from '../../../api/models/public-id';
 
 @Component({
   templateUrl: './venue-select.component.html',
@@ -30,7 +30,7 @@ export class VenueSelectComponent {
     protected readonly modal: NgbActiveModal
   ) {}
 
-  public initialize(organizationId: string, currentVenueId?: NullableOfPublicId): void {
+  public initialize(organizationId: string, currentVenueId?: PublicId): void {
     this.turnierplanApi.invoke(getVenues, { organizationId: organizationId }).subscribe({
       next: (venues) => {
         this.venues = venues;

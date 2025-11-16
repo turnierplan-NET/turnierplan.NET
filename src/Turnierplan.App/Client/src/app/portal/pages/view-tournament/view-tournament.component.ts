@@ -71,7 +71,7 @@ import { SetTournamentImageEndpointRequestTarget } from '../../../api/models/set
 import { setTournamentImage } from '../../../api/fn/tournaments/set-tournament-image';
 import { setTournamentName } from '../../../api/fn/tournaments/set-tournament-name';
 import { MatchType } from '../../../api/models/match-type';
-import { NullableOfMatchOutcomeType } from '../../../api/models/nullable-of-match-outcome-type';
+import { MatchOutcomeType } from '../../../api/models/match-outcome-type';
 
 @Component({
   templateUrl: './view-tournament.component.html',
@@ -601,7 +601,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     }
 
     this.turnierplanApi
-      .invoke(setGroupName, { groupId: groupId, tournamentId: this.tournament.id, body: { name: name ?? null } })
+      .invoke(setGroupName, { groupId: groupId, tournamentId: this.tournament.id, body: { name: name } })
       .pipe(switchMap(() => this.turnierplanApi.invoke(getTournament, { id: tournamentId })))
       .subscribe({
         next: (tournament) => {
@@ -856,7 +856,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
 
       const includeInAccumulatedScore =
         (match.state === MatchState.CurrentlyPlaying || match.state === MatchState.Finished) &&
-        match.outcomeType !== NullableOfMatchOutcomeType.SpecialScoring;
+        match.outcomeType !== MatchOutcomeType.SpecialScoring;
 
       if (includeInAccumulatedScore) {
         this.totalScoreCount += match.teamA?.score ?? 0;
@@ -881,11 +881,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
         isLive: match.state === MatchState.CurrentlyPlaying,
         scoreA: match.teamA?.score ?? undefined,
         scoreB: match.teamB?.score ?? undefined,
-        outcomeType: match.outcomeType
-          ? match.outcomeType === NullableOfMatchOutcomeType.Null
-            ? undefined
-            : match.outcomeType
-          : undefined,
+        outcomeType: match.outcomeType ? (match.outcomeType === MatchOutcomeType.Null ? undefined : match.outcomeType) : undefined,
         scoreAccumulated: includeInAccumulatedScore ? this.totalScoreCount : undefined,
         showLoadingIndicator: false
       };
