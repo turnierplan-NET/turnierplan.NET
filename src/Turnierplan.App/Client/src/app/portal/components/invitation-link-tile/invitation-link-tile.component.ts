@@ -165,24 +165,24 @@ export class InvitationLinkTileComponent {
 
           const value = this.editPropertiesForm.getRawValue();
 
-          const toNullIfEmpty = (input: string | null): string | null => {
+          const toUndefinedIfEmpty = (input: string | null): string | undefined => {
             if (input === null) {
-              return null;
+              return undefined;
             }
             input = input.trim();
-            return input.length === 0 ? null : input;
+            return input.length === 0 ? undefined : input;
           };
 
           invitationLink.name = value.name;
           invitationLink.colorCode = value.colorCode.substring(1); // skip the '#' character
 
-          invitationLink.title = toNullIfEmpty(value.title);
-          invitationLink.description = toNullIfEmpty(value.description);
-          invitationLink.contactPerson = toNullIfEmpty(value.contactPerson);
-          invitationLink.contactEmail = toNullIfEmpty(value.contactEmail);
-          invitationLink.contactTelephone = toNullIfEmpty(value.contactTelephone);
+          invitationLink.title = toUndefinedIfEmpty(value.title);
+          invitationLink.description = toUndefinedIfEmpty(value.description);
+          invitationLink.contactPerson = toUndefinedIfEmpty(value.contactPerson);
+          invitationLink.contactEmail = toUndefinedIfEmpty(value.contactEmail);
+          invitationLink.contactTelephone = toUndefinedIfEmpty(value.contactTelephone);
 
-          invitationLink.validUntil = value.hasValidUntilDate ? new Date(value.validUntil).toISOString() : null;
+          invitationLink.validUntil = value.hasValidUntilDate ? new Date(value.validUntil).toISOString() : undefined;
 
           invitationLink.externalLinks = value.externalLinks
             .filter((ext) => ext.name.trim().length > 0 && ext.url.trim().length > 0)
@@ -241,7 +241,7 @@ export class InvitationLinkTileComponent {
           const value = this.editEntryForm.getRawValue();
 
           entry.allowNewRegistrations = value.allowNewRegistrations;
-          entry.maxTeamsPerRegistration = value.limitTeamsPerRegistration ? value.maxTeamsPerRegistration : null;
+          entry.maxTeamsPerRegistration = value.limitTeamsPerRegistration ? value.maxTeamsPerRegistration : undefined;
 
           return true;
         });
@@ -266,7 +266,7 @@ export class InvitationLinkTileComponent {
     }
 
     this.updateInvitationLink((invitationLink) => {
-      invitationLink[whichImage] = image ?? null;
+      invitationLink[whichImage] = image;
       return true;
     });
   }
@@ -276,10 +276,10 @@ export class InvitationLinkTileComponent {
     this.updatePlanningRealm((planningRealm) => {
       for (const invitationLink of planningRealm.invitationLinks) {
         if (invitationLink.primaryLogo?.id === imageId) {
-          invitationLink.primaryLogo = null;
+          invitationLink.primaryLogo = undefined;
         }
         if (invitationLink.secondaryLogo?.id === imageId) {
-          invitationLink.secondaryLogo = null;
+          invitationLink.secondaryLogo = undefined;
         }
       }
       return true;
@@ -291,7 +291,7 @@ export class InvitationLinkTileComponent {
       invitationLink.entries.push({
         tournamentClassId: id,
         allowNewRegistrations: true,
-        maxTeamsPerRegistration: null,
+        maxTeamsPerRegistration: undefined,
         numberOfTeams: -1 // This is displayed in the HTML as a '?'
       });
 
@@ -355,7 +355,7 @@ export class InvitationLinkTileComponent {
   }
 
   private determineExpired(): void {
-    this.invitationLinkExpired = this._invitationLink.validUntil !== null && new Date(this._invitationLink.validUntil) < new Date();
+    this.invitationLinkExpired = !!this._invitationLink.validUntil && new Date(this._invitationLink.validUntil) < new Date();
   }
 
   private determineTournamentClassesToAdd(): void {

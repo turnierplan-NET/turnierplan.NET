@@ -17,6 +17,9 @@ public sealed class TournamentFullscreen : PageModel
     [BindProperty(SupportsGet = true)]
     public string? Id { get; set; }
 
+    [BindProperty(SupportsGet = true)]
+    public int? AutoReload { get; set; }
+
     public Turnierplan.Core.Tournament.Tournament? Data { get; private set; }
 
     public async Task OnGetAsync()
@@ -37,8 +40,7 @@ public sealed class TournamentFullscreen : PageModel
             return;
         }
 
-        const ITournamentRepository.Includes includes = ITournamentRepository.Includes.GameRelevant | ITournamentRepository.Includes.Images;
-        var tournament = await _repository.GetByPublicIdAsync(publicId, includes);
+        var tournament = await _repository.GetByPublicIdAsync(publicId, ITournamentRepository.Includes.GameRelevant | ITournamentRepository.Includes.Images);
 
         if (tournament is null || !tournament.IsPublic)
         {

@@ -109,15 +109,13 @@ internal sealed class TournamentMappingRule : MappingRuleBase<Tournament, Tourna
                     OutcomeType = match.OutcomeType
                 };
             }).OrderBy(x => x.Index).ToArray(),
-            Rankings = Enumerable.Range(1, source.Teams.Count).Select(ranking =>
+            Rankings = source.Ranking.Select(entry =>
             {
-                var teamId = source.Teams.FirstOrDefault(x => x.Ranking == ranking)?.Id;
-
                 return new RankingDto
                 {
-                    PlacementRank = ranking,
-                    IsDefined = teamId is not null,
-                    TeamId = teamId
+                    PlacementRank = entry.Position,
+                    IsDefined = entry.IsDefined,
+                    TeamId = entry.Team?.Id
                 };
             }).ToArray(),
             MatchPlanConfiguration = new MatchPlanConfigurationDto

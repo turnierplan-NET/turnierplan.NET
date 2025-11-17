@@ -83,6 +83,8 @@ public sealed class TournamentEntityTypeConfiguration : IEntityTypeConfiguration
             .OnDelete(DeleteBehavior.SetNull)
             .IsRequired(false);
 
+        builder.Ignore(x => x.Ranking);
+
         builder.Ignore(x => x.StartTimestamp);
 
         builder.Ignore(x => x.EndTimestamp);

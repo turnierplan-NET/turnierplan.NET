@@ -11,17 +11,8 @@ using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.RoleAssignment;
-using Turnierplan.Core.Tournament;
 using Turnierplan.Dal;
-using Group = Turnierplan.Adapter.Models.Group;
-using GroupParticipant = Turnierplan.Adapter.Models.GroupParticipant;
-using Match = Turnierplan.Adapter.Models.Match;
-using MatchOutcomeType = Turnierplan.Core.Tournament.MatchOutcomeType;
 using MatchType = Turnierplan.Adapter.Enums.MatchType;
-using Team = Turnierplan.Adapter.Models.Team;
-using TeamGroupStatistics = Turnierplan.Adapter.Models.TeamGroupStatistics;
-using Tournament = Turnierplan.Core.Tournament.Tournament;
-using Visibility = Turnierplan.Core.Tournament.Visibility;
 
 namespace Turnierplan.Adapter.Test.Functional;
 
@@ -56,7 +47,7 @@ public sealed class TurnierplanAdapterTest
                 Name = "T1",
                 OrganizationName = "TestOrg",
                 FolderName = "TestFolder",
-                Visibility = Enums.Visibility.Private
+                Visibility = Visibility.Private
             },
             new TournamentHeader
             {
@@ -64,21 +55,21 @@ public sealed class TurnierplanAdapterTest
                 Name = "T2",
                 OrganizationName = "TestOrg",
                 FolderName = "TestFolder",
-                Visibility = Enums.Visibility.Public
+                Visibility = Visibility.Public
             }
         ]);
 
         var tournament1 = await client.GetTournament(seedingResult.Tournament1Id);
         var tournament2 = await client.GetTournament(seedingResult.Tournament2Id);
 
-        tournament1.Should().BeEquivalentTo(new Turnierplan.Adapter.Models.Tournament
+        tournament1.Should().BeEquivalentTo(new Tournament
         {
             Id = seedingResult.Tournament1Id,
             Name = "T1",
             OrganizationName = "TestOrg",
             FolderName = "TestFolder",
             VenueName = null,
-            Visibility = Enums.Visibility.Private,
+            Visibility = Visibility.Private,
             PublicPageViews = 0,
             Teams = [],
             Groups = [],
@@ -86,14 +77,14 @@ public sealed class TurnierplanAdapterTest
             Rankings = []
         });
 
-        tournament2.Should().BeEquivalentTo(new Turnierplan.Adapter.Models.Tournament
+        tournament2.Should().BeEquivalentTo(new Tournament
         {
             Id = seedingResult.Tournament2Id,
             Name = "T2",
             OrganizationName = "TestOrg",
             FolderName = "TestFolder",
             VenueName = null,
-            Visibility = Enums.Visibility.Public,
+            Visibility = Visibility.Public,
             PublicPageViews = 3,
             Teams = [
                 new Team
@@ -209,7 +200,7 @@ public sealed class TurnierplanAdapterTest
                         Score = 3
                     },
                     State = MatchState.Finished,
-                    OutcomeType = Enums.MatchOutcomeType.Standard
+                    OutcomeType = MatchOutcomeType.Standard
                 },
                 new Match
                 {
@@ -241,7 +232,7 @@ public sealed class TurnierplanAdapterTest
                         Score = 1
                     },
                     State = MatchState.CurrentlyPlaying,
-                    OutcomeType = Enums.MatchOutcomeType.AfterOvertime
+                    OutcomeType = MatchOutcomeType.AfterOvertime
                 },
                 new Match
                 {
@@ -341,8 +332,8 @@ public sealed class TurnierplanAdapterTest
 
         var folder = new Folder(organization, "TestFolder");
 
-        var tournament1 = new Tournament(organization, "T1", Visibility.Private);
-        var tournament2 = new Tournament(organization, "T2", Visibility.Public);
+        var tournament1 = new Turnierplan.Core.Tournament.Tournament(organization, "T1", Core.Tournament.Visibility.Private);
+        var tournament2 = new Turnierplan.Core.Tournament.Tournament(organization, "T2", Core.Tournament.Visibility.Public);
 
         tournament1.SetFolder(folder);
         tournament2.SetFolder(folder);
@@ -358,19 +349,19 @@ public sealed class TurnierplanAdapterTest
             tournament2.AddGroupParticipant(group, team2);
             tournament2.AddGroupParticipant(group, team3, 2);
 
-            tournament2.GenerateMatchPlan(new MatchPlanConfiguration
+            tournament2.GenerateMatchPlan(new Turnierplan.Core.Tournament.MatchPlanConfiguration
             {
-                GroupRoundConfig = new GroupRoundConfig
+                GroupRoundConfig = new Turnierplan.Core.Tournament.GroupRoundConfig
                 {
-                    GroupMatchOrder = GroupMatchOrder.Alternating,
+                    GroupMatchOrder = Core.Tournament.GroupMatchOrder.Alternating,
                     GroupPhaseRounds = 1
                 },
                 FinalsRoundConfig = null,
                 ScheduleConfig = null
             });
 
-            tournament2.Matches[0].SetOutcome(false, 2, 3, MatchOutcomeType.Standard);
-            tournament2.Matches[1].SetOutcome(true, 1, 1, MatchOutcomeType.AfterOvertime);
+            tournament2.Matches[0].SetOutcome(false, 2, 3, Core.Tournament.MatchOutcomeType.Standard);
+            tournament2.Matches[1].SetOutcome(true, 1, 1, Core.Tournament.MatchOutcomeType.AfterOvertime);
 
             tournament2.IncrementPublicPageViews();
             tournament2.IncrementPublicPageViews();

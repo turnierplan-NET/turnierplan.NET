@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.OpenApi;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace Turnierplan.App.OpenApi;
 
@@ -27,7 +27,7 @@ internal sealed class EnumSchemaTransformer : IOpenApiSchemaTransformer
     {
         if (schema.Enum is not null && schema.Enum.Count > 0)
         {
-            schema.Type = "string";
+            schema.Type = JsonSchemaType.String;
         }
 
         return Task.CompletedTask;

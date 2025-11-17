@@ -22,9 +22,9 @@ public sealed record ReceiptsDocumentConfiguration : IDocumentConfiguration
 
     public bool ShowPrimaryLogo { get; init; } = true;
 
-    public bool ShowSecondaryLogo { get; init; } = false;
+    public bool ShowSecondaryLogo { get; init; }
 
-    public bool CombineSimilarTeams { get; init; } = false;
+    public bool CombineSimilarTeams { get; init; }
 
     public sealed record AmountEntry
     {

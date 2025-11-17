@@ -221,20 +221,20 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
           planningRealm.invitationLinks.push({
             colorCode: this.getColorCodeForInvitationLink(),
             isActive: true,
-            contactEmail: null,
-            contactPerson: null,
-            contactTelephone: null,
-            description: null,
+            contactEmail: undefined,
+            contactPerson: undefined,
+            contactTelephone: undefined,
+            description: undefined,
             entries: [],
             externalLinks: [],
             id: this.nextId--,
             name: name.trim(),
             numberOfApplications: 0,
-            primaryLogo: null,
+            primaryLogo: undefined,
             publicId: '',
-            secondaryLogo: null,
-            title: null,
-            validUntil: null
+            secondaryLogo: undefined,
+            title: undefined,
+            validUntil: undefined
           });
 
           return true;
@@ -328,11 +328,11 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     const request: UpdatePlanningRealmEndpointRequest = {
       name: this.planningRealm.name,
       tournamentClasses: this.planningRealm.tournamentClasses.map((x) => ({
-        id: x.id < 0 ? null : x.id,
+        id: x.id < 0 ? undefined : x.id,
         name: x.name
       })),
       invitationLinks: this.planningRealm.invitationLinks.map((x) => ({
-        id: x.id < 0 ? null : x.id,
+        id: x.id < 0 ? undefined : x.id,
         name: x.name,
         colorCode: x.colorCode,
         isActive: x.isActive,
@@ -352,7 +352,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
         }))
       })),
       labels: this.planningRealm.labels.map((x) => ({
-        id: x.id < 0 ? null : x.id,
+        id: x.id < 0 ? undefined : x.id,
         name: x.name,
         description: x.description,
         colorCode: x.colorCode
