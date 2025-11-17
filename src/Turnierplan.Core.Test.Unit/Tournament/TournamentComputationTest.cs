@@ -615,4 +615,7 @@ public sealed class TournamentComputationTest
         tournament.Ranking.GetEntry(11).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 3")));
         tournament.Ranking.GetEntry(12).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 4")));
     }
+
+    // TODO: Add tests to ensure that "empty" rankings are always generated as expected
+    // TODO: Add tests corresponding to the edge-cases handled by the ranking calculation change
 }
