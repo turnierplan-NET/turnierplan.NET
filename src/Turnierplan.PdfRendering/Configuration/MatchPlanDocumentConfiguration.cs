@@ -2,11 +2,11 @@ namespace Turnierplan.PdfRendering.Configuration;
 
 public sealed record MatchPlanDocumentConfiguration : IDocumentConfiguration
 {
-    public string? OrganizerNameOverride { get; init; } = null;
+    public string? OrganizerNameOverride { get; init; }
 
-    public string? TournamentNameOverride { get; init; } = null;
+    public string? TournamentNameOverride { get; init; }
 
-    public string? VenueOverride { get; init; } = null;
+    public string? VenueOverride { get; init; }
 
     public MatchPlanDateFormat DateFormat { get; init; } = MatchPlanDateFormat.DateAndDayOfWeek;
 
@@ -14,7 +14,7 @@ public sealed record MatchPlanDocumentConfiguration : IDocumentConfiguration
 
     public bool IncludeQrCode { get; init; } = true;
 
-    public bool IncludeRankingTable { get; init; } = false;
+    public bool IncludeRankingTable { get; init; }
 }
 
 public enum MatchPlanDateFormat

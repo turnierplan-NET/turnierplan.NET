@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.OpenApi;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 namespace Turnierplan.App.OpenApi;
 
@@ -12,19 +12,19 @@ internal sealed class PdfResponseOperationTransformer : IOpenApiOperationTransfo
 {
     public Task TransformAsync(OpenApiOperation operation, OpenApiOperationTransformerContext context, CancellationToken cancellationToken)
     {
-        var pdfResponseType = typeof(PdfResponse);
+        var pdfResponseType = typeof(IPdfResponse);
 
-        if (context.Description.SupportedResponseTypes.Any(x => x.Type == pdfResponseType))
+        if (context.Description.SupportedResponseTypes.Any(x => x.Type == pdfResponseType) && operation.Responses is not null)
         {
             operation.Responses["200"] = new OpenApiResponse
             {
-                Content =
+                Content = new Dictionary<string, OpenApiMediaType>
                 {
-                    ["application/pdf"] = new OpenApiMediaType
+                    ["application/pdf"] = new()
                     {
                         Schema = new OpenApiSchema
                         {
-                            Type = "string",
+                            Type = JsonSchemaType.String,
                             Format = "binary"
                         }
                     }
@@ -35,13 +35,13 @@ internal sealed class PdfResponseOperationTransformer : IOpenApiOperationTransfo
         return Task.CompletedTask;
     }
 
-    public sealed record PdfResponse;
+    public interface IPdfResponse;
 }
 
 internal static class PdfResponseOperationTransformerExtensions
 {
     public static void ProducesPdf(this RouteHandlerBuilder builder)
     {
-        builder.Produces<PdfResponseOperationTransformer.PdfResponse>();
+        builder.Produces<PdfResponseOperationTransformer.IPdfResponse>();
     }
 }

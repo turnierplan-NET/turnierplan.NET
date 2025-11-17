@@ -6,10 +6,10 @@ import { catchError, map, Observable, of, ReplaySubject, Subject, switchMap, tap
 import { AuthenticatedUser } from '../models/identity';
 import { TurnierplanApi } from '../../api/turnierplan-api';
 import { login } from '../../api/fn/identity/login';
-import { NullableOfChangePasswordFailedReason } from '../../api/models/nullable-of-change-password-failed-reason';
 import { changePassword } from '../../api/fn/identity/change-password';
 import { refresh } from '../../api/fn/identity/refresh';
 import { logout } from '../../api/fn/identity/logout';
+import { ChangePasswordFailedReason } from '../../api/models/change-password-failed-reason';
 
 interface TurnierplanAccessToken {
   exp: number;
@@ -150,7 +150,7 @@ export class AuthenticationService implements OnDestroy {
     userName: string,
     newPassword: string,
     currentPassword: string
-  ): Observable<'success' | 'failure' | NullableOfChangePasswordFailedReason> {
+  ): Observable<'success' | 'failure' | ChangePasswordFailedReason> {
     return this.turnierplanApi
       .invoke(changePassword, {
         body: {

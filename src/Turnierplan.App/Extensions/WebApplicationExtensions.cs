@@ -12,6 +12,8 @@ namespace Turnierplan.App.Extensions;
 
 internal static class WebApplicationExtensions
 {
+    private const string DatabaseMigratorLoggerName = "Turnierplan.App.DatabaseMigrator";
+
     public static async Task InitializeDatabaseAsync(this WebApplication app)
     {
         if (string.IsNullOrWhiteSpace(app.Configuration.GetDatabaseConnectionString()) && !app.Configuration.UseInMemoryDatabase())
@@ -21,9 +23,9 @@ internal static class WebApplicationExtensions
 
         using var scope = app.Services.CreateScope();
 
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<DatabaseMigrator>>();
+        var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger(DatabaseMigratorLoggerName);
         var context = scope.ServiceProvider.GetRequiredService<TurnierplanContext>();
-
+        
         if (context.Database.IsNpgsql())
         {
             // If the database is in-memory, no migration or downgrade check is necessary
@@ -34,7 +36,7 @@ internal static class WebApplicationExtensions
         await EnsureInitialUserCreatedAsync(scope.ServiceProvider, context, logger);
     }
 
-    private static async Task EnsureNoDowngradeAsync(TurnierplanContext context, ILogger<DatabaseMigrator> logger)
+    private static async Task EnsureNoDowngradeAsync(TurnierplanContext context, ILogger logger)
     {
         const string schema = TurnierplanContext.Schema;
 
@@ -90,7 +92,7 @@ INSERT INTO {schema}."__TPVersionHistory" ("Version", "Major", "Minor", "Patch",
         await context.Database.CommitTransactionAsync();
     }
 
-    private static async Task EnsureInitialUserCreatedAsync(IServiceProvider serviceProvider, TurnierplanContext context, ILogger<DatabaseMigrator> logger)
+    private static async Task EnsureInitialUserCreatedAsync(IServiceProvider serviceProvider, TurnierplanContext context, ILogger logger)
     {
         var userCount = await context.Users.CountAsync();
 
@@ -131,8 +133,6 @@ INSERT INTO {schema}."__TPVersionHistory" ("Version", "Major", "Minor", "Patch",
             logger.LogInformation("Database contains {UserCount} user(s). No administrator account was created.", userCount);
         }
     }
-
-    private sealed record DatabaseMigrator;
 
     private sealed record VersionHistory(string Version, int Major, int Minor, int Patch);
 }

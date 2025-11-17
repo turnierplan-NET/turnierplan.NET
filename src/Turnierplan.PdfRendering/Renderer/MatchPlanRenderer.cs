@@ -333,268 +333,274 @@ file static class MatchPlanQuestPdfExtensions
 {
     private const string TableHeaderBackgroundColor = "aaaaaa";
 
-    public static void MatchTimeSection(this IContainer container, DateTime? kickoff, TimeSpan? playTime, TimeSpan? pauseTime, ILocalization localization)
+    extension(ColumnDescriptor column)
     {
-        container.Row(row =>
+        public void Groups(Tournament tournament, ILocalization localization, MatchPlanOutcomes outcomes)
         {
-            row.Spacing(5, Unit.Millimetre);
-
-            if (kickoff.HasValue)
+            var groupsArray = tournament.Groups.OrderBy(group => group.AlphabeticalId).ToArray();
+            for (var i = 0; i < groupsArray.Length; i += 2)
             {
-                row.AutoItem().Text(text =>
+                var groupLeft = groupsArray[i];
+                var groupRight = i + 1 < groupsArray.Length ? groupsArray[i + 1] : null;
+
+                if (groupRight is not null)
                 {
-                    text.Span(localization.Get("Documents.MatchPlan.MatchTimes.KickoffPre"));
-                    text.Span(localization.Get("Documents.MatchPlan.MatchTimes.Kickoff", kickoff)).Underline().Bold();
-                    text.Span(localization.Get("Documents.MatchPlan.MatchTimes.KickoffPost"));
-                });
-            }
-
-            if (playTime.HasValue)
-            {
-                row.AutoItem().Text(text =>
+                    var isLastRow = i + 2 >= groupsArray.Length;
+                    column.Item().PaddingBottom(isLastRow ? 0 : 6, Unit.Millimetre).AlignCenter().Row(row =>
+                    {
+                        row.Spacing(6, Unit.Millimetre);
+                        row.RelativeItem().AlignRight().Group(groupLeft, localization, outcomes);
+                        row.RelativeItem().Group(groupRight, localization, outcomes);
+                    });
+                }
+                else
                 {
-                    text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PlayTimePre"));
-                    var minutes = (int)playTime.Value.TotalMinutes;
-                    var seconds = (int)playTime.Value.TotalSeconds - minutes * 60;
-                    text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PlayTime", minutes, seconds)).Underline().Bold();
-                    text.Span(localization.Get($"Documents.MatchPlan.MatchTimes.PlayTimePost.{(minutes == 1 && seconds == 0 ? "One" : "Many")}"));
-                });
-            }
-
-            if (pauseTime.HasValue)
-            {
-                row.AutoItem().Text(text =>
-                {
-                    text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PauseTimePre"));
-                    var minutes = (int)pauseTime.Value.TotalMinutes;
-                    var seconds = (int)pauseTime.Value.TotalSeconds - minutes * 60;
-                    text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PauseTime", minutes, seconds)).Underline().Bold();
-                    text.Span(localization.Get($"Documents.MatchPlan.MatchTimes.PauseTimePost.{(minutes == 1 && seconds == 0 ? "One" : "Many")}"));
-                });
-            }
-        });
-    }
-
-    public static void Groups(this ColumnDescriptor column, Tournament tournament, ILocalization localization, MatchPlanOutcomes outcomes)
-    {
-        var groupsArray = tournament.Groups.OrderBy(group => group.AlphabeticalId).ToArray();
-        for (var i = 0; i < groupsArray.Length; i += 2)
-        {
-            var groupLeft = groupsArray[i];
-            var groupRight = i + 1 < groupsArray.Length ? groupsArray[i + 1] : null;
-
-            if (groupRight is not null)
-            {
-                var isLastRow = i + 2 >= groupsArray.Length;
-                column.Item().PaddingBottom(isLastRow ? 0 : 6, Unit.Millimetre).AlignCenter().Row(row =>
-                {
-                    row.Spacing(6, Unit.Millimetre);
-                    row.RelativeItem().AlignRight().Group(groupLeft, localization, outcomes);
-                    row.RelativeItem().Group(groupRight, localization, outcomes);
-                });
-            }
-            else
-            {
-                column.Item().AlignCenter().Group(groupLeft, localization, outcomes);
+                    column.Item().AlignCenter().Group(groupLeft, localization, outcomes);
+                }
             }
         }
     }
 
-    public static void GroupPhaseMatches(this IContainer container, Tournament tournament, ILocalization localization, MatchPlanOutcomes outcomes)
+    extension(IContainer container)
     {
-        var showResultColumn = outcomes is MatchPlanOutcomes.ShowEmptyOutcomeStructures or MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes;
-        var insertOutcomes = outcomes is MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes;
-
-        container.Table(table =>
+        public void MatchTimeSection(DateTime? kickoff, TimeSpan? playTime, TimeSpan? pauseTime, ILocalization localization)
         {
-            table.ColumnsDefinition(columns =>
+            container.Row(row =>
             {
-                // Sum of all column widths should equal the width of two group tables + the spacing in between them
-                columns.ConstantColumn(7, Unit.Millimetre); // Index
-                columns.ConstantColumn(9, Unit.Millimetre); // Group
-                columns.ConstantColumn(9, Unit.Millimetre); // Court
-                columns.ConstantColumn(12, Unit.Millimetre); // Kickoff
-                columns.ConstantColumn(showResultColumn ? 55 : 62, Unit.Millimetre); // Team A
-                columns.ConstantColumn(3, Unit.Millimetre); // Separator
-                columns.ConstantColumn(showResultColumn ? 55 : 62, Unit.Millimetre); // Team B
+                row.Spacing(5, Unit.Millimetre);
 
-                if (showResultColumn)
+                if (kickoff.HasValue)
                 {
-                    // If this column is not shown, its width is evenly distributed amongst team A/B columns
-                    columns.ConstantColumn(14, Unit.Millimetre); // Outcome
+                    row.AutoItem().Text(text =>
+                    {
+                        text.Span(localization.Get("Documents.MatchPlan.MatchTimes.KickoffPre"));
+                        text.Span(localization.Get("Documents.MatchPlan.MatchTimes.Kickoff", kickoff)).Underline().Bold();
+                        text.Span(localization.Get("Documents.MatchPlan.MatchTimes.KickoffPost"));
+                    });
                 }
 
-                columns.ConstantColumn(6, Unit.Millimetre); // Empty Column
-            });
-
-            table.Header(header =>
-            {
-                header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Index")).Bold();
-                header.Cell().Background(TableHeaderBackgroundColor).BorderHorizontal(2).BorderLeft(2).BorderRight(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Group")).Bold();
-                header.Cell().Background(TableHeaderBackgroundColor).BorderHorizontal(2).BorderVertical(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Court")).Bold();
-                header.Cell().Background(TableHeaderBackgroundColor).BorderHorizontal(2).BorderRight(2).BorderLeft(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Kickoff")).Bold();
-                header.Cell().ColumnSpan(3).Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Teams")).Bold();
-
-                if (showResultColumn)
+                if (playTime.HasValue)
                 {
-                    header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Outcome")).Bold();
+                    row.AutoItem().Text(text =>
+                    {
+                        text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PlayTimePre"));
+                        var minutes = (int)playTime.Value.TotalMinutes;
+                        var seconds = (int)playTime.Value.TotalSeconds - minutes * 60;
+                        text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PlayTime", minutes, seconds)).Underline().Bold();
+                        text.Span(localization.Get($"Documents.MatchPlan.MatchTimes.PlayTimePost.{(minutes == 1 && seconds == 0 ? "One" : "Many")}"));
+                    });
                 }
 
-                header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black);
+                if (pauseTime.HasValue)
+                {
+                    row.AutoItem().Text(text =>
+                    {
+                        text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PauseTimePre"));
+                        var minutes = (int)pauseTime.Value.TotalMinutes;
+                        var seconds = (int)pauseTime.Value.TotalSeconds - minutes * 60;
+                        text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PauseTime", minutes, seconds)).Underline().Bold();
+                        text.Span(localization.Get($"Documents.MatchPlan.MatchTimes.PauseTimePost.{(minutes == 1 && seconds == 0 ? "One" : "Many")}"));
+                    });
+                }
             });
+        }
 
-            var matches = tournament.Matches.Where(x => x.IsGroupMatch).OrderBy(x => x.Index).ToArray();
+        public void GroupPhaseMatches(Tournament tournament, ILocalization localization, MatchPlanOutcomes outcomes)
+        {
+            var showResultColumn = outcomes is MatchPlanOutcomes.ShowEmptyOutcomeStructures or MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes;
+            var insertOutcomes = outcomes is MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes;
 
-            for (var i = 0; i < matches.Length; i++)
+            container.Table(table =>
             {
-                var match = matches[i];
-                var isLast = i == matches.Length - 1;
+                table.ColumnsDefinition(columns =>
+                {
+                    // Sum of all column widths should equal the width of two group tables + the spacing in between them
+                    columns.ConstantColumn(7, Unit.Millimetre); // Index
+                    columns.ConstantColumn(9, Unit.Millimetre); // Group
+                    columns.ConstantColumn(9, Unit.Millimetre); // Court
+                    columns.ConstantColumn(12, Unit.Millimetre); // Kickoff
+                    columns.ConstantColumn(showResultColumn ? 55 : 62, Unit.Millimetre); // Team A
+                    columns.ConstantColumn(3, Unit.Millimetre); // Separator
+                    columns.ConstantColumn(showResultColumn ? 55 : 62, Unit.Millimetre); // Team B
 
-                table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderLeft(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text($"{match.Index}");
-                table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderLeft(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(match.Group!.AlphabeticalId.ToString());
-                table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderLeft(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text($"{match.Court + 1}");
-                table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderLeft(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(match.Kickoff is null ? string.Empty : localization.Get("Documents.MatchPlan.MatchKickoffTime", match.Kickoff));
-                table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderLeft(2).BorderColor(Colors.Black).Padding(2).Text(match.TeamA?.Name ?? string.Empty).ClampLines(1);
-                table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text("-");
-                table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderColor(Colors.Black).Padding(2).Text(match.TeamB?.Name ?? string.Empty).ClampLines(1);
+                    if (showResultColumn)
+                    {
+                        // If this column is not shown, its width is evenly distributed amongst team A/B columns
+                        columns.ConstantColumn(14, Unit.Millimetre); // Outcome
+                    }
+
+                    columns.ConstantColumn(6, Unit.Millimetre); // Empty Column
+                });
+
+                table.Header(header =>
+                {
+                    header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Index")).Bold();
+                    header.Cell().Background(TableHeaderBackgroundColor).BorderHorizontal(2).BorderLeft(2).BorderRight(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Group")).Bold();
+                    header.Cell().Background(TableHeaderBackgroundColor).BorderHorizontal(2).BorderVertical(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Court")).Bold();
+                    header.Cell().Background(TableHeaderBackgroundColor).BorderHorizontal(2).BorderRight(2).BorderLeft(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Kickoff")).Bold();
+                    header.Cell().ColumnSpan(3).Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Teams")).Bold();
+
+                    if (showResultColumn)
+                    {
+                        header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Outcome")).Bold();
+                    }
+
+                    header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black);
+                });
+
+                var matches = tournament.Matches.Where(x => x.IsGroupMatch).OrderBy(x => x.Index).ToArray();
+
+                for (var i = 0; i < matches.Length; i++)
+                {
+                    var match = matches[i];
+                    var isLast = i == matches.Length - 1;
+
+                    table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderLeft(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text($"{match.Index}");
+                    table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderLeft(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(match.Group!.AlphabeticalId.ToString());
+                    table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderLeft(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text($"{match.Court + 1}");
+                    table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderLeft(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(match.Kickoff is null ? string.Empty : localization.Get("Documents.MatchPlan.MatchKickoffTime", match.Kickoff));
+                    table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderLeft(2).BorderColor(Colors.Black).Padding(2).Text(match.TeamA?.Name ?? string.Empty).ClampLines(1);
+                    table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text("-");
+                    table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderColor(Colors.Black).Padding(2).Text(match.TeamB?.Name ?? string.Empty).ClampLines(1);
+
+                    if (showResultColumn)
+                    {
+                        var text = insertOutcomes && match.IsFinished ? $"{match.ScoreA} : {match.ScoreB}" : ":";
+                        table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderLeft(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(text).Bold();
+                    }
+
+                    table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderVertical(2).BorderColor(Colors.Black);
+                }
+            });
+        }
+
+        public void DecidingMatch(Tournament tournament, Match match, string headerColor, ILocalization localization, MatchPlanOutcomes outcomes)
+        {
+            var showResultColumn = outcomes is MatchPlanOutcomes.ShowEmptyOutcomeStructures or MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes;
+            var insertOutcomes = outcomes is MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes;
+
+            container.Table(table =>
+            {
+                table.ColumnsDefinition(columns =>
+                {
+                    // Sum of all column widths should equal the width of two group tables + the spacing in between them
+                    columns.ConstantColumn(7, Unit.Millimetre); // Index
+                    columns.ConstantColumn(9, Unit.Millimetre); // Court
+                    columns.ConstantColumn(12, Unit.Millimetre); // Kickoff
+                    columns.ConstantColumn(showResultColumn ? 59 : 66, Unit.Millimetre); // Team A
+                    columns.ConstantColumn(4, Unit.Millimetre); // Separator
+                    columns.ConstantColumn(showResultColumn ? 59 : 66, Unit.Millimetre); // Team B
+
+                    if (showResultColumn)
+                    {
+                        // If this column is not shown, its width is evenly distributed amongst team A/B columns
+                        columns.ConstantColumn(14, Unit.Millimetre); // Outcome
+                    }
+
+                    columns.ConstantColumn(6, Unit.Millimetre); // Empty Column
+                });
+
+                table.Header(header =>
+                {
+                    header.Cell().Background(headerColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Index")).Bold();
+                    header.Cell().Background(headerColor).BorderHorizontal(2).BorderRight(0.5f).BorderLeft(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Court")).Bold();
+                    header.Cell().Background(headerColor).BorderHorizontal(2).BorderRight(2).BorderLeft(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Kickoff")).Bold();
+                    header.Cell().ColumnSpan(3).Background(headerColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.LocalizeMatchDisplayName(match)).Bold();
+
+                    if (showResultColumn)
+                    {
+                        header.Cell().Background(headerColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Outcome")).Bold();
+                    }
+
+                    header.Cell().Background(headerColor).Border(2).BorderColor(Colors.Black);
+                });
+
+                table.Cell().RowSpan(2).Border(2).Padding(2).AlignCenter().AlignMiddle().Text($"{match.Index}");
+                table.Cell().RowSpan(2).BorderHorizontal(2).BorderLeft(2).BorderRight(0.5f).Padding(2).AlignCenter().AlignMiddle().Text($"{match.Court + 1}");
+                table.Cell().RowSpan(2).BorderHorizontal(2).BorderLeft(0.5f).BorderRight(2).Padding(2).AlignCenter().AlignMiddle().Text(match.Kickoff is null ? string.Empty : localization.Get("Documents.MatchPlan.MatchKickoffTime", match.Kickoff));
+
+                if (insertOutcomes)
+                {
+                    table.Cell().BorderBottom(0.5f).Padding(2).Text(match.TeamA?.Name ?? string.Empty).AlignCenter().ClampLines(1);
+                    table.Cell().BorderBottom(0.5f).Padding(2).Text("-").AlignCenter();
+                    table.Cell().BorderBottom(0.5f).Padding(2).Text(match.TeamB?.Name ?? string.Empty).AlignCenter().ClampLines(1);
+                }
+                else
+                {
+                    table.Cell().BorderBottom(0.5f).Padding(2).Text(string.Empty);
+                    table.Cell().BorderBottom(0.5f).Padding(2).Text("-").AlignCenter();
+                    table.Cell().BorderBottom(0.5f).Padding(2).Text(string.Empty);
+                }
 
                 if (showResultColumn)
                 {
                     var text = insertOutcomes && match.IsFinished ? $"{match.ScoreA} : {match.ScoreB}" : ":";
-                    table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderLeft(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(text).Bold();
+                    table.Cell().RowSpan(2).Border(2).Padding(2).AlignCenter().AlignMiddle().Text(text).Bold();
                 }
 
-                table.Cell().BorderTop(0.5f).BorderBottom(isLast ? 2 : 0.5f).BorderVertical(2).BorderColor(Colors.Black);
-            }
-        });
-    }
+                table.Cell().RowSpan(2).Border(2).Padding(2).AlignCenter().AlignMiddle();
+                table.Cell().BorderBottom(2).PaddingBottom(1).AlignCenter().Text(localization.LocalizeTeamSelector(match.TeamSelectorA, tournament)).FontSize(7);
+                table.Cell().BorderBottom(2);
+                table.Cell().BorderBottom(2).PaddingBottom(1).AlignCenter().Text(localization.LocalizeTeamSelector(match.TeamSelectorB, tournament)).FontSize(7);
+            });
+        }
 
-    public static void DecidingMatch(this IContainer container, Tournament tournament, Match match, string headerColor, ILocalization localization, MatchPlanOutcomes outcomes)
-    {
-        var showResultColumn = outcomes is MatchPlanOutcomes.ShowEmptyOutcomeStructures or MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes;
-        var insertOutcomes = outcomes is MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes;
-
-        container.Table(table =>
+        private void Group(Group group, ILocalization localization, MatchPlanOutcomes outcomes)
         {
-            table.ColumnsDefinition(columns =>
-            {
-                // Sum of all column widths should equal the width of two group tables + the spacing in between them
-                columns.ConstantColumn(7, Unit.Millimetre); // Index
-                columns.ConstantColumn(9, Unit.Millimetre); // Court
-                columns.ConstantColumn(12, Unit.Millimetre); // Kickoff
-                columns.ConstantColumn(showResultColumn ? 59 : 66, Unit.Millimetre); // Team A
-                columns.ConstantColumn(4, Unit.Millimetre); // Separator
-                columns.ConstantColumn(showResultColumn ? 59 : 66, Unit.Millimetre); // Team B
+            var showResultColumns = outcomes is MatchPlanOutcomes.ShowEmptyOutcomeStructures or MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes;
+            var insertOutcomes = outcomes is MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes;
 
-                if (showResultColumn)
+            container.Table(table =>
+            {
+                table.ColumnsDefinition(columns =>
                 {
-                    // If this column is not shown, its width is evenly distributed amongst team A/B columns
-                    columns.ConstantColumn(14, Unit.Millimetre); // Outcome
-                }
+                    if (showResultColumns)
+                    {
+                        columns.ConstantColumn(7, Unit.Millimetre); // Index
+                        columns.ConstantColumn(48, Unit.Millimetre); // Team Name
+                        columns.ConstantColumn(8, Unit.Millimetre); // Points
+                        columns.ConstantColumn(11, Unit.Millimetre); // Goals
+                        columns.ConstantColumn(8, Unit.Millimetre); // Goal Diff.
+                    }
+                    else
+                    {
+                        columns.ConstantColumn(7, Unit.Millimetre); // Index
+                        columns.ConstantColumn(75, Unit.Millimetre); // Team Name
+                    }
+                });
 
-                columns.ConstantColumn(6, Unit.Millimetre); // Empty Column
-            });
-
-            table.Header(header =>
-            {
-                header.Cell().Background(headerColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Index")).Bold();
-                header.Cell().Background(headerColor).BorderHorizontal(2).BorderRight(0.5f).BorderLeft(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Court")).Bold();
-                header.Cell().Background(headerColor).BorderHorizontal(2).BorderRight(2).BorderLeft(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Kickoff")).Bold();
-                header.Cell().ColumnSpan(3).Background(headerColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.LocalizeMatchDisplayName(match)).Bold();
-
-                if (showResultColumn)
+                table.Header(header =>
                 {
-                    header.Cell().Background(headerColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Outcome")).Bold();
-                }
+                    header.Cell().ColumnSpan(2).Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.LocalizeGroupName(group)).Bold();
 
-                header.Cell().Background(headerColor).Border(2).BorderColor(Colors.Black);
-            });
+                    if (showResultColumns)
+                    {
+                        header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Points")).Bold();
+                        header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Score")).Bold();
+                        header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.ScoreDiff")).Bold();
+                    }
+                });
 
-            table.Cell().RowSpan(2).Border(2).Padding(2).AlignCenter().AlignMiddle().Text($"{match.Index}");
-            table.Cell().RowSpan(2).BorderHorizontal(2).BorderLeft(2).BorderRight(0.5f).Padding(2).AlignCenter().AlignMiddle().Text($"{match.Court + 1}");
-            table.Cell().RowSpan(2).BorderHorizontal(2).BorderLeft(0.5f).BorderRight(2).Padding(2).AlignCenter().AlignMiddle().Text(match.Kickoff is null ? string.Empty : localization.Get("Documents.MatchPlan.MatchKickoffTime", match.Kickoff));
+                var participants = insertOutcomes
+                    ? group.Participants.OrderBy(x => x.Statistics.Position).ToList()
+                    : group.Participants.ToList();
 
-            if (insertOutcomes)
-            {
-                table.Cell().BorderBottom(0.5f).Padding(2).Text(match.TeamA?.Name ?? string.Empty).AlignCenter().ClampLines(1);
-                table.Cell().BorderBottom(0.5f).Padding(2).Text("-").AlignCenter();
-                table.Cell().BorderBottom(0.5f).Padding(2).Text(match.TeamB?.Name ?? string.Empty).AlignCenter().ClampLines(1);
-            }
-            else
-            {
-                table.Cell().BorderBottom(0.5f).Padding(2).Text(string.Empty);
-                table.Cell().BorderBottom(0.5f).Padding(2).Text("-").AlignCenter();
-                table.Cell().BorderBottom(0.5f).Padding(2).Text(string.Empty);
-            }
-
-            if (showResultColumn)
-            {
-                var text = insertOutcomes && match.IsFinished ? $"{match.ScoreA} : {match.ScoreB}" : ":";
-                table.Cell().RowSpan(2).Border(2).Padding(2).AlignCenter().AlignMiddle().Text(text).Bold();
-            }
-
-            table.Cell().RowSpan(2).Border(2).Padding(2).AlignCenter().AlignMiddle();
-            table.Cell().BorderBottom(2).PaddingBottom(1).AlignCenter().Text(localization.LocalizeTeamSelector(match.TeamSelectorA, tournament)).FontSize(7);
-            table.Cell().BorderBottom(2);
-            table.Cell().BorderBottom(2).PaddingBottom(1).AlignCenter().Text(localization.LocalizeTeamSelector(match.TeamSelectorB, tournament)).FontSize(7);
-        });
-    }
-
-    private static void Group(this IContainer container, Group group, ILocalization localization, MatchPlanOutcomes outcomes)
-    {
-        var showResultColumns = outcomes is MatchPlanOutcomes.ShowEmptyOutcomeStructures or MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes;
-        var insertOutcomes = outcomes is MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes;
-
-        container.Table(table =>
-        {
-            table.ColumnsDefinition(columns =>
-            {
-                if (showResultColumns)
+                for (var i = 0; i < participants.Count; i++)
                 {
-                    columns.ConstantColumn(7, Unit.Millimetre); // Index
-                    columns.ConstantColumn(48, Unit.Millimetre); // Team Name
-                    columns.ConstantColumn(8, Unit.Millimetre); // Points
-                    columns.ConstantColumn(11, Unit.Millimetre); // Goals
-                    columns.ConstantColumn(8, Unit.Millimetre); // Goal Diff.
-                }
-                else
-                {
-                    columns.ConstantColumn(7, Unit.Millimetre); // Index
-                    columns.ConstantColumn(75, Unit.Millimetre); // Team Name
+                    var participant = participants[i];
+                    var isLast = i == participants.Count - 1;
+
+                    table.Cell().BorderLeft(2).BorderBottom(isLast ? 2 : showResultColumns ? 0.5f : 0).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(insertOutcomes ? $"{participant.Statistics.Position}." : $"{i + 1}.");
+                    table.Cell().BorderRight(2).BorderBottom(isLast ? 2 : showResultColumns ? 0.5f : 0).BorderColor(Colors.Black).Padding(2).Text(participant.Team.Name);
+
+                    if (showResultColumns)
+                    {
+                        table.Cell().BorderRight(2).BorderBottom(isLast ? 2 : 0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().AlignMiddle().Text(insertOutcomes ? $"{participant.Statistics.Points}" : string.Empty);
+                        table.Cell().BorderRight(2).BorderBottom(isLast ? 2 : 0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().AlignMiddle().Text(insertOutcomes ? $"{participant.Statistics.ScoreFor} : {participant.Statistics.ScoreAgainst}" : ":");
+                        table.Cell().BorderRight(2).BorderBottom(isLast ? 2 : 0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().AlignMiddle().Text(insertOutcomes ? $"{participant.Statistics.ScoreDifference}" : string.Empty).FontColor(participant.Statistics.ScoreDifference < 0 ? Colors.Red.Medium : Colors.Black);
+                    }
                 }
             });
-
-            table.Header(header =>
-            {
-                header.Cell().ColumnSpan(2).Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.LocalizeGroupName(group)).Bold();
-
-                if (showResultColumns)
-                {
-                    header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Points")).Bold();
-                    header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.Score")).Bold();
-                    header.Cell().Background(TableHeaderBackgroundColor).Border(2).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(localization.Get("Documents.MatchPlan.Headers.ScoreDiff")).Bold();
-                }
-            });
-
-            var participants = insertOutcomes
-                ? group.Participants.OrderBy(x => x.Statistics.Position).ToList()
-                : group.Participants.ToList();
-
-            for (var i = 0; i < participants.Count; i++)
-            {
-                var participant = participants[i];
-                var isLast = i == participants.Count - 1;
-
-                table.Cell().BorderLeft(2).BorderBottom(isLast ? 2 : showResultColumns ? 0.5f : 0).BorderColor(Colors.Black).Padding(2).AlignCenter().Text(insertOutcomes ? $"{participant.Statistics.Position}." : $"{i + 1}.");
-                table.Cell().BorderRight(2).BorderBottom(isLast ? 2 : showResultColumns ? 0.5f : 0).BorderColor(Colors.Black).Padding(2).Text(participant.Team.Name);
-
-                if (showResultColumns)
-                {
-                    table.Cell().BorderRight(2).BorderBottom(isLast ? 2 : 0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().AlignMiddle().Text(insertOutcomes ? $"{participant.Statistics.Points}" : string.Empty);
-                    table.Cell().BorderRight(2).BorderBottom(isLast ? 2 : 0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().AlignMiddle().Text(insertOutcomes ? $"{participant.Statistics.ScoreFor} : {participant.Statistics.ScoreAgainst}" : ":");
-                    table.Cell().BorderRight(2).BorderBottom(isLast ? 2 : 0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter().AlignMiddle().Text(insertOutcomes ? $"{participant.Statistics.ScoreDifference}" : string.Empty).FontColor(participant.Statistics.ScoreDifference < 0 ? Colors.Red.Medium : Colors.Black);
-                }
-            }
-        });
+        }
     }
 }

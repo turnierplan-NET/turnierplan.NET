@@ -13,7 +13,6 @@ import { NgClass } from '@angular/common';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { ImageType } from '../../../api/models/image-type';
-import { ImageDto2 } from '../../../api/models/image-dto-2';
 import { uploadImage$FormData } from '../../../api/fn/images/upload-image-form-data';
 import { getImages } from '../../../api/fn/images/get-images';
 import { ImageDto } from '../../../api/models/image-dto';
@@ -48,7 +47,7 @@ export class ImageChooserComponent {
   protected organizationId!: string;
   protected imageType!: ImageType;
 
-  protected existingImages: ImageDto2[] = [];
+  protected existingImages: ImageDto[] = [];
   protected isLoadingImages = true;
   protected currentImageId?: string;
 
@@ -58,7 +57,7 @@ export class ImageChooserComponent {
   // On mobile, where hovering does not work, the current "hovered" image is set by clicking and stored in this variable.
   protected hoverOverrideImageId?: string;
 
-  protected imageForDetailView?: ImageDto2;
+  protected imageForDetailView?: ImageDto;
 
   constructor(
     protected readonly modal: NgbActiveModal,

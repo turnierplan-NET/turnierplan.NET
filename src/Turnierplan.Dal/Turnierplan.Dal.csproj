@@ -2,7 +2,7 @@
   <Import Project="../version.xml" />
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -12,11 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.4.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.10" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
-    <PackageReference Include="Npgsql.OpenTelemetry" Version="9.0.4" />
-    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.13.1" />
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.5.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0-rc.2" /> <!-- TODO: Update to release 10.0.0 once available -->
+    <PackageReference Include="Npgsql.OpenTelemetry" Version="10.0.0-rc.1" /> <!-- TODO: Update to release 10.0.0 once available -->
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.14.0" />
   </ItemGroup>
 
   <ItemGroup>
