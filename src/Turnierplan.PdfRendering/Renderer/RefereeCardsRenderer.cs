@@ -75,14 +75,9 @@ file static class RefereeCardsQuestPdfExtensions
                     : localization.Get("Documents.RefereeCards.MatchInfoWithKickoff", match.Index, match.Kickoff);
                 column.Item().Text(matchTitle).SemiBold();
 
-                if (match.IsDecidingMatch)
-                {
-                    column.Item().Text(localization.LocalizeMatchDisplayName(match));
-                }
-                else
-                {
-                    column.Item().Text(localization.Get("Documents.RefereeCards.RefereeTeam", refereeTeam?.Name ?? string.Empty));
-                }
+                column.Item().Text(match.IsDecidingMatch
+                    ? localization.LocalizeMatchDisplayName(match)
+                    : localization.Get("Documents.RefereeCards.RefereeTeam", refereeTeam?.Name ?? string.Empty));
             });
 
             var teamA = match.IsGroupMatch

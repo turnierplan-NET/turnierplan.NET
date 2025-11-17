@@ -12,7 +12,7 @@ internal sealed class PdfResponseOperationTransformer : IOpenApiOperationTransfo
 {
     public Task TransformAsync(OpenApiOperation operation, OpenApiOperationTransformerContext context, CancellationToken cancellationToken)
     {
-        var pdfResponseType = typeof(PdfResponse);
+        var pdfResponseType = typeof(IPdfResponse);
 
         if (context.Description.SupportedResponseTypes.Any(x => x.Type == pdfResponseType) && operation.Responses is not null)
         {
@@ -35,13 +35,13 @@ internal sealed class PdfResponseOperationTransformer : IOpenApiOperationTransfo
         return Task.CompletedTask;
     }
 
-    public sealed record PdfResponse;
+    public interface IPdfResponse;
 }
 
 internal static class PdfResponseOperationTransformerExtensions
 {
     public static void ProducesPdf(this RouteHandlerBuilder builder)
     {
-        builder.Produces<PdfResponseOperationTransformer.PdfResponse>();
+        builder.Produces<PdfResponseOperationTransformer.IPdfResponse>();
     }
 }
