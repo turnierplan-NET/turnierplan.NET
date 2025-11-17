@@ -25,8 +25,6 @@ internal static class WebApplicationExtensions
 
         var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger(DatabaseMigratorLoggerName);
         var context = scope.ServiceProvider.GetRequiredService<TurnierplanContext>();
-
-        logger.LogInformation("Test");
         
         if (context.Database.IsNpgsql())
         {
