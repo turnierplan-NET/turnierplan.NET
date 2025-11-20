@@ -16,7 +16,7 @@ internal sealed class SetApplicationContactEmailEndpoint : PatchApplicationEndpo
 
     public sealed record SetApplicationContactEmailEndpointRequest
     {
-        public required string? ContactEmail { get; init; }
+        public string? ContactEmail { get; init; }
     }
 
     internal sealed class Validator : AbstractValidator<SetApplicationContactEmailEndpointRequest>

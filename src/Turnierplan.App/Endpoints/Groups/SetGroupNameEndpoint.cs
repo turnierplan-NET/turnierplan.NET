@@ -56,7 +56,7 @@ internal sealed class SetGroupNameEndpoint : EndpointBase
 
     public sealed record SetGroupNameEndpointRequest
     {
-        public required string? Name { get; init; }
+        public string? Name { get; init; }
     }
 
     private sealed class Validator : AbstractValidator<SetGroupNameEndpointRequest>

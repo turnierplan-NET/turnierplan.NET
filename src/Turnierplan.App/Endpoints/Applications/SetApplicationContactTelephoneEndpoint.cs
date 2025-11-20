@@ -16,7 +16,7 @@ internal sealed class SetApplicationContactTelephoneEndpoint : PatchApplicationE
 
     public sealed record SetApplicationContactTelephoneEndpointRequest
     {
-        public required string? ContactTelephone { get; init; }
+        public string? ContactTelephone { get; init; }
     }
 
     internal sealed class Validator : AbstractValidator<SetApplicationContactTelephoneEndpointRequest>

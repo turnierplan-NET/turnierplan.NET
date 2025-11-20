@@ -69,6 +69,7 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
             .Where(r => r.Principal.Equals(principal))
             .Include(r => r.Scope)
             .Select(r => r.Scope)
+            .Distinct()
             .ToListAsync();
     }
 }
