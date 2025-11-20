@@ -142,9 +142,9 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
 
         public required Role Role { get; init; }
 
-        public required PublicId? ApiKeyId { get; init; }
+        public PublicId? ApiKeyId { get; init; }
 
-        public required string? UserNameOrEmail { get; init; }
+        public string? UserNameOrEmail { get; init; }
     }
 
     private sealed class Validator : AbstractValidator<CreateRoleAssignmentEndpointRequest>
