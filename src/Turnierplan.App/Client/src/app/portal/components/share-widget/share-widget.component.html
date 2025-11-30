@@ -3,7 +3,7 @@
 <div class="mb-3" [translate]="translationKey + '.Link'"></div>
 
 @if (isForFullscreenView) {
-  <div class="mb-3">
+  <div class="mb-1">
     <tp-auto-reload-toggle [minimumInterval]="autoReloadMinInterval" (pathSuffixChanged)="autoReloadPathSuffix = $event" />
   </div>
 
