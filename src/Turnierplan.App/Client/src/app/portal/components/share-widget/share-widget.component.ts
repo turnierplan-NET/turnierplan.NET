@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
-import { TranslateDirective, TranslateService } from '@ngx-translate/core';
+import { TranslateDirective } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { ShareLinkComponent } from '../share-link/share-link.component';
 import { QRCodeComponent } from 'angularx-qrcode';
@@ -34,7 +34,7 @@ export class ShareWidgetComponent {
   protected autoReloadPathSuffix = '';
   protected includeQrCodeOnFullscreenView: boolean;
 
-  constructor(private readonly localStorageService: LocalStorageService) {
+  constructor(protected readonly localStorageService: LocalStorageService) {
     this.includeQrCodeOnFullscreenView = localStorageService.getIncludeQrCodeOnFullscreenView();
   }
 

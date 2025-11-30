@@ -13,7 +13,8 @@
       type="checkbox"
       role="switch"
       id="includeQrCodeOnFullscreenView"
-      [(ngModel)]="includeQrCodeOnFullscreenView" />
+      [(ngModel)]="includeQrCodeOnFullscreenView"
+      (ngModelChange)="localStorageService.setIncludeQrCodeOnFullscreenView($event)" />
     <label
       class="form-check-label"
       for="includeQrCodeOnFullscreenView"
