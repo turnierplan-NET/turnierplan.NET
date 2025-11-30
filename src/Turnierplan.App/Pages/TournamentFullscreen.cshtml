@@ -59,15 +59,14 @@
         <div class="position-fixed" style="left: 50%; width: 31%;">
             @await Component.InvokeAsync(typeof(Groups), new { tournament, localization, inlineGroupNames = true })
         </div>
-        <div class="position-fixed d-flex flex-column justify-content-between" style="left: 82%; width: 17%;">
+        <div class="position-fixed" style="left: 82%; width: 17%;">
             @if (tournament.PresentationConfiguration.ShowResults is PresentationConfiguration.ResultsMode.Default)
             {
                 @await Component.InvokeAsync(typeof(Ranking), new { tournament })
             }
             @if (Model.ShowQrCode == true)
             {
-                <span class="flex-grow-1"></span>
-                <div class="d-flex flex-column align-items-center gap-2">
+                <div class="mt-4 d-flex flex-column align-items-center gap-2">
                     <span class="fw-bold">Ergebnisse auf dem Smartphone:</span>
                     <canvas class="shadow-sm" id="qrcode-data"></canvas>
                 </div>
