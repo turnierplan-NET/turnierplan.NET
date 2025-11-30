@@ -7,14 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Npgsql;
 using Turnierplan.Core.ApiKey;
-using Turnierplan.Core.Document;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PlanningRealm;
-using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament;
-using Turnierplan.Core.User;
 using Turnierplan.Core.Venue;
 using Turnierplan.Dal.Repositories;
 

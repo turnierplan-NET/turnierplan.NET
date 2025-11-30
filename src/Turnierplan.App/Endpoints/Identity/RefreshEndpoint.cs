@@ -3,7 +3,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Turnierplan.App.Options;
 using Turnierplan.App.Security;
-using Turnierplan.Core.User;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.Identity;
 

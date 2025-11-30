@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
+using Turnierplan.Core.Entity;
 using Turnierplan.Core.Exceptions;
-using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament.TeamSelectors;
 
 namespace Turnierplan.Core.Tournament;

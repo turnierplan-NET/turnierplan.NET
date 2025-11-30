@@ -1,9 +1,19 @@
-using Turnierplan.Core.SeedWork;
+using Turnierplan.Dal.UnitOfWork;
 
 namespace Turnierplan.Dal.Extensions;
 
-public static class UnitOfWorkExtensions
+public static class TurnierplanContextExtensions
 {
+    extension(IUnitOfWork unitOfWork)
+    {
+        public async Task<TransactionWrapper> WrapTransactionAsync()
+        {
+            await unitOfWork.BeginTransactionAsync();
+
+            return new TransactionWrapper(unitOfWork);
+        }
+    }
+
     public sealed class TransactionWrapper : IAsyncDisposable
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -12,7 +22,6 @@ public static class UnitOfWorkExtensions
         {
             _unitOfWork = unitOfWork;
         }
-
 
         public bool ShouldCommit { private get; set; }
 
@@ -27,12 +36,5 @@ public static class UnitOfWorkExtensions
                 await _unitOfWork.RollbackTransactionAsync();
             }
         }
-    }
-
-    public static async Task<TransactionWrapper> WrapTransactionAsync(this IUnitOfWork unitOfWork)
-    {
-        await unitOfWork.BeginTransactionAsync();
-
-        return new TransactionWrapper(unitOfWork);
     }
 }

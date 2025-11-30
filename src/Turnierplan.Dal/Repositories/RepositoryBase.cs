@@ -1,18 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Turnierplan.Core.SeedWork;
+using Turnierplan.Core.Entity;
+using Turnierplan.Dal.UnitOfWork;
 
 namespace Turnierplan.Dal.Repositories;
 
-public abstract class RepositoryBase<TEntity, TIdentifier> : IRepository<TEntity, TIdentifier>
+internal abstract class RepositoryBase<TEntity, TIdentifier> : IRepository<TEntity, TIdentifier>
     where TEntity : Entity<TIdentifier>
 {
-    protected RepositoryBase(IUnitOfWork unitOfWork, DbSet<TEntity> dbSet)
+    protected RepositoryBase(TurnierplanContext context)
     {
-        ArgumentNullException.ThrowIfNull(unitOfWork);
-        ArgumentNullException.ThrowIfNull(dbSet);
-
-        UnitOfWork = unitOfWork;
-        DbSet = dbSet;
+        UnitOfWork = context;
+        DbSet = null!; // TODO: Find automatically
     }
 
     public IUnitOfWork UnitOfWork { get; }

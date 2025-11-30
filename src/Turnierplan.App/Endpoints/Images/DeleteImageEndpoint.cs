@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Security;
-using Turnierplan.Core.Image;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Dal.Repositories;
 using Turnierplan.ImageStorage;
 
 namespace Turnierplan.App.Endpoints.Images;

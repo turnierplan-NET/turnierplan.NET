@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
 using Turnierplan.Core.User;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.Users;
 

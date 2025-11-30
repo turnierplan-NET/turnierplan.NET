@@ -1,7 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
+using Turnierplan.Core.Entity;
 using Turnierplan.Core.PublicId;
-using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.App.Helpers;
 

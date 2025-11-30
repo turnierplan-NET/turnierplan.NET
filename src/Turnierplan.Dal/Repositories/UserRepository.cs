@@ -3,7 +3,22 @@ using Turnierplan.Core.User;
 
 namespace Turnierplan.Dal.Repositories;
 
-internal sealed class UserRepository(TurnierplanContext context) : RepositoryBase<User, Guid>(context, context.Users), IUserRepository
+public interface IUserRepository : IRepository<User, Guid>
+{
+    Task<List<User>> GetAllUsersAsync();
+
+    Task<User?> GetByIdAsync(Guid id);
+
+    Task<User?> GetByPrincipalIdAsync(Guid id);
+
+    Task<User?> GetByUserNameAsync(string userName);
+
+    Task<User?> GetByEmailAsync(string email);
+
+    Task<User?> GetByUserNameOrEmailAsync(string userNameOrEmail);
+}
+
+internal sealed class UserRepository(TurnierplanContext context) : RepositoryBase<User, Guid>(context), IUserRepository
 {
     public Task<List<User>> GetAllUsersAsync()
     {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Security;
-using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.ApiKeys;
 

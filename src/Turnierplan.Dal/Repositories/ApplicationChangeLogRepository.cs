@@ -3,7 +3,12 @@ using Turnierplan.Core.PlanningRealm;
 
 namespace Turnierplan.Dal.Repositories;
 
-internal sealed class ApplicationChangeLogRepository(TurnierplanContext context) : RepositoryBase<ApplicationChangeLog, long>(context, context.ApplicationChangeLogs), IApplicationChangeLogRepository
+public interface IApplicationChangeLogRepository : IRepository<ApplicationChangeLog, long>
+{
+    Task<List<ApplicationChangeLog>> GetByApplicationIdAsync(long applicationId);
+}
+
+internal sealed class ApplicationChangeLogRepository(TurnierplanContext context) : RepositoryBase<ApplicationChangeLog, long>(context), IApplicationChangeLogRepository
 {
     public Task<List<ApplicationChangeLog>> GetByApplicationIdAsync(long applicationId)
     {
