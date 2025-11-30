@@ -248,7 +248,7 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
     /// <remarks>Internal for testing.</remarks>
     internal string GetPublicTournamentUrl(PublicId tournamentId)
     {
-        return $"{applicationUrlProvider.GetApplicationUrl().TrimEnd('/')}/tournament?id={tournamentId.ToString()}";
+        return $"{applicationUrlProvider.GetApplicationUrl()}/tournament?id={tournamentId.ToString()}";
     }
 
     private static IEnumerable<string> GetHeaderRows(Tournament tournament, MatchPlanDocumentConfiguration configuration, ILocalization localization)

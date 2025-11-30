@@ -20,6 +20,9 @@ public sealed class TournamentFullscreen : PageModel
     [BindProperty(SupportsGet = true)]
     public int? AutoReload { get; set; }
 
+    [BindProperty(SupportsGet = true)]
+    public bool? ShowQrCode { get; set; }
+
     public Turnierplan.Core.Tournament.Tournament? Data { get; private set; }
 
     public async Task OnGetAsync()
