@@ -2,14 +2,31 @@
 
 <div class="mb-3" [translate]="translationKey + '.Link'"></div>
 
-@if (supportsAutoReload) {
+@if (isForFullscreenView) {
   <div class="mb-3">
     <tp-auto-reload-toggle [minimumInterval]="autoReloadMinInterval" (pathSuffixChanged)="autoReloadPathSuffix = $event" />
+  </div>
+
+  <div class="mb-3 form-check form-switch">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      role="switch"
+      id="includeQrCodeOnFullscreenView"
+      [(ngModel)]="includeQrCodeOnFullscreenView" />
+    <label
+      class="form-check-label"
+      for="includeQrCodeOnFullscreenView"
+      translate="Portal.ViewTournament.Share.FullscreenLink.IncludeQrCode"></label>
   </div>
 }
 
 <div [ngClass]="{ 'mb-3': showQrCode || viewsCounter !== undefined }">
-  <tp-share-link [resourcePath]="resourcePath + autoReloadPathSuffix" #shareLink />
+  @let link =
+    includeQrCodeOnFullscreenView
+      ? resourcePath + '&showQrCode=' + includeQrCodeOnFullscreenView + autoReloadPathSuffix
+      : resourcePath + autoReloadPathSuffix;
+  <tp-share-link [resourcePath]="link" #shareLink />
 </div>
 
 @if (showQrCode || viewsCounter !== undefined) {
