@@ -10,7 +10,18 @@ internal abstract class RepositoryBase<TEntity, TIdentifier> : IRepository<TEnti
     protected RepositoryBase(TurnierplanContext context)
     {
         UnitOfWork = context;
-        DbSet = null!; // TODO: Find automatically
+
+        var properties = typeof(TurnierplanContext)
+            .GetProperties()
+            .Where(x => x.PropertyType == typeof(DbSet<TEntity>))
+            .ToList();
+
+        if (properties.Count != 1)
+        {
+            throw new InvalidOperationException($"The '{nameof(TurnierplanContext)}' must have exactly one property of type '{nameof(DbSet<>)}<{typeof(TEntity).Name}>', but {properties.Count} where found.'");
+        }
+
+        DbSet = properties.Single().GetValue(context) as DbSet<TEntity> ?? throw new InvalidOperationException($"Failed to get '{nameof(DbSet<>)}<{typeof(TEntity).Name}>' from '{nameof(TurnierplanContext)}' via reflection.");
     }
 
     public IUnitOfWork UnitOfWork { get; }
