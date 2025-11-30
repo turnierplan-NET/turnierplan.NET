@@ -482,7 +482,8 @@ export const de = {
             Enabled: 'Automatisch aktualisieren',
             Interval: 'Intervall:',
             Seconds: 'Sekunden'
-          }
+          },
+          IncludeQrCode: 'Zeige QR-Code zum Scannen auf der Anzeigetafel'
         },
         Settings: 'Einstellungen',
         SettingsInfo: 'Konfigurieren Sie, wie die Turniere öffentlich präsentiert werden.',

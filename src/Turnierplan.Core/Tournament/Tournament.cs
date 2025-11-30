@@ -604,6 +604,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
                 Ranking.AddRanking(position, null);
             }
 
+            Ranking.FinalizeRanking();
             return;
         }
 

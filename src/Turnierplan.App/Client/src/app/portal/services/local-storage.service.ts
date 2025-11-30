@@ -82,6 +82,14 @@ export class LocalStorageService {
     return this.getValueFromLocalStorage(`tp_autoReloadConfig`, (x) => JSON.parse(x) as AutoReloadConfig);
   }
 
+  public setIncludeQrCodeOnFullscreenView(value: boolean): void {
+    localStorage.setItem(`tp_includeQrCodeOnFullscreenView`, value ? 'true' : 'false');
+  }
+
+  public getIncludeQrCodeOnFullscreenView(): boolean {
+    return this.getValueFromLocalStorage(`tp_includeQrCodeOnFullscreenView`, (x) => x === 'true') ?? true;
+  }
+
   private getValueFromLocalStorage<T>(key: string, parser: (value: string) => T): T | undefined {
     const value = localStorage.getItem(key);
     return value !== null && value.length > 0 ? parser(value) : undefined;

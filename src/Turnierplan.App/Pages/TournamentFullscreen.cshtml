@@ -1,12 +1,15 @@
 @page
+@using System.Web
 @using Turnierplan.App.Pages.Shared.Components.Groups
 @using Turnierplan.App.Pages.Shared.Components.Header
 @using Turnierplan.App.Pages.Shared.Components.MatchPlan
 @using Turnierplan.Core.Tournament
 @using Turnierplan.ImageStorage
 @using Turnierplan.Localization
+@using Turnierplan.PdfRendering
 @using Ranking = Turnierplan.App.Pages.Shared.Components.Ranking.Ranking
 @model Turnierplan.App.Pages.TournamentFullscreen
+@inject IApplicationUrlProvider ApplicationUrlProvider
 @inject ILocalizationProvider LocalizationProvider
 @inject IImageStorage ImageStorage
 
@@ -60,6 +63,16 @@
             @if (tournament.PresentationConfiguration.ShowResults is PresentationConfiguration.ResultsMode.Default)
             {
                 @await Component.InvokeAsync(typeof(Ranking), new { tournament })
+            }
+            @if (Model.ShowQrCode == true)
+            {
+                <div class="mt-5 d-flex flex-column align-items-center gap-2">
+                    <span class="fw-bold">Ergebnisse auf dem Smartphone:</span>
+                    <canvas class="shadow-sm" id="qrcode-data"></canvas>
+                </div>
+                var tournamentUrl = $"{ApplicationUrlProvider.GetApplicationUrl()}/tournament?id={tournament.PublicId}";
+                <script src="/assets/qrcode.1.5.1.min.js"></script>
+                <script>QRCode.toCanvas(document.getElementById('qrcode-data'), @Html.Raw(HttpUtility.JavaScriptStringEncode(tournamentUrl, addDoubleQuotes: true)))</script>
             }
         </div>
     </div>
