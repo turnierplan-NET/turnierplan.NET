@@ -2,7 +2,7 @@ using Turnierplan.Dal.UnitOfWork;
 
 namespace Turnierplan.Dal.Extensions;
 
-public static class TurnierplanContextExtensions
+public static class UnitOfWorkExtensions
 {
     extension(IUnitOfWork unitOfWork)
     {
