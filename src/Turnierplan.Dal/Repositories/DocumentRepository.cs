@@ -4,7 +4,12 @@ using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.Dal.Repositories;
 
-internal sealed class DocumentRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Document>(context, context.Documents), IDocumentRepository
+public interface IDocumentRepository : IRepositoryWithPublicId<Document, long>
+{
+    Task<Document?> GetByPublicIdAsync(PublicId id, bool includeTournamentDetails = false);
+}
+
+internal sealed class DocumentRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Document>(context), IDocumentRepository
 {
     public async Task<Document?> GetByPublicIdAsync(PublicId id, bool includeTournamentDetails = false)
     {

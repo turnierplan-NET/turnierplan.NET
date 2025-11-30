@@ -2,8 +2,8 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
-using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.ApplicationTeams;
 

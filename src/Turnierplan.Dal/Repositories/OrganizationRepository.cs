@@ -5,7 +5,31 @@ using Turnierplan.Core.RoleAssignment;
 
 namespace Turnierplan.Dal.Repositories;
 
-internal sealed class OrganizationRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Organization>(context, context.Organizations), IOrganizationRepository
+public interface IOrganizationRepository : IRepositoryWithPublicId<Organization, long>
+{
+    Task<Organization?> GetByPublicIdAsync(PublicId id, Includes includes);
+
+    Task<List<Organization>> GetAllAsync();
+
+    /// <summary>
+    /// Returns a list of all organizations that have any role assignment for the specified principal.
+    /// </summary>
+    Task<List<Organization>> GetByPrincipalAsync(Principal principal);
+
+    [Flags]
+    public enum Includes
+    {
+        None = 0,
+        Folders = 1,
+        Tournaments = 2,
+        Venues = 4,
+        Images = 8,
+        ApiKeys = 16,
+        PlanningRealms = 32
+    }
+}
+
+internal sealed class OrganizationRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Organization>(context), IOrganizationRepository
 {
     public override Task<Organization?> GetByPublicIdAsync(PublicId id)
     {

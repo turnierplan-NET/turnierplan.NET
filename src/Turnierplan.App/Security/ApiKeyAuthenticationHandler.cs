@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.RoleAssignment;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Security;
 

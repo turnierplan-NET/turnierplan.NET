@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.RoleAssignment;
-using Turnierplan.Core.User;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.Principals;
 

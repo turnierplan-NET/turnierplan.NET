@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.OpenApi;
 using Turnierplan.App.Security;
-using Turnierplan.Core.Document;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Dal.Extensions;
+using Turnierplan.Dal.Repositories;
 using Turnierplan.Localization;
 using Turnierplan.PdfRendering;
 using Turnierplan.PdfRendering.Renderer;

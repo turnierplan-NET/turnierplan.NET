@@ -1,5 +1,5 @@
 using System.Globalization;
-using Turnierplan.Core.SeedWork;
+using Turnierplan.Core.Entity;
 
 namespace Turnierplan.Core.User;
 

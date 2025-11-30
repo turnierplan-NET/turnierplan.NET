@@ -3,8 +3,8 @@ using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
 using Turnierplan.Core.Image;
-using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.Images;
 

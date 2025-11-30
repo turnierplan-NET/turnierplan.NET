@@ -4,12 +4,19 @@ using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.Dal.Repositories;
 
+public interface IApiKeyRepository : IRepositoryWithPublicId<ApiKey, long>
+{
+    Task<ApiKey?> GetByPrincipalIdAsync(Guid id);
+
+    Task<List<ApiKeyRequest>> GetRequestsInTimeRange(ApiKey apiKey, DateTime start, DateTime end);
+}
+
 internal sealed class ApiKeyRepository : RepositoryBaseWithPublicId<ApiKey>, IApiKeyRepository
 {
     private readonly DbSet<ApiKeyRequest> _requests;
 
     public ApiKeyRepository(TurnierplanContext context)
-        : base(context, context.ApiKeys)
+        : base(context)
     {
         _requests = context.ApiKeyRequests;
     }

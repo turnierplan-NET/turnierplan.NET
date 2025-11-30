@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
 using Turnierplan.Core.User;
+using Turnierplan.Dal.Repositories;
 using IdentityOptions = Turnierplan.App.Options.IdentityOptions;
 
 namespace Turnierplan.App.Endpoints.Identity;

@@ -5,6 +5,7 @@ using Turnierplan.App.Models.Enums;
 using Turnierplan.App.Security;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.Matches;
 

@@ -1,8 +1,8 @@
+using Turnierplan.Core.Entity;
 using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.RoleAssignment;
-using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament.Comparers;
 using Turnierplan.Core.Tournament.Definitions;
 using Turnierplan.Core.Tournament.TeamSelectors;

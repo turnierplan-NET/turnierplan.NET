@@ -1,4 +1,4 @@
-using Turnierplan.Core.SeedWork;
+using Turnierplan.Core.Entity;
 
 namespace Turnierplan.Core.Tournament;
 

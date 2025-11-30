@@ -8,11 +8,11 @@ using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.RoleAssignment;
-using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.User;
 using Turnierplan.Core.Venue;
 using Turnierplan.Dal.EntityConfigurations;
+using Turnierplan.Dal.UnitOfWork;
 
 namespace Turnierplan.Dal;
 

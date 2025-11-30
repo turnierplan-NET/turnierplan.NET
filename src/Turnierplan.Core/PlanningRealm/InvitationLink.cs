@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
+using Turnierplan.Core.Entity;
 using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.Image;
-using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.PlanningRealm;
 

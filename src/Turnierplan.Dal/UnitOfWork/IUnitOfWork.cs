@@ -1,4 +1,4 @@
-﻿namespace Turnierplan.Core.SeedWork;
+﻿namespace Turnierplan.Dal.UnitOfWork;
 
 public interface IUnitOfWork
 {
