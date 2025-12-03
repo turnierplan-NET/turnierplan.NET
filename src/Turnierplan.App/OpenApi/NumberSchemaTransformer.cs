@@ -10,8 +10,8 @@ namespace Turnierplan.App.OpenApi;
 /// "propertyXYZ": {
 ///   "pattern": "^-?(?:0|[1-9]\\d*)$",
 ///   "type": [
-///     "null",
-///     "integer"
+///     "integer",
+///     "string"
 ///   ],
 ///   "format": "int32"
 /// }
@@ -20,7 +20,7 @@ namespace Turnierplan.App.OpenApi;
 /// Because of this, the ng-openapi-gen package (correctly) generates the following TypeScript code:
 ///
 /// <code>
-/// propertyXYZ: (number | string | null);
+/// propertyXYZ: (number | string);
 /// </code>
 ///
 /// This is unfortunate because the <c>string</c> type causes type-issues when doing mathematical operations on the
