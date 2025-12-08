@@ -146,7 +146,10 @@ export class FolderStatisticsComponent implements OnInit, OnDestroy {
       ...commonOptions,
       xAxis: {
         type: 'category',
-        data: this.statistics.tournamentPageViews.map((x) => x.tournamentName)
+        data: this.statistics.tournamentPageViews.map((x) => x.tournamentName),
+        axisLabel: {
+          rotate: -45
+        }
       },
       yAxis: {
         type: 'value'
