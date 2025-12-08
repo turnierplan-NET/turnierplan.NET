@@ -60,6 +60,7 @@
 
   <Target Name="RemoveUnnecessaryPublishFiles" AfterTargets="Publish">
     <!-- The source directory 'Client' should not be included in the publish output. -->
-    <RemoveDir Directories="$(PublishUrl)/Client" />
+    <RemoveDir Condition="$(PublishDir) != ''" Directories="$(PublishDir)/Client" />
+    <RemoveDir Condition="$(PublishUrl) != ''" Directories="$(PublishUrl)/Client" />
   </Target>
 </Project>
