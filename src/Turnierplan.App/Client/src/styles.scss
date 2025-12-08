@@ -179,6 +179,8 @@ body {
 
 .offcanvas {
   width: 600px !important;
+  max-height: 100vh;
+  overflow-y: auto;
 }
 
 .dropdown-menu {
