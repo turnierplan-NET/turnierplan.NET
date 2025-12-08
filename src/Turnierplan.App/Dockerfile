@@ -18,7 +18,8 @@ ARG BUILD_CONFIGURATION=Release
 
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && apt-get install -y nodejs
 
-RUN dotnet publish "./Turnierplan.App.csproj" -c "$BUILD_CONFIGURATION" -o /app/publish /p:UseAppHost=false
+# By specifying the publish runtime 'linux-x64', no unnecessary native libraries are included in the image
+RUN dotnet publish "./Turnierplan.App.csproj" -c "$BUILD_CONFIGURATION" --runtime linux-x64 -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

@@ -57,4 +57,9 @@
       </ResolvedFileToPublish>
     </ItemGroup>
   </Target>
+
+  <Target Name="RemoveUnnecessaryPublishFiles" AfterTargets="Publish">
+    <!-- The source directory 'Client' should not be included in the publish output. -->
+    <RemoveDir Directories="$(PublishUrl)/Client" />
+  </Target>
 </Project>
