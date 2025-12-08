@@ -16,7 +16,9 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <!-- The section 'contentfiles;' was removed due to an active issue: https://github.com/dotnet/efcore/issues/36970#issuecomment-3543760035
+           When updating this package, check if this issue is resolved and the IncludeAssets can be restored.-->
+      <IncludeAssets>runtime; build; native; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="10.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -54,5 +56,11 @@
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       </ResolvedFileToPublish>
     </ItemGroup>
+  </Target>
+
+  <Target Name="RemoveUnnecessaryPublishFiles" AfterTargets="Publish">
+    <!-- The source directory 'Client' should not be included in the publish output. -->
+    <RemoveDir Condition="$(PublishDir) != ''" Directories="$(PublishDir)/Client" />
+    <RemoveDir Condition="$(PublishUrl) != ''" Directories="$(PublishUrl)/Client" />
   </Target>
 </Project>
