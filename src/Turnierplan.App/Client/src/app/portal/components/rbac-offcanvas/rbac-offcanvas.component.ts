@@ -178,26 +178,6 @@ export class RbacOffcanvasComponent implements OnDestroy {
           }
 
           this.roleAssignments = this.roleAssignments.filter((x) => x.assignments.length > 0);
-
-          this.roleAssignments = [
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments,
-            ...this.roleAssignments
-          ];
         },
         error: (error) => {
           this.errorSubject$.next(error);
