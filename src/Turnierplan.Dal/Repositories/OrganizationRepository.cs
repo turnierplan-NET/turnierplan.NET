@@ -31,6 +31,8 @@ public interface IOrganizationRepository : IRepositoryWithPublicId<Organization,
 
 internal sealed class OrganizationRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Organization>(context), IOrganizationRepository
 {
+    private readonly TurnierplanContext _context = context;
+
     public override Task<Organization?> GetByPublicIdAsync(PublicId id)
     {
         return DbSet.Where(x => x.PublicId == id)
@@ -89,7 +91,7 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
     {
         // IDEA: Try to optimize this query directly within EF
 
-        return context.OrganizationRoleAssignments
+        return _context.OrganizationRoleAssignments
             .Where(r => r.Principal.Equals(principal))
             .Include(r => r.Scope)
             .Select(r => r.Scope)
