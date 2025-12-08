@@ -1,4 +1,4 @@
-<div class="p-3">
+<div class="p-3 overflow-y-scroll" style="max-height: 100vh">
   <div class="mb-3">
     <tp-action-button
       [title]="'Portal.General.Cancel'"
@@ -26,7 +26,7 @@
         (buttonClick)="showAddRoleAssignmentDialog()" />
     </div>
 
-    <table class="mb-2 table table-bordered">
+    <table class="mb-0 table table-bordered">
       <tbody>
         @for (group of roleAssignments; track group) {
           <tr class="table-active">
@@ -79,7 +79,7 @@
     </table>
 
     @if (roleAssignmentCount > 1) {
-      <div class="small">
+      <div class="mt-3 small">
         <span class="ms-1 me-1" translate="Portal.RbacManagement.TotalCount"></span>
         <span>{{ roleAssignmentCount }}</span>
       </div>
