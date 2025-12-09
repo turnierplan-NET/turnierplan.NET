@@ -329,6 +329,11 @@ export const de = {
           Header: 'Anmeldung',
           Tooltip: 'Wenn eine Mannschaft aus einem Turnierplaner hinzugefügt wurde, können Sie hier zu der Anmeldung abspringen.'
         },
+        MatchesPlayed: 'Sp.',
+        MatchesWon: 'G',
+        MatchesDrawn: 'U',
+        MatchesLost: 'V',
+        Score: 'Tore',
         Priority: {
           Header: 'Priorität',
           Tooltip: 'Bei Gleichstand der Gruppenergebnisse wird die Mannschaft mit der höheren Priorität höher platziert.'

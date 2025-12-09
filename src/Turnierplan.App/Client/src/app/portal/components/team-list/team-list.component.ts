@@ -24,6 +24,11 @@ export interface TeamView {
   entryFeePaidAt?: Date;
   groupId?: number;
   priority?: number;
+  matches: number;
+  won: number;
+  drawn: number;
+  lost: number;
+  score: string;
   teamLink?: TeamLinkDto;
   // IDEA: The properties below should probably be extracted from this interface (see MatchView)
   showLoadingIndicator: { name: boolean; priority: boolean; entryFee: boolean; outOfCompetition: boolean };
