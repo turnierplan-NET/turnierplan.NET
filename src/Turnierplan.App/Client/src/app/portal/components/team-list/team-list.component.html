@@ -19,7 +19,10 @@
           <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesWon"></th>
           <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesDrawn"></th>
           <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesLost"></th>
-          <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.Score"></th>
+          <th class="text-nowrap">
+            <span translate="Portal.ViewTournament.Teams.Score.Header"></span>
+            <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.Score.Tooltip'" />
+          </th>
         }
         <th class="text-nowrap">
           <span translate="Portal.ViewTournament.Teams.Priority.Header"></span>

@@ -334,7 +334,10 @@ export const de = {
         MatchesWon: 'G',
         MatchesDrawn: 'U',
         MatchesLost: 'V',
-        Score: 'Tore',
+        Score: {
+          Header: 'Tore',
+          Tooltip: 'Endet ein Spiel als "Sonderwertung (§)", werden die Tore aus diesem Spiel nicht gezählt..'
+        },
         Priority: {
           Header: 'Priorität',
           Tooltip: 'Bei Gleichstand der Gruppenergebnisse wird die Mannschaft mit der höheren Priorität höher platziert.'
