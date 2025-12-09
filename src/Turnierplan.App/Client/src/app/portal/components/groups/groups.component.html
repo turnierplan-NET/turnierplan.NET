@@ -1,78 +1,80 @@
-@for (group of groups; track group.alphabeticalId; let isLast = $last) {
-  <table class="table table-hover" [ngClass]="{ 'mb-4': !isLast }" [attr.aria-describedby]="'groupName' + group.id.toString()">
-    <thead>
-      <tr>
-        <th scope="colgroup" class="text-center" colspan="9">
-          <span id="groupName{{ group.id }}">
-            @if (group.showLoadingIndicator) {
-              <tp-small-spinner />
-            } @else {
-              {{ group.displayName }}
-            }
-            <tp-rename-button
-              class="ms-3"
-              translationKey="Portal.ViewTournament.Group.Rename"
-              *tpIsActionAllowed="[tournamentId, Actions.GenericWrite]"
-              [disabled]="isUpdatingAnyGroup"
-              [displayLabel]="false"
-              [allowReset]="true"
-              [current]="group.hasCustomDisplayName ? group.displayName : undefined"
-              (renamed)="renameGroup(group.id, $event)"
-              (resetName)="renameGroup(group.id, undefined)" />
-          </span>
-        </th>
-      </tr>
-      <tr>
-        <th scope="col" class="text-center" style="width: 5%" translate="Portal.ViewTournament.Group.Position"></th>
-        <th scope="col" class="text-center" style="width: 55%" translate="Portal.ViewTournament.Group.Team"></th>
-        <th scope="col" class="text-center" style="width: 5%" translate="Portal.ViewTournament.Group.Matches"></th>
-        <th scope="col" class="text-center" style="width: 5%" translate="Portal.ViewTournament.Group.MatchesWon"></th>
-        <th scope="col" class="text-center" style="width: 5%" translate="Portal.ViewTournament.Group.MatchesDrawn"></th>
-        <th scope="col" class="text-center" style="width: 5%" translate="Portal.ViewTournament.Group.MatchesLost"></th>
-        <th scope="col" class="text-center" style="width: 10%" translate="Portal.ViewTournament.Group.Score"></th>
-        <th scope="col" class="text-center" style="width: 5%" translate="Portal.ViewTournament.Group.ScoreDifference"></th>
-        <th scope="col" class="text-center" style="width: 5%" translate="Portal.ViewTournament.Group.Points"></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (team of group.teams; track team.id) {
+<div class="table-responsive">
+  @for (group of groups; track group.alphabeticalId; let isLast = $last) {
+    <table class="table table-hover" [ngClass]="{ 'mb-4': !isLast }" [attr.aria-describedby]="'groupName' + group.id.toString()">
+      <thead>
         <tr>
-          <td class="text-center">{{ team.position }}</td>
-          <td class="text-center">{{ team.name }}</td>
-          <td class="text-center">{{ team.matches }}</td>
-          <td class="text-center">{{ team.won }}</td>
-          <td class="text-center">{{ team.drawn }}</td>
-          <td class="text-center">{{ team.lost }}</td>
-          <td class="text-center">{{ team.score }}</td>
-          <td class="text-center">{{ team.scoreDiff }}</td>
-          <td class="text-center">{{ team.points }}</td>
+          <th scope="colgroup" class="text-center" colspan="9">
+            <span id="groupName{{ group.id }}">
+              @if (group.showLoadingIndicator) {
+                <tp-small-spinner />
+              } @else {
+                {{ group.displayName }}
+              }
+              <tp-rename-button
+                class="ms-3"
+                translationKey="Portal.ViewTournament.Group.Rename"
+                *tpIsActionAllowed="[tournamentId, Actions.GenericWrite]"
+                [disabled]="isUpdatingAnyGroup"
+                [displayLabel]="false"
+                [allowReset]="true"
+                [current]="group.hasCustomDisplayName ? group.displayName : undefined"
+                (renamed)="renameGroup(group.id, $event)"
+                (resetName)="renameGroup(group.id, undefined)" />
+            </span>
+          </th>
         </tr>
-      } @empty {
         <tr>
-          <td translate="Portal.ViewTournament.Group.NoTeams" colspan="9"></td>
+          <th scope="col" class="text-center" style="width: 5%" translate="Portal.ViewTournament.Group.Position"></th>
+          <th scope="col" class="text-center" style="width: 55%" translate="Portal.ViewTournament.Group.Team"></th>
+          <th scope="col" class="text-center" style="width: 5%" translate="Portal.ViewTournament.Group.Matches"></th>
+          <th scope="col" class="text-center" style="width: 5%" translate="Portal.ViewTournament.Group.MatchesWon"></th>
+          <th scope="col" class="text-center" style="width: 5%" translate="Portal.ViewTournament.Group.MatchesDrawn"></th>
+          <th scope="col" class="text-center" style="width: 5%" translate="Portal.ViewTournament.Group.MatchesLost"></th>
+          <th scope="col" class="text-center" style="width: 10%" translate="Portal.ViewTournament.Group.Score"></th>
+          <th scope="col" class="text-center" style="width: 5%" translate="Portal.ViewTournament.Group.ScoreDifference"></th>
+          <th scope="col" class="text-center" style="width: 5%" translate="Portal.ViewTournament.Group.Points"></th>
         </tr>
-      }
-    </tbody>
-  </table>
-} @empty {
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.Position"></th>
-        <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.Team"></th>
-        <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.Matches"></th>
-        <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.MatchesWon"></th>
-        <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.MatchesDrawn"></th>
-        <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.MatchesLost"></th>
-        <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.Score"></th>
-        <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.ScoreDifference"></th>
-        <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.Points"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td translate="Portal.ViewTournament.Group.NoGroups" colspan="9"></td>
-      </tr>
-    </tbody>
-  </table>
-}
+      </thead>
+      <tbody>
+        @for (team of group.teams; track team.id) {
+          <tr>
+            <td class="text-center">{{ team.position }}</td>
+            <td class="text-center">{{ team.name }}</td>
+            <td class="text-center">{{ team.matches }}</td>
+            <td class="text-center">{{ team.won }}</td>
+            <td class="text-center">{{ team.drawn }}</td>
+            <td class="text-center">{{ team.lost }}</td>
+            <td class="text-center">{{ team.score }}</td>
+            <td class="text-center">{{ team.scoreDiff }}</td>
+            <td class="text-center">{{ team.points }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td translate="Portal.ViewTournament.Group.NoTeams" colspan="9"></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @empty {
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.Position"></th>
+          <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.Team"></th>
+          <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.Matches"></th>
+          <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.MatchesWon"></th>
+          <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.MatchesDrawn"></th>
+          <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.MatchesLost"></th>
+          <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.Score"></th>
+          <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.ScoreDifference"></th>
+          <th scope="col" class="text-center" translate="Portal.ViewTournament.Group.Points"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td translate="Portal.ViewTournament.Group.NoGroups" colspan="9"></td>
+        </tr>
+      </tbody>
+    </table>
+  }
+</div>
