@@ -324,6 +324,7 @@ export const de = {
       Teams: {
         TableLabel: 'Mannschaften des Turniers',
         NoTeams: 'Keine Mannschaften vorhanden',
+        DisplayStatistics: 'Statistik anzeigen',
         Name: 'Name',
         Link: {
           Header: 'Anmeldung',

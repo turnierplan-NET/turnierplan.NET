@@ -58,6 +58,9 @@ export class TeamListComponent {
   @Input()
   public teams: TeamView[] = [];
 
+  @Input()
+  public displayTeamStatistics = false;
+
   @Output()
   public teamRename = new EventEmitter<{ teamId: number; name: string }>();
 

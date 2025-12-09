@@ -14,11 +14,13 @@
             <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.Link.Tooltip'" />
           </th>
         }
-        <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesPlayed"></th>
-        <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesWon"></th>
-        <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesDrawn"></th>
-        <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesLost"></th>
-        <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.Score"></th>
+        @if (displayTeamStatistics) {
+          <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesPlayed"></th>
+          <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesWon"></th>
+          <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesDrawn"></th>
+          <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesLost"></th>
+          <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.Score"></th>
+        }
         <th class="text-nowrap">
           <span translate="Portal.ViewTournament.Teams.Priority.Header"></span>
           <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.Priority.Tooltip'" />
@@ -80,11 +82,13 @@
               }
             </td>
           }
-          <td class="align-middle text-center">{{ team.matches }}</td>
-          <td class="align-middle text-center">{{ team.won }}</td>
-          <td class="align-middle text-center">{{ team.drawn }}</td>
-          <td class="align-middle text-center">{{ team.lost }}</td>
-          <td class="align-middle text-center">{{ team.score }}</td>
+          @if (displayTeamStatistics) {
+            <td class="align-middle text-center">{{ team.matches }}</td>
+            <td class="align-middle text-center">{{ team.won }}</td>
+            <td class="align-middle text-center">{{ team.drawn }}</td>
+            <td class="align-middle text-center">{{ team.lost }}</td>
+            <td class="align-middle text-center">{{ team.score }}</td>
+          }
           <td class="align-middle">
             @if (team.groupId !== undefined && team.priority !== undefined) {
               <div class="d-flex flex-row gap-2 justify-content-between align-items-center" style="width: 4em">
