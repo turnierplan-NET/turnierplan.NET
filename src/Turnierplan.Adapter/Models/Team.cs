@@ -20,4 +20,9 @@ public sealed record Team
     /// be regarded worse compared to any other team when sorting teams in a group, for example.
     /// </summary>
     public required bool OutOfCompetition { get; init; }
+
+    /// <summary>
+    /// The computed statistics resulting from this all matches this team has participated in.
+    /// </summary>
+    public required TeamStatistics Statistics { get; init; }
 }
