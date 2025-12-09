@@ -13,6 +13,7 @@ public sealed class Team : Entity<int>
         Name = name;
         OutOfCompetition = outOfCompetition;
         EntryFeePaidAt = entryFeePaidAt;
+        Statistics = new TeamStatistics();
     }
 
     internal Team(int id, string name, bool outOfCompetition, DateTime? entryFeePaidAt)
@@ -21,6 +22,7 @@ public sealed class Team : Entity<int>
         Name = name;
         OutOfCompetition = outOfCompetition;
         EntryFeePaidAt = entryFeePaidAt;
+        Statistics = new TeamStatistics();
     }
 
     public override int Id { get; protected set; }
@@ -34,6 +36,8 @@ public sealed class Team : Entity<int>
     public bool OutOfCompetition { get; set; }
 
     public DateTime? EntryFeePaidAt { get; set; }
+
+    public TeamStatistics Statistics { get; internal set; }
 
     public void SetName(string name)
     {

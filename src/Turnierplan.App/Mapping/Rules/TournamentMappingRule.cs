@@ -33,6 +33,15 @@ internal sealed class TournamentMappingRule : MappingRuleBase<Tournament, Tourna
                     OutOfCompetition = team.OutOfCompetition,
                     HasPaidEntryFee = team.EntryFeePaidAt is not null,
                     EntryFeePaidAt = team.EntryFeePaidAt,
+                    Statistics = new TeamStatisticsDto
+                    {
+                        ScoreFor = team.Statistics.ScoreFor,
+                        ScoreAgainst = team.Statistics.ScoreAgainst,
+                        MatchesPlayed = team.Statistics.MatchesPlayed,
+                        MatchesWon = team.Statistics.MatchesWon,
+                        MatchesDrawn = team.Statistics.MatchesDrawn,
+                        MatchesLost = team.Statistics.MatchesLost
+                    },
                     Link = team.TeamLink is null ? null : new TeamLinkDto
                     {
                         PlanningRealmId = team.TeamLink.ApplicationTeam.Application.PlanningRealm.PublicId,
