@@ -336,7 +336,7 @@ export const de = {
         MatchesLost: 'V',
         Score: {
           Header: 'Tore',
-          Tooltip: 'Endet ein Spiel als "Sonderwertung (§)", werden die Tore aus diesem Spiel nicht gezählt..'
+          Tooltip: 'Endet ein Spiel als "Sonderwertung (§)", werden die Tore aus diesem Spiel nicht gezählt.'
         },
         Priority: {
           Header: 'Priorität',
