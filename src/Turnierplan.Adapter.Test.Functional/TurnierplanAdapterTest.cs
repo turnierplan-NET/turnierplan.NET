@@ -91,19 +91,46 @@ public sealed class TurnierplanAdapterTest
                 {
                     Id = 1,
                     Name = "Team 1",
-                    OutOfCompetition = false
+                    OutOfCompetition = false,
+                    Statistics = new TeamStatistics
+                    {
+                        ScoreFor = 2,
+                        ScoreAgainst = 3,
+                        MatchesPlayed = 1,
+                        MatchesWon = 0,
+                        MatchesDrawn = 0,
+                        MatchesLost = 1
+                    }
                 },
                 new Team
                 {
                     Id = 2,
                     Name = "Team 2",
-                    OutOfCompetition = false
+                    OutOfCompetition = false,
+                    Statistics = new TeamStatistics
+                    {
+                        ScoreFor = 3,
+                        ScoreAgainst = 2,
+                        MatchesPlayed = 1,
+                        MatchesWon = 1,
+                        MatchesDrawn = 0,
+                        MatchesLost = 0
+                    }
                 },
                 new Team
                 {
                     Id = 3,
                     Name = "Team 3",
-                    OutOfCompetition = false
+                    OutOfCompetition = false,
+                    Statistics = new TeamStatistics
+                    {
+                        ScoreFor = 0,
+                        ScoreAgainst = 0,
+                        MatchesPlayed = 0,
+                        MatchesWon = 0,
+                        MatchesDrawn = 0,
+                        MatchesLost = 0
+                    }
                 }
             ],
             Groups = [

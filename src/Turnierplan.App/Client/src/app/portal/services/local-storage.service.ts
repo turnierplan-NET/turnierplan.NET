@@ -28,6 +28,14 @@ export class LocalStorageService {
     return this.getValueFromLocalStorage('tp_showAccumulatedScore', (x) => x === 'true') ?? false;
   }
 
+  public setDisplayTeamStatistics(enable: boolean): void {
+    localStorage.setItem('tp_showTeamStatistics', enable ? 'true' : 'false');
+  }
+
+  public isDisplayTeamStatisticsEnabled(): boolean {
+    return this.getValueFromLocalStorage('tp_showTeamStatistics', (x) => x === 'true') ?? false;
+  }
+
   public setOpenTournamentInNewTab(enable: boolean): void {
     localStorage.setItem('tp_openTournamentInNewTab', enable ? 'true' : 'false');
   }

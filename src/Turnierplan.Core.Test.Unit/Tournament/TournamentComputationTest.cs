@@ -185,6 +185,49 @@ public sealed class TournamentComputationTest
             ranking.IsDefined.Should().BeTrue();
             ranking.Team.Should().Be(team);
         }
+
+        // Assert team statistics (the numbers represent: <group phase> + <semi-finals if applicable> + <playoff if applicable>)
+        team1.Statistics.ScoreFor.Should().Be(5 + 1 + (playoff3rd ? 3 : 0));
+        team1.Statistics.ScoreAgainst.Should().Be(1 + 2 + (playoff3rd ? 4 : 0));
+        team1.Statistics.MatchesWon.Should().Be(2 + 0);
+        team1.Statistics.MatchesDrawn.Should().Be(0 + 0);
+        team1.Statistics.MatchesLost.Should().Be(0 + 1 + (playoff3rd ? 1 : 0));
+        team1.Statistics.MatchesPlayed.Should().Be(2 + 1 + (playoff3rd ? 1 : 0));
+
+        team2.Statistics.ScoreFor.Should().Be(0 + 2);
+        team2.Statistics.ScoreAgainst.Should().Be(2 + 1 + (playoff1st ? 1 : 0));
+        team2.Statistics.MatchesWon.Should().Be(0 + 1);
+        team2.Statistics.MatchesDrawn.Should().Be(1 + 0);
+        team2.Statistics.MatchesLost.Should().Be(1 + 0 + (playoff1st ? 1 : 0));
+        team2.Statistics.MatchesPlayed.Should().Be(2 + 1 + (playoff1st ? 1 : 0));
+
+        team3.Statistics.ScoreFor.Should().Be(6 + 3 + (playoff1st ? 1 : 0));
+        team3.Statistics.ScoreAgainst.Should().Be(1 + 1);
+        team3.Statistics.MatchesWon.Should().Be(2 + 1 + (playoff1st ? 1 : 0));
+        team3.Statistics.MatchesDrawn.Should().Be(0 + 0);
+        team3.Statistics.MatchesLost.Should().Be(0 + 0);
+        team3.Statistics.MatchesPlayed.Should().Be(2 + 1 + (playoff1st ? 1 : 0));
+
+        team4.Statistics.ScoreFor.Should().Be(2 + 1 + (playoff3rd ? 4 : 0));
+        team4.Statistics.ScoreAgainst.Should().Be(3 + 3 + (playoff3rd ? 3 : 0));
+        team4.Statistics.MatchesWon.Should().Be(0 + 0 + (playoff3rd ? 1 : 0));
+        team4.Statistics.MatchesDrawn.Should().Be(1 + 0);
+        team4.Statistics.MatchesLost.Should().Be(1 + 1);
+        team4.Statistics.MatchesPlayed.Should().Be(2 + 1 + (playoff3rd ? 1 : 0));
+
+        team5.Statistics.ScoreFor.Should().Be(1 + (playoff5th ? 2 : 0));
+        team5.Statistics.ScoreAgainst.Should().Be(4 + (playoff5th ? 1 : 0));
+        team5.Statistics.MatchesWon.Should().Be(0 + (playoff5th ? 1 : 0));
+        team5.Statistics.MatchesDrawn.Should().Be(1);
+        team5.Statistics.MatchesLost.Should().Be(1);
+        team5.Statistics.MatchesPlayed.Should().Be(2 + (playoff5th ? 1 : 0));
+
+        team6.Statistics.ScoreFor.Should().Be(1 + (playoff5th ? 1 : 0));
+        team6.Statistics.ScoreAgainst.Should().Be(4 + (playoff5th ? 2 : 0));
+        team6.Statistics.MatchesWon.Should().Be(0);
+        team6.Statistics.MatchesDrawn.Should().Be(1);
+        team6.Statistics.MatchesLost.Should().Be(1 + (playoff5th ? 1 : 0));
+        team6.Statistics.MatchesPlayed.Should().Be(2 + (playoff5th ? 1 : 0));
     }
 
     [Fact]
@@ -365,6 +408,31 @@ public sealed class TournamentComputationTest
 
         tournament._matches.Single(x => x.Id == 6).TeamA.Should().Be(team2);
         tournament._matches.Single(x => x.Id == 6).TeamB.Should().Be(team3);
+
+        // Assert team statistics
+        team1.Statistics.ScoreFor.Should().Be(6);
+        team1.Statistics.ScoreAgainst.Should().Be(5);
+        team1.Statistics.MatchesWon.Should().Be(2);
+        team1.Statistics.MatchesDrawn.Should().Be(0);
+        team1.Statistics.MatchesLost.Should().Be(1);
+
+        team2.Statistics.ScoreFor.Should().Be(4);
+        team2.Statistics.ScoreAgainst.Should().Be(5);
+        team2.Statistics.MatchesWon.Should().Be(1);
+        team2.Statistics.MatchesDrawn.Should().Be(0);
+        team2.Statistics.MatchesLost.Should().Be(2);
+
+        team3.Statistics.ScoreFor.Should().Be(4);
+        team3.Statistics.ScoreAgainst.Should().Be(5);
+        team3.Statistics.MatchesWon.Should().Be(1);
+        team3.Statistics.MatchesDrawn.Should().Be(0);
+        team3.Statistics.MatchesLost.Should().Be(2);
+
+        team4.Statistics.ScoreFor.Should().Be(6);
+        team4.Statistics.ScoreAgainst.Should().Be(5);
+        team4.Statistics.MatchesWon.Should().Be(2);
+        team4.Statistics.MatchesDrawn.Should().Be(0);
+        team4.Statistics.MatchesLost.Should().Be(1);
     }
 
     [Fact]
@@ -436,6 +504,25 @@ public sealed class TournamentComputationTest
 
         tournament._matches.Single(x => x.Id == 3).TeamA.Should().Be(team3);
         tournament._matches.Single(x => x.Id == 3).TeamB.Should().Be(team1);
+
+        // Assert team statistics
+        team1.Statistics.ScoreFor.Should().Be(2);
+        team1.Statistics.ScoreAgainst.Should().Be(2);
+        team1.Statistics.MatchesWon.Should().Be(0);
+        team1.Statistics.MatchesDrawn.Should().Be(2);
+        team1.Statistics.MatchesLost.Should().Be(0);
+
+        team2.Statistics.ScoreFor.Should().Be(2);
+        team2.Statistics.ScoreAgainst.Should().Be(2);
+        team2.Statistics.MatchesWon.Should().Be(0);
+        team2.Statistics.MatchesDrawn.Should().Be(2);
+        team2.Statistics.MatchesLost.Should().Be(0);
+
+        team3.Statistics.ScoreFor.Should().Be(2);
+        team3.Statistics.ScoreAgainst.Should().Be(2);
+        team3.Statistics.MatchesWon.Should().Be(0);
+        team3.Statistics.MatchesDrawn.Should().Be(2);
+        team3.Statistics.MatchesLost.Should().Be(0);
     }
 
     /// <summary>
@@ -614,5 +701,44 @@ public sealed class TournamentComputationTest
         tournament.Ranking.GetEntry(10).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 8")));
         tournament.Ranking.GetEntry(11).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 3")));
         tournament.Ranking.GetEntry(12).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 4")));
+    }
+
+    [Fact]
+    public void Tournament___Compute___Matches_With_Special_Scoring_Do_Not_Count_Towards_Team_Statistics_Score()
+    {
+        var tournament = TestTournament.Default;
+
+        // Add group
+        var groupA = tournament.AddGroup('A');
+
+        // Add teams
+        var team1 = tournament.AddTeam("Team 1");
+        var team2 = tournament.AddTeam("Team 2");
+
+        // Assign teams to groups
+        tournament.AddGroupParticipant(groupA, team1);
+        tournament.AddGroupParticipant(groupA, team2);
+
+        // Add matches
+        tournament._matches.Add(new Match(1, 1, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 4, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(2, 2, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 0, OutcomeType = MatchOutcomeType.SpecialScoring });
+
+        // Compute tournament
+        tournament.Compute();
+
+        // Assert team statistics
+        team1.Statistics.ScoreFor.Should().Be(4);
+        team1.Statistics.ScoreAgainst.Should().Be(2);
+        team1.Statistics.MatchesWon.Should().Be(2);
+        team1.Statistics.MatchesDrawn.Should().Be(0);
+        team1.Statistics.MatchesLost.Should().Be(0);
+        team1.Statistics.MatchesPlayed.Should().Be(2);
+
+        team2.Statistics.ScoreFor.Should().Be(2);
+        team2.Statistics.ScoreAgainst.Should().Be(4);
+        team2.Statistics.MatchesWon.Should().Be(0);
+        team2.Statistics.MatchesDrawn.Should().Be(0);
+        team2.Statistics.MatchesLost.Should().Be(2);
+        team2.Statistics.MatchesPlayed.Should().Be(2);
     }
 }

@@ -110,11 +110,25 @@
             @case (2) {
               <div class="card-header d-flex flex-row align-items-center">
                 <tp-badge context="ViewTournament" label="TeamCount" [value]="processedTeams.length" />
+                <span class="flex-grow-1"></span>
+                <div class="form-check mb-0">
+                  <input
+                    class="form-check-input me-2"
+                    id="displayTeamStatisticsCheckbox"
+                    type="checkbox"
+                    [ngModel]="displayTeamStatistics"
+                    (ngModelChange)="saveDisplayTeamStatistics($event)" />
+                  <label
+                    class="form-check-label"
+                    for="displayTeamStatisticsCheckbox"
+                    translate="Portal.ViewTournament.Teams.DisplayStatistics"></label>
+                </div>
               </div>
               <div class="card-body p-0">
                 <tp-team-list
                   [tournamentId]="tournament.id"
                   [teams]="processedTeams"
+                  [displayTeamStatistics]="displayTeamStatistics"
                   (teamRename)="renameTeam($event.teamId, $event.name)"
                   (teamSetPriority)="setTeamPriority($event.teamId, $event.groupId, $event.priority)"
                   (teamSetEntryFeePaid)="setTeamEntryFeePaid($event.teamId, $event.entryFeePaid)"

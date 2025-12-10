@@ -179,6 +179,8 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
   protected showAccumulatedScore = false;
   protected totalScoreCount = 0;
 
+  protected displayTeamStatistics = false;
+
   protected recentDocumentId?: string;
 
   protected isUpdatingVisibility = false;
@@ -205,6 +207,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.showAccumulatedScore = this.localStorageService.isDisplayAccumulateScoreEnabled();
+    this.displayTeamStatistics = this.localStorageService.isDisplayTeamStatisticsEnabled();
 
     this.route.paramMap
       .pipe(
@@ -281,6 +284,11 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
   protected saveAccumulatedScoreSetting(newValue: boolean): void {
     this.showAccumulatedScore = newValue;
     this.localStorageService.setDisplayAccumulateScore(newValue);
+  }
+
+  protected saveDisplayTeamStatistics(newValue: boolean): void {
+    this.displayTeamStatistics = newValue;
+    this.localStorageService.setDisplayTeamStatistics(newValue);
   }
 
   protected matchClicked(matchId: number): void {
@@ -932,6 +940,11 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
         entryFeePaidAt: team.entryFeePaidAt ? new Date(team.entryFeePaidAt) : undefined,
         groupId: undefined,
         priority: undefined,
+        matches: team.statistics.matchesPlayed,
+        won: team.statistics.matchesWon,
+        drawn: team.statistics.matchesDrawn,
+        lost: team.statistics.matchesLost,
+        score: `${team.statistics.scoreFor}:${team.statistics.scoreAgainst}`,
         teamLink: team.link,
         showLoadingIndicator: {
           name: false,
