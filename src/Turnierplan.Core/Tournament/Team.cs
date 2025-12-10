@@ -37,7 +37,7 @@ public sealed class Team : Entity<int>
 
     public DateTime? EntryFeePaidAt { get; set; }
 
-    public TeamStatistics Statistics { get; internal set; }
+    public TeamStatistics Statistics { get; }
 
     public void SetName(string name)
     {
