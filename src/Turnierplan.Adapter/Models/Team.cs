@@ -22,7 +22,7 @@ public sealed record Team
     public required bool OutOfCompetition { get; init; }
 
     /// <summary>
-    /// The computed statistics resulting from this all matches this team has participated in.
+    /// The computed statistics resulting from all matches this team has participated in.
     /// </summary>
     public required TeamStatistics Statistics { get; init; }
 }
