@@ -563,11 +563,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     private void ComputeRanking()
     {
-        Ranking.Reset();
-
-        // TODO Implement new ranking algorithm
-
-        Ranking.FinalizeRanking();
+        Ranking.Evaluate(_teams, _matches);
     }
 
     private void ComputeTeamStatistics()

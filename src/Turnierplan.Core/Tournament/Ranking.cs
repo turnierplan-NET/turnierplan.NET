@@ -6,6 +6,8 @@ public sealed class Ranking : IEnumerable<RankingPosition>
 {
     private readonly List<RankingPosition> _positions = [];
 
+    #region Access properties/methods and IEnumerable implementation
+
     public IReadOnlyList<RankingPosition> Positions => _positions.AsReadOnly();
 
     public RankingPosition GetEntry(int position)
@@ -23,20 +25,18 @@ public sealed class Ranking : IEnumerable<RankingPosition>
         return GetEnumerator();
     }
 
-    // More complex logic will be introduced with issues #2 and #247
+    #endregion
 
-    internal void Reset()
+    #region Ranking evaluation logic
+
+    internal void Evaluate(IReadOnlyCollection<Team> teams, IReadOnlyCollection<Match> matches)
     {
         _positions.Clear();
-    }
 
-    internal void AddRanking(int position, Team? team)
-    {
-        _positions.Add(new RankingPosition(position, team));
-    }
+        // TODO: Implement
 
-    internal void FinalizeRanking()
-    {
         _positions.Sort((a, b) => a.Position - b.Position);
     }
+
+    #endregion
 }
