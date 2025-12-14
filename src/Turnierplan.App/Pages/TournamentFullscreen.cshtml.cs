@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Turnierplan.Core.PublicId;
-using Turnierplan.Core.Tournament;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Pages;
 
@@ -19,6 +19,9 @@ public sealed class TournamentFullscreen : PageModel
 
     [BindProperty(SupportsGet = true)]
     public int? AutoReload { get; set; }
+
+    [BindProperty(SupportsGet = true)]
+    public bool? ShowQrCode { get; set; }
 
     public Turnierplan.Core.Tournament.Tournament? Data { get; private set; }
 

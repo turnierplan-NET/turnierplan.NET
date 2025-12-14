@@ -4,7 +4,9 @@ using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.Dal.Repositories;
 
-internal sealed class InvitationLinkRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<InvitationLink>(context, context.InvitationLinks), IInvitationLinkRepository
+public interface IInvitationLinkRepository : IRepositoryWithPublicId<InvitationLink, long>;
+
+internal sealed class InvitationLinkRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<InvitationLink>(context), IInvitationLinkRepository
 {
     public override Task<InvitationLink?> GetByPublicIdAsync(PublicId id)
     {

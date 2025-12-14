@@ -12,5 +12,7 @@ public sealed record TeamDto
 
     public DateTime? EntryFeePaidAt { get; init; }
 
+    public required TeamStatisticsDto Statistics { get; init; }
+
     public TeamLinkDto? Link { get; init; }
 }

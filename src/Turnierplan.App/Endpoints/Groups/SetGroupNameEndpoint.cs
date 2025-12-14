@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
 using Turnierplan.Core.PublicId;
-using Turnierplan.Core.Tournament;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.Groups;
 
@@ -56,7 +56,7 @@ internal sealed class SetGroupNameEndpoint : EndpointBase
 
     public sealed record SetGroupNameEndpointRequest
     {
-        public required string? Name { get; init; }
+        public string? Name { get; init; }
     }
 
     private sealed class Validator : AbstractValidator<SetGroupNameEndpointRequest>

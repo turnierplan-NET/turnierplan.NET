@@ -7,7 +7,7 @@ using Turnierplan.App.Security;
 using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.RoleAssignment;
-using Turnierplan.Core.User;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.Organizations;
 

@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
+using Turnierplan.Core.Entity;
 using Turnierplan.Core.Exceptions;
-using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament.TeamSelectors;
 
 namespace Turnierplan.Core.Tournament;
@@ -78,6 +78,9 @@ public sealed class Match : Entity<int>
 
     public bool IsDecidingMatch => FinalsRound is not null || PlayoffPosition is not null;
 
+    [MemberNotNullWhen(true, nameof(ScoreA))]
+    [MemberNotNullWhen(true, nameof(ScoreB))]
+    [MemberNotNullWhen(true, nameof(OutcomeType))]
     public bool IsFinished => IsCurrentlyPlaying == false && ScoreA is not null && ScoreB is not null && OutcomeType is not null;
 
     public void SetOutcome(bool isCurrentlyPlaying, int scoreA, int scoreB, MatchOutcomeType outcomeType)

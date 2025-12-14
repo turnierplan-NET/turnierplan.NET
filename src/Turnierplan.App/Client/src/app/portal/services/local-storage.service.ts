@@ -28,6 +28,14 @@ export class LocalStorageService {
     return this.getValueFromLocalStorage('tp_showAccumulatedScore', (x) => x === 'true') ?? false;
   }
 
+  public setDisplayTeamStatistics(enable: boolean): void {
+    localStorage.setItem('tp_showTeamStatistics', enable ? 'true' : 'false');
+  }
+
+  public isDisplayTeamStatisticsEnabled(): boolean {
+    return this.getValueFromLocalStorage('tp_showTeamStatistics', (x) => x === 'true') ?? false;
+  }
+
   public setOpenTournamentInNewTab(enable: boolean): void {
     localStorage.setItem('tp_openTournamentInNewTab', enable ? 'true' : 'false');
   }
@@ -80,6 +88,14 @@ export class LocalStorageService {
 
   public getAutoReloadConfig(): AutoReloadConfig | undefined {
     return this.getValueFromLocalStorage(`tp_autoReloadConfig`, (x) => JSON.parse(x) as AutoReloadConfig);
+  }
+
+  public setIncludeQrCodeOnFullscreenView(value: boolean): void {
+    localStorage.setItem(`tp_includeQrCodeOnFullscreenView`, value ? 'true' : 'false');
+  }
+
+  public getIncludeQrCodeOnFullscreenView(): boolean {
+    return this.getValueFromLocalStorage(`tp_includeQrCodeOnFullscreenView`, (x) => x === 'true') ?? true;
   }
 
   private getValueFromLocalStorage<T>(key: string, parser: (value: string) => T): T | undefined {

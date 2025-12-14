@@ -11,6 +11,7 @@ using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Dal.Extensions;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.ApiKeys;
 

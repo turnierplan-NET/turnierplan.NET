@@ -1,8 +1,8 @@
+using Turnierplan.Core.Entity;
 using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.RoleAssignment;
-using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament.Comparers;
 using Turnierplan.Core.Tournament.Definitions;
 using Turnierplan.Core.Tournament.TeamSelectors;
@@ -518,6 +518,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         ComputeGroupPhaseResults();
         ComputeMatches(match => !match.IsGroupMatch);
         ComputeRanking();
+        ComputeTeamStatistics();
     }
 
     private void ComputeMatches(Func<Match, bool> filter)
@@ -544,8 +545,8 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
                 foreach (var match in filteredMatches)
                 {
                     // We know ScoreA and ScoreB cannot be null because filteredMatches only contains matches with IsFinished = true
-                    var scoreFor = (match.TeamA == participant.Team ? match.ScoreA : match.ScoreB) ?? 0;
-                    var scoreAgainst = (match.TeamA == participant.Team ? match.ScoreB : match.ScoreA) ?? 0;
+                    var scoreFor = (match.TeamA == participant.Team ? match.ScoreA : match.ScoreB)!.Value;
+                    var scoreAgainst = (match.TeamA == participant.Team ? match.ScoreB : match.ScoreA)!.Value;
 
                     participant.Statistics.AddMatchOutcome(scoreFor, scoreAgainst, ComputationConfiguration);
                 }
@@ -567,6 +568,28 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         // TODO Implement new ranking algorithm
 
         Ranking.FinalizeRanking();
+    }
+
+    private void ComputeTeamStatistics()
+    {
+        foreach (var team in _teams)
+        {
+            team.Statistics.Reset();
+        }
+
+        foreach (var match in _matches)
+        {
+            if (!match.IsFinished)
+            {
+                continue;
+            }
+
+            // If the match outcome is 'SpecialScoring', the score of the match should not be counted towards the score of the teams.
+            var ignoreScoreCounter = match.OutcomeType is MatchOutcomeType.SpecialScoring;
+
+            match.TeamA?.Statistics.AddMatchOutcome(match.ScoreA.Value, match.ScoreB.Value, ignoreScoreCounter, ComputationConfiguration);
+            match.TeamB?.Statistics.AddMatchOutcome(match.ScoreB.Value, match.ScoreA.Value, ignoreScoreCounter, ComputationConfiguration);
+        }
     }
 
     private void GenerateGroupMatches(GroupRoundConfig? config, out int matchIndexOffset)

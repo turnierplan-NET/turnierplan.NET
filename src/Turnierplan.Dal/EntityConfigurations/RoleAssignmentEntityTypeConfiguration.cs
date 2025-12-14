@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Turnierplan.Core.Entity;
 using Turnierplan.Core.RoleAssignment;
-using Turnierplan.Core.SeedWork;
 using Turnierplan.Dal.Converters;
 
 namespace Turnierplan.Dal.EntityConfigurations;

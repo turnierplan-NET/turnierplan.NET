@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Helpers;
 using Turnierplan.App.Security;
-using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.Organizations;
 

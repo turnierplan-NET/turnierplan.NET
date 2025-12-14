@@ -1,4 +1,4 @@
-namespace Turnierplan.Core.SeedWork;
+namespace Turnierplan.Core.Entity;
 
 public abstract class Entity<TIdentifier>
 {

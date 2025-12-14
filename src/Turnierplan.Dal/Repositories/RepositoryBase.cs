@@ -1,18 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Turnierplan.Core.SeedWork;
+using Turnierplan.Core.Entity;
+using Turnierplan.Dal.UnitOfWork;
 
 namespace Turnierplan.Dal.Repositories;
 
-public abstract class RepositoryBase<TEntity, TIdentifier> : IRepository<TEntity, TIdentifier>
+internal abstract class RepositoryBase<TEntity, TIdentifier> : IRepository<TEntity, TIdentifier>
     where TEntity : Entity<TIdentifier>
 {
-    protected RepositoryBase(IUnitOfWork unitOfWork, DbSet<TEntity> dbSet)
+    protected RepositoryBase(TurnierplanContext context)
     {
-        ArgumentNullException.ThrowIfNull(unitOfWork);
-        ArgumentNullException.ThrowIfNull(dbSet);
+        UnitOfWork = context;
 
-        UnitOfWork = unitOfWork;
-        DbSet = dbSet;
+        var properties = typeof(TurnierplanContext)
+            .GetProperties()
+            .Where(x => x.PropertyType == typeof(DbSet<TEntity>))
+            .ToList();
+
+        if (properties.Count != 1)
+        {
+            throw new InvalidOperationException($"The '{nameof(TurnierplanContext)}' must have exactly one property of type '{nameof(DbSet<>)}<{typeof(TEntity).Name}>', but {properties.Count} where found.'");
+        }
+
+        DbSet = properties.Single().GetValue(context) as DbSet<TEntity> ?? throw new InvalidOperationException($"Failed to get '{nameof(DbSet<>)}<{typeof(TEntity).Name}>' from '{nameof(TurnierplanContext)}' via reflection.");
     }
 
     public IUnitOfWork UnitOfWork { get; }

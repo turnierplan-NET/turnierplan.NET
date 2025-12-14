@@ -3,7 +3,12 @@ using Turnierplan.Core.PlanningRealm;
 
 namespace Turnierplan.Dal.Repositories;
 
-internal sealed class ApplicationRepository(TurnierplanContext context) : RepositoryBase<Application, long>(context, context.Applications), IApplicationRepository
+public interface IApplicationRepository : IRepository<Application, long>
+{
+    Task<Application?> GetByFormSessionAsync(Guid formSession);
+}
+
+internal sealed class ApplicationRepository(TurnierplanContext context) : RepositoryBase<Application, long>(context), IApplicationRepository
 {
     public Task<Application?> GetByFormSessionAsync(Guid formSession)
     {

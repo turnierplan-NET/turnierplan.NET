@@ -26,6 +26,6 @@ internal sealed class ApplicationUrlProvider : IApplicationUrlProvider
             return string.Empty;
         }
 
-        return url;
+        return url.TrimEnd('/');
     }
 }

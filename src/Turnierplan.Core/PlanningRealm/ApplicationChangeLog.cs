@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using Turnierplan.Core.SeedWork;
+using Turnierplan.Core.Entity;
 
 namespace Turnierplan.Core.PlanningRealm;
 

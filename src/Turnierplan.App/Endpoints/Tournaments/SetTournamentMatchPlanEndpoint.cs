@@ -4,9 +4,9 @@ using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
 using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.PublicId;
-using Turnierplan.Core.Tournament;
 using Turnierplan.Core.Tournament.TeamSelectors;
 using Turnierplan.Dal.Converters;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.Tournaments;
 

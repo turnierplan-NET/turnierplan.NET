@@ -324,10 +324,19 @@ export const de = {
       Teams: {
         TableLabel: 'Mannschaften des Turniers',
         NoTeams: 'Keine Mannschaften vorhanden',
+        DisplayStatistics: 'Statistik anzeigen',
         Name: 'Name',
         Link: {
           Header: 'Anmeldung',
           Tooltip: 'Wenn eine Mannschaft aus einem Turnierplaner hinzugefügt wurde, können Sie hier zu der Anmeldung abspringen.'
+        },
+        MatchesPlayed: 'Sp.',
+        MatchesWon: 'G',
+        MatchesDrawn: 'U',
+        MatchesLost: 'V',
+        Score: {
+          Header: 'Tore',
+          Tooltip: 'Endet ein Spiel als "Sonderwertung (§)", werden die Tore aus diesem Spiel nicht gezählt.'
         },
         Priority: {
           Header: 'Priorität',
@@ -482,7 +491,8 @@ export const de = {
             Enabled: 'Automatisch aktualisieren',
             Interval: 'Intervall:',
             Seconds: 'Sekunden'
-          }
+          },
+          IncludeQrCode: 'Zeige QR-Code zum Scannen auf der Anzeigetafel'
         },
         Settings: 'Einstellungen',
         SettingsInfo: 'Konfigurieren Sie, wie die Turniere öffentlich präsentiert werden.',

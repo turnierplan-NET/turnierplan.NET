@@ -1,5 +1,5 @@
+using Turnierplan.Core.Entity;
 using Turnierplan.Core.RoleAssignment;
-using Turnierplan.Core.SeedWork;
 
 namespace Turnierplan.Core.PlanningRealm;
 

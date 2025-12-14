@@ -4,7 +4,28 @@ using Turnierplan.Core.Tournament;
 
 namespace Turnierplan.Dal.Repositories;
 
-internal sealed class TournamentRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Tournament>(context, context.Tournaments), ITournamentRepository
+public interface ITournamentRepository : IRepositoryWithPublicId<Tournament, long>
+{
+    Task<Tournament?> GetByPublicIdAsync(PublicId id, Includes includes);
+
+    [Flags]
+    public enum Includes
+    {
+        None = 0,
+        Teams = 1,
+        Groups = 2,
+        Matches = 4,
+        Documents = 8,
+        Venue = 16,
+        FolderWithTournaments = 32,
+        Images = 64,
+        TeamsWithLinks = 128,
+
+        GameRelevant = Teams | Groups | Matches
+    }
+}
+
+internal sealed class TournamentRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<Tournament>(context), ITournamentRepository
 {
     public override Task<Tournament?> GetByPublicIdAsync(PublicId id)
     {

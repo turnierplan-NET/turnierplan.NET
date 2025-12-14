@@ -76,122 +76,124 @@
 </ng-template>
 
 <ng-template #teamsSection>
-  <table class="table table-bordered shadow-sm">
-    <tbody>
-      @let numberOfColumns = groups.length > 1 ? 6 : 5;
-      @for (group of groups; track group.alphabeticalId; let groupIndex = $index) {
-        <tr>
-          <td [attr.colspan]="numberOfColumns" class="bg-body-tertiary">
-            <div class="d-flex flex-row gap-2 align-items-center">
-              @let hasCustomDisplayName = group.displayName.length;
-              @if (hasCustomDisplayName) {
-                <span
-                  class="fw-bold"
-                  translate="Portal.ConfigureTournament.Sections.Participants.GroupWithName"
-                  [translateParams]="{ alphabeticalId: group.alphabeticalId, displayName: group.displayName }"></span>
-              } @else {
-                <span
-                  class="fw-bold"
-                  translate="Portal.ConfigureTournament.Sections.Participants.GroupWithoutName"
-                  [translateParams]="{ alphabeticalId: group.alphabeticalId }"></span>
-              }
-              <tp-rename-button
-                class="ms-2"
-                translationKey="Portal.ConfigureTournament.Sections.Participants.GroupRename"
-                [displayLabel]="false"
-                [allowReset]="true"
-                [current]="hasCustomDisplayName ? group.displayName : undefined"
-                (renamed)="setGroupName(group, $event)"
-                (resetName)="setGroupName(group, '')" />
-              <tp-action-button
-                [icon]="'plus-circle'"
-                [type]="'outline-primary'"
-                [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.Button'"
-                [tpE2E]="['configure-tournament-page-add-group-button', group.alphabeticalId]"
-                (buttonClick)="addTeam(group)" />
-              <span class="flex-grow-1"></span>
-              @if (group.teams.length > 0) {
-                <tp-tooltip-icon
-                  [margin]="false"
-                  [iconClass]="'text-danger'"
-                  [tooltipText]="'Portal.ConfigureTournament.Sections.Participants.CannotDeleteGroupWithTeams'" />
-              } @else {
-                <tp-delete-button (confirmed)="removeGroup(groupIndex)" />
-              }
-            </div>
-          </td>
-        </tr>
-
-        @for (team of group.teams; track team; let index = $index; let isFirst = $first; let isLast = $last) {
+  <div class="table-responsive">
+    <table class="table table-bordered shadow-sm">
+      <tbody>
+        @let numberOfColumns = groups.length > 1 ? 6 : 5;
+        @for (group of groups; track group.alphabeticalId; let groupIndex = $index) {
           <tr>
-            <td style="width: 1px">{{ index + 1 }}.</td>
-            <td style="width: 1px">
-              @if (team.teamLink) {
-                <tp-tooltip-icon
-                  [margin]="false"
-                  [icon]="'ticket-perforated'"
-                  [tooltipText]="'Portal.ConfigureTournament.Sections.Participants.TeamFromPlanningRealm'"
-                  [tooltipTextParams]="{
-                    planningRealm: team.teamLink.planningRealmName,
-                    tournamentClass: team.teamLink.tournamentClassName
-                  }" />
-              }
-            </td>
-            <td>
-              <span>{{ team.name }}</span>
-              @if (!team.teamLink) {
+            <td [attr.colspan]="numberOfColumns" class="bg-body-tertiary">
+              <div class="d-flex flex-row gap-2 align-items-center">
+                @let hasCustomDisplayName = group.displayName.length;
+                @if (hasCustomDisplayName) {
+                  <span
+                    class="fw-bold"
+                    translate="Portal.ConfigureTournament.Sections.Participants.GroupWithName"
+                    [translateParams]="{ alphabeticalId: group.alphabeticalId, displayName: group.displayName }"></span>
+                } @else {
+                  <span
+                    class="fw-bold"
+                    translate="Portal.ConfigureTournament.Sections.Participants.GroupWithoutName"
+                    [translateParams]="{ alphabeticalId: group.alphabeticalId }"></span>
+                }
                 <tp-rename-button
                   class="ms-2"
-                  translationKey="Portal.ConfigureTournament.Sections.Participants.TeamRename"
+                  translationKey="Portal.ConfigureTournament.Sections.Participants.GroupRename"
                   [displayLabel]="false"
-                  [reducedFootprint]="true"
-                  [current]="team.name"
-                  (renamed)="setTeamName(team, $event)" />
-              }
-            </td>
-            <td style="width: 1px">
-              <div class="d-flex flex-row gap-2 justify-content-center">
-                @if (!isFirst) {
-                  <i class="bi bi-caret-up tp-cursor-pointer" (click)="swapTeams(group, index, index - 1)"></i>
-                }
-                @if (!isLast) {
-                  <i class="bi bi-caret-down tp-cursor-pointer" (click)="swapTeams(group, index, index + 1)"></i>
+                  [allowReset]="true"
+                  [current]="hasCustomDisplayName ? group.displayName : undefined"
+                  (renamed)="setGroupName(group, $event)"
+                  (resetName)="setGroupName(group, '')" />
+                <tp-action-button
+                  [icon]="'plus-circle'"
+                  [type]="'outline-primary'"
+                  [title]="'Portal.ConfigureTournament.Sections.Participants.AddTeam.Button'"
+                  [tpE2E]="['configure-tournament-page-add-group-button', group.alphabeticalId]"
+                  (buttonClick)="addTeam(group)" />
+                <span class="flex-grow-1"></span>
+                @if (group.teams.length > 0) {
+                  <tp-tooltip-icon
+                    [margin]="false"
+                    [iconClass]="'text-danger'"
+                    [tooltipText]="'Portal.ConfigureTournament.Sections.Participants.CannotDeleteGroupWithTeams'" />
+                } @else {
+                  <tp-delete-button (confirmed)="removeGroup(groupIndex)" />
                 }
               </div>
             </td>
-            @if (groups.length > 1) {
-              <td style="width: 1px">
-                <i
-                  class="bi bi-box-arrow-right tp-cursor-pointer"
-                  [ngbPopover]="moveTeamToGroupPopover"
-                  [autoClose]="'outside'"
-                  [placement]="'end'"
-                  container="body"
-                  popoverClass="tp-popover-slim"
-                  (click)="teamForMovingToOtherGroup = { team: team, currentGroup: group }"></i>
-              </td>
-            }
-            <td style="width: 1px">
-              <tp-delete-button [reducedFootprint]="true" (confirmed)="removeTeam(group, index)" />
-            </td>
           </tr>
+
+          @for (team of group.teams; track team; let index = $index; let isFirst = $first; let isLast = $last) {
+            <tr>
+              <td style="width: 1px">{{ index + 1 }}.</td>
+              <td style="width: 1px">
+                @if (team.teamLink) {
+                  <tp-tooltip-icon
+                    [margin]="false"
+                    [icon]="'ticket-perforated'"
+                    [tooltipText]="'Portal.ConfigureTournament.Sections.Participants.TeamFromPlanningRealm'"
+                    [tooltipTextParams]="{
+                      planningRealm: team.teamLink.planningRealmName,
+                      tournamentClass: team.teamLink.tournamentClassName
+                    }" />
+                }
+              </td>
+              <td>
+                <span>{{ team.name }}</span>
+                @if (!team.teamLink) {
+                  <tp-rename-button
+                    class="ms-2"
+                    translationKey="Portal.ConfigureTournament.Sections.Participants.TeamRename"
+                    [displayLabel]="false"
+                    [reducedFootprint]="true"
+                    [current]="team.name"
+                    (renamed)="setTeamName(team, $event)" />
+                }
+              </td>
+              <td style="width: 1px">
+                <div class="d-flex flex-row gap-2 justify-content-center">
+                  @if (!isFirst) {
+                    <i class="bi bi-caret-up tp-cursor-pointer" (click)="swapTeams(group, index, index - 1)"></i>
+                  }
+                  @if (!isLast) {
+                    <i class="bi bi-caret-down tp-cursor-pointer" (click)="swapTeams(group, index, index + 1)"></i>
+                  }
+                </div>
+              </td>
+              @if (groups.length > 1) {
+                <td style="width: 1px">
+                  <i
+                    class="bi bi-box-arrow-right tp-cursor-pointer"
+                    [ngbPopover]="moveTeamToGroupPopover"
+                    [autoClose]="'outside'"
+                    [placement]="'end'"
+                    container="body"
+                    popoverClass="tp-popover-slim"
+                    (click)="teamForMovingToOtherGroup = { team: team, currentGroup: group }"></i>
+                </td>
+              }
+              <td style="width: 1px">
+                <tp-delete-button [reducedFootprint]="true" (confirmed)="removeTeam(group, index)" />
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td
+                [attr.colspan]="numberOfColumns"
+                [ngClass]="attemptedToSaveChanges ? 'small fw-bold text-danger' : 'small fst-italic'"
+                translate="Portal.ConfigureTournament.Sections.Participants.NoTeamsNotice"></td>
+            </tr>
+          }
         } @empty {
           <tr>
             <td
-              [attr.colspan]="numberOfColumns"
-              [ngClass]="attemptedToSaveChanges ? 'small fw-bold text-danger' : 'small fst-italic'"
-              translate="Portal.ConfigureTournament.Sections.Participants.NoTeamsNotice"></td>
+              [ngClass]="attemptedToSaveChanges && groups.length === 0 ? 'small fw-bold text-danger' : 'small fst-italic'"
+              translate="Portal.ConfigureTournament.Sections.Participants.NoGroupsNotice"></td>
           </tr>
         }
-      } @empty {
-        <tr>
-          <td
-            [ngClass]="attemptedToSaveChanges && groups.length === 0 ? 'small fw-bold text-danger' : 'small fst-italic'"
-            translate="Portal.ConfigureTournament.Sections.Participants.NoGroupsNotice"></td>
-        </tr>
-      }
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 
   <div class="d-flex flex-row justify-content-center gap-2">
     <tp-action-button

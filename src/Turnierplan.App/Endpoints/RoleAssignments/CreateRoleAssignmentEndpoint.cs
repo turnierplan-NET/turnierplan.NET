@@ -6,6 +6,7 @@ using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
 using Turnierplan.Core.ApiKey;
+using Turnierplan.Core.Entity;
 using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
@@ -13,10 +14,9 @@ using Turnierplan.Core.Organization;
 using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.RoleAssignment;
-using Turnierplan.Core.SeedWork;
 using Turnierplan.Core.Tournament;
-using Turnierplan.Core.User;
 using Turnierplan.Core.Venue;
+using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.RoleAssignments;
 
@@ -142,9 +142,9 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
 
         public required Role Role { get; init; }
 
-        public required PublicId? ApiKeyId { get; init; }
+        public PublicId? ApiKeyId { get; init; }
 
-        public required string? UserNameOrEmail { get; init; }
+        public string? UserNameOrEmail { get; init; }
     }
 
     private sealed class Validator : AbstractValidator<CreateRoleAssignmentEndpointRequest>

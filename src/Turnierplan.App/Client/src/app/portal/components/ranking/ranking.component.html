@@ -1,20 +1,22 @@
-<table class="table table-hover" [attr.aria-label]="'Portal.ViewTournament.Ranking.TableLabel' | translate">
-  <thead>
-    <tr>
-      <th translate="Portal.ViewTournament.Ranking.Position"></th>
-      <th translate="Portal.ViewTournament.Ranking.Team"></th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (ranking of rankings; track ranking.position) {
+<div class="table-responsive">
+  <table class="table table-hover" [attr.aria-label]="'Portal.ViewTournament.Ranking.TableLabel' | translate">
+    <thead>
       <tr>
-        <td>{{ ranking.position }}</td>
-        <td [tpE2E]="['view-tournament-page-ranking-team-name', ranking.position]">{{ ranking.team }}</td>
+        <th translate="Portal.ViewTournament.Ranking.Position"></th>
+        <th translate="Portal.ViewTournament.Ranking.Team"></th>
       </tr>
-    } @empty {
-      <tr>
-        <td translate="Portal.ViewTournament.Ranking.NoRankings" colspan="2"></td>
-      </tr>
-    }
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      @for (ranking of rankings; track ranking.position) {
+        <tr>
+          <td>{{ ranking.position }}</td>
+          <td [tpE2E]="['view-tournament-page-ranking-team-name', ranking.position]">{{ ranking.team }}</td>
+        </tr>
+      } @empty {
+        <tr>
+          <td translate="Portal.ViewTournament.Ranking.NoRankings" colspan="2"></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

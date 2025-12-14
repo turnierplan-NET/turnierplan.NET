@@ -1,153 +1,172 @@
 @let genericWriteAllowed = (authorizationService.isActionAllowed$(tournamentId, Actions.GenericWrite) | async) ?? false;
 @let tournamentConductAllowed = (authorizationService.isActionAllowed$(tournamentId, Actions.TournamentConduct) | async) ?? false;
 
-<table class="table table-hover" [attr.aria-label]="'Portal.ViewTournament.Teams.TableLabelTableLabel' | translate">
-  @let showLinkColumn = hasTeamsWithLink;
-  <thead>
-    <tr>
-      <th style="width: 0"></th>
-      <th style="width: 38%" translate="Portal.ViewTournament.Teams.Name"></th>
-      @if (showLinkColumn) {
-        <th class="text-nowrap">
-          <span translate="Portal.ViewTournament.Teams.Link.Header"></span>
-          <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.Link.Tooltip'" />
-        </th>
-      }
-      <th class="text-nowrap">
-        <span translate="Portal.ViewTournament.Teams.Priority.Header"></span>
-        <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.Priority.Tooltip'" />
-      </th>
-      <th class="text-nowrap">
-        <span translate="Portal.ViewTournament.Teams.OutOfCompetition.Header"></span>
-        <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.OutOfCompetition.Tooltip'" />
-      </th>
-      <th class="text-nowrap">
-        <span translate="Portal.ViewTournament.Teams.EntryFeePaid.Header"></span>
-        <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.EntryFeePaid.Tooltip'" />
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (team of teams; track team.id) {
+<div class="table-responsive">
+  <table class="table table-hover" [attr.aria-label]="'Portal.ViewTournament.Teams.TableLabelTableLabel' | translate">
+    @let showLinkColumn = hasTeamsWithLink;
+    <thead>
       <tr>
-        <td class="align-middle text-center">
-          @if (genericWriteAllowed) {
-            @if (team.teamLink !== undefined) {
-              <tp-tooltip-icon
-                [margin]="false"
-                [iconClass]="'text-secondary'"
-                [tooltipText]="'Portal.ViewTournament.Teams.RenameDisabledTooltip'" />
-            } @else {
-              <tp-rename-button
-                translationKey="Portal.ViewTournament.Teams.Rename"
-                [displayLabel]="false"
-                [allowReset]="false"
-                [current]="team.name"
-                (renamed)="renameTeam(team.id, $event)" />
-            }
-          }
-        </td>
-        <td class="align-middle">
-          @if (team.showLoadingIndicator.name) {
-            <tp-small-spinner />
-          } @else {
-            {{ team.name }}
-          }
-        </td>
+        <th style="width: 0"></th>
+        <th style="width: 38%" translate="Portal.ViewTournament.Teams.Name"></th>
         @if (showLinkColumn) {
-          <td class="text-nowrap align-middle">
-            @if (team.teamLink) {
-              <div class="d-flex flex-row align-items-center gap-2 pe-3">
-                <span>{{ team.teamLink.tournamentClassName }}</span>
+          <th class="text-nowrap">
+            <span translate="Portal.ViewTournament.Teams.Link.Header"></span>
+            <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.Link.Tooltip'" />
+          </th>
+        }
+        @if (displayTeamStatistics) {
+          <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesPlayed"></th>
+          <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesWon"></th>
+          <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesDrawn"></th>
+          <th scope="col" class="text-center" style="width: 1px" translate="Portal.ViewTournament.Teams.MatchesLost"></th>
+          <th class="text-nowrap">
+            <span translate="Portal.ViewTournament.Teams.Score.Header"></span>
+            <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.Score.Tooltip'" />
+          </th>
+        }
+        <th class="text-nowrap">
+          <span translate="Portal.ViewTournament.Teams.Priority.Header"></span>
+          <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.Priority.Tooltip'" />
+        </th>
+        <th class="text-nowrap">
+          <span translate="Portal.ViewTournament.Teams.OutOfCompetition.Header"></span>
+          <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.OutOfCompetition.Tooltip'" />
+        </th>
+        <th class="text-nowrap">
+          <span translate="Portal.ViewTournament.Teams.EntryFeePaid.Header"></span>
+          <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Teams.EntryFeePaid.Tooltip'" />
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (team of teams; track team.id) {
+        <tr>
+          <td class="align-middle text-center">
+            @if (genericWriteAllowed) {
+              @if (team.teamLink !== undefined) {
                 <tp-tooltip-icon
                   [margin]="false"
-                  [icon]="'question-circle'"
                   [iconClass]="'text-secondary'"
-                  [tooltipText]="team.teamLink.planningRealmName" />
-                <tp-action-button
-                  [icon]="'box-arrow-up-right'"
-                  [mode]="'IconOnly'"
-                  [type]="'outline-secondary'"
-                  *tpIsActionAllowed="[team.teamLink.planningRealmId, Actions.ApplicationsRead]"
-                  (buttonClick)="navigateToPlanningRealm(team.teamLink.planningRealmId, team.teamLink.applicationTeamId)" />
+                  [tooltipText]="'Portal.ViewTournament.Teams.RenameDisabledTooltip'" />
+              } @else {
+                <tp-rename-button
+                  translationKey="Portal.ViewTournament.Teams.Rename"
+                  [displayLabel]="false"
+                  [allowReset]="false"
+                  [current]="team.name"
+                  (renamed)="renameTeam(team.id, $event)" />
+              }
+            }
+          </td>
+          <td class="align-middle">
+            @if (team.showLoadingIndicator.name) {
+              <tp-small-spinner />
+            } @else {
+              {{ team.name }}
+            }
+          </td>
+          @if (showLinkColumn) {
+            <td class="text-nowrap align-middle">
+              @if (team.teamLink) {
+                <div class="d-flex flex-row align-items-center gap-2 pe-3">
+                  <span>{{ team.teamLink.tournamentClassName }}</span>
+                  <tp-tooltip-icon
+                    [margin]="false"
+                    [icon]="'question-circle'"
+                    [iconClass]="'text-secondary'"
+                    [tooltipText]="team.teamLink.planningRealmName" />
+                  <tp-action-button
+                    [icon]="'box-arrow-up-right'"
+                    [mode]="'IconOnly'"
+                    [type]="'outline-secondary'"
+                    *tpIsActionAllowed="[team.teamLink.planningRealmId, Actions.ApplicationsRead]"
+                    (buttonClick)="navigateToPlanningRealm(team.teamLink.planningRealmId, team.teamLink.applicationTeamId)" />
+                </div>
+              }
+            </td>
+          }
+          @if (displayTeamStatistics) {
+            <td class="align-middle text-center">{{ team.matches }}</td>
+            <td class="align-middle text-center">{{ team.won }}</td>
+            <td class="align-middle text-center">{{ team.drawn }}</td>
+            <td class="align-middle text-center">{{ team.lost }}</td>
+            <td class="align-middle text-center">{{ team.score }}</td>
+          }
+          <td class="align-middle">
+            @if (team.groupId !== undefined && team.priority !== undefined) {
+              <div class="d-flex flex-row gap-2 justify-content-between align-items-center" style="width: 4em">
+                @if (tournamentConductAllowed) {
+                  <i class="bi bi-dash-circle tp-cursor-pointer" (click)="setTeamPriority(team.id, -1)"></i>
+                }
+                @if (team.showLoadingIndicator.priority) {
+                  <tp-small-spinner />
+                } @else {
+                  <span>{{ team.priority }}</span>
+                }
+                @if (tournamentConductAllowed) {
+                  <i class="bi bi-plus-circle tp-cursor-pointer" (click)="setTeamPriority(team.id, 1)"></i>
+                }
               </div>
             }
           </td>
-        }
-        <td class="align-middle">
-          @if (team.groupId !== undefined && team.priority !== undefined) {
-            <div class="d-flex flex-row gap-2 justify-content-between align-items-center" style="width: 4em">
-              @if (tournamentConductAllowed) {
-                <i class="bi bi-dash-circle tp-cursor-pointer" (click)="setTeamPriority(team.id, -1)"></i>
-              }
-              @if (team.showLoadingIndicator.priority) {
-                <tp-small-spinner />
-              } @else {
-                <span>{{ team.priority }}</span>
-              }
-              @if (tournamentConductAllowed) {
-                <i class="bi bi-plus-circle tp-cursor-pointer" (click)="setTeamPriority(team.id, 1)"></i>
-              }
-            </div>
-          }
-        </td>
-        <td class="align-middle">
-          @if (team.showLoadingIndicator.outOfCompetition) {
-            <tp-small-spinner class="ms-2" />
-          } @else {
-            <div class="form-check form-switch">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                role="switch"
-                [disabled]="!genericWriteAllowed"
-                [checked]="team.outOfCompetition"
-                [ngClass]="{ 'pe-none': isUpdatingAnyTeam }"
-                (change)="toggleTeamOutOfCompetition(team.id)" />
-            </div>
-          }
-        </td>
-        <td class="align-middle text-nowrap">
-          <div class="d-flex flex-row gap-2 align-items-center">
-            @if (team.showLoadingIndicator.entryFee) {
-              <tp-small-spinner />
-            } @else if (team.entryFeePaidAt) {
-              <i class="bi bi-check-circle-fill text-success"></i>
-              <span class="small">
-                <span translate="Portal.ViewTournament.Teams.EntryFeePaid.PaidAt"></span>
-                <span class="ms-1">{{ team.entryFeePaidAt | translateDate: 'medium' }}</span>
-              </span>
-              @if (tournamentConductAllowed) {
-                <i
-                  class="bi bi-arrow-counterclockwise tp-cursor-pointer"
-                  [ngbPopover]="resetEntryFeeConfirmationPopup"
-                  [popoverContext]="{ teamId: team.id }"
-                  [autoClose]="'outside'"
-                  [container]="'body'"
-                  [popoverClass]="'tp-popover-slim'"></i>
-              }
+          <td class="align-middle">
+            @if (team.showLoadingIndicator.outOfCompetition) {
+              <tp-small-spinner class="ms-2" />
             } @else {
-              <i class="bi bi-x-circle text-danger"></i>
-              <span class="small" translate="Portal.ViewTournament.Teams.EntryFeePaid.NotPaid"></span>
-              @if (tournamentConductAllowed) {
-                <tp-action-button
-                  icon="cash-coin"
-                  type="outline-secondary"
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  role="switch"
+                  [disabled]="!genericWriteAllowed"
+                  [checked]="team.outOfCompetition"
                   [ngClass]="{ 'pe-none': isUpdatingAnyTeam }"
-                  [title]="'Portal.ViewTournament.Teams.EntryFeePaid.Pay'"
-                  (buttonClick)="setTeamEntryFeePaid(team.id, true)" />
-              }
+                  (change)="toggleTeamOutOfCompetition(team.id)" />
+              </div>
             }
-          </div>
-        </td>
-      </tr>
-    } @empty {
-      <tr>
-        <td [attr.colspan]="showLinkColumn ? 6 : 5" translate="Portal.ViewTournament.Teams.NoTeams"></td>
-      </tr>
-    }
-  </tbody>
-</table>
+          </td>
+          <td class="align-middle text-nowrap">
+            <div class="d-flex flex-row gap-2 align-items-center">
+              @if (team.showLoadingIndicator.entryFee) {
+                <tp-small-spinner />
+              } @else if (team.entryFeePaidAt) {
+                <i class="bi bi-check-circle-fill text-success"></i>
+                <span class="small">
+                  <span translate="Portal.ViewTournament.Teams.EntryFeePaid.PaidAt"></span>
+                  <span class="ms-1">{{ team.entryFeePaidAt | translateDate: 'medium' }}</span>
+                </span>
+                @if (tournamentConductAllowed) {
+                  <i
+                    class="bi bi-arrow-counterclockwise tp-cursor-pointer"
+                    [ngbPopover]="resetEntryFeeConfirmationPopup"
+                    [popoverContext]="{ teamId: team.id }"
+                    [autoClose]="'outside'"
+                    [container]="'body'"
+                    [popoverClass]="'tp-popover-slim'"></i>
+                }
+              } @else {
+                <i class="bi bi-x-circle text-danger"></i>
+                <span class="small" translate="Portal.ViewTournament.Teams.EntryFeePaid.NotPaid"></span>
+                @if (tournamentConductAllowed) {
+                  <tp-action-button
+                    icon="cash-coin"
+                    type="outline-secondary"
+                    [ngClass]="{ 'pe-none': isUpdatingAnyTeam }"
+                    [title]="'Portal.ViewTournament.Teams.EntryFeePaid.Pay'"
+                    (buttonClick)="setTeamEntryFeePaid(team.id, true)" />
+                }
+              }
+            </div>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td [attr.colspan]="showLinkColumn ? 6 : 5" translate="Portal.ViewTournament.Teams.NoTeams"></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
 
 <ng-template #resetEntryFeeConfirmationPopup let-teamId="teamId">
   <div class="px-3 py-2 d-flex flex-row align-items-center gap-3">
