@@ -118,7 +118,7 @@ internal sealed class TournamentMappingRule : MappingRuleBase<Tournament, Tourna
                     OutcomeType = match.OutcomeType
                 };
             }).OrderBy(x => x.Index).ToArray(),
-            Rankings = source.Ranking.Select(entry =>
+            Rankings = source.Ranking.Positions.Select(entry =>
             {
                 return new RankingDto
                 {

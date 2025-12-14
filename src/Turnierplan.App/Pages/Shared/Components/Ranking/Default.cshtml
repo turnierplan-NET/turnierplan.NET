@@ -8,7 +8,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var ranking in Model.Tournament.Ranking)
+    @foreach (var ranking in Model.Tournament.Ranking.Positions)
     {
         <tr class="ranking-@ranking.Position">
             <td class="ps-3">@(ranking.Position).</td>
