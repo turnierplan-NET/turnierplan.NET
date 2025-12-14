@@ -44,3 +44,15 @@ tr.ranking-2 > td {
 tr.ranking-3 > td {
   background: #f1e1d6 !important;
 }
+
+@media (width < 576px) {
+  img.tournament-banner-image {
+    max-width: calc(100vw - 16px);
+  }
+}
+
+@media (width >= 576px) {
+  img.tournament-banner-image {
+    max-width: min(900px, 90vw);
+  }
+}
