@@ -1002,6 +1002,4 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
         internal sealed record MatchDefinition(Group Group, int BlockIndex, TeamSelectorBase TeamA, TeamSelectorBase TeamB);
     }
-
-    private sealed record RankingEligibleTeam(GroupParticipant? CombinedGroupStats, int BestFinalsRoundPlayed);
 }
