@@ -1,3 +1,4 @@
+@using System.Web
 <!doctype html>
 <html lang="de">
 <head>
@@ -14,10 +15,10 @@
     <link rel="manifest" href="/site.webmanifest" />
 
     <link rel="stylesheet" type="text/css" href="/assets/bootstrap.5.3.8.min.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/turnierplan.css?v=2025-11-02" />
+    <link rel="stylesheet" type="text/css" href="/assets/turnierplan.css?v=2025-12-14" />
 
     <script>
-        document.title = `@ViewData["Title"] \u00b7 turnierplan.NET`;
+        document.title = `@Html.Raw(HttpUtility.JavaScriptStringEncode(ViewData["Title"] as string)) \u00b7 turnierplan.NET`;
         const twoDigit = (x) => { return x < 10 ? `0${x}` : `${x}`; }
     </script>
 </head>
