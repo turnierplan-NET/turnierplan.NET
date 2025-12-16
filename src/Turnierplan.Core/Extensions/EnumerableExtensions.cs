@@ -27,11 +27,6 @@ internal static class EnumerableExtensions
         return result;
     }
 
-    public static IEnumerable<T> WhereNotNull<T>(this IEnumerable<T?> source)
-    {
-        return source.Where(x => x is not null)!;
-    }
-
     public static bool IsSequential<T>(this IEnumerable<T> source, T first)
         where T : IIncrementOperators<T>, IEquatable<T>
     {
