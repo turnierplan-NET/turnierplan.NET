@@ -111,7 +111,7 @@ internal sealed class RankingSection
         {
             // all team "slots" are filled => the teams can be compared and ranked
             IsDefined = true;
-            Teams = [..SortTeams(tournament, relevantTeamsTop, relevantMatches), ..SortTeams(tournament, relevantTeamsBottom, relevantMatches)]; // TODO: Sort teams by their relative score in the K/O matches
+            Teams = [..SortTeams(tournament, relevantTeamsTop, relevantMatches), ..SortTeams(tournament, relevantTeamsBottom, relevantMatches)];
         }
         else
         {
@@ -142,9 +142,20 @@ internal sealed class RankingSection
     public ImmutableArray<Team>? Teams { get; }
 
     /// <summary>
-    /// Sorts a list of teams by match results and their relative group statistics and returns the result.
+    /// <para>
+    /// Sorts a list of teams by the following criteria:
+    /// </para>
+    /// <para>
+    /// If <paramref name="sortByMatches"/> is specified, the teams will primarily be ordered based on their success
+    /// in the matches included in the set.
+    /// </para>
+    /// <para>
+    /// If <paramref name="sortByMatches"/> is not specified <b>or</b> two teams cannot be ordered based on the match
+    /// outcomes, they will be ordered based on their group statistics. The underlying <see cref="TeamComparer"/>
+    /// always ensures a determinstic ordering: As a last resort, it uses the team's IDs.
+    /// </para>
     /// </summary>
-    private static IEnumerable<Team> SortTeams(Tournament tournament, List<Team> teams, HashSet<Match>? relevantMatches)
+    private static IEnumerable<Team> SortTeams(Tournament tournament, List<Team> teams, HashSet<Match>? sortByMatches)
     {
         var comparer = new TeamComparer(tournament);
 
@@ -156,13 +167,13 @@ internal sealed class RankingSection
                     .WhereNotNull()
                     .ToList();
 
-                TeamGroupStatistics? relevantMatchesStatistics = null;
+                TeamGroupStatistics? sortByMatchesStatistics = null;
 
-                if (relevantMatches is not null)
+                if (sortByMatches is not null)
                 {
-                    relevantMatchesStatistics = new TeamGroupStatistics();
+                    sortByMatchesStatistics = new TeamGroupStatistics();
 
-                    foreach (var match in relevantMatches)
+                    foreach (var match in sortByMatches)
                     {
                         if (!match.IsTeamParticipant(team))
                         {
@@ -172,7 +183,7 @@ internal sealed class RankingSection
                         var scoreFor = (match.TeamA == team ? match.ScoreA : match.ScoreB)!.Value;
                         var scoreAgainst = (match.TeamA == team ? match.ScoreB : match.ScoreA)!.Value;
 
-                        relevantMatchesStatistics.AddMatchOutcome(scoreFor, scoreAgainst, tournament.ComputationConfiguration);
+                        sortByMatchesStatistics.AddMatchOutcome(scoreFor, scoreAgainst, tournament.ComputationConfiguration);
                     }
                 }
 
@@ -182,7 +193,7 @@ internal sealed class RankingSection
                     {
                         Team = team,
                         Statistics = new TeamGroupStatistics(),
-                        RelevantMatchesStatistics = relevantMatchesStatistics
+                        SortByMatchesStatistics = sortByMatchesStatistics
                     };
                 }
 
@@ -191,7 +202,7 @@ internal sealed class RankingSection
                     Team = team,
                     Priority = participations.Max(x => x.Priority),
                     Statistics = participations.Select(x => x.Statistics).Combine(),
-                    RelevantMatchesStatistics = relevantMatchesStatistics
+                    SortByMatchesStatistics = sortByMatchesStatistics
                 };
             })
             .Order(comparer)
@@ -202,13 +213,13 @@ internal sealed class RankingSection
     {
         public required Team Team { get; init; }
 
-        public int Order { get; init; }
+        public int Order => 0;
 
         public int Priority { get; init; }
 
         public required TeamGroupStatistics Statistics { get; init; }
 
-        public required TeamGroupStatistics? RelevantMatchesStatistics { get; init; }
+        public required TeamGroupStatistics? SortByMatchesStatistics { get; init; }
 
         public bool HasAssociatedGroup => false;
 
@@ -234,15 +245,15 @@ internal sealed class RankingSection
 
         private int CompareTeams(TemporaryTeam x, TemporaryTeam y)
         {
-            if (x.RelevantMatchesStatistics is not null && y.RelevantMatchesStatistics is not null)
+            if (x.SortByMatchesStatistics is not null && y.SortByMatchesStatistics is not null)
             {
                 foreach (var mode in tournament.ComputationConfiguration.ComparisonModes)
                 {
                     var diff = mode switch
                     {
-                        TeamComparisonMode.ByPoints => y.RelevantMatchesStatistics.Points - x.RelevantMatchesStatistics.Points,
-                        TeamComparisonMode.ByScoreDifference => y.RelevantMatchesStatistics.ScoreDifference - x.RelevantMatchesStatistics.ScoreDifference,
-                        TeamComparisonMode.ByScore => y.RelevantMatchesStatistics.ScoreFor - x.RelevantMatchesStatistics.ScoreFor,
+                        TeamComparisonMode.ByPoints => y.SortByMatchesStatistics.Points - x.SortByMatchesStatistics.Points,
+                        TeamComparisonMode.ByScoreDifference => y.SortByMatchesStatistics.ScoreDifference - x.SortByMatchesStatistics.ScoreDifference,
+                        TeamComparisonMode.ByScore => y.SortByMatchesStatistics.ScoreFor - x.SortByMatchesStatistics.ScoreFor,
                         TeamComparisonMode.ByDirectComparison => 0, // Direct comparison is ignored in this case
                         _ => throw new TurnierplanException($"Invalid comparison mode specified: {mode}")
                     };
