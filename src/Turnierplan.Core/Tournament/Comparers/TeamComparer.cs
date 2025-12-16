@@ -2,15 +2,8 @@
 
 namespace Turnierplan.Core.Tournament.Comparers;
 
-internal sealed class TeamComparer : IComparer<IComparableTeam>
+internal sealed class TeamComparer(Tournament tournament) : IComparer<IComparableTeam>
 {
-    private readonly Tournament _tournament;
-
-    public TeamComparer(Tournament tournament)
-    {
-        _tournament = tournament;
-    }
-
     public int Compare(IComparableTeam? x, IComparableTeam? y)
     {
         if (Equals(x, y))
@@ -38,7 +31,7 @@ internal sealed class TeamComparer : IComparer<IComparableTeam>
             return -1;
         }
 
-        foreach (var mode in _tournament.ComputationConfiguration.ComparisonModes)
+        foreach (var mode in tournament.ComputationConfiguration.ComparisonModes)
         {
             var diff = Math.Sign(CompareParticipants(x, y, mode));
 
@@ -86,7 +79,7 @@ internal sealed class TeamComparer : IComparer<IComparableTeam>
             return 0;
         }
 
-        var matches = _tournament._matches
+        var matches = tournament._matches
             .Where(match => match.AreBothTeamsParticipant(x.Team, y.Team) && match.Group == x.AssociatedGroup && match.IsFinished)
             .ToList();
 
