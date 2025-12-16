@@ -11,7 +11,7 @@ namespace Turnierplan.Core.Tournament;
 
 public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tournament>, IEntityWithOrganization
 {
-    internal readonly GroupParticipantComparer _groupParticipantComparer;
+    internal readonly TeamComparer _teamComparer;
     internal int? _nextEntityId;
 
     internal readonly List<RoleAssignment<Tournament>> _roleAssignments = [];
@@ -22,7 +22,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     public Tournament(Organization.Organization organization, string name, Visibility visibility)
     {
-        _groupParticipantComparer = new GroupParticipantComparer(this);
+        _teamComparer = new TeamComparer(this);
 
         organization._tournaments.Add(this);
 
@@ -40,7 +40,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     internal Tournament(long id, PublicId.PublicId publicId, DateTime createdAt, string name, Visibility visibility, int publicPageViews)
     {
-        _groupParticipantComparer = new GroupParticipantComparer(this);
+        _teamComparer = new TeamComparer(this);
 
         Id = id;
         PublicId = publicId;
@@ -556,7 +556,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
             var position = 1;
 
-            foreach (var team in group._participants.Order(_groupParticipantComparer))
+            foreach (var team in group._participants.Order(_teamComparer))
             {
                 team.Statistics.Position = position++;
             }
