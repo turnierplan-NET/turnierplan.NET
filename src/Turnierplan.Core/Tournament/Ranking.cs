@@ -4,7 +4,13 @@ namespace Turnierplan.Core.Tournament;
 
 public sealed class Ranking
 {
+    private readonly Tournament _tournament;
     private readonly List<RankingPosition> _positions = [];
+
+    internal Ranking(Tournament tournament)
+    {
+        _tournament = tournament;
+    }
 
     public bool IsEvaluated { get; private set; }
 
@@ -23,16 +29,17 @@ public sealed class Ranking
         return _positions.Single(x => x.Position == position);
     }
 
-    internal void Evaluate(IReadOnlyCollection<Team> teams, IReadOnlyCollection<Match> matches)
+    internal void Evaluate()
     {
-        _positions.Clear();
-
-        // TODO: Implement new algorithm and insert into the temporary list
         var positionsTemporary = new List<RankingPosition>();
 
+        // TODO: Implement new algorithm and insert into the temporary list
+
+        _positions.Clear();
         _positions.AddRange(positionsTemporary
             .OrderBy(x => x.Position)
             .ThenBy(x => x.Team?.Name));
+
         IsEvaluated = true;
     }
 

@@ -35,6 +35,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         PublicPageViews = 0;
         ComputationConfiguration = new ComputationConfiguration();
         PresentationConfiguration = new PresentationConfiguration();
+        Ranking = new Ranking(this);
     }
 
     internal Tournament(long id, PublicId.PublicId publicId, DateTime createdAt, string name, Visibility visibility, int publicPageViews)
@@ -49,6 +50,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         PublicPageViews = publicPageViews;
         ComputationConfiguration = new ComputationConfiguration();
         PresentationConfiguration = new PresentationConfiguration();
+        Ranking = new Ranking(this);
     }
 
     public override long Id { get; protected set; }
@@ -93,7 +95,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     public IReadOnlyList<Document.Document> Documents => _documents.AsReadOnly();
 
-    public Ranking Ranking { get; } = new();
+    public Ranking Ranking { get; }
 
     public DateTime? StartTimestamp
     {
@@ -517,7 +519,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         ComputeMatches(match => match.IsGroupMatch);
         ComputeGroupPhaseResults();
         ComputeMatches(match => !match.IsGroupMatch);
-        ComputeRanking();
+        Ranking.Evaluate();
         ComputeTeamStatistics();
     }
 
@@ -559,11 +561,6 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
                 team.Statistics.Position = position++;
             }
         }
-    }
-
-    private void ComputeRanking()
-    {
-        Ranking.Evaluate(_teams, _matches);
     }
 
     private void ComputeTeamStatistics()
