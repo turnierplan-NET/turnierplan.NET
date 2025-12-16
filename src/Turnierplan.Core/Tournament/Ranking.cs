@@ -78,13 +78,18 @@ public sealed class Ranking
             // Iterate over all sections, starting from the highest tier, and copy the rankings
             foreach (var section in sections.OrderByDescending(x => x.Tier))
             {
+                if (section.Size == 0)
+                {
+                    continue;
+                }
+
                 if (section.IsDefined)
                 {
                     var teamsAdded = 0;
 
                     foreach (var team in section.Teams)
                     {
-                        positionsTemporary.Add(new RankingPosition(++nextPosition, team));
+                        positionsTemporary.Add(new RankingPosition(nextPosition++, team));
                         teamsAdded++;
                     }
 
@@ -97,7 +102,7 @@ public sealed class Ranking
                 {
                     for (var i = 0; i < section.Size; i++)
                     {
-                        positionsTemporary.Add(new RankingPosition(++nextPosition, null));
+                        positionsTemporary.Add(new RankingPosition(nextPosition++, null));
                     }
                 }
             }

@@ -62,13 +62,13 @@ internal sealed class RankingSection
             // Check whether any other match in the tournament references the current match's winner/loser
             var otherMatches = tournament._matches.Where(x => x.IsDecidingMatch && x.FinalsRound != finalsRound).ToList();
             var includeWinnerInSection = otherMatches
-                .None(x => (x.TeamSelectorA is MatchSelector { SelectionMode: MatchSelector.Mode.Winner } msA && msA.TargetMatchIndex == x.Index)
-                    || (x.TeamSelectorB is MatchSelector { SelectionMode: MatchSelector.Mode.Winner } msB && msB.TargetMatchIndex == x.Index));
+                .None(x => (x.TeamSelectorA is MatchSelector { SelectionMode: MatchSelector.Mode.Winner } msA && msA.TargetMatchIndex == match.Index)
+                    || (x.TeamSelectorB is MatchSelector { SelectionMode: MatchSelector.Mode.Winner } msB && msB.TargetMatchIndex == match.Index));
             var includeLoserInSection = otherMatches
-                .None(x => (x.TeamSelectorA is MatchSelector { SelectionMode: MatchSelector.Mode.Loser } msA && msA.TargetMatchIndex == x.Index)
-                    || (x.TeamSelectorB is MatchSelector { SelectionMode: MatchSelector.Mode.Loser } msB && msB.TargetMatchIndex == x.Index));
+                .None(x => (x.TeamSelectorA is MatchSelector { SelectionMode: MatchSelector.Mode.Loser } msA && msA.TargetMatchIndex == match.Index)
+                    || (x.TeamSelectorB is MatchSelector { SelectionMode: MatchSelector.Mode.Loser } msB && msB.TargetMatchIndex == match.Index));
 
-            if (!includeWinnerInSection)
+            if (includeWinnerInSection)
             {
                 // This match's winner is not referenced by any other match => This match's winner must be placed in this section.
                 // To be honest, this should never happen in a "normal" tournament because a deciding match winner typically
@@ -82,7 +82,7 @@ internal sealed class RankingSection
                 }
             }
 
-            if (!includeLoserInSection)
+            if (includeLoserInSection)
             {
                 // This match's loser is not referenced by any other match => This match's loser must be placed in this section.
 
@@ -107,7 +107,7 @@ internal sealed class RankingSection
         {
             // all team "slots" are filled => the teams can be compared and ranked
             IsDefined = true;
-            Teams = [..SortTeams(tournament, relevantTeamsTop), ..SortTeams(tournament, relevantTeamsBottom)];
+            Teams = [..SortTeams(tournament, relevantTeamsTop), ..SortTeams(tournament, relevantTeamsBottom)]; // TODO: Sort teams by their relative score in the K/O matches
         }
         else
         {
