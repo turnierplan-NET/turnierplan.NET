@@ -1,6 +1,6 @@
 namespace Turnierplan.Core.Tournament;
 
-public sealed class GroupParticipant
+public sealed class GroupParticipant : IComparableTeam
 {
     internal GroupParticipant(Group group, Team team, int order, int priority)
     {
@@ -27,4 +27,8 @@ public sealed class GroupParticipant
     public int Priority { get; set; }
 
     public TeamGroupStatistics Statistics { get; internal set; }
+
+    bool IComparableTeam.HasAssociatedGroup => true;
+
+    Group IComparableTeam.AssociatedGroup => Group;
 }

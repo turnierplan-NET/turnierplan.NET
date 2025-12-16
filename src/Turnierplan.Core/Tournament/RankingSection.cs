@@ -38,7 +38,7 @@ internal sealed class RankingSection
 
         Size = relevantTeams.Count;
         IsDefined = true; // always true because we know that all group matches are finished
-        Teams = [..SortTeams(tournament, relevantTeams)];
+        Teams = [..SortTeams(tournament, relevantTeams, null)];
     }
 
     /// <remarks>
@@ -50,6 +50,7 @@ internal sealed class RankingSection
         Tier = int.MaxValue - finalsRound; // a "higher" finals round corresponds to a lower "tier" of K/O match
         Size = 0; // start at 0 and increment below
 
+        var relevantMatches = new HashSet<Match>();
         var relevantTeamsTop = new List<Team>();
         var relevantTeamsBottom = new List<Team>();
 
@@ -80,6 +81,7 @@ internal sealed class RankingSection
                 if (match.IsFinished)
                 {
                     relevantTeamsTop.Add(match.GetWinningTeam()!);
+                    relevantMatches.Add(match);
                 }
             }
 
@@ -92,6 +94,7 @@ internal sealed class RankingSection
                 if (match.IsFinished)
                 {
                     relevantTeamsTop.Add(match.GetLosingTeam()!);
+                    relevantMatches.Add(match);
                 }
             }
         }
@@ -108,7 +111,7 @@ internal sealed class RankingSection
         {
             // all team "slots" are filled => the teams can be compared and ranked
             IsDefined = true;
-            Teams = [..SortTeams(tournament, relevantTeamsTop), ..SortTeams(tournament, relevantTeamsBottom)]; // TODO: Sort teams by their relative score in the K/O matches
+            Teams = [..SortTeams(tournament, relevantTeamsTop, relevantMatches), ..SortTeams(tournament, relevantTeamsBottom, relevantMatches)]; // TODO: Sort teams by their relative score in the K/O matches
         }
         else
         {
@@ -139,10 +142,12 @@ internal sealed class RankingSection
     public ImmutableArray<Team>? Teams { get; }
 
     /// <summary>
-    /// Sorts a list of teams by their relative group statistics and returns the result.
+    /// Sorts a list of teams by match results and their relative group statistics and returns the result.
     /// </summary>
-    private static IEnumerable<Team> SortTeams(Tournament tournament, List<Team> teams)
+    private static IEnumerable<Team> SortTeams(Tournament tournament, List<Team> teams, HashSet<Match>? relevantMatches)
     {
+        var comparer = new TeamComparer(tournament);
+
         return teams
             .Select(team =>
             {
@@ -151,22 +156,106 @@ internal sealed class RankingSection
                     .WhereNotNull()
                     .ToList();
 
-                if (participations.Count == 0)
+                TeamGroupStatistics? relevantMatchesStatistics = null;
+
+                if (relevantMatches is not null)
                 {
-                    return null;
+                    relevantMatchesStatistics = new TeamGroupStatistics();
+
+                    foreach (var match in relevantMatches)
+                    {
+                        if (!match.IsTeamParticipant(team))
+                        {
+                            continue;
+                        }
+
+                        var scoreFor = (match.TeamA == team ? match.ScoreA : match.ScoreB)!.Value;
+                        var scoreAgainst = (match.TeamA == team ? match.ScoreB : match.ScoreA)!.Value;
+
+                        relevantMatchesStatistics.AddMatchOutcome(scoreFor, scoreAgainst, tournament.ComputationConfiguration);
+                    }
                 }
 
-                var source = participations[0];
-                var priority = participations.Max(x => x.Priority);
-                var combinedGroupStats = new GroupParticipant(source.Group, source.Team, 0, priority)
+                if (participations.Count == 0)
                 {
-                    Statistics = participations.Select(x => x.Statistics).Combine()
-                };
+                    return new TemporaryTeam
+                    {
+                        Team = team,
+                        Statistics = new TeamGroupStatistics(),
+                        RelevantMatchesStatistics = relevantMatchesStatistics
+                    };
+                }
 
-                return combinedGroupStats;
+                return new TemporaryTeam
+                {
+                    Team = team,
+                    Priority = participations.Max(x => x.Priority),
+                    Statistics = participations.Select(x => x.Statistics).Combine(),
+                    RelevantMatchesStatistics = relevantMatchesStatistics
+                };
             })
-            .WhereNotNull()
-            .Order(tournament._groupParticipantComparer)
+            .Order(comparer)
             .Select(x => x.Team);
+    }
+
+    private sealed record TemporaryTeam : IComparableTeam
+    {
+        public required Team Team { get; init; }
+
+        public int Order { get; init; }
+
+        public int Priority { get; init; }
+
+        public required TeamGroupStatistics Statistics { get; init; }
+
+        public required TeamGroupStatistics? RelevantMatchesStatistics { get; init; }
+
+        public bool HasAssociatedGroup => false;
+
+        public Group? AssociatedGroup => null;
+    }
+
+    private sealed class TeamComparer(Tournament tournament) : IComparer<TemporaryTeam>
+    {
+        public int Compare(TemporaryTeam? x, TemporaryTeam? y)
+        {
+            if (Equals(x, y))
+            {
+                return 0;
+            }
+
+            if (x is not null && y is not null)
+            {
+                return CompareTeams(x, y);
+            }
+
+            return x is null ? 1 : -1;
+        }
+
+        private int CompareTeams(TemporaryTeam x, TemporaryTeam y)
+        {
+            if (x.RelevantMatchesStatistics is not null && y.RelevantMatchesStatistics is not null)
+            {
+                foreach (var mode in tournament.ComputationConfiguration.ComparisonModes)
+                {
+                    var diff = mode switch
+                    {
+                        TeamComparisonMode.ByPoints => y.RelevantMatchesStatistics.Points - x.RelevantMatchesStatistics.Points,
+                        TeamComparisonMode.ByScoreDifference => y.RelevantMatchesStatistics.ScoreDifference - x.RelevantMatchesStatistics.ScoreDifference,
+                        TeamComparisonMode.ByScore => y.RelevantMatchesStatistics.ScoreFor - x.RelevantMatchesStatistics.ScoreFor,
+                        TeamComparisonMode.ByDirectComparison => 0, // Direct comparison is ignored in this case
+                        _ => throw new TurnierplanException($"Invalid comparison mode specified: {mode}")
+                    };
+
+                    if (diff != 0)
+                    {
+                        return Math.Sign(diff);
+                    }
+                }
+            }
+
+            // In any other case, we fall through to a comparison based on the group matches
+            return tournament._teamComparer.Compare(x, y);
+        }
     }
 }

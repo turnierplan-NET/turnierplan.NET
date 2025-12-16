@@ -40,7 +40,7 @@ public sealed record GroupResultsNthRankedSelector(int[] TargetGroupIds, int Ord
             return null;
         }
 
-        eligibleTeams.Sort(tournament._groupParticipantComparer);
+        eligibleTeams.Sort(tournament._teamComparer);
 
         return eligibleTeams[OrdinalNumber].Team;
     }
