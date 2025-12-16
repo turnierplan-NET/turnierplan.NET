@@ -72,6 +72,8 @@ internal sealed class CreateTournamentEndpoint : EndpointBase<TournamentDto>
         await tournamentRepository.CreateAsync(tournament);
         await tournamentRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
+        tournament.Compute();
+
         accessValidator.AddRolesToResponseHeader(tournament);
 
         return Results.Ok(mapper.Map<TournamentDto>(tournament));
