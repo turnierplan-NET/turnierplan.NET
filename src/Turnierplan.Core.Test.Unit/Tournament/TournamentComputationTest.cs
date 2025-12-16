@@ -6,11 +6,11 @@ namespace Turnierplan.Core.Test.Unit.Tournament;
 public sealed class TournamentComputationTest
 {
     [Theory]
-    [InlineData(true, true, true, 3, 2, 4, 1, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and all ranking matches
-    [InlineData(false, false, false, 3, 1, 4, 2, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and no ranking matches → All rankings are determined based on the team's group match statistics
-    [InlineData(true, false, false, 3, 2, 1, 4, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and no ranking matches → Only first two rankings are determined via final match
-    [InlineData(false, true, false, 3, 2, 4, 1, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and no ranking matches → Only 3rd/4th place are determined via ranking match (not a typical scenario :D)
-    public void Tournament___Compute_With_Ranking_Matches___Works_As_Expected(bool playoff1st, bool playoff3rd, bool playoff5th, params int[] expectedRankingsOrder)
+    [InlineData(true, true, true, false, 3, 2, 4, 1, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and all ranking matches
+    [InlineData(false, false, false, false, 3, 1, 4, 2, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and no ranking matches → All rankings are determined based on the team's group match statistics
+    [InlineData(true, false, false, false, 3, 2, 1, 4, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and no ranking matches → Only first two rankings are determined via final match
+    [InlineData(false, true, false, true, /* 1st & 2nd are "empty" */ 4, 1, 3, 2, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and no ranking matches → Only 3rd/4th place are determined via ranking match (not a typical scenario :D)
+    public void Tournament___Compute_With_Ranking_Matches___Works_As_Expected(bool playoff1st, bool playoff3rd, bool playoff5th, bool firstAndSecondPlaceSkipped, params int[] expectedRankingsOrder)
     {
         var tournament = TestTournament.Default;
 
@@ -181,7 +181,8 @@ public sealed class TournamentComputationTest
             var teamName = $"Team {expectedRankingsOrder[i]}";
 
             var team = tournament._teams.Single(x => x.Name.Equals(teamName));
-            var ranking = tournament.Ranking.Positions.Single(x => x.Position == i + 1);
+            var position = firstAndSecondPlaceSkipped ? i + 3 : i + 1;
+            var ranking = tournament.Ranking.Positions.Single(x => x.Position == position);
             ranking.IsDefined.Should().BeTrue();
             ranking.Team.Should().Be(team);
         }

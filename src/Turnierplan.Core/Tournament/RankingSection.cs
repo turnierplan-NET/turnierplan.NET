@@ -19,7 +19,7 @@ internal sealed class RankingSection
     {
         Tier = int.MinValue; // this section is always at the bottom of the ranking
 
-        var decidingMatches = tournament._matches.Where(x => x is { IsDecidingMatch: true, PlayoffPosition: null }).ToList();
+        var decidingMatches = tournament._matches.Where(x => x is { IsDecidingMatch: true }).ToList();
         List<Team> relevantTeams;
 
         if (decidingMatches.Count == 0)
@@ -30,8 +30,9 @@ internal sealed class RankingSection
         else
         {
             // Tournament contains deciding matches => all teams which do not participate in the first finals round must be considered
-            var highestFinalsRound = decidingMatches.Max(x => x.FinalsRound!.Value);
-            var matchesInFinalRound = decidingMatches.Where(x => x.FinalsRound == highestFinalsRound).ToList();
+            var decidingMatchesWithFinalsRound = decidingMatches.Where(x => x.FinalsRound.HasValue).ToList();
+            var highestFinalsRound = decidingMatchesWithFinalsRound.Count == 0 ? int.MaxValue : decidingMatchesWithFinalsRound.Max(x => x.FinalsRound!.Value);
+            var matchesInFinalRound = decidingMatches.Where(x => x.PlayoffPosition.HasValue || x.FinalsRound == highestFinalsRound).ToList();
             relevantTeams = tournament._teams.Where(team => matchesInFinalRound.None(match => match.IsTeamParticipant(team))).ToList();
         }
 

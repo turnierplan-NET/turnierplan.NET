@@ -49,7 +49,7 @@ public sealed class Ranking
         {
             // If any group match is non-finished, fill the remaining rankings with 'blank spaces'
             var takenPositions = positionsTemporary.Select(x => x.Position);
-            var missingPositions = Enumerable.Range(0, _tournament._teams.Count)
+            var missingPositions = Enumerable.Range(1, _tournament._teams.Count)
                 .Except(takenPositions)
                 .Select(positions => new RankingPosition(positions, null));
 
