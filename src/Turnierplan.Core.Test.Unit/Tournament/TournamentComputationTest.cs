@@ -7,7 +7,7 @@ public sealed class TournamentComputationTest
 {
     [Theory]
     [InlineData(true, true, true, false, 3, 2, 4, 1, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and all ranking matches
-    [InlineData(false, false, false, false, 3, 1, 4, 2, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and no ranking matches → All rankings are determined based on the team's group match statistics
+    [InlineData(false, false, false, false, 3, 2, 1, 4, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and no ranking matches → First four ranking are defined by the outcomes of semi-finals, remaining rankings are determined based on the team's group match statistics
     [InlineData(true, false, false, false, 3, 2, 1, 4, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and no ranking matches → Only first two rankings are determined via final match
     [InlineData(false, true, false, true, /* 1st & 2nd are "empty" */ 4, 1, 3, 2, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and no ranking matches → Only 3rd/4th place are determined via ranking match (not a typical scenario :D)
     public void Tournament___Compute_With_Ranking_Matches___Works_As_Expected(bool playoff1st, bool playoff3rd, bool playoff5th, bool firstAndSecondPlaceSkipped, params int[] expectedRankingsOrder)
@@ -43,8 +43,8 @@ public sealed class TournamentComputationTest
         tournament._matches.Add(new Match(5, 5, new GroupDefinitionSelector(1, 2), new GroupDefinitionSelector(1, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
         tournament._matches.Add(new Match(6, 6, new GroupDefinitionSelector(2, 2), new GroupDefinitionSelector(2, 0), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 4, OutcomeType = MatchOutcomeType.Standard });
 
-        tournament._matches.Add(new Match(7, 7, new GroupResultsSelector(1, 1), new GroupResultsSelector(2, 2), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(8, 8, new GroupResultsSelector(2, 1), new GroupResultsSelector(1, 2), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(7, 7, new GroupResultsSelector(1, 1), new GroupResultsSelector(2, 2), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard }); // Team 1 vs Team 2
+        tournament._matches.Add(new Match(8, 8, new GroupResultsSelector(2, 1), new GroupResultsSelector(1, 2), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard }); // Team 3 vs Team 4
 
         if (playoff5th)
         {
@@ -670,13 +670,13 @@ public sealed class TournamentComputationTest
         tournament._matches.Add(new Match(17, 17, new GroupDefinitionSelector(3, 3), new GroupDefinitionSelector(3, 0), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
         tournament._matches.Add(new Match(18, 18, new GroupDefinitionSelector(3, 1), new GroupDefinitionSelector(3, 2), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
 
-        tournament._matches.Add(new Match(19, 19, new GroupResultsSelector(1, 1), new GroupResultsNthRankedSelector([groupA.Id, groupB.Id, groupC.Id], 0, 3), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(20, 20, new GroupResultsSelector(2, 1), new GroupResultsNthRankedSelector([groupA.Id, groupB.Id, groupC.Id], 1, 3), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 3, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(21, 21, new GroupResultsSelector(1, 2), new GroupResultsSelector(3, 2), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(22, 22, new GroupResultsSelector(2, 2), new GroupResultsSelector(3, 1), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(19, 19, new GroupResultsSelector(1, 1), new GroupResultsNthRankedSelector([groupA.Id, groupB.Id, groupC.Id], 0, 3), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard }); // Team 1 vs Team 11
+        tournament._matches.Add(new Match(20, 20, new GroupResultsSelector(2, 1), new GroupResultsNthRankedSelector([groupA.Id, groupB.Id, groupC.Id], 1, 3), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 3, OutcomeType = MatchOutcomeType.Standard }); // Team 5 vs Team 7
+        tournament._matches.Add(new Match(21, 21, new GroupResultsSelector(1, 2), new GroupResultsSelector(3, 2), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard }); // Team 2 vs Team 10
+        tournament._matches.Add(new Match(22, 22, new GroupResultsSelector(2, 2), new GroupResultsSelector(3, 1), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard }); // Team 6 vs Team 9
 
-        tournament._matches.Add(new Match(23, 23, new MatchSelector(19, MatchSelector.Mode.Winner), new MatchSelector(20, MatchSelector.Mode.Winner), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(24, 24, new MatchSelector(21, MatchSelector.Mode.Winner), new MatchSelector(22, MatchSelector.Mode.Winner), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(23, 23, new MatchSelector(19, MatchSelector.Mode.Winner), new MatchSelector(20, MatchSelector.Mode.Winner), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard }); // Team 11 vs Team 7
+        tournament._matches.Add(new Match(24, 24, new MatchSelector(21, MatchSelector.Mode.Winner), new MatchSelector(22, MatchSelector.Mode.Winner), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard }); // Team 2 vs Team 6
 
         tournament._matches.Add(new Match(25, 25, new MatchSelector(23, MatchSelector.Mode.Winner), new MatchSelector(24, MatchSelector.Mode.Winner), (int)FinalsRoundOrder.FinalOnly, 1) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
 
@@ -687,15 +687,15 @@ public sealed class TournamentComputationTest
         tournament._ranking.Single(x => x.Position == 1).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 11")));
         tournament._ranking.Single(x => x.Position == 2).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 6")));
 
-        // Assert ranking from semi-final disqualified teams: 2, 7 (compared by group stats)
-        tournament._ranking.Single(x => x.Position == 3).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 7")));
-        tournament._ranking.Single(x => x.Position == 4).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 2")));
+        // Assert ranking from semi-final disqualified teams: 2, 7 (compared by their respective success in the semi-final matches)
+        tournament._ranking.Single(x => x.Position == 3).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 2")));
+        tournament._ranking.Single(x => x.Position == 4).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 7")));
 
-        // Assert ranking from quarter-final disqualified teams: 1, 5, 10, 9 (compared by group stats)
-        tournament._ranking.Single(x => x.Position == 5).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 9")));
-        tournament._ranking.Single(x => x.Position == 6).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 10")));
-        tournament._ranking.Single(x => x.Position == 7).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 5")));
-        tournament._ranking.Single(x => x.Position == 8).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 1")));
+        // Assert ranking from quarter-final disqualified teams: 1, 5, 10, 9 (compared by their respective success in the quarter-final matches)
+        tournament._ranking.Single(x => x.Position == 5).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 9"))); // 9 and 1 both lost 0:1 so they are compared by their group stats
+        tournament._ranking.Single(x => x.Position == 6).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 1")));
+        tournament._ranking.Single(x => x.Position == 7).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 10")));
+        tournament._ranking.Single(x => x.Position == 8).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 5")));
 
         // Assert ranking from non-qualified teams: 3, 4, 8, 12
         tournament._ranking.Single(x => x.Position == 9).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 12")));
@@ -742,7 +742,4 @@ public sealed class TournamentComputationTest
         team2.Statistics.MatchesLost.Should().Be(2);
         team2.Statistics.MatchesPlayed.Should().Be(2);
     }
-
-    // TODO: Add tests to ensure that "empty" rankings are always generated as expected
-    // TODO: Add tests corresponding to the edge-cases handled by the ranking calculation change
 }
