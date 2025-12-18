@@ -510,7 +510,7 @@ export class ManageApplicationsComponent implements OnDestroy {
       this.combinedEmailAddresses = undefined;
     } else {
       const uniqueAddresses = [...new Set(this.result.items.map((application) => application.contactEmail).filter((mail) => !!mail))];
-      this.combinedEmailAddresses = uniqueAddresses.length <= 1 ? undefined : uniqueAddresses.join(' ');
+      this.combinedEmailAddresses = uniqueAddresses.length <= 1 ? undefined : uniqueAddresses.join(', ');
     }
   }
 }
