@@ -175,14 +175,14 @@ public sealed class TournamentComputationTest
         }
 
         // Assert ranking
-        tournament.Ranking.Positions.Count.Should().Be(expectedRankingsOrder.Length);
+        tournament._ranking.Count.Should().Be(expectedRankingsOrder.Length);
         for (var i = 0; i < expectedRankingsOrder.Length; i++)
         {
             var teamName = $"Team {expectedRankingsOrder[i]}";
 
             var team = tournament._teams.Single(x => x.Name.Equals(teamName));
             var position = firstAndSecondPlaceSkipped ? i + 3 : i + 1;
-            var ranking = tournament.Ranking.Positions.Single(x => x.Position == position);
+            var ranking = tournament._ranking.Single(x => x.Position == position);
             ranking.IsDefined.Should().BeTrue();
             ranking.Team.Should().Be(team);
         }
@@ -588,15 +588,15 @@ public sealed class TournamentComputationTest
         tournament.Compute();
 
         // Assert ranking
-        tournament.Ranking.Positions.Count.Should().Be(8);
-        tournament.Ranking.GetEntry(1).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 2")));
-        tournament.Ranking.GetEntry(2).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 1")));
-        tournament.Ranking.GetEntry(3).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 5")));
-        tournament.Ranking.GetEntry(4).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 6")));
-        tournament.Ranking.GetEntry(5).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 3")));
-        tournament.Ranking.GetEntry(6).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 4")));
-        tournament.Ranking.GetEntry(7).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 7")));
-        tournament.Ranking.GetEntry(8).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 8")));
+        tournament._ranking.Count.Should().Be(8);
+        tournament._ranking.Single(x => x.Position == 1).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 2")));
+        tournament._ranking.Single(x => x.Position == 2).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 1")));
+        tournament._ranking.Single(x => x.Position == 3).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 5")));
+        tournament._ranking.Single(x => x.Position == 4).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 6")));
+        tournament._ranking.Single(x => x.Position == 5).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 3")));
+        tournament._ranking.Single(x => x.Position == 6).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 4")));
+        tournament._ranking.Single(x => x.Position == 7).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 7")));
+        tournament._ranking.Single(x => x.Position == 8).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 8")));
     }
 
     /// <summary>
@@ -684,24 +684,24 @@ public sealed class TournamentComputationTest
         tournament.Compute();
 
         // Assert ranking from final match: 11 vs 6
-        tournament.Ranking.GetEntry(1).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 11")));
-        tournament.Ranking.GetEntry(2).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 6")));
+        tournament._ranking.Single(x => x.Position == 1).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 11")));
+        tournament._ranking.Single(x => x.Position == 2).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 6")));
 
         // Assert ranking from semi-final disqualified teams: 2, 7 (compared by group stats)
-        tournament.Ranking.GetEntry(3).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 7")));
-        tournament.Ranking.GetEntry(4).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 2")));
+        tournament._ranking.Single(x => x.Position == 3).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 7")));
+        tournament._ranking.Single(x => x.Position == 4).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 2")));
 
         // Assert ranking from quarter-final disqualified teams: 1, 5, 10, 9 (compared by group stats)
-        tournament.Ranking.GetEntry(5).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 9")));
-        tournament.Ranking.GetEntry(6).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 10")));
-        tournament.Ranking.GetEntry(7).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 5")));
-        tournament.Ranking.GetEntry(8).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 1")));
+        tournament._ranking.Single(x => x.Position == 5).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 9")));
+        tournament._ranking.Single(x => x.Position == 6).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 10")));
+        tournament._ranking.Single(x => x.Position == 7).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 5")));
+        tournament._ranking.Single(x => x.Position == 8).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 1")));
 
         // Assert ranking from non-qualified teams: 3, 4, 8, 12
-        tournament.Ranking.GetEntry(9).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 12")));
-        tournament.Ranking.GetEntry(10).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 8")));
-        tournament.Ranking.GetEntry(11).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 3")));
-        tournament.Ranking.GetEntry(12).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 4")));
+        tournament._ranking.Single(x => x.Position == 9).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 12")));
+        tournament._ranking.Single(x => x.Position == 10).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 8")));
+        tournament._ranking.Single(x => x.Position == 11).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 3")));
+        tournament._ranking.Single(x => x.Position == 12).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 4")));
     }
 
     [Fact]

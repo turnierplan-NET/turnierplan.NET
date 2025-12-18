@@ -165,7 +165,7 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
 
                                 if (configuration.Outcomes is MatchPlanOutcomes.ShowOutcomeStructuresWithOutcomes)
                                 {
-                                    var positions = tournament.Ranking.Positions;
+                                    var positions = tournament.Ranking;
 
                                     for (var i = 0; i < positions.Count; i++)
                                     {
