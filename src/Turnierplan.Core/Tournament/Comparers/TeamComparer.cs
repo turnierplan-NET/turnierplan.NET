@@ -2,16 +2,9 @@
 
 namespace Turnierplan.Core.Tournament.Comparers;
 
-internal sealed class GroupParticipantComparer : IComparer<GroupParticipant>
+internal sealed class TeamComparer(Tournament tournament) : IComparer<IComparableTeam>
 {
-    private readonly Tournament _tournament;
-
-    public GroupParticipantComparer(Tournament tournament)
-    {
-        _tournament = tournament;
-    }
-
-    public int Compare(GroupParticipant? x, GroupParticipant? y)
+    public int Compare(IComparableTeam? x, IComparableTeam? y)
     {
         if (Equals(x, y))
         {
@@ -26,7 +19,7 @@ internal sealed class GroupParticipantComparer : IComparer<GroupParticipant>
         return x is null ? 1 : -1;
     }
 
-    private int CompareParticipants(GroupParticipant x, GroupParticipant y)
+    private int CompareParticipants(IComparableTeam x, IComparableTeam y)
     {
         if (x.Team.OutOfCompetition && !y.Team.OutOfCompetition)
         {
@@ -38,7 +31,7 @@ internal sealed class GroupParticipantComparer : IComparer<GroupParticipant>
             return -1;
         }
 
-        foreach (var mode in _tournament.ComputationConfiguration.ComparisonModes)
+        foreach (var mode in tournament.ComputationConfiguration.ComparisonModes)
         {
             var diff = Math.Sign(CompareParticipants(x, y, mode));
 
@@ -62,7 +55,7 @@ internal sealed class GroupParticipantComparer : IComparer<GroupParticipant>
         return x.Team.Id - y.Team.Id;
     }
 
-    private int CompareParticipants(GroupParticipant x, GroupParticipant y, TeamComparisonMode mode)
+    private int CompareParticipants(IComparableTeam x, IComparableTeam y, TeamComparisonMode mode)
     {
         return mode switch
         {
@@ -74,15 +67,20 @@ internal sealed class GroupParticipantComparer : IComparer<GroupParticipant>
         };
     }
 
-    private int CompareByDirectComparison(GroupParticipant x, GroupParticipant y)
+    private int CompareByDirectComparison(IComparableTeam x, IComparableTeam y)
     {
-        if (x.Group.Id != y.Group.Id)
+        if (!x.HasAssociatedGroup || !y.HasAssociatedGroup)
         {
             return 0;
         }
 
-        var matches = _tournament._matches
-            .Where(match => match.AreBothTeamsParticipant(x.Team, y.Team) && match.Group == x.Group && match.IsFinished)
+        if (x.AssociatedGroup != y.AssociatedGroup)
+        {
+            return 0;
+        }
+
+        var matches = tournament._matches
+            .Where(match => match.AreBothTeamsParticipant(x.Team, y.Team) && match.Group == x.AssociatedGroup && match.IsFinished)
             .ToList();
 
         if (matches.Count == 0)

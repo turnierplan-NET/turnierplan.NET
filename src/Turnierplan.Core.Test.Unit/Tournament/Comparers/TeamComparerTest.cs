@@ -4,7 +4,7 @@ using Turnierplan.Core.Tournament.TeamSelectors;
 
 namespace Turnierplan.Core.Test.Unit.Tournament.Comparers;
 
-public sealed class GroupParticipantComparerTest
+public sealed class TeamComparerTest
 {
     private static Team DummyTeam(int teamId, bool outOfCompetition = false)
     {
@@ -17,11 +17,11 @@ public sealed class GroupParticipantComparerTest
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
-    public void GroupParticipantComparer___When_Comparing_Same_Instance___Returns_Expected_Result(bool outOfCompetition)
+    public void TeamComparerTest___When_Comparing_Same_Instance___Returns_Expected_Result(bool outOfCompetition)
     {
         // Arrange
         var comparer = CreateTestComparer();
-        var team = new GroupParticipant(null!, DummyTeam(1, outOfCompetition), 0, 0);
+        var team = new TestComparableTeam(DummyTeam(1, outOfCompetition), 0, 0);
 
         // Assert
         comparer.Compare(team, team).Should().Be(0);
@@ -30,11 +30,11 @@ public sealed class GroupParticipantComparerTest
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
-    public void GroupParticipantComparer___When_Comparing_With_Null___Returns_Expected_Result(bool outOfCompetition)
+    public void TeamComparerTest___When_Comparing_With_Null___Returns_Expected_Result(bool outOfCompetition)
     {
         // Arrange
         var comparer = CreateTestComparer();
-        var team = new GroupParticipant(null!, DummyTeam(1, outOfCompetition), 0, 0);
+        var team = new TestComparableTeam(DummyTeam(1, outOfCompetition), 0, 0);
 
         // Assert
         comparer.Compare(team, null).Should().Be(-1);
@@ -48,19 +48,19 @@ public sealed class GroupParticipantComparerTest
     [InlineData(3, 4, 1)]
     [InlineData(3, 5, 1)]
     [InlineData(3, 3, -1)]
-    public void GroupParticipantComparer___Compare_By_Points___Works_As_Expected(int pointsA, int pointsB, int expectedResult)
+    public void TeamComparerTest___Compare_By_Points___Works_As_Expected(int pointsA, int pointsB, int expectedResult)
     {
         // Arrange
         var comparer = CreateTestComparer(TeamComparisonMode.ByPoints);
 
-        var teamX = new GroupParticipant(null!, DummyTeam(1), 0, 0)
+        var teamX = new TestComparableTeam(DummyTeam(1), 0, 0)
         {
             Statistics = new TeamGroupStatistics
             {
                 Points = pointsA
             }
         };
-        var teamY = new GroupParticipant(null!, DummyTeam(2), 0, 0)
+        var teamY = new TestComparableTeam(DummyTeam(2), 0, 0)
         {
             Statistics = new TeamGroupStatistics
             {
@@ -83,12 +83,12 @@ public sealed class GroupParticipantComparerTest
     [InlineData(0, 5, 0, 3, 1)]
     [InlineData(5, 0, 5, 0, -1)]
     [InlineData(0, 5, 0, 5, -1)]
-    public void GroupParticipantComparer___Compare_By_Goal_Difference___Works_As_Expected(int scoreForA, int scoreAgainstA, int scoreForB, int scoreAgainstB, int expectedResult)
+    public void TeamComparerTest___Compare_By_Goal_Difference___Works_As_Expected(int scoreForA, int scoreAgainstA, int scoreForB, int scoreAgainstB, int expectedResult)
     {
         // Arrange
         var comparer = CreateTestComparer(TeamComparisonMode.ByScoreDifference);
 
-        var teamX = new GroupParticipant(null!, DummyTeam(1), 0, 0)
+        var teamX = new TestComparableTeam(DummyTeam(1), 0, 0)
         {
             Statistics = new TeamGroupStatistics
             {
@@ -96,7 +96,7 @@ public sealed class GroupParticipantComparerTest
                 ScoreAgainst = scoreAgainstA
             }
         };
-        var teamY = new GroupParticipant(null!, DummyTeam(2), 0, 0)
+        var teamY = new TestComparableTeam(DummyTeam(2), 0, 0)
         {
             Statistics = new TeamGroupStatistics
             {
@@ -119,19 +119,19 @@ public sealed class GroupParticipantComparerTest
     [InlineData(1, 5, 1)]
     [InlineData(1, 8, 1)]
     [InlineData(4, 4, -1)]
-    public void GroupParticipantComparer___Compare_By_Score___Works_As_Expected(int scoreA, int scoreB, int expectedResult)
+    public void TeamComparerTest___Compare_By_Score___Works_As_Expected(int scoreA, int scoreB, int expectedResult)
     {
         // Arrange
         var comparer = CreateTestComparer(TeamComparisonMode.ByScore);
 
-        var teamX = new GroupParticipant(null!, DummyTeam(1), 0, 0)
+        var teamX = new TestComparableTeam(DummyTeam(1), 0, 0)
         {
             Statistics = new TeamGroupStatistics
             {
                 ScoreFor = scoreA
             }
         };
-        var teamY = new GroupParticipant(null!, DummyTeam(2), 0, 0)
+        var teamY = new TestComparableTeam(DummyTeam(2), 0, 0)
         {
             Statistics = new TeamGroupStatistics
             {
@@ -159,7 +159,7 @@ public sealed class GroupParticipantComparerTest
     [InlineData(false, 2, 1, 0, 3, -1)]
     [InlineData(false, 1, 2, 2, 2, -1)]
     [InlineData(false, 2, 1, 2, 2, -1)]
-    public void GroupParticipantComparer___Compare_By_Direct_Comparison___Works_As_Expected(bool returnNoMatches, int? matchTeamIdA, int? matchTeamIdB, int? matchScoreA, int? matchScoreB, int expectedResult)
+    public void TeamComparerTest___Compare_By_Direct_Comparison___Works_As_Expected(bool returnNoMatches, int? matchTeamIdA, int? matchTeamIdB, int? matchScoreA, int? matchScoreB, int expectedResult)
     {
         // Arrange
         var teams = new Dictionary<int, Team> { { 1, DummyTeam(1) }, { 2, DummyTeam(2) } };
@@ -184,8 +184,8 @@ public sealed class GroupParticipantComparerTest
 
         var comparer = CreateTestComparer(matches, TeamComparisonMode.ByDirectComparison);
 
-        var teamX = new GroupParticipant(group, teams[1], 0, 0);
-        var teamY = new GroupParticipant(group, teams[2], 0, 0);
+        var teamX = new TestComparableTeam(group, teams[1], 0, 0);
+        var teamY = new TestComparableTeam(group, teams[2], 0, 0);
 
         // Act
         var result = comparer.Compare(teamX, teamY);
@@ -209,7 +209,7 @@ public sealed class GroupParticipantComparerTest
     [InlineData(2, 1, -1, 1, 2, 1, 2, 4, 2)]
     [InlineData(2, 1, -1, 1, 2, 2, 3)]
     [InlineData(2, 1, -1, 1, 2, 3, 2)]
-    public void GroupParticipantComparer___Compare_By_Direct_Comparison_With_Multiple_Matches___Works_As_Expected(int matchTeamIdA, int matchTeamIdB, int expectedResult, params int[] matchScore)
+    public void TeamComparerTest___Compare_By_Direct_Comparison_With_Multiple_Matches___Works_As_Expected(int matchTeamIdA, int matchTeamIdB, int expectedResult, params int[] matchScore)
     {
         // Arrange
         var teams = new Dictionary<int, Team> { { 1, DummyTeam(1) }, { 2, DummyTeam(2) } };
@@ -230,8 +230,8 @@ public sealed class GroupParticipantComparerTest
 
         var comparer = CreateTestComparer(matches, TeamComparisonMode.ByDirectComparison);
 
-        var teamX = new GroupParticipant(group, teams[1], 0, 0);
-        var teamY = new GroupParticipant(group, teams[2], 0, 0);
+        var teamX = new TestComparableTeam(group, teams[1], 0, 0);
+        var teamY = new TestComparableTeam(group, teams[2], 0, 0);
 
         // Act
         var result = comparer.Compare(teamX, teamY);
@@ -250,13 +250,13 @@ public sealed class GroupParticipantComparerTest
     [InlineData(1, 1, 1)]
     [InlineData(5, 5, 1)]
     [InlineData(-5, -5, 1)]
-    public void GroupParticipantComparer___Compare_By_Priority___Works_As_Expected(int priorityA, int priorityB, int expectedResult)
+    public void TeamComparerTest___Compare_By_Priority___Works_As_Expected(int priorityA, int priorityB, int expectedResult)
     {
         // Arrange
         var comparer = CreateTestComparer();
 
-        var teamX = new GroupParticipant(null!, DummyTeam(1), 2, priorityA);
-        var teamY = new GroupParticipant(null!, DummyTeam(2), 1, priorityB);
+        var teamX = new TestComparableTeam(DummyTeam(1), 2, priorityA);
+        var teamY = new TestComparableTeam(DummyTeam(2), 1, priorityB);
 
         // Act
         var result = comparer.Compare(teamX, teamY);
@@ -274,13 +274,13 @@ public sealed class GroupParticipantComparerTest
     [InlineData(0, 0, -1)]
     [InlineData(1, 1, -1)]
     [InlineData(5, 5, -1)]
-    public void GroupParticipantComparer___Compare_By_Order___Works_As_Expected(int orderA, int orderB, int expectedResult)
+    public void TeamComparerTest___Compare_By_Order___Works_As_Expected(int orderA, int orderB, int expectedResult)
     {
         // Arrange
         var comparer = CreateTestComparer();
 
-        var teamX = new GroupParticipant(null!, DummyTeam(1), orderA, 0);
-        var teamY = new GroupParticipant(null!, DummyTeam(2), orderB, 0);
+        var teamX = new TestComparableTeam(DummyTeam(1), orderA, 0);
+        var teamY = new TestComparableTeam(DummyTeam(2), orderB, 0);
 
         // Act
         var result = comparer.Compare(teamX, teamY);
@@ -292,14 +292,14 @@ public sealed class GroupParticipantComparerTest
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
-    public void GroupParticipantComparer___When_Comparing_Using_Multiple_Comparing_Modes_And_With_Out_Of_Competition___Works_As_Expected(bool team3OutOfCompetition)
+    public void TeamComparerTest___When_Comparing_Using_Multiple_Comparing_Modes_And_With_Out_Of_Competition___Works_As_Expected(bool team3OutOfCompetition)
     {
         // Arrange
         var comparer = CreateTestComparer(TeamComparisonMode.ByPoints, TeamComparisonMode.ByScoreDifference, TeamComparisonMode.ByScore);
 
-        var teams = new GroupParticipant[]
+        var teams = new TestComparableTeam[]
         {
-            new(null!, DummyTeam(8), 0, 0)
+            new(DummyTeam(8), 0, 0)
             {
                 Statistics = new TeamGroupStatistics
                 {
@@ -309,7 +309,7 @@ public sealed class GroupParticipantComparerTest
                     // GoalDifference = 4
                 }
             },
-            new(null!, DummyTeam(6), 0, 0)
+            new(DummyTeam(6), 0, 0)
             {
                 Statistics = new TeamGroupStatistics
                 {
@@ -319,7 +319,7 @@ public sealed class GroupParticipantComparerTest
                     // GoalDifference = 3
                 }
             },
-            new(null!, DummyTeam(3, team3OutOfCompetition), 0, 0)
+            new(DummyTeam(3, team3OutOfCompetition), 0, 0)
             {
                 Statistics = new TeamGroupStatistics
                 {
@@ -329,7 +329,7 @@ public sealed class GroupParticipantComparerTest
                     // GoalDifference = 2
                 }
             },
-            new(null!, DummyTeam(1), 0, 0)
+            new(DummyTeam(1), 0, 0)
             {
                 Statistics = new TeamGroupStatistics
                 {
@@ -339,7 +339,7 @@ public sealed class GroupParticipantComparerTest
                     // ScoreDifference = -1
                 }
             },
-            new(null!, DummyTeam(7), 0, 0)
+            new(DummyTeam(7), 0, 0)
             {
                 Statistics = new TeamGroupStatistics
                 {
@@ -372,9 +372,9 @@ public sealed class GroupParticipantComparerTest
         }
     }
 
-    private static GroupParticipantComparer CreateTestComparer(params TeamComparisonMode[] comparisonModes) => CreateTestComparer([], comparisonModes);
+    private static TeamComparer CreateTestComparer(params TeamComparisonMode[] comparisonModes) => CreateTestComparer([], comparisonModes);
 
-    private static GroupParticipantComparer CreateTestComparer(IEnumerable<Match> matches, params TeamComparisonMode[] comparisonModes)
+    private static TeamComparer CreateTestComparer(IEnumerable<Match> matches, params TeamComparisonMode[] comparisonModes)
     {
         var tournament = TestTournament.Default;
 
@@ -383,6 +383,40 @@ public sealed class GroupParticipantComparerTest
         tournament.ComputationConfiguration.ComparisonModes.Clear();
         tournament.ComputationConfiguration.ComparisonModes.AddRange(comparisonModes);
 
-        return new GroupParticipantComparer(tournament);
+        return new TeamComparer(tournament);
     }
+
+    private sealed class TestComparableTeam : IComparableTeam
+    {
+        public TestComparableTeam(Group group, Team team, int order, int priority)
+        {
+            AssociatedGroup = group;
+            Team = team;
+            Order = order;
+            Priority = priority;
+            Statistics = new TeamGroupStatistics();
+        }
+
+        public TestComparableTeam(Team team, int order, int priority)
+        {
+            AssociatedGroup = null;
+            Team = team;
+            Order = order;
+            Priority = priority;
+            Statistics = new TeamGroupStatistics();
+        }
+
+        public Team Team { get; }
+
+        public int Order { get; }
+
+        public int Priority { get; }
+
+        public TeamGroupStatistics Statistics { get; init; }
+
+        public bool HasAssociatedGroup => AssociatedGroup is not null;
+
+        public Group? AssociatedGroup { get; }
+    }
+
 }

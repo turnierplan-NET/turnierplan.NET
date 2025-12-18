@@ -11,7 +11,7 @@ namespace Turnierplan.Core.Tournament;
 
 public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tournament>, IEntityWithOrganization
 {
-    internal readonly GroupParticipantComparer _groupParticipantComparer;
+    internal readonly TeamComparer _teamComparer;
     internal int? _nextEntityId;
 
     internal readonly List<RoleAssignment<Tournament>> _roleAssignments = [];
@@ -19,10 +19,11 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
     internal readonly List<Group> _groups = [];
     internal readonly List<Match> _matches = [];
     internal readonly List<Document.Document> _documents = [];
+    internal readonly List<RankingPosition> _ranking = [];
 
     public Tournament(Organization.Organization organization, string name, Visibility visibility)
     {
-        _groupParticipantComparer = new GroupParticipantComparer(this);
+        _teamComparer = new TeamComparer(this);
 
         organization._tournaments.Add(this);
 
@@ -39,7 +40,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     internal Tournament(long id, PublicId.PublicId publicId, DateTime createdAt, string name, Visibility visibility, int publicPageViews)
     {
-        _groupParticipantComparer = new GroupParticipantComparer(this);
+        _teamComparer = new TeamComparer(this);
 
         Id = id;
         PublicId = publicId;
@@ -93,7 +94,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     public IReadOnlyList<Document.Document> Documents => _documents.AsReadOnly();
 
-    public Ranking Ranking { get; } = new();
+    public IReadOnlyList<RankingPosition> Ranking => _ranking.AsReadOnly();
 
     public DateTime? StartTimestamp
     {
@@ -554,7 +555,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
             var position = 1;
 
-            foreach (var team in group._participants.Order(_groupParticipantComparer))
+            foreach (var team in group._participants.Order(_teamComparer))
             {
                 team.Statistics.Position = position++;
             }
@@ -563,106 +564,87 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     private void ComputeRanking()
     {
-        var matchesWithRankingInfluence = new HashSet<Match>();
-        var undefinedRankings = Enumerable.Range(1, _teams.Count).ToList();
+        var positionsTemporary = new List<RankingPosition>();
 
-        Ranking.Reset();
-
-        foreach (var match in _matches.Where(x => x.PlayoffPosition is not null))
+        // Matches with a defined playoff position (final, 3rd playoff, etc.) are always evaluated immediately
+        foreach (var match in _matches)
         {
-            matchesWithRankingInfluence.Add(match);
-
-            var winnerRanking = match.PlayoffPosition!.Value;
-            var loserRanking = match.PlayoffPosition!.Value + 1;
-
-            if (!undefinedRankings.Contains(winnerRanking))
+            if (!match.PlayoffPosition.HasValue)
             {
-                throw new TurnierplanException($"Match {match.Id} attempts to redefine ranking {winnerRanking}.");
+                continue;
             }
 
-            if (!undefinedRankings.Contains(loserRanking))
-            {
-                throw new TurnierplanException($"Match {match.Id} attempts to redefine ranking {loserRanking}.");
-            }
-
-            // If the match is not finished, the winning/losing team is null and no ranking will be assigned
-            var winningTeam = match.GetWinningTeam();
-            var losingTeam = match.GetLosingTeam();
-
-            Ranking.AddRanking(winnerRanking, winningTeam);
-            Ranking.AddRanking(loserRanking, losingTeam);
-
-            undefinedRankings.Remove(winnerRanking);
-            undefinedRankings.Remove(loserRanking);
+            positionsTemporary.Add(new RankingPosition(match.PlayoffPosition.Value, match.GetWinningTeam()));
+            positionsTemporary.Add(new RankingPosition(match.PlayoffPosition.Value + 1, match.GetLosingTeam()));
         }
 
-        if (undefinedRankings.Count == 0
-            || matchesWithRankingInfluence.Any(x => x.TeamA is null || x.TeamB is null)
-            || _matches.Where(x => x.IsGroupMatch).Any(x => !x.IsFinished))
+        if (_matches.Any(x => x is { IsGroupMatch: true, IsFinished: false }))
         {
-            foreach (var position in undefinedRankings)
-            {
-                Ranking.AddRanking(position, null);
-            }
+            // If any group match is non-finished, fill the remaining rankings with 'blank spaces'
+            var takenPositions = positionsTemporary.Select(x => x.Position);
+            var missingPositions = Enumerable.Range(1, _teams.Count)
+                .Except(takenPositions)
+                .Select(positions => new RankingPosition(positions, null));
 
-            Ranking.FinalizeRanking();
-            return;
+            positionsTemporary.AddRange(missingPositions);
         }
+        else
+        {
+            // All other rankings can only be evaluated if all group matches are finished
+            var sections = new List<RankingSection>();
 
-        var eligibleTeams = _teams
-            .Where(team => !matchesWithRankingInfluence.Any(match => match.IsTeamParticipant(team)))
-            .Select(team =>
+            // Add a ranking section for each finals round in the tournament
+            sections.AddRange(_matches
+                .Where(x => x.PlayoffPosition is null && x.FinalsRound is not null)
+                .Select(x => x.FinalsRound)
+                .Distinct()
+                .Select(fr => new RankingSection(this, fr!.Value)));
+
+            // Add a section for all teams that are not qualified for any finals round
+            sections.Add(new RankingSection(this));
+
+            // The next ranking position, given all previously defined rankings
+            var nextPosition = positionsTemporary.Count > 0
+                ? positionsTemporary.Max(x => x.Position) + 1
+                : 1;
+
+            // Iterate over all sections, starting from the highest tier, and copy the rankings
+            foreach (var section in sections.OrderByDescending(x => x.Tier))
             {
-                var participations = _groups
-                    .Select(group => group._participants.SingleOrDefault(participant => participant.Team == team))
-                    .WhereNotNull()
-                    .ToList();
-
-                if (participations.Count == 0)
+                if (section.Size == 0)
                 {
-                    return new RankingEligibleTeam(null, int.MaxValue);
+                    continue;
                 }
 
-                var source = participations[0];
-                var priority = participations.Max(x => x.Priority);
-                var combinedGroupStats = new GroupParticipant(source.Group, source.Team, 0, priority)
+                if (section.IsDefined)
                 {
-                    Statistics = participations.Select(x => x.Statistics).Combine()
-                };
+                    var teamsAdded = 0;
 
-                var bestFinalsRoundPlayed = _matches
-                    .Where(match => match is { FinalsRound: not null, PlayoffPosition: null } && match.IsTeamParticipant(team))
-                    .Select(x => x.FinalsRound)
-                    .Order() // Lower 'FinalsRound' is "better"
-                    .FirstOrDefault() ?? int.MaxValue;
+                    foreach (var team in section.Teams)
+                    {
+                        positionsTemporary.Add(new RankingPosition(nextPosition++, team));
+                        teamsAdded++;
+                    }
 
-                return new RankingEligibleTeam(combinedGroupStats, bestFinalsRoundPlayed);
-            })
-            .Where(x => x.CombinedGroupStats is not null)
-            .GroupBy(x => x.BestFinalsRoundPlayed)
-            .OrderBy(x => x.Key);
-
-        var undefinedRankingsIndex = 0;
-
-        foreach (var grouping in eligibleTeams)
-        {
-            // NOTE: The instances of GroupParticipant are not the original ones as they appear in the tournament's groups. Rather,
-            // they are constructed using a certain team's id and the combined statistics of all the team's participations.
-            var sortedTeams = grouping.Select(x => x.CombinedGroupStats!).Order(_groupParticipantComparer);
-
-            foreach (var participant in sortedTeams)
-            {
-                Ranking.AddRanking(undefinedRankings[undefinedRankingsIndex++], participant.Team);
+                    if (teamsAdded != section.Size)
+                    {
+                        throw new TurnierplanException("Section contains a number of teams which is different from the specified size!");
+                    }
+                }
+                else
+                {
+                    for (var i = 0; i < section.Size; i++)
+                    {
+                        positionsTemporary.Add(new RankingPosition(nextPosition++, null));
+                    }
+                }
             }
         }
 
-        for (var i = undefinedRankingsIndex; i < undefinedRankings.Count; i++)
-        {
-            Ranking.AddRanking(undefinedRankings[i], null);
-        }
-
-        // TODO: Improve how this works when implementing #2 / #247
-        Ranking.FinalizeRanking();
+        _ranking.Clear();
+        _ranking.AddRange(positionsTemporary
+            .OrderBy(x => x.Position)
+            .ThenBy(x => x.Team?.Name));
     }
 
     private void ComputeTeamStatistics()
@@ -1097,6 +1079,4 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
         internal sealed record MatchDefinition(Group Group, int BlockIndex, TeamSelectorBase TeamA, TeamSelectorBase TeamB);
     }
-
-    private sealed record RankingEligibleTeam(GroupParticipant? CombinedGroupStats, int BestFinalsRoundPlayed);
 }
