@@ -367,7 +367,21 @@ export const de = {
         TableLabel: 'Endplatzierungen des Turniers',
         NoRankings: 'Keine Platzierungen vorhanden',
         Position: 'Position',
-        Team: 'Mannschaft'
+        Team: 'Mannschaft',
+        Reasons: {
+          WinnerOfFinal: 'Sieger vom Finale',
+          LoserOfFinal: 'Verlierer vom Finale',
+          WinnerOfThirdPlacePlayoff: 'Sieger vom Spiel um Platz 3',
+          LoserOfThirdPlacePlayoff: 'Verlierer vom Spiel um Platz 3',
+          WinnerOfAdditionalPlayoff: 'Sieger von zusätzlichem Platzierungsspiel',
+          LoserOfAdditionalPlayoff: 'Verlierer von zusätzlichem Platzierungsspiel',
+          QualifiedForSemiFinals: 'Qualifiziert für Halbfinale',
+          QualifiedForQuarterFinals: 'Qualifiziert für Viertelfinale',
+          QualifiedForEighthFinals: 'Qualifiziert für Achtelfinale',
+          QualifiedForBroaderFinals: 'Qualifiziert für andere Finalrunde',
+          NotQualifiedForFinals: 'Nicht qualifiziert für Finalrunde',
+          ManuallyChanged: 'Manuell bearbeitet'
+        }
       },
       Documents: {
         Name: 'Name',
