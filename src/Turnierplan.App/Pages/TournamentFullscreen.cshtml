@@ -100,4 +100,11 @@
             setTimeout(() => { window.location.reload(); }, delayUntilReload);
         </script>
     }
+
+    @if (Model.ScrollMatchIntoView.HasValue)
+    {
+        <script>
+            document.getElementById('match-@Model.ScrollMatchIntoView.Value').scrollIntoView(false);
+        </script>
+    }
 }

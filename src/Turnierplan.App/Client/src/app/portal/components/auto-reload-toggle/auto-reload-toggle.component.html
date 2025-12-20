@@ -1,5 +1,5 @@
 <!-- Set min height to prevent flickering when toggling on/off auto reload -->
-<div class="d-flex flex-row gap-4 align-items-center" style="min-height: 31px">
+<div class="d-flex flex-row gap-1 align-items-center" style="min-height: 31px">
   <div class="form-check form-switch">
     <input
       class="form-check-input"
@@ -8,24 +8,25 @@
       id="enableAutoReload"
       [ngModel]="config.enableAutoReload"
       (ngModelChange)="config.enableAutoReload = $event; emitCurrentValue()" />
-    <label
-      class="form-check-label"
-      for="enableAutoReload"
-      translate="Portal.ViewTournament.Share.FullscreenLink.AutoReloadConfig.Enabled"></label>
+    <label class="form-check-label" for="enableAutoReload">
+      <span translate="Portal.ViewTournament.Share.FullscreenLink.AutoReloadConfig.Enabled"></span>
+      @if (config.enableAutoReload) {
+        <!-- This 'filler word' is part of the label to avoid a slight y offset caused by the layout with the checkbox/input field -->
+        <span>&nbsp;</span>
+        <span translate="Portal.ViewTournament.Share.FullscreenLink.AutoReloadConfig.Every"></span>
+      }
+    </label>
   </div>
   @if (config.enableAutoReload) {
-    <div class="d-flex flex-row align-items-center gap-1">
-      <span translate="Portal.ViewTournament.Share.FullscreenLink.AutoReloadConfig.Interval"></span>
-      <input
-        style="width: 6em"
-        class="form-control form-control-sm"
-        type="number"
-        [min]="minimumInterval"
-        step="1"
-        id="autoReloadInterval"
-        [ngModel]="config.autoReloadInterval"
-        (ngModelChange)="config.autoReloadInterval = $event; emitCurrentValue()" />
-      <span translate="Portal.ViewTournament.Share.FullscreenLink.AutoReloadConfig.Seconds"></span>
-    </div>
+    <input
+      style="width: 6em"
+      class="form-control form-control-sm"
+      type="number"
+      [min]="minimumInterval"
+      step="1"
+      id="autoReloadInterval"
+      [ngModel]="config.autoReloadInterval"
+      (ngModelChange)="config.autoReloadInterval = $event; emitCurrentValue()" />
+    <span translate="Portal.ViewTournament.Share.FullscreenLink.AutoReloadConfig.Seconds"></span>
   }
 </div>

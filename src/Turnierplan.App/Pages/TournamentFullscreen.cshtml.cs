@@ -21,9 +21,17 @@ public sealed class TournamentFullscreen : PageModel
     public int? AutoReload { get; set; }
 
     [BindProperty(SupportsGet = true)]
+    public bool? AutoScroll { get; set; }
+
+    [BindProperty(SupportsGet = true)]
     public bool? ShowQrCode { get; set; }
 
     public Turnierplan.Core.Tournament.Tournament? Data { get; private set; }
+
+    /// <summary>
+    /// The ID of the match which should be scrolled into view upon page load.
+    /// </summary>
+    public int? ScrollMatchIntoView { get; private set; }
 
     public async Task OnGetAsync()
     {
@@ -53,5 +61,25 @@ public sealed class TournamentFullscreen : PageModel
         tournament.Compute();
 
         Data = tournament;
+
+        ScrollMatchIntoView = AutoScroll == true ? FindMatchToScrollIntoView(tournament) : null;
+    }
+
+    private static int? FindMatchToScrollIntoView(Core.Tournament.Tournament tournament)
+    {
+        var orderedMatches = tournament.Matches.OrderBy(x => x.Index).ToArray();
+
+        for (var i = orderedMatches.Length - 1; i >= 0; i--)
+        {
+            var match = orderedMatches[i];
+
+            if (match.IsFinished)
+            {
+                var scrollToMatch = Math.Min(i + 4, orderedMatches.Length - 1);
+                return orderedMatches[scrollToMatch].Index;
+            }
+        }
+
+        return null;
     }
 }
