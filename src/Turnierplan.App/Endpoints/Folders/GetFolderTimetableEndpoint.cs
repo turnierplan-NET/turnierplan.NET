@@ -14,6 +14,8 @@ internal sealed class GetFolderTimetableEndpoint : EndpointBase<FolderTimetableD
 
     protected override Delegate Handler => Handle;
 
+    protected override bool? AllowApiKeyAccess => true;
+
     private static async Task<IResult> Handle(
         [FromRoute] PublicId id,
         IFolderRepository folderRepository,

@@ -574,17 +574,24 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
                 continue;
             }
 
-            positionsTemporary.Add(new RankingPosition(match.PlayoffPosition.Value, match.GetWinningTeam()));
-            positionsTemporary.Add(new RankingPosition(match.PlayoffPosition.Value + 1, match.GetLosingTeam()));
+            var reasons = match.PlayoffPosition switch
+            {
+                1 => (Winner: RankingReason.WinnerOfFinal, Loser: RankingReason.LoserOfFinal),
+                3 => (Winner: RankingReason.WinnerOfThirdPlacePlayoff, Loser: RankingReason.LoserOfThirdPlacePlayoff),
+                _ => (Winner: RankingReason.WinnerOfAdditionalPlayoff, Loser: RankingReason.LoserOfAdditionalPlayoff)
+            };
+
+            positionsTemporary.Add(new RankingPosition(match.PlayoffPosition.Value, reasons.Winner, match.GetWinningTeam()));
+            positionsTemporary.Add(new RankingPosition(match.PlayoffPosition.Value + 1, reasons.Loser, match.GetLosingTeam()));
         }
 
-        if (_matches.Any(x => x is { IsGroupMatch: true, IsFinished: false }))
+        if (_matches.Any(x => x is { IsGroupMatch: true, IsFinished: false })) // TODO: Try to remove this entire if-branch | If not possible: Use proper ranking reason below
         {
             // If any group match is non-finished, fill the remaining rankings with 'blank spaces'
             var takenPositions = positionsTemporary.Select(x => x.Position);
             var missingPositions = Enumerable.Range(1, _teams.Count)
                 .Except(takenPositions)
-                .Select(positions => new RankingPosition(positions, null));
+                .Select(positions => new RankingPosition(positions, RankingReason.ManuallyChanged, null));
 
             positionsTemporary.AddRange(missingPositions);
         }
@@ -622,7 +629,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
                     foreach (var team in section.Teams)
                     {
-                        positionsTemporary.Add(new RankingPosition(nextPosition++, team));
+                        positionsTemporary.Add(new RankingPosition(nextPosition++, section.RankingReason, team));
                         teamsAdded++;
                     }
 
@@ -635,7 +642,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
                 {
                     for (var i = 0; i < section.Size; i++)
                     {
-                        positionsTemporary.Add(new RankingPosition(nextPosition++, null));
+                        positionsTemporary.Add(new RankingPosition(nextPosition++, section.RankingReason, null));
                     }
                 }
             }

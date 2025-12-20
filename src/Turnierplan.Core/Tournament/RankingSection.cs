@@ -39,6 +39,7 @@ internal sealed class RankingSection
         Size = relevantTeams.Count;
         IsDefined = true; // always true because we know that all group matches are finished
         Teams = [..SortTeams(tournament, relevantTeams, null)];
+        RankingReason = RankingReason.NotQualifiedForFinals;
     }
 
     /// <remarks>
@@ -118,6 +119,14 @@ internal sealed class RankingSection
             // something went wrong :(
             throw new TurnierplanException("Illegal state detected while evaluating ranking section.");
         }
+
+        RankingReason = finalsRound switch
+        {
+            1 => RankingReason.QualifiedForSemiFinals,
+            2 => RankingReason.QualifiedForQuarterFinals,
+            3 => RankingReason.QualifiedForEighthFinals,
+            _ => RankingReason.QualifiedForBroaderFinals
+        };
     }
 
     /// <summary>
@@ -135,6 +144,11 @@ internal sealed class RankingSection
     /// </summary>
     [MemberNotNullWhen(true, nameof(Teams))]
     public bool IsDefined { get; }
+
+    /// <summary>
+    /// The ranking reason that should be assigned to all rankings generated in this section.
+    /// </summary>
+    public RankingReason RankingReason { get; }
 
     /// <summary>
     /// The teams in this section, ordered from best to worst or <c>null</c> if this section is not defined.
