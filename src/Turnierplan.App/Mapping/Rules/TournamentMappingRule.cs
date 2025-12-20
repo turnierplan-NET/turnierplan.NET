@@ -123,6 +123,7 @@ internal sealed class TournamentMappingRule : MappingRuleBase<Tournament, Tourna
                 return new RankingDto
                 {
                     PlacementRank = entry.Position,
+                    Reason = entry.Reason,
                     IsDefined = entry.IsDefined,
                     TeamId = entry.Team?.Id
                 };

@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
+using Turnierplan.Adapter.Enums;
 
 namespace Turnierplan.Adapter.Models;
 
 /// <summary>
-/// A ranking in the context of a <see cref="Tournament"/>. There are equally many rankings in a tournament as there are teams.
+/// A ranking in the context of a <see cref="Tournament"/>. The number of rankings can differ from the number of teams.
+/// Also, the sequence of <see cref="PlacementRank"/> does not necessarily have to start at 1, and it may also contain gaps.
 /// </summary>
 public sealed record Ranking
 {
@@ -11,6 +13,11 @@ public sealed record Ranking
     /// The placement rank, starting at <c>1</c> for the first place and counting up.
     /// </summary>
     public required int PlacementRank { get; init; }
+
+    /// <summary>
+    /// The reason is a short explanation of why the specific team is selected / will be selected for this ranking position.
+    /// </summary>
+    public required RankingReason Reason { get; init; }
 
     /// <summary>
     /// Whether this ranking is currently defined or not.
