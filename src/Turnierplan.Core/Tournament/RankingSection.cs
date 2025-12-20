@@ -12,12 +12,16 @@ namespace Turnierplan.Core.Tournament;
 internal sealed class RankingSection
 {
     /// <remarks>
-    /// Creates the section for all nonqualified teams. Note that this constructor will perform invalid
-    /// calculations if the tournament contains non-finished group matches!
+    /// Creates the section for all nonqualified teams.
     /// </remarks>
     public RankingSection(Tournament tournament)
     {
         Tier = int.MinValue; // this section is always at the bottom of the ranking
+
+        if (tournament._matches.Any(x => x is { IsGroupMatch: true, IsFinished: false }))
+        {
+            throw new TurnierplanException("A ranking section for nonqualified teams can only be created when all group matches are finished.");
+        }
 
         var decidingMatches = tournament._matches.Where(x => x is { IsDecidingMatch: true }).ToList();
         List<Team> relevantTeams;
@@ -39,11 +43,14 @@ internal sealed class RankingSection
         Size = relevantTeams.Count;
         IsDefined = true; // always true because we know that all group matches are finished
         Teams = [..SortTeams(tournament, relevantTeams, null)];
+
+        RankingReason = tournament._matches.Any(x => x.FinalsRound.HasValue || x.PlayoffPosition.HasValue)
+            ? RankingReason.NotQualifiedForFinals
+            : RankingReason.RankingViaGroupResults;
     }
 
     /// <remarks>
-    /// Creates the section for all teams qualified for a specific round. Note that this constructor will
-    /// perform invalid calculations if the tournament contains non-finished group matches!
+    /// Creates the section for all teams qualified for a specific round.
     /// </remarks>
     public RankingSection(Tournament tournament, int finalsRound)
     {
@@ -118,6 +125,14 @@ internal sealed class RankingSection
             // something went wrong :(
             throw new TurnierplanException("Illegal state detected while evaluating ranking section.");
         }
+
+        RankingReason = finalsRound switch
+        {
+            1 => RankingReason.QualifiedForSemiFinals,
+            2 => RankingReason.QualifiedForQuarterFinals,
+            3 => RankingReason.QualifiedForEighthFinals,
+            _ => RankingReason.QualifiedForBroaderFinals
+        };
     }
 
     /// <summary>
@@ -135,6 +150,11 @@ internal sealed class RankingSection
     /// </summary>
     [MemberNotNullWhen(true, nameof(Teams))]
     public bool IsDefined { get; }
+
+    /// <summary>
+    /// The ranking reason that should be assigned to all rankings generated in this section.
+    /// </summary>
+    public RankingReason RankingReason { get; }
 
     /// <summary>
     /// The teams in this section, ordered from best to worst or <c>null</c> if this section is not defined.

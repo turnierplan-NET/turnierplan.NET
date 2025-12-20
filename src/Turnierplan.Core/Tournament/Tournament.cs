@@ -574,70 +574,83 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
                 continue;
             }
 
-            positionsTemporary.Add(new RankingPosition(match.PlayoffPosition.Value, match.GetWinningTeam()));
-            positionsTemporary.Add(new RankingPosition(match.PlayoffPosition.Value + 1, match.GetLosingTeam()));
-        }
-
-        if (_matches.Any(x => x is { IsGroupMatch: true, IsFinished: false }))
-        {
-            // If any group match is non-finished, fill the remaining rankings with 'blank spaces'
-            var takenPositions = positionsTemporary.Select(x => x.Position);
-            var missingPositions = Enumerable.Range(1, _teams.Count)
-                .Except(takenPositions)
-                .Select(positions => new RankingPosition(positions, null));
-
-            positionsTemporary.AddRange(missingPositions);
-        }
-        else
-        {
-            // All other rankings can only be evaluated if all group matches are finished
-            var sections = new List<RankingSection>();
-
-            // Add a ranking section for each finals round in the tournament
-            sections.AddRange(_matches
-                .Where(x => x.PlayoffPosition is null && x.FinalsRound is not null)
-                .Select(x => x.FinalsRound)
-                .Distinct()
-                .Select(fr => new RankingSection(this, fr!.Value)));
-
-            // Add a section for all teams that are not qualified for any finals round
-            sections.Add(new RankingSection(this));
-
-            // The next ranking position, given all previously defined rankings
-            var nextPosition = positionsTemporary.Count > 0
-                ? positionsTemporary.Max(x => x.Position) + 1
-                : 1;
-
-            // Iterate over all sections, starting from the highest tier, and copy the rankings
-            foreach (var section in sections.OrderByDescending(x => x.Tier))
+            var reasons = match.PlayoffPosition switch
             {
-                if (section.Size == 0)
+                1 => (Winner: RankingReason.WinnerOfFinal, Loser: RankingReason.LoserOfFinal),
+                3 => (Winner: RankingReason.WinnerOfThirdPlacePlayoff, Loser: RankingReason.LoserOfThirdPlacePlayoff),
+                _ => (Winner: RankingReason.WinnerOfAdditionalPlayoff, Loser: RankingReason.LoserOfAdditionalPlayoff)
+            };
+
+            positionsTemporary.Add(new RankingPosition(match.PlayoffPosition.Value, reasons.Winner, match.GetWinningTeam()));
+            positionsTemporary.Add(new RankingPosition(match.PlayoffPosition.Value + 1, reasons.Loser, match.GetLosingTeam()));
+        }
+
+        // All other rankings can are evaluated via "sections"
+        var sections = new List<RankingSection>();
+
+        // Add a ranking section for each finals round in the tournament
+        sections.AddRange(_matches
+            .Where(x => x.PlayoffPosition is null && x.FinalsRound is not null)
+            .Select(x => x.FinalsRound)
+            .Distinct()
+            .Select(fr => new RankingSection(this, fr!.Value)));
+
+        // If all group matches are finished, we can also add the section for all nonqualified teams. If any
+        // group match is not finished yet, we create blank rankings below for the "missing" number of teams.
+        var areAllGroupMatchesFinished = _matches.Where(x => x.IsGroupMatch).All(x => x.IsFinished);
+        if (areAllGroupMatchesFinished)
+        {
+            sections.Add(new RankingSection(this));
+        }
+
+        // The next ranking position, given all previously defined rankings
+        var nextPosition = positionsTemporary.Count > 0
+            ? positionsTemporary.Max(x => x.Position) + 1
+            : 1;
+
+        // Iterate over all sections, starting from the highest tier, and copy the rankings
+        foreach (var section in sections.OrderByDescending(x => x.Tier))
+        {
+            if (section.Size == 0)
+            {
+                continue;
+            }
+
+            if (section.IsDefined)
+            {
+                var teamsAdded = 0;
+
+                foreach (var team in section.Teams)
                 {
-                    continue;
+                    positionsTemporary.Add(new RankingPosition(nextPosition++, section.RankingReason, team));
+                    teamsAdded++;
                 }
 
-                if (section.IsDefined)
+                if (teamsAdded != section.Size)
                 {
-                    var teamsAdded = 0;
-
-                    foreach (var team in section.Teams)
-                    {
-                        positionsTemporary.Add(new RankingPosition(nextPosition++, team));
-                        teamsAdded++;
-                    }
-
-                    if (teamsAdded != section.Size)
-                    {
-                        throw new TurnierplanException("Section contains a number of teams which is different from the specified size!");
-                    }
+                    throw new TurnierplanException("Section contains a number of teams which is different from the specified size!");
                 }
-                else
+            }
+            else
+            {
+                for (var i = 0; i < section.Size; i++)
                 {
-                    for (var i = 0; i < section.Size; i++)
-                    {
-                        positionsTemporary.Add(new RankingPosition(nextPosition++, null));
-                    }
+                    positionsTemporary.Add(new RankingPosition(nextPosition++, section.RankingReason, null));
                 }
+            }
+        }
+
+        // If any group match is not finished, create blank rankings until the number of rankings equals number of teams.
+        // For explanation, see command above where the 'areAllGroupMatchesFinished' is defined.
+        if (!areAllGroupMatchesFinished)
+        {
+            var reason = _matches.Any(x => x.FinalsRound.HasValue || x.PlayoffPosition.HasValue)
+                ? RankingReason.NotQualifiedForFinals
+                : RankingReason.RankingViaGroupResults;
+
+            for (; nextPosition <= _teams.Count; nextPosition++)
+            {
+                positionsTemporary.Add(new RankingPosition(nextPosition, reason, null));
             }
         }
 

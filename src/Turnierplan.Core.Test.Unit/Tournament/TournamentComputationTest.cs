@@ -590,13 +590,21 @@ public sealed class TournamentComputationTest
         // Assert ranking
         tournament._ranking.Count.Should().Be(8);
         tournament._ranking.Single(x => x.Position == 1).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 2")));
+        tournament._ranking.Single(x => x.Position == 1).Reason.Should().Be(RankingReason.WinnerOfFinal);
         tournament._ranking.Single(x => x.Position == 2).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 1")));
+        tournament._ranking.Single(x => x.Position == 2).Reason.Should().Be(RankingReason.LoserOfFinal);
         tournament._ranking.Single(x => x.Position == 3).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 5")));
+        tournament._ranking.Single(x => x.Position == 3).Reason.Should().Be(RankingReason.QualifiedForSemiFinals);
         tournament._ranking.Single(x => x.Position == 4).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 6")));
+        tournament._ranking.Single(x => x.Position == 4).Reason.Should().Be(RankingReason.QualifiedForSemiFinals);
         tournament._ranking.Single(x => x.Position == 5).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 3")));
+        tournament._ranking.Single(x => x.Position == 5).Reason.Should().Be(RankingReason.NotQualifiedForFinals);
         tournament._ranking.Single(x => x.Position == 6).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 4")));
+        tournament._ranking.Single(x => x.Position == 6).Reason.Should().Be(RankingReason.NotQualifiedForFinals);
         tournament._ranking.Single(x => x.Position == 7).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 7")));
+        tournament._ranking.Single(x => x.Position == 7).Reason.Should().Be(RankingReason.NotQualifiedForFinals);
         tournament._ranking.Single(x => x.Position == 8).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 8")));
+        tournament._ranking.Single(x => x.Position == 8).Reason.Should().Be(RankingReason.NotQualifiedForFinals);
     }
 
     /// <summary>
@@ -685,23 +693,35 @@ public sealed class TournamentComputationTest
 
         // Assert ranking from final match: 11 vs 6
         tournament._ranking.Single(x => x.Position == 1).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 11")));
+        tournament._ranking.Single(x => x.Position == 1).Reason.Should().Be(RankingReason.WinnerOfFinal);
         tournament._ranking.Single(x => x.Position == 2).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 6")));
+        tournament._ranking.Single(x => x.Position == 2).Reason.Should().Be(RankingReason.LoserOfFinal);
 
         // Assert ranking from semi-final disqualified teams: 2, 7 (compared by their respective success in the semi-final matches)
         tournament._ranking.Single(x => x.Position == 3).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 2")));
+        tournament._ranking.Single(x => x.Position == 3).Reason.Should().Be(RankingReason.QualifiedForSemiFinals);
         tournament._ranking.Single(x => x.Position == 4).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 7")));
+        tournament._ranking.Single(x => x.Position == 4).Reason.Should().Be(RankingReason.QualifiedForSemiFinals);
 
         // Assert ranking from quarter-final disqualified teams: 1, 5, 10, 9 (compared by their respective success in the quarter-final matches)
         tournament._ranking.Single(x => x.Position == 5).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 9"))); // 9 and 1 both lost 0:1 so they are compared by their group stats
+        tournament._ranking.Single(x => x.Position == 5).Reason.Should().Be(RankingReason.QualifiedForQuarterFinals);
         tournament._ranking.Single(x => x.Position == 6).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 1")));
+        tournament._ranking.Single(x => x.Position == 6).Reason.Should().Be(RankingReason.QualifiedForQuarterFinals);
         tournament._ranking.Single(x => x.Position == 7).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 10")));
+        tournament._ranking.Single(x => x.Position == 7).Reason.Should().Be(RankingReason.QualifiedForQuarterFinals);
         tournament._ranking.Single(x => x.Position == 8).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 5")));
+        tournament._ranking.Single(x => x.Position == 8).Reason.Should().Be(RankingReason.QualifiedForQuarterFinals);
 
         // Assert ranking from non-qualified teams: 3, 4, 8, 12
         tournament._ranking.Single(x => x.Position == 9).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 12")));
+        tournament._ranking.Single(x => x.Position == 9).Reason.Should().Be(RankingReason.NotQualifiedForFinals);
         tournament._ranking.Single(x => x.Position == 10).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 8")));
+        tournament._ranking.Single(x => x.Position == 10).Reason.Should().Be(RankingReason.NotQualifiedForFinals);
         tournament._ranking.Single(x => x.Position == 11).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 3")));
+        tournament._ranking.Single(x => x.Position == 11).Reason.Should().Be(RankingReason.NotQualifiedForFinals);
         tournament._ranking.Single(x => x.Position == 12).Team.Should().Be(tournament._teams.Single(x => x.Name.Equals("Team 4")));
+        tournament._ranking.Single(x => x.Position == 12).Reason.Should().Be(RankingReason.NotQualifiedForFinals);
     }
 
     [Fact]
@@ -832,64 +852,74 @@ public sealed class TournamentComputationTest
 
         // For now, only all group matches except one have an outcome => no rankings yet
         tournament.Compute();
-        AssertRanking([null, null, null, null, null, null, null, null, null, null, null, null]);
+        AssertRankingTeams([null, null, null, null, null, null, null, null, null, null, null, null]);
+        AssertRankingReasons();
 
         // Set final group match => The final four rankings can now be calculated
         tournament._matches.Single(x => x.Index == 18).SetOutcome(false, 2, 2, MatchOutcomeType.Standard);
         tournament.Compute();
-        AssertRanking([null, null, null, null, null, null, null, null, team12, team8, team3, team4]);
+        AssertRankingTeams([null, null, null, null, null, null, null, null, team12, team8, team3, team4]);
+        AssertRankingReasons();
 
         // Set three of the four quarter-finals => Nothing should change
         tournament._matches.Single(x => x.Index == 19).SetOutcome(false, 0, 1, MatchOutcomeType.Standard);
         tournament._matches.Single(x => x.Index == 20).SetOutcome(false, 0, 3, MatchOutcomeType.Standard);
         tournament._matches.Single(x => x.Index == 21).SetOutcome(false, 2, 0, MatchOutcomeType.Standard);
         tournament.Compute();
-        AssertRanking([null, null, null, null, null, null, null, null, team12, team8, team3, team4]);
+        AssertRankingTeams([null, null, null, null, null, null, null, null, team12, team8, team3, team4]);
+        AssertRankingReasons();
 
         // Set the final quarter-final => Four new rankings appear (the four losers of the quarter-finals)
         tournament._matches.Single(x => x.Index == 22).SetOutcome(false, 1, 0, MatchOutcomeType.Standard);
         tournament.Compute();
-        AssertRanking([null, null, null, null, team9, team1, team10, team5, team12, team8, team3, team4]);
+        AssertRankingTeams([null, null, null, null, team9, team1, team10, team5, team12, team8, team3, team4]);
+        AssertRankingReasons();
 
         // Set the first semi-final => Nothing should change
         tournament._matches.Single(x => x.Index == 23).SetOutcome(false, 2, 0, MatchOutcomeType.Standard);
         tournament.Compute();
-        AssertRanking([null, null, null, null, team9, team1, team10, team5, team12, team8, team3, team4]);
+        AssertRankingTeams([null, null, null, null, team9, team1, team10, team5, team12, team8, team3, team4]);
+        AssertRankingReasons();
 
         if (with3rdPlacePlayoff)
         {
             // Set the second semi-final => Nothing changes because the final four rankings each are set by the last two matches
             tournament._matches.Single(x => x.Index == 24).SetOutcome(false, 0, 1, MatchOutcomeType.Standard);
             tournament.Compute();
-            AssertRanking([null, null, null, null, team9, team1, team10, team5, team12, team8, team3, team4]);
+            AssertRankingTeams([null, null, null, null, team9, team1, team10, team5, team12, team8, team3, team4]);
+            AssertRankingReasons();
 
             // Set the 3rd place playoff => Rankings 3/4 are now set
             tournament._matches.Single(x => x.Index == 25).SetOutcome(false, 3, 1, MatchOutcomeType.Standard);
             tournament.Compute();
-            AssertRanking([null, null, team7, team2, team9, team1, team10, team5, team12, team8, team3, team4]);
+            AssertRankingTeams([null, null, team7, team2, team9, team1, team10, team5, team12, team8, team3, team4]);
+            AssertRankingReasons();
 
             // Set the final => All rankings are now set
             tournament._matches.Single(x => x.Index == 26).SetOutcome(false, 2, 0, MatchOutcomeType.Standard);
             tournament.Compute();
-            AssertRanking([team11, team6, team7, team2, team9, team1, team10, team5, team12, team8, team3, team4]);
+            AssertRankingTeams([team11, team6, team7, team2, team9, team1, team10, team5, team12, team8, team3, team4]);
+            AssertRankingReasons();
         }
         else
         {
             // Set the second semi-final => The next two rankings appear with the two losers of the semi-finals since there is no 3rd place playoff
             tournament._matches.Single(x => x.Index == 24).SetOutcome(false, 0, 1, MatchOutcomeType.Standard);
             tournament.Compute();
-            AssertRanking([null, null, team2, team7, team9, team1, team10, team5, team12, team8, team3, team4]);
+            AssertRankingTeams([null, null, team2, team7, team9, team1, team10, team5, team12, team8, team3, team4]);
+            AssertRankingReasons();
 
             // Set the final => All rankings are now set
             tournament._matches.Single(x => x.Index == 25).SetOutcome(false, 2, 0, MatchOutcomeType.Standard);
             tournament.Compute();
-            AssertRanking([team11, team6, team2, team7, team9, team1, team10, team5, team12, team8, team3, team4]);
+            AssertRankingTeams([team11, team6, team2, team7, team9, team1, team10, team5, team12, team8, team3, team4]);
+            AssertRankingReasons();
         }
 
         return;
 
-        // Helper function
-        void AssertRanking(Team?[] teams)
+        // Helper function for asserting teams
+        void AssertRankingTeams(Team?[] teams)
         {
             for (var i = 0; i < teams.Length; i++)
             {
@@ -906,6 +936,23 @@ public sealed class TournamentComputationTest
                     r.Team.Should().Be(teams[i]);
                 }
             }
+        }
+
+        // The ranking reasons never change during the tournament
+        void AssertRankingReasons()
+        {
+            tournament._ranking.Single(x => x.Position == 1).Reason.Should().Be(RankingReason.WinnerOfFinal);
+            tournament._ranking.Single(x => x.Position == 2).Reason.Should().Be(RankingReason.LoserOfFinal);
+            tournament._ranking.Single(x => x.Position == 3).Reason.Should().Be(with3rdPlacePlayoff ? RankingReason.WinnerOfThirdPlacePlayoff : RankingReason.QualifiedForSemiFinals);
+            tournament._ranking.Single(x => x.Position == 4).Reason.Should().Be(with3rdPlacePlayoff ? RankingReason.LoserOfThirdPlacePlayoff : RankingReason.QualifiedForSemiFinals);
+            tournament._ranking.Single(x => x.Position == 5).Reason.Should().Be(RankingReason.QualifiedForQuarterFinals);
+            tournament._ranking.Single(x => x.Position == 6).Reason.Should().Be(RankingReason.QualifiedForQuarterFinals);
+            tournament._ranking.Single(x => x.Position == 7).Reason.Should().Be(RankingReason.QualifiedForQuarterFinals);
+            tournament._ranking.Single(x => x.Position == 8).Reason.Should().Be(RankingReason.QualifiedForQuarterFinals);
+            tournament._ranking.Single(x => x.Position == 9).Reason.Should().Be(RankingReason.NotQualifiedForFinals);
+            tournament._ranking.Single(x => x.Position == 10).Reason.Should().Be(RankingReason.NotQualifiedForFinals);
+            tournament._ranking.Single(x => x.Position == 11).Reason.Should().Be(RankingReason.NotQualifiedForFinals);
+            tournament._ranking.Single(x => x.Position == 12).Reason.Should().Be(RankingReason.NotQualifiedForFinals);
         }
     }
 }

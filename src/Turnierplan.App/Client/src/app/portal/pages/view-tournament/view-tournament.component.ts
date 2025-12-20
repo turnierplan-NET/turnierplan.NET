@@ -974,7 +974,8 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       }
       return {
         position: ranking.placementRank,
-        team: teamName
+        team: teamName,
+        reason: ranking.reason
       };
     });
   }

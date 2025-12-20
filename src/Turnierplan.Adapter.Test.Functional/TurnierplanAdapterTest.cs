@@ -298,18 +298,21 @@ public sealed class TurnierplanAdapterTest
                 new Ranking
                 {
                     PlacementRank = 1,
+                    Reason = RankingReason.RankingViaGroupResults,
                     IsDefined = false,
                     TeamId = null
                 },
                 new Ranking
                 {
                     PlacementRank = 2,
+                    Reason = RankingReason.RankingViaGroupResults,
                     IsDefined = false,
                     TeamId = null
                 },
                 new Ranking
                 {
                     PlacementRank = 3,
+                    Reason = RankingReason.RankingViaGroupResults,
                     IsDefined = false,
                     TeamId = null
                 }

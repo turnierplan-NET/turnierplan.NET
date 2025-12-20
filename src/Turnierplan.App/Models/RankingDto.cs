@@ -1,8 +1,12 @@
+using Turnierplan.Core.Tournament;
+
 namespace Turnierplan.App.Models;
 
 public sealed record RankingDto
 {
     public required int PlacementRank { get; init; }
+
+    public required RankingReason Reason { get; init; }
 
     public required bool IsDefined { get; init; }
 

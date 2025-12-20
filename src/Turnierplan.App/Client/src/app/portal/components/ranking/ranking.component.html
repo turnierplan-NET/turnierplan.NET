@@ -4,6 +4,7 @@
       <tr>
         <th translate="Portal.ViewTournament.Ranking.Position"></th>
         <th translate="Portal.ViewTournament.Ranking.Team"></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -11,6 +12,7 @@
         <tr>
           <td>{{ ranking.position }}</td>
           <td [tpE2E]="['view-tournament-page-ranking-team-name', ranking.position]">{{ ranking.team }}</td>
+          <td class="align-middle small text-secondary" [translate]="'Portal.ViewTournament.Ranking.Reasons.' + ranking.reason"></td>
         </tr>
       } @empty {
         <tr>
