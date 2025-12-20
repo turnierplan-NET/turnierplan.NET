@@ -644,9 +644,13 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         // For explanation, see command above where the 'areAllGroupMatchesFinished' is defined.
         if (!areAllGroupMatchesFinished)
         {
+            var reason = _matches.Any(x => x.FinalsRound.HasValue || x.PlayoffPosition.HasValue)
+                ? RankingReason.NotQualifiedForFinals
+                : RankingReason.RankingViaGroupResults;
+
             for (; nextPosition <= _teams.Count; nextPosition++)
             {
-                positionsTemporary.Add(new RankingPosition(nextPosition, RankingReason.NotQualifiedForFinals, null));
+                positionsTemporary.Add(new RankingPosition(nextPosition, reason, null));
             }
         }
 
