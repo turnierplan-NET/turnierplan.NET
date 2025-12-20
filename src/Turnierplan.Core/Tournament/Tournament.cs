@@ -214,6 +214,31 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         return participant;
     }
 
+    public RankingOverwrite AddRankingOverwrite(int placementRank, bool hideRanking)
+    {
+        var rankingOverwrite = new RankingOverwrite(GetNextId(), placementRank, hideRanking);
+        _rankingOverwrites.Add(rankingOverwrite);
+
+        return rankingOverwrite;
+    }
+
+    public RankingOverwrite AddRankingOverwrite(int placementRank, Team? assignTeam)
+    {
+        if (assignTeam is not null && !_teams.Contains(assignTeam))
+        {
+            throw new TurnierplanException("The specified team does not belong to this tournament");
+        }
+
+        var rankingOverwrite = new RankingOverwrite(GetNextId(), placementRank, false)
+        {
+            AssignTeam = assignTeam
+        };
+
+        _rankingOverwrites.Add(rankingOverwrite);
+
+        return rankingOverwrite;
+    }
+
     public void RemoveTeam(Team team)
     {
         team.UnlinkApplicationTeam();
@@ -224,6 +249,11 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
     public void RemoveGroup(Group group)
     {
         _groups.Remove(group);
+    }
+
+    public void RemoveRankingOverwrite(RankingOverwrite rankingOverwrite)
+    {
+        _rankingOverwrites.Remove(rankingOverwrite);
     }
 
     public void SetFolder(Folder.Folder? folder)
@@ -1052,8 +1082,27 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
     {
         if (_nextEntityId is null)
         {
-            var allIds = Teams.Select(x => x.Id).Union(Groups.Select(x => x.Id)).Union(Matches.Select(x => x.Id)).ToList();
-            _nextEntityId = allIds.Count == 0 ? 0 : allIds.Max();
+            _nextEntityId = 0;
+
+            foreach (var team in _teams)
+            {
+                _nextEntityId = team.Id > _nextEntityId ? team.Id : _nextEntityId;
+            }
+
+            foreach (var groups in _groups)
+            {
+                _nextEntityId = groups.Id > _nextEntityId ? groups.Id : _nextEntityId;
+            }
+
+            foreach (var match in _matches)
+            {
+                _nextEntityId = match.Id > _nextEntityId ? match.Id : _nextEntityId;
+            }
+
+            foreach (var rankingOverwrite in _rankingOverwrites)
+            {
+                _nextEntityId = rankingOverwrite.Id > _nextEntityId ? rankingOverwrite.Id : _nextEntityId;
+            }
         }
 
         _nextEntityId++;
