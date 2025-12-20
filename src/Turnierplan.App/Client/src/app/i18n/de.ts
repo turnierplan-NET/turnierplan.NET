@@ -504,7 +504,7 @@ export const de = {
           Link: 'Der folgende Link ist empfohlen, wenn Sie für Ihre Besucher eine Anzeigetafel mit aktuellen Ergebnissen präsentieren. Die Seite ist für die Betrachtung im Vollbild-Modus optimiert und kann sich automatisch in einem festgelegten Abstand aktualisieren.',
           AutoReloadConfig: {
             Enabled: 'Automatisch aktualisieren',
-            Interval: 'Intervall:',
+            Every: 'alle',
             Seconds: 'Sekunden'
           },
           AutoScroll: 'Automatisch zum aktuellen Spiel scrollen',
