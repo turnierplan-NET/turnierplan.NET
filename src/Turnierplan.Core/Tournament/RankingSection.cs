@@ -12,12 +12,16 @@ namespace Turnierplan.Core.Tournament;
 internal sealed class RankingSection
 {
     /// <remarks>
-    /// Creates the section for all nonqualified teams. Note that this constructor will perform invalid
-    /// calculations if the tournament contains non-finished group matches!
+    /// Creates the section for all nonqualified teams.
     /// </remarks>
     public RankingSection(Tournament tournament)
     {
         Tier = int.MinValue; // this section is always at the bottom of the ranking
+
+        if (tournament._matches.Any(x => x is { IsGroupMatch: true, IsFinished: false }))
+        {
+            throw new TurnierplanException("A ranking section for nonqualified teams can only be created when all group matches are finished.");
+        }
 
         var decidingMatches = tournament._matches.Where(x => x is { IsDecidingMatch: true }).ToList();
         List<Team> relevantTeams;
@@ -46,8 +50,7 @@ internal sealed class RankingSection
     }
 
     /// <remarks>
-    /// Creates the section for all teams qualified for a specific round. Note that this constructor will
-    /// perform invalid calculations if the tournament contains non-finished group matches!
+    /// Creates the section for all teams qualified for a specific round.
     /// </remarks>
     public RankingSection(Tournament tournament, int finalsRound)
     {
