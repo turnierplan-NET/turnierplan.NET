@@ -25,6 +25,11 @@ public sealed class TournamentFullscreen : PageModel
 
     public Turnierplan.Core.Tournament.Tournament? Data { get; private set; }
 
+    /// <summary>
+    /// The ID of the match which should be scrolled into view upon page load.
+    /// </summary>
+    public int? ScrollMatchIntoView { get; private set; }
+
     public async Task OnGetAsync()
     {
         if (string.IsNullOrEmpty(Id))
@@ -53,5 +58,24 @@ public sealed class TournamentFullscreen : PageModel
         tournament.Compute();
 
         Data = tournament;
+        ScrollMatchIntoView = FindMatchToScrollIntoView(tournament);
+    }
+
+    private static int? FindMatchToScrollIntoView(Core.Tournament.Tournament tournament)
+    {
+        var orderedMatches = tournament.Matches.OrderBy(x => x.Index).ToArray();
+
+        for (var i = orderedMatches.Length - 1; i >= 0; i--)
+        {
+            var match = orderedMatches[i];
+
+            if (match.IsFinished)
+            {
+                var scrollToMatch = Math.Min(i + 4, orderedMatches.Length - 1);
+                return orderedMatches[scrollToMatch].Index;
+            }
+        }
+
+        return null;
     }
 }
