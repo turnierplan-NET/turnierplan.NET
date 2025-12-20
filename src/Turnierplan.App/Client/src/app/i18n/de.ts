@@ -380,6 +380,7 @@ export const de = {
           QualifiedForEighthFinals: 'Qualifiziert für Achtelfinale',
           QualifiedForBroaderFinals: 'Qualifiziert für andere Finalrunde',
           NotQualifiedForFinals: 'Nicht qualifiziert für Finalrunde',
+          RankingViaGroupResults: 'Platzierung nach Gruppenergebnissen',
           ManuallyChanged: 'Manuell bearbeitet'
         }
       },

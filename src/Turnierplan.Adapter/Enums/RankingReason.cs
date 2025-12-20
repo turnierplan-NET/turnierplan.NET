@@ -67,7 +67,13 @@ public enum RankingReason
     /// The ranking is defined by a team which has not qualified for any finals round at all. If multiple rankings have this
     /// reason assigned, the teams will be sorted amongst each other by their group statistics.
     /// </summary>
+    /// <seealso cref="RankingViaGroupResults" />
     NotQualifiedForFinals,
+
+    /// <summary>
+    /// Used instead of <see cref="NotQualifiedForFinals"/> if the tournament does not contain any finals/playoff matches.
+    /// </summary>
+    RankingViaGroupResults,
 
     /// <summary>
     /// The ranking is defined manually.

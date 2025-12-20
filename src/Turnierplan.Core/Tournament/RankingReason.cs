@@ -16,8 +16,8 @@ public enum RankingReason
     QualifiedForEighthFinals,
     QualifiedForBroaderFinals,
 
-    // TODO: Additional reason for tournament with no finals round?
     NotQualifiedForFinals,
+    RankingViaGroupResults,
 
     // TODO: This enum member will be used in https://github.com/turnierplan-NET/turnierplan.NET/issues/247
     ManuallyChanged

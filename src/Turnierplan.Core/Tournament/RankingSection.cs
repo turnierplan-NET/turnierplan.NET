@@ -39,7 +39,10 @@ internal sealed class RankingSection
         Size = relevantTeams.Count;
         IsDefined = true; // always true because we know that all group matches are finished
         Teams = [..SortTeams(tournament, relevantTeams, null)];
-        RankingReason = RankingReason.NotQualifiedForFinals;
+
+        RankingReason = tournament._matches.Any(x => x.FinalsRound.HasValue || x.PlayoffPosition.HasValue)
+            ? RankingReason.NotQualifiedForFinals
+            : RankingReason.RankingViaGroupResults;
     }
 
     /// <remarks>
