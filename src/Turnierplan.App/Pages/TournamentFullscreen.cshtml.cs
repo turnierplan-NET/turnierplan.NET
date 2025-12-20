@@ -21,6 +21,9 @@ public sealed class TournamentFullscreen : PageModel
     public int? AutoReload { get; set; }
 
     [BindProperty(SupportsGet = true)]
+    public bool? AutoScroll { get; set; }
+
+    [BindProperty(SupportsGet = true)]
     public bool? ShowQrCode { get; set; }
 
     public Turnierplan.Core.Tournament.Tournament? Data { get; private set; }
@@ -58,7 +61,8 @@ public sealed class TournamentFullscreen : PageModel
         tournament.Compute();
 
         Data = tournament;
-        ScrollMatchIntoView = FindMatchToScrollIntoView(tournament);
+
+        ScrollMatchIntoView = AutoScroll == true ? FindMatchToScrollIntoView(tournament) : null;
     }
 
     private static int? FindMatchToScrollIntoView(Core.Tournament.Tournament tournament)
