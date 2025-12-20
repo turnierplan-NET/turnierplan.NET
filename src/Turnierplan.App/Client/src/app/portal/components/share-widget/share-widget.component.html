@@ -7,6 +7,20 @@
     <tp-auto-reload-toggle [minimumInterval]="autoReloadMinInterval" (pathSuffixChanged)="autoReloadPathSuffix = $event" />
   </div>
 
+  <div class="mb-2 form-check form-switch">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      role="switch"
+      id="autoScrollOnFullscreenView"
+      [(ngModel)]="autoScrollOnFullscreenView"
+      (ngModelChange)="localStorageService.setAutoScrollOnFullscreenView($event)" />
+    <label
+      class="form-check-label"
+      for="autoScrollOnFullscreenView"
+      translate="Portal.ViewTournament.Share.FullscreenLink.AutoScroll"></label>
+  </div>
+
   <div class="mb-3 form-check form-switch">
     <input
       class="form-check-input"
@@ -23,11 +37,7 @@
 }
 
 <div [ngClass]="{ 'mb-3': showQrCode || viewsCounter !== undefined }">
-  @let link =
-    includeQrCodeOnFullscreenView
-      ? resourcePath + '&showQrCode=' + includeQrCodeOnFullscreenView + autoReloadPathSuffix
-      : resourcePath + autoReloadPathSuffix;
-  <tp-share-link [resourcePath]="link" #shareLink />
+  <tp-share-link [resourcePath]="getLink()" #shareLink />
 </div>
 
 @if (showQrCode || viewsCounter !== undefined) {

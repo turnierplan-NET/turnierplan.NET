@@ -98,6 +98,14 @@ export class LocalStorageService {
     return this.getValueFromLocalStorage(`tp_includeQrCodeOnFullscreenView`, (x) => x === 'true') ?? true;
   }
 
+  public setAutoScrollOnFullscreenView(value: boolean): void {
+    localStorage.setItem(`tp_autoScrollOnFullscreenView`, value ? 'true' : 'false');
+  }
+
+  public getAutoScrollOnFullscreenView(): boolean {
+    return this.getValueFromLocalStorage(`tp_autoScrollOnFullscreenView`, (x) => x === 'true') ?? true;
+  }
+
   private getValueFromLocalStorage<T>(key: string, parser: (value: string) => T): T | undefined {
     const value = localStorage.getItem(key);
     return value !== null && value.length > 0 ? parser(value) : undefined;

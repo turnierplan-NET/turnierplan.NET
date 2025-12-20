@@ -33,9 +33,11 @@ export class ShareWidgetComponent {
   protected qrCodeUrl?: SafeUrl;
   protected autoReloadPathSuffix = '';
   protected includeQrCodeOnFullscreenView: boolean;
+  protected autoScrollOnFullscreenView: boolean;
 
   constructor(protected readonly localStorageService: LocalStorageService) {
     this.includeQrCodeOnFullscreenView = localStorageService.getIncludeQrCodeOnFullscreenView();
+    this.autoScrollOnFullscreenView = localStorageService.getAutoScrollOnFullscreenView();
   }
 
   @Input()
@@ -46,5 +48,23 @@ export class ShareWidgetComponent {
 
   protected get showQrCode(): boolean {
     return !this.isForFullscreenView;
+  }
+
+  protected getLink(): string {
+    if (!this.isForFullscreenView) {
+      return this.resourcePath;
+    }
+
+    let result = this.resourcePath + this.autoReloadPathSuffix;
+
+    if (this.includeQrCodeOnFullscreenView) {
+      result += '&showQrCode=true';
+    }
+
+    if (this.autoScrollOnFullscreenView) {
+      result += '&autoScroll=true';
+    }
+
+    return result;
   }
 }

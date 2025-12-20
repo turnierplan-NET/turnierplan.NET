@@ -507,6 +507,7 @@ export const de = {
             Interval: 'Intervall:',
             Seconds: 'Sekunden'
           },
+          AutoScroll: 'Automatisch zum aktuellen Spiel scrollen',
           IncludeQrCode: 'Zeige QR-Code zum Scannen auf der Anzeigetafel'
         },
         Settings: 'Einstellungen',
