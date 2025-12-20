@@ -19,6 +19,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
     internal readonly List<Group> _groups = [];
     internal readonly List<Match> _matches = [];
     internal readonly List<Document.Document> _documents = [];
+    internal readonly List<RankingOverwrite> _rankingOverwrites = [];
     internal readonly List<RankingPosition> _ranking = [];
 
     public Tournament(Organization.Organization organization, string name, Visibility visibility)
@@ -93,6 +94,8 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
     public IReadOnlyList<Match> Matches => _matches.AsReadOnly();
 
     public IReadOnlyList<Document.Document> Documents => _documents.AsReadOnly();
+
+    public IReadOnlyList<RankingOverwrite> RankingOverwrites => _rankingOverwrites.AsReadOnly();
 
     public IReadOnlyList<RankingPosition> Ranking => _ranking.AsReadOnly();
 
@@ -651,6 +654,19 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             for (; nextPosition <= _teams.Count; nextPosition++)
             {
                 positionsTemporary.Add(new RankingPosition(nextPosition, reason, null));
+            }
+        }
+
+        foreach (var placementRank in _rankingOverwrites.Select(x => x.PlacementRank).Distinct())
+        {
+            positionsTemporary.RemoveAll(x => x.Position == placementRank);
+        }
+
+        foreach (var overwrite in _rankingOverwrites)
+        {
+            if (!overwrite.HideRanking)
+            {
+                positionsTemporary.Add(new RankingPosition(overwrite.PlacementRank, RankingReason.ManuallyChanged, overwrite.AssignTeam));
             }
         }
 
