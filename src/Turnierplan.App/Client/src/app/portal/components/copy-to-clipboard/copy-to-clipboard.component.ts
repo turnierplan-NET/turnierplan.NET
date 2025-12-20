@@ -8,8 +8,15 @@ import { TranslatePipe } from '@ngx-translate/core';
   imports: [NgbTooltip, TranslatePipe]
 })
 export class CopyToClipboardComponent {
+  private _value: string | number = '';
+  private _nonce = 0;
+
   @Input()
-  public value: string | number = '';
+  public set value(value: string | number) {
+    this._value = value;
+    this._nonce++;
+    this.copyToClipboardPressed = false;
+  }
 
   @Input()
   public tooltipOverwrite?: string;
@@ -21,10 +28,16 @@ export class CopyToClipboardComponent {
       return;
     }
 
-    void navigator.clipboard.writeText(`${this.value}`).then(() => {
+    void navigator.clipboard.writeText(`${this._value}`).then(() => {
       this.copyToClipboardPressed = true;
+
+      const k = this._nonce;
+
       setTimeout(() => {
-        this.copyToClipboardPressed = false;
+        if (k === this._nonce) {
+          // Only reset 'copyToClipboardPressed' if the value was not changed in the meantime (which immediately resets the copyToClipboardPressed to false)
+          this.copyToClipboardPressed = false;
+        }
       }, 2500);
     });
   }
