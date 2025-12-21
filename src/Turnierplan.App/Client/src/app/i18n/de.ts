@@ -383,8 +383,14 @@ export const de = {
           RankingViaGroupResults: 'Platzierung nach Gruppenergebnissen',
           ManuallyChanged: 'Manuell bearbeitet'
         },
+        Hidden: 'Ausgeblendet',
         AddOverwrite: {
           Title: 'Platzierung ändern'
+        },
+        DeleteOverwrite: {
+          Header: 'Zurücksetzen',
+          Tooltip:
+            'Wenn zuvorige Änderungen gelöscht werden, wird an der jeweiligen Stelle wieder die Standard-Platzierung anzeigt, welche im Turnier berechnet werden.'
         }
       },
       Documents: {

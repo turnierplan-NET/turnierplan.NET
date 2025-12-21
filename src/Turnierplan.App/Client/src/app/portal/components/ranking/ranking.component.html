@@ -1,12 +1,19 @@
+@let showDeleteOverwriteColumn = allowRemoveOverwrite && hasRankingOverwrites;
+
 <div class="table-responsive">
   <table class="table table-hover" [attr.aria-label]="'Portal.ViewTournament.Ranking.TableLabel' | translate">
     <thead>
       <tr>
         <th translate="Portal.ViewTournament.Ranking.Position"></th>
         <th translate="Portal.ViewTournament.Ranking.Team"></th>
+        <th style="width: 1px"></th>
         <th></th>
-        <th>hidden</th>
-        <th>overwriteID</th>
+        @if (showDeleteOverwriteColumn) {
+          <th>
+            <span translate="Portal.ViewTournament.Ranking.DeleteOverwrite.Header"></span>
+            <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Ranking.DeleteOverwrite.Tooltip'" />
+          </th>
+        }
       </tr>
     </thead>
     <tbody>
@@ -14,14 +21,36 @@
         <tr>
           <td>{{ ranking.position }}</td>
           <td [tpE2E]="['view-tournament-page-ranking-team-name', ranking.position]">{{ ranking.team ?? '' }}</td>
-          <td class="align-middle small text-secondary" [translate]="'Portal.ViewTournament.Ranking.Reasons.' + ranking.reason"></td>
-          <td>{{ ranking.isHidden }}</td>
-          <td>{{ ranking.rankingOverwriteId }}</td>
+          <td class="align-middle text-secondary pe-0">
+            @if (ranking.isHidden) {
+              <i class="bi bi-eye-slash"></i>
+            } @else if (ranking.reason === rankingReason.ManuallyChanged) {
+              <i class="bi bi-arrow-down-up"></i>
+            }
+          </td>
+          <td class="align-middle text-secondary small">
+            @if (ranking.isHidden) {
+              <span [translate]="'Portal.ViewTournament.Ranking.Hidden'"></span>
+            } @else if (ranking.reason === rankingReason.ManuallyChanged) {
+              <span [translate]="'Portal.ViewTournament.Ranking.Reasons.ManuallyChanged'"></span>
+            } @else {
+              <span [translate]="'Portal.ViewTournament.Ranking.Reasons.' + ranking.reason"></span>
+            }
+          </td>
+          @if (showDeleteOverwriteColumn) {
+            <td>
+              @if (ranking.rankingOverwriteId !== undefined) {
+                <div class="d-flex flex-row">
+                  <!-- d-flex to avoid layout issues -->
+                  <tp-delete-button [reducedFootprint]="true" (confirmed)="removeRankingOverwrite.emit(ranking.rankingOverwriteId)" />
+                </div>
+              }
+            </td>
+          }
         </tr>
       } @empty {
         <tr>
-          <td translate="Portal.ViewTournament.Ranking.NoRankings" colspan="2"></td>
-          <!-- TODO: Fix colspan at the end -->
+          <td translate="Portal.ViewTournament.Ranking.NoRankings" [attr.colspan]="showDeleteOverwriteColumn ? 5 : 4"></td>
         </tr>
       }
     </tbody>

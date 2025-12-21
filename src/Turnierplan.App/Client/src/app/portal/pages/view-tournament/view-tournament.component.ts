@@ -76,6 +76,7 @@ import { RankingReason } from '../../../api/models/ranking-reason';
 import { NewRankingOverwriteDialogComponent } from '../../components/new-ranking-overwrite-dialog/new-ranking-overwrite-dialog.component';
 import { createRankingOverwrite } from '../../../api/fn/ranking-overwrites/create-ranking-overwrite';
 import { CreateRankingOverwriteEndpointRequest } from '../../../api/models/create-ranking-overwrite-endpoint-request';
+import { deleteRankingOverwrite } from '../../../api/fn/ranking-overwrites/delete-ranking-overwrite';
 
 @Component({
   templateUrl: './view-tournament.component.html',
@@ -836,6 +837,34 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
         next: (tournament): void => {
           this.setTournament(tournament);
           this.loadingState = { isLoading: false };
+
+          // TODO: Add alert
+        },
+        error: (error) => {
+          this.loadingState = { isLoading: false, error: error };
+        }
+      });
+  }
+
+  protected deleteRankingOverwrite(id: number): void {
+    if (!this.tournament) {
+      return;
+    }
+
+    const tournamentId = this.tournament.id;
+
+    this.turnierplanApi
+      .invoke(deleteRankingOverwrite, { tournamentId: tournamentId, rankingOverwriteId: id })
+      .pipe(
+        tap(() => (this.loadingState = { isLoading: true })),
+        switchMap(() => this.turnierplanApi.invoke(getTournament, { id: tournamentId }))
+      )
+      .subscribe({
+        next: (tournament): void => {
+          this.setTournament(tournament);
+          this.loadingState = { isLoading: false };
+
+          // TODO: Add alert
         },
         error: (error) => {
           this.loadingState = { isLoading: false, error: error };
