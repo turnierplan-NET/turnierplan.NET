@@ -5,18 +5,23 @@
         <th translate="Portal.ViewTournament.Ranking.Position"></th>
         <th translate="Portal.ViewTournament.Ranking.Team"></th>
         <th></th>
+        <th>hidden</th>
+        <th>overwriteID</th>
       </tr>
     </thead>
     <tbody>
       @for (ranking of rankings; track ranking.position) {
         <tr>
           <td>{{ ranking.position }}</td>
-          <td [tpE2E]="['view-tournament-page-ranking-team-name', ranking.position]">{{ ranking.team }}</td>
+          <td [tpE2E]="['view-tournament-page-ranking-team-name', ranking.position]">{{ ranking.team ?? '' }}</td>
           <td class="align-middle small text-secondary" [translate]="'Portal.ViewTournament.Ranking.Reasons.' + ranking.reason"></td>
+          <td>{{ ranking.isHidden }}</td>
+          <td>{{ ranking.rankingOverwriteId }}</td>
         </tr>
       } @empty {
         <tr>
           <td translate="Portal.ViewTournament.Ranking.NoRankings" colspan="2"></td>
+          <!-- TODO: Fix colspan at the end -->
         </tr>
       }
     </tbody>
