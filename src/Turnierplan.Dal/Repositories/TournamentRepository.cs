@@ -70,7 +70,7 @@ internal sealed class TournamentRepository(TurnierplanContext context) : Reposit
 
         if (includes.HasFlag(ITournamentRepository.Includes.RankingOverwrites))
         {
-            query = query.Include(x => x.RankingOverwrites);
+            query = query.Include(x => x.RankingOverwrites).ThenInclude(x => x.AssignTeam);
         }
 
         if (includes.HasFlag(ITournamentRepository.Includes.Venue))
