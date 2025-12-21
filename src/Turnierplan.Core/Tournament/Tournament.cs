@@ -235,9 +235,17 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             throw new TurnierplanException("The specified team does not belong to this tournament");
         }
 
-        if (_rankingOverwrites.Any(x => x.HideRanking && x.PlacementRank == placementRank))
+        foreach (var existingOverwrite in _rankingOverwrites.Where(x => x.PlacementRank == placementRank))
         {
-            throw new TurnierplanException($"Cannot create ranking overwrite for placement rank '{placementRank}' with team assignment if there already exists an overwrite for that placement rank.");
+            if (existingOverwrite.HideRanking)
+            {
+                throw new TurnierplanException($"Cannot create ranking overwrite for placement rank '{placementRank}' with team assignment because there already exists an overwrite which hides this ranking.");
+            }
+
+            if (existingOverwrite.AssignTeam == assignTeam)
+            {
+                throw new TurnierplanException($"Cannot create ranking overwrite for placement rank '{placementRank}' with team assignment because there already exists an overwrite for this placement rank with the specified team.");
+            }
         }
 
         var rankingOverwrite = new RankingOverwrite(GetNextId(), placementRank, false)
