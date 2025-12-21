@@ -8,7 +8,7 @@ using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.RankingOverwrites;
 
-internal sealed class CreateRankingOverwrite : EndpointBase
+internal sealed class CreateRankingOverwriteEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Post;
 

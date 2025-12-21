@@ -5,7 +5,7 @@ using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.RankingOverwrites;
 
-internal sealed class DeleteRankingOverwrite : EndpointBase
+internal sealed class DeleteRankingOverwriteEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Delete;
 
@@ -20,7 +20,6 @@ internal sealed class DeleteRankingOverwrite : EndpointBase
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-
         var tournament = await repository.GetByPublicIdAsync(tournamentId, ITournamentRepository.Includes.RankingOverwrites);
 
         if (tournament is null)
