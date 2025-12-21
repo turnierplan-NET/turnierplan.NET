@@ -1,7 +1,7 @@
 ﻿import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { TranslateDirective, TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { finalize, map, Observable, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 import { NotificationService } from '../../../core/services/notification.service';
@@ -9,12 +9,12 @@ import { ComputationConfigurationComponent } from '../../components/computation-
 import { DocumentCopyComponent } from '../../components/document-copy/document-copy.component';
 import { DocumentSelectComponent } from '../../components/document-select/document-select.component';
 import { EditMatchComponent } from '../../components/edit-match/edit-match.component';
-import { GroupTeamView, GroupView, GroupsComponent } from '../../components/groups/groups.component';
-import { MatchView, MatchViewType, MatchPlanComponent } from '../../components/match-plan/match-plan.component';
+import { GroupsComponent, GroupTeamView, GroupView } from '../../components/groups/groups.component';
+import { MatchPlanComponent, MatchView, MatchViewType } from '../../components/match-plan/match-plan.component';
 import { MoveTournamentToFolderComponent } from '../../components/move-tournament-to-folder/move-tournament-to-folder.component';
-import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
-import { RankingView, RankingComponent } from '../../components/ranking/ranking.component';
-import { TeamView, TeamListComponent } from '../../components/team-list/team-list.component';
+import { PageFrameComponent, PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
+import { RankingComponent, RankingView } from '../../components/ranking/ranking.component';
+import { TeamListComponent, TeamView } from '../../components/team-list/team-list.component';
 import { VenueSelectComponent } from '../../components/venue-select/venue-select.component';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { getDocumentName } from '../../helpers/document-name';
@@ -26,7 +26,7 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
 import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
-import { NgClass, AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { BadgeComponent } from '../../components/badge/badge.component';
 import { FormsModule } from '@angular/forms';
 import { LoadingIndicatorComponent } from '../../components/loading-indicator/loading-indicator.component';
@@ -72,6 +72,11 @@ import { setTournamentImage } from '../../../api/fn/tournaments/set-tournament-i
 import { setTournamentName } from '../../../api/fn/tournaments/set-tournament-name';
 import { MatchType } from '../../../api/models/match-type';
 import { MatchOutcomeType } from '../../../api/models/match-outcome-type';
+import { RankingReason } from '../../../api/models/ranking-reason';
+import { NewRankingOverwriteDialogComponent } from '../../components/new-ranking-overwrite-dialog/new-ranking-overwrite-dialog.component';
+import { createRankingOverwrite } from '../../../api/fn/ranking-overwrites/create-ranking-overwrite';
+import { CreateRankingOverwriteEndpointRequest } from '../../../api/models/create-ranking-overwrite-endpoint-request';
+import { deleteRankingOverwrite } from '../../../api/fn/ranking-overwrites/delete-ranking-overwrite';
 
 @Component({
   templateUrl: './view-tournament.component.html',
@@ -803,6 +808,79 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     });
   }
 
+  protected addRankingOverwrite(): void {
+    if (!this.tournament) {
+      return;
+    }
+
+    const tournamentId = this.tournament.id;
+
+    const ref = this.modalService.open(NewRankingOverwriteDialogComponent, {
+      size: 'md',
+      fullscreen: 'md',
+      centered: true,
+      scrollable: true
+    });
+
+    const component = ref.componentInstance as NewRankingOverwriteDialogComponent;
+    component.teams = this.processedTeams;
+    component.existingOverwrites = this.tournament.rankingOverwrites;
+
+    ref.closed
+      .pipe(
+        tap(() => (this.loadingState = { isLoading: true })),
+        switchMap((request: CreateRankingOverwriteEndpointRequest) =>
+          this.turnierplanApi.invoke(createRankingOverwrite, { id: tournamentId, body: request })
+        ),
+        switchMap(() => this.turnierplanApi.invoke(getTournament, { id: tournamentId }))
+      )
+      .subscribe({
+        next: (tournament): void => {
+          this.setTournament(tournament);
+          this.loadingState = { isLoading: false };
+
+          this.notificationService.showNotification(
+            'success',
+            'Portal.ViewTournament.AddRankingOverwriteToast.Title',
+            'Portal.ViewTournament.AddRankingOverwriteToast.Message'
+          );
+        },
+        error: (error) => {
+          this.loadingState = { isLoading: false, error: error };
+        }
+      });
+  }
+
+  protected deleteRankingOverwrite(id: number): void {
+    if (!this.tournament) {
+      return;
+    }
+
+    const tournamentId = this.tournament.id;
+
+    this.turnierplanApi
+      .invoke(deleteRankingOverwrite, { tournamentId: tournamentId, rankingOverwriteId: id })
+      .pipe(
+        tap(() => (this.loadingState = { isLoading: true })),
+        switchMap(() => this.turnierplanApi.invoke(getTournament, { id: tournamentId }))
+      )
+      .subscribe({
+        next: (tournament): void => {
+          this.setTournament(tournament);
+          this.loadingState = { isLoading: false };
+
+          this.notificationService.showNotification(
+            'info',
+            'Portal.ViewTournament.DeleteRankingOverwriteToast.Title',
+            'Portal.ViewTournament.DeleteRankingOverwriteToast.Message'
+          );
+        },
+        error: (error) => {
+          this.loadingState = { isLoading: false, error: error };
+        }
+      });
+  }
+
   private reloadDocuments(): Observable<unknown> {
     if (!this.tournament) {
       return of({});
@@ -967,16 +1045,43 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       return convertedTeam;
     });
 
-    this.processedRankings = this.tournament.rankings.map((ranking) => {
-      let teamName = '';
-      if (ranking.teamId) {
-        teamName = this.tournament?.teams.find((team) => team.id == ranking.teamId)?.name ?? '';
-      }
-      return {
-        position: ranking.placementRank,
-        team: teamName,
-        reason: ranking.reason
-      };
-    });
+    this.processedRankings = [];
+    this.processedRankings.push(
+      ...this.tournament.rankings.map((ranking) => {
+        const teamName = ranking.teamId ? this.tournament?.teams.find((team) => team.id == ranking.teamId)?.name : undefined;
+
+        // Finding the ranking overwrite by teamId & placementRank is a "best guess" because there could be multiple overwrites satisfying this
+        // condition. However, in that case deleting either one by its id would result in the same outcome. So for the moment, this is sufficient.
+        const rankingOverwriteId =
+          ranking.reason === RankingReason.ManuallyChanged
+            ? this.tournament?.rankingOverwrites.find((o) => o.placementRank === ranking.placementRank && o.assignTeamId === ranking.teamId)
+                ?.id
+            : undefined;
+
+        return {
+          position: ranking.placementRank,
+          isHidden: false,
+          rankingOverwriteId: rankingOverwriteId,
+          team: teamName,
+          reason: ranking.reason
+        };
+      })
+    );
+    // "Hidden" rankings don't appear in the ranking position array. Because of this, we need
+    // to construct these ranking views from the overwrites which cause them to be hidden.
+    this.processedRankings.push(
+      ...this.tournament.rankingOverwrites
+        .filter((overwrite) => overwrite.hideRanking)
+        .map((overwrite) => {
+          return {
+            position: overwrite.placementRank,
+            isHidden: true,
+            rankingOverwriteId: overwrite.id,
+            team: undefined,
+            reason: undefined
+          };
+        })
+    );
+    this.processedRankings.sort((a, b) => a.position - b.position);
   }
 }

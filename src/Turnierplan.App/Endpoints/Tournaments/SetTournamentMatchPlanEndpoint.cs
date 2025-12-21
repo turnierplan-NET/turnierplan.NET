@@ -71,14 +71,9 @@ internal sealed class SetTournamentMatchPlanEndpoint : EndpointBase
 
         tournament.SetMatchOrder(matchIdToIndexMap);
 
-        try
+        if (!tournament.TryCompute(out var errorResult))
         {
-            // Compute the tournament such that the changes are not saved in case of an exception
-            tournament.Compute();
-        }
-        catch (TurnierplanException ex)
-        {
-            return Results.BadRequest($"Changes to match plan result in computation failure: {ex.Message}");
+            return errorResult;
         }
 
         await repository.UnitOfWork.SaveChangesAsync(cancellationToken);

@@ -381,7 +381,20 @@ export const de = {
           QualifiedForBroaderFinals: 'Qualifiziert für andere Finalrunde',
           NotQualifiedForFinals: 'Nicht qualifiziert für Finalrunde',
           RankingViaGroupResults: 'Platzierung nach Gruppenergebnissen',
-          ManuallyChanged: 'Manuell bearbeitet'
+          ManuallyChanged: 'Manuell zugewiesen'
+        },
+        NoTeam: 'keine Mannschaft',
+        Hidden: 'Ausgeblendet',
+        AddOverwrite: {
+          Title: 'Platzierung ändern',
+          PlacementRank: 'Platzierung:',
+          HideRanking: 'Platzierung ausblenden',
+          HideRankingTooltip: 'Wenn die Platzierung ausgeblendet wird, ist sie nicht mehr auf den öffentlichen Turnierseiten sichtbar'
+        },
+        DeleteOverwrite: {
+          Header: 'Zurücksetzen',
+          Tooltip:
+            'Wenn zuvorige Änderungen gelöscht werden, wird an der jeweiligen Stelle wieder die Standard-Platzierung anzeigt, welche im Turnier berechnet werden.'
         }
       },
       Documents: {
@@ -636,6 +649,14 @@ export const de = {
         Title: 'Änderungen übernommen',
         MessageClear: 'Das bestehende Ergebnis wurde entfernt.',
         MessageSave: 'Das Spielergebnis wurde gespeichert.'
+      },
+      AddRankingOverwriteToast: {
+        Title: 'Änderungen übernommen',
+        Message: 'Die Änderung an der Platzierung wurde übernommen und wird nun angezeigt.'
+      },
+      DeleteRankingOverwriteToast: {
+        Title: 'Änderungen zurückgesetzt',
+        Message: 'Die Änderung an der Platzierung wurde zurückgesetzt. Es wird nun wieder die berechnete Platzierung angezeigt.'
       },
       ComputationConfigurationDialog: {
         StandardComparisonModes: 'Häufig verwendet:',

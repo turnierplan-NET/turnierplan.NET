@@ -19,6 +19,5 @@ public enum RankingReason
     NotQualifiedForFinals,
     RankingViaGroupResults,
 
-    // TODO: This enum member will be used in https://github.com/turnierplan-NET/turnierplan.NET/issues/247
     ManuallyChanged
 }

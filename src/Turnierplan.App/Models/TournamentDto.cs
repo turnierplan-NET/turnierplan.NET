@@ -33,6 +33,8 @@ public sealed record TournamentDto
 
     public required MatchDto[] Matches { get; init; }
 
+    public required RankingOverwriteDto[] RankingOverwrites { get; init; }
+
     public required RankingDto[] Rankings { get; init; }
 
     public required MatchPlanConfigurationDto MatchPlanConfiguration { get; init; }

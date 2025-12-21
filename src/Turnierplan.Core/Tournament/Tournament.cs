@@ -1,3 +1,4 @@
+using System.Reflection;
 using Turnierplan.Core.Entity;
 using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.Extensions;
@@ -19,6 +20,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
     internal readonly List<Group> _groups = [];
     internal readonly List<Match> _matches = [];
     internal readonly List<Document.Document> _documents = [];
+    internal readonly List<RankingOverwrite> _rankingOverwrites = [];
     internal readonly List<RankingPosition> _ranking = [];
 
     public Tournament(Organization.Organization organization, string name, Visibility visibility)
@@ -93,6 +95,8 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
     public IReadOnlyList<Match> Matches => _matches.AsReadOnly();
 
     public IReadOnlyList<Document.Document> Documents => _documents.AsReadOnly();
+
+    public IReadOnlyList<RankingOverwrite> RankingOverwrites => _rankingOverwrites.AsReadOnly();
 
     public IReadOnlyList<RankingPosition> Ranking => _ranking.AsReadOnly();
 
@@ -211,6 +215,49 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         return participant;
     }
 
+    public RankingOverwrite AddRankingOverwrite(int placementRank, bool hideRanking)
+    {
+        if (_rankingOverwrites.Any(x => x.PlacementRank == placementRank))
+        {
+            throw new TurnierplanException($"Cannot create ranking overwrite to hide placement rank '{placementRank}' because there already exists an overwrite for this placement rank.");
+        }
+
+        var rankingOverwrite = new RankingOverwrite(GetNextId(), placementRank, hideRanking);
+        _rankingOverwrites.Add(rankingOverwrite);
+
+        return rankingOverwrite;
+    }
+
+    public RankingOverwrite AddRankingOverwrite(int placementRank, Team? assignTeam)
+    {
+        if (assignTeam is not null && !_teams.Contains(assignTeam))
+        {
+            throw new TurnierplanException("The specified team does not belong to this tournament");
+        }
+
+        foreach (var existingOverwrite in _rankingOverwrites.Where(x => x.PlacementRank == placementRank))
+        {
+            if (existingOverwrite.HideRanking)
+            {
+                throw new TurnierplanException($"Cannot create ranking overwrite for placement rank '{placementRank}' with team assignment because there already exists an overwrite which hides this ranking.");
+            }
+
+            if (existingOverwrite.AssignTeam == assignTeam)
+            {
+                throw new TurnierplanException($"Cannot create ranking overwrite for placement rank '{placementRank}' with team assignment because there already exists an overwrite for this placement rank with the specified team.");
+            }
+        }
+
+        var rankingOverwrite = new RankingOverwrite(GetNextId(), placementRank, false)
+        {
+            AssignTeam = assignTeam
+        };
+
+        _rankingOverwrites.Add(rankingOverwrite);
+
+        return rankingOverwrite;
+    }
+
     public void RemoveTeam(Team team)
     {
         team.UnlinkApplicationTeam();
@@ -221,6 +268,11 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
     public void RemoveGroup(Group group)
     {
         _groups.Remove(group);
+    }
+
+    public void RemoveRankingOverwrite(RankingOverwrite rankingOverwrite)
+    {
+        _rankingOverwrites.Remove(rankingOverwrite);
     }
 
     public void SetFolder(Folder.Folder? folder)
@@ -654,6 +706,19 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             }
         }
 
+        foreach (var placementRank in _rankingOverwrites.Select(x => x.PlacementRank).Distinct())
+        {
+            positionsTemporary.RemoveAll(x => x.Position == placementRank);
+        }
+
+        foreach (var overwrite in _rankingOverwrites)
+        {
+            if (!overwrite.HideRanking)
+            {
+                positionsTemporary.Add(new RankingPosition(overwrite.PlacementRank, RankingReason.ManuallyChanged, overwrite.AssignTeam));
+            }
+        }
+
         _ranking.Clear();
         _ranking.AddRange(positionsTemporary
             .OrderBy(x => x.Position)
@@ -1036,8 +1101,27 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
     {
         if (_nextEntityId is null)
         {
-            var allIds = Teams.Select(x => x.Id).Union(Groups.Select(x => x.Id)).Union(Matches.Select(x => x.Id)).ToList();
-            _nextEntityId = allIds.Count == 0 ? 0 : allIds.Max();
+            _nextEntityId = 0;
+
+            foreach (var team in _teams)
+            {
+                _nextEntityId = team.Id > _nextEntityId ? team.Id : _nextEntityId;
+            }
+
+            foreach (var groups in _groups)
+            {
+                _nextEntityId = groups.Id > _nextEntityId ? groups.Id : _nextEntityId;
+            }
+
+            foreach (var match in _matches)
+            {
+                _nextEntityId = match.Id > _nextEntityId ? match.Id : _nextEntityId;
+            }
+
+            foreach (var rankingOverwrite in _rankingOverwrites)
+            {
+                _nextEntityId = rankingOverwrite.Id > _nextEntityId ? rankingOverwrite.Id : _nextEntityId;
+            }
         }
 
         _nextEntityId++;

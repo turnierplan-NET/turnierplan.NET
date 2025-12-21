@@ -20,8 +20,9 @@ public interface ITournamentRepository : IRepositoryWithPublicId<Tournament, lon
         FolderWithTournaments = 32,
         Images = 64,
         TeamsWithLinks = 128,
+        RankingOverwrites = 256,
 
-        GameRelevant = Teams | Groups | Matches
+        GameRelevant = Teams | Groups | Matches | RankingOverwrites
     }
 }
 
@@ -65,6 +66,11 @@ internal sealed class TournamentRepository(TurnierplanContext context) : Reposit
         if (includes.HasFlag(ITournamentRepository.Includes.Documents))
         {
             query = query.Include(x => x.Documents);
+        }
+
+        if (includes.HasFlag(ITournamentRepository.Includes.RankingOverwrites))
+        {
+            query = query.Include(x => x.RankingOverwrites).ThenInclude(x => x.AssignTeam);
         }
 
         if (includes.HasFlag(ITournamentRepository.Includes.Venue))

@@ -118,14 +118,24 @@ internal sealed class TournamentMappingRule : MappingRuleBase<Tournament, Tourna
                     OutcomeType = match.OutcomeType
                 };
             }).OrderBy(x => x.Index).ToArray(),
-            Rankings = source.Ranking.Select(entry =>
+            RankingOverwrites = source.RankingOverwrites.Select(rankingOverwrite =>
+            {
+                return new RankingOverwriteDto
+                {
+                    Id = rankingOverwrite.Id,
+                    PlacementRank = rankingOverwrite.PlacementRank,
+                    HideRanking = rankingOverwrite.HideRanking,
+                    AssignTeamId = rankingOverwrite.AssignTeam?.Id
+                };
+            }).ToArray(),
+            Rankings = source.Ranking.Select(rankingPosition =>
             {
                 return new RankingDto
                 {
-                    PlacementRank = entry.Position,
-                    Reason = entry.Reason,
-                    IsDefined = entry.IsDefined,
-                    TeamId = entry.Team?.Id
+                    PlacementRank = rankingPosition.Position,
+                    Reason = rankingPosition.Reason,
+                    IsDefined = rankingPosition.IsDefined,
+                    TeamId = rankingPosition.Team?.Id
                 };
             }).ToArray(),
             MatchPlanConfiguration = new MatchPlanConfigurationDto

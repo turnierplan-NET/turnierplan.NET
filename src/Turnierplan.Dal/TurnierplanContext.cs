@@ -169,6 +169,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new MatchEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OrganizationEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new PlanningRealmEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new RankingOverwriteEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TeamEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TeamLinkEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TournamentEntityTypeConfiguration());

@@ -113,11 +113,18 @@ public sealed class TournamentEntityTypeConfiguration : IEntityTypeConfiguration
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
+        builder.HasMany(x => x.RankingOverwrites)
+            .WithOne()
+            .HasForeignKey("TournamentId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
         builder.Metadata.FindNavigation(nameof(Tournament.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(Tournament.Teams))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(Tournament.Groups))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(Tournament.Matches))!.SetPropertyAccessMode(PropertyAccessMode.Field);
         builder.Metadata.FindNavigation(nameof(Tournament.Documents))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(Tournament.RankingOverwrites))!.SetPropertyAccessMode(PropertyAccessMode.Field);
 
     }
 }

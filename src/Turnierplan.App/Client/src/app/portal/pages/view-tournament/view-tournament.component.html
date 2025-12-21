@@ -1,5 +1,6 @@
 ﻿<ng-container *tpLoadingState="loadingState">
   @if (tournament) {
+    @let tournamentConductAllowed = (authorizationService.isActionAllowed$(tournament.id, Actions.TournamentConduct) | async) ?? false;
     <tp-page-frame
       [title]="tournament.name"
       [backLink]="'../../organization/' + tournament.organizationId"
@@ -26,6 +27,15 @@
                   (buttonClick)="showTournamentTree = true" />
               }
             }
+          }
+          @case (3) {
+            <ng-container *tpIsActionAllowed="[tournament.id, Actions.TournamentConduct]">
+              <tp-action-button
+                [title]="'Portal.ViewTournament.Ranking.AddOverwrite.Title'"
+                [type]="'outline-secondary'"
+                [icon]="'arrow-down-up'"
+                (buttonClick)="addRankingOverwrite()" />
+            </ng-container>
           }
           @case (4) {
             <ng-container *tpIsActionAllowed="[tournament.id, Actions.GenericWrite]">
@@ -79,7 +89,7 @@
               </div>
               <div class="card-body p-0">
                 <tp-match-plan
-                  [allowReporting]="(authorizationService.isActionAllowed$(tournament.id, Actions.TournamentConduct) | async) ?? false"
+                  [allowReporting]="tournamentConductAllowed"
                   [showAccumulatedScore]="showAccumulatedScore"
                   [matches]="processedMatches"
                   [groups]="processedGroups"
@@ -140,7 +150,10 @@
                 <tp-badge context="ViewTournament" label="RankingsCount" [value]="processedRankings.length" />
               </div>
               <div class="card-body p-0">
-                <tp-ranking [rankings]="processedRankings" />
+                <tp-ranking
+                  [rankings]="processedRankings"
+                  [allowRemoveOverwrite]="tournamentConductAllowed"
+                  (removeRankingOverwrite)="deleteRankingOverwrite($event)" />
               </div>
             }
             @case (4) {
@@ -378,7 +391,7 @@
       <ng-template #fullWidthContent>
         @if (tournament && isTournamentTreeVisible) {
           <tp-match-tree
-            [allowReporting]="(authorizationService.isActionAllowed$(tournament.id, Actions.TournamentConduct) | async) ?? false"
+            [allowReporting]="tournamentConductAllowed"
             [matches]="processedMatches"
             [groups]="processedGroups"
             (matchClick)="matchClicked($event)" />

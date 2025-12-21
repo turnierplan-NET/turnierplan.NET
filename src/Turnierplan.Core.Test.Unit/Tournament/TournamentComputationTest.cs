@@ -955,4 +955,123 @@ public sealed class TournamentComputationTest
             tournament._ranking.Single(x => x.Position == 12).Reason.Should().Be(RankingReason.NotQualifiedForFinals);
         }
     }
+
+    [Fact]
+    public void Tournament___Compute_Ranking_Overwrites_Are_Applied_Correctly___Works_As___Expected()
+    {
+        var tournament = TestTournament.Default;
+
+        // Add group
+        var groupA = tournament.AddGroup('A');
+
+        // Add teams
+        var team1 = tournament.AddTeam("Team 1");
+        var team2 = tournament.AddTeam("Team 2");
+        var team3 = tournament.AddTeam("Team 3");
+        var team4 = tournament.AddTeam("Team 4");
+        var team5 = tournament.AddTeam("Team 5");
+
+        // Assign teams to groups
+        tournament.AddGroupParticipant(groupA, team1);
+        tournament.AddGroupParticipant(groupA, team2);
+        tournament.AddGroupParticipant(groupA, team3);
+        tournament.AddGroupParticipant(groupA, team4);
+        tournament.AddGroupParticipant(groupA, team5);
+
+        // Generate matches
+        tournament.GenerateMatchPlan(new MatchPlanConfiguration
+        {
+            GroupRoundConfig = new GroupRoundConfig
+            {
+                GroupMatchOrder = GroupMatchOrder.Sequential,
+                GroupPhaseRounds = 1
+            }
+        });
+
+        // Just to make sure...
+        tournament._matches.Should().HaveCount(10);
+
+        // Apply some outcomes
+        foreach (var match in tournament._matches)
+        {
+            match.SetOutcome(false, 0, 0, MatchOutcomeType.Standard);
+        }
+
+        // Compute and assert rankings. Because all matches are 0-0, the teams are effectively "ranked" by their ID
+        tournament.Compute();
+        tournament._ranking.Should().HaveCount(5);
+        tournament._ranking.Single(x => x.Position == 1).Team.Should().Be(team1);
+        tournament._ranking.Single(x => x.Position == 2).Team.Should().Be(team2);
+        tournament._ranking.Single(x => x.Position == 3).Team.Should().Be(team3);
+        tournament._ranking.Single(x => x.Position == 4).Team.Should().Be(team4);
+        tournament._ranking.Single(x => x.Position == 5).Team.Should().Be(team5);
+        tournament._ranking.Should().AllSatisfy(r => r.Reason.Should().Be(RankingReason.RankingViaGroupResults));
+
+        // Add first overwrite
+        var hideSecondPlace = tournament.AddRankingOverwrite(2, hideRanking: true);
+        tournament.Compute();
+        tournament._ranking.Should().HaveCount(4);
+        tournament._ranking.Single(x => x.Position == 1).Team.Should().Be(team1);
+        tournament._ranking.Single(x => x.Position == 3).Team.Should().Be(team3);
+        tournament._ranking.Single(x => x.Position == 4).Team.Should().Be(team4);
+        tournament._ranking.Single(x => x.Position == 5).Team.Should().Be(team5);
+        tournament._ranking.Should().AllSatisfy(r => r.Reason.Should().Be(RankingReason.RankingViaGroupResults));
+
+        // Add another overwrite
+        var setFourthPlaceToTeam2 = tournament.AddRankingOverwrite(4, team2);
+        tournament.Compute();
+        tournament._ranking.Should().HaveCount(4);
+        tournament._ranking.Single(x => x.Position == 1).Team.Should().Be(team1);
+        tournament._ranking.Single(x => x.Position == 3).Team.Should().Be(team3);
+        tournament._ranking.Single(x => x.Position == 4).Team.Should().Be(team2);
+        tournament._ranking.Single(x => x.Position == 5).Team.Should().Be(team5);
+        tournament._ranking.Single(x => x.Position == 1).Reason.Should().Be(RankingReason.RankingViaGroupResults);
+        tournament._ranking.Single(x => x.Position == 3).Reason.Should().Be(RankingReason.RankingViaGroupResults);
+        tournament._ranking.Single(x => x.Position == 4).Reason.Should().Be(RankingReason.ManuallyChanged);
+        tournament._ranking.Single(x => x.Position == 5).Reason.Should().Be(RankingReason.RankingViaGroupResults);
+
+        // Add another overwrite, also for 4th place
+        tournament.AddRankingOverwrite(4, team5);
+        tournament.Compute();
+        tournament._ranking.Should().HaveCount(5);
+        tournament._ranking.Single(x => x.Position == 1).Team.Should().Be(team1);
+        tournament._ranking.Single(x => x.Position == 3).Team.Should().Be(team3);
+        tournament._ranking.Single(x => x.Position == 5).Team.Should().Be(team5);
+        tournament._ranking.Single(x => x.Position == 1).Reason.Should().Be(RankingReason.RankingViaGroupResults);
+        tournament._ranking.Single(x => x.Position == 3).Reason.Should().Be(RankingReason.RankingViaGroupResults);
+        tournament._ranking.Single(x => x.Position == 5).Reason.Should().Be(RankingReason.RankingViaGroupResults);
+        var place4 = tournament._ranking.Where(x => x.Position == 4).ToList();
+        place4.Should().HaveCount(2);
+        place4.Should().AllSatisfy(r => r.Reason.Should().Be(RankingReason.ManuallyChanged));
+        place4.Any(x => x.Team == team2).Should().BeTrue();
+        place4.Any(x => x.Team == team5).Should().BeTrue();
+
+        // Remove the second overwrite
+        tournament.RemoveRankingOverwrite(setFourthPlaceToTeam2);
+        tournament.Compute();
+        tournament._ranking.Should().HaveCount(4);
+        tournament._ranking.Single(x => x.Position == 1).Team.Should().Be(team1);
+        tournament._ranking.Single(x => x.Position == 3).Team.Should().Be(team3);
+        tournament._ranking.Single(x => x.Position == 4).Team.Should().Be(team5);
+        tournament._ranking.Single(x => x.Position == 5).Team.Should().Be(team5);
+        tournament._ranking.Single(x => x.Position == 1).Reason.Should().Be(RankingReason.RankingViaGroupResults);
+        tournament._ranking.Single(x => x.Position == 3).Reason.Should().Be(RankingReason.RankingViaGroupResults);
+        tournament._ranking.Single(x => x.Position == 4).Reason.Should().Be(RankingReason.ManuallyChanged);
+        tournament._ranking.Single(x => x.Position == 5).Reason.Should().Be(RankingReason.RankingViaGroupResults);
+
+        // Remove the first overwrite
+        tournament.RemoveRankingOverwrite(hideSecondPlace);
+        tournament.Compute();
+        tournament._ranking.Should().HaveCount(5);
+        tournament._ranking.Single(x => x.Position == 1).Team.Should().Be(team1);
+        tournament._ranking.Single(x => x.Position == 2).Team.Should().Be(team2);
+        tournament._ranking.Single(x => x.Position == 3).Team.Should().Be(team3);
+        tournament._ranking.Single(x => x.Position == 4).Team.Should().Be(team5);
+        tournament._ranking.Single(x => x.Position == 5).Team.Should().Be(team5);
+        tournament._ranking.Single(x => x.Position == 1).Reason.Should().Be(RankingReason.RankingViaGroupResults);
+        tournament._ranking.Single(x => x.Position == 2).Reason.Should().Be(RankingReason.RankingViaGroupResults);
+        tournament._ranking.Single(x => x.Position == 3).Reason.Should().Be(RankingReason.RankingViaGroupResults);
+        tournament._ranking.Single(x => x.Position == 4).Reason.Should().Be(RankingReason.ManuallyChanged);
+        tournament._ranking.Single(x => x.Position == 5).Reason.Should().Be(RankingReason.RankingViaGroupResults);
+    }
 }
