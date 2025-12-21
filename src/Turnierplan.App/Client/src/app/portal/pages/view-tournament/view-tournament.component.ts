@@ -73,6 +73,9 @@ import { setTournamentName } from '../../../api/fn/tournaments/set-tournament-na
 import { MatchType } from '../../../api/models/match-type';
 import { MatchOutcomeType } from '../../../api/models/match-outcome-type';
 import { RankingReason } from '../../../api/models/ranking-reason';
+import { NewRankingOverwriteDialogComponent } from '../../components/new-ranking-overwrite-dialog/new-ranking-overwrite-dialog.component';
+import { createRankingOverwrite } from '../../../api/fn/ranking-overwrites/create-ranking-overwrite';
+import { CreateRankingOverwriteEndpointRequest } from '../../../api/models/create-ranking-overwrite-endpoint-request';
 
 @Component({
   templateUrl: './view-tournament.component.html',
@@ -802,6 +805,41 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
         this.loadingState = { isLoading: false, error: error };
       }
     });
+  }
+
+  protected addRankingOverwrite(): void {
+    if (!this.tournament) {
+      return;
+    }
+
+    const tournamentId = this.tournament.id;
+
+    const ref = this.modalService.open(NewRankingOverwriteDialogComponent, {
+      size: 'lg',
+      fullscreen: 'lg',
+      centered: true,
+      scrollable: true
+    });
+
+    const component = ref.componentInstance as NewRankingOverwriteDialogComponent;
+    component.teams = this.processedTeams;
+
+    ref.closed
+      .pipe(
+        tap(() => (this.loadingState = { isLoading: true })),
+        switchMap((request: CreateRankingOverwriteEndpointRequest) =>
+          this.turnierplanApi.invoke(createRankingOverwrite, { id: tournamentId, body: request })
+        ),
+        switchMap(() => this.turnierplanApi.invoke(getTournament, { id: tournamentId }))
+      )
+      .subscribe({
+        next: (tournament): void => {
+          this.setTournament(tournament);
+        },
+        error: (error) => {
+          this.loadingState = { isLoading: false, error: error };
+        }
+      });
   }
 
   private reloadDocuments(): Observable<unknown> {

@@ -382,6 +382,9 @@ export const de = {
           NotQualifiedForFinals: 'Nicht qualifiziert für Finalrunde',
           RankingViaGroupResults: 'Platzierung nach Gruppenergebnissen',
           ManuallyChanged: 'Manuell bearbeitet'
+        },
+        AddOverwrite: {
+          Title: 'Platzierung ändern'
         }
       },
       Documents: {

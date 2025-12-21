@@ -1,3 +1,4 @@
+using System.Reflection;
 using Turnierplan.Core.Entity;
 using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.Extensions;
@@ -216,6 +217,11 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     public RankingOverwrite AddRankingOverwrite(int placementRank, bool hideRanking)
     {
+        if (_rankingOverwrites.Any(x => x.HideRanking && x.PlacementRank == placementRank))
+        {
+            throw new TurnierplanException($"A ranking overwrite to hide placement rank '{placementRank}' already exists.");
+        }
+
         var rankingOverwrite = new RankingOverwrite(GetNextId(), placementRank, hideRanking);
         _rankingOverwrites.Add(rankingOverwrite);
 
@@ -227,6 +233,11 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         if (assignTeam is not null && !_teams.Contains(assignTeam))
         {
             throw new TurnierplanException("The specified team does not belong to this tournament");
+        }
+
+        if (_rankingOverwrites.Any(x => x.HideRanking && x.PlacementRank == placementRank))
+        {
+            throw new TurnierplanException($"Cannot create ranking overwrite for placement rank '{placementRank}' with team assignment if there already exists an overwrite for that placement rank.");
         }
 
         var rankingOverwrite = new RankingOverwrite(GetNextId(), placementRank, false)

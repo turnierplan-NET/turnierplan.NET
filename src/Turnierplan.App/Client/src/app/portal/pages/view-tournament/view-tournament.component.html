@@ -27,6 +27,15 @@
               }
             }
           }
+          @case (3) {
+            <ng-container *tpIsActionAllowed="[tournament.id, Actions.TournamentConduct]">
+              <tp-action-button
+                [title]="'Portal.ViewTournament.Ranking.AddOverwrite.Title'"
+                [type]="'outline-secondary'"
+                [icon]="'arrow-down-up'"
+                (buttonClick)="addRankingOverwrite()" />
+            </ng-container>
+          }
           @case (4) {
             <ng-container *tpIsActionAllowed="[tournament.id, Actions.GenericWrite]">
               <tp-action-button
