@@ -18,7 +18,7 @@ internal sealed class CreateRankingOverwriteEndpoint : EndpointBase
 
     private static async Task<IResult> Handle(
         [FromRoute] PublicId id,
-        [FromBody] CreateRankingOverwriteRequest request,
+        [FromBody] CreateRankingOverwriteEndpointRequest request,
         ITournamentRepository repository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
@@ -75,7 +75,7 @@ internal sealed class CreateRankingOverwriteEndpoint : EndpointBase
         return Results.NoContent();
     }
 
-    public sealed record CreateRankingOverwriteRequest
+    public sealed record CreateRankingOverwriteEndpointRequest
     {
         public required int PlacementRank { get; init; }
 
@@ -84,7 +84,7 @@ internal sealed class CreateRankingOverwriteEndpoint : EndpointBase
         public int? AssignTeamId { get; init; }
     }
 
-    private sealed class Validator : AbstractValidator<CreateRankingOverwriteRequest>
+    private sealed class Validator : AbstractValidator<CreateRankingOverwriteEndpointRequest>
     {
         public static readonly Validator Instance = new();
 
