@@ -13,9 +13,9 @@ public sealed class RankingOverwrite : Entity<int>
 
     public override int Id { get; protected set; }
 
-    public int PlacementRank { get; set; }
+    public int PlacementRank { get; }
 
-    public bool HideRanking { get; set; }
+    public bool HideRanking { get; }
 
-    public Team? AssignTeam { get; set; }
+    public Team? AssignTeam { get; internal set; }
 }
