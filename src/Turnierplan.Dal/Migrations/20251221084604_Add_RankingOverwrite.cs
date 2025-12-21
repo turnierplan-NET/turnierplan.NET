@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -12,28 +11,29 @@ namespace Turnierplan.Dal.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "RankingOverwrite",
+                name: "RankingOverwrites",
+                schema: "turnierplan",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<int>(type: "integer", nullable: false),
+                    TournamentId = table.Column<long>(type: "bigint", nullable: false),
                     PlacementRank = table.Column<int>(type: "integer", nullable: false),
                     HideRanking = table.Column<bool>(type: "boolean", nullable: false),
                     AssignTeamTournamentId = table.Column<long>(type: "bigint", nullable: true),
-                    AssignTeamId = table.Column<int>(type: "integer", nullable: true),
-                    TournamentId = table.Column<long>(type: "bigint", nullable: false)
+                    AssignTeamId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RankingOverwrite", x => x.Id);
+                    table.PrimaryKey("PK_RankingOverwrites", x => new { x.TournamentId, x.Id });
                     table.ForeignKey(
-                        name: "FK_RankingOverwrite_Teams_AssignTeamTournamentId_AssignTeamId",
+                        name: "FK_RankingOverwrites_Teams_AssignTeamTournamentId_AssignTeamId",
                         columns: x => new { x.AssignTeamTournamentId, x.AssignTeamId },
                         principalSchema: "turnierplan",
                         principalTable: "Teams",
-                        principalColumns: new[] { "TournamentId", "Id" });
+                        principalColumns: new[] { "TournamentId", "Id" },
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_RankingOverwrite_Tournaments_TournamentId",
+                        name: "FK_RankingOverwrites_Tournaments_TournamentId",
                         column: x => x.TournamentId,
                         principalSchema: "turnierplan",
                         principalTable: "Tournaments",
@@ -42,21 +42,18 @@ namespace Turnierplan.Dal.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_RankingOverwrite_AssignTeamTournamentId_AssignTeamId",
-                table: "RankingOverwrite",
+                name: "IX_RankingOverwrites_AssignTeamTournamentId_AssignTeamId",
+                schema: "turnierplan",
+                table: "RankingOverwrites",
                 columns: new[] { "AssignTeamTournamentId", "AssignTeamId" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_RankingOverwrite_TournamentId",
-                table: "RankingOverwrite",
-                column: "TournamentId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RankingOverwrite");
+                name: "RankingOverwrites",
+                schema: "turnierplan");
         }
     }
 }

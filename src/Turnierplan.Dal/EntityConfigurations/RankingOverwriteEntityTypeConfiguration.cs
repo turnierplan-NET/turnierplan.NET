@@ -24,6 +24,6 @@ public sealed class RankingOverwriteEntityTypeConfiguration : IEntityTypeConfigu
         builder.HasOne(x => x.AssignTeam)
             .WithMany()
             .OnDelete(DeleteBehavior.SetNull)
-            .IsRequired();
+            .IsRequired(false);
     }
 }

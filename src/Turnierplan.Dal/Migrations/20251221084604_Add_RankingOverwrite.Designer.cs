@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20251220195927_Add_RankingOverwrite")]
+    [Migration("20251221084604_Add_RankingOverwrite")]
     partial class Add_RankingOverwrite
     {
         /// <inheritdoc />
@@ -865,11 +865,11 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("Turnierplan.Core.Tournament.RankingOverwrite", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                    b.Property<long>("TournamentId")
+                        .HasColumnType("bigint");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
 
                     b.Property<int?>("AssignTeamId")
                         .HasColumnType("integer");
@@ -883,16 +883,11 @@ namespace Turnierplan.Dal.Migrations
                     b.Property<int>("PlacementRank")
                         .HasColumnType("integer");
 
-                    b.Property<long>("TournamentId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TournamentId");
+                    b.HasKey("TournamentId", "Id");
 
                     b.HasIndex("AssignTeamTournamentId", "AssignTeamId");
 
-                    b.ToTable("RankingOverwrite");
+                    b.ToTable("RankingOverwrites", "turnierplan");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.Tournament.Team", b =>
@@ -1474,7 +1469,8 @@ namespace Turnierplan.Dal.Migrations
 
                     b.HasOne("Turnierplan.Core.Tournament.Team", "AssignTeam")
                         .WithMany()
-                        .HasForeignKey("AssignTeamTournamentId", "AssignTeamId");
+                        .HasForeignKey("AssignTeamTournamentId", "AssignTeamId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("AssignTeam");
                 });
