@@ -217,9 +217,9 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     public RankingOverwrite AddRankingOverwrite(int placementRank, bool hideRanking)
     {
-        if (_rankingOverwrites.Any(x => x.HideRanking && x.PlacementRank == placementRank))
+        if (_rankingOverwrites.Any(x => x.PlacementRank == placementRank))
         {
-            throw new TurnierplanException($"A ranking overwrite to hide placement rank '{placementRank}' already exists.");
+            throw new TurnierplanException($"Cannot create ranking overwrite to hide placement rank '{placementRank}' because there already exists an overwrite for this placement rank.");
         }
 
         var rankingOverwrite = new RankingOverwrite(GetNextId(), placementRank, hideRanking);

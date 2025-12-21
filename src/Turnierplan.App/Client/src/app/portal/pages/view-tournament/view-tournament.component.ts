@@ -824,6 +824,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
 
     const component = ref.componentInstance as NewRankingOverwriteDialogComponent;
     component.teams = this.processedTeams;
+    component.existingOverwrites = this.tournament.rankingOverwrites;
 
     ref.closed
       .pipe(

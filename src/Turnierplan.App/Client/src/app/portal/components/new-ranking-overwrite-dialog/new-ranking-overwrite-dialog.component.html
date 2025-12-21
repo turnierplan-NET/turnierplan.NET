@@ -34,6 +34,13 @@
       </select>
     </div>
   }
+
+  @if (hasConflictWithExisting) {
+    <tp-alert
+      class="mt-3"
+      [type]="'danger'"
+      [text]="'Die Änderung kann nicht gespeichert werden, da es bereits eine Änderung für dieselbe Platzierung gibt.'" />
+  }
 </div>
 <div class="modal-footer">
   <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
