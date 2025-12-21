@@ -5,8 +5,10 @@ import { RankingReason } from '../../../api/models/ranking-reason';
 
 export interface RankingView {
   position: number;
-  team: string;
-  reason: RankingReason;
+  isHidden: boolean;
+  rankingOverwriteId?: number;
+  team?: string;
+  reason?: RankingReason;
 }
 
 @Component({
