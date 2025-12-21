@@ -646,6 +646,14 @@ export const de = {
         MessageClear: 'Das bestehende Ergebnis wurde entfernt.',
         MessageSave: 'Das Spielergebnis wurde gespeichert.'
       },
+      AddRankingOverwriteToast: {
+        Title: 'Änderungen übernommen',
+        Message: 'Die Änderung an der Platzierung wurde übernommen und wird nun angezeigt.'
+      },
+      DeleteRankingOverwriteToast: {
+        Title: 'Änderungen zurückgesetzt',
+        Message: 'Die Änderung an der Platzierung wurde zurückgesetzt. Es wird nun wieder die berechnete Platzierung angezeigt.'
+      },
       ComputationConfigurationDialog: {
         StandardComparisonModes: 'Häufig verwendet:',
         NonStandardComparisonModes: 'Alle Platzierungsregeln:'

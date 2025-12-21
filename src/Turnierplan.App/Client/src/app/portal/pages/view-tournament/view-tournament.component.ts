@@ -838,7 +838,11 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
           this.setTournament(tournament);
           this.loadingState = { isLoading: false };
 
-          // TODO: Add alert
+          this.notificationService.showNotification(
+            'success',
+            'Portal.ViewTournament.AddRankingOverwriteToast.Title',
+            'Portal.ViewTournament.AddRankingOverwriteToast.Message'
+          );
         },
         error: (error) => {
           this.loadingState = { isLoading: false, error: error };
@@ -864,7 +868,11 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
           this.setTournament(tournament);
           this.loadingState = { isLoading: false };
 
-          // TODO: Add alert
+          this.notificationService.showNotification(
+            'info',
+            'Portal.ViewTournament.DeleteRankingOverwriteToast.Title',
+            'Portal.ViewTournament.DeleteRankingOverwriteToast.Message'
+          );
         },
         error: (error) => {
           this.loadingState = { isLoading: false, error: error };
