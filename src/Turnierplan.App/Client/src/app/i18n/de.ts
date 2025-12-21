@@ -381,11 +381,14 @@ export const de = {
           QualifiedForBroaderFinals: 'Qualifiziert für andere Finalrunde',
           NotQualifiedForFinals: 'Nicht qualifiziert für Finalrunde',
           RankingViaGroupResults: 'Platzierung nach Gruppenergebnissen',
-          ManuallyChanged: 'Manuell bearbeitet'
+          ManuallyChanged: 'Manuell zugewiesen'
         },
         Hidden: 'Ausgeblendet',
         AddOverwrite: {
-          Title: 'Platzierung ändern'
+          Title: 'Platzierung ändern',
+          PlacementRank: 'Platzierung:',
+          HideRanking: 'Platzierung ausblenden',
+          HideRankingTooltip: 'Wenn die Platzierung ausgeblendet wird, ist sie nicht mehr auf den öffentlichen Turnierseiten sichtbar'
         },
         DeleteOverwrite: {
           Header: 'Zurücksetzen',

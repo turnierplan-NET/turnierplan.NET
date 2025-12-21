@@ -816,8 +816,8 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     const tournamentId = this.tournament.id;
 
     const ref = this.modalService.open(NewRankingOverwriteDialogComponent, {
-      size: 'lg',
-      fullscreen: 'lg',
+      size: 'md',
+      fullscreen: 'md',
       centered: true,
       scrollable: true
     });
