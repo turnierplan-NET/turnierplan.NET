@@ -383,6 +383,7 @@ export const de = {
           RankingViaGroupResults: 'Platzierung nach Gruppenergebnissen',
           ManuallyChanged: 'Manuell zugewiesen'
         },
+        NoTeam: 'keine Mannschaft',
         Hidden: 'Ausgeblendet',
         AddOverwrite: {
           Title: 'Platzierung ändern',

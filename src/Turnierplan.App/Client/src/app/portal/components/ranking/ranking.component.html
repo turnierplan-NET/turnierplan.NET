@@ -20,7 +20,13 @@
       @for (ranking of rankings; track ranking) {
         <tr>
           <td>{{ ranking.position }}</td>
-          <td [tpE2E]="['view-tournament-page-ranking-team-name', ranking.position]">{{ ranking.team ?? '' }}</td>
+          <td [tpE2E]="['view-tournament-page-ranking-team-name', ranking.position]">
+            @if (ranking.reason === rankingReason.ManuallyChanged && ranking.team === undefined) {
+              <span class="text-secondary fst-italic small" [translate]="'Portal.ViewTournament.Ranking.NoTeam'"></span>
+            } @else {
+              <span>{{ ranking.team ?? '' }}</span>
+            }
+          </td>
           <td class="align-middle text-secondary pe-0">
             @if (ranking.isHidden) {
               <i class="bi bi-eye-slash"></i>
