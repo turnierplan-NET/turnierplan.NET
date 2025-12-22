@@ -13,53 +13,55 @@
           <tp-badge context="Administration" label="UserCount" [value]="users.length" />
         </div>
         <div class="card-body p-0">
-          <table class="table" [attr.aria-label]="'Portal.Administration.Users.TableLabel' | translate">
-            <thead>
-              <tr>
-                <th translate="Portal.Administration.Users.UserName"></th>
-                <th translate="Portal.Administration.Users.FullName"></th>
-                <th translate="Portal.Administration.Users.EMail"></th>
-                <th translate="Portal.Administration.Users.CreatedAt"></th>
-                <th translate="Portal.Administration.Users.LastPasswordChange"></th>
-                <th translate="Portal.Administration.Users.Administrator"></th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (user of users; track user) {
-                @let isCurrentUser = user.id === currentUserId;
+          <div class="table-responsive">
+            <table class="table" [attr.aria-label]="'Portal.Administration.Users.TableLabel' | translate">
+              <thead>
                 <tr>
-                  <td class="align-middle">{{ user.userName }}</td>
-                  <td class="align-middle">{{ user.fullName ?? '' }}</td>
-                  <td class="align-middle">{{ user.eMail ?? '' }}</td>
-                  <td class="align-middle small">{{ user.createdAt | translateDate: 'medium' }}</td>
-                  <td class="align-middle small">{{ user.lastPasswordChange | translateDate: 'medium' }}</td>
-                  <td class="align-middle">
-                    @if (user.isAdministrator) {
-                      <i class="bi bi-check-circle"></i>
-                    }
-                  </td>
-                  <td>
-                    <div class="d-flex flex-row gap-2">
-                      <tp-action-button
-                        [icon]="'pencil'"
-                        [type]="'outline-secondary'"
-                        [mode]="'IconOnly'"
-                        (buttonClick)="editButtonClicked(user.id, editUserCanvas)" />
-                      <div [ngClass]="{ 'tp-cursor-not-allowed': isCurrentUser }">
-                        <tp-action-button
-                          [icon]="'trash'"
-                          [type]="'outline-danger'"
-                          [mode]="'IconOnly'"
-                          [disabled]="isCurrentUser"
-                          (buttonClick)="deleteButtonClicked(user.id, deleteConfirmationCanvas)" />
-                      </div>
-                    </div>
-                  </td>
+                  <th translate="Portal.Administration.Users.UserName"></th>
+                  <th translate="Portal.Administration.Users.FullName"></th>
+                  <th translate="Portal.Administration.Users.EMail"></th>
+                  <th translate="Portal.Administration.Users.CreatedAt"></th>
+                  <th translate="Portal.Administration.Users.LastPasswordChange"></th>
+                  <th translate="Portal.Administration.Users.Administrator"></th>
+                  <th></th>
                 </tr>
-              }
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                @for (user of users; track user) {
+                  @let isCurrentUser = user.id === currentUserId;
+                  <tr>
+                    <td class="align-middle">{{ user.userName }}</td>
+                    <td class="align-middle">{{ user.fullName ?? '' }}</td>
+                    <td class="align-middle">{{ user.eMail ?? '' }}</td>
+                    <td class="align-middle small">{{ user.createdAt | translateDate: 'medium' }}</td>
+                    <td class="align-middle small">{{ user.lastPasswordChange | translateDate: 'medium' }}</td>
+                    <td class="align-middle">
+                      @if (user.isAdministrator) {
+                        <i class="bi bi-check-circle"></i>
+                      }
+                    </td>
+                    <td>
+                      <div class="d-flex flex-row gap-2">
+                        <tp-action-button
+                          [icon]="'pencil'"
+                          [type]="'outline-secondary'"
+                          [mode]="'IconOnly'"
+                          (buttonClick)="editButtonClicked(user.id, editUserCanvas)" />
+                        <div [ngClass]="{ 'tp-cursor-not-allowed': isCurrentUser }">
+                          <tp-action-button
+                            [icon]="'trash'"
+                            [type]="'outline-danger'"
+                            [mode]="'IconOnly'"
+                            [disabled]="isCurrentUser"
+                            (buttonClick)="deleteButtonClicked(user.id, deleteConfirmationCanvas)" />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </ng-template>

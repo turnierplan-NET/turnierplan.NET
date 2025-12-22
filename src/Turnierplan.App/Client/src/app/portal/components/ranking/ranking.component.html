@@ -9,7 +9,7 @@
         <th style="width: 1px"></th>
         <th></th>
         @if (showDeleteOverwriteColumn) {
-          <th>
+          <th class="text-nowrap">
             <span translate="Portal.ViewTournament.Ranking.DeleteOverwrite.Header"></span>
             <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Ranking.DeleteOverwrite.Tooltip'" />
           </th>
@@ -34,7 +34,7 @@
               <i class="bi bi-arrow-down-up"></i>
             }
           </td>
-          <td class="align-middle text-secondary small">
+          <td class="align-middle text-secondary small text-nowrap">
             @if (ranking.isHidden) {
               <span [translate]="'Portal.ViewTournament.Ranking.Hidden'"></span>
             } @else if (ranking.reason === rankingReason.ManuallyChanged) {
