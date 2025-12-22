@@ -84,10 +84,12 @@
         }
         updateClock();
         setInterval(updateClock, 1000);
-        document.onscroll = () => {
+        const updateShadow = () => {
             const shadowStrength = window.scrollY > 100 ? 1 : (window.scrollY < 10 ? 0 : ((window.scrollY - 10) / 90));
             document.getElementById("header-information").style['box-shadow'] = `0 0 8px rgba(0, 0, 0, ${shadowStrength})`;
-        };
+        }
+        document.onscroll = () => updateShadow();
+        updateShadow();
     </script>
 
     @if (Model.AutoReload.HasValue)
