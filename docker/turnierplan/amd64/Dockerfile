@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:10.0.1-noble-amd64 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0.1-alpine3.23-amd64 AS base
 
 # Where are the files stored inside the container? This folder should be mapped as a volume
 ARG DATA_DIRECTORY=/var/turnierplan
@@ -20,16 +20,11 @@ RUN dotnet publish "./Turnierplan.App.csproj" -c Release --runtime linux-x64 -o 
 
 FROM base AS final
 
-# Since .NET 8, the official container image no longer includes the 'Kerberos' package. Since Npgsql 10.0, an
-# error is shown upon startup if that package is not installed. Because of this, we install the package manually.
-# The official documentation states you have to install the 'libkrb5-3' package:
-#   - https://learn.microsoft.com/en-us/dotnet/core/compatibility/containers/8.0/krb5-libs-package
-# However, this seems to have no effect. By digging in the 'dotnet-docker' repository, you can find the Dockerfile
-# used for the .NET 6 images which states the 'libgssapi-krb5-2' package which is installed below.
-#   - source: https://github.com/dotnet/dotnet-docker/blob/0a4258cc250885be5162d01f178bff5c856291f4/src/runtime-deps/6.0/jammy/amd64/Dockerfile
-RUN apt-get update \
-    && apt-get -y install libgssapi-krb5-2 \
-    && rm -rf /var/lib/apt/lists/*
+# Install some packages:
+#  - 'gcompat'    to run QuestPDF dependencies on Alpine Linux
+#  - 'krb5-libs'  to enable Npgsql GSS session encryption
+#  - 'tzdata'     contains relevant time zone information
+RUN apk add gcompat krb5-libs tzdata
 
 # Prepare the directory used by the turnierplan.NET application
 RUN mkdir "$DATA_DIRECTORY" && chown "$APP_UID" "$DATA_DIRECTORY"
