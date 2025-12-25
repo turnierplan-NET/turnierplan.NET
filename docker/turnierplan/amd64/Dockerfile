@@ -1,13 +1,12 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0.1-noble-amd64 AS base
 
-# Where are the files stored in the container? This folder should be mapped as a volume
+# Where are the files stored inside the container? This folder should be mapped as a volume
 ARG DATA_DIRECTORY=/var/turnierplan
 
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0.101-noble-amd64 AS build
 
 # Copy the source files and build the solution.
-WORKDIR /src
-COPY . .
+COPY src /src/
 WORKDIR "/src/Turnierplan.App"
 RUN dotnet build "./Turnierplan.App.csproj" -c Release -o /app/build
 

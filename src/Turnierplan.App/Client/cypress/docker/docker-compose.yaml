@@ -3,8 +3,8 @@
 services:
   turnierplan.e2e.application:
     build:
-      dockerfile: 'Turnierplan.App/Dockerfile'
-      context: '../../../../'
+      dockerfile: 'docker/turnierplan/amd64/Dockerfile'
+      context: '../../../../../'
     ports:
       - "45001:8080"
     environment:
