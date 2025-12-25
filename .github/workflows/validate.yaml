@@ -96,27 +96,3 @@ jobs:
       - name: 'Destroy e2e test environment'
         run: 'npm run e2e:destroy'
         working-directory: './src/Turnierplan.App/Client/'
-
-  e2e-arm64v8:
-    name: 'E2E Tests (arm64v8)'
-    runs-on: ubuntu-24.04-arm
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: 'Setup Node.js 24.x'
-        uses: actions/setup-node@v3
-        with:
-          node-version: '24.x'
-      - name: 'Install npm packages'
-        run: 'npm ci'
-        working-directory: './src/Turnierplan.App/Client/'
-      - name: 'Prepare e2e test environment'
-        run: 'npm run e2e:prepare:arm64v8'
-        working-directory: './src/Turnierplan.App/Client/'
-      - name: 'Run e2e tests'
-        run: 'npm run e2e:run'
-        working-directory: './src/Turnierplan.App/Client/'
-      - name: 'Destroy e2e test environment'
-        run: 'npm run e2e:destroy'
-        working-directory: './src/Turnierplan.App/Client/'
