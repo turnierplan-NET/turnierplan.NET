@@ -72,6 +72,7 @@ jobs:
         if: ${{ env.RUN_SONARQUBE_ANALYSIS == 'true' }}
         run: 'dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"'
         working-directory: './src'
+
   e2e-amd64:
     name: 'E2E Tests (amd64)'
     runs-on: ubuntu-24.04
@@ -95,6 +96,7 @@ jobs:
       - name: 'Destroy e2e test environment'
         run: 'npm run e2e:destroy'
         working-directory: './src/Turnierplan.App/Client/'
+
   e2e-arm64v8:
     name: 'E2E Tests (arm64v8)'
     runs-on: ubuntu-24.04-arm

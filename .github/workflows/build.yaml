@@ -26,8 +26,8 @@ jobs:
     outputs:
       turnierplan_version: ${{ steps.extract-version.outputs.turnierplan_version }}
 
-  container-image:
-    name: 'Build container image'
+  container-image-amd64:
+    name: 'Build container image (amd64)'
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -56,6 +56,37 @@ jobs:
           push: true
           # Note: Always push "latest" even when building from a non-main branch. This is because currently, no patches are released for a non-latest minor release.
           tags: 'ghcr.io/turnierplan-net/turnierplan:latest,ghcr.io/turnierplan-net/turnierplan:${{ needs.extract-version.outputs.turnierplan_version }}'
+
+  container-image-arm64v8:
+    name: 'Build container image (arm64v8)'
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: read
+      packages: write
+    needs:
+      - extract-version
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'Replace environment tokens'
+        uses: cschleiden/replace-tokens@v1
+        with:
+          files: '["**/environment.prod.ts"]'
+        env:
+          TOKEN_APPLICATION_VERSION: "${{ needs.extract-version.outputs.turnierplan_version }}"
+      - name: Login to container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: 'Build and push container image'
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+        with:
+          context: .
+          file: ./docker/turnierplan-amd64/Dockerfile
+          push: true
+          # Note: Always push "latest-arm64v8" even when building from a non-main branch. This is because currently, no patches are released for a non-latest minor release.
+          tags: 'ghcr.io/turnierplan-net/turnierplan:latest-arm64v8,ghcr.io/turnierplan-net/turnierplan:${{ needs.extract-version.outputs.turnierplan_version }}-arm64v8'
 
   nuget-package:
     name: 'Build NuGet package'
