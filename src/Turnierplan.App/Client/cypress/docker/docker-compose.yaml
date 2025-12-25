@@ -1,9 +1,19 @@
 # This docker compose file is used for running the E2E tests during the CI workflow
 
 services:
-  turnierplan.e2e.application:
+  turnierplan.e2e.application:amd64:
     build:
       dockerfile: 'docker/turnierplan-amd64/Dockerfile'
+      context: '../../../../../'
+    ports:
+      - "45001:8080"
+    environment:
+      - Database__InMemory=true
+      - Turnierplan__ApplicationUrl=http://localhost:45001
+      - Turnierplan__InitialUserPassword=P@ssw0rd
+  turnierplan.e2e.application:arm64v8:
+    build:
+      dockerfile: 'docker/turnierplan-arm64v8/Dockerfile'
       context: '../../../../../'
     ports:
       - "45001:8080"
