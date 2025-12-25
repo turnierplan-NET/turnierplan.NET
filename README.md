@@ -163,7 +163,7 @@ If you have an Entra ID app registration with the necessary permissions on the s
 
 ## Documentation
 
-The developer documentation of **turnierplan.NET** is located in the `docs` directory of this repository.
+The developer documentation of **turnierplan.NET** is located in the `docs` directory of this repository. Information about the container images and how to build them can be found in the [README.md in the docker folder](./docker/README.md).
 
 ## Development
 
