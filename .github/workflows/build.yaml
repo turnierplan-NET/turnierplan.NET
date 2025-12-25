@@ -51,8 +51,8 @@ jobs:
       - name: 'Build and push container image'
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
-          context: ./src
-          file: ./src/Turnierplan.App/Dockerfile
+          context: .
+          file: ./docker/turnierplan/amd64/Dockerfile
           push: true
           # Note: Always push "latest" even when building from a non-main branch. This is because currently, no patches are released for a non-latest minor release.
           tags: 'ghcr.io/turnierplan-net/turnierplan:latest,ghcr.io/turnierplan-net/turnierplan:${{ needs.extract-version.outputs.turnierplan_version }}'
