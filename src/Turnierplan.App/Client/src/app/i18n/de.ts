@@ -1342,7 +1342,7 @@ export const de = {
         User: 'Benutzer'
       },
       PrincipalNotFound: 'Der Prinzipal konnte nicht mehr gefunden werden. Wurde der Nutzer/API-Schlüssel gelöscht?',
-      TotalCount: 'Gesamt:',
+      TotalCount: '{{count}} Zuweisungen',
       Id: 'ID:',
       CreatedAt: 'Erstellt am:',
       Inherited: 'Vererbt durch:',
