@@ -204,7 +204,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly localStorageService: LocalStorageService,
     private readonly translateService: TranslateService
-  ) { }
+  ) {}
 
   protected get isTournamentTreeVisible(): boolean {
     return this.canShowTournamentTree && this.currentPage === ViewTournamentComponent.MatchPlanPageId && this.showTournamentTree;
@@ -1067,7 +1067,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
         const rankingOverwriteId =
           ranking.reason === RankingReason.ManuallyChanged
             ? this.tournament?.rankingOverwrites.find((o) => o.placementRank === ranking.placementRank && o.assignTeamId === ranking.teamId)
-              ?.id
+                ?.id
             : undefined;
 
         return {
