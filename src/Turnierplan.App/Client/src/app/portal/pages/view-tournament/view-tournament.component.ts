@@ -204,7 +204,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly localStorageService: LocalStorageService,
     private readonly translateService: TranslateService
-  ) {}
+  ) { }
 
   protected get isTournamentTreeVisible(): boolean {
     return this.canShowTournamentTree && this.currentPage === ViewTournamentComponent.MatchPlanPageId && this.showTournamentTree;
@@ -255,7 +255,13 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       this.turnierplanApi.invoke(getDocuments, { tournamentId: this.tournament.id }).subscribe({
         next: (documents) => {
           this.documents = documents ?? [];
-          this.documents.sort((a, b) => a.id.localeCompare(b.id));
+          this.documents.sort((a, b) => {
+            const nameComparison = a.name.localeCompare(b.name);
+            if (nameComparison !== 0) {
+              return nameComparison;
+            }
+            return new Date(a.lastModifiedAt).getTime() - new Date(b.lastModifiedAt).getTime();
+          });
           this.isLoadingDocuments = false;
         },
         error: (error) => {
@@ -888,7 +894,13 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     return this.turnierplanApi.invoke(getDocuments, { tournamentId: this.tournament.id }).pipe(
       tap((result) => {
         this.documents = result;
-        this.documents.sort((a, b) => a.id.localeCompare(b.id));
+        this.documents.sort((a, b) => {
+          const nameComparison = a.name.localeCompare(b.name);
+          if (nameComparison !== 0) {
+            return nameComparison;
+          }
+          return new Date(a.lastModifiedAt).getTime() - new Date(b.lastModifiedAt).getTime();
+        });
       })
     );
   }
@@ -1055,7 +1067,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
         const rankingOverwriteId =
           ranking.reason === RankingReason.ManuallyChanged
             ? this.tournament?.rankingOverwrites.find((o) => o.placementRank === ranking.placementRank && o.assignTeamId === ranking.teamId)
-                ?.id
+              ?.id
             : undefined;
 
         return {
