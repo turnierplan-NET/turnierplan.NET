@@ -1,10 +1,10 @@
 # This docker compose file is used for running the E2E tests during the CI workflow
 
 services:
-  turnierplan.e2e.application:
+  turnierplan.e2e.application.amd64:
     build:
-      dockerfile: 'Turnierplan.App/Dockerfile'
-      context: '../../../../'
+      dockerfile: 'docker/turnierplan-amd64/Dockerfile'
+      context: '../../../../../'
     ports:
       - "45001:8080"
     environment:
