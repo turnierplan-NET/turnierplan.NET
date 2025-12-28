@@ -255,7 +255,13 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
       this.turnierplanApi.invoke(getDocuments, { tournamentId: this.tournament.id }).subscribe({
         next: (documents) => {
           this.documents = documents ?? [];
-          this.documents.sort((a, b) => a.id.localeCompare(b.id));
+          this.documents.sort((a, b) => {
+            const nameComparison = a.name.localeCompare(b.name);
+            if (nameComparison !== 0) {
+              return nameComparison;
+            }
+            return new Date(a.lastModifiedAt).getTime() - new Date(b.lastModifiedAt).getTime();
+          });
           this.isLoadingDocuments = false;
         },
         error: (error) => {
@@ -888,7 +894,13 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     return this.turnierplanApi.invoke(getDocuments, { tournamentId: this.tournament.id }).pipe(
       tap((result) => {
         this.documents = result;
-        this.documents.sort((a, b) => a.id.localeCompare(b.id));
+        this.documents.sort((a, b) => {
+          const nameComparison = a.name.localeCompare(b.name);
+          if (nameComparison !== 0) {
+            return nameComparison;
+          }
+          return new Date(a.lastModifiedAt).getTime() - new Date(b.lastModifiedAt).getTime();
+        });
       })
     );
   }
