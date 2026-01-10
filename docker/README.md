@@ -6,7 +6,7 @@ Currently, there exists one Dockerfile with the `dotnet/aspnet:10.0-alpine` base
 docker build -t turnierplan:dev -f docker/turnierplan-amd64/Dockerfile .
 ```
 
-> ![WARNING] Manually built container images should not be used in production! This is because the relevant GitHub workflow performs other important steps before actually building the images. 
+> [!WARNING] Manually built container images should not be used in production! This is because the relevant GitHub workflow performs other important steps before actually building the images. 
 
 The resulting container image can be run as described in the [main readme](../README.md). The following minimal example uses an in-memory data store and does not mount any volumes:
 
