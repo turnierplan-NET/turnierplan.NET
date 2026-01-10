@@ -188,12 +188,23 @@ export class DocumentManagerComponent {
         const document = this.documents.find((x) => x.id === id);
         if (document) {
           document.name = name;
+          this.sortDocuments();
         }
         this.currentlyUpdatingName = undefined;
       },
       error: (error) => {
         this.errorOccured.emit(error);
       }
+    });
+  }
+
+  private sortDocuments(): void {
+    this.documents = [...this.documents].sort((a, b) => {
+      const nameComparison = a.name.localeCompare(b.name);
+      if (nameComparison !== 0) {
+        return nameComparison;
+      }
+      return new Date(a.lastModifiedAt).getTime() - new Date(b.lastModifiedAt).getTime();
     });
   }
 
