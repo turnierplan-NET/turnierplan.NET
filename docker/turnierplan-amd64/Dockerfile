@@ -33,7 +33,6 @@ RUN mkdir "$DATA_DIRECTORY" && chown "$APP_UID" "$DATA_DIRECTORY"
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
-EXPOSE 8081
 
 # Copy the publish output i.e. the application binaries and the static web assets including the client application
 COPY --from=publish /app/publish .
