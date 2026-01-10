@@ -86,6 +86,6 @@ internal sealed partial class CreateDocumentEndpoint : EndpointBase<DocumentDto>
         }
     }
 
-    [LoggerMessage(LogLevel.Critical, "Could not get the default document configuration for document type {DocumentType}.", EventId = 100)]
+    [LoggerMessage(LogLevel.Critical, "Could not get the default document configuration for document type {DocumentType}.", EventId = 101)]
     private static partial void CouldNotGetDefaultDocumentConfiguration(ILogger<CreateDocumentEndpoint> logger, DocumentType documentType);
 }

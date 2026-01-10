@@ -9,6 +9,6 @@ internal sealed partial class SigningKeyProviderLogger
         _logger = logger;
     }
 
-    [LoggerMessage(LogLevel.Critical, "The directory for identity storage does not exist and could not be created.", EventId = 100)]
+    [LoggerMessage(LogLevel.Critical, "The directory for identity storage does not exist and could not be created.", EventId = 101)]
     public partial void IdentityDirectoryCreationFailed();
 }

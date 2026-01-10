@@ -9,6 +9,6 @@ internal sealed partial class ApplicationUrlProviderLogger
         _logger = logger;
     }
 
-    [LoggerMessage(LogLevel.Warning, "The 'ApplicationUrl' is not specified. Please check your application configuration.", EventId = 100)]
+    [LoggerMessage(LogLevel.Warning, "The 'ApplicationUrl' is not specified. Please check your application configuration.", EventId = 101)]
     public partial void ApplicationUrlNotSpecified();
 }

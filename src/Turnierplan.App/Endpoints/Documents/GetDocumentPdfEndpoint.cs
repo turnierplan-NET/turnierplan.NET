@@ -97,9 +97,9 @@ internal sealed partial class GetDocumentPdfEndpoint : EndpointBase
         return Results.File(stream.ToArray(), "application/pdf");
     }
 
-    [LoggerMessage(LogLevel.Error, "Failed to parse the document configuration of document with type '{DocumentType}'.", EventId = 100)]
+    [LoggerMessage(LogLevel.Error, "Failed to parse the document configuration of document with type '{DocumentType}'.", EventId = 101)]
     private static partial void FailedToParseDocumentConfiguration(ILogger<GetDocumentPdfEndpoint> logger, DocumentType documentType);
 
-    [LoggerMessage(LogLevel.Critical, "No document renderer available for document type '{DocumentType}'.", EventId = 101)]
+    [LoggerMessage(LogLevel.Critical, "No document renderer available for document type '{DocumentType}'.", EventId = 102)]
     private static partial void NoRendererAvailableForDocumentType(ILogger<GetDocumentPdfEndpoint> logger, DocumentType documentType);
 }

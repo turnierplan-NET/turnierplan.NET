@@ -11,12 +11,12 @@ internal sealed partial class TurnierplanContextLogger
         _logger = logger;
     }
 
-    [LoggerMessage(LogLevel.Information, "Beginning database transaction", EventId = 100)]
+    [LoggerMessage(LogLevel.Information, "Beginning database transaction", EventId = 101)]
     public partial void BeginningTransaction();
 
-    [LoggerMessage(LogLevel.Information, "Committing database transaction", EventId = 101)]
+    [LoggerMessage(LogLevel.Information, "Committing database transaction", EventId = 102)]
     public partial void CommittingTransaction();
 
-    [LoggerMessage(LogLevel.Information, "Rolling back database transaction", EventId = 102)]
+    [LoggerMessage(LogLevel.Information, "Rolling back database transaction", EventId = 103)]
     public partial void RollingBackTransaction();
 }

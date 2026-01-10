@@ -9,9 +9,9 @@ internal sealed partial class DeletionHelperLogger
         _logger = logger;
     }
 
-    [LoggerMessage(LogLevel.Error, "Image with id '{ImageId}' was successfully deleted from image storage but the deletion from the database failed.", EventId = 100)]
+    [LoggerMessage(LogLevel.Error, "Image with id '{ImageId}' was successfully deleted from image storage but the deletion from the database failed.", EventId = 101)]
     public partial void ImageDeletedButDatabaseRemovalFailed(Exception exception, long imageId);
 
-    [LoggerMessage(LogLevel.Error, "Failed to delete image with id '{ImageId}' from image storage while deleting organization with id '{OrganizationId}'.", EventId = 101)]
+    [LoggerMessage(LogLevel.Error, "Failed to delete image with id '{ImageId}' from image storage while deleting organization with id '{OrganizationId}'.", EventId = 102)]
     public partial void ImageDeletionFromStorageFailed(long imageId, long organizationId);
 }
