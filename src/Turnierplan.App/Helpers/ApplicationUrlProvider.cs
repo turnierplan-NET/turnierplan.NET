@@ -7,12 +7,12 @@ namespace Turnierplan.App.Helpers;
 internal sealed class ApplicationUrlProvider : IApplicationUrlProvider
 {
     private readonly IOptionsMonitor<TurnierplanOptions> _options;
-    private readonly ILogger<ApplicationUrlProvider> _logger;
+    private readonly ApplicationUrlProviderLogger _logger;
 
     public ApplicationUrlProvider(IOptionsMonitor<TurnierplanOptions> options, ILogger<ApplicationUrlProvider> logger)
     {
         _options = options;
-        _logger = logger;
+        _logger = new ApplicationUrlProviderLogger(logger);
     }
 
     public string GetApplicationUrl()
@@ -21,7 +21,7 @@ internal sealed class ApplicationUrlProvider : IApplicationUrlProvider
 
         if (string.IsNullOrWhiteSpace(url))
         {
-            _logger.LogWarning("The ApplicationUrl is not specified. Please check your application configuration.");
+            _logger.ApplicationUrlNotSpecified();
 
             return string.Empty;
         }

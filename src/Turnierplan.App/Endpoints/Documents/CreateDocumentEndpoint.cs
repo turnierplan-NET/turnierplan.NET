@@ -11,7 +11,7 @@ using Turnierplan.PdfRendering;
 
 namespace Turnierplan.App.Endpoints.Documents;
 
-internal sealed class CreateDocumentEndpoint : EndpointBase<DocumentDto>
+internal sealed partial class CreateDocumentEndpoint : EndpointBase<DocumentDto>
 {
     protected override HttpMethod Method => HttpMethod.Post;
 
@@ -53,7 +53,7 @@ internal sealed class CreateDocumentEndpoint : EndpointBase<DocumentDto>
 
         if (!documentTypeRegistry.TryGetDocumentDefaultConfiguration(request.Type, out var configuration))
         {
-            logger.LogCritical("Could not get the default document configuration for document type {DocumentType}.", request.Type);
+            CouldNotGetDefaultDocumentConfiguration(logger, request.Type);
 
             return Results.InternalServerError();
         }
@@ -85,4 +85,7 @@ internal sealed class CreateDocumentEndpoint : EndpointBase<DocumentDto>
                 .NotEmpty();
         }
     }
+
+    [LoggerMessage(LogLevel.Critical, "Could not get the default document configuration for document type {DocumentType}.", EventId = 100)]
+    private static partial void CouldNotGetDefaultDocumentConfiguration(ILogger<CreateDocumentEndpoint> logger, DocumentType documentType);
 }

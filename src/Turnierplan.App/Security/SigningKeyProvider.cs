@@ -26,7 +26,8 @@ internal sealed class SigningKeyProvider : ISigningKeyProvider
 
         if (!Directory.Exists(storagePath))
         {
-            logger.LogCritical("The directory for identity storage does not exist and could not be created.");
+            var customLogger = new SigningKeyProviderLogger(logger);
+            customLogger.IdentityDirectoryCreationFailed();
         }
 
         var signingKeyFile = Path.Join(storagePath, "jwt-signing-key.bin");

@@ -10,14 +10,14 @@ namespace Turnierplan.ImageStorage.Azure;
 
 internal sealed class AzureImageStorage : IImageStorage
 {
-    private readonly ILogger<AzureImageStorage> _logger;
+    private readonly AzureImageStorageLogger _logger;
     private readonly BlobContainerClient _client;
     private readonly string _storageAccountUrl;
     private readonly string _containerName;
 
     public AzureImageStorage(IOptions<AzureImageStorageOptions> options, ILogger<AzureImageStorage> logger)
     {
-        _logger = logger;
+        _logger = new AzureImageStorageLogger(logger);
 
         ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.StorageAccountName);
         ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.ContainerName);
@@ -25,7 +25,7 @@ internal sealed class AzureImageStorage : IImageStorage
         _storageAccountUrl = $"https://{options.Value.StorageAccountName}.blob.core.windows.net";
         var storageAccountUri = new Uri(_storageAccountUrl);
 
-        _logger.LogInformation("Initializing Azure Blob Storage client for storage account '{StorageAccountUrl}'.", _storageAccountUrl);
+        _logger.InitializingAzureBlobStorageClient(_storageAccountUrl);
 
         BlobServiceClient blobServiceClient;
 
@@ -38,7 +38,7 @@ internal sealed class AzureImageStorage : IImageStorage
 
             ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.AccountKey);
 
-            _logger.LogInformation("Using account key authentication for Azure Blob Storage");
+            _logger.UsingAccountKeyAuthentication();
 
             var credential = new StorageSharedKeyCredential(options.Value.StorageAccountName, options.Value.AccountKey);
             blobServiceClient = new BlobServiceClient(storageAccountUri, credential);
@@ -53,13 +53,13 @@ internal sealed class AzureImageStorage : IImageStorage
                 ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.ClientId);
                 ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.ClientSecret);
 
-                _logger.LogInformation("Using ClientSecretCredential for Azure Blob Storage");
+                _logger.UsingClientSecretCredential();
 
                 credential = new ClientSecretCredential(options.Value.TenantId, options.Value.ClientId, options.Value.ClientSecret);
             }
             else
             {
-                _logger.LogInformation("Using DefaultAzureCredential for Azure Blob Storage");
+                _logger.UsingDefaultAzureCredential();
 
                 credential = new DefaultAzureCredential();
             }
@@ -91,7 +91,7 @@ internal sealed class AzureImageStorage : IImageStorage
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to upload image '{BlobName}' to Azure Blob Storage because of an exception.", blobName);
+            _logger.FailedToUploadImage(ex, blobName);
         }
 
         return false;
@@ -110,7 +110,7 @@ internal sealed class AzureImageStorage : IImageStorage
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to read image '{BlobName}' from Azure Blob Storage because of an exception.", blobName);
+            _logger.FailedToReadImage(ex, blobName);
 
             throw new InvalidOperationException("Failed to read image from Azure Blob Storage.", ex);
         }
@@ -129,7 +129,7 @@ internal sealed class AzureImageStorage : IImageStorage
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to delete image '{BlobName}' from Azure Blob Storage because of an exception.", blobName);
+            _logger.FailedToDeleteImage(ex, blobName);
         }
 
         return false;

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.OpenApi;
 using Turnierplan.App.Security;
+using Turnierplan.Core.Document;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Dal.Extensions;
 using Turnierplan.Dal.Repositories;
@@ -10,7 +11,7 @@ using Turnierplan.PdfRendering.Renderer;
 
 namespace Turnierplan.App.Endpoints.Documents;
 
-internal sealed class GetDocumentPdfEndpoint : EndpointBase
+internal sealed partial class GetDocumentPdfEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Get;
 
@@ -59,7 +60,7 @@ internal sealed class GetDocumentPdfEndpoint : EndpointBase
 
         if (!documentTypeRegistry.TryParseDocumentConfiguration(document.Type, document.Configuration, out var configuration))
         {
-            logger.LogError("Failed to parse the document configuration of document with type '{DocumentType}'.", document.Type);
+            FailedToParseDocumentConfiguration(logger, document.Type);
 
             return Results.InternalServerError();
         }
@@ -68,7 +69,7 @@ internal sealed class GetDocumentPdfEndpoint : EndpointBase
 
         if (renderer is null)
         {
-            logger.LogCritical("No document renderer available for document type '{DocumentType}'.", document.Type);
+            NoRendererAvailableForDocumentType(logger, document.Type);
 
             return Results.InternalServerError();
         }
@@ -95,4 +96,10 @@ internal sealed class GetDocumentPdfEndpoint : EndpointBase
 
         return Results.File(stream.ToArray(), "application/pdf");
     }
+
+    [LoggerMessage(LogLevel.Error, "Failed to parse the document configuration of document with type '{DocumentType}'.", EventId = 100)]
+    private static partial void FailedToParseDocumentConfiguration(ILogger<GetDocumentPdfEndpoint> logger, DocumentType documentType);
+
+    [LoggerMessage(LogLevel.Critical, "No document renderer available for document type '{DocumentType}'.", EventId = 101)]
+    private static partial void NoRendererAvailableForDocumentType(ILogger<GetDocumentPdfEndpoint> logger, DocumentType documentType);
 }
