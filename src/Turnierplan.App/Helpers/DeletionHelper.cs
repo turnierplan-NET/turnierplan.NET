@@ -17,7 +17,7 @@ internal sealed class DeletionHelper : IDeletionHelper
     private readonly IPlanningRealmRepository _planningRealmRepository;
     private readonly IImageRepository _imageRepository;
     private readonly IImageStorage _imageStorage;
-    private readonly ILogger<DeletionHelper> _logger;
+    private readonly DeletionHelperLogger _logger;
 
     public DeletionHelper(
         IOrganizationRepository organizationRepository,
@@ -34,7 +34,7 @@ internal sealed class DeletionHelper : IDeletionHelper
         _planningRealmRepository = planningRealmRepository;
         _imageRepository = imageRepository;
         _imageStorage = imageStorage;
-        _logger = logger;
+        _logger = new DeletionHelperLogger(logger);
     }
 
     public async Task<bool> DeleteOrganizationAsync(Organization organization, CancellationToken cancellationToken)
@@ -57,14 +57,14 @@ internal sealed class DeletionHelper : IDeletionHelper
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Image with id '{ImageId}' was successfully deleted from image storage but the deletion from the database failed.", image.Id);
+                    _logger.ImageDeletedButDatabaseRemovalFailed(ex, image.Id);
 
                     return false;
                 }
             }
             else
             {
-                _logger.LogError("Failed to delete image with id '{ImageId}' from image storage while deleting organization with id '{OrganizationId}'.", image.Id, organization.Id);
+                _logger.ImageDeletionFromStorageFailed(image.Id, organization.Id);
 
                 hasNonDeletedImages = true;
             }

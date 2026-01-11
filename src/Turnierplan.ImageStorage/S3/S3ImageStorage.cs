@@ -11,7 +11,7 @@ namespace Turnierplan.ImageStorage.S3;
 
 internal sealed class S3ImageStorage : IImageStorage
 {
-    private readonly ILogger<S3ImageStorage> _logger;
+    private readonly S3ImageStorageLogger _logger;
     private readonly AmazonS3Client _client;
     private readonly string _bucketName;
 
@@ -21,7 +21,7 @@ internal sealed class S3ImageStorage : IImageStorage
         ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.AccessKeySecret);
         ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.BucketName);
 
-        _logger = logger;
+        _logger = new S3ImageStorageLogger(logger);
 
         var s3Credentials = new BasicAWSCredentials(options.Value.AccessKey, options.Value.AccessKeySecret);
         var s3Config = new AmazonS3Config();
@@ -85,11 +85,11 @@ internal sealed class S3ImageStorage : IImageStorage
                 return true;
             }
 
-            _logger.LogError("Failed to upload image '{ObjectKey}' to S3. Result status code: {StatusCode}", objectKey, (int)response.HttpStatusCode);
+            _logger.FailedToUploadImage(objectKey, (int)response.HttpStatusCode);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to upload image '{ObjectKey}' to S3 because of an exception.", objectKey);
+            _logger.FailedToUploadImage(ex, objectKey);
         }
 
         return false;
@@ -112,7 +112,7 @@ internal sealed class S3ImageStorage : IImageStorage
             return response.ResponseStream;
         }
 
-        _logger.LogError("Failed to read image '{ObjectKey}' from S3. Result status code: {StatusCode}", objectKey, (int)response.HttpStatusCode);
+        _logger.FailedToReadImage(objectKey, (int)response.HttpStatusCode);
 
         throw new InvalidOperationException($"Failed to read image from S3. Status code: {response.HttpStatusCode}");
     }
@@ -138,7 +138,7 @@ internal sealed class S3ImageStorage : IImageStorage
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to delete image '{ObjectKey}' from S3 because of an exception.", objectKey);
+            _logger.FailedToDeleteImage(ex, objectKey);
         }
 
         return false;

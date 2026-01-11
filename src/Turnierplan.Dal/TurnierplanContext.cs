@@ -20,14 +20,14 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 {
     public const string Schema = "turnierplan";
 
-    private readonly ILogger<TurnierplanContext> _logger;
+    private readonly TurnierplanContextLogger _logger;
 
     private IDbContextTransaction? _activeTransaction;
 
     public TurnierplanContext(DbContextOptions<TurnierplanContext> options, ILogger<TurnierplanContext> logger)
         : base(options)
     {
-        _logger = logger;
+        _logger = new TurnierplanContextLogger(logger);
     }
 
     public DbSet<ApiKey> ApiKeys { get; set; } = null!;
@@ -95,7 +95,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
             throw new InvalidOperationException("Transaction already started.");
         }
 
-        _logger.LogInformation("Beginning database transaction");
+        _logger.BeginningTransaction();
 
         _activeTransaction = await Database.BeginTransactionAsync();
     }
@@ -107,7 +107,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
             throw new InvalidOperationException("Transaction not started.");
         }
 
-        _logger.LogInformation("Committing database transaction");
+        _logger.CommittingTransaction();
 
         await _activeTransaction.CommitAsync();
         await _activeTransaction.DisposeAsync();
@@ -122,7 +122,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
             throw new InvalidOperationException("Transaction not started.");
         }
 
-        _logger.LogInformation("Rolling back database transaction");
+        _logger.RollingBackTransaction();
 
         await _activeTransaction.RollbackAsync();
         await _activeTransaction.DisposeAsync();

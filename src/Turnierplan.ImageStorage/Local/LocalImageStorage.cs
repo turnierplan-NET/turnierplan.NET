@@ -9,23 +9,23 @@ namespace Turnierplan.ImageStorage.Local;
 
 internal sealed class LocalImageStorage : ILocalImageStorage
 {
-    private readonly ILogger<LocalImageStorage> _logger;
+    private readonly LocalImageStorageLogger _logger;
     private readonly string _storagePath;
 
     public LocalImageStorage(ILogger<LocalImageStorage> logger, IOptions<LocalImageStorageOptions> options)
     {
-        _logger = logger;
+        _logger = new LocalImageStorageLogger(logger);
 
         ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.StoragePath);
         _storagePath = Path.GetFullPath(options.Value.StoragePath);
 
-        _logger.LogInformation("Using the following directory for local image storage: '{LocalImageStoragePath}'", _storagePath);
+        _logger.UsingDirectoryForLocalImageStorage(_storagePath);
 
         Directory.CreateDirectory(_storagePath);
 
         if (!Directory.Exists(_storagePath))
         {
-            _logger.LogCritical("The directory for local image storage does not exist and could not be created.");
+            _logger.DirectoryCouldNotBeCreated();
         }
     }
 
@@ -50,13 +50,13 @@ internal sealed class LocalImageStorage : ILocalImageStorage
 
                 if (!Directory.Exists(imageDirectoryPath))
                 {
-                    _logger.LogCritical("The directory for the image could not be created: '{ImageDirectory}'.", imageDirectoryPath);
+                    _logger.DirectoryForImageCouldNotBeCreated(imageDirectoryPath);
 
                     return Task.FromResult(false);
                 }
             }
 
-            _logger.LogDebug("Writing image to: {FilePath}", filePath);
+            _logger.WritingImageToFile(filePath);
 
             using var destination = new FileStream(filePath, FileMode.Create);
             imageData.CopyTo(destination);
@@ -65,7 +65,7 @@ internal sealed class LocalImageStorage : ILocalImageStorage
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to save image to file to '{FilePath}'.", filePath);
+            _logger.FailedToWriteImage(ex, filePath);
 
             return Task.FromResult(false);
         }
@@ -86,7 +86,7 @@ internal sealed class LocalImageStorage : ILocalImageStorage
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to delete image file '{FilePath}'.", filePath);
+            _logger.FailedToDeleteImage(ex, filePath);
 
             return Task.FromResult(false);
         }

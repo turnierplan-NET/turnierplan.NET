@@ -8,12 +8,12 @@ namespace Turnierplan.Localization;
 
 internal sealed partial class LocalizationProvider : ILocalizationProvider
 {
-    private readonly ILogger<LocalizationProvider> _logger;
+    private readonly LocalizationProviderLogger _logger;
     private readonly Dictionary<string, ILocalization> _cache = [];
 
     public LocalizationProvider(ILogger<LocalizationProvider> logger)
     {
-        _logger = logger;
+        _logger = new LocalizationProviderLogger(logger);
 
         LoadLanguages();
     }
@@ -47,7 +47,7 @@ internal sealed partial class LocalizationProvider : ILocalizationProvider
 
                 if (stream is null)
                 {
-                    _logger.LogError("Stream for translations file '{LocalizationResourceName}' is null.", resourceName);
+                    _logger.LocalizationResourceStreamIsNull(resourceName);
                     continue;
                 }
 
@@ -55,7 +55,7 @@ internal sealed partial class LocalizationProvider : ILocalizationProvider
 
                 if (culture is null)
                 {
-                    _logger.LogWarning("Could not find CultureInfo for language code '{LanguageCode}'. Falling back to 'InvariantCulture'.", languageCode);
+                    _logger.CouldNotFindCultureInfoForLanguageCode(languageCode);
                     culture = CultureInfo.InvariantCulture;
                 }
 
@@ -64,7 +64,7 @@ internal sealed partial class LocalizationProvider : ILocalizationProvider
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to load translations for language with code '{LanguageCode}'.", languageCode);
+                _logger.FailedToLoadTranslationsForLanguage(ex, languageCode);
             }
         }
     }
