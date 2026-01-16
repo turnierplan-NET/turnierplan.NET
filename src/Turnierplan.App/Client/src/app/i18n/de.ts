@@ -231,7 +231,7 @@ export const de = {
       },
       DeleteWidget: {
         Title: 'Organisation löschen',
-        Info: 'Wenn Sie eine Organisation löschen, werden automatisch alle darin enthaltenen Turniere, Spielstätten sämtliche hochgeladenen Bilder mitgelöscht. Diese Aktion kann nicht widerrufen werden!',
+        Info: 'Wenn Sie eine Organisation löschen, werden automatisch alle darin enthaltenen Turniere, Spielstätten, API-Schlüssel, sowie sämtliche hochgeladenen Bilder mitgelöscht. Zudem werden alle Turnierplaner inklusive aller Anmeldungen und Kontaktdaten gelöscht. Diese Aktion kann nicht widerrufen werden!',
         SuccessToast: {
           Title: 'Organisation wurde gelöscht',
           Message: 'Ihre Organisation wurde gelöscht.'
