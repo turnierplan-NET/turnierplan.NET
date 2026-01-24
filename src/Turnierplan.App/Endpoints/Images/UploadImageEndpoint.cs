@@ -24,8 +24,7 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
-        // Note the usage of [FromForm] instead of [FromBody]
-        [FromForm] UploadImageEndpointRequest request,
+        [FromForm] UploadImageEndpointRequest request, // Note: We use [FromForm] instead of [FromBody]
         IOrganizationRepository organizationRepository,
         IAccessValidator accessValidator,
         IImageStorage imageStorage,
