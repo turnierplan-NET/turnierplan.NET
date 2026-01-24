@@ -115,6 +115,3 @@ app.UseStaticFiles();
 await app.InitializeDatabaseAsync();
 
 await app.RunAsync();
-
-// Public class definition is required for functional tests
-public sealed partial class Program;
