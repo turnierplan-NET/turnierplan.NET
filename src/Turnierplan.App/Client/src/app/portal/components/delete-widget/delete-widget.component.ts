@@ -20,7 +20,7 @@ export class DeleteWidgetComponent {
 
   @Input()
   public set targetObjectName(value: string) {
-    this.confirmationText = value.replace(/[^A-Za-z0-9.\-_|ÄÖÜäöüß ]+/g, '').trim();
+    this.confirmationText = value.replaceAll(/[^A-Za-z0-9.\-_|ÄÖÜäöüß ]+/g, '').trim();
   }
 
   @Output()

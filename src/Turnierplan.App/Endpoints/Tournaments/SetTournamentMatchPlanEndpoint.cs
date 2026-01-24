@@ -2,7 +2,6 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
-using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament.TeamSelectors;
 using Turnierplan.Dal.Converters;

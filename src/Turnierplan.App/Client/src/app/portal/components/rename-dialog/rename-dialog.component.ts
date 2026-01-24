@@ -45,10 +45,10 @@ export class RenameDialogComponent {
     const sanitizedInitial = (this.initialValue ?? '').trim();
 
     if (sanitized.length > 0) {
-      if (sanitized !== sanitizedInitial) {
-        this.modal.close(sanitized);
-      } else {
+      if (sanitized === sanitizedInitial) {
         this.modal.dismiss();
+      } else {
+        this.modal.close(sanitized);
       }
     } else if (sanitized.length === 0 && this.allowReset) {
       if (sanitizedInitial.length > 0) {

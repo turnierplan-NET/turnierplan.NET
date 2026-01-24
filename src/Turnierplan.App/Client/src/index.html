@@ -16,7 +16,7 @@
     <script>
       const colorTheme = localStorage.getItem('tp_colorTheme');
       if (colorTheme) {
-        document.documentElement.setAttribute('data-bs-theme', 'dark');
+        document.documentElement.dataset.bsTheme = 'dark';
       }
     </script>
   </head>

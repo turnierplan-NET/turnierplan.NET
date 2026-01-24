@@ -278,7 +278,7 @@
 
       <div>
         <div>
-          <label for="name" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ColorCode"></label>
+          <label for="colorCode" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ColorCode"></label>
           <tp-tooltip-icon
             [icon]="'info-circle'"
             [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.InternalInformation'" />
@@ -304,7 +304,7 @@
         <div class="mt-3">
           @let control = editPropertiesForm.get('validUntil')!;
           <input
-            id="maxTeamsPerRegistration"
+            id="validUntil"
             type="datetime-local"
             class="form-control"
             formControlName="validUntil"

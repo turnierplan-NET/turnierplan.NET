@@ -9,7 +9,7 @@ internal static class EnumerableExtensions
             return !enumerable.Any(predicate);
         }
     }
-    
+
     extension<T>(IEnumerable<T?> enumerable)
     {
         public IEnumerable<T> WhereNotNull()

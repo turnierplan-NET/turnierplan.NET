@@ -16,10 +16,10 @@ export class TitleService {
   ) {}
 
   public setTitleFrom(value: NamedEntity | undefined): void {
-    if (!value) {
-      this.title.setTitle(environment.defaultTitle);
-    } else {
+    if (value) {
       this.setCompoundTitle(value.name);
+    } else {
+      this.title.setTitle(environment.defaultTitle);
     }
   }
 

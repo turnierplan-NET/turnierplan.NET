@@ -23,12 +23,12 @@ export class LoadingStateDirective {
 
     if (state.isLoading) {
       this.viewContainer.createComponent(LoadingIndicatorComponent);
-    } else if (state.error !== undefined) {
+    } else if (state.error === undefined) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+    } else {
       this.titleService.setTitleTranslated('Portal.ErrorPage.Title');
       const component = this.viewContainer.createComponent(LoadingErrorComponent);
       component.instance.error = state.error;
-    } else {
-      this.viewContainer.createEmbeddedView(this.templateRef);
     }
   }
 }

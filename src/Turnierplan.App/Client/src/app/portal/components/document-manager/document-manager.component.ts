@@ -244,8 +244,7 @@ export class DocumentManagerComponent {
   }
 
   private getDocumentFileName(name: string): string {
-    const fileNameSanitizeRegex = /[^.A-Za-z0-9Ä-Öä-öß _-]/g;
-    return `${name} - ${this.tournamentName}.pdf`.replace(fileNameSanitizeRegex, '_');
+    return `${name} - ${this.tournamentName}.pdf`.replaceAll(/[^.A-Za-z0-9Ä-Öä-öß _-]/g, '_');
   }
 
   private getDocumentConfig(document: DocumentDto): Observable<DocumentConfiguration> {

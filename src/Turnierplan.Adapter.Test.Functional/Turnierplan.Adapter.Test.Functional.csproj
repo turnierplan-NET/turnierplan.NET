@@ -10,7 +10,7 @@
   <Import Project="../Turnierplan.Test.Common.props" />
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.2" />
   </ItemGroup>
 
   <ItemGroup>

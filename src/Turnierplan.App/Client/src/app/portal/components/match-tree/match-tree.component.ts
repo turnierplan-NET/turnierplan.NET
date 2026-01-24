@@ -205,7 +205,7 @@ export class MatchTreeComponent implements OnChanges, AfterViewInit {
       nextMatchTileY += matchDiv.offsetHeight + paddingInPixels;
     }
 
-    const missingSpaceY = Math.max(0.0, nextMatchTileY - this.layoutedDiv.nativeElement.offsetHeight);
+    const missingSpaceY = Math.max(0, nextMatchTileY - this.layoutedDiv.nativeElement.offsetHeight);
     this.additionalPaddingDiv.nativeElement.style.height = `${missingSpaceY}px`;
   }
 
@@ -254,9 +254,11 @@ export class MatchTreeComponent implements OnChanges, AfterViewInit {
 
       const middleX = Math.round((targetConnectorX + dependencyConnectorX) / 2);
 
-      this.connectingLines.push({ x1: dependencyConnectorX, y1: dependencyConnectorY, x2: middleX, y2: dependencyConnectorY });
-      this.connectingLines.push({ x1: middleX, y1: dependencyConnectorY, x2: middleX, y2: targetConnectorY });
-      this.connectingLines.push({ x1: middleX, y1: targetConnectorY, x2: targetConnectorX, y2: targetConnectorY });
+      this.connectingLines.push(
+        { x1: dependencyConnectorX, y1: dependencyConnectorY, x2: middleX, y2: dependencyConnectorY },
+        { x1: middleX, y1: dependencyConnectorY, x2: middleX, y2: targetConnectorY },
+        { x1: middleX, y1: targetConnectorY, x2: targetConnectorX, y2: targetConnectorY }
+      );
     };
 
     if (dependencyDiv1 !== undefined && dependencyDiv2 === undefined) {

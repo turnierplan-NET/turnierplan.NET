@@ -32,6 +32,6 @@ export class ColorThemeService {
   }
 
   private static setColorTheme(theme: ColorTheme): void {
-    document.documentElement.setAttribute('data-bs-theme', theme);
+    document.documentElement.dataset.bsTheme = theme;
   }
 }

@@ -98,7 +98,7 @@ export class CreateTournamentComponent implements OnDestroy {
               const index = currentFolder.indexOf('/');
               if (index >= 0) {
                 const folderId = currentFolder.substring(index + 1);
-                if (folders.findIndex((x) => x.id === folderId) >= 0) {
+                if (folders.some((x) => x.id === folderId)) {
                   this.folderMode = 'ExistingFolder';
                   this.existingFolderId.setValue(currentFolder.substring(index + 1));
                 }
