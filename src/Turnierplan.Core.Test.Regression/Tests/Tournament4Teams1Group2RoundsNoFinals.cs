@@ -6,8 +6,6 @@ internal sealed class Tournament4Teams1Group2RoundsNoFinals : TournamentRegressi
 {
     public Tournament4Teams1Group2RoundsNoFinals()
     {
-        Subject(new Tournament.Tournament(new Organization.Organization(string.Empty), "reg_name", Visibility.Private));
-
         var team1 = Step(t => t.AddTeam("Test 1"));
         var team2 = Step(t => t.AddTeam("Test 2"));
         var team3 = Step(t => t.AddTeam("Test 3"));

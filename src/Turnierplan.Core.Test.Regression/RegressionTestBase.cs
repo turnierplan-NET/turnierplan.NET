@@ -2,8 +2,6 @@ using System.Text;
 
 namespace Turnierplan.Core.Test.Regression;
 
-internal abstract class TournamentRegressionTestBase : RegressionTestBase<Tournament.Tournament>;
-
 internal abstract class RegressionTestBase<TSubject> : IRegressionTest
     where TSubject : class
 {
