@@ -1,8 +1,8 @@
 using System.Reflection;
 using FluentAssertions;
 using Xunit;
-using Xunit.Abstractions;
 using Xunit.Sdk;
+using Xunit.v3;
 
 namespace Turnierplan.Core.Test.Regression;
 
@@ -38,7 +38,7 @@ public sealed class RegressionTestRunner(ITestOutputHelper output)
 
         var outputFileName = Path.Join(__outputFolderName, $"{regressionTestName}.out");
         output.WriteLine("Writing test output to: '{0}'", outputFileName);
-        await File.WriteAllTextAsync(outputFileName, regressionTestOutput);
+        await File.WriteAllTextAsync(outputFileName, regressionTestOutput, TestContext.Current.CancellationToken);
 
         var expectedFileResourceName = $"{__selfType.Namespace}.Expected.{regressionTestName}.out";
         output.WriteLine("Expected test output file: {0}", expectedFileResourceName);
@@ -50,7 +50,7 @@ public sealed class RegressionTestRunner(ITestOutputHelper output)
         }
 
         using var streamReader = new StreamReader(expectedFileStream);
-        var expectedTestOutput = (await streamReader.ReadToEndAsync()).TrimEnd();
+        var expectedTestOutput = (await streamReader.ReadToEndAsync(TestContext.Current.CancellationToken)).TrimEnd();
         output.WriteLine("Expected test output was read and has a length of {0}", expectedTestOutput.Length);
 
         regressionTestOutput.Should().Be(expectedTestOutput);
@@ -59,15 +59,21 @@ public sealed class RegressionTestRunner(ITestOutputHelper output)
     [AttributeUsage(AttributeTargets.Method)]
     private sealed class RegressionTestDataAttribute : DataAttribute
     {
-        public override IEnumerable<object[]> GetData(MethodInfo testMethod)
+        public override ValueTask<IReadOnlyCollection<ITheoryDataRow>> GetData(MethodInfo testMethod, DisposalTracker disposalTracker)
         {
             var interfaceType = typeof(IRegressionTest);
 
-            return __selfType.Assembly
+            return ValueTask.FromResult<IReadOnlyCollection<ITheoryDataRow>>(__selfType.Assembly
                 .GetTypes()
                 .Where(type => type.IsAssignableTo(interfaceType) && type is { IsClass: true, IsAbstract: false })
                 .Select(type => type.Name)
-                .Select(name => new object[] { name });
+                .Select(name => new TheoryDataRow(name))
+                .ToList());
+        }
+
+        public override bool SupportsDiscoveryEnumeration()
+        {
+            return true;
         }
     }
 }
