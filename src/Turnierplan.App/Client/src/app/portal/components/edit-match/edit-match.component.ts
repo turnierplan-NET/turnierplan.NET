@@ -81,7 +81,7 @@ export class EditMatchComponent implements OnDestroy, AfterViewInit {
   }
 
   protected closeModal(action: 'cancel' | 'clear' | 'save' | 'saveLive'): void {
-    const isValidScore = (value: number): boolean => !isNaN(value) && value === parseInt(`${value}`, 10);
+    const isValidScore = (value: number): boolean => !Number.isNaN(value) && value === Number.parseInt(`${value}`, 10);
 
     if (action !== 'cancel') {
       let request: SetMatchOutcomeEndpointRequest;
