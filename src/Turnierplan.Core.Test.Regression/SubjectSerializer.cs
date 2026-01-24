@@ -32,6 +32,10 @@ internal static class SubjectSerializer
         builder.Append(tournament.Groups.Count);
         builder.Append(';');
         builder.Append(tournament.Matches.Count);
+        builder.Append(';');
+        builder.Append(tournament.RankingOverwrites.Count);
+        builder.Append(';');
+        builder.Append(tournament.Ranking.Count);
         builder.AppendLine();
 
         foreach (var team in tournament.Teams)
@@ -139,6 +143,32 @@ internal static class SubjectSerializer
             builder.Append(match.OutcomeType);
             builder.Append(';');
             builder.Append(match.IsFinished);
+            builder.AppendLine();
+        }
+
+        foreach (var overwrite in tournament.RankingOverwrites)
+        {
+            builder.Append("RO");
+            builder.Append(overwrite.Id);
+            builder.Append(';');
+            builder.Append(overwrite.PlacementRank);
+            builder.Append(';');
+            builder.Append(overwrite.HideRanking);
+            builder.Append(';');
+            builder.Append(overwrite.AssignTeam?.Id);
+            builder.AppendLine();
+        }
+
+        foreach (var ranking in tournament.Ranking)
+        {
+            builder.Append('R');
+            builder.Append(ranking.Position);
+            builder.Append(';');
+            builder.Append(ranking.Reason);
+            builder.Append(';');
+            builder.Append(ranking.IsDefined);
+            builder.Append(';');
+            builder.Append(ranking.Team?.Id);
             builder.AppendLine();
         }
     }
