@@ -1,0 +1,547 @@
+[1]
+reg_name;Private;False;0;0;0;0;0;0
+[2]
+reg_name;Private;False;0;1;0;0;0;0
+T1;Test 1;;False;0;0;0;0;0;0
+[3]
+reg_name;Private;False;0;2;0;0;0;0
+T1;Test 1;;False;0;0;0;0;0;0
+T2;Test 2;;False;0;0;0;0;0;0
+[4]
+reg_name;Private;False;0;3;0;0;0;0
+T1;Test 1;;False;0;0;0;0;0;0
+T2;Test 2;;False;0;0;0;0;0;0
+T3;Test 3;;False;0;0;0;0;0;0
+[5]
+reg_name;Private;False;0;4;0;0;0;0
+T1;Test 1;;False;0;0;0;0;0;0
+T2;Test 2;;False;0;0;0;0;0;0
+T3;Test 3;;False;0;0;0;0;0;0
+T4;Test 4;;False;0;0;0;0;0;0
+[6]
+reg_name;Private;False;0;4;1;0;0;0
+T1;Test 1;;False;0;0;0;0;0;0
+T2;Test 2;;False;0;0;0;0;0;0
+T3;Test 3;;False;0;0;0;0;0;0
+T4;Test 4;;False;0;0;0;0;0;0
+G5;A;;0
+[7]
+reg_name;Private;False;0;4;1;0;0;0
+T1;Test 1;;False;0;0;0;0;0;0
+T2;Test 2;;False;0;0;0;0;0;0
+T3;Test 3;;False;0;0;0;0;0;0
+T4;Test 4;;False;0;0;0;0;0;0
+G5;A;;1
+>1;5;1;0;0;0;0;0;0;0;0;0;0
+[8]
+reg_name;Private;False;0;4;1;0;0;0
+T1;Test 1;;False;0;0;0;0;0;0
+T2;Test 2;;False;0;0;0;0;0;0
+T3;Test 3;;False;0;0;0;0;0;0
+T4;Test 4;;False;0;0;0;0;0;0
+G5;A;;2
+>1;5;1;0;0;0;0;0;0;0;0;0;0
+>2;5;2;0;0;0;0;0;0;0;0;0;0
+[9]
+reg_name;Private;False;0;4;1;0;0;0
+T1;Test 1;;False;0;0;0;0;0;0
+T2;Test 2;;False;0;0;0;0;0;0
+T3;Test 3;;False;0;0;0;0;0;0
+T4;Test 4;;False;0;0;0;0;0;0
+G5;A;;3
+>1;5;1;0;0;0;0;0;0;0;0;0;0
+>2;5;2;0;0;0;0;0;0;0;0;0;0
+>3;5;3;0;0;0;0;0;0;0;0;0;0
+[10]
+reg_name;Private;False;0;4;1;0;0;0
+T1;Test 1;;False;0;0;0;0;0;0
+T2;Test 2;;False;0;0;0;0;0;0
+T3;Test 3;;False;0;0;0;0;0;0
+T4;Test 4;;False;0;0;0;0;0;0
+G5;A;;4
+>1;5;1;0;0;0;0;0;0;0;0;0;0
+>2;5;2;0;0;0;0;0;0;0;0;0;0
+>3;5;3;0;0;0;0;0;0;0;0;0;0
+>4;5;4;0;0;0;0;0;0;0;0;0;0
+[11]
+reg_name;Private;False;0;4;1;12;0;0
+T1;Test 1;;False;0;0;0;0;0;0
+T2;Test 2;;False;0;0;0;0;0;0
+T3;Test 3;;False;0;0;0;0;0;0
+T4;Test 4;;False;0;0;0;0;0;0
+G5;A;;4
+>1;5;1;0;0;0;0;0;0;0;0;0;0
+>2;5;2;0;0;0;0;0;0;0;0;0;0
+>3;5;3;0;0;0;0;0;0;0;0;0;0
+>4;5;4;0;0;0;0;0;0;0;0;0;0
+M6;1;0;;G5/0;G5/1;;;5;True;False;;;;;;False
+M7;2;0;;G5/2;G5/3;;;5;True;False;;;;;;False
+M8;3;0;;G5/0;G5/2;;;5;True;False;;;;;;False
+M9;4;0;;G5/1;G5/3;;;5;True;False;;;;;;False
+M10;5;0;;G5/3;G5/0;;;5;True;False;;;;;;False
+M11;6;0;;G5/1;G5/2;;;5;True;False;;;;;;False
+M12;7;0;;G5/1;G5/0;;;5;True;False;;;;;;False
+M13;8;0;;G5/3;G5/2;;;5;True;False;;;;;;False
+M14;9;0;;G5/2;G5/0;;;5;True;False;;;;;;False
+M15;10;0;;G5/3;G5/1;;;5;True;False;;;;;;False
+M16;11;0;;G5/0;G5/3;;;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;;;5;True;False;;;;;;False
+[12]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;0;0;0;0;0;0
+T2;Test 2;;False;0;0;0;0;0;0
+T3;Test 3;;False;0;0;0;0;0;0
+T4;Test 4;;False;0;0;0;0;0;0
+G5;A;;4
+>1;5;1;0;1;0;0;0;0;0;0;0;0
+>2;5;2;0;2;0;0;0;0;0;0;0;0
+>3;5;3;0;3;0;0;0;0;0;0;0;0
+>4;5;4;0;4;0;0;0;0;0;0;0;0
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;;;;;False
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;;;;;False
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;;;;;False
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;;;;;False
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;;;;;False
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;;;;;False
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;;;;;False
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;;;;;False
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;;;;;False
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;;;;;False
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[13]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;0;0;0;0;0;0
+T2;Test 2;;False;0;0;0;0;0;0
+T3;Test 3;;False;0;0;0;0;0;0
+T4;Test 4;;False;0;0;0;0;0;0
+G5;A;;4
+>1;5;1;0;1;0;0;0;0;0;0;0;0
+>2;5;2;0;2;0;0;0;0;0;0;0;0
+>3;5;3;0;3;0;0;0;0;0;0;0;0
+>4;5;4;0;4;0;0;0;0;0;0;0;0
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;;;;;False
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;;;;;False
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;;;;;False
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;;;;;False
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;;;;;False
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;;;;;False
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;;;;;False
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;;;;;False
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;;;;;False
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[14]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;1;0;1;0;0;1
+T2;Test 2;;False;0;1;0;0;1;1
+T3;Test 3;;False;0;0;0;0;0;0
+T4;Test 4;;False;0;0;0;0;0;0
+G5;A;;4
+>1;5;1;0;1;1;0;1;0;0;3;1;1
+>2;5;2;0;4;0;1;0;0;1;0;-1;1
+>3;5;3;0;2;0;0;0;0;0;0;0;0
+>4;5;4;0;3;0;0;0;0;0;0;0;0
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;;;;;False
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;;;;;False
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;;;;;False
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;;;;;False
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;;;;;False
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;;;;;False
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;;;;;False
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;;;;;False
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;;;;;False
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[15]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;1;0;1;0;0;1
+T2;Test 2;;False;0;1;0;0;1;1
+T3;Test 3;;False;0;0;0;0;0;0
+T4;Test 4;;False;0;0;0;0;0;0
+G5;A;;4
+>1;5;1;0;1;1;0;1;0;0;3;1;1
+>2;5;2;0;4;0;1;0;0;1;0;-1;1
+>3;5;3;0;2;0;0;0;0;0;0;0;0
+>4;5;4;0;3;0;0;0;0;0;0;0;0
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;False;2;2;Standard;True
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;;;;;False
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;;;;;False
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;;;;;False
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;;;;;False
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;;;;;False
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;;;;;False
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;;;;;False
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;;;;;False
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[16]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;1;0;1;0;0;1
+T2;Test 2;;False;0;1;0;0;1;1
+T3;Test 3;;False;0;0;0;0;0;0
+T4;Test 4;;False;0;0;0;0;0;0
+G5;A;;4
+>1;5;1;0;1;1;0;1;0;0;3;1;1
+>2;5;2;0;4;0;1;0;0;1;0;-1;1
+>3;5;3;0;2;0;0;0;0;0;0;0;0
+>4;5;4;0;3;0;0;0;0;0;0;0;0
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;False;2;2;Standard;True
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;False;3;1;Standard;True
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;;;;;False
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;;;;;False
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;;;;;False
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;;;;;False
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;;;;;False
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;;;;;False
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;;;;;False
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[17]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;4;1;2;0;0;2
+T2;Test 2;;False;0;1;0;0;1;1
+T3;Test 3;;False;3;5;0;1;1;2
+T4;Test 4;;False;2;2;0;1;0;1
+G5;A;;4
+>1;5;1;0;1;4;1;2;0;0;6;3;2
+>2;5;2;0;4;0;1;0;0;1;0;-1;1
+>3;5;3;0;3;3;5;0;1;1;1;-2;2
+>4;5;4;0;2;2;2;0;1;0;1;0;1
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;False;2;2;Standard;True
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;False;3;1;Standard;True
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;;;;;False
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;;;;;False
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;;;;;False
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;;;;;False
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;;;;;False
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;;;;;False
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;;;;;False
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[18]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;4;1;2;0;0;2
+T2;Test 2;;False;0;1;0;0;1;1
+T3;Test 3;;False;3;5;0;1;1;2
+T4;Test 4;;False;2;2;0;1;0;1
+G5;A;;4
+>1;5;1;0;1;4;1;2;0;0;6;3;2
+>2;5;2;0;4;0;1;0;0;1;0;-1;1
+>3;5;3;0;3;3;5;0;1;1;1;-2;2
+>4;5;4;0;2;2;2;0;1;0;1;0;1
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;False;2;2;Standard;True
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;False;3;1;Standard;True
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;False;4;6;Standard;True
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;;;;;False
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;;;;;False
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;;;;;False
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;;;;;False
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;;;;;False
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;;;;;False
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[19]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;4;1;2;0;0;2
+T2;Test 2;;False;0;1;0;0;1;1
+T3;Test 3;;False;3;5;0;1;1;2
+T4;Test 4;;False;2;2;0;1;0;1
+G5;A;;4
+>1;5;1;0;1;4;1;2;0;0;6;3;2
+>2;5;2;0;4;0;1;0;0;1;0;-1;1
+>3;5;3;0;3;3;5;0;1;1;1;-2;2
+>4;5;4;0;2;2;2;0;1;0;1;0;1
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;False;2;2;Standard;True
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;False;3;1;Standard;True
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;False;4;6;Standard;True
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;False;0;0;Standard;True
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;;;;;False
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;;;;;False
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;;;;;False
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;;;;;False
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;;;;;False
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[20]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;4;1;2;0;0;2
+T2;Test 2;;False;0;1;0;0;1;1
+T3;Test 3;;False;3;5;0;1;1;2
+T4;Test 4;;False;2;2;0;1;0;1
+G5;A;;4
+>1;5;1;0;1;4;1;2;0;0;6;3;2
+>2;5;2;0;4;0;1;0;0;1;0;-1;1
+>3;5;3;0;3;3;5;0;1;1;1;-2;2
+>4;5;4;0;2;2;2;0;1;0;1;0;1
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;False;2;2;Standard;True
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;False;3;1;Standard;True
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;False;4;6;Standard;True
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;False;0;0;Standard;True
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;False;2;2;Standard;True
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;;;;;False
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;;;;;False
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;;;;;False
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;;;;;False
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[21]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;4;1;2;0;0;2
+T2;Test 2;;False;0;1;0;0;1;1
+T3;Test 3;;False;3;5;0;1;1;2
+T4;Test 4;;False;2;2;0;1;0;1
+G5;A;;4
+>1;5;1;0;1;4;1;2;0;0;6;3;2
+>2;5;2;0;4;0;1;0;0;1;0;-1;1
+>3;5;3;0;3;3;5;0;1;1;1;-2;2
+>4;5;4;0;2;2;2;0;1;0;1;0;1
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;False;2;2;Standard;True
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;False;3;1;Standard;True
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;False;4;6;Standard;True
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;False;0;0;Standard;True
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;False;2;2;Standard;True
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;False;3;2;Standard;True
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;;;;;False
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;;;;;False
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;;;;;False
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[22]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;6;4;2;1;1;4
+T2;Test 2;;False;9;11;1;1;2;4
+T3;Test 3;;False;5;7;0;2;1;3
+T4;Test 4;;False;8;6;1;2;0;3
+G5;A;;4
+>1;5;1;0;1;6;4;2;1;1;7;2;4
+>2;5;2;0;3;9;11;1;1;2;4;-2;4
+>3;5;3;0;4;5;7;0;2;1;2;-2;3
+>4;5;4;0;2;8;6;1;2;0;5;2;3
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;False;2;2;Standard;True
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;False;3;1;Standard;True
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;False;4;6;Standard;True
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;False;0;0;Standard;True
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;False;2;2;Standard;True
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;False;3;2;Standard;True
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;;;;;False
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;;;;;False
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;;;;;False
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[23]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;6;4;2;1;1;4
+T2;Test 2;;False;9;11;1;1;2;4
+T3;Test 3;;False;5;7;0;2;1;3
+T4;Test 4;;False;8;6;1;2;0;3
+G5;A;;4
+>1;5;1;0;1;6;4;2;1;1;7;2;4
+>2;5;2;0;3;9;11;1;1;2;4;-2;4
+>3;5;3;0;4;5;7;0;2;1;2;-2;3
+>4;5;4;0;2;8;6;1;2;0;5;2;3
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;False;2;2;Standard;True
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;False;3;1;Standard;True
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;False;4;6;Standard;True
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;False;0;0;Standard;True
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;False;2;2;Standard;True
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;False;3;2;Standard;True
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;False;1;1;Standard;True
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;;;;;False
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;;;;;False
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[24]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;6;4;2;1;1;4
+T2;Test 2;;False;9;11;1;1;2;4
+T3;Test 3;;False;5;7;0;2;1;3
+T4;Test 4;;False;8;6;1;2;0;3
+G5;A;;4
+>1;5;1;0;1;6;4;2;1;1;7;2;4
+>2;5;2;0;3;9;11;1;1;2;4;-2;4
+>3;5;3;0;4;5;7;0;2;1;2;-2;3
+>4;5;4;0;2;8;6;1;2;0;5;2;3
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;False;2;2;Standard;True
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;False;3;1;Standard;True
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;False;4;6;Standard;True
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;False;0;0;Standard;True
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;False;2;2;Standard;True
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;False;3;2;Standard;True
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;False;1;1;Standard;True
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;False;0;3;Standard;True
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;;;;;False
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[25]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;6;4;2;1;1;4
+T2;Test 2;;False;9;11;1;1;2;4
+T3;Test 3;;False;5;7;0;2;1;3
+T4;Test 4;;False;8;6;1;2;0;3
+G5;A;;4
+>1;5;1;0;1;6;4;2;1;1;7;2;4
+>2;5;2;0;3;9;11;1;1;2;4;-2;4
+>3;5;3;0;4;5;7;0;2;1;2;-2;3
+>4;5;4;0;2;8;6;1;2;0;5;2;3
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;False;2;2;Standard;True
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;False;3;1;Standard;True
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;False;4;6;Standard;True
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;False;0;0;Standard;True
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;False;2;2;Standard;True
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;False;3;2;Standard;True
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;False;1;1;Standard;True
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;False;0;3;Standard;True
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;False;2;0;Standard;True
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;;;;;False
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[26]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;6;4;2;1;1;4
+T2;Test 2;;False;9;11;1;1;2;4
+T3;Test 3;;False;5;7;0;2;1;3
+T4;Test 4;;False;8;6;1;2;0;3
+G5;A;;4
+>1;5;1;0;1;6;4;2;1;1;7;2;4
+>2;5;2;0;3;9;11;1;1;2;4;-2;4
+>3;5;3;0;4;5;7;0;2;1;2;-2;3
+>4;5;4;0;2;8;6;1;2;0;5;2;3
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;False;2;2;Standard;True
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;False;3;1;Standard;True
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;False;4;6;Standard;True
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;False;0;0;Standard;True
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;False;2;2;Standard;True
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;False;3;2;Standard;True
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;False;1;1;Standard;True
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;False;0;3;Standard;True
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;False;2;0;Standard;True
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;False;0;2;Standard;True
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;;;;;False
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[27]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;6;4;2;1;1;4
+T2;Test 2;;False;9;11;1;1;2;4
+T3;Test 3;;False;5;7;0;2;1;3
+T4;Test 4;;False;8;6;1;2;0;3
+G5;A;;4
+>1;5;1;0;1;6;4;2;1;1;7;2;4
+>2;5;2;0;3;9;11;1;1;2;4;-2;4
+>3;5;3;0;4;5;7;0;2;1;2;-2;3
+>4;5;4;0;2;8;6;1;2;0;5;2;3
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;False;2;2;Standard;True
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;False;3;1;Standard;True
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;False;4;6;Standard;True
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;False;0;0;Standard;True
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;False;2;2;Standard;True
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;False;3;2;Standard;True
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;False;1;1;Standard;True
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;False;0;3;Standard;True
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;False;2;0;Standard;True
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;False;0;2;Standard;True
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;False;2;1;Standard;True
+R1;RankingViaGroupResults;False;
+R2;RankingViaGroupResults;False;
+R3;RankingViaGroupResults;False;
+R4;RankingViaGroupResults;False;
+[28]
+reg_name;Private;False;0;4;1;12;0;4
+T1;Test 1;;False;9;6;3;1;2;6
+T2;Test 2;;False;10;15;1;1;4;6
+T3;Test 3;;False;8;12;1;3;2;6
+T4;Test 4;;False;13;7;3;3;0;6
+G5;A;;4
+>1;5;1;0;2;9;6;3;1;2;10;3;6
+>2;5;2;0;4;10;15;1;1;4;4;-5;6
+>3;5;3;0;3;8;12;1;3;2;6;-4;6
+>4;5;4;0;1;13;7;3;3;0;12;6;6
+M6;1;0;;G5/0;G5/1;1;2;5;True;False;;False;1;0;Standard;True
+M7;2;0;;G5/2;G5/3;3;4;5;True;False;;False;2;2;Standard;True
+M8;3;0;;G5/0;G5/2;1;3;5;True;False;;False;3;1;Standard;True
+M9;4;0;;G5/1;G5/3;2;4;5;True;False;;False;4;6;Standard;True
+M10;5;0;;G5/3;G5/0;4;1;5;True;False;;False;0;0;Standard;True
+M11;6;0;;G5/1;G5/2;2;3;5;True;False;;False;2;2;Standard;True
+M12;7;0;;G5/1;G5/0;2;1;5;True;False;;False;3;2;Standard;True
+M13;8;0;;G5/3;G5/2;4;3;5;True;False;;False;1;1;Standard;True
+M14;9;0;;G5/2;G5/0;3;1;5;True;False;;False;0;3;Standard;True
+M15;10;0;;G5/3;G5/1;4;2;5;True;False;;False;2;0;Standard;True
+M16;11;0;;G5/0;G5/3;1;4;5;True;False;;False;0;2;Standard;True
+M17;12;0;;G5/2;G5/1;3;2;5;True;False;;False;2;1;Standard;True
+R1;RankingViaGroupResults;True;4
+R2;RankingViaGroupResults;True;1
+R3;RankingViaGroupResults;True;3
+R4;RankingViaGroupResults;True;2

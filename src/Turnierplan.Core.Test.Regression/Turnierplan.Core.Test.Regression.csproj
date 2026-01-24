@@ -10,6 +10,10 @@
   <Import Project="../Turnierplan.Test.Common.props" />
 
   <ItemGroup>
-    <ProjectReference Include="..\Turnierplan.App\Turnierplan.App.csproj" />
+    <ProjectReference Include="..\Turnierplan.Core\Turnierplan.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Expected/*.out" />
   </ItemGroup>
 </Project>

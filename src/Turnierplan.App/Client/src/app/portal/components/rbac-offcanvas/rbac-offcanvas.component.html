@@ -1,8 +1,8 @@
 <div class="p-3">
   <div class="mb-3">
     <tp-action-button
-      [title]="'Portal.General.Cancel'"
-      [icon]="'x-circle'"
+      [title]="'Portal.General.Done'"
+      [icon]="'check-circle'"
       [type]="'outline-secondary'"
       (buttonClick)="offcanvas.close()" />
   </div>
@@ -25,6 +25,12 @@
         [icon]="'plus-circle'"
         (buttonClick)="showAddRoleAssignmentDialog()" />
     </div>
+
+    @if (roleAssignmentCount > 3) {
+      <div class="mb-2 me-1 small text-end">
+        <span translate="Portal.RbacManagement.TotalCount" [translateParams]="{ count: roleAssignmentCount }"></span>
+      </div>
+    }
 
     <table class="mb-0 table table-bordered">
       <tbody>
@@ -77,12 +83,5 @@
         }
       </tbody>
     </table>
-
-    @if (roleAssignmentCount > 1) {
-      <div class="mt-3 small">
-        <span class="ms-1 me-1" translate="Portal.RbacManagement.TotalCount"></span>
-        <span>{{ roleAssignmentCount }}</span>
-      </div>
-    }
   }
 </div>

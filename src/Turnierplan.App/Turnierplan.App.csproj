@@ -14,7 +14,7 @@
     <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.23.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.1">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0">
       <PrivateAssets>all</PrivateAssets>
       <!-- The section 'contentfiles;' was removed due to an active issue: https://github.com/dotnet/efcore/issues/36970#issuecomment-3543760035
            When updating this package, check if this issue is resolved and the IncludeAssets can be restored.-->
@@ -31,12 +31,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Turnierplan.Dal\Turnierplan.Dal.csproj" />
     <ProjectReference Include="..\Turnierplan.PdfRendering\Turnierplan.PdfRendering.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="..\.dockerignore">
-      <Link>.dockerignore</Link>
-    </Content>
   </ItemGroup>
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
