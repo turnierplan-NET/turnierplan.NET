@@ -25,7 +25,7 @@ internal static class WebApplicationExtensions
 
         var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger(DatabaseMigratorLoggerName);
         var context = scope.ServiceProvider.GetRequiredService<TurnierplanContext>();
-        
+
         if (context.Database.IsNpgsql())
         {
             // If the database is in-memory, no migration or downgrade check is necessary
