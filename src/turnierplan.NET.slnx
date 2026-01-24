@@ -4,6 +4,7 @@
     <File Path="version.xml" />
   </Folder>
   <Folder Name="/Test/">
+    <File Path="Turnierplan.Test.Common.props" />
     <Project Path="Turnierplan.Adapter.Test.Functional/Turnierplan.Adapter.Test.Functional.csproj" />
     <Project Path="Turnierplan.App.Test.Unit/Turnierplan.App.Test.Unit.csproj" />
     <Project Path="Turnierplan.Core.Test.Unit/Turnierplan.Core.Test.Unit.csproj" />
