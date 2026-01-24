@@ -107,7 +107,7 @@ export class DocumentConfigReceiptsComponent extends DocumentConfigComponent<Rec
     // Entries need not be consecutive, this should probably be possible through the UI at some point.
     // For now, we simply find the lowest number that is not currently a key in the map.
     let newEntry = 2;
-    while (this.amountKeys.some((x) => +x === newEntry)) {
+    while (this.amountKeys.includes(`${newEntry}`)) {
       newEntry++;
     }
 
