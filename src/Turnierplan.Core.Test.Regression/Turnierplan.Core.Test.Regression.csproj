@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../version.xml" />
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <Import Project="../Turnierplan.Test.Common.props" />
+  
+  <ItemGroup>
+    <EmbeddedResource Include="Expected/*.out" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Turnierplan.Core\Turnierplan.Core.csproj" />
+  </ItemGroup>
+</Project>

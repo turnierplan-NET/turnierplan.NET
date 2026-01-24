@@ -7,6 +7,7 @@
     <File Path="Turnierplan.Test.Common.props" />
     <Project Path="Turnierplan.Adapter.Test.Functional/Turnierplan.Adapter.Test.Functional.csproj" />
     <Project Path="Turnierplan.App.Test.Unit/Turnierplan.App.Test.Unit.csproj" />
+    <Project Path="Turnierplan.Core.Test.Regression/Turnierplan.Core.Test.Regression.csproj" />
     <Project Path="Turnierplan.Core.Test.Unit/Turnierplan.Core.Test.Unit.csproj" />
     <Project Path="Turnierplan.Dal.Test.Unit/Turnierplan.Dal.Test.Unit.csproj" />
     <Project Path="Turnierplan.Localization.Test.Unit/Turnierplan.Localization.Test.Unit.csproj" />
