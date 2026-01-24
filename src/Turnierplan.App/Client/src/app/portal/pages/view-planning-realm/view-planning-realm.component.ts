@@ -141,7 +141,6 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   ];
 
   private readonly destroyed$ = new Subject<void>();
-  private originalPlanningRealm?: PlanningRealmDto;
 
   constructor(
     private readonly turnierplanApi: TurnierplanApi,
@@ -412,10 +411,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   }
 
   private setPlanningRealm(planningRealm: PlanningRealmDto): void {
-    this.originalPlanningRealm = planningRealm;
-
     // Create a working copy which can be modified and saved/discarded
-    this.planningRealm = JSON.parse(JSON.stringify(this.originalPlanningRealm)) as PlanningRealmDto;
+    this.planningRealm = planningRealm;
     this._hasUnsavedChanges = false;
 
     this.titleService.setTitleFrom(this.planningRealm);

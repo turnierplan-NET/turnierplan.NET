@@ -79,7 +79,7 @@ export class FolderStatisticsComponent implements OnInit, OnDestroy {
             this.titleService.setCompoundTitle(statistics.folderName);
 
             if (statistics.goalDistributionExcludedTournaments.length > 0) {
-              const names = [...statistics.goalDistributionExcludedTournaments.map((x) => x.tournamentName)];
+              const names = statistics.goalDistributionExcludedTournaments.map((x) => x.tournamentName);
               names.sort((a, b) => a.localeCompare(b));
               this.goalDistributionExcludedTournaments = names.join(', ');
             } else {

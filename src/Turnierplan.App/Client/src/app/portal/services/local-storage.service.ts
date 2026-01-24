@@ -51,11 +51,11 @@ export class LocalStorageService {
   public getPlanningRealmApplicationsFilter(planningRealmId: string): ApplicationsFilter {
     const value = this.getValueFromLocalStorage(`tp_applicationsFilter_${planningRealmId}`, (x) => x);
 
-    if (!value) {
-      return defaultApplicationsFilter;
+    if (value) {
+      return { ...defaultApplicationsFilter, ...(JSON.parse(value) as ApplicationsFilter) };
     }
 
-    return { ...defaultApplicationsFilter, ...(JSON.parse(value) as ApplicationsFilter) };
+    return defaultApplicationsFilter;
   }
 
   public setAddTeamDialogMode(mode: string): void {

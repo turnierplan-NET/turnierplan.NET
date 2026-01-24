@@ -634,7 +634,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
       return;
     }
 
-    if (!this.currentFinalRound || this.availableFinalRounds.indexOf(this.currentFinalRound) === -1) {
+    if (!this.currentFinalRound || !this.availableFinalRounds.includes(this.currentFinalRound)) {
       this.currentFinalRound = this.availableFinalRounds[0];
     }
 
