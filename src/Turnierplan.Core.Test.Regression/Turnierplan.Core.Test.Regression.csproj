@@ -8,12 +8,12 @@
   </PropertyGroup>
 
   <Import Project="../Turnierplan.Test.Common.props" />
-  
-  <ItemGroup>
-    <EmbeddedResource Include="Expected/*.out" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Turnierplan.Core\Turnierplan.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Expected/*.out" />
   </ItemGroup>
 </Project>
