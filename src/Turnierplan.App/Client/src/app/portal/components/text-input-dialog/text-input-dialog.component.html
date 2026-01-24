@@ -5,10 +5,10 @@
   </div>
   <div class="modal-body d-flex flex-column">
     <div class="form-group">
-      <label class="form-label" for="content" [translate]="translationKey + '.InfoText'"></label>
+      <label class="form-label" for="currentValue" [translate]="translationKey + '.InfoText'"></label>
       @if (textArea) {
         <textarea
-          id="content"
+          id="currentValue"
           class="form-control"
           [rows]="10"
           [(ngModel)]="currentValue"
@@ -19,7 +19,7 @@
         <input
           class="form-control"
           type="text"
-          id="content"
+          id="currentValue"
           [(ngModel)]="currentValue"
           [ngClass]="{ 'is-invalid': showError }"
           (keyup)="onKeyUp($event)"

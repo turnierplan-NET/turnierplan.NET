@@ -83,8 +83,7 @@ export class PageFrameComponent implements OnInit, OnChanges {
     if ('navigationTabs' in changes) {
       if (this.navigationTabs && this.navigationTabs.length > 0) {
         if (this.currentTabId) {
-          const stillExists = this.navigationTabs.findIndex((x) => x.id === this.currentTabId) >= 0;
-          if (!stillExists) {
+          if (!this.navigationTabs.some((x) => x.id === this.currentTabId)) {
             this.currentTabId = this.navigationTabs[0].id;
           }
         } else {

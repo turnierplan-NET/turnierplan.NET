@@ -17,6 +17,7 @@ import { uploadImage$FormData } from '../../../api/fn/images/upload-image-form-d
 import { getImages } from '../../../api/fn/images/get-images';
 import { ImageDto } from '../../../api/models/image-dto';
 import { deleteImage } from '../../../api/fn/images/delete-image';
+import { from, switchMap } from 'rxjs';
 
 export interface ImageChooserResult {
   type: 'ImageDeleted' | 'ImageSelected' | 'ImageUploaded';
@@ -96,34 +97,28 @@ export class ImageChooserComponent {
       if (targetFile) {
         this.isUploadingImage = true;
 
-        const reader = new FileReader();
-
-        reader.onload = (data) => {
-          const content = data.target?.result as ArrayBuffer;
-
-          if (content) {
-            this.turnierplanApi
-              .invoke(uploadImage$FormData, {
+        from(targetFile.arrayBuffer())
+          .pipe(
+            switchMap((arrayBuffer) =>
+              this.turnierplanApi.invoke(uploadImage$FormData, {
                 body: {
                   organizationId: this.organizationId,
                   imageType: this.imageType,
                   imageName: targetFile.name,
-                  image: new Blob([content])
+                  image: new Blob([arrayBuffer])
                 }
               })
-              .subscribe({
-                next: (result) => {
-                  this.modal.close({ type: 'ImageUploaded', image: result } as ImageChooserResult);
-                },
-                error: () => {
-                  this.isUploadingImage = false;
-                  this.hasUploadError = true;
-                }
-              });
-          }
-        };
-
-        reader.readAsArrayBuffer(targetFile);
+            )
+          )
+          .subscribe({
+            next: (result) => {
+              this.modal.close({ type: 'ImageUploaded', image: result } as ImageChooserResult);
+            },
+            error: () => {
+              this.isUploadingImage = false;
+              this.hasUploadError = true;
+            }
+          });
       }
     });
 

@@ -74,10 +74,10 @@ export class TextInputDialogComponent {
       return;
     }
 
-    if (sanitized !== sanitizedInitial) {
-      this.modal.close(sanitized);
-    } else {
+    if (sanitized === sanitizedInitial) {
       this.modal.dismiss();
+    } else {
+      this.modal.close(sanitized);
     }
   }
 }
