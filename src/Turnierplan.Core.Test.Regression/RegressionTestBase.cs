@@ -60,6 +60,5 @@ internal abstract class RegressionTestBase<TSubject> : IRegressionTest
         _builder.Append(']');
         _builder.AppendLine();
         _builder.AppendSubject(_subject);
-        _builder.AppendLine();
     }
 }
