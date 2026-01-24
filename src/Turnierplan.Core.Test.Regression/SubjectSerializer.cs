@@ -1,4 +1,5 @@
 using System.Text;
+using Turnierplan.Core.Tournament.TeamSelectors;
 
 namespace Turnierplan.Core.Test.Regression;
 
@@ -32,5 +33,134 @@ internal static class SubjectSerializer
         builder.Append(';');
         builder.Append(tournament.Matches.Count);
         builder.AppendLine();
+
+        foreach (var team in tournament.Teams)
+        {
+            builder.Append('T');
+            builder.Append(team.Id);
+            builder.Append(';');
+            builder.Append(team.Name);
+            builder.Append(';');
+            builder.Append(team.EntryFeePaidAt?.Ticks);
+            builder.Append(';');
+            builder.Append(team.OutOfCompetition);
+            builder.Append(';');
+            builder.Append(team.Statistics.ScoreFor);
+            builder.Append(';');
+            builder.Append(team.Statistics.ScoreAgainst);
+            builder.Append(';');
+            builder.Append(team.Statistics.MatchesWon);
+            builder.Append(';');
+            builder.Append(team.Statistics.MatchesDrawn);
+            builder.Append(';');
+            builder.Append(team.Statistics.MatchesLost);
+            builder.Append(';');
+            builder.Append(team.Statistics.MatchesPlayed);
+            builder.AppendLine();
+        }
+
+        foreach (var group in tournament.Groups)
+        {
+            builder.Append('G');
+            builder.Append(group.Id);
+            builder.Append(';');
+            builder.Append(group.AlphabeticalId);
+            builder.Append(';');
+            builder.Append(group.DisplayName);
+            builder.Append(';');
+            builder.Append(group.Participants.Count);
+            builder.AppendLine();
+
+            foreach (var participant in group.Participants)
+            {
+                builder.Append('>');
+                builder.Append(participant.Team.Id);
+                builder.Append(';');
+                builder.Append(participant.Group.Id);
+                builder.Append(';');
+                builder.Append(participant.Order);
+                builder.Append(';');
+                builder.Append(participant.Priority);
+                builder.Append(';');
+                builder.Append(participant.Statistics.Position);
+                builder.Append(';');
+                builder.Append(participant.Statistics.ScoreFor);
+                builder.Append(';');
+                builder.Append(participant.Statistics.ScoreAgainst);
+                builder.Append(';');
+                builder.Append(participant.Statistics.MatchesWon);
+                builder.Append(';');
+                builder.Append(participant.Statistics.MatchesDrawn);
+                builder.Append(';');
+                builder.Append(participant.Statistics.MatchesLost);
+                builder.Append(';');
+                builder.Append(participant.Statistics.Points);
+                builder.Append(';');
+                builder.Append(participant.Statistics.ScoreDifference);
+                builder.Append(';');
+                builder.Append(participant.Statistics.MatchesPlayed);
+                builder.AppendLine();
+            }
+        }
+
+        foreach (var match in tournament.Matches)
+        {
+            builder.Append('M');
+            builder.Append(match.Id);
+            builder.Append(';');
+            builder.Append(match.Index);
+            builder.Append(';');
+            builder.Append(match.Court);
+            builder.Append(';');
+            builder.Append(match.Kickoff?.Ticks);
+            builder.Append(';');
+            builder.Append(ConvertTeamSelectorToString(match.TeamSelectorA));
+            builder.Append(';');
+            builder.Append(ConvertTeamSelectorToString(match.TeamSelectorB));
+            builder.Append(';');
+            builder.Append(match.TeamA?.Id);
+            builder.Append(';');
+            builder.Append(match.TeamB?.Id);
+            builder.Append(';');
+            builder.Append(match.Group?.Id);
+            builder.Append(';');
+            builder.Append(match.IsGroupMatch);
+            builder.Append(';');
+            builder.Append(match.IsDecidingMatch);
+            builder.Append(';');
+            builder.Append(match.PlayoffPosition);
+            builder.Append(';');
+            builder.Append(match.IsCurrentlyPlaying);
+            builder.Append(';');
+            builder.Append(match.ScoreA);
+            builder.Append(';');
+            builder.Append(match.ScoreB);
+            builder.Append(';');
+            builder.Append(match.OutcomeType);
+            builder.Append(';');
+            builder.Append(match.IsFinished);
+            builder.AppendLine();
+        }
+    }
+
+    /// <remarks>Copied from the DAL project.</remarks>
+    private static string ConvertTeamSelectorToString(TeamSelectorBase input)
+    {
+        switch (input)
+        {
+            case GroupDefinitionSelector groupDefinitionSelector:
+                return $"G{groupDefinitionSelector.TargetGroupId}/{groupDefinitionSelector.TargetTeamIndex}";
+            case GroupResultsNthRankedSelector groupResultsNthRankedSelector:
+                var groupIds = string.Join(",", groupResultsNthRankedSelector.TargetGroupIds);
+                return $"N{groupIds}/{groupResultsNthRankedSelector.OrdinalNumber}/{groupResultsNthRankedSelector.PlacementRank}";
+            case GroupResultsSelector groupResultsSelector:
+                return $"R{groupResultsSelector.TargetGroupId}/{groupResultsSelector.TargetGroupPosition}";
+            case MatchSelector matchSelector:
+                return $"{(matchSelector.SelectionMode is MatchSelector.Mode.Winner ? "W" : "L")}{matchSelector.TargetMatchIndex}";
+            case StaticTeamSelector staticTeamSelector:
+                return $"T{staticTeamSelector.TargetTeamId}";
+            default:
+                return string.Empty;
+        }
     }
 }
