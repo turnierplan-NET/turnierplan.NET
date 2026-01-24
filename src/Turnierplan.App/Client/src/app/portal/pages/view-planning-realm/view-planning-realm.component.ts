@@ -411,7 +411,6 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   }
 
   private setPlanningRealm(planningRealm: PlanningRealmDto): void {
-    // Create a working copy which can be modified and saved/discarded
     this.planningRealm = planningRealm;
     this._hasUnsavedChanges = false;
 
