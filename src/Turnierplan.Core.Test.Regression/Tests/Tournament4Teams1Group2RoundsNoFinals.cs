@@ -2,15 +2,12 @@ using Turnierplan.Core.Tournament;
 
 namespace Turnierplan.Core.Test.Regression.Tests;
 
-internal sealed class Tournament4Teams1Group2RoundsNoFinals : RegressionTestBase<Tournament.Tournament>
+internal sealed class Tournament4Teams1Group2RoundsNoFinals : TournamentRegressionTestBase
 {
-    protected override Tournament.Tournament CreateSubject()
+    public Tournament4Teams1Group2RoundsNoFinals()
     {
-        return new Tournament.Tournament(new Organization.Organization(string.Empty), "reg_name", Visibility.Private);
-    }
+        Subject(new Tournament.Tournament(new Organization.Organization(string.Empty), "reg_name", Visibility.Private));
 
-    protected override void RunSteps()
-    {
         var team1 = Step(t => t.AddTeam("Test 1"));
         var team2 = Step(t => t.AddTeam("Test 2"));
         var team3 = Step(t => t.AddTeam("Test 3"));

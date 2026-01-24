@@ -2,51 +2,49 @@ using System.Text;
 
 namespace Turnierplan.Core.Test.Regression;
 
+internal abstract class TournamentRegressionTestBase : RegressionTestBase<Tournament.Tournament>;
+
 internal abstract class RegressionTestBase<TSubject> : IRegressionTest
     where TSubject : class
 {
     private readonly StringBuilder _builder = new();
     private TSubject? _subject;
-    private bool _finished;
     private int _saveStateIndex;
 
-    public string Result
-    {
-        get => !_finished ? throw new InvalidOperationException("This test is not finished yet.") : field;
-        private set;
-    } = string.Empty;
+    public string Result => _builder.ToString();
 
-    private TSubject Subject => _subject ?? throw new InvalidOperationException("This test is not currently running.");
-
-    public void Execute()
+    protected void Subject(TSubject subject)
     {
         if (_subject is not null)
         {
-            throw new InvalidOperationException("This test was already executed.");
+            throw new InvalidOperationException($"The '{nameof(Subject)}()' method may only be called once.");
         }
 
-        _subject = CreateSubject();
+        _subject = subject;
+
         AddSaveState();
-        RunSteps();
-        _finished = true;
-        Result = _builder.ToString();
     }
-
-
-    protected abstract TSubject CreateSubject();
-
-    protected abstract void RunSteps();
 
     protected void Step(Action<TSubject> step)
     {
-        step(Subject);
+        if (_subject is null)
+        {
+            throw new InvalidOperationException($"Call '{nameof(Subject)}()' first to initialize the test subject.");
+        }
+
+        step(_subject);
 
         AddSaveState();
     }
 
     protected TResult Step<TResult>(Func<TSubject, TResult> step)
     {
-        var result = step(Subject);
+        if (_subject is null)
+        {
+            throw new InvalidOperationException($"Call '{nameof(Subject)}()' first to initialize the test subject.");
+        }
+
+        var result = step(_subject);
 
         AddSaveState();
 

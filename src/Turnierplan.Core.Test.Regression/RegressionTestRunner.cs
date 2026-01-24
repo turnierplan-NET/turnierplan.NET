@@ -33,9 +33,8 @@ public sealed class RegressionTestRunner(ITestOutputHelper output)
 
         output.WriteLine("The test type {0} was successfully instantiated.", typeName);
 
-        regressionTest.Execute();
         var regressionTestOutput = regressionTest.Result.TrimEnd();
-        output.WriteLine("All test steps were successfully executed and the result length is {0}", regressionTestOutput.Length);
+        output.WriteLine("The actual test result length is {0}", regressionTestOutput.Length);
 
         var outputFileName = Path.Join(__outputFolderName, $"{regressionTestName}.out");
         output.WriteLine("Writing test output to: '{0}'", outputFileName);
