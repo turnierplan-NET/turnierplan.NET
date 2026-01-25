@@ -40,13 +40,13 @@ jobs:
         working-directory: "docs"
       - name: "Setup Pages"
         uses: actions/configure-pages@v5
-        if: ${{ env.DEPLOY_TO_GITHUB_PAGES }}
+        if: ${{ env.DEPLOY_TO_GITHUB_PAGES == 'true' }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-        if: ${{ env.DEPLOY_TO_GITHUB_PAGES }}
+        if: ${{ env.DEPLOY_TO_GITHUB_PAGES == 'true' }}
         with:
           path: "docs/site"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        if: ${{ env.DEPLOY_TO_GITHUB_PAGES }}
+        if: ${{ env.DEPLOY_TO_GITHUB_PAGES == 'true' }}
