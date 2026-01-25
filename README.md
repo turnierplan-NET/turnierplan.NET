@@ -17,9 +17,9 @@ If you want to install **turnierplan.NET** on your server, please visit the [Ins
 
 ## Documentation
 
-Visit the **turnierplan.NET** documentation using the following link: [https://docs.turnierplan.net](https://docs.turnierplan.net)
+Visit the **turnierplan.NET** documentation using the following link: [docs.turnierplan.net](https://docs.turnierplan.net)
 
-The documentation sources are located in the `docs` directory. See the [docs/README.md](docs/README.md) for further information on how to edit and build the documentation.
+The documentation sources are located in the `docs` directory. See the [docs readme](docs/README.md) for further information on how to edit and build the documentation.
 
 ## Development
 
