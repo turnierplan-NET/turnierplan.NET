@@ -15,10 +15,14 @@ jobs:
     name: "Documentation"
     runs-on: ubuntu-24.04
     steps:
+      - uses: actions/checkout@v5
       - name: "Set up Python 3.12"
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: "Install requirements"
+        run: "python3 -m pip install -r requirements.txt"
+        working-directory: "docs"
       - name: "Build documentation"
         run: "python3 -m mkdocs build"
         working-directory: "docs"
