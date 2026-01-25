@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - eliaspr/new-docs # TODO: Change branch names!
+      - main
     paths:
       - "docs/**"
   pull_request:
@@ -25,7 +25,7 @@ jobs:
     name: "Documentation"
     runs-on: ubuntu-24.04
     env:
-      DEPLOY_TO_GITHUB_PAGES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/eliaspr/new-docs' }}
+      DEPLOY_TO_GITHUB_PAGES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     steps:
       - uses: actions/checkout@v5
       - name: "Set up Python 3.12"
