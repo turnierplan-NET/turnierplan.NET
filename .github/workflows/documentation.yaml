@@ -1,0 +1,52 @@
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  documentation:
+    name: "Documentation"
+    runs-on: ubuntu-24.04
+    env:
+      DEPLOY_TO_GITHUB_PAGES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: "Set up Python 3.12"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: "Install requirements"
+        run: "python3 -m pip install -r requirements.txt"
+        working-directory: "docs"
+      - name: "Build documentation"
+        run: "python3 -m mkdocs build"
+        working-directory: "docs"
+      - name: "Setup Pages"
+        uses: actions/configure-pages@v5
+        if: ${{ env.DEPLOY_TO_GITHUB_PAGES == 'true' }}
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        if: ${{ env.DEPLOY_TO_GITHUB_PAGES == 'true' }}
+        with:
+          path: "docs/site"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        if: ${{ env.DEPLOY_TO_GITHUB_PAGES == 'true' }}
