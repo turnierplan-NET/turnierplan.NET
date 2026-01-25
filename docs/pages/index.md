@@ -1,17 +1,13 @@
-# Welcome to MkDocs
+# turnierplan.NET
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+**turnierplan.NET** ist a free and open-source web application for football tournaments
 
-## Commands
+<div class="text-center">
+  <img src="img/logo-192.png" />
+</div>
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+<hr class="my-5" />
 
-## Project layout
+## Getting Started
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+To set up an instance of **turnierplan.NET** on your own server, visit the [Installation](installation.md) guide.
