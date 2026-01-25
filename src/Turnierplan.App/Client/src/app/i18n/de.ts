@@ -170,6 +170,7 @@ export const de = {
         Tournaments: 'Turniere',
         Venues: 'Spielstätten',
         PlanningRealms: 'Turnierplaner',
+        Images: 'Bilder',
         ApiKeys: 'API-Schlüssel',
         Settings: 'Einstellungen'
       },
@@ -177,6 +178,7 @@ export const de = {
         TournamentCount: 'Turniere',
         VenueCount: 'Spielstätten',
         PlanningRealmCount: 'Turnierplaner',
+        ImagesCount: 'Bilder',
         ApiKeyCount: 'API-Schlüssel'
       },
       NewTournament: 'Neues Turnier',

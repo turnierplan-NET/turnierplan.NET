@@ -130,6 +130,18 @@
                 </div>
               }
             }
+            @case (5) {
+              @if (isLoadingImages || !images) {
+                <tp-loading-indicator class="my-5" [marginY]="false" />
+              } @else {
+                <div class="card-header d-flex flex-row align-items-center">
+                  <tp-badge context="ViewOrganization" label="ImagesCount" [value]="images.length" />
+                </div>
+                <div class="card-body p-0">
+                  <tp-image-manager />
+                </div>
+              }
+            }
             @case (2) {
               <!-- If the number is modified, check the @if statement below -->
               @if (isLoadingApiKeys || !apiKeys) {

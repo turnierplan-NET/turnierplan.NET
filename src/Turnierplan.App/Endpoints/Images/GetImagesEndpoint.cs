@@ -18,7 +18,7 @@ internal sealed class GetImagesEndpoint : EndpointBase<IEnumerable<ImageDto>>
 
     private static async Task<IResult> Handle(
         [FromQuery] PublicId organizationId,
-        [FromQuery] ImageType imageType,
+        [FromQuery] ImageType? imageType,
         IOrganizationRepository repository,
         IAccessValidator accessValidator,
         IMapper mapper)
@@ -35,7 +35,9 @@ internal sealed class GetImagesEndpoint : EndpointBase<IEnumerable<ImageDto>>
             return Results.Forbid();
         }
 
-        var filteredImages = organization.Images.Where(x => x.Type == imageType).ToList();
+        var filteredImages = imageType.HasValue
+            ? organization.Images.Where(x => x.Type == imageType).ToList()
+            : organization.Images;
 
         foreach (var image in filteredImages)
         {
