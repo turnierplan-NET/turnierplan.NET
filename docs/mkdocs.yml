@@ -1,0 +1,4 @@
+site_name: "turnierplan.NET"
+site_author: "turnierplan"
+docs_dir: "pages"
+theme: "readthedocs"
