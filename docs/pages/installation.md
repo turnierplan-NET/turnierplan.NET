@@ -2,56 +2,77 @@
 
 **turnierplan.NET** comes as a pre-built container image which can be deployed with minimal configuration. The image is available on GitHub: [ghcr.io/turnierplan-net/turnierplan](https://github.com/turnierplan-NET/turnierplan.NET/pkgs/container/turnierplan)
 
-In the simplest case, you can configure the container to use an in-memory data store. Note that this in-memory store is only meant for quick testing and is *not stable* for production! 
+## Getting Started
+
+In the simplest case, you can configure the container to use an in-memory data store. Note that this in-memory store is only meant for quick testing and is obviously not suitable for a production environment.
 
 ```shell
-docker run -p 80:8080 -e Turnierplan__ApplicationUrl="http://localhost" -e Database__InMemory="true" ghcr.io/turnierplan-net/turnierplan:latest
+docker run -p 80:8080 -e Database__InMemory="true" ghcr.io/turnierplan-net/turnierplan:latest
 ```
 
-A PostgreSQL database can be configured by specifying the `Database__ConnectionString` environment variable:
+You should see the following output. The credentials of the initial admin user are displayed in the container logs. You can now open up <a href="http://localhost" target="_blank">http://localhost</a> in your browser and log in using those credentials.
 
-```shell
-docker run -p 80:8080 -e Turnierplan__ApplicationUrl="http://localhost" -e Database__ConnectionString="<connection_string>" ghcr.io/turnierplan-net/turnierplan:latest
+```
+  __                                                     ___                                        __
+ /\ \__                        __                       /\_ \                                      /\ \__
+ \ \ ,_\  __  __  _ __    ___ /\_\     __   _ __   _____\//\ \      __      ___         ___      __\ \ ,_\
+  \ \ \/ /\ \/\ \/\`'__\/' _ `\/\ \  /'__`\/\`'__\/\ '__`\\ \ \   /'__`\  /' _ `\     /' _ `\  /'__`\ \ \/
+   \ \ \_\ \ \_\ \ \ \/ /\ \/\ \ \ \/\  __/\ \ \/ \ \ \L\ \\_\ \_/\ \L\.\_/\ \/\ \  __/\ \/\ \/\  __/\ \ \_
+    \ \__\\ \____/\ \_\ \ \_\ \_\ \_\ \____\\ \_\  \ \ ,__//\____\ \__/.\_\ \_\ \_\/\_\ \_\ \_\ \____\\ \__\
+     \/__/ \/___/  \/_/  \/_/\/_/\/_/\/____/ \/_/   \ \ \/ \/____/\/__/\/_/\/_/\/_/\/_/\/_/\/_/\/____/ \/__/
+                                                     \ \_\
+                                                      \/_/   v2025.4.0
+
+info: Turnierplan.ImageStorage.Local.LocalImageStorage[0]
+      Using the following directory for local image storage: '/var/turnierplan/images'
+info: Turnierplan.App.DatabaseMigrator[0]
+      An initial user was created: You can log in using "admin" and the password "53fe6bac-1050-4801-bb11-be2dbd479d66". IMMEDIATELY change this password when running in a production environment!
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://[::]:8080
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: /app
 ```
 
-The credentials of the initial admin user are displayed in the container logs.
+## Persisting Data
 
-> [!CAUTION]
-> In a production environment, you should immediately change the administrator password to a secure one!
+The application stores the following data in the `/var/turnierplan` directory:
 
-### Persisting Data
+- `/var/turnierplan/identity/jwt-signing-key.bin` - The SHA512 signature key used to sign and verify JWT tokens.
+- `/var/turnierplan/images/**` - If not configured otherwise (see [section below](#storing-images)), this folder will contain all uploaded image files.
 
-To persist the **turnierplan.NET** application data, create a Docker volume mapping to the `/var/turnierplan` folder inside the container.
+Therefore, there should always be a volume mapping for this path.
 
-> [!CAUTION]
-> This folder contains the JWT signing key for issued access/refresh tokens.
+## Environment Variables
 
-### Environment Variables
-
-For a basic installation, the following environment variables *must* be set:
+For a basic installation, the following environment variables must be set:
 
 | Environment Variable          | Description                                                  |
 |-------------------------------|--------------------------------------------------------------|
 | `Turnierplan__ApplicationUrl` | The URL used to access the website.                          |
 | `Database__ConnectionString`  | The PostgreSQL connection string with read/write permission. |
 
-The following environment variables *can* be set if you want to enable specific features or modify default behavior:
+The following environment variables can be set if you want to enable specific features or modify default behavior:
 
 | Environment Variable                    | Description                                                                                                                                                                      | Default      |
 |-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
 | `ApplicationInsights__ConnectionString` | Can be set if you wish that your instance sends telemetry data to [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview). | -            |
 | `Identity__AccessTokenLifetime`         | Defines the lifetime of issued JWT access tokens.                                                                                                                                | `00:03:00`   |
 | `Identity__RefreshTokenLifetime`        | Defines the lifetime of issued JWT refresh tokens.                                                                                                                               | `1.00:00:00` |
-| `Turnierplan__InstanceName`             | The instance name is displayed in the header/footer of the public pages. If not specified, `turnierplan.NET` will be shown instead.                                              | -            |
+| `Turnierplan__InstanceName`             | The instance name is displayed in the header/footer of the public pages. If not specified, the string `turnierplan.NET` will be shown instead.                                   | -            |
 | `Turnierplan__LogoUrl`                  | The URL of the custom logo to be displayed in the header of the public pages. If not specified, the turnierplan.NET logo will be shown instead.                                  | -            |
 | `Turnierplan__ImprintUrl`               | The URL of your external imprint page if you want it to be linked on the public pages.                                                                                           | -            |
 | `Turnierplan__PrivacyUrl`               | The URL of your external privacy page if you want it to be linked on the public pages.                                                                                           | -            |
 
-> The token lifetimes must be specified as .NET `TimeSpan` strings. For example `00:03:00` means 3 minutes or `1.00:00.00` means 1 day.
+!!! note
+    The token lifetimes must be specified as .NET `TimeSpan` strings. For example `00:03:00` means 3 minutes or `1.00:00.00` means 1 day.
 
-### Docker Compose Example
+## Docker Compose
 
-You can use the following docker compose file to get a complete instance running on your machine:
+A minimal recommended configuration for a production environment is shown in the following docker compose example:
 
 ```yaml
 services:
@@ -89,12 +110,27 @@ networks:
   turnierplan:
 ```
 
-> [!TIP]
-> It is recommended to *not* use the `latest` tag. Rather, pin your docker services to a specific image version.
+!!! tip
+    It is recommended to not use the latest tag. Rather, pin your docker services to a specific image version.
 
-### Storing images in AWS S3
+Feel free to modify the environment variables or add additional ones as described in the [environment variables](#environment-variables) section above.
 
-If you prefer to store uploaded images in an AWS S3 or S3-compatible bucket, add the following environment variables to your deployment:
+## Storing Images
+
+By default, all uploaded image files are stored in the `/var/turnierplan/images` directory. Whilst this is a very simple solution, it also means that the turnierplan.NET backend will serve all image files which can potentially lead to high load on the application server. Alternatively, you can configure the application to save image files to an external storage service. This way, clients can load the images directly from the external service.
+
+!!! warning
+    The differnt implementations do not necessarily use the same folder structure to organizie the files. Because of this, migrating from one image storage implementation to another can be difficult - so choose wisely!
+
+The following implementations are currently available:
+
+- **Local** - The default, which saves images in a local folder as described above
+- **AWS S3** (or compatible)
+- **Azure Blob Storage**
+
+### Configuring AWS S3
+
+To store uploaded images in an AWS S3 or S3-compatible bucket, add the following environment variables to your deployment:
 
 | Environment Variable            | Description                                      |
 |---------------------------------|--------------------------------------------------|
@@ -105,14 +141,13 @@ If you prefer to store uploaded images in an AWS S3 or S3-compatible bucket, add
 | `ImageStorage__AccessKeySecret` | The access key secret.                           |
 | `ImageStorage__BucketName`      | The name of the bucket.                          |
 
-The access key must have permissions to create, read and delete objects.
+The access key must have permissions to create, read and delete objects. 
 
-> [!NOTE]
-> The `RegionEndpoint` and `ServiceUrl` variables are *mutually exclusive*. Use the former if you are using an AWS S3 bucket and use the latter if you use a S3-compatible bucket from a third party.
+The `RegionEndpoint` and `ServiceUrl` variables are *mutually exclusive*. Use the former if you are using an AWS S3 bucket and use the latter if you use a S3-compatible bucket from a third party.
 
-### Storing images in Azure Blob Storage
+### Configuring Azure Blob Storage
 
-If you prefer to store uploaded images in Microsoft [Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs/), add the following environment variables to your deployment:
+To store uploaded images in an [Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs/) container, add the following environment variables to your deployment:
 
 | Environment Variable               | Description                                  |
 |------------------------------------|----------------------------------------------|
@@ -124,7 +159,7 @@ By default, a [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/
 
 When using Entra ID based authentication, the managed identity / app registration must have permission to create/read/delete blobs in the storage account. This can be achieved by assigning the [Storage Blob Data Contributor](https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/storage#storage-blob-data-contributor) role.
 
-#### Authenticating using access key
+#### Access key authentication
 
 Refer to the [documentation](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage?tabs=azure-portal) on how to view and manage the access keys.
 
@@ -135,7 +170,7 @@ The following environment variables must be set to enable access key authenticat
 | `ImageStorage__UseAccountKey` | Set to `true` to use account key authentication. |
 | `ImageStorage__AccountKey`    | The value of the account key.                    |
 
-#### Authenticate using client secret
+#### Client secret authentication
 
 If you have an Entra ID app registration with the necessary permissions on the storage account, you can set the following environment variables to enable client secret authentication:
 
