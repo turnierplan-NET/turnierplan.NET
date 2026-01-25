@@ -72,6 +72,11 @@ internal sealed class AccessValidator : IAccessValidator
             AddAvailableRoles(target, availableRoles, principal);
         }
 
+        if (availableRoles.Count == 0)
+        {
+            return;
+        }
+
         var targetPublicId = target.PublicId.ToString();
         var rolesList = string.Join('+', availableRoles.Select(x => x.ToString()));
         var rolesHeaderValue = $"{targetPublicId}={rolesList}";
@@ -80,6 +85,7 @@ internal sealed class AccessValidator : IAccessValidator
 
         if (target is IEntityWithOrganization entityWithOrganization)
         {
+            // TODO: Evaluate if this is still necessary after #309 / #324
             // Always add the organization-level roles, too. This is necessary because for example, the tournament
             // page allows the user to upload images. But for uploading images, the authorization check is done
             // against the organization.
