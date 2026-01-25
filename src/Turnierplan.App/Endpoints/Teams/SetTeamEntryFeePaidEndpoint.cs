@@ -40,7 +40,22 @@ internal sealed class SetTeamEntryFeePaidEndpoint : EndpointBase
             return Results.NotFound();
         }
 
-        team.EntryFeePaidAt = request.HasPaidEntryFee ? DateTime.UtcNow : null;
+        if (request.HasPaidEntryFee)
+        {
+            if (team.EntryFeePaidAt.HasValue)
+            {
+                // If the team already has an "entry fee paid at" timestamp, we don't overwrite
+                // the current value of the timestamp and instead, we exit early.
+
+                return Results.NoContent();
+            }
+
+            team.EntryFeePaidAt = DateTime.UtcNow;
+        }
+        else
+        {
+            team.EntryFeePaidAt = null;
+        }
 
         await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
