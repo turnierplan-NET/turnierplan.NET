@@ -1,10 +1,15 @@
 on:
   push:
     branches:
+      - eliaspr/new-docs # TODO: Change branch names!
+    paths:
+      - "docs/**"
+  pull_request:
+    branches:
       - main
-      - eliaspr/new-docs # TODO: Remove this line!
-    # paths:
-    #   - "docs/**"
+    paths:
+      - "docs/**"
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
@@ -19,6 +24,8 @@ jobs:
   documentation:
     name: "Documentation"
     runs-on: ubuntu-24.04
+    env:
+      DEPLOY_TO_GITHUB_PAGES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/eliaspr/new-docs' }}
     steps:
       - uses: actions/checkout@v5
       - name: "Set up Python 3.12"
@@ -33,10 +40,13 @@ jobs:
         working-directory: "docs"
       - name: "Setup Pages"
         uses: actions/configure-pages@v5
+        if: ${{ env.DEPLOY_TO_GITHUB_PAGES }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        if: ${{ env.DEPLOY_TO_GITHUB_PAGES }}
         with:
           path: "docs/site"
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        if: ${{ env.DEPLOY_TO_GITHUB_PAGES }}
