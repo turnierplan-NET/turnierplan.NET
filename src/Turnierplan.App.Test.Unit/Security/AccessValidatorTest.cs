@@ -277,7 +277,7 @@ public sealed class AccessValidatorTest
 
     private sealed class MockHttpContext : HttpContext
     {
-        public override void Abort() => throw new NotImplementedException();
+        public override void Abort() => throw new NotSupportedException();
         public override IFeatureCollection Features { get; } = null!;
         public override HttpRequest Request { get; } = null!;
         public override HttpResponse Response { get; } = new MockHttpResponse();
@@ -293,9 +293,9 @@ public sealed class AccessValidatorTest
 
     private sealed class MockHttpResponse : HttpResponse
     {
-        public override void OnStarting(Func<object, Task> callback, object state) => throw new NotImplementedException();
-        public override void OnCompleted(Func<object, Task> callback, object state) => throw new NotImplementedException();
-        public override void Redirect(string location, bool permanent) => throw new NotImplementedException();
+        public override void OnStarting(Func<object, Task> callback, object state) => throw new NotSupportedException();
+        public override void OnCompleted(Func<object, Task> callback, object state) => throw new NotSupportedException();
+        public override void Redirect(string location, bool permanent) => throw new NotSupportedException();
         public override HttpContext HttpContext => null!;
         public override int StatusCode { get; set; }
         public override IHeaderDictionary Headers { get; } = new HeaderDictionary();
