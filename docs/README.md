@@ -1,6 +1,6 @@
 ## turnierplan.NET &middot; Documentation
 
-This directory contains the source markdown files and mkdocs configuration for the turnierplan.NET documentation: [docs.turnierplan.net](https://docs.turnierplan.net).
+This directory contains the source markdown files and mkdocs configuration for the publically available turnierplan.NET documentation: [https://docs.turnierplan.net](https://docs.turnierplan.net).
 
 In order to build the documentation locally, you must first install Python and [mkdocs](https://www.mkdocs.org):
 
