@@ -19,8 +19,8 @@
     <tbody>
       @for (ranking of rankings; track ranking) {
         <tr>
-          <td>{{ ranking.position }}</td>
-          <td [tpE2E]="['view-tournament-page-ranking-team-name', ranking.position]">
+          <td class="align-middle">{{ ranking.position }}</td>
+          <td class="align-middle" [tpE2E]="['view-tournament-page-ranking-team-name', ranking.position]">
             @if (ranking.reason === rankingReason.ManuallyChanged && ranking.team === undefined) {
               <span class="text-secondary fst-italic small" [translate]="'Portal.ViewTournament.Ranking.NoTeam'"></span>
             } @else {
@@ -44,7 +44,7 @@
             }
           </td>
           @if (showDeleteOverwriteColumn) {
-            <td>
+            <td class="align-middle">
               @if (ranking.rankingOverwriteId !== undefined) {
                 <div class="d-flex flex-row">
                   <!-- d-flex to avoid layout issues -->
