@@ -34,7 +34,7 @@ To run the application from source, follow these steps:
 3. Open a terminal and navigate to the `src/Turnierplan.App/Client` directory. Run `npm install` to install the node dependencies. Next, you can start the client application by typing `npm run start`.
 4. Access the client application using [http://localhost:45001](http://localhost:45001) and log in using default credentials. The user name is `admin` and the password is `P@ssw0rd`.
 
+When running locally, the API documentation can be viewed by opening [http://localhost:45000/scalar](http://localhost:45000/scalar).
+
 > [!NOTE]  
 > The solution must be built first before the client application can be started. This is because the client application startup depends on OpenAPI files generated during the solution build.
-
-When running locally, the API documentation can be viewed by opening [http://localhost:45000/scalar](http://localhost:45000/scalar).
