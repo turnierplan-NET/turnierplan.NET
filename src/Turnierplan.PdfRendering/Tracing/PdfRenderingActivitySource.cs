@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Turnierplan.Core.Image;
 
 namespace Turnierplan.PdfRendering.Tracing;
 
@@ -18,6 +19,29 @@ internal static class PdfRenderingActivitySource
         }
 
         activity.SetTag("turnierplan.renderer.type", rendererType.FullName);
+
+        activity.Start();
+
+        return activity;
+    }
+
+    public static Activity? LoadRemoteImage(Activity? parent, Image image, string usage)
+    {
+        if (parent is null)
+        {
+            return null;
+        }
+
+        var activity = __source.StartActivity(ActivityKind.Internal, parent.Context);
+
+        if (activity == null)
+        {
+            return null;
+        }
+
+        activity.SetTag("turnierplan.image.id", image.PublicId.ToString());
+        activity.SetTag("turnierplan.image.type", image.Type.ToString());
+        activity.SetTag("turnierplan.image_usage", usage);
 
         activity.Start();
 
