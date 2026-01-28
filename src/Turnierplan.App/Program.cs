@@ -31,10 +31,9 @@ ValidatorOptions.Global.LanguageManager.Enabled = false;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddApplicationInsightsTelemetry();
-
 builder.Services.Configure<TurnierplanOptions>(builder.Configuration.GetSection("Turnierplan"));
 
+builder.Services.AddTurnierplanMonitoring(builder.Configuration);
 builder.Services.AddTurnierplanDataAccessLayer(builder.Configuration);
 builder.Services.AddTurnierplanDocumentRendering<ApplicationUrlProvider>();
 builder.Services.AddTurnierplanImageStorage(builder.Configuration.GetSection("ImageStorage"));

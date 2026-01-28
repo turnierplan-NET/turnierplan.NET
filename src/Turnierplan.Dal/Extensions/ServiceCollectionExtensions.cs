@@ -1,11 +1,9 @@
-﻿using Azure.Monitor.OpenTelemetry.Exporter;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Npgsql;
 using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
@@ -47,18 +45,6 @@ public static class ServiceCollectionExtensions
                 });
             }
         });
-
-        var applicationInsightsConnectionString = configuration.GetSection("ApplicationInsights").GetValue<string>("ConnectionString");
-
-        if (!string.IsNullOrEmpty(applicationInsightsConnectionString))
-        {
-            services.AddOpenTelemetry()
-                .WithTracing(tracing =>
-                {
-                    tracing.AddNpgsql()
-                        .AddAzureMonitorTraceExporter(o => o.ConnectionString = applicationInsightsConnectionString);
-                });
-        }
 
         services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
         services.AddScoped<IApplicationRepository, ApplicationRepository>();
