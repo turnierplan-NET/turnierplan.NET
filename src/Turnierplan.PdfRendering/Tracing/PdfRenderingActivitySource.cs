@@ -18,7 +18,7 @@ internal static class PdfRenderingActivitySource
             return null;
         }
 
-        activity.SetTag("turnierplan.renderer.type", rendererType.FullName);
+        activity.SetTag("turnierplan.renderer.type", rendererType.Name);
 
         activity.Start();
 

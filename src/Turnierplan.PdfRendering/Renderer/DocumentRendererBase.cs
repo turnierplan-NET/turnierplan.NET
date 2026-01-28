@@ -20,7 +20,7 @@ public abstract class DocumentRendererBase<T> : IDocumentRenderer
 
     protected Activity? CurrentActivity { get; private set; }
 
-    public void Render(Tournament tournament, IDocumentConfiguration configuration, ILocalization localization, Stream destination)
+    public bool Render(Tournament tournament, IDocumentConfiguration configuration, ILocalization localization, Stream destination)
     {
         lock (this)
         {
@@ -45,15 +45,15 @@ public abstract class DocumentRendererBase<T> : IDocumentRenderer
 
             document.GeneratePdf(destination);
 
-            CurrentActivity?.Stop();
             CurrentActivity?.SetTag("turnierplan.renderer.output_size", destination.Position);
+            CurrentActivity?.Stop();
         }
         catch (Exception ex)
         {
-            CurrentActivity?.Stop();
             CurrentActivity?.AddException(ex);
+            CurrentActivity?.Stop();
 
-            throw;
+            return false;
         }
         finally
         {
@@ -66,6 +66,8 @@ public abstract class DocumentRendererBase<T> : IDocumentRenderer
                 // Ignored
             }
         }
+
+        return true;
     }
 
     protected abstract Document Render(Tournament tournament, T configuration, ILocalization localization);

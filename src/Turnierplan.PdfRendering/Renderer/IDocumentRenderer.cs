@@ -8,5 +8,5 @@ public interface IDocumentRenderer
 {
     Type DocumentConfigurationType { get; }
 
-    void Render(Tournament tournament, IDocumentConfiguration configuration, ILocalization localization, Stream destination);
+    bool Render(Tournament tournament, IDocumentConfiguration configuration, ILocalization localization, Stream destination);
 }
