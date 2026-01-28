@@ -3,9 +3,9 @@ using Turnierplan.Core.Image;
 
 namespace Turnierplan.PdfRendering.Tracing;
 
-internal static class PdfRenderingActivitySource
+internal static class DocumentRendererActivitySource
 {
-    public const string ActivitySourceName = "TurnierplanPdfRenderer";
+    public const string ActivitySourceName = "TurnierplanDocumentRendering";
 
     private static readonly ActivitySource __source = new(ActivitySourceName);
 

@@ -50,13 +50,13 @@ public sealed class MatchPlanRenderer(IImageStorage imageStorage, IApplicationUr
 
                     if (tournament.PrimaryLogo is not null)
                     {
-                        using var _ = PdfRenderingActivitySource.LoadRemoteImage(CurrentActivity, tournament.PrimaryLogo, nameof(tournament.PrimaryLogo));
+                        using var _ = DocumentRendererActivitySource.LoadRemoteImage(CurrentActivity, tournament.PrimaryLogo, nameof(tournament.PrimaryLogo));
                         column.Item().Unconstrained().Width(3, Unit.Centimetre).Image(tournament.PrimaryLogo, imageStorage);
                     }
 
                     if (tournament.SecondaryLogo is not null)
                     {
-                        using var _ = PdfRenderingActivitySource.LoadRemoteImage(CurrentActivity, tournament.SecondaryLogo, nameof(tournament.SecondaryLogo));
+                        using var _ = DocumentRendererActivitySource.LoadRemoteImage(CurrentActivity, tournament.SecondaryLogo, nameof(tournament.SecondaryLogo));
                         column.Item().AlignRight().Unconstrained().TranslateX(-3, Unit.Centimetre).Width(3, Unit.Centimetre).Image(tournament.SecondaryLogo, imageStorage);
                     }
 
@@ -87,7 +87,7 @@ public sealed class MatchPlanRenderer(IImageStorage imageStorage, IApplicationUr
 
                     if (tournament.BannerImage is not null)
                     {
-                        using var _ = PdfRenderingActivitySource.LoadRemoteImage(CurrentActivity, tournament.BannerImage, nameof(tournament.BannerImage));
+                        using var _ = DocumentRendererActivitySource.LoadRemoteImage(CurrentActivity, tournament.BannerImage, nameof(tournament.BannerImage));
                         column.Item().PaddingVertical(16).Image(tournament.BannerImage, imageStorage);
                     }
 

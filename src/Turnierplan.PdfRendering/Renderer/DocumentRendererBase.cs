@@ -37,7 +37,7 @@ public abstract class DocumentRendererBase<T> : IDocumentRenderer
             throw new InvalidOperationException($"Expected document configuration of type '{typeof(T).Name}', but got {configuration.GetType().FullName}");
         }
 
-        CurrentActivity = PdfRenderingActivitySource.RenderPdfDocument(GetType());
+        CurrentActivity = DocumentRendererActivitySource.RenderPdfDocument(GetType());
 
         try
         {

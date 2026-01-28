@@ -22,7 +22,7 @@ internal static class ServiceCollectionExtensions
                 .WithTracing(tracing =>
                 {
                     tracing.AddTurnierplanDataAccessLayer();
-                    tracing.AddTurnierplanPdfRenderer();
+                    tracing.AddTurnierplanDocumentRendering();
                 })
                 .UseAzureMonitor(opt => opt.ConnectionString = connectionString);
         }

@@ -5,9 +5,9 @@ namespace Turnierplan.PdfRendering.Extensions;
 
 public static class TracerProviderBuilderExtensions
 {
-    public static TracerProviderBuilder AddTurnierplanPdfRenderer(this TracerProviderBuilder builder)
+    public static TracerProviderBuilder AddTurnierplanDocumentRendering(this TracerProviderBuilder builder)
     {
-        return builder.AddSource(PdfRenderingActivitySource.ActivitySourceName);
+        return builder.AddSource(DocumentRendererActivitySource.ActivitySourceName);
     }
 }
 
