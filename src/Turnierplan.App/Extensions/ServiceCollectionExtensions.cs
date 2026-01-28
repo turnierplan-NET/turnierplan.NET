@@ -1,10 +1,10 @@
 using Azure.Monitor.OpenTelemetry.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Npgsql;
 using Turnierplan.App.Security;
 using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.User;
+using Turnierplan.Dal.Extensions;
 using Turnierplan.PdfRendering.Extensions;
 using IdentityOptions = Turnierplan.App.Options.IdentityOptions;
 
@@ -21,7 +21,7 @@ internal static class ServiceCollectionExtensions
             services.AddOpenTelemetry()
                 .WithTracing(tracing =>
                 {
-                    tracing.AddNpgsql();
+                    tracing.AddTurnierplanDataAccessLayer();
                     tracing.AddTurnierplanPdfRenderer();
                 })
                 .UseAzureMonitor(opt => opt.ConnectionString = connectionString);
