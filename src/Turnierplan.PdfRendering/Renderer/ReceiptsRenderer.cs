@@ -1,5 +1,4 @@
 using System.Text.RegularExpressions;
-using Microsoft.ApplicationInsights;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -12,10 +11,8 @@ using Turnierplan.PdfRendering.Extensions;
 namespace Turnierplan.PdfRendering.Renderer;
 
 [DocumentRenderer]
-public sealed partial class ReceiptsRenderer(TelemetryClient telemetryClient, IImageStorage imageStorage) : DocumentRendererBase<ReceiptsDocumentConfiguration>(telemetryClient)
+public sealed partial class ReceiptsRenderer(IImageStorage imageStorage) : DocumentRendererBase<ReceiptsDocumentConfiguration>
 {
-    private readonly TelemetryClient _telemetryClient = telemetryClient;
-
     protected override Document Render(Tournament tournament, ReceiptsDocumentConfiguration configuration, ILocalization localization)
     {
         var signatureDate = tournament.Matches.OrderBy(x => x.Index).FirstOrDefault()?.Kickoff ?? DateTime.UtcNow;
@@ -38,13 +35,13 @@ public sealed partial class ReceiptsRenderer(TelemetryClient telemetryClient, II
                         {
                             if (configuration.ShowPrimaryLogo && tournament.PrimaryLogo is not null)
                             {
-                                _telemetryClient.TrackTrace("Loading tournament primary logo from external source.");
+                                CurrentActivity.AddRemoteImageEvent(tournament.PrimaryLogo, nameof(tournament.PrimaryLogo));
                                 column.Item().Unconstrained().Width(1.7f, Unit.Centimetre).Image(tournament.PrimaryLogo, imageStorage);
                             }
 
                             if (configuration.ShowSecondaryLogo && tournament.SecondaryLogo is not null)
                             {
-                                _telemetryClient.TrackTrace("Loading tournament secondary logo from external source.");
+                                CurrentActivity.AddRemoteImageEvent(tournament.SecondaryLogo, nameof(tournament.SecondaryLogo));
                                 column.Item().AlignRight().Unconstrained().TranslateX(-1.7f, Unit.Centimetre).Width(1.7f, Unit.Centimetre).Image(tournament.SecondaryLogo, imageStorage);
                             }
 

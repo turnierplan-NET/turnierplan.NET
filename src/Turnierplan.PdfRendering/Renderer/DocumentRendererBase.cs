@@ -1,33 +1,43 @@
-using Microsoft.ApplicationInsights;
+using System.Diagnostics;
 using QuestPDF.Fluent;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Localization;
 using Turnierplan.PdfRendering.Configuration;
+using Turnierplan.PdfRendering.Tracing;
 
 namespace Turnierplan.PdfRendering.Renderer;
 
 public abstract class DocumentRendererBase<T> : IDocumentRenderer
     where T : IDocumentConfiguration
 {
-    private const string DependencyTypeName = "PdfRendering";
+    private bool _renderCalled;
 
-    private readonly TelemetryClient _telemetryClient;
-
-    private protected DocumentRendererBase(TelemetryClient telemetryClient)
+    private protected DocumentRendererBase()
     {
-        _telemetryClient = telemetryClient;
     }
 
     public Type DocumentConfigurationType => typeof(T);
 
+    protected Activity? CurrentActivity { get; private set; }
+
     public void Render(Tournament tournament, IDocumentConfiguration configuration, ILocalization localization, Stream destination)
     {
+        lock (this)
+        {
+            if (_renderCalled)
+            {
+                throw new InvalidOperationException("Each instance of document renderer can only be used once.");
+            }
+
+            _renderCalled = true;
+        }
+
         if (configuration is not T documentConfiguration)
         {
             throw new InvalidOperationException($"Expected document configuration of type '{typeof(T).Name}', but got {configuration.GetType().FullName}");
         }
 
-        var startTime = DateTimeOffset.UtcNow;
+        CurrentActivity = PdfRenderingActivitySource.RenderPdfDocument(GetType());
 
         try
         {
@@ -35,14 +45,26 @@ public abstract class DocumentRendererBase<T> : IDocumentRenderer
 
             document.GeneratePdf(destination);
 
-            _telemetryClient.TrackDependency(DependencyTypeName, GetType().Name, $"PDF size (bytes): {destination.Position}", startTime, DateTimeOffset.UtcNow - startTime, true);
+            CurrentActivity?.Stop();
+            CurrentActivity?.SetTag("turnierplan.renderer.output_size", destination.Position);
         }
         catch (Exception ex)
         {
-            _telemetryClient.TrackException(ex);
-            _telemetryClient.TrackDependency(DependencyTypeName, GetType().Name, string.Empty, startTime, DateTimeOffset.UtcNow - startTime, false);
+            CurrentActivity?.Stop();
+            CurrentActivity?.AddException(ex);
 
             throw;
+        }
+        finally
+        {
+            try
+            {
+                CurrentActivity?.Dispose();
+            }
+            catch
+            {
+                // Ignored
+            }
         }
     }
 
