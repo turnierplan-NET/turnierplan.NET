@@ -78,6 +78,8 @@ internal sealed class GetDocumentPdfEndpoint : EndpointBase
         // Wrap the code below in a transaction such that the generation count
         // is only incremented when the document is rendered successfully.
 
+        bool isSuccessful;
+
         await using (var transaction = await repository.UnitOfWork.WrapTransactionAsync())
         {
             document.IncreaseGenerationCount();
@@ -88,11 +90,13 @@ internal sealed class GetDocumentPdfEndpoint : EndpointBase
             document.Tournament.ShiftToTimezone(timeZoneInfo);
             document.Tournament.Compute();
 
-            renderer.Render(document.Tournament, configuration, localization, stream);
+            isSuccessful = renderer.Render(document.Tournament, configuration, localization, stream);
 
-            transaction.ShouldCommit = true;
+            transaction.ShouldCommit = isSuccessful;
         }
 
-        return Results.File(stream.ToArray(), "application/pdf");
+        return isSuccessful
+            ? Results.File(stream.ToArray(), "application/pdf")
+            : Results.InternalServerError();
     }
 }

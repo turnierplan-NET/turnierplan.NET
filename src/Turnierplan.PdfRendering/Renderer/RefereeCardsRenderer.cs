@@ -1,4 +1,3 @@
-using Microsoft.ApplicationInsights;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -10,7 +9,7 @@ using Turnierplan.PdfRendering.Extensions;
 namespace Turnierplan.PdfRendering.Renderer;
 
 [DocumentRenderer]
-public sealed class RefereeCardsRenderer(TelemetryClient telemetryClient) : DocumentRendererBase<RefereeCardsDocumentConfiguration>(telemetryClient)
+public sealed class RefereeCardsRenderer : DocumentRendererBase<RefereeCardsDocumentConfiguration>
 {
     protected override Document Render(Tournament tournament, RefereeCardsDocumentConfiguration configuration, ILocalization localization)
     {

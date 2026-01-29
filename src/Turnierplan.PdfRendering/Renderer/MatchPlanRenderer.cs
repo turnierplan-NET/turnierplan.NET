@@ -1,4 +1,3 @@
-using Microsoft.ApplicationInsights;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -9,14 +8,13 @@ using Turnierplan.ImageStorage;
 using Turnierplan.Localization;
 using Turnierplan.PdfRendering.Configuration;
 using Turnierplan.PdfRendering.Extensions;
+using Turnierplan.PdfRendering.Tracing;
 
 namespace Turnierplan.PdfRendering.Renderer;
 
 [DocumentRenderer]
-public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageStorage imageStorage, IApplicationUrlProvider applicationUrlProvider) : DocumentRendererBase<MatchPlanDocumentConfiguration>(telemetryClient)
+public sealed class MatchPlanRenderer(IImageStorage imageStorage, IApplicationUrlProvider applicationUrlProvider) : DocumentRendererBase<MatchPlanDocumentConfiguration>
 {
-    private readonly TelemetryClient _telemetryClient = telemetryClient;
-
     protected override Document Render(Tournament tournament, MatchPlanDocumentConfiguration configuration, ILocalization localization)
     {
         return Document.Create(container =>
@@ -51,13 +49,13 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
 
                     if (tournament.PrimaryLogo is not null)
                     {
-                        _telemetryClient.TrackTrace("Loading tournament primary logo from external source.");
+                        using var _ = DocumentRendererActivitySource.LoadRemoteImage(CurrentActivity, tournament.PrimaryLogo, nameof(tournament.PrimaryLogo));
                         column.Item().Unconstrained().Width(3, Unit.Centimetre).Image(tournament.PrimaryLogo, imageStorage);
                     }
 
                     if (tournament.SecondaryLogo is not null)
                     {
-                        _telemetryClient.TrackTrace("Loading tournament secondary logo from external source.");
+                        using var _ = DocumentRendererActivitySource.LoadRemoteImage(CurrentActivity, tournament.SecondaryLogo, nameof(tournament.SecondaryLogo));
                         column.Item().AlignRight().Unconstrained().TranslateX(-3, Unit.Centimetre).Width(3, Unit.Centimetre).Image(tournament.SecondaryLogo, imageStorage);
                     }
 
@@ -88,7 +86,7 @@ public sealed class MatchPlanRenderer(TelemetryClient telemetryClient, IImageSto
 
                     if (tournament.BannerImage is not null)
                     {
-                        _telemetryClient.TrackTrace("Loading tournament banner image from external source.");
+                        using var _ = DocumentRendererActivitySource.LoadRemoteImage(CurrentActivity, tournament.BannerImage, nameof(tournament.BannerImage));
                         column.Item().PaddingVertical(16).Image(tournament.BannerImage, imageStorage);
                     }
 

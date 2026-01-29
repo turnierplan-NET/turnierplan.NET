@@ -56,7 +56,9 @@ public abstract partial class RendererTestBase<TRenderer>
             __serviceProvider.GetRequiredService<ILocalizationProvider>().TryGetLocalization(languageCode, out var localization).Should().BeTrue();
 
             using var stream = new MemoryStream();
-            GetRenderer().Render(tournament, configuration, new LocalizationWrapper(localization!), stream);
+            var isSuccessful = GetRenderer().Render(tournament, configuration, new LocalizationWrapper(localization!), stream);
+
+            isSuccessful.Should().BeTrue();
 
             var pdfData = stream.ToArray();
 
