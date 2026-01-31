@@ -11,9 +11,8 @@ export class ViewTournamentPage {
 
   public async reportMatch(index: number, scoreA: number, scoreB: number): Promise<void> {
     await this.page.getByTestId(turnierplan.viewTournamentPage.matchPlan.matchRow(index)).click();
-    await this.page.getByTestId(turnierplan.editMatchDialog.scoreAField).fill(`${scoreA}`);
-    await this.page.waitForTimeout(100); // TODO: Fix test flakiness
-    await this.page.getByTestId(turnierplan.editMatchDialog.scoreBField).fill(`${scoreB}`);
+    await this.page.getByTestId(turnierplan.editMatchDialog.scoreAField).pressSequentially(`${scoreA}`);
+    await this.page.getByTestId(turnierplan.editMatchDialog.scoreBField).pressSequentially(`${scoreB}`);
     await this.page.getByTestId(turnierplan.editMatchDialog.saveButton).click();
   }
 
