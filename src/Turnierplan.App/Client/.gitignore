@@ -11,3 +11,7 @@ src/app/generated/*
 
 # Local chrome installation
 chrome
+
+# E2E test results
+playwright-report
+test-results

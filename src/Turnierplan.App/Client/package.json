@@ -21,10 +21,10 @@
     "test:ci": "ng test --watch=false --source-map=true --code-coverage --browsers ChromeHeadless",
     "e2e:swap-environment": "replace-in-file \"environment.prod.ts\" \"environment.e2e.ts\" angular.json",
     "e2e:swap-environment-back": "replace-in-file \"environment.e2e.ts\" \"environment.prod.ts\" angular.json",
-    "e2e:prepare:amd64": "npm run e2e:swap-environment && docker compose -f cypress/docker/docker-compose.yaml up --build -d turnierplan.e2e.application.amd64 && npm run e2e:swap-environment-back",
-    "e2e:destroy": "docker compose -f cypress/docker/docker-compose.yaml down",
-    "e2e:open": "npx cypress open",
-    "e2e:run": "npx cypress run"
+    "e2e:prepare:amd64": "npx playwright install chromium && npm run e2e:swap-environment && docker compose -f e2e/docker/docker-compose.yaml up --build -d turnierplan.e2e.application.amd64 && npm run e2e:swap-environment-back",
+    "e2e:destroy": "docker compose -f e2e/docker/docker-compose.yaml down",
+    "e2e:open": "npx playwright test --ui",
+    "e2e:run": "npx playwright test"
   },
   "dependencies": {
     "@angular/common": "~20.3.16",
@@ -53,9 +53,9 @@
     "@angular/build": "~20.3.15",
     "@angular/cli": "~20.3.15",
     "@angular/compiler-cli": "~20.3.16",
+    "@playwright/test": "~1.58.1",
     "@types/jasmine": "~5.1.13",
     "@types/node": "~25.0.3",
-    "cypress": "~15.8.1",
     "jasmine-core": "~5.13.0",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.2.0",
