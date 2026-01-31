@@ -1,1 +1,49 @@
-<p>image-manager works!</p>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th translate="Portal.ViewOrganization.Images.Preview" style="width: 1px"></th>
+        <th style="width: 1px"></th>
+        <th translate="Portal.ViewOrganization.Images.Name"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (image of images; track image.id) {
+        @let writeAllowed = (authorizationService.isActionAllowed$(image.id, Actions.GenericWrite) | async) ?? false;
+
+        <tr>
+          <td class="align-middle">
+            <img class="border shadow-sm" style="width: 10em" [src]="image.url" [alt]="image.name" />
+            <div
+              class="text-center mt-1 small text-secondary"
+              translate="Portal.ViewOrganization.Images.Dimensions"
+              [translateParams]="{ w: image.width, h: image.height }"></div>
+            <div
+              class="text-center small text-secondary"
+              translate="Portal.ViewOrganization.Images.FileSize"
+              [translateParams]="{ size: image.fileSize / 1000 | number: '1.1-1' : 'de' }"></div>
+          </td>
+          <td class="pe-0 align-middle">
+            @if (writeAllowed) {
+              <tp-rename-button
+                translationKey="Portal.ViewOrganization.Images.Rename"
+                [displayLabel]="false"
+                [allowReset]="false"
+                [current]="image.name"
+                (renamed)="renameImage(image.id, $event)" />
+            }
+          </td>
+          <td class="align-middle">
+            <span class="small">{{ image.name }}</span>
+          </td>
+          <!-- TODO: Add number of "referenced" tournaments -->
+          <!-- TODO: Add delete button -->
+        </tr>
+      } @empty {
+        <tr>
+          <td translate="Portal.ViewOrganization.Images.NoImages" colspan="3241508"></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

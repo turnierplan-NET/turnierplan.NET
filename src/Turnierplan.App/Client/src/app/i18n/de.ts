@@ -184,6 +184,7 @@ export const de = {
       NewTournament: 'Neues Turnier',
       NewVenue: 'Neue Spielstätte',
       NewPlanningRealm: 'Neuer Turnierplaner',
+      UploadImage: 'Bild hochladen',
       NewApiKey: 'Neuer API-Schlüssel',
       NoTournaments: 'In dieser Organisation gibt es aktuell keine Turniere.\nErstellen Sie ein Turner mit der Schaltfläche oben rechts.',
       NoVenues:
@@ -212,6 +213,17 @@ export const de = {
       VenueTile: {
         NoDescription: 'Keine Beschreibung vorhanden',
         Open: 'öffnen'
+      },
+      Images: {
+        Preview: 'Vorschau',
+        Name: 'Name',
+        Dimensions: '{{w}} x {{h}} px',
+        FileSize: '{{size}} KB',
+        NoImages: 'Es sind aktuell keine Bilder vorhanden.',
+        Rename: {
+          Title: 'Bild umbenennen',
+          EnterNewName: 'Geben Sie den neuen Namen für das Bild ein:'
+        }
       },
       ApiKeys: {
         TableLabel: 'API Schlüssel dieser Organisation',
