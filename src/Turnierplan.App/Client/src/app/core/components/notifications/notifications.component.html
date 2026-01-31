@@ -5,6 +5,6 @@
     [autohide]="true"
     [delay]="7500"
     (hidden)="notificationService.removeNotification(notification.id)"
-    >{{ notification.body }}</ngb-toast
+    ><span [tpE2E]="['notification', notification.id]">{{ notification.body }}</span></ngb-toast
   >
 }
