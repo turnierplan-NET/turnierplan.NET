@@ -25,6 +25,7 @@ export const turnierplan = {
     title: 'page-frame-title'
   },
   viewOrganizationPage: {
+    tournamentsPageId: 0,
     settingsPageId: 3,
     newTournamentButton: 'view-organization-page-new-tournament-button'
   },
@@ -45,6 +46,7 @@ export const turnierplan = {
     confirmButton: 'add-team-dialog-confirm-button'
   },
   viewTournamentPage: {
+    matchPlanPageId: 0,
     rankingsPageId: 3,
     matchPlan: {
       matchRow: (index: number) => `view-tournament-page-match-plan-match-row-${index}`
