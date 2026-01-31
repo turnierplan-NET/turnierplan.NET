@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
 import { turnierplan } from '../consts/turnierplan';
 
-export class OrganizationPage {
+export class ViewOrganizationPage {
   constructor(private readonly page: Page) {}
 
   public async createTournament(name: string): Promise<void> {

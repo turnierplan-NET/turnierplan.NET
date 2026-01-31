@@ -2,24 +2,24 @@ import { expect, test } from '@playwright/test';
 import { createIdentifier } from '../utils/create-identifier';
 import { LoginPage } from '../pages/login-page';
 import { LandingPage } from '../pages/landing-page';
-import { OrganizationPage } from '../pages/organization-page';
+import { ViewOrganizationPage } from '../pages/view-organization-page';
 import { getExpectedTitle } from '../utils/get-expected-title';
 import { ConfigureTournamentPage } from '../pages/configure-tournament-page';
 import { teamNames } from '../utils/team-names';
 import { turnierplan } from '../consts/turnierplan';
 import { texts } from '../consts/texts';
-import { TournamentPage } from '../pages/tournament-page';
+import { ViewTournamentPage } from '../pages/view-tournament-page';
 
 test('Create, configure and conduct a basic tournament', async ({ page }) => {
   await new LoginPage(page).login();
   await new LandingPage(page).createOrganization(createIdentifier());
 
   const tournamentName = createIdentifier();
-  await new OrganizationPage(page).createTournament(tournamentName);
+  await new ViewOrganizationPage(page).createTournament(tournamentName);
   await expect(page).toHaveTitle(getExpectedTitle(tournamentName));
 
   const configureTournamentPage = new ConfigureTournamentPage(page);
-  const viewTournamentPage = new TournamentPage(page);
+  const viewTournamentPage = new ViewTournamentPage(page);
 
   // Add two groups
   await configureTournamentPage.addGroup();

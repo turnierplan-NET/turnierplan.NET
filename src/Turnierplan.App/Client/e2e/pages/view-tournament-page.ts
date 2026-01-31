@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 import { turnierplan } from '../consts/turnierplan';
 
-export class TournamentPage {
+export class ViewTournamentPage {
   constructor(private readonly page: Page) {}
 
   public async navigateTo(page: 'matchPlan' | 'ranking'): Promise<void> {
