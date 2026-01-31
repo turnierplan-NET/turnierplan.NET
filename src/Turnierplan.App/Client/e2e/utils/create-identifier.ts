@@ -4,7 +4,7 @@ export const createIdentifier = () => {
 
   const index1 = Math.floor(Math.random() * adjectives.length);
   const index2 = Math.floor(Math.random() * nouns.length);
-  const randomNumber = Math.floor(Math.random() * 9000 + 1000);
+  const randomNumber = Math.floor(Math.random() * 90000 + 10000);
 
   return `${adjectives[index1]}_${nouns[index2]}_${randomNumber}`;
 };
