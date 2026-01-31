@@ -12,6 +12,7 @@ export const turnierplan = {
     logoLink: 'header-logo-link'
   },
   landingPage: {
+    organizationsPageId: 0,
     newOrganizationButton: 'landing-page-new-organization-button'
   },
   loginPage: {
@@ -20,10 +21,11 @@ export const turnierplan = {
     passwordField: 'login-page-password-field'
   },
   pageFrame: {
-    navigationTab: (id) => ['page-frame-navigation-tab', id],
+    navigationTab: (id: number) => `page-frame-navigation-tab-${id}`,
     title: 'page-frame-title'
   },
   viewOrganizationPage: {
+    tournamentsPageId: 0,
     settingsPageId: 3,
     newTournamentButton: 'view-organization-page-new-tournament-button'
   },
@@ -34,7 +36,7 @@ export const turnierplan = {
   configureTournamentPage: {
     addGroupButton: 'configure-tournament-page-add-group-button',
     shuffleGroupsButton: 'configure-tournament-page-shuffle-groups-button',
-    addTeamButton: (alphabeticalId) => ['configure-tournament-page-add-group-button', alphabeticalId],
+    addTeamButton: (alphabeticalId: string) => `configure-tournament-page-add-group-button-${alphabeticalId}`,
     enableFinalsRound: 'configure-tournament-page-enable-finals-round',
     firstFinalsRound: 'configure-tournament-page-first-finals-round',
     submitButton: 'configure-tournament-page-submit-button'
@@ -44,17 +46,19 @@ export const turnierplan = {
     confirmButton: 'add-team-dialog-confirm-button'
   },
   viewTournamentPage: {
+    matchPlanPageId: 0,
     rankingsPageId: 3,
     matchPlan: {
-      matchRow: (index) => ['view-tournament-page-match-plan-match-row', index]
+      matchRow: (index: number) => `view-tournament-page-match-plan-match-row-${index}`
     },
     ranking: {
-      teamName: (position) => ['view-tournament-page-ranking-team-name', position]
+      teamName: (position: number) => `view-tournament-page-ranking-team-name-${position}`
     }
   },
   editMatchDialog: {
     scoreAField: 'edit-match-dialog-score-a-field',
     scoreBField: 'edit-match-dialog-score-b-field',
     saveButton: 'edit-match-dialog-save-button'
-  }
+  },
+  notification: (id: number) => `notification-${id}`
 };

@@ -22,7 +22,7 @@ public static class ServiceCollectionExtensions
 
         foreach (var rendererType in rendererTypes)
         {
-            services.AddScoped(baseType, rendererType);
+            services.AddTransient(baseType, rendererType);
         }
     }
 }

@@ -4,6 +4,7 @@ using Turnierplan.Core.Entity;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.PlanningRealm;
+using Turnierplan.Core.PublicId;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.Venue;
@@ -23,6 +24,14 @@ internal sealed class AccessValidator : IAccessValidator
 {
     private const string RolesHeaderName = "X-Turnierplan-Roles";
     private readonly HttpContext _httpContext;
+
+    /// <summary>
+    /// Keep track of the IDs of all entities whose role assignments have been added to the HTTP response via the
+    /// <see cref="AddRolesToResponseHeader"/> method. This is done to avoid duplicates which could previously occur
+    /// in some specific endpoints. Since <see cref="AccessValidator"/> is a <see cref="ServiceLifetime.Scoped"/>
+    /// service, a single list is sufficient to keep track of IDs added to the <em>current</em> response.
+    /// </summary>
+    private readonly HashSet<PublicId> _roleHeaderProcessedEntityIds = [];
 
     public AccessValidator(IHttpContextAccessor contextAccessor)
     {
@@ -45,6 +54,12 @@ internal sealed class AccessValidator : IAccessValidator
     public void AddRolesToResponseHeader<T>(IEntityWithRoleAssignments<T> target)
         where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
+        if (!_roleHeaderProcessedEntityIds.Add(target.PublicId))
+        {
+            // The AddRolesToResponseHeader() method was previously called on the same entity
+            return;
+        }
+
         var availableRoles = new HashSet<Role>();
 
         if (_httpContext.IsCurrentUserAdministrator())
@@ -57,6 +72,11 @@ internal sealed class AccessValidator : IAccessValidator
             AddAvailableRoles(target, availableRoles, principal);
         }
 
+        if (availableRoles.Count == 0)
+        {
+            return;
+        }
+
         var targetPublicId = target.PublicId.ToString();
         var rolesList = string.Join('+', availableRoles.Select(x => x.ToString()));
         var rolesHeaderValue = $"{targetPublicId}={rolesList}";
@@ -65,6 +85,7 @@ internal sealed class AccessValidator : IAccessValidator
 
         if (target is IEntityWithOrganization entityWithOrganization)
         {
+            // TODO: Evaluate if this is still necessary after #309 / #324
             // Always add the organization-level roles, too. This is necessary because for example, the tournament
             // page allows the user to upload images. But for uploading images, the authorization check is done
             // against the organization.
