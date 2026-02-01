@@ -1096,6 +1096,4 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     );
     this.processedRankings.sort((a, b) => a.position - b.position);
   }
-
-  protected readonly Image = Image;
 }
