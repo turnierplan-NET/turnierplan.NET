@@ -55,11 +55,14 @@ export class ImageChooserComponent {
     this.turnierplanApi.invoke(getImages, { organizationId: this.organizationId }).subscribe({
       next: (response) => {
         this.existingImages = response.images;
-        this.existingImages.sort((a, b) => {
-          if (a.id === this.currentImageId) return -1;
-          if (b.id === this.currentImageId) return 1;
-          return new Date(b.createdAt).getDate() - new Date(a.createdAt).getDate();
-        });
+
+        // Keep the original sorting from the response, but always move the current image to the first position
+        const currentImageIndex = this.existingImages.findIndex((x) => x.id === this.currentImageId);
+        if (currentImageIndex !== -1) {
+          const currentImage = this.existingImages.splice(currentImageIndex, 1);
+          this.existingImages = [currentImage[0], ...this.existingImages];
+        }
+
         this.isLoadingImages = false;
       },
       error: (error) => {
