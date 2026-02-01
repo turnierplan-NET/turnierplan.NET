@@ -43,8 +43,8 @@ import { setApiKeyStatus } from '../../../api/fn/api-keys/set-api-key-status';
 import { getApiKeys } from '../../../api/fn/api-keys/get-api-keys';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
 import { ImageManagerComponent } from '../../components/image-manager/image-manager.component';
-import { ImageDto } from '../../../api/models/image-dto';
 import { getImages } from '../../../api/fn/images/get-images';
+import { GetImagesEndpointResponse } from '../../../api/models/get-images-endpoint-response';
 
 @Component({
   templateUrl: './view-organization.component.html',
@@ -89,7 +89,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
   protected tournaments?: TournamentHeaderDto[];
   protected venues?: VenueDto[];
   protected planningRealms?: PlanningRealmHeaderDto[];
-  protected images?: ImageDto[];
+  protected images?: GetImagesEndpointResponse;
   protected apiKeys?: ApiKeyDto[];
   protected displayApiKeyUsage?: string;
   protected isLoadingVenues = false;
@@ -224,7 +224,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     if (number === ViewOrganizationComponent.imagesPageId && !this.images && !this.isLoadingImages) {
       // Load images only when the page is opened
       this.isLoadingImages = true;
-      this.turnierplanApi.invoke(getImages, { organizationId: this.organization.id }).subscribe({
+      this.turnierplanApi.invoke(getImages, { organizationId: this.organization.id, includeReferences: true }).subscribe({
         next: (images) => {
           this.images = images;
           this.isLoadingImages = false;

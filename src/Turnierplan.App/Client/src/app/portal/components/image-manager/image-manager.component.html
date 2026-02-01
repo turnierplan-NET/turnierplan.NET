@@ -3,8 +3,13 @@
     <thead>
       <tr>
         <th translate="Portal.ViewOrganization.Images.Preview" style="width: 1px"></th>
-        <th style="width: 1px"></th>
-        <th translate="Portal.ViewOrganization.Images.Name"></th>
+        <th translate="Portal.ViewOrganization.Images.Type.Header" style="width: 1px"></th>
+        <th class="text-nowrap" translate="Portal.ViewOrganization.Images.CreatedAt"></th>
+        <th translate="Portal.ViewOrganization.Images.Name" colspan="2"></th>
+        <th class="text-nowrap" style="width: 1px">
+          <span translate="Portal.ViewOrganization.Images.References.Header"></span>
+          <tp-tooltip-icon [tooltipText]="'Portal.ViewOrganization.Images.References.Tooltip'" />
+        </th>
         <th style="width: 1px"></th>
         <th style="width: 1px"></th>
       </tr>
@@ -25,7 +30,9 @@
               translate="Portal.ViewOrganization.Images.FileSize"
               [translateParams]="{ size: image.fileSize / 1000 | number: '1.1-1' : 'de' }"></div>
           </td>
-          <td class="align-middle" [class.pe-0]="!image.isUpdatingName">
+          <td class="align-middle" [translate]="'Portal.ViewOrganization.Images.Type.' + image.type"></td>
+          <td class="align-middle text-nowrap">{{ image.createdAt | translateDate }}</td>
+          <td class="align-middle" style="width: 1px" [class.pe-0]="!image.isUpdatingName">
             @if (image.isUpdatingName) {
               <tp-small-spinner class="ms-2" />
             } @else if (writeAllowed) {
@@ -37,10 +44,16 @@
                 (renamed)="renameImage(image.id, $event)" />
             }
           </td>
-          <td class="align-middle">
-            <span class="small">{{ image.name }}</span>
+          <td class="align-middle tp-text-ellipsis" style="max-width: 300px">
+            <span class="small" [title]="image.name">{{ image.name }}</span>
           </td>
-          <!-- TODO: Add number of "referenced" tournaments -->
+          <td class="align-middle">
+            @if (image.referenceCount === 0) {
+              <span class="small fst-italic" [translate]="'Portal.ViewOrganization.Images.References.None'"></span>
+            } @else if (image.referenceCount !== undefined) {
+              <span>{{ image.referenceCount }}</span>
+            }
+          </td>
           <td class="align-middle pe-0">
             <tp-rbac-widget
               *tpIsActionAllowed="[image.id, Actions.ReadOrWriteRoleAssignments]"
@@ -56,8 +69,7 @@
         </tr>
       } @empty {
         <tr>
-          <!-- TODO: colspan? -->
-          <td translate="Portal.ViewOrganization.Images.NoImages" colspan="5"></td>
+          <td translate="Portal.ViewOrganization.Images.NoImages" colspan="8"></td>
         </tr>
       }
     </tbody>

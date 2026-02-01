@@ -13,8 +13,10 @@ import { RbacWidgetComponent } from '../rbac-widget/rbac-widget.component';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { deleteImage } from '../../../api/fn/images/delete-image';
 import { NotificationService } from '../../../core/services/notification.service';
+import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
-type ImageView = ImageDto & { isUpdatingName: boolean };
+type ImageView = ImageDto & { referenceCount?: number; isUpdatingName: boolean };
 
 @Component({
   selector: 'tp-image-manager',
@@ -26,14 +28,20 @@ type ImageView = ImageDto & { isUpdatingName: boolean };
     SmallSpinnerComponent,
     IsActionAllowedDirective,
     RbacWidgetComponent,
-    DeleteButtonComponent
+    DeleteButtonComponent,
+    TooltipIconComponent,
+    TranslateDatePipe
   ],
   templateUrl: './image-manager.component.html'
 })
 export class ImageManagerComponent {
   @Input({ required: true })
-  public set images(value: ImageDto[]) {
-    this._images = value.map((x) => ({ ...x, isUpdatingName: false }));
+  public set images(value: { images: ImageDto[]; references?: { [key: string]: number } }) {
+    this._images = value.images.map((x) => ({
+      ...x,
+      referenceCount: value.references ? value.references[x.id] : undefined,
+      isUpdatingName: false
+    }));
   }
 
   @Output()

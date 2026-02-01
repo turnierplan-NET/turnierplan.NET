@@ -21,6 +21,7 @@ internal sealed class ImageMappingRule : MappingRuleBase<Image, ImageDto>
             Id = source.PublicId,
             RbacScopeId = source.GetScopeId(),
             CreatedAt = source.CreatedAt,
+            Type = source.Type,
             Name = source.Name,
             Url = _imageStorage.GetFullImageUrl(source),
             FileSize = source.FileSize,

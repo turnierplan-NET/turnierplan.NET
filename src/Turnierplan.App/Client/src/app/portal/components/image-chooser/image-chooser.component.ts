@@ -155,8 +155,8 @@ export class ImageChooserComponent {
 
   private loadImages(): void {
     this.turnierplanApi.invoke(getImages, { organizationId: this.organizationId, imageType: this.imageType }).subscribe({
-      next: (images) => {
-        this.existingImages = images;
+      next: (response) => {
+        this.existingImages = response.images;
         this.existingImages.sort((a, b) => {
           if (a.id === this.currentImageId) return -1;
           if (b.id === this.currentImageId) return 1;

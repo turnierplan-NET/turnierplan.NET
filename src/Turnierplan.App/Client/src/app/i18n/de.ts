@@ -216,9 +216,20 @@ export const de = {
       },
       Images: {
         Preview: 'Vorschau',
-        Name: 'Name',
         Dimensions: '{{w}} x {{h}} px',
         FileSize: '{{size}} KB',
+        Type: {
+          Header: 'Typ',
+          Logo: 'Logo',
+          Banner: 'Banner'
+        },
+        CreatedAt: 'Hochgeladen am',
+        Name: 'Name',
+        References: {
+          Header: 'Verwendungen',
+          Tooltip: 'Gibt an, von wie vielen Turnieren wird dieses Bild verwendet wird',
+          None: 'keine'
+        },
         NoImages: 'Es sind aktuell keine Bilder vorhanden.',
         Rename: {
           Title: 'Bild umbenennen',
