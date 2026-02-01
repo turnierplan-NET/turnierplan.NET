@@ -14,7 +14,7 @@ namespace Turnierplan.App.OpenApi;
 /// to <c>string</c>:
 ///
 /// <code>
-/// export enum ImageType {
+/// export enum MatchType {
 ///   A = 'A',
 ///   B = 'B',
 ///   C = 'C'
