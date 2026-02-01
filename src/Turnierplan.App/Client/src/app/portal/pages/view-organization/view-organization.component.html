@@ -144,6 +144,9 @@
               } @else {
                 <div class="card-header d-flex flex-row align-items-center">
                   <tp-badge context="ViewOrganization" label="ImagesCount" [value]="images.images.length" />
+                  @if (imagesTotalSize !== undefined) {
+                    <tp-badge context="ViewOrganization" label="ImagesTotalSize" [value]="imagesTotalSize | fileSize: 'de'" />
+                  }
                 </div>
                 <div class="card-body p-0">
                   <tp-image-manager [images]="images" (errorOccured)="loadingState = { isLoading: false, error: $event }" />

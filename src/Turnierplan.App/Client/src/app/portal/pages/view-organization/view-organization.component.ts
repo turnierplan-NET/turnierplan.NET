@@ -45,6 +45,7 @@ import { E2eDirective } from '../../../core/directives/e2e.directive';
 import { ImageManagerComponent } from '../../components/image-manager/image-manager.component';
 import { getImages } from '../../../api/fn/images/get-images';
 import { GetImagesEndpointResponse } from '../../../api/models/get-images-endpoint-response';
+import { FileSizePipe } from '../../pipes/file-size.pipe';
 
 @Component({
   templateUrl: './view-organization.component.html',
@@ -73,7 +74,8 @@ import { GetImagesEndpointResponse } from '../../../api/models/get-images-endpoi
     TranslateDatePipe,
     IdWidgetComponent,
     E2eDirective,
-    ImageManagerComponent
+    ImageManagerComponent,
+    FileSizePipe
   ]
 })
 export class ViewOrganizationComponent implements OnInit, OnDestroy {
@@ -91,6 +93,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
   protected venues?: VenueDto[];
   protected planningRealms?: PlanningRealmHeaderDto[];
   protected images?: GetImagesEndpointResponse;
+  protected imagesTotalSize?: number;
   protected apiKeys?: ApiKeyDto[];
   protected displayApiKeyUsage?: string;
   protected isLoadingVenues = false;
@@ -228,6 +231,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       this.turnierplanApi.invoke(getImages, { organizationId: this.organization.id, includeReferences: true }).subscribe({
         next: (images) => {
           this.images = images;
+          this.imagesTotalSize = images.images.reduce((sum, img) => sum + img.fileSize, 0);
           this.isLoadingImages = false;
         },
         error: (error) => {

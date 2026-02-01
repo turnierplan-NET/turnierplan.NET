@@ -179,6 +179,7 @@ export const de = {
         VenueCount: 'Spielstätten',
         PlanningRealmCount: 'Turnierplaner',
         ImagesCount: 'Bilder',
+        ImagesTotalSize: 'Gesamtgröße',
         ApiKeyCount: 'API-Schlüssel'
       },
       NewTournament: 'Neues Turnier',
