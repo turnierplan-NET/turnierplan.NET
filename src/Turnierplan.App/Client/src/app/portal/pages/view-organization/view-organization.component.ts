@@ -42,6 +42,10 @@ import { deleteApiKey } from '../../../api/fn/api-keys/delete-api-key';
 import { setApiKeyStatus } from '../../../api/fn/api-keys/set-api-key-status';
 import { getApiKeys } from '../../../api/fn/api-keys/get-api-keys';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
+import { ImageManagerComponent } from '../../components/image-manager/image-manager.component';
+import { getImages } from '../../../api/fn/images/get-images';
+import { GetImagesEndpointResponse } from '../../../api/models/get-images-endpoint-response';
+import { FileSizePipe } from '../../pipes/file-size.pipe';
 
 @Component({
   templateUrl: './view-organization.component.html',
@@ -69,10 +73,14 @@ import { E2eDirective } from '../../../core/directives/e2e.directive';
     TranslatePipe,
     TranslateDatePipe,
     IdWidgetComponent,
-    E2eDirective
+    E2eDirective,
+    ImageManagerComponent,
+    FileSizePipe
   ]
 })
 export class ViewOrganizationComponent implements OnInit, OnDestroy {
+  public static readonly imagesPageId = 5;
+
   private static readonly venuesPageId = 1;
   private static readonly apiKeysPageId = 2;
   private static readonly planningRealmsPageId = 4;
@@ -84,11 +92,14 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
   protected tournaments?: TournamentHeaderDto[];
   protected venues?: VenueDto[];
   protected planningRealms?: PlanningRealmHeaderDto[];
+  protected images?: GetImagesEndpointResponse;
+  protected imagesTotalSize?: number;
   protected apiKeys?: ApiKeyDto[];
   protected displayApiKeyUsage?: string;
   protected isLoadingVenues = false;
-  protected isLoadingApiKeys = false;
   protected isLoadingPlanningRealms = false;
+  protected isLoadingImages = false;
+  protected isLoadingApiKeys = false;
 
   protected isUpdatingName = false;
 
@@ -108,6 +119,11 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       id: ViewOrganizationComponent.planningRealmsPageId,
       title: 'Portal.ViewOrganization.Pages.PlanningRealms',
       icon: 'bi-ticket-perforated'
+    },
+    {
+      id: ViewOrganizationComponent.imagesPageId,
+      title: 'Portal.ViewOrganization.Pages.Images',
+      icon: 'bi-image'
     },
     {
       id: ViewOrganizationComponent.apiKeysPageId,
@@ -202,6 +218,21 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
         next: (planningRealms) => {
           this.planningRealms = planningRealms;
           this.isLoadingPlanningRealms = false;
+        },
+        error: (error) => {
+          this.loadingState = { isLoading: false, error: error };
+        }
+      });
+    }
+
+    if (number === ViewOrganizationComponent.imagesPageId && !this.images && !this.isLoadingImages) {
+      // Load images only when the page is opened
+      this.isLoadingImages = true;
+      this.turnierplanApi.invoke(getImages, { organizationId: this.organization.id, includeReferences: true }).subscribe({
+        next: (images) => {
+          this.images = images;
+          this.imagesTotalSize = images.images.reduce((sum, img) => sum + img.fileSize, 0);
+          this.isLoadingImages = false;
         },
         error: (error) => {
           this.loadingState = { isLoading: false, error: error };

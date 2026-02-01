@@ -34,6 +34,14 @@
               [icon]="'plus-circle'"
               [routerLink]="'create/planning-realm'" />
           }
+          @case (5) {
+            <tp-action-button
+              *tpIsActionAllowed="[organization.id, Actions.GenericWrite]"
+              [title]="'Portal.ViewOrganization.UploadImage'"
+              [type]="'outline-success'"
+              [icon]="'upload'"
+              [routerLink]="'upload/image'" />
+          }
           @case (2) {
             <tp-action-button
               *tpIsActionAllowed="[organization.id, Actions.GenericWrite]"
@@ -127,6 +135,21 @@
                       }
                     </div>
                   }
+                </div>
+              }
+            }
+            @case (5) {
+              @if (isLoadingImages || !images) {
+                <tp-loading-indicator class="my-5" [marginY]="false" />
+              } @else {
+                <div class="card-header d-flex flex-row align-items-center">
+                  <tp-badge context="ViewOrganization" label="ImagesCount" [value]="images.images.length" />
+                  @if (imagesTotalSize !== undefined) {
+                    <tp-badge context="ViewOrganization" label="ImagesTotalSize" [value]="imagesTotalSize | fileSize: 'de'" />
+                  }
+                </div>
+                <div class="card-body p-0">
+                  <tp-image-manager [images]="images" (errorOccured)="loadingState = { isLoading: false, error: $event }" />
                 </div>
               }
             }

@@ -2,13 +2,21 @@
   max-height: 40em;
 }
 
+.image-info {
+  max-width: 9em;
+
+  &.xsmall {
+    font-size: 0.7em;
+  }
+}
+
 .image-tile {
   &:hover,
   &.hover-override {
     border-color: #333 !important;
 
     .hover-buttons {
-      background: rgb(255 255 255 / 60%);
+      background: rgb(255 255 255 / 85%);
       display: flex !important;
     }
   }

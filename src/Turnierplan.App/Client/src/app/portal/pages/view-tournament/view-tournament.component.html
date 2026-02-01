@@ -321,7 +321,6 @@
                       class="flex-md-grow-1"
                       [currentImage]="images.primaryLogo"
                       [imageAlt]="'PrimaryLogo'"
-                      [imageType]="ImageType.Logo"
                       [organizationId]="tournament.organizationId"
                       (imageChange)="setImage('primaryLogo', $event?.id)"
                       (imageDelete)="loadTournamentImages()"
@@ -330,7 +329,6 @@
                       class="flex-md-grow-1"
                       [currentImage]="images.secondaryLogo"
                       [imageAlt]="'SecondaryLogo'"
-                      [imageType]="ImageType.Logo"
                       [organizationId]="tournament.organizationId"
                       (imageChange)="setImage('secondaryLogo', $event?.id)"
                       (imageDelete)="loadTournamentImages()"
@@ -339,12 +337,27 @@
                       class="flex-md-grow-1"
                       [currentImage]="images.bannerImage"
                       [imageAlt]="'Banner'"
-                      [imageType]="ImageType.Banner"
                       [organizationId]="tournament.organizationId"
                       (imageChange)="setImage('bannerImage', $event?.id)"
                       (imageDelete)="loadTournamentImages()"
                       (apiError)="loadingState = { isLoading: false, error: $event }" />
                   </div>
+
+                  @if (images.bannerImage) {
+                    @let bannerAspectRatio = images.bannerImage.width / images.bannerImage.height;
+                    @if (bannerAspectRatio < 3) {
+                      <tp-alert
+                        [type]="'warning'"
+                        [icon]="'aspect-ratio'"
+                        [margin]="'mt-4 mb-0'"
+                        [text]="'Portal.ViewTournament.Settings.EditImages.BannerAspectRatioWarning'"
+                        [textParams]="{
+                          w: images.bannerImage.width,
+                          h: images.bannerImage.height,
+                          ratio: bannerAspectRatio | number: '1.1-1' : 'de'
+                        }" />
+                    }
+                  }
                 }
               </div>
               <hr class="m-0" />

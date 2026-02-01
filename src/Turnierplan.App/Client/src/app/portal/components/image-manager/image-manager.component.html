@@ -1,0 +1,72 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th translate="Portal.ViewOrganization.Images.Preview" style="width: 1px"></th>
+        <th class="text-nowrap" translate="Portal.ViewOrganization.Images.CreatedAt"></th>
+        <th translate="Portal.ViewOrganization.Images.Name" colspan="2"></th>
+        <th class="text-nowrap">
+          <span translate="Portal.ViewOrganization.Images.References.Header"></span>
+          <tp-tooltip-icon [tooltipText]="'Portal.ViewOrganization.Images.References.Tooltip'" />
+        </th>
+        <th style="width: 1px"></th>
+        <th style="width: 1px"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (image of _images; track image.id) {
+        @let writeAllowed = (authorizationService.isActionAllowed$(image.id, Actions.GenericWrite) | async) ?? false;
+
+        <tr>
+          <td class="align-middle">
+            <img class="border shadow-sm" style="width: 10em" [src]="image.url" [alt]="image.name" />
+            <div
+              class="text-center mt-1 small text-secondary"
+              translate="Portal.ViewOrganization.Images.Dimensions"
+              [translateParams]="{ w: image.width, h: image.height }"></div>
+            <div class="text-center small text-secondary">{{ image.fileSize | fileSize: 'de' }}</div>
+          </td>
+          <td class="align-middle text-nowrap">{{ image.createdAt | translateDate }}</td>
+          <td class="align-middle" style="width: 1px" [class.pe-0]="!image.isUpdatingName">
+            @if (image.isUpdatingName) {
+              <tp-small-spinner class="ms-2" />
+            } @else if (writeAllowed) {
+              <tp-rename-button
+                translationKey="Portal.ViewOrganization.Images.Rename"
+                [displayLabel]="false"
+                [allowReset]="false"
+                [current]="image.name"
+                (renamed)="renameImage(image.id, $event)" />
+            }
+          </td>
+          <td class="align-middle tp-text-ellipsis" style="max-width: 300px">
+            <span [title]="image.name">{{ image.name }}</span>
+          </td>
+          <td class="align-middle">
+            @if (image.referenceCount === 0) {
+              <span class="small fst-italic" [translate]="'Portal.ViewOrganization.Images.References.None'"></span>
+            } @else if (image.referenceCount !== undefined) {
+              <span>{{ image.referenceCount }}</span>
+            }
+          </td>
+          <td class="align-middle pe-0">
+            <tp-rbac-widget
+              *tpIsActionAllowed="[image.id, Actions.ReadOrWriteRoleAssignments]"
+              [target]="image"
+              [buttonOnly]="true"
+              (errorOccured)="errorOccured.emit($event)" />
+          </td>
+          <td class="align-middle">
+            @if (writeAllowed) {
+              <tp-delete-button (confirmed)="deleteImage(image.id)" />
+            }
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td translate="Portal.ViewOrganization.Images.NoImages" colspan="7"></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

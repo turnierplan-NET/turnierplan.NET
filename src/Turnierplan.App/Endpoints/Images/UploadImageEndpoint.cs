@@ -1,9 +1,11 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using SkiaSharp;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
+using Turnierplan.App.Options;
 using Turnierplan.App.Security;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.PublicId;
@@ -14,9 +16,6 @@ namespace Turnierplan.App.Endpoints.Images;
 
 internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
 {
-    private const int MinimumImageSizeInPixels = 50;
-    private const int MaximumImageSizeInPixels = 3000;
-
     protected override HttpMethod Method => HttpMethod.Post;
 
     protected override string Route => "/api/images";
@@ -24,16 +23,32 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
-        // Note the usage of [FromForm] instead of [FromBody]
-        [FromForm] UploadImageEndpointRequest request,
+        [FromForm] UploadImageEndpointRequest request, // Note that [FromForm] is used instead of [FromBody]
         IOrganizationRepository organizationRepository,
         IAccessValidator accessValidator,
         IImageStorage imageStorage,
         IImageRepository imageRepository,
+        IOptions<TurnierplanOptions> turnierplanOptions,
+        ILogger<UploadImageEndpoint> logger,
         IMapper mapper,
         CancellationToken cancellationToken)
     {
-        if (!Validator.Instance.ValidateAndGetResult(request, out var result))
+        var maxImageSize = turnierplanOptions.Value.ImageMaxSize;
+        var imageQuality = turnierplanOptions.Value.ImageQuality;
+
+        if (maxImageSize is null or <= 0)
+        {
+            logger.LogError($"The '{nameof(TurnierplanOptions.ImageMaxSize)}' value in '{nameof(TurnierplanOptions)}' must be specified and greater than zero.");
+            return Results.InternalServerError();
+        }
+
+        if (imageQuality is null or <= 0 or > 100)
+        {
+            logger.LogError($"The '{nameof(TurnierplanOptions.ImageQuality)}' value in '{nameof(TurnierplanOptions)}' must be specified, greater than zero, and less than or equal to 100.");
+            return Results.InternalServerError();
+        }
+
+        if (!new Validator(maxImageSize.Value).ValidateAndGetResult(request, out var result))
         {
             return result;
         }
@@ -67,31 +82,12 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
             return Results.BadRequest("Could not process image.");
         }
 
-        if (imageData.Width < MinimumImageSizeInPixels || imageData.Height < MinimumImageSizeInPixels)
-        {
-            return Results.BadRequest($"Image is too small (must be at least {MinimumImageSizeInPixels}px along both sides).");
-        }
-
-        if (imageData.Width > MaximumImageSizeInPixels || imageData.Height > MaximumImageSizeInPixels)
-        {
-            return Results.BadRequest($"Image is too large (maximum is {MaximumImageSizeInPixels}px along each side).");
-        }
-
-        var constraints = ImageConstraints.GetImageConstraints(request.ImageType);
-
-        if (!constraints.IsSizeValid((ushort)imageData.Width, (ushort)imageData.Height))
-        {
-            return Results.BadRequest($"Image dimensions do not meet the constraints: {constraints}");
-        }
-
-        imageData = ScaleBitmapToMaximumDimensions(imageData, request.ImageType);
-
         var memoryStream = new MemoryStream();
-        var encodedData = imageData.Encode(SKEncodedImageFormat.Webp, 80); // IDEA: Make the quality configurable via app settings
+        var encodedData = imageData.Encode(SKEncodedImageFormat.Webp, imageQuality.Value);
         encodedData.SaveTo(memoryStream);
         memoryStream.Seek(0, SeekOrigin.Begin);
 
-        var image = new Image(organization, request.ImageName, request.ImageType, "webp", memoryStream.Length, (ushort)imageData.Width, (ushort)imageData.Height);
+        var image = new Image(organization, request.ImageName.Trim(), "webp", memoryStream.Length, (ushort)imageData.Width, (ushort)imageData.Height);
 
         // Dispose here because Image() ctor accesses width and height of imageData
         imageData.Dispose();
@@ -111,29 +107,6 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
         return Results.Ok(mapper.Map<ImageDto>(image));
     }
 
-    private static SKBitmap ScaleBitmapToMaximumDimensions(SKBitmap imageData, ImageType imageType)
-    {
-        var maxWidth = imageType switch
-        {
-            ImageType.Logo => 400,
-            ImageType.Banner => 1600,
-            _ => throw new ArgumentOutOfRangeException(nameof(imageType), imageType, null)
-        };
-
-        if (imageData.Width < maxWidth)
-        {
-            return imageData;
-        }
-
-        var scaleFactor = (float)maxWidth / imageData.Width;
-        var destinationSize = new SKImageInfo(maxWidth, (int)(imageData.Height * scaleFactor));
-        var scaledImage = imageData.Resize(destinationSize, new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear));
-
-        imageData.Dispose();
-
-        return scaledImage;
-    }
-
     public sealed record UploadImageEndpointRequest
     {
         /// <remarks>
@@ -142,8 +115,6 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
         /// </remarks>
         public required string OrganizationId { get; init; }
 
-        public required ImageType ImageType { get; init; }
-
         public required IFormFile Image { get; init; }
 
         public required string ImageName { get; init; }
@@ -151,16 +122,11 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
 
     private sealed class Validator : AbstractValidator<UploadImageEndpointRequest>
     {
-        public static readonly Validator Instance = new();
-
-        private Validator()
+        public Validator(int maxSize)
         {
-            RuleFor(x => x.ImageType)
-                .IsInEnum();
-
             RuleFor(x => x.Image.Length)
-                .LessThanOrEqualTo(8 * 1024 * 1024)
-                .WithMessage("Image file size must be 8MB or less.");
+                .LessThanOrEqualTo(maxSize)
+                .WithMessage($"The maximum allowed image size is {maxSize} bytes.");
 
             RuleFor(x => x.ImageName)
                 .NotEmpty();

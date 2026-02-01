@@ -2,13 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
-using Turnierplan.Core.Image;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.Images;
 
-internal sealed class GetImagesEndpoint : EndpointBase<IEnumerable<ImageDto>>
+internal sealed class GetImagesEndpoint : EndpointBase<GetImagesEndpoint.GetImagesEndpointResponse>
 {
     protected override HttpMethod Method => HttpMethod.Get;
 
@@ -18,12 +17,13 @@ internal sealed class GetImagesEndpoint : EndpointBase<IEnumerable<ImageDto>>
 
     private static async Task<IResult> Handle(
         [FromQuery] PublicId organizationId,
-        [FromQuery] ImageType imageType,
-        IOrganizationRepository repository,
+        [FromQuery] bool? includeReferences,
+        IOrganizationRepository organizationRepository,
+        IImageRepository imageRepository,
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        var organization = await repository.GetByPublicIdAsync(organizationId, IOrganizationRepository.Includes.Images);
+        var organization = await organizationRepository.GetByPublicIdAsync(organizationId, IOrganizationRepository.Includes.Images);
 
         if (organization is null)
         {
@@ -35,13 +35,39 @@ internal sealed class GetImagesEndpoint : EndpointBase<IEnumerable<ImageDto>>
             return Results.Forbid();
         }
 
-        var filteredImages = organization.Images.Where(x => x.Type == imageType).ToList();
+        var sortedImages = organization.Images
+            .OrderByDescending(x => x.CreatedAt)
+            .ToList();
 
-        foreach (var image in filteredImages)
+        foreach (var image in sortedImages)
         {
             accessValidator.AddRolesToResponseHeader(image);
         }
 
-        return Results.Ok(mapper.MapCollection<ImageDto>(filteredImages));
+        Dictionary<PublicId, int>? references = null;
+
+        if (includeReferences == true)
+        {
+            references = [];
+
+            foreach (var image in sortedImages)
+            {
+                var count = await imageRepository.CountNumberOfReferencingTournamentsAsync(image.Id);
+                references[image.PublicId] = count;
+            }
+        }
+
+        return Results.Ok(new GetImagesEndpointResponse
+        {
+            Images = mapper.MapCollection<ImageDto>(sortedImages).ToArray(),
+            References = references
+        });
+    }
+
+    public sealed record GetImagesEndpointResponse
+    {
+        public required ImageDto[] Images { get; init; }
+
+        public required Dictionary<PublicId, int>? References { get; init; }
     }
 }

@@ -46,7 +46,7 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
 
         if (includes.HasFlag(IOrganizationRepository.Includes.Tournaments))
         {
-            query = query.Include(x => x.Tournaments).ThenInclude(x => x.Folder);
+            query = query.Include(x => x.Tournaments).ThenInclude(x => x.Folder).ThenInclude(x => x!.RoleAssignments);
         }
 
         if (includes.HasFlag(IOrganizationRepository.Includes.Venues))
@@ -61,7 +61,7 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
 
         if (includes.HasFlag(IOrganizationRepository.Includes.Images))
         {
-            query = query.Include(x => x.Images);
+            query = query.Include(x => x.Images).ThenInclude(x => x.RoleAssignments);
         }
 
         if (includes.HasFlag(IOrganizationRepository.Includes.ApiKeys))

@@ -18,6 +18,7 @@ import { ViewTournamentComponent } from './pages/view-tournament/view-tournament
 import { ConfigureTournamentComponent } from './pages/configure-tournament/configure-tournament.component';
 import { EditMatchPlanComponent } from './pages/edit-match-plan/edit-match-plan.component';
 import { ViewVenueComponent } from './pages/view-venue/view-venue.component';
+import { UploadImageComponent } from './pages/upload-image/upload-image.component';
 
 export const portalRoutes: Routes = [
   {
@@ -49,6 +50,10 @@ export const portalRoutes: Routes = [
       {
         path: 'organization/:id/create/api-key',
         component: CreateApiKeyComponent
+      },
+      {
+        path: 'organization/:id/upload/image',
+        component: UploadImageComponent
       },
       {
         path: 'organization/:id/create/planning-realm',

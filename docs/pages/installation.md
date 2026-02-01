@@ -66,6 +66,8 @@ The following environment variables can be set if you want to enable specific fe
 | `Turnierplan__LogoUrl`                  | The URL of the custom logo to be displayed in the header of the public pages. If not specified, the turnierplan.NET logo will be shown instead.                                  | -            |
 | `Turnierplan__ImprintUrl`               | The URL of your external imprint page if you want it to be linked on the public pages.                                                                                           | -            |
 | `Turnierplan__PrivacyUrl`               | The URL of your external privacy page if you want it to be linked on the public pages.                                                                                           | -            |
+| `Turnierplan__ImageMaxSize`             | The maximum allowed file size when uploading an image file. The default value equates to 8 MiB (8 &middot; 1024 &middot; 1024)                                                   | `8388608`    |
+| `Turnierplan__ImageQuality`             | Uploaded images are compressed using the `webp` format with the specified quality. A value of `100` will result in lossless compression being uesd.                              | `80`         |
 
 !!! note
     The token lifetimes must be specified as .NET `TimeSpan` strings. For example `00:03:00` means 3 minutes or `1.00:00.00` means 1 day.

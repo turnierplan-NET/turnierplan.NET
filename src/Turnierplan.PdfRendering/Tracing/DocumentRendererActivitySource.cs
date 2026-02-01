@@ -40,7 +40,8 @@ internal static class DocumentRendererActivitySource
         }
 
         activity.SetTag("turnierplan.image.id", image.PublicId.ToString());
-        activity.SetTag("turnierplan.image.type", image.Type.ToString());
+        activity.SetTag("turnierplan.image.file_size", image.FileSize);
+        activity.SetTag("turnierplan.image.file_extension", image.FileExtension);
         activity.SetTag("turnierplan.image_usage", usage);
 
         activity.Start();

@@ -170,6 +170,7 @@ export const de = {
         Tournaments: 'Turniere',
         Venues: 'Spielstätten',
         PlanningRealms: 'Turnierplaner',
+        Images: 'Bilder',
         ApiKeys: 'API-Schlüssel',
         Settings: 'Einstellungen'
       },
@@ -177,11 +178,14 @@ export const de = {
         TournamentCount: 'Turniere',
         VenueCount: 'Spielstätten',
         PlanningRealmCount: 'Turnierplaner',
+        ImagesCount: 'Bilder',
+        ImagesTotalSize: 'Gesamtgröße',
         ApiKeyCount: 'API-Schlüssel'
       },
       NewTournament: 'Neues Turnier',
       NewVenue: 'Neue Spielstätte',
       NewPlanningRealm: 'Neuer Turnierplaner',
+      UploadImage: 'Bild hochladen',
       NewApiKey: 'Neuer API-Schlüssel',
       NoTournaments: 'In dieser Organisation gibt es aktuell keine Turniere.\nErstellen Sie ein Turner mit der Schaltfläche oben rechts.',
       NoVenues:
@@ -210,6 +214,26 @@ export const de = {
       VenueTile: {
         NoDescription: 'Keine Beschreibung vorhanden',
         Open: 'öffnen'
+      },
+      Images: {
+        Preview: 'Vorschau',
+        Dimensions: '{{w}} x {{h}} px',
+        CreatedAt: 'Hochgeladen am',
+        Name: 'Name',
+        References: {
+          Header: 'Verwendungen',
+          Tooltip: 'Gibt an, von wie vielen Turnieren wird dieses Bild verwendet wird',
+          None: 'keine'
+        },
+        NoImages: 'Es sind aktuell keine Bilder vorhanden.',
+        Rename: {
+          Title: 'Bild umbenennen',
+          EnterNewName: 'Geben Sie den neuen Namen für das Bild ein:'
+        },
+        DeleteToast: {
+          Title: 'Bild wurde gelöscht',
+          Message: 'Das Bild wurde gelöscht.'
+        }
       },
       ApiKeys: {
         TableLabel: 'API Schlüssel dieser Organisation',
@@ -598,7 +622,9 @@ export const de = {
           }
         },
         EditImages: {
-          Title: 'Logos & Bilddateien'
+          Title: 'Logos & Bilddateien',
+          BannerAspectRatioWarning:
+            'Das aktuelle Banner hat eine Auflösung von {{w}} x {{h}} px und ein Seitenverhältnis von {{ratio}}:1. Für eine optimale Darstellung verwenden Sie ein Bild mit einem Seitenverhältnis von mindestens 3:1'
         },
         MoveToAnotherFolder: {
           Title: 'Turnier verschieben',
@@ -1199,6 +1225,20 @@ export const de = {
         }
       }
     },
+    UploadImage: {
+      Title: 'Bild hochladen',
+      Form: {
+        File: 'Datei auswählen:',
+        Name: 'Name:',
+        NameInvalid: 'Der angegebene Name ist ungültig'
+      },
+      NameTooltip: 'Wenn der Name leergelassen wird, wird der Dateinahme der gewählten Datei als Name verwendet.',
+      Preview: 'Bildvorschau:',
+      PreviewAlt: 'Bildvorschau der Datei "{{fileName}}"',
+      OrganizationNotice:
+        'Es wird ein neues Bild in der Organisation <span class="fw-bold">{{organizationName}}</span> hochgeladen. Das Bild kann anschließend von allen Turnieren und Turnierplanern innerhalb der Organisation verwendet werden.',
+      Submit: 'Hochladen'
+    },
     CreateApiKey: {
       Title: 'Neuen API-Schlüssel erstellen',
       Form: {
@@ -1260,23 +1300,11 @@ export const de = {
       Banner: 'Banner'
     },
     ImageChooser: {
-      Title: 'Bild hochladen oder auswählen',
+      Title: 'Bild auswählen',
       Remove: 'Bild entfernen',
-      NoImages: 'Laden Sie Ihr erstes Bild hoch...',
-      Upload: 'Hochladen',
-      UploadFailed: 'Das Bild konnte nicht hochgeladen werden. Prüfen Sie die Maße und die maximale Dateigröße.',
-      Constraints: {
-        Logo: 'Das Bild muss quadratisch sein mit einer Auflösung zwischen 50x50 und 3000x3000 Pixel. Die maximale Dateigröße beträgt 8 MB.',
-        Banner:
-          'Das Bild muss mindestens 50px hoch sein und darf maximal 3000px breit sein. Das Seitenverhältnis muss zwischen 3:1 und 5:1 liegen. Die maximale Dateigröße beträgt 8 MB.'
-      },
-      DetailView: {
-        Title: 'Hier sehen Sie die Detailinformationen zu folgendem Bild:',
-        Name: 'Dateiname: {{value}}',
-        CreatedAt: 'Hochgeladen am: {{value}}',
-        FileSize: 'Dateigröße: {{value}} KB',
-        Resolution: 'Auflösung: {{width}}x{{height}} px'
-      }
+      NoImages: 'In dieser Organisation wurden bisher noch keine Bilder hochgeladen.',
+      UploadViaOrgPage: 'Neue Bilder können Sie auf der Seite der Organisation hochladen.',
+      Dimensions: '{{w}} x {{h}} px'
     },
     MultiSelectFilter: {
       All: 'alle',
@@ -1351,6 +1379,10 @@ export const de = {
         Folder: {
           Tooltip: 'Ordner',
           NotInherited: 'Zuweisung liegt auf diesem Ordner'
+        },
+        Image: {
+          Tooltip: 'Bild',
+          NotInherited: 'Zuweisung liegt auf diesem Bild'
         },
         Organization: {
           Tooltip: 'Organisation',

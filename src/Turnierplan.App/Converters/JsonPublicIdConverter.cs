@@ -24,5 +24,13 @@ internal sealed class JsonPublicIdConverter : JsonConverter<PublicId>
     {
         writer.WriteStringValue(value.ToString());
     }
+
+    /// <remarks>
+    /// Required for serialization of properties with the type <c>Dictionary&lt;PublicId, T&gt;</c>
+    /// </remarks>
+    public override void WriteAsPropertyName(Utf8JsonWriter writer, PublicId value, JsonSerializerOptions options)
+    {
+        writer.WritePropertyName(value.ToString());
+    }
 }
 

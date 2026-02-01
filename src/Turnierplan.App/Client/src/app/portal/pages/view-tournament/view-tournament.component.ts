@@ -26,7 +26,7 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
 import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe, DecimalPipe, NgClass } from '@angular/common';
 import { BadgeComponent } from '../../components/badge/badge.component';
 import { FormsModule } from '@angular/forms';
 import { LoadingIndicatorComponent } from '../../components/loading-indicator/loading-indicator.component';
@@ -42,7 +42,6 @@ import { MatchTreeComponent } from '../../components/match-tree/match-tree.compo
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { IdWidgetComponent } from '../../components/id-widget/id-widget.component';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { ImageType } from '../../../api/models/image-type';
 import { Visibility } from '../../../api/models/visibility';
 import { TournamentDto } from '../../../api/models/tournament-dto';
 import { TournamentImagesDto } from '../../../api/models/tournament-images-dto';
@@ -109,7 +108,8 @@ import { deleteRankingOverwrite } from '../../../api/fn/ranking-overwrites/delet
     AsyncPipe,
     TranslatePipe,
     TranslateDatePipe,
-    IdWidgetComponent
+    IdWidgetComponent,
+    DecimalPipe
   ]
 })
 export class ViewTournamentComponent implements OnInit, OnDestroy {
@@ -118,7 +118,6 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
   private static readonly DocumentsPageId = 4;
   private static readonly SettingsPageId = 6;
 
-  protected readonly ImageType = ImageType;
   protected readonly Visibility = Visibility;
   protected readonly Actions = Actions;
 
