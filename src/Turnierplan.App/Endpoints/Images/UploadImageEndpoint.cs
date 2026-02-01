@@ -1,9 +1,11 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using SkiaSharp;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
+using Turnierplan.App.Options;
 using Turnierplan.App.Security;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.PublicId;
@@ -26,10 +28,27 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
         IAccessValidator accessValidator,
         IImageStorage imageStorage,
         IImageRepository imageRepository,
+        IOptions<TurnierplanOptions> turnierplanOptions,
+        ILogger<UploadImageEndpoint> logger,
         IMapper mapper,
         CancellationToken cancellationToken)
     {
-        if (!Validator.Instance.ValidateAndGetResult(request, out var result))
+        var maxImageSize = turnierplanOptions.Value.ImageMaxSize;
+        var imageQuality = turnierplanOptions.Value.ImageQuality;
+
+        if (maxImageSize is null or <= 0)
+        {
+            logger.LogError($"The '{nameof(TurnierplanOptions.ImageMaxSize)}' value in '{nameof(TurnierplanOptions)}' must be specified and greater than zero.");
+            return Results.InternalServerError();
+        }
+
+        if (imageQuality is null or <= 0 or > 100)
+        {
+            logger.LogError($"The '{nameof(TurnierplanOptions.ImageQuality)}' value in '{nameof(TurnierplanOptions)}' must be specified, greater than zero, and less than or equal to 100.");
+            return Results.InternalServerError();
+        }
+
+        if (!new Validator(maxImageSize.Value).ValidateAndGetResult(request, out var result))
         {
             return result;
         }
@@ -63,15 +82,8 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
             return Results.BadRequest("Could not process image.");
         }
 
-        // TODO: Make this configurable via appsettings as well
-        const int MaximumImageSizeInPixels = 3000;
-        if (imageData.Width > MaximumImageSizeInPixels || imageData.Height > MaximumImageSizeInPixels)
-        {
-            return Results.BadRequest($"Image is too large (maximum is {MaximumImageSizeInPixels}px along each side).");
-        }
-
         var memoryStream = new MemoryStream();
-        var encodedData = imageData.Encode(SKEncodedImageFormat.Webp, 80); // TODO: Make the image format & quality configurable via app settings (NOTE: Update file type in Image ctor below)
+        var encodedData = imageData.Encode(SKEncodedImageFormat.Webp, imageQuality.Value);
         encodedData.SaveTo(memoryStream);
         memoryStream.Seek(0, SeekOrigin.Begin);
 
@@ -110,14 +122,11 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
 
     private sealed class Validator : AbstractValidator<UploadImageEndpointRequest>
     {
-        public static readonly Validator Instance = new();
-
-        private Validator()
+        public Validator(int maxSize)
         {
-            // TODO: Add app configuration for maximum image size
             RuleFor(x => x.Image.Length)
-                .LessThanOrEqualTo(8 * 1024 * 1024)
-                .WithMessage("Image file size must be 8MB or less.");
+                .LessThanOrEqualTo(maxSize)
+                .WithMessage($"The maximum allowed image size is {maxSize} bytes.");
 
             RuleFor(x => x.ImageName)
                 .NotEmpty();
