@@ -217,7 +217,6 @@ export const de = {
       Images: {
         Preview: 'Vorschau',
         Dimensions: '{{w}} x {{h}} px',
-        FileSize: '{{size}} KB',
         CreatedAt: 'Hochgeladen am',
         Name: 'Name',
         References: {

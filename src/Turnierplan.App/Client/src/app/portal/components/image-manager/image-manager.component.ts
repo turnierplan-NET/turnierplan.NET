@@ -15,6 +15,7 @@ import { deleteImage } from '../../../api/fn/images/delete-image';
 import { NotificationService } from '../../../core/services/notification.service';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
+import { FileSizePipe } from '../../pipes/file-size.pipe';
 
 type ImageView = ImageDto & { referenceCount?: number; isUpdatingName: boolean };
 
@@ -30,7 +31,8 @@ type ImageView = ImageDto & { referenceCount?: number; isUpdatingName: boolean }
     RbacWidgetComponent,
     DeleteButtonComponent,
     TooltipIconComponent,
-    TranslateDatePipe
+    TranslateDatePipe,
+    FileSizePipe
   ],
   templateUrl: './image-manager.component.html'
 })

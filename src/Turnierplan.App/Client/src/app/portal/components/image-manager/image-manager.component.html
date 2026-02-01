@@ -24,10 +24,7 @@
               class="text-center mt-1 small text-secondary"
               translate="Portal.ViewOrganization.Images.Dimensions"
               [translateParams]="{ w: image.width, h: image.height }"></div>
-            <div
-              class="text-center small text-secondary"
-              translate="Portal.ViewOrganization.Images.FileSize"
-              [translateParams]="{ size: image.fileSize / 1000 | number: '1.1-1' : 'de' }"></div>
+            <div class="text-center small text-secondary">{{ image.fileSize | fileSize: 'de' }}</div>
           </td>
           <td class="align-middle text-nowrap">{{ image.createdAt | translateDate }}</td>
           <td class="align-middle" style="width: 1px" [class.pe-0]="!image.isUpdatingName">
