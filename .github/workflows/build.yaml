@@ -79,3 +79,32 @@ jobs:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: 'dotnet nuget push ./*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate'
         working-directory: './src'
+
+  documentation:
+    name: 'Build and publish documentation'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: "Set up Python 3.12"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: "Install requirements"
+        run: "python3 -m pip install -r requirements.txt"
+        working-directory: "docs"
+      - name: "Build documentation"
+        run: "python3 -m mkdocs build"
+        working-directory: "docs"
+      - name: "Setup Pages"
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "docs/site"
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
