@@ -21,11 +21,11 @@
           <div
             class="border shadow-sm image-tile position-relative"
             [ngClass]="{
-              'border-success bg-success-subtle': image.id === currentImageId,
+              'is-current-image border-success bg-success-subtle': image.id === currentImageId,
               'hover-override': image.id === hoverOverrideImageId
             }">
             <div
-              class="hover-buttons d-none position-absolute flex-row align-items-center justify-content-center gap-2"
+              class="hover-buttons d-none position-absolute flex-column align-items-center justify-content-center"
               style="top: 0; left: 0">
               @if (image.id !== currentImageId) {
                 <tp-action-button
@@ -33,14 +33,22 @@
                   [mode]="'IconOnly'"
                   [icon]="'check-lg'"
                   (buttonClick)="image.id !== currentImageId && modal.close({ type: 'ImageSelected', image: image })" />
+                <span class="image-info small text-black text-nowrap tp-text-ellipsis mt-2" [title]="image.name">{{ image.name }}</span>
+                <span
+                  class="image-info xsmall text-black text-nowrap tp-text-ellipsis"
+                  [translate]="'Portal.ImageChooser.Dimensions'"
+                  [translateParams]="{ w: image.width, h: image.height }"></span>
+                <span class="image-info xsmall text-black text-nowrap tp-text-ellipsis">{{ image.fileSize | fileSize: 'de' }}</span>
               }
             </div>
             <div class="image-wrapper d-flex flex-column align-items-center justify-content-center">
+              <!-- The <img/> does not get a [title] if it is a non-current, selectable image! This is because
+                all selectable images have the transparent overlay on hover which then displays the name...  -->
               <img
                 style="max-width: 9em"
                 [src]="image.url"
                 [alt]="image.name"
-                [title]="image.name"
+                [title]="image.id === currentImageId ? image.name : ''"
                 (click)="hoverOverrideImageId = image.id" />
             </div>
           </div>

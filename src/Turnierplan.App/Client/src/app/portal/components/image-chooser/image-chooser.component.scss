@@ -2,14 +2,24 @@
   max-height: 40em;
 }
 
-.image-tile {
-  &:hover,
-  &.hover-override {
-    border-color: #333 !important;
+.image-info {
+  max-width: 9em;
 
-    .hover-buttons {
-      background: rgb(255 255 255 / 60%);
-      display: flex !important;
+  &.xsmall {
+    font-size: 0.7em;
+  }
+}
+
+.image-tile {
+  &:not(.is-current-image) {
+    &:hover,
+    &.hover-override {
+      border-color: #333 !important;
+
+      .hover-buttons {
+        background: rgb(255 255 255 / 85%);
+        display: flex !important;
+      }
     }
   }
 

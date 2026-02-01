@@ -9,6 +9,7 @@ import { NgClass } from '@angular/common';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { getImages } from '../../../api/fn/images/get-images';
 import { ImageDto } from '../../../api/models/image-dto';
+import { FileSizePipe } from '../../pipes/file-size.pipe';
 
 export interface ImageChooserResult {
   type: 'ImageDeleted' | 'ImageSelected';
@@ -19,7 +20,7 @@ export interface ImageChooserResult {
 @Component({
   templateUrl: './image-chooser.component.html',
   styleUrls: ['./image-chooser.component.scss'],
-  imports: [TranslateDirective, LoadingIndicatorComponent, ActionButtonComponent, NgClass]
+  imports: [TranslateDirective, LoadingIndicatorComponent, ActionButtonComponent, NgClass, FileSizePipe]
 })
 export class ImageChooserComponent {
   protected readonly Actions = Actions;

@@ -1303,7 +1303,8 @@ export const de = {
       Title: 'Bild auswählen',
       Remove: 'Bild entfernen',
       NoImages: 'In dieser Organisation wurden bisher noch keine Bilder hochgeladen.',
-      UploadViaOrgPage: 'Neue Bilder können Sie auf der Seite der Organisation hochladen.'
+      UploadViaOrgPage: 'Neue Bilder können Sie auf der Seite der Organisation hochladen.',
+      Dimensions: '{{w}} x {{h}} px'
     },
     MultiSelectFilter: {
       All: 'alle',
