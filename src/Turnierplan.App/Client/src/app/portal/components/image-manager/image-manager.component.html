@@ -3,7 +3,6 @@
     <thead>
       <tr>
         <th translate="Portal.ViewOrganization.Images.Preview" style="width: 1px"></th>
-        <th translate="Portal.ViewOrganization.Images.Type.Header" style="width: 1px"></th>
         <th class="text-nowrap" translate="Portal.ViewOrganization.Images.CreatedAt"></th>
         <th translate="Portal.ViewOrganization.Images.Name" colspan="2"></th>
         <th class="text-nowrap" style="width: 1px">
@@ -30,7 +29,6 @@
               translate="Portal.ViewOrganization.Images.FileSize"
               [translateParams]="{ size: image.fileSize / 1000 | number: '1.1-1' : 'de' }"></div>
           </td>
-          <td class="align-middle" [translate]="'Portal.ViewOrganization.Images.Type.' + image.type"></td>
           <td class="align-middle text-nowrap">{{ image.createdAt | translateDate }}</td>
           <td class="align-middle" style="width: 1px" [class.pe-0]="!image.isUpdatingName">
             @if (image.isUpdatingName) {

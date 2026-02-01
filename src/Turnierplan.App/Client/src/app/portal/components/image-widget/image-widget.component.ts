@@ -5,7 +5,6 @@ import { ImageChooserComponent, ImageChooserResult } from '../image-chooser/imag
 import { TranslateDirective } from '@ngx-translate/core';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { ImageDto } from '../../../api/models/image-dto';
-import { ImageType } from '../../../api/models/image-type';
 
 @Component({
   selector: 'tp-image-widget',
@@ -18,9 +17,6 @@ export class ImageWidgetComponent {
 
   @Input()
   public imageAlt!: string;
-
-  @Input()
-  public imageType!: ImageType;
 
   @Input()
   public organizationId!: string;
@@ -51,7 +47,7 @@ export class ImageWidgetComponent {
     });
 
     const component = ref.componentInstance as ImageChooserComponent;
-    component.init(this.organizationId, this.imageType, this.currentImage?.id);
+    component.init(this.organizationId, this.currentImage?.id);
 
     ref.closed.subscribe({
       next: (result: ImageChooserResult) => {

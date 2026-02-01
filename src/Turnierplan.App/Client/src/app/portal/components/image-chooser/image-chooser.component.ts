@@ -7,7 +7,6 @@ import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicato
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgClass } from '@angular/common';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { ImageType } from '../../../api/models/image-type';
 import { getImages } from '../../../api/fn/images/get-images';
 import { ImageDto } from '../../../api/models/image-dto';
 
@@ -26,10 +25,7 @@ export class ImageChooserComponent {
   protected readonly Actions = Actions;
 
   protected isInitialized = false;
-
   protected organizationId!: string;
-  protected imageType!: ImageType;
-
   protected existingImages: ImageDto[] = [];
   protected isLoadingImages = true;
   protected currentImageId?: string;
@@ -42,13 +38,12 @@ export class ImageChooserComponent {
     private readonly turnierplanApi: TurnierplanApi
   ) {}
 
-  public init(organizationId: string, imageType: ImageType, currentImageId?: string): void {
+  public init(organizationId: string, currentImageId?: string): void {
     if (this.isInitialized) {
       return;
     }
 
     this.organizationId = organizationId;
-    this.imageType = imageType;
     this.currentImageId = currentImageId;
     this.isInitialized = true;
 
@@ -56,7 +51,7 @@ export class ImageChooserComponent {
   }
 
   private loadImages(): void {
-    this.turnierplanApi.invoke(getImages, { organizationId: this.organizationId, imageType: this.imageType }).subscribe({
+    this.turnierplanApi.invoke(getImages, { organizationId: this.organizationId }).subscribe({
       next: (response) => {
         this.existingImages = response.images;
         this.existingImages.sort((a, b) => {

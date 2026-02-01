@@ -218,11 +218,6 @@ export const de = {
         Preview: 'Vorschau',
         Dimensions: '{{w}} x {{h}} px',
         FileSize: '{{size}} KB',
-        Type: {
-          Header: 'Typ',
-          Logo: 'Logo',
-          Banner: 'Banner'
-        },
         CreatedAt: 'Hochgeladen am',
         Name: 'Name',
         References: {

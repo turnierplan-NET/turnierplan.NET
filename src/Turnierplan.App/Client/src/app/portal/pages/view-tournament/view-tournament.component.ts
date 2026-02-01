@@ -42,7 +42,6 @@ import { MatchTreeComponent } from '../../components/match-tree/match-tree.compo
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { IdWidgetComponent } from '../../components/id-widget/id-widget.component';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { ImageType } from '../../../api/models/image-type';
 import { Visibility } from '../../../api/models/visibility';
 import { TournamentDto } from '../../../api/models/tournament-dto';
 import { TournamentImagesDto } from '../../../api/models/tournament-images-dto';
@@ -118,7 +117,6 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
   private static readonly DocumentsPageId = 4;
   private static readonly SettingsPageId = 6;
 
-  protected readonly ImageType = ImageType;
   protected readonly Visibility = Visibility;
   protected readonly Actions = Actions;
 
