@@ -77,10 +77,11 @@ import { GetImagesEndpointResponse } from '../../../api/models/get-images-endpoi
   ]
 })
 export class ViewOrganizationComponent implements OnInit, OnDestroy {
+  public static readonly imagesPageId = 5;
+
   private static readonly venuesPageId = 1;
   private static readonly apiKeysPageId = 2;
   private static readonly planningRealmsPageId = 4;
-  private static readonly imagesPageId = 5;
 
   protected readonly Actions = Actions;
 
