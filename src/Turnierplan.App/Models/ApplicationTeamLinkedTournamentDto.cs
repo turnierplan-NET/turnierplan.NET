@@ -4,9 +4,9 @@ namespace Turnierplan.App.Models;
 
 public sealed record ApplicationTeamLinkedTournamentDto
 {
-    public required PublicId Id { get; set; }
+    public required PublicId Id { get; init; }
 
-    public required string Name { get; set; }
+    public required string Name { get; init; }
 
-    public required string? FolderName { get; set; }
+    public required string? FolderName { get; init; }
 }
