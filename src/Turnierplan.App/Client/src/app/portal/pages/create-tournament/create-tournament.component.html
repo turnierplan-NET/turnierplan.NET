@@ -105,7 +105,7 @@
 
   <hr />
 
-  <div class="form-text">
+  <div class="form-text d-flex flex-row align-items-center">
     <i class="bi bi-info-circle"></i>
     <span
       class="ms-2"
@@ -113,7 +113,7 @@
   </div>
 
   @if (visibility === 'Private') {
-    <div class="form-text text-primary-emphasis">
+    <div class="form-text d-flex flex-row align-items-center text-primary-emphasis">
       <i class="bi bi-exclamation-triangle"></i>
       <span class="ms-2" [innerHTML]="'Portal.CreateTournament.VisibilityPrivateNotice' | translate"></span>
     </div>
