@@ -260,12 +260,10 @@ public sealed class AccessValidatorTest
         var headers = httpContextAccessor.HttpContext!.Response.Headers;
         var headerValues = headers["X-Turnierplan-Roles"];
 
-        var organizationId = organization.PublicId.ToString();
         var tournamentId1 = tournament1.PublicId.ToString();
         var tournamentId2 = tournament2.PublicId.ToString();
 
-        headerValues.Should().HaveCount(3);
-        headerValues.Single(x => x!.StartsWith(organizationId)).Should().Be($"{organizationId}=Reader");
+        headerValues.Should().HaveCount(2);
         headerValues.Single(x => x!.StartsWith(tournamentId1)).Should().Be($"{tournamentId1}=Owner+Reader+Contributor");
         headerValues.Single(x => x!.StartsWith(tournamentId2)).Should().Be($"{tournamentId2}=Reader+Contributor");
     }
