@@ -5,10 +5,12 @@
         <th translate="Portal.ViewOrganization.Images.Preview" style="width: 1px"></th>
         <th style="width: 1px"></th>
         <th translate="Portal.ViewOrganization.Images.Name"></th>
+        <th style="width: 1px"></th>
+        <th style="width: 1px"></th>
       </tr>
     </thead>
     <tbody>
-      @for (image of images; track image.id) {
+      @for (image of _images; track image.id) {
         @let writeAllowed = (authorizationService.isActionAllowed$(image.id, Actions.GenericWrite) | async) ?? false;
 
         <tr>
@@ -23,8 +25,10 @@
               translate="Portal.ViewOrganization.Images.FileSize"
               [translateParams]="{ size: image.fileSize / 1000 | number: '1.1-1' : 'de' }"></div>
           </td>
-          <td class="pe-0 align-middle">
-            @if (writeAllowed) {
+          <td class="align-middle" [class.pe-0]="!image.isUpdatingName">
+            @if (image.isUpdatingName) {
+              <tp-small-spinner class="ms-2" />
+            } @else if (writeAllowed) {
               <tp-rename-button
                 translationKey="Portal.ViewOrganization.Images.Rename"
                 [displayLabel]="false"
@@ -37,11 +41,23 @@
             <span class="small">{{ image.name }}</span>
           </td>
           <!-- TODO: Add number of "referenced" tournaments -->
-          <!-- TODO: Add delete button -->
+          <td class="align-middle pe-0">
+            <tp-rbac-widget
+              *tpIsActionAllowed="[image.id, Actions.ReadOrWriteRoleAssignments]"
+              [target]="image"
+              [buttonOnly]="true"
+              (errorOccured)="errorOccured.emit($event)" />
+          </td>
+          <td class="align-middle">
+            @if (writeAllowed) {
+              <tp-delete-button (confirmed)="deleteImage(image.id)" />
+            }
+          </td>
         </tr>
       } @empty {
         <tr>
-          <td translate="Portal.ViewOrganization.Images.NoImages" colspan="3241508"></td>
+          <!-- TODO: colspan? -->
+          <td translate="Portal.ViewOrganization.Images.NoImages" colspan="5"></td>
         </tr>
       }
     </tbody>

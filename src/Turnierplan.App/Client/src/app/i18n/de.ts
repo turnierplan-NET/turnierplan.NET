@@ -223,6 +223,10 @@ export const de = {
         Rename: {
           Title: 'Bild umbenennen',
           EnterNewName: 'Geben Sie den neuen Namen für das Bild ein:'
+        },
+        DeleteToast: {
+          Title: 'Bild wurde gelöscht',
+          Message: 'Das Bild wurde gelöscht.'
         }
       },
       ApiKeys: {

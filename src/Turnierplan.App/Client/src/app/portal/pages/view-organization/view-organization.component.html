@@ -146,7 +146,7 @@
                   <tp-badge context="ViewOrganization" label="ImagesCount" [value]="images.length" />
                 </div>
                 <div class="card-body p-0">
-                  <tp-image-manager [images]="images" />
+                  <tp-image-manager [images]="images" (errorOccured)="loadingState = { isLoading: false, error: $event }" />
                 </div>
               }
             }
