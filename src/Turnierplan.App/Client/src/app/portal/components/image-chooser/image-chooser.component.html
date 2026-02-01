@@ -8,51 +8,13 @@
       <div class="my-4">
         <tp-loading-indicator [marginY]="false" />
       </div>
-    } @else if (isInImageDetailView) {
-      <div class="px-3 small text-secondary d-flex flex-row align-items-start gap-2">
-        <i class="bi bi-info-circle align-self-start"></i>
-        <span class="flex-grow-1" [translate]="'Portal.ImageChooser.DetailView.Title'"></span>
-      </div>
-
-      <div class="px-3 mt-4 d-flex flex-row align-items-center justify-content-evenly">
-        <img style="max-width: 9em" [src]="imageForDetailView!.url" [alt]="imageForDetailView!.name" [title]="imageForDetailView!.name" />
-        <div>
-          <div translate="Portal.ImageChooser.DetailView.Name" [translateParams]="{ value: imageForDetailView!.name }"></div>
-          <div
-            translate="Portal.ImageChooser.DetailView.CreatedAt"
-            [translateParams]="{ value: imageForDetailView!.createdAt | translateDate: 'medium' }"></div>
-          <div
-            translate="Portal.ImageChooser.DetailView.FileSize"
-            [translateParams]="{ value: getRoundedFileSize(imageForDetailView!.fileSize) }"></div>
-          <div
-            translate="Portal.ImageChooser.DetailView.Resolution"
-            [translateParams]="{ width: imageForDetailView!.width, height: imageForDetailView!.height }"></div>
-        </div>
-        <div class="d-flex flex-column align-items-center">
-          <tp-delete-button *tpIsActionAllowed="[imageForDetailView!.id, Actions.GenericWrite]" (confirmed)="deleteCurrentViewedImage()" />
-        </div>
-      </div>
     } @else {
       <div class="px-3 d-flex flex-row align-items-center gap-3">
         <div class="flex-grow-1 small text-secondary d-flex flex-row align-items-start gap-2">
           <i class="bi bi-info-circle align-self-start"></i>
-          <span class="flex-grow-1" [translate]="'Portal.ImageChooser.Constraints.' + imageType"></span>
+          <span class="flex-grow-1" [translate]="'Portal.ImageChooser.UploadViaOrgPage'"></span>
         </div>
-        @if (isUploadingImage) {
-          <tp-small-spinner />
-        } @else {
-          <tp-action-button
-            *tpIsActionAllowed="[organizationId, Actions.GenericWrite]"
-            [type]="'outline-primary'"
-            [icon]="'cloud-upload-fill'"
-            [title]="'Portal.ImageChooser.Upload'"
-            (buttonClick)="openFileSelectionDialog()" />
-        }
       </div>
-
-      @if (hasUploadError) {
-        <tp-alert class="px-3 my-3" [type]="'danger'" [icon]="'exclamation-octagon'" [text]="'Portal.ImageChooser.UploadFailed'" />
-      }
 
       <div class="p-3 d-flex flex-row flex-wrap gap-2 overflow-y-scroll justify-content-start image-container">
         @for (image of existingImages; track image.id) {
@@ -65,7 +27,6 @@
             <div
               class="hover-buttons d-none position-absolute flex-row align-items-center justify-content-center gap-2"
               style="top: 0; left: 0">
-              <tp-action-button [type]="'primary'" [mode]="'IconOnly'" [icon]="'info-circle'" (buttonClick)="imageForDetailView = image" />
               @if (image.id !== currentImageId) {
                 <tp-action-button
                   [type]="'success'"
@@ -91,17 +52,13 @@
   </div>
   @if (!isLoadingImages) {
     <div class="modal-footer">
-      @if (isInImageDetailView) {
-        <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Back'" (buttonClick)="imageForDetailView = undefined" />
-      } @else {
-        @if (currentImageId !== undefined && !isInImageDetailView) {
-          <tp-action-button
-            [type]="'outline-secondary'"
-            [title]="'Portal.ImageChooser.Remove'"
-            (buttonClick)="modal.close({ type: 'ImageSelected', image: undefined })" />
-        }
-        <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
+      @if (currentImageId !== undefined) {
+        <tp-action-button
+          [type]="'outline-secondary'"
+          [title]="'Portal.ImageChooser.Remove'"
+          (buttonClick)="modal.close({ type: 'ImageSelected', image: undefined })" />
       }
+      <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
     </div>
   }
 }

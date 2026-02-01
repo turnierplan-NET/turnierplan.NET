@@ -55,7 +55,7 @@ export class ImageWidgetComponent {
 
     ref.closed.subscribe({
       next: (result: ImageChooserResult) => {
-        if (result.type === 'ImageUploaded' || result.type === 'ImageSelected') {
+        if (result.type === 'ImageSelected') {
           this.imageChange.emit(result.image);
         } else if (result.type === 'ImageDeleted') {
           this.imageDelete.emit(result.deletedImageId);
