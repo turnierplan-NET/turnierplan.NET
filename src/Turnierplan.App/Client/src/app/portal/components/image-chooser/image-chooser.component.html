@@ -42,8 +42,6 @@
               <span class="image-info xsmall text-black text-nowrap tp-text-ellipsis">{{ image.fileSize | fileSize: 'de' }}</span>
             </div>
             <div class="image-wrapper d-flex flex-column align-items-center justify-content-center">
-              <!-- The <img/> does not get a [title] if it is a non-current, selectable image! This is because
-                all selectable images have the transparent overlay on hover which then displays the name...  -->
               <img style="max-width: 9em" [src]="image.url" [alt]="image.name" (click)="hoverOverrideImageId = image.id" />
             </div>
           </div>
