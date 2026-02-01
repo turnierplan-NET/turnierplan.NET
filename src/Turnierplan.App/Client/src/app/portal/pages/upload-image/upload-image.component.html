@@ -25,7 +25,11 @@
     <hr />
     <div class="mb-2" translate="Portal.UploadImage.Preview"></div>
     <div class="d-flex flex-row">
-      <img class="border shadow-sm" style="max-width: 15em; max-height: 15em" [src]="previewUrl" />
+      <img
+        class="border shadow-sm"
+        style="max-width: 15em; max-height: 15em"
+        [src]="previewUrl"
+        [alt]="'Portal.UploadImage.PreviewAlt' | translate: { fileName: selectedFile?.name }" />
     </div>
   }
 

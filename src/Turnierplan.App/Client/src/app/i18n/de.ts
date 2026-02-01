@@ -1237,6 +1237,7 @@ export const de = {
       },
       NameTooltip: 'Wenn der Name leergelassen wird, wird der Dateinahme der gewählten Datei als Name verwendet.',
       Preview: 'Bildvorschau:',
+      PreviewAlt: 'Bildvorschau der Datei "{{fileName}}"',
       OrganizationNotice:
         'Es wird ein neues Bild in der Organisation <span class="fw-bold">{{organizationName}}</span> hochgeladen. Das Bild kann anschließend von allen Turnieren und Turnierplanern innerhalb der Organisation verwendet werden.',
       Submit: 'Hochladen'
