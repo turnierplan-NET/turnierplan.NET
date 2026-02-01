@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ImageDto } from '../../../api/models/image-dto';
 import { TranslateDirective } from '@ngx-translate/core';
-import { AsyncPipe, DecimalPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { RenameButtonComponent } from '../rename-button/rename-button.component';
@@ -25,7 +25,6 @@ type ImageView = ImageDto & { referenceCount?: number; isUpdatingName: boolean }
     TranslateDirective,
     AsyncPipe,
     RenameButtonComponent,
-    DecimalPipe,
     SmallSpinnerComponent,
     IsActionAllowedDirective,
     RbacWidgetComponent,
