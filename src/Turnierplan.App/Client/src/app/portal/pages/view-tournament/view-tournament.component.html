@@ -342,6 +342,22 @@
                       (imageDelete)="loadTournamentImages()"
                       (apiError)="loadingState = { isLoading: false, error: $event }" />
                   </div>
+
+                  @if (images.bannerImage) {
+                    @let bannerAspectRatio = images.bannerImage.width / images.bannerImage.height;
+                    @if (bannerAspectRatio < 3) {
+                      <tp-alert
+                        [type]="'warning'"
+                        [icon]="'aspect-ratio'"
+                        [margin]="'mt-4 mb-0'"
+                        [text]="'Portal.ViewTournament.Settings.EditImages.BannerAspectRatioWarning'"
+                        [textParams]="{
+                          w: images.bannerImage.width,
+                          h: images.bannerImage.height,
+                          ratio: bannerAspectRatio | number: '1.1-1' : 'de'
+                        }" />
+                    }
+                  }
                 }
               </div>
               <hr class="m-0" />

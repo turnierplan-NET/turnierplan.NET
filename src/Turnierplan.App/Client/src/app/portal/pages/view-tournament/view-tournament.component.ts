@@ -26,7 +26,7 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
 import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe, DecimalPipe, NgClass } from '@angular/common';
 import { BadgeComponent } from '../../components/badge/badge.component';
 import { FormsModule } from '@angular/forms';
 import { LoadingIndicatorComponent } from '../../components/loading-indicator/loading-indicator.component';
@@ -108,7 +108,8 @@ import { deleteRankingOverwrite } from '../../../api/fn/ranking-overwrites/delet
     AsyncPipe,
     TranslatePipe,
     TranslateDatePipe,
-    IdWidgetComponent
+    IdWidgetComponent,
+    DecimalPipe
   ]
 })
 export class ViewTournamentComponent implements OnInit, OnDestroy {
@@ -1095,4 +1096,6 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
     );
     this.processedRankings.sort((a, b) => a.position - b.position);
   }
+
+  protected readonly Image = Image;
 }

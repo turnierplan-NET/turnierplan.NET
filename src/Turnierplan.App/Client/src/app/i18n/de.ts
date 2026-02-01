@@ -622,7 +622,9 @@ export const de = {
           }
         },
         EditImages: {
-          Title: 'Logos & Bilddateien'
+          Title: 'Logos & Bilddateien',
+          BannerAspectRatioWarning:
+            'Das aktuelle Banner hat eine Auflösung von {{w}} x {{h}} px und ein Seitenverhältnis von {{ratio}}:1. Für eine optimale Darstellung verwenden Sie ein Bild mit einem Seitenverhältnis von mindestens 3:1'
         },
         MoveToAnotherFolder: {
           Title: 'Turnier verschieben',
