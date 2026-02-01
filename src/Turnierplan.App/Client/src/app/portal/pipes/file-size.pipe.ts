@@ -7,6 +7,7 @@ import { formatNumber } from '@angular/common';
 export class FileSizePipe implements PipeTransform {
   public transform(value: number, locale: string): string {
     let suffix = '';
+    let digitsFormat = '1.1-1';
 
     if (value >= 1_000_000_000) {
       value /= 1_000_000_000;
@@ -19,8 +20,9 @@ export class FileSizePipe implements PipeTransform {
       suffix = 'kB';
     } else {
       suffix = 'B';
+      digitsFormat = '1.0';
     }
 
-    return formatNumber(value, locale, '1.1-1') + ' ' + suffix;
+    return formatNumber(value, locale, digitsFormat) + ' ' + suffix;
   }
 }
