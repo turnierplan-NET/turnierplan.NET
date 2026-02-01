@@ -87,7 +87,7 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
         encodedData.SaveTo(memoryStream);
         memoryStream.Seek(0, SeekOrigin.Begin);
 
-        var image = new Image(organization, request.ImageName, "webp", memoryStream.Length, (ushort)imageData.Width, (ushort)imageData.Height);
+        var image = new Image(organization, request.ImageName.Trim(), "webp", memoryStream.Length, (ushort)imageData.Width, (ushort)imageData.Height);
 
         // Dispose here because Image() ctor accesses width and height of imageData
         imageData.Dispose();

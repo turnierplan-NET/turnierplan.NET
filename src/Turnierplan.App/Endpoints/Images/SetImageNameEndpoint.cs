@@ -39,7 +39,7 @@ internal sealed class SetImageNameEndpoint : EndpointBase
             return Results.Forbid();
         }
 
-        image.Name = request.Name;
+        image.Name = request.Name.Trim();
 
         await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
