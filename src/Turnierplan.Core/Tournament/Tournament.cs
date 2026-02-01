@@ -1,7 +1,6 @@
 using Turnierplan.Core.Entity;
 using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.Extensions;
-using Turnierplan.Core.Image;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament.Comparers;
 using Turnierplan.Core.Tournament.Definitions;
@@ -304,17 +303,17 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     public void SetPrimaryLogo(Image.Image? primaryLogo)
     {
-        CheckImageTypeAndSetImage(primaryLogo, ImageType.Logo, () => PrimaryLogo = primaryLogo);
+        ValidateAndSetImage(primaryLogo, () => PrimaryLogo = primaryLogo);
     }
 
     public void SetSecondaryLogo(Image.Image? secondaryLogo)
     {
-        CheckImageTypeAndSetImage(secondaryLogo, ImageType.Logo, () => SecondaryLogo = secondaryLogo);
+        ValidateAndSetImage(secondaryLogo, () => SecondaryLogo = secondaryLogo);
     }
 
     public void SetBannerImage(Image.Image? bannerImage)
     {
-        CheckImageTypeAndSetImage(bannerImage, ImageType.Banner, () => BannerImage = bannerImage);
+        ValidateAndSetImage(bannerImage, () => BannerImage = bannerImage);
     }
 
     public void ShiftToTimezone(TimeZoneInfo timeZone)
@@ -1075,7 +1074,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             .ToArray();
     }
 
-    private void CheckImageTypeAndSetImage(Image.Image? provided, ImageType expectedType, Action apply)
+    private void ValidateAndSetImage(Image.Image? provided, Action apply)
     {
         if (provided is null)
         {
@@ -1086,11 +1085,6 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         if (provided.Organization != Organization)
         {
             throw new TurnierplanException("Cannot assign an image from another organization.");
-        }
-
-        if (provided.Type != expectedType)
-        {
-            throw new TurnierplanException($"Cannot assign image because the image's type is not the expected type '{expectedType}'.");
         }
 
         apply();

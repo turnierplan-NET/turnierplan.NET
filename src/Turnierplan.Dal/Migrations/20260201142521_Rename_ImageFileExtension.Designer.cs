@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Turnierplan.Dal;
@@ -12,9 +13,11 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    partial class TurnierplanContextModelSnapshot : ModelSnapshot
+    [Migration("20260201142521_Rename_ImageFileExtension")]
+    partial class Rename_ImageFileExtension
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

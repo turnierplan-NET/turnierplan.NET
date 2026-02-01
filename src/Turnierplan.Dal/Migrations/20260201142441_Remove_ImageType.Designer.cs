@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Turnierplan.Dal;
@@ -12,9 +13,11 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    partial class TurnierplanContextModelSnapshot : ModelSnapshot
+    [Migration("20260201142441_Remove_ImageType")]
+    partial class Remove_ImageType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -205,12 +208,12 @@ namespace Turnierplan.Dal.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FileExtension")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<long>("FileSize")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("Height")
                         .HasColumnType("integer");

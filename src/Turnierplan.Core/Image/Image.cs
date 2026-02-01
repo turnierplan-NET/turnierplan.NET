@@ -1,5 +1,4 @@
 using Turnierplan.Core.Entity;
-using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.RoleAssignment;
 
 namespace Turnierplan.Core.Image;
@@ -8,10 +7,8 @@ public sealed class Image : Entity<long>, IEntityWithRoleAssignments<Image>, IEn
 {
     internal readonly List<RoleAssignment<Image>> _roleAssignments = [];
 
-    public Image(Organization.Organization organization, string name, ImageType type, string fileType, long fileSize, ushort width, ushort height)
+    public Image(Organization.Organization organization, string name, string fileExtension, long fileSize, ushort width, ushort height)
     {
-        ValidateImageSize(type, width, height);
-
         organization._images.Add(this);
 
         Id = 0;
@@ -20,22 +17,20 @@ public sealed class Image : Entity<long>, IEntityWithRoleAssignments<Image>, IEn
         Organization = organization;
         CreatedAt = DateTime.UtcNow;
         Name = name;
-        Type = type;
-        FileType = fileType;
+        FileExtension = fileExtension;
         FileSize = fileSize;
         Width = width;
         Height = height;
     }
 
-    internal Image(long id, Guid resourceIdentifier, PublicId.PublicId publicId, DateTime createdAt, string name, ImageType type, string fileType, long fileSize, ushort width, ushort height)
+    internal Image(long id, Guid resourceIdentifier, PublicId.PublicId publicId, DateTime createdAt, string name, string fileExtension, long fileSize, ushort width, ushort height)
     {
         Id = id;
         ResourceIdentifier = resourceIdentifier;
         PublicId = publicId;
         CreatedAt = createdAt;
         Name = name;
-        Type = type;
-        FileType = fileType;
+        FileExtension = fileExtension;
         FileSize = fileSize;
         Width = width;
         Height = height;
@@ -55,9 +50,7 @@ public sealed class Image : Entity<long>, IEntityWithRoleAssignments<Image>, IEn
 
     public string Name { get; set; }
 
-    public ImageType Type { get; }
-
-    public string FileType { get; }
+    public string FileExtension { get; }
 
     public long FileSize { get; }
 
@@ -76,15 +69,5 @@ public sealed class Image : Entity<long>, IEntityWithRoleAssignments<Image>, IEn
     public void RemoveRoleAssignment(RoleAssignment<Image> roleAssignment)
     {
         _roleAssignments.Remove(roleAssignment);
-    }
-
-    private static void ValidateImageSize(ImageType type, ushort width, ushort height)
-    {
-        var constraints = ImageConstraints.GetImageConstraints(type);
-
-        if (!constraints.IsSizeValid(width, height))
-        {
-            throw new TurnierplanException($"Image with size {width}x{height} does not meet criteria of type {type}: {constraints}");
-        }
     }
 }

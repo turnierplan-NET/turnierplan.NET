@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
-using Turnierplan.Core.Image;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Dal.Repositories;
 
@@ -18,7 +17,6 @@ internal sealed class GetImagesEndpoint : EndpointBase<GetImagesEndpoint.GetImag
 
     private static async Task<IResult> Handle(
         [FromQuery] PublicId organizationId,
-        [FromQuery] ImageType? imageType,
         [FromQuery] bool? includeReferences,
         IOrganizationRepository organizationRepository,
         IImageRepository imageRepository,
@@ -37,15 +35,11 @@ internal sealed class GetImagesEndpoint : EndpointBase<GetImagesEndpoint.GetImag
             return Results.Forbid();
         }
 
-        var filteredImages = imageType.HasValue
-            ? organization.Images.Where(x => x.Type == imageType)
-            : organization.Images;
-
-        var filteredAndSortedImages = filteredImages
+        var sortedImages = organization.Images
             .OrderByDescending(x => x.CreatedAt)
             .ToList();
 
-        foreach (var image in filteredAndSortedImages)
+        foreach (var image in sortedImages)
         {
             accessValidator.AddRolesToResponseHeader(image);
         }
@@ -56,7 +50,7 @@ internal sealed class GetImagesEndpoint : EndpointBase<GetImagesEndpoint.GetImag
         {
             references = [];
 
-            foreach (var image in filteredAndSortedImages)
+            foreach (var image in sortedImages)
             {
                 var count = await imageRepository.CountNumberOfReferencingTournamentsAsync(image.Id);
                 references[image.PublicId] = count;
@@ -65,7 +59,7 @@ internal sealed class GetImagesEndpoint : EndpointBase<GetImagesEndpoint.GetImag
 
         return Results.Ok(new GetImagesEndpointResponse
         {
-            Images = mapper.MapCollection<ImageDto>(filteredAndSortedImages).ToArray(),
+            Images = mapper.MapCollection<ImageDto>(sortedImages).ToArray(),
             References = references
         });
     }

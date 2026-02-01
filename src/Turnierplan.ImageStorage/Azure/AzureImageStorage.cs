@@ -141,6 +141,6 @@ internal sealed class AzureImageStorage : IImageStorage
 
     private static string GetBlobName(Image image)
     {
-        return $"{image.CreatedAt.Year}/{image.CreatedAt.Month:D2}/{image.ResourceIdentifier}.{image.FileType}";
+        return $"{image.CreatedAt.Year}/{image.CreatedAt.Month:D2}/{image.ResourceIdentifier}.{image.FileExtension}";
     }
 }

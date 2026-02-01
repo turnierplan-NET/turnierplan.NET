@@ -40,10 +40,7 @@ public sealed class ImageEntityTypeConfiguration : IEntityTypeConfiguration<Imag
         builder.Property(x => x.Name)
             .IsRequired();
 
-        builder.Property(x => x.Type)
-            .IsRequired();
-
-        builder.Property(x => x.FileType)
+        builder.Property(x => x.FileExtension)
             .IsRequired();
 
         builder.Property(x => x.FileSize)

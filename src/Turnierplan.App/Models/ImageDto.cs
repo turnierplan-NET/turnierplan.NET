@@ -1,4 +1,3 @@
-using Turnierplan.Core.Image;
 using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.App.Models;
@@ -10,8 +9,6 @@ public sealed record ImageDto
     public required string RbacScopeId { get; init; }
 
     public required DateTime CreatedAt { get; init; }
-
-    public required ImageType Type { get; init; }
 
     public required string Name { get; init; }
 

@@ -114,6 +114,6 @@ internal sealed class LocalImageStorage : ILocalImageStorage
 
     private static string GetImageFileName(Image image)
     {
-        return $"{image.ResourceIdentifier}.{image.FileType}";
+        return $"{image.ResourceIdentifier}.{image.FileExtension}";
     }
 }

@@ -14,9 +14,6 @@ namespace Turnierplan.App.Endpoints.Images;
 
 internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
 {
-    private const int MinimumImageSizeInPixels = 50;
-    private const int MaximumImageSizeInPixels = 3000;
-
     protected override HttpMethod Method => HttpMethod.Post;
 
     protected override string Route => "/api/images";
@@ -24,7 +21,7 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
-        [FromForm] UploadImageEndpointRequest request, // Note: We use [FromForm] instead of [FromBody]
+        [FromForm] UploadImageEndpointRequest request, // Note that [FromForm] is used instead of [FromBody]
         IOrganizationRepository organizationRepository,
         IAccessValidator accessValidator,
         IImageStorage imageStorage,
@@ -66,31 +63,19 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
             return Results.BadRequest("Could not process image.");
         }
 
-        if (imageData.Width < MinimumImageSizeInPixels || imageData.Height < MinimumImageSizeInPixels)
-        {
-            return Results.BadRequest($"Image is too small (must be at least {MinimumImageSizeInPixels}px along both sides).");
-        }
-
+        // TODO: Make this configurable via appsettings as well
+        const int MaximumImageSizeInPixels = 3000;
         if (imageData.Width > MaximumImageSizeInPixels || imageData.Height > MaximumImageSizeInPixels)
         {
             return Results.BadRequest($"Image is too large (maximum is {MaximumImageSizeInPixels}px along each side).");
         }
 
-        var constraints = ImageConstraints.GetImageConstraints(request.ImageType);
-
-        if (!constraints.IsSizeValid((ushort)imageData.Width, (ushort)imageData.Height))
-        {
-            return Results.BadRequest($"Image dimensions do not meet the constraints: {constraints}");
-        }
-
-        imageData = ScaleBitmapToMaximumDimensions(imageData, request.ImageType);
-
         var memoryStream = new MemoryStream();
-        var encodedData = imageData.Encode(SKEncodedImageFormat.Webp, 80); // IDEA: Make the quality configurable via app settings
+        var encodedData = imageData.Encode(SKEncodedImageFormat.Webp, 80); // TODO: Make the image format & quality configurable via app settings (NOTE: Update file type in Image ctor below)
         encodedData.SaveTo(memoryStream);
         memoryStream.Seek(0, SeekOrigin.Begin);
 
-        var image = new Image(organization, request.ImageName, request.ImageType, "webp", memoryStream.Length, (ushort)imageData.Width, (ushort)imageData.Height);
+        var image = new Image(organization, request.ImageName, "webp", memoryStream.Length, (ushort)imageData.Width, (ushort)imageData.Height);
 
         // Dispose here because Image() ctor accesses width and height of imageData
         imageData.Dispose();
@@ -110,29 +95,6 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
         return Results.Ok(mapper.Map<ImageDto>(image));
     }
 
-    private static SKBitmap ScaleBitmapToMaximumDimensions(SKBitmap imageData, ImageType imageType)
-    {
-        var maxWidth = imageType switch
-        {
-            ImageType.Logo => 400,
-            ImageType.Banner => 1600,
-            _ => throw new ArgumentOutOfRangeException(nameof(imageType), imageType, null)
-        };
-
-        if (imageData.Width < maxWidth)
-        {
-            return imageData;
-        }
-
-        var scaleFactor = (float)maxWidth / imageData.Width;
-        var destinationSize = new SKImageInfo(maxWidth, (int)(imageData.Height * scaleFactor));
-        var scaledImage = imageData.Resize(destinationSize, new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.Linear));
-
-        imageData.Dispose();
-
-        return scaledImage;
-    }
-
     public sealed record UploadImageEndpointRequest
     {
         /// <remarks>
@@ -140,8 +102,6 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
         /// in the context of other requests. Because of this, we accept a string and parse this identifier manually.
         /// </remarks>
         public required string OrganizationId { get; init; }
-
-        public required ImageType ImageType { get; init; }
 
         public required IFormFile Image { get; init; }
 
@@ -154,9 +114,7 @@ internal sealed class UploadImageEndpoint : EndpointBase<ImageDto>
 
         private Validator()
         {
-            RuleFor(x => x.ImageType)
-                .IsInEnum();
-
+            // TODO: Add app configuration for maximum image size
             RuleFor(x => x.Image.Length)
                 .LessThanOrEqualTo(8 * 1024 * 1024)
                 .WithMessage("Image file size must be 8MB or less.");

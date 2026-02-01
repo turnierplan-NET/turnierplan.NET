@@ -85,12 +85,12 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 
     public void SetPrimaryLogo(Image.Image? primaryLogo)
     {
-        CheckImageTypeAndSetImage(primaryLogo, () => PrimaryLogo = primaryLogo);
+        ValidateAndSetImage(primaryLogo, () => PrimaryLogo = primaryLogo);
     }
 
     public void SetSecondaryLogo(Image.Image? secondaryLogo)
     {
-        CheckImageTypeAndSetImage(secondaryLogo, () => SecondaryLogo = secondaryLogo);
+        ValidateAndSetImage(secondaryLogo, () => SecondaryLogo = secondaryLogo);
     }
 
     public bool IsValidUntilSurpassed()
@@ -98,7 +98,7 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
         return ValidUntil.HasValue && ValidUntil.Value < DateTime.UtcNow;
     }
 
-    private void CheckImageTypeAndSetImage(Image.Image? provided, Action apply)
+    private void ValidateAndSetImage(Image.Image? provided, Action apply)
     {
         if (provided is null)
         {
@@ -109,11 +109,6 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
         if (provided.Organization != PlanningRealm.Organization)
         {
             throw new TurnierplanException("Cannot assign an image from another organization.");
-        }
-
-        if (provided.Type != ImageType.Logo)
-        {
-            throw new TurnierplanException($"Cannot assign image because the image's type is not the expected type '{ImageType.Logo}'.");
         }
 
         apply();

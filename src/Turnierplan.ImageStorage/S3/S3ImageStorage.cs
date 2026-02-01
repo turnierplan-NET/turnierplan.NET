@@ -151,6 +151,6 @@ internal sealed class S3ImageStorage : IImageStorage
 
     private static string GetObjectKey(Image image)
     {
-        return $"images/{image.CreatedAt.Year}/{image.CreatedAt.Month:D2}/{image.ResourceIdentifier}.{image.FileType}";
+        return $"images/{image.CreatedAt.Year}/{image.CreatedAt.Month:D2}/{image.ResourceIdentifier}.{image.FileExtension}";
     }
 }
