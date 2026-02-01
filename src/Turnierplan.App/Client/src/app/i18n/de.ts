@@ -1381,6 +1381,10 @@ export const de = {
           Tooltip: 'Ordner',
           NotInherited: 'Zuweisung liegt auf diesem Ordner'
         },
+        Image: {
+          Tooltip: 'Bild',
+          NotInherited: 'Zuweisung liegt auf diesem Bild'
+        },
         Organization: {
           Tooltip: 'Organisation',
           NotInherited: 'Zuweisung liegt auf dieser Organisation'

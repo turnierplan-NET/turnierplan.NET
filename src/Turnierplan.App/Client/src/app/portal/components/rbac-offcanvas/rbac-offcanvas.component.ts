@@ -71,6 +71,9 @@ export class RbacOffcanvasComponent implements OnDestroy {
       case 'Folder':
         this.targetIcon = 'folder2-open';
         break;
+      case 'Image':
+        this.targetIcon = 'image';
+        break;
       case 'Organization':
         this.targetIcon = 'boxes';
         break;
