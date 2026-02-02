@@ -11,8 +11,12 @@ export class ViewTournamentPage {
 
   public async reportMatch(index: number, scoreA: number, scoreB: number): Promise<void> {
     await this.page.getByTestId(turnierplan.viewTournamentPage.matchPlan.matchRow(index)).click();
-    await this.page.getByTestId(turnierplan.editMatchDialog.scoreAField).pressSequentially(`${scoreA}`);
-    await this.page.getByTestId(turnierplan.editMatchDialog.scoreBField).pressSequentially(`${scoreB}`);
+    await this.page.getByTestId(turnierplan.editMatchDialog.scoreAField).fill(`${scoreA}`);
+
+    // This click() below seems pointless but is required because the scoreB is sometimes inserted into the scoreA field...
+    await this.page.getByTestId(turnierplan.editMatchDialog.scoreBField).click();
+
+    await this.page.getByTestId(turnierplan.editMatchDialog.scoreBField).fill(`${scoreB}`);
     await this.page.getByTestId(turnierplan.editMatchDialog.saveButton).click();
   }
 

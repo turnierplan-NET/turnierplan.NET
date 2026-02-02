@@ -1,6 +1,12 @@
 # This docker compose file is used for running the E2E tests during the CI workflow
 
 services:
+  turnierplan.e2e.database:
+    image: postgres:17.0
+    environment:
+      - POSTGRES_PASSWORD=P@ssw0rd
+      - POSTGRES_DB=turnierplan_e2e
+
   turnierplan.e2e.application.amd64:
     build:
       dockerfile: 'docker/turnierplan-amd64/Dockerfile'
@@ -8,6 +14,6 @@ services:
     ports:
       - "45001:8080"
     environment:
-      - Database__InMemory=true
+      - Database__ConnectionString=Host=turnierplan.e2e.database;Database=turnierplan_e2e;Username=postgres;Password=P@ssw0rd
       - Turnierplan__ApplicationUrl=http://localhost:45001
       - Turnierplan__InitialUserPassword=P@ssw0rd
