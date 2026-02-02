@@ -1,6 +1,5 @@
 <Solution>
   <Folder Name="/Solution Files/">
-    <File Path="docker-compose.yml" />
     <File Path="version.xml" />
   </Folder>
   <Folder Name="/Test/">
