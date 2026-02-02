@@ -2,10 +2,10 @@ using Projects;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var database = builder.AddPostgres("Postgres-Server")
+var database = builder.AddPostgres("Turnierplan-Postgres")
     .WithDataVolume()
     .WithLifetime(ContainerLifetime.Persistent)
-    .AddDatabase("Postgres-Database");
+    .AddDatabase("Turnierplan-Database");
 
 builder.AddProject<Turnierplan_App>("Turnierplan-Backend")
     .WaitFor(database)
@@ -19,3 +19,5 @@ builder.AddJavaScriptApp("Turnierplan-Client", "../Turnierplan.App/Client")
     .WithNpm(installCommand: "ci");
 
 builder.Build().Run();
+
+// TODO: Add OpenTelemetry collection
