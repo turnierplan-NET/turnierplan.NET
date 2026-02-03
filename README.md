@@ -23,20 +23,21 @@ The documentation sources are located in the `docs` directory. See the [docs rea
 
 ## Development
 
-This section describes how to set up the development environment. First, you need to install the following tools:
+This section describes how to set up the development environment. First, you need to install the following tools installed on your machine:
 
+- Docker
 - .NET 10.0 SDK
-- node.js v24.x and npm
-- your favourite IDE
+- Node.js v24.x and npm
+- [JetBrains Rider](https://www.jetbrains.com/rider/) (free for non-commercial use) or [Visual Studio](https://visualstudio.microsoft.com/vs/)
 
 To run the application from source, follow these steps:
 
-1. Open the `src/Turnierplan.slnx` solution and navigate to the docker compose file located under `Solution Items`. Run the `turnierplan.database` docker compose service. This will start up the PostgreSQL database for local development.
-2. Navigate to the `Turnierplan.App` project and run the `Turnierplan.App` launch configuration. This will start the backend using port `45000`.
-3. Open a terminal and navigate to the `src/Turnierplan.App/Client` directory. Run `npm install` to install the node dependencies. Next, you can start the client application by typing `npm run start`.
-4. Access the client application using [http://localhost:45001](http://localhost:45001) and log in using default credentials. The user name is `admin` and the password is `P@ssw0rd`.
+1. Open the `src/Turnierplan.slnx` solution.
+2. Run the `Turnierplan.AppHost` project. This will start the Aspire AppHost which will do the following steps:
+    - Download the postgres container imgage and run a local database
+    - Install npm dependencies and run the client app
+    - Run the backend `Turnierplan.App`
+3. The Aspire dashboard will open up from which you can navigate to the client application ([http://localhost:45001](http://localhost:45001)).
+4. Now you can log in using default credentials: The user name is `admin` and the password is `P@ssw0rd`.
 
 When running locally, the API documentation can be viewed by opening [http://localhost:45000/scalar](http://localhost:45000/scalar).
-
-> [!NOTE]  
-> The solution must be built first before the client application can be started. This is because the client application startup depends on OpenAPI files generated during the solution build.
