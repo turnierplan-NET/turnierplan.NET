@@ -1,6 +1,10 @@
 using Azure.Monitor.OpenTelemetry.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
+using Npgsql;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
 using Turnierplan.App.Security;
 using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.User;
@@ -14,17 +18,45 @@ internal static class ServiceCollectionExtensions
 {
     public static void AddTurnierplanMonitoring(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetSection("ApplicationInsights").GetValue<string>("ConnectionString");
+        var applicationInsightsConnectionString = configuration.GetSection("ApplicationInsights").GetValue<string>("ConnectionString");
+        var hasApplicationInsights = !string.IsNullOrEmpty(applicationInsightsConnectionString);
+        var hasOtlpExport = !string.IsNullOrWhiteSpace(configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
 
-        if (!string.IsNullOrWhiteSpace(connectionString))
+        if (!hasApplicationInsights && !hasOtlpExport)
         {
-            services.AddOpenTelemetry()
-                .WithTracing(tracing =>
-                {
-                    tracing.AddTurnierplanDataAccessLayer();
-                    tracing.AddTurnierplanDocumentRendering();
-                })
-                .UseAzureMonitor(opt => opt.ConnectionString = connectionString);
+            return;
+        }
+
+        var openTelemetryBuilder = services.AddOpenTelemetry();
+
+        openTelemetryBuilder.WithMetrics(metrics =>
+        {
+            metrics.AddAspNetCoreInstrumentation();
+            metrics.AddHttpClientInstrumentation();
+            metrics.AddRuntimeInstrumentation();
+            metrics.AddNpgsqlInstrumentation();
+        });
+
+        openTelemetryBuilder.WithTracing(tracing =>
+        {
+            tracing.AddAspNetCoreInstrumentation(options =>
+            {
+                // Exclude health check requests from tracing
+                options.Filter = context => !context.Request.Path.StartsWithSegments("/health");
+            });
+            tracing.AddHttpClientInstrumentation();
+            tracing.AddTurnierplanDataAccessLayer();
+            tracing.AddTurnierplanDocumentRendering();
+        });
+
+        if (hasApplicationInsights)
+        {
+            openTelemetryBuilder.UseAzureMonitor(opt => opt.ConnectionString = applicationInsightsConnectionString);
+        }
+
+        if (hasOtlpExport)
+        {
+            openTelemetryBuilder.UseOtlpExporter();
         }
     }
 

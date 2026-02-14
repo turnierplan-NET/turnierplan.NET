@@ -30,5 +30,3 @@ else
 }
 
 builder.Build().Run();
-
-// TODO: Add OpenTelemetry collection
