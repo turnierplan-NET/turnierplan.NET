@@ -28,16 +28,16 @@ This section describes how to set up the development environment. First, you nee
 - Docker
 - .NET 10.0 SDK
 - Node.js v24.x and npm
-- [JetBrains Rider](https://www.jetbrains.com/rider/) (free for non-commercial use) or [Visual Studio](https://visualstudio.microsoft.com/vs/)
+- Your preferred IDE such as [JetBrains Rider](https://www.jetbrains.com/rider/) or [Visual Studio](https://visualstudio.microsoft.com/vs/)
 
 To run the application from source, follow these steps:
 
 1. Open the `src/Turnierplan.slnx` solution.
-2. Run the `Turnierplan.AppHost` project. This will start the Aspire AppHost which will do the following steps:
-    - Download the postgres container imgage and run a local database
+2. Run the `Turnierplan.AppHost` project. Make sure to use the configuration *with client*. This will start the Aspire AppHost which will do the following steps:
+    - Download the postgres container image and run a local database
     - Install npm dependencies and run the client app
     - Run the backend `Turnierplan.App`
 3. The Aspire dashboard will open up from which you can navigate to the client application ([http://localhost:45001](http://localhost:45001)).
-4. Now you can log in using default credentials: The user name is `admin` and the password is `P@ssw0rd`.
+4. Now you can log in using default credentials: The username is `admin` and the password is `P@ssw0rd`.
 
 When running locally, the API documentation can be viewed by opening [http://localhost:45000/scalar](http://localhost:45000/scalar).
