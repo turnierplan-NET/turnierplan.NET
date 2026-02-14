@@ -1,9 +1,21 @@
 {
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "Turnierplan.AppHost": {
+    "with client": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "http://localhost:15285",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DOTNET_ENVIRONMENT": "Development",
+        "ASPIRE_DASHBOARD_OTLP_ENDPOINT_URL": "http://localhost:19065",
+        "ASPIRE_DASHBOARD_MCP_ENDPOINT_URL": "http://localhost:18247",
+        "ASPIRE_RESOURCE_SERVICE_ENDPOINT_URL": "http://localhost:20277",
+        "TURNIERPLAN_ASPIRE_RUN_CLIENT": "true"
+      }
+    },
+    "without client": {
+      "commandName": "Project",
       "launchBrowser": true,
       "applicationUrl": "http://localhost:15285",
       "environmentVariables": {
