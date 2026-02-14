@@ -1,6 +1,5 @@
 <Solution>
   <Folder Name="/Solution Files/">
-    <File Path="docker-compose.yml" />
     <File Path="version.xml" />
   </Folder>
   <Folder Name="/Test/">
@@ -15,6 +14,7 @@
   </Folder>
   <Project Path="Turnierplan.Adapter/Turnierplan.Adapter.csproj" />
   <Project Path="Turnierplan.App/Turnierplan.App.csproj" />
+  <Project Path="Turnierplan.AppHost/Turnierplan.AppHost.csproj" />
   <Project Path="Turnierplan.Core/Turnierplan.Core.csproj" />
   <Project Path="Turnierplan.Dal/Turnierplan.Dal.csproj" />
   <Project Path="Turnierplan.ImageStorage/Turnierplan.ImageStorage.csproj" />
