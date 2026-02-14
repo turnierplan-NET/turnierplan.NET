@@ -20,9 +20,9 @@ internal static class ServiceCollectionExtensions
     {
         var applicationInsightsConnectionString = configuration.GetSection("ApplicationInsights").GetValue<string>("ConnectionString");
         var hasApplicationInsights = !string.IsNullOrEmpty(applicationInsightsConnectionString);
-        var hasOtlpExport = !string.IsNullOrWhiteSpace(configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
+        var hasOltpExporter = !string.IsNullOrWhiteSpace(configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
 
-        if (!hasApplicationInsights && !hasOtlpExport)
+        if (!hasApplicationInsights && !hasOltpExporter)
         {
             return;
         }
@@ -54,7 +54,7 @@ internal static class ServiceCollectionExtensions
             openTelemetryBuilder.UseAzureMonitor(opt => opt.ConnectionString = applicationInsightsConnectionString);
         }
 
-        if (hasOtlpExport)
+        if (hasOltpExporter)
         {
             openTelemetryBuilder.UseOtlpExporter();
         }
