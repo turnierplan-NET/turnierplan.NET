@@ -21,10 +21,11 @@ RUN dotnet publish "./Turnierplan.App.csproj" -c Release --runtime linux-x64 -o 
 FROM base AS final
 
 # Install some packages:
-#  - 'gcompat'    to run QuestPDF dependencies on Alpine Linux
-#  - 'krb5-libs'  to enable Npgsql GSS session encryption
-#  - 'tzdata'     contains relevant time zone information
-RUN apk add gcompat krb5-libs tzdata
+#  - 'gcompat'                    to run QuestPDF dependencies on Alpine Linux
+#  - 'icu-libs' & 'icu-data-full' contains relevant localization data
+#  - 'krb5-libs'                  to enable Npgsql GSS session encryption
+#  - 'tzdata'                     contains relevant time zone information
+RUN apk add gcompat icu-libs icu-data-full krb5-libs tzdata
 
 # Prepare the directory used by the turnierplan.NET application
 RUN mkdir "$DATA_DIRECTORY" && chown "$APP_UID" "$DATA_DIRECTORY"
@@ -40,6 +41,9 @@ COPY --from=publish /app/publish .
 # Set the environment variables based on the data directory
 ENV Identity__StoragePath=$DATA_DIRECTORY/identity
 ENV ImageStorage__StoragePath=$DATA_DIRECTORY/images
+
+# Tells dotnet to use the previously installed localization data
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
 # Entrypoint is the DLL of the Turnierplan.App project
 ENTRYPOINT ["dotnet", "Turnierplan.App.dll"]
