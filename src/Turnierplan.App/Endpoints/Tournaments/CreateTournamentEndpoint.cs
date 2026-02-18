@@ -6,6 +6,7 @@ using Turnierplan.App.Models;
 using Turnierplan.App.Security;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Dal.Repositories;
 
@@ -56,6 +57,10 @@ internal sealed class CreateTournamentEndpoint : EndpointBase<TournamentDto>
             {
                 return Results.NotFound("The specified folder does not exist.");
             }
+
+            // Note: No authorization check is necessary on the scope of the folder! This is because above, we ensure
+            // that the user has at least 'GenericWrite' permission on the organization. If he does, this permission
+            // is always passed onto the folder anyways.
         }
         else if (request.FolderName is not null)
         {
