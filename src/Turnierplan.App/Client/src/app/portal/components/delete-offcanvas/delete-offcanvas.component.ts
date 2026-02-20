@@ -34,11 +34,11 @@ export class DeleteOffcanvasComponent {
     this.targetObjectId = targetObjectId;
 
     this.currentOffcanvas = this.offcanvasService.open(this.offcanvasTemplate, { position: 'end' });
+    this.currentOffcanvas.hidden.subscribe(() => (this.currentOffcanvas = undefined));
   }
 
   public close(): void {
     this.currentOffcanvas?.close();
-    this.currentOffcanvas = undefined;
     this.targetObjectId = undefined;
     this.targetObjectName = undefined;
   }
@@ -52,6 +52,7 @@ export class DeleteOffcanvasComponent {
     if (!id) {
       return;
     }
+
     this.deleteClick.emit(id);
   }
 
