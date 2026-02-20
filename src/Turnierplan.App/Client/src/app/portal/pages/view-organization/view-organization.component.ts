@@ -20,7 +20,6 @@ import { VenueTileComponent } from '../../components/venue-tile/venue-tile.compo
 import { NgClass, AsyncPipe } from '@angular/common';
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { FormsModule } from '@angular/forms';
-import { DeleteButtonComponent } from '../../components/delete-button/delete-button.component';
 import { ApiKeyUsageComponent } from '../../components/api-key-usage/api-key-usage.component';
 import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
@@ -66,7 +65,6 @@ import { DeleteOffcanvasComponent } from '../../components/delete-offcanvas/dele
     NgClass,
     TooltipIconComponent,
     FormsModule,
-    DeleteButtonComponent,
     ApiKeyUsageComponent,
     RbacWidgetComponent,
     DeleteWidgetComponent,
