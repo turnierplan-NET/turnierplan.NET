@@ -55,6 +55,4 @@ export class DeleteOffcanvasComponent {
 
     this.deleteClick.emit(id);
   }
-
-  // TODO: Close currently open offcanvas on confirm/abort
 }
