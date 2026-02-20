@@ -43,7 +43,7 @@ import { DeleteOffcanvasComponent } from '../../components/delete-offcanvas/dele
   ]
 })
 export class AdministrationPageComponent implements OnInit {
-  @ViewChild('deleteConfirmationCanvas')
+  @ViewChild('deleteUserOffcanvas')
   protected deleteConfirmationCanvas?: DeleteOffcanvasComponent;
 
   protected loadingState: LoadingState = { isLoading: true };

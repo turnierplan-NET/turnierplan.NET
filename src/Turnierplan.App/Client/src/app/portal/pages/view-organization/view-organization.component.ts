@@ -46,6 +46,7 @@ import { ImageManagerComponent } from '../../components/image-manager/image-mana
 import { getImages } from '../../../api/fn/images/get-images';
 import { GetImagesEndpointResponse } from '../../../api/models/get-images-endpoint-response';
 import { FileSizePipe } from '../../pipes/file-size.pipe';
+import { DeleteOffcanvasComponent } from '../../components/delete-offcanvas/delete-offcanvas.component';
 
 @Component({
   templateUrl: './view-organization.component.html',
@@ -75,7 +76,8 @@ import { FileSizePipe } from '../../pipes/file-size.pipe';
     IdWidgetComponent,
     E2eDirective,
     ImageManagerComponent,
-    FileSizePipe
+    FileSizePipe,
+    DeleteOffcanvasComponent
   ]
 })
 export class ViewOrganizationComponent implements OnInit, OnDestroy {
@@ -299,8 +301,8 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
         next: () => {
           this.notificationService.showNotification(
             'info',
-            'Portal.ViewOrganization.ApiKeys.DeleteToast.Title',
-            'Portal.ViewOrganization.ApiKeys.DeleteToast.Message'
+            'Portal.ViewOrganization.ApiKeys.Delete.SuccessToast.Title',
+            'Portal.ViewOrganization.ApiKeys.Delete.SuccessToast.Message'
           );
         },
         error: (error) => {

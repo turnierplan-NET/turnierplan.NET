@@ -53,7 +53,7 @@
                             [type]="'outline-danger'"
                             [mode]="'IconOnly'"
                             [disabled]="isCurrentUser"
-                            (buttonClick)="deleteConfirmationCanvas.show(user.id, user.userName)" />
+                            (buttonClick)="deleteUserOffcanvas.show(user.id, user.userName)" />
                         </div>
                       </div>
                     </td>
@@ -170,7 +170,4 @@
   </div>
 </ng-template>
 
-<tp-delete-offcanvas
-  #deleteConfirmationCanvas
-  [translationKey]="'Portal.Administration.DeleteUser'"
-  (deleteClick)="deleteConfirmed($event)" />
+<tp-delete-offcanvas #deleteUserOffcanvas [translationKey]="'Portal.Administration.DeleteUser'" (deleteClick)="deleteConfirmed($event)" />

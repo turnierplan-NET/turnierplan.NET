@@ -7,8 +7,7 @@ import { NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'tp-delete-offcanvas',
   imports: [ActionButtonComponent, DeleteWidgetComponent, TranslateDirective],
-  templateUrl: './delete-offcanvas.component.html',
-  styleUrl: './delete-offcanvas.component.scss'
+  templateUrl: './delete-offcanvas.component.html'
 })
 export class DeleteOffcanvasComponent {
   @Input()
