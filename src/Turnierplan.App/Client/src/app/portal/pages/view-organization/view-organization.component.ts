@@ -79,6 +79,7 @@ import { DeleteOffcanvasComponent } from '../../components/delete-offcanvas/dele
   ]
 })
 export class ViewOrganizationComponent implements OnInit, OnDestroy {
+  // TODO: Close api key delete offcanvas on route change
   public static readonly imagesPageId = 5;
 
   private static readonly venuesPageId = 1;
