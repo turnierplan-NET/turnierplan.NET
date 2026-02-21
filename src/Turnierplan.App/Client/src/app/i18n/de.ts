@@ -423,10 +423,12 @@ export const de = {
           HideRanking: 'Platzierung ausblenden',
           HideRankingTooltip: 'Wenn die Platzierung ausgeblendet wird, ist sie nicht mehr auf den öffentlichen Turnierseiten sichtbar'
         },
-        DeleteOverwrite: {
+        Delete: {
           Header: 'Zurücksetzen',
           Tooltip:
-            'Wenn zuvorige Änderungen gelöscht werden, wird an der jeweiligen Stelle wieder die Standard-Platzierung anzeigt, welche im Turnier berechnet werden.'
+            'Wenn zuvorige Änderungen gelöscht werden, wird an der jeweiligen Stelle wieder die Standard-Platzierung anzeigt, welche im Turnier berechnet werden.',
+          Title: 'Platzierung zurücksetzen',
+          ObjectDisplayName: 'Zuweisung für {{value}}. Platz'
         }
       },
       Documents: {
@@ -1172,6 +1174,9 @@ export const de = {
         NoLabels: 'keine Labels',
         NoLinkedTournament: 'kein Turnier verknüpft',
         CannotDeleteTeamWhileLinked: 'Die Mannschaft kann nicht gelöscht werden, solange sie an einem Turnier teilnimmt.',
+        DeleteTeam: {
+          Title: 'Mannschaft löschen'
+        },
         RenameTeam: {
           Title: 'Mannschaft umbenennen',
           EnterNewName:
