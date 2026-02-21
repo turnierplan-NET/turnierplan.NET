@@ -182,3 +182,14 @@ If you have an Entra ID app registration with the necessary permissions on the s
 | `ImageStorage__TenantId`        | The tenant id where the app registration resides.       |
 | `ImageStorage__ClientId`        | The client id of the *app registration*.                |
 | `ImageStorage__ClientSecret`    | The value of the client secret.                         |
+
+## Troubleshooting
+
+Below are troubleshooting steps for some issues you might encounter during installation.
+
+### Connecting over HTTP
+
+If you are connecting to a remote (non-`localhost`) turnierplan.NET server via HTTP, you should see a *401 Unauthorized* error after logging in with your valid credentials. This is because turnierplan.NET uses secure cookies by default. You can set the `Identity__UseInsecureCookies` environment variable to `true` to change this behavior.
+
+!!! danger
+    Using HTTP is obviously not the way to go if you are connecting over the internet. For local setups this might be fine, though it is still discouraged. Most importantly, it is **not officially supported** because some parts of the client application rely on HTTPS-only browser APIs to work properly (such as clipboard or crypto).

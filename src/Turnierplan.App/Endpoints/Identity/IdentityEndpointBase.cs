@@ -78,11 +78,15 @@ internal abstract class IdentityEndpointBase<TResponse> : EndpointBase<TResponse
 
         void AddCookie(string path)
         {
+            // If the config value 'UseInsecureCookies' is set to true, the cookies will be sent without the 'secure' flag.
+            // Thus, the browser will also send the cookies along with HTTP requests instead of HTTPS only.
+            var isSecure = _options.CurrentValue.UseInsecureCookies != true;
+
             var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
                 SameSite = SameSiteMode.Strict,
-                Secure = true,
+                Secure = isSecure,
                 Path = path,
                 Expires = cookieExpires
             };
