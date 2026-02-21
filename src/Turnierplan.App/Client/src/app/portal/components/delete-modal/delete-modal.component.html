@@ -3,6 +3,13 @@
 </div>
 <div class="modal-body d-flex flex-column">
   <div [innerHTML]="'Portal.DeleteWidget.ConfirmModalText' | translate"></div>
+
+  <!-- Compare translated text with the translation key. If they are equal, no additional modal text is defined. -->
+  @let additionalModalTextKey = translationKey + '.AdditionalModalText';
+  @let additionalModalText = additionalModalTextKey | translate;
+  @if (additionalModalText !== additionalModalTextKey) {
+    <div class="mt-3">{{ additionalModalText }}</div>
+  }
   <div class="mt-3 d-flex flex-row gap-2 text-danger">
     <i class="bi bi-trash"></i>
     <span class="fw-bold">{{ targetObjectName }}</span>

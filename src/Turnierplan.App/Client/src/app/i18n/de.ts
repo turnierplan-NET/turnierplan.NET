@@ -232,6 +232,7 @@ export const de = {
         },
         Delete: {
           Title: 'Bild löschen',
+          AdditionalModalText: 'Nach dem Löschen wird das Bild bei allen bisher verknüpften Turnieren nicht mehr sichtbar sein!',
           SuccessToast: {
             Title: 'Bild wurde gelöscht',
             Message: 'Das Bild wurde gelöscht.'
@@ -428,7 +429,9 @@ export const de = {
           Tooltip:
             'Wenn zuvorige Änderungen gelöscht werden, wird an der jeweiligen Stelle wieder die Standard-Platzierung anzeigt, welche im Turnier berechnet werden.',
           Title: 'Platzierung zurücksetzen',
-          ObjectDisplayName: 'Zuweisung für {{value}}. Platz'
+          ObjectDisplayName: 'Zuweisung für {{value}}. Platz',
+          AdditionalModalText:
+            'Nach dem Löschen wird an der jeweiligen Stelle wieder die Standard-Platzierung anzeigt, welche im Turnier berechnet werden.'
         }
       },
       Documents: {
@@ -1175,7 +1178,8 @@ export const de = {
         NoLinkedTournament: 'kein Turnier verknüpft',
         CannotDeleteTeamWhileLinked: 'Die Mannschaft kann nicht gelöscht werden, solange sie an einem Turnier teilnimmt.',
         DeleteTeam: {
-          Title: 'Mannschaft löschen'
+          Title: 'Mannschaft aus Anmeldung löschen',
+          AdditionalModalText: 'Die anderen Mannschaften in dieser Anmeldung sind hiervon nicht betroffen.'
         },
         RenameTeam: {
           Title: 'Mannschaft umbenennen',
