@@ -80,16 +80,19 @@ public sealed partial class ReceiptsRenderer(IImageStorage imageStorage) : Docum
                                 : localization.Get("Documents.Receipts.SignatureDateLocation", configuration.SignatureLocation, signatureDate);
                             column.Item().PaddingTop(5, Unit.Millimetre).AlignCenter().Text(signatureDateLocation);
 
-                            column.Item().PaddingHorizontal(4, Unit.Millimetre).PaddingTop(17, Unit.Millimetre).Text(localization.Get("Documents.Receipts.Signature")).Underline();
-
-                            column.Item().PaddingHorizontal(4, Unit.Millimetre).Height(17, Unit.Millimetre).Row(row =>
+                            column.Item().PaddingBottom(3, Unit.Millimetre).PaddingHorizontal(4, Unit.Millimetre).ExtendVertical().AlignBottom().Column(signatureColumn =>
                             {
-                                var signatureInfo = string.IsNullOrWhiteSpace(configuration.SignatureRecipient)
-                                    ? localization.Get("Documents.Receipts.SignatureInfo")
-                                    : configuration.SignatureRecipient;
+                                signatureColumn.Item().Text(localization.Get("Documents.Receipts.Signature")).Underline();
 
-                                row.RelativeItem(0.5f).AlignBottom().BorderTop(0.75f).Text(signatureInfo).FontSize(6);
-                                row.RelativeItem(0.5f);
+                                signatureColumn.Item().Height(17, Unit.Millimetre).Row(row =>
+                                {
+                                    var signatureInfo = string.IsNullOrWhiteSpace(configuration.SignatureRecipient)
+                                        ? localization.Get("Documents.Receipts.SignatureInfo")
+                                        : configuration.SignatureRecipient;
+
+                                    row.RelativeItem(0.5f).AlignBottom().BorderTop(0.75f).PaddingTop(2).Text(signatureInfo).FontSize(6);
+                                    row.RelativeItem(0.5f);
+                                });
                             });
                         });
                     }
