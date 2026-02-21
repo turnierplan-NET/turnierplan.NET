@@ -217,7 +217,11 @@
                             </td>
                             @if (writeAllowed) {
                               <td class="align-middle" style="width: 1px">
-                                <tp-delete-button (confirmed)="deleteApiKey(apiKey.id)" />
+                                <tp-action-button
+                                  [icon]="'trash'"
+                                  [type]="'outline-danger'"
+                                  [mode]="'IconOnly'"
+                                  (buttonClick)="deleteApiKeyOffcanvas.show(apiKey.id, apiKey.name)" />
                               </td>
                             }
                           </tr>
@@ -267,3 +271,8 @@
     </tp-page-frame>
   }
 </ng-container>
+
+<tp-delete-offcanvas
+  #deleteApiKeyOffcanvas
+  [translationKey]="'Portal.ViewOrganization.ApiKeys.Delete'"
+  (deleteClick)="deleteApiKey($event)" />

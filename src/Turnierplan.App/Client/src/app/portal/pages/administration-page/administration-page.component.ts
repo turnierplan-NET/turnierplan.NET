@@ -1,6 +1,5 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 import { switchMap } from 'rxjs';
 
 import { AuthenticationService } from '../../../core/services/authentication.service';
@@ -8,12 +7,10 @@ import { NotificationService } from '../../../core/services/notification.service
 import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
-import { NavigationStart, Router, RouterLink } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { RouterLink } from '@angular/router';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 import { BadgeComponent } from '../../components/badge/badge.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
-import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { NgClass } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -24,6 +21,8 @@ import { getUsers } from '../../../api/fn/users/get-users';
 import { UpdateUserEndpointRequest } from '../../../api/models/update-user-endpoint-request';
 import { updateUser } from '../../../api/fn/users/update-user';
 import { deleteUser } from '../../../api/fn/users/delete-user';
+import { DeleteOffcanvasComponent } from '../../components/delete-offcanvas/delete-offcanvas.component';
+import { OffcanvasWrapperComponent } from '../../components/offcanvas-wrapper/offcanvas-wrapper.component';
 
 @Component({
   templateUrl: './administration-page.component.html',
@@ -34,22 +33,24 @@ import { deleteUser } from '../../../api/fn/users/delete-user';
     RouterLink,
     BadgeComponent,
     TranslateDirective,
-    DeleteWidgetComponent,
     TranslatePipe,
     TranslateDatePipe,
     NgClass,
     ReactiveFormsModule,
-    AlertComponent
+    AlertComponent,
+    DeleteOffcanvasComponent,
+    OffcanvasWrapperComponent
   ]
 })
 export class AdministrationPageComponent implements OnInit {
+  @ViewChild('editUserOffcanvas')
+  protected editUserOffcanvas!: OffcanvasWrapperComponent;
+
   protected loadingState: LoadingState = { isLoading: true };
   protected users: UserDto[] = [];
   protected currentUserId: string = '';
 
-  protected userSelectedForDeletion?: UserDto;
   protected userSelectedForEditing?: UserDto;
-  protected currentOffcanvas?: NgbOffcanvasRef;
 
   protected editUserForm = new FormGroup({
     userName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
@@ -72,22 +73,9 @@ export class AdministrationPageComponent implements OnInit {
     private readonly turnierplanApi: TurnierplanApi,
     private readonly titleService: TitleService,
     private readonly authenticationService: AuthenticationService,
-    private readonly offcanvasService: NgbOffcanvas,
-    private readonly notificationService: NotificationService,
-    private readonly router: Router
+    private readonly notificationService: NotificationService
   ) {
     this.authenticationService.authentication$.pipe(takeUntilDestroyed()).subscribe((userInfo) => (this.currentUserId = userInfo.id));
-
-    this.router.events
-      .pipe(
-        takeUntilDestroyed(),
-        filter((event) => event instanceof NavigationStart)
-      )
-      .subscribe({
-        next: () => {
-          this.currentOffcanvas?.close();
-        }
-      });
   }
 
   public ngOnInit(): void {
@@ -104,7 +92,11 @@ export class AdministrationPageComponent implements OnInit {
     });
   }
 
-  protected editButtonClicked(id: string, template: TemplateRef<unknown>): void {
+  protected editButtonClicked(id: string): void {
+    if (this.editUserOffcanvas.isOpen) {
+      return;
+    }
+
     this.userSelectedForEditing = this.users.find((x) => x.id === id);
 
     if (this.userSelectedForEditing) {
@@ -126,7 +118,7 @@ export class AdministrationPageComponent implements OnInit {
         this.editUserForm.get('isAdministrator')!.enable();
       }
 
-      this.currentOffcanvas = this.offcanvasService.open(template, { position: 'end' });
+      this.editUserOffcanvas.show();
     }
   }
 
@@ -143,7 +135,7 @@ export class AdministrationPageComponent implements OnInit {
       return;
     }
 
-    this.currentOffcanvas?.close();
+    this.editUserOffcanvas.close();
     this.loadingState = { isLoading: true };
 
     const formValue = this.editUserForm.getRawValue();
@@ -175,20 +167,7 @@ export class AdministrationPageComponent implements OnInit {
       });
   }
 
-  protected deleteButtonClicked(id: string, template: TemplateRef<unknown>): void {
-    if (id === this.currentUserId) {
-      return;
-    }
-
-    this.userSelectedForDeletion = this.users.find((x) => x.id === id);
-
-    if (this.userSelectedForDeletion) {
-      this.currentOffcanvas = this.offcanvasService.open(template, { position: 'end' });
-    }
-  }
-
   protected deleteConfirmed(userId: string): void {
-    this.currentOffcanvas?.close();
     this.loadingState = { isLoading: true };
 
     this.turnierplanApi

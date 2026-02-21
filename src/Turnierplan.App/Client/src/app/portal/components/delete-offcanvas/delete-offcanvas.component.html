@@ -1,0 +1,13 @@
+<tp-offcanvas-wrapper #offcanvasWrapper>
+  @if (targetObjectName && targetObjectId) {
+    <tp-delete-widget
+      [translationKey]="translationKey"
+      [thinLayout]="true"
+      [targetObjectName]="targetObjectName"
+      (deleteClick)="confirmed()" />
+    <div class="mt-3 small text-secondary">
+      <span [translate]="translationKey + '.IdConfirmation'"></span><br />
+      <span>{{ targetObjectId }}</span>
+    </div>
+  }
+</tp-offcanvas-wrapper>

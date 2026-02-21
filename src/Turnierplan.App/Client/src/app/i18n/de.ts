@@ -131,7 +131,7 @@ export const de = {
       },
       DeleteUser: {
         Title: 'Benutzer löschen',
-        Info: 'Wenn Sie eine Benutzer löschen, werden die Organisationen des Benutzers nicht mitgelöscht und bleiben weiterhin für alle Administratoren sichtbar.',
+        Info: 'Wenn Sie einen Benutzer löschen, werden die Organisationen des Benutzers nicht mitgelöscht und bleiben weiterhin für alle Administratoren sichtbar.',
         IdConfirmation: 'Benutzer-ID:',
         SuccessToast: {
           Title: 'Benutzer wurde gelöscht',
@@ -245,9 +245,14 @@ export const de = {
         Expired: 'Dieser API-Schlüssel ist abgelaufen',
         NoApiKeys: 'Keine API-Schlüssel vorhanden',
         ViewCharts: 'Aufrufstatistik',
-        DeleteToast: {
-          Title: 'API-Schlüssel wurde gelöscht',
-          Message: 'Der API-Schlüssel wurde gelöscht und kann nun nicht mehr für Anfragen verwendet werden.'
+        Delete: {
+          Title: 'API-Schlüssel löschen',
+          Info: 'Wenn Sie eine API-Schlüssel löschen, kann dieser Schlüssel nicht mehr für neue Anfragen verwendet werden. Außerdem sind alle vorherigen Anfragen, welche mit diesem Schlüssel getätigt wurden, nicht mehr nachvollziehbar.',
+          IdConfirmation: 'API-Schlüssel ID:',
+          SuccessToast: {
+            Title: 'API-Schlüssel wurde gelöscht',
+            Message: 'Der  API-Schlüssel wurde gelöscht und kann nun nicht mehr für Anfragen verwendet werden.'
+          }
         }
       },
       RbacWidget: {
