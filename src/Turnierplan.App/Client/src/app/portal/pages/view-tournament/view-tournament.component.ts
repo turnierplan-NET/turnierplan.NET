@@ -450,8 +450,8 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
         next: () => {
           this.notificationService.showNotification(
             'info',
-            'Portal.ViewTournament.Documents.DeleteToast.Title',
-            'Portal.ViewTournament.Documents.DeleteToast.Message'
+            'Portal.ViewTournament.Documents.Delete.SuccessToast.Title',
+            'Portal.ViewTournament.Documents.Delete.SuccessToast.Message'
           );
         },
         error: (error) => {

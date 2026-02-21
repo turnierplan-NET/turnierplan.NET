@@ -4,7 +4,8 @@ import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { showDeleteModal } from '../delete-modal/delete-modal.component';
 
 @Component({
   selector: 'tp-delete-widget',
@@ -20,6 +21,7 @@ export class DeleteWidgetComponent {
 
   @Input()
   public set targetObjectName(value: string) {
+    this._targetObjectName = value;
     this.confirmationText = value.replaceAll(/[^A-Za-z0-9.\-_|ÄÖÜäöüß ]+/g, '').trim();
   }
 
@@ -29,7 +31,8 @@ export class DeleteWidgetComponent {
   protected confirmationText?: string;
   protected confirmationTextInput: string = '';
   protected allowDeletion = false;
-  protected openModal?: NgbModalRef;
+
+  private _targetObjectName: string = '';
 
   constructor(private readonly modalService: NgbModal) {}
 
@@ -37,18 +40,15 @@ export class DeleteWidgetComponent {
     this.allowDeletion = this.confirmationText !== undefined && this.confirmationText === this.confirmationTextInput.trim();
   }
 
-  protected deleteClicked(template: TemplateRef<unknown>): void {
+  protected deleteClicked(): void {
     if (this.allowDeletion) {
-      this.openModal = this.modalService.open(template, {
-        size: 'md',
-        fullscreen: 'md',
-        centered: true
+      showDeleteModal(this.modalService, this.translationKey, this._targetObjectName).subscribe({
+        next: (result): void => {
+          if (result) {
+            this.deleteClick.emit();
+          }
+        }
       });
     }
-  }
-
-  protected confirmDeleteClicked(): void {
-    this.openModal?.dismiss();
-    this.deleteClick.emit();
   }
 }

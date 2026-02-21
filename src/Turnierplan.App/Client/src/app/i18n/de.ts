@@ -230,9 +230,13 @@ export const de = {
           Title: 'Bild umbenennen',
           EnterNewName: 'Geben Sie den neuen Namen für das Bild ein:'
         },
-        DeleteToast: {
-          Title: 'Bild wurde gelöscht',
-          Message: 'Das Bild wurde gelöscht.'
+        Delete: {
+          Title: 'Bild löschen',
+          AdditionalModalText: 'Nach dem Löschen wird das Bild bei allen bisher verknüpften Turnieren nicht mehr sichtbar sein!',
+          SuccessToast: {
+            Title: 'Bild wurde gelöscht',
+            Message: 'Das Bild wurde gelöscht.'
+          }
         }
       },
       ApiKeys: {
@@ -423,7 +427,11 @@ export const de = {
         DeleteOverwrite: {
           Header: 'Zurücksetzen',
           Tooltip:
-            'Wenn zuvorige Änderungen gelöscht werden, wird an der jeweiligen Stelle wieder die Standard-Platzierung anzeigt, welche im Turnier berechnet werden.'
+            'Wenn zuvorige Änderungen gelöscht werden, wird an der jeweiligen Stelle wieder die Standard-Platzierung anzeigt, welche im Turnier berechnet werden.',
+          Title: 'Platzierung zurücksetzen',
+          ObjectDisplayName: 'Zuweisung für {{value}}. Platz',
+          AdditionalModalText:
+            'Nach dem Löschen wird an der jeweiligen Stelle wieder die Standard-Platzierung anzeigt, welche im Turnier berechnet werden.'
         }
       },
       Documents: {
@@ -432,7 +440,6 @@ export const de = {
         Generations: 'Abrufe',
         Configure: 'Einstellungen',
         Download: 'Herunterladen',
-        Delete: 'Löschen',
         Create: 'Neues Dokument',
         Copy: 'Dokument kopieren',
         NoDocuments: 'Es sind aktuell keine Dokumente vorhanden.',
@@ -446,9 +453,13 @@ export const de = {
           Title: 'Dokument umbenennen',
           EnterNewName: 'Geben Sie den neuen Namen für das Dokument ein:'
         },
-        DeleteToast: {
-          Title: 'Dokument wurde gelöscht',
-          Message: 'Das Dokument wurde gelöscht.'
+        Delete: {
+          Header: 'Löschen',
+          Title: 'Dokument löschen',
+          SuccessToast: {
+            Title: 'Dokument wurde gelöscht',
+            Message: 'Das Dokument wurde gelöscht.'
+          }
         },
         ConfigureModal: {
           Title: 'Dokument bearbeiten',
@@ -1166,6 +1177,10 @@ export const de = {
         NoLabels: 'keine Labels',
         NoLinkedTournament: 'kein Turnier verknüpft',
         CannotDeleteTeamWhileLinked: 'Die Mannschaft kann nicht gelöscht werden, solange sie an einem Turnier teilnimmt.',
+        DeleteTeam: {
+          Title: 'Mannschaft aus Anmeldung löschen',
+          AdditionalModalText: 'Die anderen Mannschaften in dieser Anmeldung sind hiervon nicht betroffen.'
+        },
         RenameTeam: {
           Title: 'Mannschaft umbenennen',
           EnterNewName:

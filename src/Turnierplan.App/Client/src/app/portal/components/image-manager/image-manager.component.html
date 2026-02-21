@@ -58,7 +58,11 @@
           </td>
           <td class="align-middle">
             @if (writeAllowed) {
-              <tp-delete-button (confirmed)="deleteImage(image.id)" />
+              <tp-delete-button
+                [modalConfirmation]="true"
+                [translationKey]="'Portal.ViewOrganization.Images.Delete'"
+                [targetObjectName]="image.name"
+                (confirmed)="deleteImage(image.id)" />
             }
           </td>
         </tr>

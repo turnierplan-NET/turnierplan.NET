@@ -245,7 +245,12 @@
                                 [margin]="false"
                                 [tooltipText]="'Portal.ViewPlanningRealm.Applications.CannotDeleteTeamWhileLinked'" />
                             } @else {
-                              <tp-delete-button [reducedFootprint]="true" (confirmed)="deleteTeam(application.id, team.id)" />
+                              <tp-delete-button
+                                [reducedFootprint]="true"
+                                [modalConfirmation]="true"
+                                [translationKey]="'Portal.ViewPlanningRealm.Applications.DeleteTeam'"
+                                [targetObjectName]="team.name"
+                                (confirmed)="deleteTeam(application.id, team.id)" />
                             }
                           </td>
                         </tr>

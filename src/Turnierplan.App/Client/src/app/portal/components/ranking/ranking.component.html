@@ -48,7 +48,14 @@
               @if (ranking.rankingOverwriteId !== undefined) {
                 <div class="d-flex flex-row">
                   <!-- d-flex to avoid layout issues -->
-                  <tp-delete-button [reducedFootprint]="true" (confirmed)="removeRankingOverwrite.emit(ranking.rankingOverwriteId)" />
+                  <tp-delete-button
+                    [reducedFootprint]="true"
+                    [modalConfirmation]="true"
+                    [translationKey]="'Portal.ViewTournament.Ranking.DeleteOverwrite'"
+                    [targetObjectName]="
+                      'Portal.ViewTournament.Ranking.DeleteOverwrite.ObjectDisplayName' | translate: { value: ranking.position }
+                    "
+                    (confirmed)="removeRankingOverwrite.emit(ranking.rankingOverwriteId)" />
                 </div>
               }
             </td>

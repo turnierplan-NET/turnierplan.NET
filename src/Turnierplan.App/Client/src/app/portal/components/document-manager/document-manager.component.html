@@ -20,7 +20,7 @@
         </th>
         @if (writeAllowed) {
           <th>
-            <span class="d-none d-md-block" translate="Portal.ViewTournament.Documents.Delete"></span>
+            <span class="d-none d-md-block" translate="Portal.ViewTournament.Documents.Delete.Header"></span>
           </th>
         }
       </tr>
@@ -93,7 +93,11 @@
           </td>
           @if (writeAllowed) {
             <td class="align-middle">
-              <tp-delete-button (confirmed)="deleteDocument(doc.id)" />
+              <tp-delete-button
+                [modalConfirmation]="true"
+                [translationKey]="'Portal.ViewTournament.Documents.Delete'"
+                [targetObjectName]="doc.name"
+                (confirmed)="deleteDocument(doc.id)" />
             </td>
           }
         </tr>
