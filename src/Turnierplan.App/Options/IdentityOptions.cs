@@ -10,6 +10,6 @@ internal sealed class IdentityOptions : AuthenticationSchemeOptions
 
     public TimeSpan RefreshTokenLifetime { get; init; } = TimeSpan.Zero;
 
-    public bool? AllowInsecure { get; init; }
+    public bool? UseInsecureCookies { get; init; }
 }
 

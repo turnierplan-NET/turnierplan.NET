@@ -62,7 +62,6 @@ The following environment variables can be set if you want to enable specific fe
 | `ApplicationInsights__ConnectionString` | Can be set if you wish that your instance sends telemetry data to [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview). | -            |
 | `Identity__AccessTokenLifetime`         | Defines the lifetime of issued JWT access tokens.                                                                                                                                | `00:03:00`   |
 | `Identity__RefreshTokenLifetime`        | Defines the lifetime of issued JWT refresh tokens.                                                                                                                               | `1.00:00:00` |
-| `Identity__AllowInsecure`               | Set to `true` to allow login via HTTP. This is obviously not recommended.                                                                                                        | `false`      |
 | `Turnierplan__InstanceName`             | The instance name is displayed in the header/footer of the public pages. If not specified, the string `turnierplan.NET` will be shown instead.                                   | -            |
 | `Turnierplan__LogoUrl`                  | The URL of the custom logo to be displayed in the header of the public pages. If not specified, the turnierplan.NET logo will be shown instead.                                  | -            |
 | `Turnierplan__ImprintUrl`               | The URL of your external imprint page if you want it to be linked on the public pages.                                                                                           | -            |
@@ -183,3 +182,14 @@ If you have an Entra ID app registration with the necessary permissions on the s
 | `ImageStorage__TenantId`        | The tenant id where the app registration resides.       |
 | `ImageStorage__ClientId`        | The client id of the *app registration*.                |
 | `ImageStorage__ClientSecret`    | The value of the client secret.                         |
+
+## Troubleshooting
+
+Below are troubleshooting steps for some issues you might encounter during installation.
+
+### Connecting over HTTP
+
+If you are connecting to a remote (non-`localhost`) turnierplan.NET server via HTTP, you should see a *401 Unauthorized* error after logging in with your valid credentials. This is because turnierplan.NET uses secure cookies by default. You can set the `Identity__UseInsecureCookies` environment variable to `true` to change this behavior.
+
+!!! danger
+    Using HTTP is obviously not the way to go if you are connecting over the internet. For local setups this might be fine, though it is still discouraged. Most importantly, it is **not officially supported** because some parts of the client application rely on HTTPS-only browser APIs to work properly (such as clipboard or crypto).
