@@ -1,11 +1,12 @@
 <div
-  [ngbPopover]="disabled ? undefined : popoverContent"
+  [ngbPopover]="disabled || modalConfirmation ? undefined : popoverContent"
   [autoClose]="'outside'"
   #popover="ngbPopover"
   container="body"
   popoverClass="tp-popover-slim"
   [tabindex]="popover.isOpen() ? 0 : -1"
   (keydown.enter)="popover.isOpen() && deleteClicked()"
+  (click)="openModalIfEnabled()"
   [ngClass]="{
     'tp-cursor-pointer': reducedFootprint,
     'btn btn-sm btn-outline-danger': !reducedFootprint,

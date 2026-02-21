@@ -35,19 +35,26 @@ export class DeleteButtonComponent {
 
   protected deleteClicked(): void {
     if (this.modalConfirmation) {
-      if (!this.translationKey || !this.targetObjectName) {
-        throw new Error('The translation key and target object name must be specified if modal confirmation is enabled.');
-      }
-
-      showDeleteModal(this.modalService, this.translationKey, this.targetObjectName).subscribe({
-        next: (result): void => {
-          if (result) {
-            this.confirmed.emit();
-          }
-        }
-      });
-    } else {
-      this.confirmed.emit();
+      return;
     }
+    this.confirmed.emit();
+  }
+
+  protected openModalIfEnabled(): void {
+    if (!this.modalConfirmation) {
+      return;
+    }
+
+    if (!this.translationKey || !this.targetObjectName) {
+      throw new Error('The translation key and target object name must be specified if modal confirmation is enabled.');
+    }
+
+    showDeleteModal(this.modalService, this.translationKey, this.targetObjectName).subscribe({
+      next: (result): void => {
+        if (result) {
+          this.confirmed.emit();
+        }
+      }
+    });
   }
 }
