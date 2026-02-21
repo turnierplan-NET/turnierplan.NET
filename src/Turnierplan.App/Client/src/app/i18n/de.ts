@@ -432,7 +432,6 @@ export const de = {
         Generations: 'Abrufe',
         Configure: 'Einstellungen',
         Download: 'Herunterladen',
-        Delete: 'Löschen',
         Create: 'Neues Dokument',
         Copy: 'Dokument kopieren',
         NoDocuments: 'Es sind aktuell keine Dokumente vorhanden.',
@@ -446,9 +445,13 @@ export const de = {
           Title: 'Dokument umbenennen',
           EnterNewName: 'Geben Sie den neuen Namen für das Dokument ein:'
         },
-        DeleteToast: {
-          Title: 'Dokument wurde gelöscht',
-          Message: 'Das Dokument wurde gelöscht.'
+        Delete: {
+          Header: 'Löschen',
+          Title: 'Dokument löschen',
+          SuccessToast: {
+            Title: 'Dokument wurde gelöscht',
+            Message: 'Das Dokument wurde gelöscht.'
+          }
         },
         ConfigureModal: {
           Title: 'Dokument bearbeiten',
