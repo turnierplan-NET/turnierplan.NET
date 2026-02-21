@@ -87,8 +87,8 @@ export class ImageManagerComponent {
 
         this.notificationService.showNotification(
           'info',
-          'Portal.ViewOrganization.Images.DeleteToast.Title',
-          'Portal.ViewOrganization.Images.DeleteToast.Message'
+          'Portal.ViewOrganization.Images.Delete.SuccessToast.Title',
+          'Portal.ViewOrganization.Images.Delete.SuccessToast.Message'
         );
       },
       error: (error) => {

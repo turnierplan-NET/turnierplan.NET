@@ -58,7 +58,12 @@
           </td>
           <td class="align-middle">
             @if (writeAllowed) {
-              <tp-delete-button (confirmed)="deleteImage(image.id)" />
+              <!-- TODO: Set custom text for deleting image => "Will be removed from all tournaments" or similar -->
+              <tp-delete-button
+                [modalConfirmation]="true"
+                [translationKey]="'Portal.ViewOrganization.Images.Delete'"
+                [targetObjectName]="image.name"
+                (confirmed)="deleteImage(image.id)" />
             }
           </td>
         </tr>
