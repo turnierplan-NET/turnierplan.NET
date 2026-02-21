@@ -67,7 +67,7 @@ public sealed partial class ReceiptsRenderer(IImageStorage imageStorage) : Docum
                                     : string.Empty).FontSize(7);
                             });
 
-                            column.Item().PaddingTop(8, Unit.Millimetre).AlignCenter().Text(text =>
+                            column.Item().PaddingTop(10, Unit.Millimetre).AlignCenter().Text(text =>
                             {
                                 text.DefaultTextStyle(x => x.FontSize(10));
                                 text.Span(localization.Get("Documents.Receipts.Line1"));
