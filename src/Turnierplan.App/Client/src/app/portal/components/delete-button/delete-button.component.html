@@ -5,7 +5,7 @@
   container="body"
   popoverClass="tp-popover-slim"
   [tabindex]="popover.isOpen() ? 0 : -1"
-  (keydown.enter)="popover.isOpen() && confirmed.emit()"
+  (keydown.enter)="popover.isOpen() && deleteClicked()"
   [ngClass]="{
     'tp-cursor-pointer': reducedFootprint,
     'btn btn-sm btn-outline-danger': !reducedFootprint,
@@ -23,7 +23,7 @@
     @if (!disabled) {
       <i
         class="tp-cursor-pointer bi bi-trash text-danger fs-5"
-        (click)="confirmed.emit()"
+        (click)="deleteClicked()"
         [title]="'Portal.DeleteButton.ConfirmTooltip' | translate"></i>
     }
     <span
