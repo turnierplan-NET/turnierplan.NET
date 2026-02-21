@@ -6,7 +6,7 @@
   popoverClass="tp-popover-slim"
   [tabindex]="popover.isOpen() ? 0 : -1"
   (keydown.enter)="popover.isOpen() && deleteClicked()"
-  (click)="openModalIfEnabled()"
+  (click)="showDeleteModalIfEnabled()"
   [ngClass]="{
     'tp-cursor-pointer': reducedFootprint,
     'btn btn-sm btn-outline-danger': !reducedFootprint,

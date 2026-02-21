@@ -40,7 +40,7 @@ export class DeleteButtonComponent {
     this.confirmed.emit();
   }
 
-  protected openModalIfEnabled(): void {
+  protected showDeleteModalIfEnabled(): void {
     if (!this.modalConfirmation) {
       return;
     }
