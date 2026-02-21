@@ -9,5 +9,7 @@ internal sealed class IdentityOptions : AuthenticationSchemeOptions
     public TimeSpan AccessTokenLifetime { get; init; } = TimeSpan.Zero;
 
     public TimeSpan RefreshTokenLifetime { get; init; } = TimeSpan.Zero;
+
+    public bool? AllowInsecure { get; init; }
 }
 
