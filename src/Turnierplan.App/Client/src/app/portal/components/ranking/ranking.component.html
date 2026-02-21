@@ -48,6 +48,7 @@
               @if (ranking.rankingOverwriteId !== undefined) {
                 <div class="d-flex flex-row">
                   <!-- d-flex to avoid layout issues -->
+                  <!-- TODO: Enable modal for this delete button -->
                   <tp-delete-button [reducedFootprint]="true" (confirmed)="removeRankingOverwrite.emit(ranking.rankingOverwriteId)" />
                 </div>
               }
