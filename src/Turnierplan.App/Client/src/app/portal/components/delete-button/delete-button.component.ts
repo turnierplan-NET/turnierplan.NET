@@ -37,6 +37,7 @@ export class DeleteButtonComponent {
     if (this.modalConfirmation) {
       return;
     }
+
     this.confirmed.emit();
   }
 

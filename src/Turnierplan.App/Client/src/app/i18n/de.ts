@@ -424,7 +424,7 @@ export const de = {
           HideRanking: 'Platzierung ausblenden',
           HideRankingTooltip: 'Wenn die Platzierung ausgeblendet wird, ist sie nicht mehr auf den öffentlichen Turnierseiten sichtbar'
         },
-        Delete: {
+        DeleteOverwrite: {
           Header: 'Zurücksetzen',
           Tooltip:
             'Wenn zuvorige Änderungen gelöscht werden, wird an der jeweiligen Stelle wieder die Standard-Platzierung anzeigt, welche im Turnier berechnet werden.',

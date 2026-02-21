@@ -10,8 +10,8 @@
         <th></th>
         @if (showDeleteOverwriteColumn) {
           <th class="text-nowrap">
-            <span translate="Portal.ViewTournament.Ranking.Delete.Header"></span>
-            <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Ranking.Delete.Tooltip'" />
+            <span translate="Portal.ViewTournament.Ranking.DeleteOverwrite.Header"></span>
+            <tp-tooltip-icon [tooltipText]="'Portal.ViewTournament.Ranking.DeleteOverwrite.Tooltip'" />
           </th>
         }
       </tr>
@@ -51,8 +51,10 @@
                   <tp-delete-button
                     [reducedFootprint]="true"
                     [modalConfirmation]="true"
-                    [translationKey]="'Portal.ViewTournament.Ranking.Delete'"
-                    [targetObjectName]="'Portal.ViewTournament.Ranking.Delete.ObjectDisplayName' | translate: { value: ranking.position }"
+                    [translationKey]="'Portal.ViewTournament.Ranking.DeleteOverwrite'"
+                    [targetObjectName]="
+                      'Portal.ViewTournament.Ranking.DeleteOverwrite.ObjectDisplayName' | translate: { value: ranking.position }
+                    "
                     (confirmed)="removeRankingOverwrite.emit(ranking.rankingOverwriteId)" />
                 </div>
               }
