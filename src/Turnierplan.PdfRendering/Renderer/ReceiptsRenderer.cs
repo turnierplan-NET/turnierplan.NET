@@ -58,16 +58,16 @@ public sealed partial class ReceiptsRenderer(IImageStorage imageStorage) : Docum
 
                             column.Item().LineHorizontal(1);
 
-                            column.Item().PaddingTop(15, Unit.Millimetre).AlignCenter().Text(entry.TeamName).FontSize(14);
+                            column.Item().PaddingTop(11, Unit.Millimetre).AlignCenter().Text(entry.TeamName).FontSize(14).ClampLines(3);
 
-                            column.Item().PaddingTop(2, Unit.Millimetre).AlignCenter().Text(text =>
+                            column.Item().PaddingTop(3, Unit.Millimetre).AlignCenter().Text(text =>
                             {
                                 text.Span(entry.TeamCount > 1
                                     ? localization.Get("Documents.Receipts.CombinedTeams", entry.TeamCount)
                                     : string.Empty).FontSize(7);
                             });
 
-                            column.Item().PaddingTop(10, Unit.Millimetre).AlignCenter().Text(text =>
+                            column.Item().PaddingTop(8, Unit.Millimetre).AlignCenter().Text(text =>
                             {
                                 text.DefaultTextStyle(x => x.FontSize(10));
                                 text.Span(localization.Get("Documents.Receipts.Line1"));
