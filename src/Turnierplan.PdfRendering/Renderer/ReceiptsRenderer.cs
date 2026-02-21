@@ -58,7 +58,7 @@ public sealed partial class ReceiptsRenderer(IImageStorage imageStorage) : Docum
 
                             column.Item().LineHorizontal(1);
 
-                            column.Item().PaddingTop(11, Unit.Millimetre).AlignCenter().Text(entry.TeamName).FontSize(14).ClampLines(3);
+                            column.Item().PaddingTop(15, Unit.Millimetre).AlignCenter().Text(entry.TeamName).FontSize(14).ClampLines(3);
 
                             column.Item().PaddingTop(3, Unit.Millimetre).AlignCenter().Text(text =>
                             {
@@ -80,7 +80,7 @@ public sealed partial class ReceiptsRenderer(IImageStorage imageStorage) : Docum
                                 : localization.Get("Documents.Receipts.SignatureDateLocation", configuration.SignatureLocation, signatureDate);
                             column.Item().PaddingTop(5, Unit.Millimetre).AlignCenter().Text(signatureDateLocation);
 
-                            column.Item().PaddingBottom(3, Unit.Millimetre).PaddingHorizontal(4, Unit.Millimetre).ExtendVertical().AlignBottom().Column(signatureColumn =>
+                            column.Item().PaddingBottom(4, Unit.Millimetre).PaddingHorizontal(4, Unit.Millimetre).ExtendVertical().AlignBottom().Column(signatureColumn =>
                             {
                                 signatureColumn.Item().Text(localization.Get("Documents.Receipts.Signature")).Underline();
 
