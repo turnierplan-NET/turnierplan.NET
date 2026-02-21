@@ -1,12 +1,11 @@
-import { Component, EventEmitter, inject, Input, Output, TemplateRef, ViewChild } from '@angular/core';
-import { ActionButtonComponent } from '../action-button/action-button.component';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { DeleteWidgetComponent } from '../delete-widget/delete-widget.component';
 import { TranslateDirective } from '@ngx-translate/core';
-import { NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
+import { OffcanvasWrapperComponent } from '../offcanvas-wrapper/offcanvas-wrapper.component';
 
 @Component({
   selector: 'tp-delete-offcanvas',
-  imports: [ActionButtonComponent, DeleteWidgetComponent, TranslateDirective],
+  imports: [DeleteWidgetComponent, TranslateDirective, OffcanvasWrapperComponent],
   templateUrl: './delete-offcanvas.component.html'
 })
 export class DeleteOffcanvasComponent {
@@ -16,43 +15,28 @@ export class DeleteOffcanvasComponent {
   @Output()
   public deleteClick = new EventEmitter<string>();
 
-  @ViewChild('offcanvasTemplate')
-  protected offcanvasTemplate!: TemplateRef<any>;
+  @ViewChild('offcanvasWrapper')
+  protected offcanvasWrapper!: OffcanvasWrapperComponent;
 
   protected targetObjectName?: string;
   protected targetObjectId?: string;
 
-  private readonly offcanvasService = inject(NgbOffcanvas);
-  private currentOffcanvas?: NgbOffcanvasRef;
-
   public show(targetObjectId: string, targetObjectName: string): void {
-    if (this.currentOffcanvas) {
+    if (this.offcanvasWrapper.isOpen) {
       return;
     }
 
     this.targetObjectName = targetObjectName;
     this.targetObjectId = targetObjectId;
 
-    this.currentOffcanvas = this.offcanvasService.open(this.offcanvasTemplate, { position: 'end' });
-    this.currentOffcanvas.hidden.subscribe(() => (this.currentOffcanvas = undefined));
-  }
-
-  public close(): void {
-    this.currentOffcanvas?.close();
-    this.targetObjectId = undefined;
-    this.targetObjectName = undefined;
+    this.offcanvasWrapper.show();
   }
 
   protected confirmed(): void {
-    // Remember the id because close() will reset the field
-    const id = this.targetObjectId;
+    this.offcanvasWrapper.close();
 
-    this.close();
-
-    if (!id) {
-      return;
+    if (this.targetObjectId) {
+      this.deleteClick.emit(this.targetObjectId);
     }
-
-    this.deleteClick.emit(id);
   }
 }

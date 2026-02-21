@@ -1,18 +1,13 @@
-<ng-template #offcanvasTemplate>
-  <div class="p-3">
-    <div class="mb-3">
-      <tp-action-button [title]="'Portal.General.Cancel'" [icon]="'x-circle'" [type]="'outline-secondary'" (buttonClick)="close()" />
+<tp-offcanvas-wrapper #offcanvasWrapper>
+  @if (targetObjectName && targetObjectId) {
+    <tp-delete-widget
+      [translationKey]="translationKey"
+      [thinLayout]="true"
+      [targetObjectName]="targetObjectName"
+      (deleteClick)="confirmed()" />
+    <div class="mt-3 small text-secondary">
+      <span [translate]="translationKey + '.IdConfirmation'"></span><br />
+      <span>{{ targetObjectId }}</span>
     </div>
-    @if (targetObjectName && targetObjectId) {
-      <tp-delete-widget
-        [translationKey]="translationKey"
-        [thinLayout]="true"
-        [targetObjectName]="targetObjectName"
-        (deleteClick)="confirmed()" />
-      <div class="mt-3 small text-secondary">
-        <span [translate]="translationKey + '.IdConfirmation'"></span><br />
-        <span>{{ targetObjectId }}</span>
-      </div>
-    }
-  </div>
-</ng-template>
+  }
+</tp-offcanvas-wrapper>
