@@ -17,6 +17,7 @@ import { ApiKeyDto } from '../../../api/models/api-key-dto';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { getOrganization } from '../../../api/fn/organizations/get-organization';
 import { createApiKey } from '../../../api/fn/api-keys/create-api-key';
+import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 @Component({
   templateUrl: './create-api-key.component.html',
@@ -31,7 +32,8 @@ import { createApiKey } from '../../../api/fn/api-keys/create-api-key';
     FormsModule,
     ReactiveFormsModule,
     NgClass,
-    TranslatePipe
+    TranslatePipe,
+    E2eDirective
   ]
 })
 export class CreateApiKeyComponent {

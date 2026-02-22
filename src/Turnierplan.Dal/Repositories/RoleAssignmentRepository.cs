@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.Entity;
 using Turnierplan.Core.Folder;
@@ -10,11 +11,23 @@ using Turnierplan.Core.Venue;
 
 namespace Turnierplan.Dal.Repositories;
 
-public interface IRoleAssignmentRepository<T> : IRepository<RoleAssignment<T>, Guid>
+public interface IRoleAssignmentRepository
+{
+    Task RemoveAllByPrincipalAsync(Principal principal);
+}
+
+public interface IRoleAssignmentRepository<T> : IRepository<RoleAssignment<T>, Guid>, IRoleAssignmentRepository
     where T : Entity<long>, IEntityWithRoleAssignments<T>;
 
 internal abstract class RoleAssignmentRepositoryBase<T>(TurnierplanContext context) : RepositoryBase<RoleAssignment<T>, Guid>(context), IRoleAssignmentRepository<T>
-    where T : Entity<long>, IEntityWithRoleAssignments<T>;
+    where T : Entity<long>, IEntityWithRoleAssignments<T>
+{
+    public async Task RemoveAllByPrincipalAsync(Principal principal)
+    {
+        var roleAssignments = await DbSet.Where(x => x.Principal == principal).ToListAsync();
+        DbSet.RemoveRange(roleAssignments);
+    }
+}
 
 internal sealed class ApiKeyRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<ApiKey>(context);
 

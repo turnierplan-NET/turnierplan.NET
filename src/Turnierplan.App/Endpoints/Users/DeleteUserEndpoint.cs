@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
+using Turnierplan.Core.Extensions;
 using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.Users;
@@ -18,6 +19,7 @@ internal sealed class DeleteUserEndpoint : EndpointBase
         [FromRoute] Guid id,
         HttpContext context,
         IUserRepository repository,
+        IServiceProvider serviceProvider,
         CancellationToken cancellationToken)
     {
         if (id == context.GetCurrentUserIdOrThrow())
@@ -33,6 +35,13 @@ internal sealed class DeleteUserEndpoint : EndpointBase
         }
 
         repository.Remove(user);
+
+        var principal = user.AsPrincipal();
+
+        foreach (var roleAssignmentRepository in serviceProvider.GetServices<IRoleAssignmentRepository>())
+        {
+            await roleAssignmentRepository.RemoveAllByPrincipalAsync(principal);
+        }
 
         await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 

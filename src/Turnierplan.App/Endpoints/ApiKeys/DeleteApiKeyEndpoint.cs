@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Security;
+using Turnierplan.Core.Extensions;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Dal.Repositories;
 
@@ -17,6 +18,7 @@ internal sealed class DeleteApiKeyEndpoint : EndpointBase
         [FromRoute] PublicId id,
         IApiKeyRepository repository,
         IAccessValidator accessValidator,
+        IServiceProvider serviceProvider,
         CancellationToken cancellationToken)
     {
         var apiKey = await repository.GetByPublicIdAsync(id);
@@ -32,6 +34,13 @@ internal sealed class DeleteApiKeyEndpoint : EndpointBase
         }
 
         repository.Remove(apiKey);
+
+        var principal = apiKey.AsPrincipal();
+
+        foreach (var roleAssignmentRepository in serviceProvider.GetServices<IRoleAssignmentRepository>())
+        {
+            await roleAssignmentRepository.RemoveAllByPrincipalAsync(principal);
+        }
 
         await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 

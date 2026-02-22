@@ -45,6 +45,7 @@
           @case (2) {
             <tp-action-button
               *tpIsActionAllowed="[organization.id, Actions.GenericWrite]"
+              [tpE2E]="'view-organization-page-new-api-key-button'"
               [title]="'Portal.ViewOrganization.NewApiKey'"
               [type]="'outline-success'"
               [icon]="'plus-circle'"
@@ -218,6 +219,7 @@
                             @if (writeAllowed) {
                               <td class="align-middle" style="width: 1px">
                                 <tp-action-button
+                                  [tpE2E]="['view-organization-page-delete-api-key-button', apiKey.id]"
                                   [icon]="'trash'"
                                   [type]="'outline-danger'"
                                   [mode]="'IconOnly'"

@@ -30,16 +30,8 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
 
     private static async Task<IResult> Handle(
         [FromBody] CreateRoleAssignmentEndpointRequest request,
-        IApiKeyRepository apiKeyRepository,
-        IFolderRepository folderRepository,
-        IImageRepository imageRepository,
-        IOrganizationRepository organizationRepository,
-        IPlanningRealmRepository planningRealmRepository,
-        ITournamentRepository tournamentRepository,
-        IUserRepository userRepository,
-        IVenueRepository venueRepository,
-        IAccessValidator accessValidator,
         IServiceProvider serviceProvider,
+        IAccessValidator accessValidator,
         IMapper mapper,
         CancellationToken cancellationToken)
     {
@@ -55,13 +47,13 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
 
         var task = typeName switch
         {
-            "ApiKey" => CreateRoleAssignmentAsync(request, apiKeyRepository, targetId, accessValidator, apiKeyRepository, userRepository, serviceProvider.GetRequiredService<IRoleAssignmentRepository<ApiKey>>(), mapper, cancellationToken),
-            "Folder" => CreateRoleAssignmentAsync(request, folderRepository, targetId, accessValidator, apiKeyRepository, userRepository, serviceProvider.GetRequiredService<IRoleAssignmentRepository<Folder>>(), mapper, cancellationToken),
-            "Image" => CreateRoleAssignmentAsync(request, imageRepository, targetId, accessValidator, apiKeyRepository, userRepository, serviceProvider.GetRequiredService<IRoleAssignmentRepository<Image>>(), mapper, cancellationToken),
-            "Organization" => CreateRoleAssignmentAsync(request, organizationRepository, targetId, accessValidator, apiKeyRepository, userRepository, serviceProvider.GetRequiredService<IRoleAssignmentRepository<Organization>>(), mapper, cancellationToken),
-            "PlanningRealm" => CreateRoleAssignmentAsync(request, planningRealmRepository, targetId, accessValidator, apiKeyRepository, userRepository, serviceProvider.GetRequiredService<IRoleAssignmentRepository<PlanningRealm>>(), mapper, cancellationToken),
-            "Tournament" => CreateRoleAssignmentAsync(request, tournamentRepository, targetId, accessValidator, apiKeyRepository, userRepository, serviceProvider.GetRequiredService<IRoleAssignmentRepository<Tournament>>(), mapper, cancellationToken),
-            "Venue" => CreateRoleAssignmentAsync(request, venueRepository, targetId, accessValidator, apiKeyRepository, userRepository, serviceProvider.GetRequiredService<IRoleAssignmentRepository<Venue>>(), mapper, cancellationToken),
+            "ApiKey" => CreateRoleAssignmentAsync<ApiKey>(request, serviceProvider, accessValidator, mapper, targetId, cancellationToken),
+            "Folder" => CreateRoleAssignmentAsync<Folder>(request, serviceProvider, accessValidator, mapper, targetId, cancellationToken),
+            "Image" => CreateRoleAssignmentAsync<Image>(request, serviceProvider, accessValidator, mapper, targetId, cancellationToken),
+            "Organization" => CreateRoleAssignmentAsync<Organization>(request, serviceProvider, accessValidator, mapper, targetId, cancellationToken),
+            "PlanningRealm" => CreateRoleAssignmentAsync<PlanningRealm>(request, serviceProvider, accessValidator, mapper, targetId, cancellationToken),
+            "Tournament" => CreateRoleAssignmentAsync<Tournament>(request, serviceProvider, accessValidator, mapper, targetId, cancellationToken),
+            "Venue" => CreateRoleAssignmentAsync<Venue>(request, serviceProvider, accessValidator, mapper, targetId, cancellationToken),
             _ => null
         };
 
@@ -72,16 +64,14 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
 
     private static async Task<IResult> CreateRoleAssignmentAsync<T>(
         CreateRoleAssignmentEndpointRequest request,
-        IRepositoryWithPublicId<T, long> repository,
-        PublicId targetId,
+        IServiceProvider serviceProvider,
         IAccessValidator accessValidator,
-        IApiKeyRepository apiKeyRepository,
-        IUserRepository userRepository,
-        IRoleAssignmentRepository<T> roleAssignmentRepository,
         IMapper mapper,
+        PublicId targetId,
         CancellationToken cancellationToken)
         where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
+        var repository = serviceProvider.GetRequiredService<IRepositoryWithPublicId<T, long>>();
         var entity = await repository.GetByPublicIdAsync(targetId);
 
         if (entity is null)
@@ -94,7 +84,7 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
             return Results.Forbid();
         }
 
-        var principal = await GetPrincipalAsync(request, apiKeyRepository, userRepository);
+        var principal = await GetPrincipalAsync(request, serviceProvider);
 
         if (principal is null)
         {
@@ -106,6 +96,7 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
             return Results.Conflict("There already exists a role assignment for the specified principal/role combination.");
         }
 
+        var roleAssignmentRepository = serviceProvider.GetRequiredService<IRoleAssignmentRepository<T>>();
         var roleAssignment = entity.AddRoleAssignment(request.Role, principal);
 
         await roleAssignmentRepository.CreateAsync(roleAssignment);
@@ -114,13 +105,11 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
         return Results.Ok(mapper.Map<RoleAssignmentDto>(roleAssignment));
     }
 
-    private static async Task<Principal?> GetPrincipalAsync(
-        CreateRoleAssignmentEndpointRequest request,
-        IApiKeyRepository apiKeyRepository,
-        IUserRepository userRepository)
+    private static async Task<Principal?> GetPrincipalAsync(CreateRoleAssignmentEndpointRequest request, IServiceProvider serviceProvider)
     {
         if (request.ApiKeyId.HasValue)
         {
+            var apiKeyRepository = serviceProvider.GetRequiredService<IApiKeyRepository>();
             var apiKey = await apiKeyRepository.GetByPublicIdAsync(request.ApiKeyId.Value);
 
             return apiKey?.AsPrincipal();
@@ -128,6 +117,7 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
 
         if (request.UserNameOrEmail is not null)
         {
+            var userRepository = serviceProvider.GetRequiredService<IUserRepository>();
             var user = await userRepository.GetByUserNameOrEmailAsync(request.UserNameOrEmail);
 
             return user?.AsPrincipal();

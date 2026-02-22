@@ -3,9 +3,15 @@ using Turnierplan.App.Helpers;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
+using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.Entity;
+using Turnierplan.Core.Folder;
+using Turnierplan.Core.Image;
+using Turnierplan.Core.Organization;
+using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament;
+using Turnierplan.Core.Venue;
 using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.RoleAssignments;
@@ -20,13 +26,7 @@ internal sealed class GetRoleAssignmentsEndpoint : EndpointBase<IEnumerable<Role
 
     private static async Task<IResult> Handle(
         [FromRoute] string scopeId,
-        IApiKeyRepository apiKeyRepository,
-        IFolderRepository folderRepository,
-        IImageRepository imageRepository,
-        IOrganizationRepository organizationRepository,
-        IPlanningRealmRepository planningRealmRepository,
-        ITournamentRepository tournamentRepository,
-        IVenueRepository venueRepository,
+        IServiceProvider serviceProvider,
         IAccessValidator accessValidator,
         IMapper mapper)
     {
@@ -37,13 +37,13 @@ internal sealed class GetRoleAssignmentsEndpoint : EndpointBase<IEnumerable<Role
 
         var task = typeName switch
         {
-            "ApiKey" => GetRoleAssignmentsAsync(apiKeyRepository, targetId, accessValidator, mapper),
-            "Folder" => GetRoleAssignmentsAsync(folderRepository, targetId, accessValidator, mapper),
-            "Image" => GetRoleAssignmentsAsync(imageRepository, targetId, accessValidator, mapper),
-            "Organization" => GetRoleAssignmentsAsync(organizationRepository, targetId, accessValidator, mapper),
-            "PlanningRealm" => GetRoleAssignmentsAsync(planningRealmRepository, targetId, accessValidator, mapper),
-            "Tournament" => GetRoleAssignmentsAsync(tournamentRepository, targetId, accessValidator, mapper),
-            "Venue" => GetRoleAssignmentsAsync(venueRepository, targetId, accessValidator, mapper),
+            "ApiKey" => GetRoleAssignmentsAsync<ApiKey>(serviceProvider, accessValidator, mapper, targetId),
+            "Folder" => GetRoleAssignmentsAsync<Folder>(serviceProvider, accessValidator, mapper, targetId),
+            "Image" => GetRoleAssignmentsAsync<Image>(serviceProvider, accessValidator, mapper, targetId),
+            "Organization" => GetRoleAssignmentsAsync<Organization>(serviceProvider, accessValidator, mapper, targetId),
+            "PlanningRealm" => GetRoleAssignmentsAsync<PlanningRealm>(serviceProvider, accessValidator, mapper, targetId),
+            "Tournament" => GetRoleAssignmentsAsync<Tournament>(serviceProvider, accessValidator, mapper, targetId),
+            "Venue" => GetRoleAssignmentsAsync<Venue>(serviceProvider, accessValidator, mapper, targetId),
             _ => null
         };
 
@@ -52,9 +52,10 @@ internal sealed class GetRoleAssignmentsEndpoint : EndpointBase<IEnumerable<Role
             : await task;
     }
 
-    private static async Task<IResult> GetRoleAssignmentsAsync<T>(IRepositoryWithPublicId<T, long> repository, PublicId targetId, IAccessValidator accessValidator, IMapper mapper)
+    private static async Task<IResult> GetRoleAssignmentsAsync<T>(IServiceProvider serviceProvider, IAccessValidator accessValidator, IMapper mapper, PublicId targetId)
         where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
+        var repository = serviceProvider.GetRequiredService<IRepositoryWithPublicId<T, long>>();
         var entity = await repository.GetByPublicIdAsync(targetId);
 
         if (entity is null)
