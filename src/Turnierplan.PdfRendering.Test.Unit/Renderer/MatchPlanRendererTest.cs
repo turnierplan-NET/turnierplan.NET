@@ -1,8 +1,11 @@
-﻿using Turnierplan.Core.Organization;
+﻿using FluentAssertions;
+using FluentAssertions.Extensions;
+using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament;
 using Turnierplan.PdfRendering.Configuration;
 using Turnierplan.PdfRendering.Renderer;
+using Xunit;
 
 namespace Turnierplan.PdfRendering.Test.Unit.Renderer;
 

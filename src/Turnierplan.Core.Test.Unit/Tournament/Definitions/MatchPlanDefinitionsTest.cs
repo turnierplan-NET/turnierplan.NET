@@ -1,4 +1,6 @@
-﻿using Turnierplan.Core.Tournament.Definitions;
+﻿using FluentAssertions;
+using Turnierplan.Core.Tournament.Definitions;
+using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.Tournament.Definitions;
 

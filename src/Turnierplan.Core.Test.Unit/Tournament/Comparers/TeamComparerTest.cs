@@ -1,6 +1,8 @@
-﻿using Turnierplan.Core.Tournament;
+﻿using FluentAssertions;
+using Turnierplan.Core.Tournament;
 using Turnierplan.Core.Tournament.Comparers;
 using Turnierplan.Core.Tournament.TeamSelectors;
+using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.Tournament.Comparers;
 

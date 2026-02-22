@@ -2,6 +2,7 @@ using FluentValidation.TestHelper;
 using Turnierplan.App.Endpoints.Matches;
 using Turnierplan.App.Models.Enums;
 using Turnierplan.Core.Tournament;
+using Xunit;
 
 namespace Turnierplan.App.Test.Unit.Endpoints.Matches;
 

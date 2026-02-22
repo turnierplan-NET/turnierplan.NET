@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
+using FluentAssertions;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ using Turnierplan.Localization.Extensions;
 using Turnierplan.PdfRendering.Configuration;
 using Turnierplan.PdfRendering.Extensions;
 using Turnierplan.PdfRendering.Renderer;
+using Xunit;
 using Image = Turnierplan.Core.Image.Image;
 
 namespace Turnierplan.PdfRendering.Test.Unit.Renderer;

@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.TestHelper;
 using Turnierplan.App.Endpoints.Tournaments;
+using Xunit;
 
 namespace Turnierplan.App.Test.Unit.Endpoints.Tournaments;
 
