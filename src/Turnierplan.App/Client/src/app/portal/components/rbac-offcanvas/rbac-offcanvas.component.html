@@ -26,11 +26,16 @@
         (buttonClick)="showAddRoleAssignmentDialog()" />
     </div>
 
-    @if (roleAssignmentCount > 3) {
-      <div class="mb-2 me-1 small text-end">
-        <span translate="Portal.RbacManagement.TotalCount" [translateParams]="{ count: roleAssignmentCount }"></span>
-      </div>
-    }
+    <div class="mb-2 me-1 small text-end">
+      @if (roleAssignmentCount === 1) {
+        <span class="fst-italic" translate="Portal.RbacManagement.TotalCount.One"></span>
+      } @else {
+        <span
+          class="fst-italic"
+          translate="Portal.RbacManagement.TotalCount.Many"
+          [translateParams]="{ count: roleAssignmentCount }"></span>
+      }
+    </div>
 
     <table class="mb-0 table table-bordered">
       <tbody>
