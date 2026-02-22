@@ -1116,9 +1116,10 @@ export const de = {
         Description: 'Beschreibung',
         NoLabels: 'Es sind aktuell keine Labels vorhanden.',
         LabelsInfo: 'Labels können verwendet werden, um angemeldete Mannschaften zu kategorisieren und zu filtern.',
-        DeleteWarning: {
+        Delete: {
           Title: 'Label löschen',
-          Text: 'Wenn Sie ein Label löschen, wird dieses Label von allen Mannschaften entfernt, bei denen dieses Label aktuell zugewiesen ist. Dies kann nicht rückgängig gemacht werden!'
+          AdditionalModalText:
+            'Wenn Sie ein Label löschen, wird dieses Label von allen Mannschaften entfernt, bei denen dieses Label aktuell zugewiesen ist. Dies kann nicht rückgängig gemacht werden!'
         }
       },
       SaveToViewApplications: 'Speichern Sie die offenen Änderungen, um die Anmeldungen zu sehen und neue Anmeldungen hinzuzufügen.',
@@ -1306,9 +1307,11 @@ export const de = {
     DeleteWidget: {
       EnterToConfirm:
         'Zur Bestätigung geben Sie bitte &quot;<span class="text-decoration-underline">{{text}}</span>&quot; in folgendes Textfeld ein:',
-      ConfirmModalText: 'Bestätigen Sie den Löschvorgang. Dies kann <span class="fw-bold">nicht</span> rückgängig gemacht werden!',
-      Delete: 'Löschen',
-      DeleteConfirm: 'Löschen bestätigen'
+      Delete: 'Löschen'
+    },
+    DeleteModal: {
+      InfoText: 'Bestätigen Sie den Löschvorgang. Dies kann <span class="fw-bold">nicht</span> rückgängig gemacht werden!',
+      Confirm: 'Löschen bestätigen'
     },
     VisibilitySelector: {
       Private: 'Privat',

@@ -2,7 +2,7 @@
   <div class="modal-title" [translate]="translationKey + '.Title'"></div>
 </div>
 <div class="modal-body d-flex flex-column">
-  <div [innerHTML]="'Portal.DeleteWidget.ConfirmModalText' | translate"></div>
+  <div [innerHTML]="'Portal.DeleteModal.InfoText' | translate"></div>
 
   <!-- Compare translated text with the translation key. If they are equal, no additional modal text is defined. -->
   @let additionalModalTextKey = translationKey + '.AdditionalModalText';
@@ -18,9 +18,9 @@
 <div class="modal-footer">
   <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
   <tp-action-button
-    [tpE2E]="'delete-widget-confirm-delete-button'"
+    [tpE2E]="'delete-modal-confirm-delete-button'"
     [type]="'danger'"
     [icon]="'trash'"
-    [title]="'Portal.DeleteWidget.DeleteConfirm'"
+    [title]="'Portal.DeleteModal.Confirm'"
     (buttonClick)="modal.close(true)" />
 </div>
