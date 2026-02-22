@@ -11,18 +11,21 @@ using Turnierplan.Core.Venue;
 
 namespace Turnierplan.Dal.Repositories;
 
-public interface IRoleAssignmentRepository<T> : IRepository<RoleAssignment<T>, Guid>
-    where T : Entity<long>, IEntityWithRoleAssignments<T>
+public interface IRoleAssignmentRepository
 {
-    Task RemoveByPrincipalAsync(Principal principal);
+    Task RemoveAllByPrincipalAsync(Principal principal);
 }
+
+public interface IRoleAssignmentRepository<T> : IRepository<RoleAssignment<T>, Guid>, IRoleAssignmentRepository
+    where T : Entity<long>, IEntityWithRoleAssignments<T>;
 
 internal abstract class RoleAssignmentRepositoryBase<T>(TurnierplanContext context) : RepositoryBase<RoleAssignment<T>, Guid>(context), IRoleAssignmentRepository<T>
     where T : Entity<long>, IEntityWithRoleAssignments<T>
 {
-    public async Task RemoveByPrincipalAsync(Principal principal)
+    public async Task RemoveAllByPrincipalAsync(Principal principal)
     {
-        await DbSet.Where(x => x.Principal == principal).ExecuteDeleteAsync();
+        var roleAssignments = await DbSet.Where(x => x.Principal == principal).ToListAsync();
+        DbSet.RemoveRange(roleAssignments);
     }
 }
 

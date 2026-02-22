@@ -77,5 +77,13 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRoleAssignmentRepository<PlanningRealm>, PlanningRealmRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Tournament>, TournamentRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Venue>, VenueRoleAssignmentRepository>();
+
+        services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<ApiKey>>());
+        services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Folder>>());
+        services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Image>>());
+        services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Organization>>());
+        services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<PlanningRealm>>());
+        services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Tournament>>());
+        services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Venue>>());
     }
 }
