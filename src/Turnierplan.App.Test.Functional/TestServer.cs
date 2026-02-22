@@ -69,11 +69,4 @@ internal sealed class TestServer
         using var scope = _application.Services.CreateScope();
         return action(scope.ServiceProvider.GetRequiredService<TurnierplanContext>());
     }
-
-    private sealed record LoginResult
-    {
-        public required bool Success { get; init; }
-
-        public string? AccessToken { get; init; }
-    }
 }
