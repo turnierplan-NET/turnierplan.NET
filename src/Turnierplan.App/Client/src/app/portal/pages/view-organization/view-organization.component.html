@@ -219,6 +219,7 @@
                             @if (writeAllowed) {
                               <td class="align-middle" style="width: 1px">
                                 <tp-action-button
+                                  [tpE2E]="['view-organization-page-delete-api-key-button', apiKey.id]"
                                   [icon]="'trash'"
                                   [type]="'outline-danger'"
                                   [mode]="'IconOnly'"

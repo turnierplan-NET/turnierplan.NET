@@ -5,7 +5,13 @@
     <div class="mt-4 mb-3">
       <label for="success_apiKey_id" class="form-label" translate="Portal.CreateApiKey.SuccessInformation.Id"></label>
       <div class="input-group">
-        <input id="success_apiKey_id" type="text" class="form-control" readonly [value]="createdApiKey.id" />
+        <input
+          id="success_apiKey_id"
+          type="text"
+          class="form-control"
+          readonly
+          [tpE2E]="'create-api-key-page-result-id-field'"
+          [value]="createdApiKey.id" />
         <span class="input-group-text">
           <tp-copy-to-clipboard [value]="createdApiKey.id" />
         </span>
@@ -15,7 +21,13 @@
     <div class="mb-3">
       <label for="success_apiKey_secret" class="form-label" translate="Portal.CreateApiKey.SuccessInformation.Secret"></label>
       <div class="input-group">
-        <input id="success_apiKey_secret" type="text" class="form-control" readonly [value]="createdApiKey.secret ?? ''" />
+        <input
+          id="success_apiKey_secret"
+          type="text"
+          class="form-control"
+          readonly
+          [tpE2E]="'create-api-key-page-result-secret-field'"
+          [value]="createdApiKey.secret ?? ''" />
         <span class="input-group-text">
           <tp-copy-to-clipboard [value]="createdApiKey.secret ?? ''" />
         </span>

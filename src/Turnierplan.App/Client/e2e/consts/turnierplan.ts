@@ -38,7 +38,8 @@ export const turnierplan = {
     apiKeysPageId: 2,
     settingsPageId: 3,
     newTournamentButton: 'view-organization-page-new-tournament-button',
-    newApiKeyButton: 'view-organization-page-new-api-key-button'
+    newApiKeyButton: 'view-organization-page-new-api-key-button',
+    deleteApiKeyButton: (id: string) => `view-organization-page-delete-api-key-button-${id}`
   },
   createTournamentPage: {
     confirmButton: 'create-tournament-page-confirm-button',
@@ -47,6 +48,8 @@ export const turnierplan = {
   createApiKeyPage: {
     apiKeyNameField: 'create-api-key-page-api-key-name-field',
     confirmButton: 'create-api-key-page-confirm-button',
+    resultIdField: 'create-api-key-page-result-id-field',
+    resultSecretField: 'create-api-key-page-result-secret-field',
     doneButton: 'create-api-key-page-done-button'
   },
   configureTournamentPage: {

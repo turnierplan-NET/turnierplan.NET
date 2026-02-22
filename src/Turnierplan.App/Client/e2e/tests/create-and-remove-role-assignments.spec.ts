@@ -19,13 +19,13 @@ test('Create API key, then create and remove role assignment', async ({ page }) 
   await rbacOffcanvas.close();
 
   const apiKeyName = createIdentifier();
-  await organizationPage.createApiKey(apiKeyName);
+  const apiKeyDetails = await organizationPage.createApiKey(apiKeyName);
 
   await organizationPage.openRoleAssignments();
   await expect(rbacOffcanvas.getRoleAssignmentsCountLocator()).toHaveText('2 Zuweisungen');
   await rbacOffcanvas.close();
 
-  // TODO: Delete API key
+  await organizationPage.deleteApiKeyWithId(apiKeyDetails.id, apiKeyName);
 
   await organizationPage.openRoleAssignments();
   await expect(rbacOffcanvas.getRoleAssignmentsCountLocator()).toHaveText('1 Zuweisung');
