@@ -4,9 +4,11 @@ export const turnierplan = {
     organizationNameField: 'create-organization-page-organization-name-field'
   },
   deleteWidget: {
-    confirmDeleteButton: 'delete-widget-confirm-delete-button',
     deleteButton: 'delete-widget-delete-button',
     confirmationField: 'delete-widget-confirmation-field'
+  },
+  deleteModal: {
+    confirmDeleteButton: 'delete-modal-confirm-delete-button'
   },
   header: {
     logoLink: 'header-logo-link'
