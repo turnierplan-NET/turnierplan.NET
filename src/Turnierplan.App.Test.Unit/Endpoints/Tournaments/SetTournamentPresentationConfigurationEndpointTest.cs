@@ -3,6 +3,7 @@ using FluentValidation.TestHelper;
 using Turnierplan.App.Endpoints.Tournaments;
 using Turnierplan.App.Models;
 using Turnierplan.Core.Tournament;
+using Xunit;
 
 namespace Turnierplan.App.Test.Unit.Endpoints.Tournaments;
 

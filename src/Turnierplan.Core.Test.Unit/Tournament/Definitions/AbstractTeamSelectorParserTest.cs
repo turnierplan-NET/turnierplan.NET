@@ -1,5 +1,7 @@
-﻿using Turnierplan.Core.Exceptions;
+﻿using FluentAssertions;
+using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.Tournament.Definitions;
+using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.Tournament.Definitions;
 

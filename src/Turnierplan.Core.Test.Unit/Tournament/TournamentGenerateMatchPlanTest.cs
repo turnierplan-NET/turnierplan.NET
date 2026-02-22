@@ -1,6 +1,9 @@
-﻿using Turnierplan.Core.Exceptions;
+﻿using FluentAssertions;
+using FluentAssertions.Extensions;
+using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.Tournament.TeamSelectors;
+using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.Tournament;
 
