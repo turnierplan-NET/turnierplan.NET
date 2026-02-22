@@ -1,10 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Helpers;
 using Turnierplan.App.Security;
+using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.Entity;
+using Turnierplan.Core.Folder;
+using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
+using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.RoleAssignment;
+using Turnierplan.Core.Tournament;
+using Turnierplan.Core.Venue;
 using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.RoleAssignments;
@@ -20,13 +26,7 @@ internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
     private static async Task<IResult> Handle(
         [FromRoute] string scopeId,
         [FromRoute] string roleAssignmentId,
-        IApiKeyRepository apiKeyRepository,
-        IFolderRepository folderRepository,
-        IImageRepository imageRepository,
-        IOrganizationRepository organizationRepository,
-        IPlanningRealmRepository planningRealmRepository,
-        ITournamentRepository tournamentRepository,
-        IVenueRepository venueRepository,
+        IServiceProvider serviceProvider,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
@@ -42,13 +42,13 @@ internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
 
         var task = typeName switch
         {
-            "ApiKey" => DeleteRoleAssignmentAsync(apiKeyRepository, targetId, accessValidator, roleAssignmentGuid, cancellationToken),
-            "Folder" => DeleteRoleAssignmentAsync(folderRepository, targetId, accessValidator, roleAssignmentGuid, cancellationToken),
-            "Image" => DeleteRoleAssignmentAsync(imageRepository, targetId, accessValidator, roleAssignmentGuid, cancellationToken),
-            "Organization" => DeleteRoleAssignmentAsync(organizationRepository, targetId, accessValidator, roleAssignmentGuid, cancellationToken),
-            "PlanningRealm" => DeleteRoleAssignmentAsync(planningRealmRepository, targetId, accessValidator, roleAssignmentGuid, cancellationToken),
-            "Tournament" => DeleteRoleAssignmentAsync(tournamentRepository, targetId, accessValidator, roleAssignmentGuid, cancellationToken),
-            "Venue" => DeleteRoleAssignmentAsync(venueRepository, targetId, accessValidator, roleAssignmentGuid, cancellationToken),
+            "ApiKey" => DeleteRoleAssignmentAsync<ApiKey>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
+            "Folder" => DeleteRoleAssignmentAsync<Folder>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
+            "Image" => DeleteRoleAssignmentAsync<Image>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
+            "Organization" => DeleteRoleAssignmentAsync<Organization>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
+            "PlanningRealm" => DeleteRoleAssignmentAsync<PlanningRealm>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
+            "Tournament" => DeleteRoleAssignmentAsync<Tournament>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
+            "Venue" => DeleteRoleAssignmentAsync<Venue>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
             _ => null
         };
 
@@ -58,13 +58,14 @@ internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
     }
 
     private static async Task<IResult> DeleteRoleAssignmentAsync<T>(
-        IRepositoryWithPublicId<T, long> repository,
-        PublicId targetId,
+        IServiceProvider serviceProvider,
         IAccessValidator accessValidator,
+        PublicId targetId,
         Guid roleAssignmentId,
         CancellationToken cancellationToken)
         where T : Entity<long>, IEntityWithRoleAssignments<T>
     {
+        var repository = serviceProvider.GetRequiredService<IRepositoryWithPublicId<T, long>>();
         var entity = await repository.GetByPublicIdAsync(targetId);
 
         if (entity is null)
