@@ -14,6 +14,7 @@ import { RoleAssignmentDto } from '../../../api/models/role-assignment-dto';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { deleteRoleAssignment } from '../../../api/fn/role-assignments/delete-role-assignment';
 import { getRoleAssignments } from '../../../api/fn/role-assignments/get-role-assignments';
+import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 interface IRbacOffcanvasTarget {
   name: string;
@@ -30,7 +31,8 @@ interface IRbacOffcanvasTarget {
     RbacPrincipalComponent,
     DeleteButtonComponent,
     TranslatePipe,
-    TranslateDatePipe
+    TranslateDatePipe,
+    E2eDirective
   ]
 })
 export class RbacOffcanvasComponent implements OnDestroy {

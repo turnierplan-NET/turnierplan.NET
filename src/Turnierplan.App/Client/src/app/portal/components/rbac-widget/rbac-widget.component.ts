@@ -6,6 +6,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { TranslateDirective } from '@ngx-translate/core';
+import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 interface IRbacWidgetTarget {
   name: string;
@@ -15,7 +16,7 @@ interface IRbacWidgetTarget {
 @Component({
   selector: 'tp-rbac-widget',
   templateUrl: './rbac-widget.component.html',
-  imports: [ActionButtonComponent, TranslateDirective]
+  imports: [ActionButtonComponent, TranslateDirective, E2eDirective]
 })
 export class RbacWidgetComponent {
   @Input()

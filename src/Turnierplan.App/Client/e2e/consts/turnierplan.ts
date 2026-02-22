@@ -26,14 +26,28 @@ export const turnierplan = {
     navigationTab: (id: number) => `page-frame-navigation-tab-${id}`,
     title: 'page-frame-title'
   },
+  rbacWidget: {
+    openOffcanvasButton: 'rbac-widget-open-offcanvas-button'
+  },
+  rbacOffcanvas: {
+    doneButton: 'rbac-offcanvas-done-button',
+    assignmentsCount: 'rbac-offcanvas-assignments-count'
+  },
   viewOrganizationPage: {
     tournamentsPageId: 0,
+    apiKeysPageId: 2,
     settingsPageId: 3,
-    newTournamentButton: 'view-organization-page-new-tournament-button'
+    newTournamentButton: 'view-organization-page-new-tournament-button',
+    newApiKeyButton: 'view-organization-page-new-api-key-button'
   },
   createTournamentPage: {
     confirmButton: 'create-tournament-page-confirm-button',
     tournamentNameField: 'create-tournament-page-tournament-name-field'
+  },
+  createApiKeyPage: {
+    apiKeyNameField: 'create-api-key-page-api-key-name-field',
+    confirmButton: 'create-api-key-page-confirm-button',
+    doneButton: 'create-api-key-page-done-button'
   },
   configureTournamentPage: {
     addGroupButton: 'configure-tournament-page-add-group-button',

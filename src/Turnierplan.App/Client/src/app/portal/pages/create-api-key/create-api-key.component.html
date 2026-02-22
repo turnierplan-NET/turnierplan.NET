@@ -25,7 +25,11 @@
     <hr />
 
     <div class="d-flex flex-row justify-content-end">
-      <tp-action-button [type]="'success'" [title]="'Portal.General.Done'" [routerLink]="'../..'" />
+      <tp-action-button
+        [tpE2E]="'create-api-key-page-done-button'"
+        [type]="'success'"
+        [title]="'Portal.General.Done'"
+        [routerLink]="'../..'" />
     </div>
   </tp-page-frame>
 } @else {
@@ -38,6 +42,7 @@
           type="text"
           class="form-control"
           formControlName="name"
+          [tpE2E]="'create-api-key-page-api-key-name-field'"
           [ngClass]="nameControl.dirty || nameControl.touched ? (nameControl.invalid ? 'is-invalid' : 'is-valid') : ''" />
         <div class="invalid-feedback" translate="Portal.CreateApiKey.Form.NameInvalid"></div>
         <div class="valid-feedback" translate="Portal.CreateApiKey.Form.NameValid"></div>
@@ -90,6 +95,7 @@
 
     <div class="d-flex flex-row justify-content-end">
       <tp-action-button
+        [tpE2E]="'create-api-key-page-confirm-button'"
         [type]="'success'"
         [title]="'Portal.CreateApiKey.Submit'"
         [disabled]="form.invalid"

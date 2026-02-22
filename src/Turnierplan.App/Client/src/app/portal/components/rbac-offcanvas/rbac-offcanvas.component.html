@@ -1,6 +1,7 @@
 <div class="p-3">
   <div class="mb-3">
     <tp-action-button
+      [tpE2E]="'rbac-offcanvas-done-button'"
       [title]="'Portal.General.Done'"
       [icon]="'check-circle'"
       [type]="'outline-secondary'"
@@ -26,7 +27,7 @@
         (buttonClick)="showAddRoleAssignmentDialog()" />
     </div>
 
-    <div class="mb-2 me-1 small text-end">
+    <div class="mb-2 me-1 small text-end" [tpE2E]="'rbac-offcanvas-assignments-count'">
       @if (roleAssignmentCount === 1) {
         <span class="fst-italic" translate="Portal.RbacManagement.TotalCount.One"></span>
       } @else {

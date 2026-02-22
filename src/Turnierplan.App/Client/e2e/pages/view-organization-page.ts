@@ -11,10 +11,23 @@ export class ViewOrganizationPage {
     await this.page.getByTestId(turnierplan.createTournamentPage.confirmButton).click();
   }
 
+  public async createApiKey(name: string): Promise<void> {
+    await this.page.getByTestId(turnierplan.pageFrame.navigationTab(turnierplan.viewOrganizationPage.apiKeysPageId)).click();
+    await this.page.getByTestId(turnierplan.viewOrganizationPage.newApiKeyButton).click();
+    await this.page.getByTestId(turnierplan.createApiKeyPage.apiKeyNameField).fill(name);
+    await this.page.getByTestId(turnierplan.createApiKeyPage.confirmButton).click();
+    await this.page.getByTestId(turnierplan.createApiKeyPage.doneButton).click();
+  }
+
   public async deleteOrganization(confirmText: string): Promise<void> {
     await this.page.getByTestId(turnierplan.pageFrame.navigationTab(turnierplan.viewOrganizationPage.settingsPageId)).click();
     await this.page.getByTestId(turnierplan.deleteWidget.confirmationField).fill(confirmText);
     await this.page.getByTestId(turnierplan.deleteWidget.deleteButton).click();
     await this.page.getByTestId(turnierplan.deleteModal.confirmDeleteButton).click();
+  }
+
+  public async openRoleAssignments(): Promise<void> {
+    await this.page.getByTestId(turnierplan.pageFrame.navigationTab(turnierplan.viewOrganizationPage.settingsPageId)).click();
+    await this.page.getByTestId(turnierplan.rbacWidget.openOffcanvasButton).click();
   }
 }
