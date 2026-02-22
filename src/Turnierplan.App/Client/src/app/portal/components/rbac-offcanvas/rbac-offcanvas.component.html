@@ -27,14 +27,11 @@
         (buttonClick)="showAddRoleAssignmentDialog()" />
     </div>
 
-    <div class="mb-2 me-1 small text-end" [tpE2E]="'rbac-offcanvas-assignments-count'">
+    <div class="mb-2 me-1 small text-end fst-italic" [tpE2E]="'rbac-offcanvas-assignments-count'">
       @if (roleAssignmentCount === 1) {
-        <span class="fst-italic" translate="Portal.RbacManagement.TotalCount.One"></span>
+        <span translate="Portal.RbacManagement.TotalCount.One"></span>
       } @else {
-        <span
-          class="fst-italic"
-          translate="Portal.RbacManagement.TotalCount.Many"
-          [translateParams]="{ count: roleAssignmentCount }"></span>
+        <span translate="Portal.RbacManagement.TotalCount.Many" [translateParams]="{ count: roleAssignmentCount }"></span>
       }
     </div>
 
