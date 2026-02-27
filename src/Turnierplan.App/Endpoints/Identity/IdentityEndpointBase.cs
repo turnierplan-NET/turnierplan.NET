@@ -21,7 +21,7 @@ internal abstract class IdentityEndpointBase<TResponse> : EndpointBase<TResponse
         _signingKeyProvider = signingKeyProvider;
     }
 
-    protected string CreateTokenForUser(User user, bool isRefreshToken)
+    protected async Task<string> CreateTokenForUserAsync(User user, bool isRefreshToken, CancellationToken cancellationToken)
     {
         var claims = new List<Claim>();
 
@@ -57,11 +57,13 @@ internal abstract class IdentityEndpointBase<TResponse> : EndpointBase<TResponse
 
         var identityOptions = _options.CurrentValue;
         var tokenHandler = new JwtSecurityTokenHandler();
+
+        var signingKey = await _signingKeyProvider.GetSigningKeyAsync(cancellationToken);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
             Expires = DateTime.UtcNow + (isRefreshToken ? identityOptions.RefreshTokenLifetime : identityOptions.AccessTokenLifetime),
-            SigningCredentials = new SigningCredentials(_signingKeyProvider.GetSigningKey(), _signingKeyProvider.GetSigningAlgorithm())
+            SigningCredentials = new SigningCredentials(signingKey, _signingKeyProvider.GetSigningAlgorithm())
         };
 
         return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
