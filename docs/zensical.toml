@@ -26,6 +26,7 @@ nav = [
 
 favicon = "images/favicon.ico"
 language = "en"
+font = false
 
 features = [
     "content.action.edit",
@@ -59,11 +60,6 @@ scheme = "slate"
 accent = "green"
 toggle.icon = "lucide/moon"
 toggle.name = "Switch to light mode"
-
-[project.theme.font]
-text = "Inter"
-code = "Jetbrains Mono"
-# TODO: Don't load fonts from Google
 
 [project.theme.icon]
 logo = "lucide/trophy"
