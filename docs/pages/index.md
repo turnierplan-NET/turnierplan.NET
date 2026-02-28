@@ -1,16 +1,19 @@
 ---
-icon: lucide/rocket
+icon: lucide/library-big
 ---
 
-# turnierplan.NET
+# Overview
 
-**turnierplan.NET** ist a free and open-source web application for football tournaments
+turnierplan.NET is an **open-source tournament planning application** ([GitHub](github.com/turnierplan-NET/turnierplan.NET)) for football clubs and anyone else who wants to invite teams, create schedules and report match outcomes. 
 
-<div class="text-center">
-  <img src="images/logo-192.png" />
+<div class="grid cards" markdown>
+- :fontawesome-brands-html5: __HTML__ for content and structure
+- :fontawesome-brands-js: __JavaScript__ for interactivity
+- :fontawesome-brands-css3: __CSS__ for text running out of boxes
+- :fontawesome-brands-internet-explorer: __Internet Explorer__ ... huh?
 </div>
 
-<hr class="my-5" />
+
 
 ## Getting Started
 

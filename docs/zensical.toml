@@ -9,12 +9,12 @@ repo_name = "turnierplan-NET/turnierplan.NET"
 repo_url = "https://github.com/turnierplan-NET/turnierplan.NET"
 edit_uri = "blob/main/docs/pages/"
 
-copyright = "Copyright &copy; 2026 Elias Hörner, turnierplan.NET"
+copyright = "Copyright &copy; 2026 Elias Hörner"
 
 docs_dir = "pages"
 
 nav = [
-    { "Getting Started" = "index.md" },
+    { "Overview" = "index.md" },
     { "Installation" = "installation.md" },
     { "Installation 2" = [
         "test/index.md",
