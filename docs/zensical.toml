@@ -26,6 +26,7 @@ nav = [
 [project.theme]
 
 favicon = "images/favicon.ico"
+logo = "images/logo-64.png"
 language = "en"
 font = false
 
@@ -61,7 +62,3 @@ scheme = "slate"
 accent = "green"
 toggle.icon = "lucide/moon"
 toggle.name = "Switch to light mode"
-
-[project.theme.icon]
-logo = "lucide/trophy"
-
