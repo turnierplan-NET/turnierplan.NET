@@ -6,20 +6,12 @@
 
 ## Introduction
 
-**turnierplan.NET** is mostly written in C# using [.NET](https://dotnet.microsoft.com/). This includes the core logic, the backend API and database connection as well as all publicly visible web pages. In addition, it serves the *turnierplan.NET portal*, the client application for authenticated users, based on the [Angular](https://angular.dev/) framework. Some screenshots can be seen in the [section at the end](#screenshots).
+**turnierplan.NET** is mostly written in C# using [.NET](https://dotnet.microsoft.com/). This includes the core logic, the backend API and database connection as well as all publicly visible web pages. In addition, it serves the *turnierplan.NET portal*, the client application for authenticated users, based on the [Angular](https://angular.dev/) framework.
+
+Visit the **turnierplan.NET** documentation using the following link: [docs.turnierplan.net](https://docs.turnierplan.net).  If you want to install **turnierplan.NET** on your server, please visit the [Installation guide](https://docs.turnierplan.net/installation).
 
 > [!NOTE]  
 > The user interface is currently only available in German 🇩🇪
-
-## Installation
-
-If you want to install **turnierplan.NET** on your server, please visit the [Installation guide](https://docs.turnierplan.net/installation).
-
-## Documentation
-
-Visit the **turnierplan.NET** documentation using the following link: [docs.turnierplan.net](https://docs.turnierplan.net)
-
-The documentation sources are located in the `docs` directory. See the [docs readme](docs/README.md) for further information on how to edit and build the documentation.
 
 ## Development
 

@@ -8,7 +8,7 @@ In order to build the documentation locally, you must first install Python and `
 pip install -r requirements.txt
 ```
 
-Next, you can either view the rendered documentation using the zensical-built-in server or you can generate the static website files:
+Next, you can either view the rendered documentation using the zensical built-in server or you can generate the static website files:
 
 ```
 python3 -m zensical serve  # starts a local web server on port 8000
