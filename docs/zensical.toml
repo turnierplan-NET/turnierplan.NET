@@ -5,6 +5,7 @@ site_author = "turnierplan.NET"
 site_url = "https://docs.turnierplan.net/"
 site_description = "The administrator and user documentation for turnierplan.NET"
 
+repo_name = "turnierplan-NET/turnierplan.NET"
 repo_url = "https://github.com/turnierplan-NET/turnierplan.NET"
 edit_uri = "blob/main/docs/pages/"
 
