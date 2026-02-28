@@ -1,0 +1,70 @@
+[project]
+
+site_name = "turnierplan.NET Documentation"
+site_author = "turnierplan.NET"
+site_url = "https://docs.turnierplan.net/"
+site_description = "The administrator and user documentation for turnierplan.NET"
+
+repo_url = "https://github.com/turnierplan-NET/turnierplan.NET"
+edit_uri = "blob/main/docs/pages/"
+
+copyright = "Copyright &copy; 2026 Elias Hörner, turnierplan.NET"
+
+docs_dir = "pages"
+
+nav = [
+    { "Getting Started" = "index.md" },
+    { "Installation" = "installation.md" },
+    { "Installation 2" = [
+        "test/index.md",
+        { "Installation" = "installation3.md" },
+        { "Installation" = "installation4.md" },
+    ]}
+]
+
+[project.theme]
+
+favicon = "images/favicon.ico"
+language = "en"
+
+features = [
+    "content.action.edit",
+    "content.code.annotate",
+    "content.code.copy",
+    "content.footnote.tooltips",
+    # "content.tabs.link",
+    # "content.tooltips",
+    "navigation.expand",
+    "navigation.footer",
+    "navigation.indexes",
+    "navigation.instant",
+    "navigation.instant.prefetch",
+    "navigation.path",
+    "navigation.sections",
+    "navigation.top",
+    "navigation.tracking",
+    "search.highlight",
+    # "toc.follow",
+    # "toc.integrate",
+]
+
+[[project.theme.palette]]
+scheme = "default"
+accent = "green"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+scheme = "slate"
+accent = "green"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to light mode"
+
+[project.theme.font]
+text = "Inter"
+code = "Jetbrains Mono"
+# TODO: Don't load fonts from Google
+
+[project.theme.icon]
+logo = "lucide/trophy"
+

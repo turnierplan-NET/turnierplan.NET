@@ -1,9 +1,13 @@
+---
+icon: lucide/rocket
+---
+
 # turnierplan.NET
 
 **turnierplan.NET** ist a free and open-source web application for football tournaments
 
 <div class="text-center">
-  <img src="img/logo-192.png" />
+  <img src="images/logo-192.png" />
 </div>
 
 <hr class="my-5" />
