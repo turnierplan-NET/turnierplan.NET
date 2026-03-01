@@ -42,7 +42,7 @@
               <span class="image-info xsmall text-nowrap tp-text-ellipsis">{{ image.fileSize | fileSize: 'de' }}</span>
             </div>
             <div class="image-wrapper d-flex flex-column align-items-center justify-content-center">
-              <img style="max-width: 9em" [src]="image.url" [alt]="image.name" (click)="hoverOverrideImageId = image.id" />
+              <img style="max-width: 9em; max-height: 9em" [src]="image.url" [alt]="image.name" (click)="hoverOverrideImageId = image.id" />
             </div>
           </div>
         } @empty {
