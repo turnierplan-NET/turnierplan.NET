@@ -20,7 +20,7 @@ public abstract class DocumentRendererBase<T> : IDocumentRenderer
 
     protected Activity? CurrentActivity { get; private set; }
 
-    public bool Render(Tournament tournament, IDocumentConfiguration configuration, ILocalization localization, Stream destination)
+    public void Render(Tournament tournament, IDocumentConfiguration configuration, ILocalization localization, Stream destination)
     {
         lock (this)
         {
@@ -53,7 +53,7 @@ public abstract class DocumentRendererBase<T> : IDocumentRenderer
             CurrentActivity?.AddException(ex);
             CurrentActivity?.Stop();
 
-            return false;
+            throw;
         }
         finally
         {
@@ -66,8 +66,6 @@ public abstract class DocumentRendererBase<T> : IDocumentRenderer
                 // Ignored
             }
         }
-
-        return true;
     }
 
     protected abstract Document Render(Tournament tournament, T configuration, ILocalization localization);
