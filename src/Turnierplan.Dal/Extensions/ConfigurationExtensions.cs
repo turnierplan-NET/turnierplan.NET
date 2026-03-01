@@ -4,16 +4,13 @@ namespace Turnierplan.Dal.Extensions;
 
 public static class ConfigurationExtensions
 {
-    extension(IConfiguration configuration)
+    public static bool UseInMemoryDatabase(this IConfiguration configuration)
     {
-        public bool UseInMemoryDatabase()
-        {
-            return configuration.GetSection("Database").GetValue("InMemory", false);
-        }
+        return configuration.GetSection("Database").GetValue("InMemory", false);
+    }
 
-        public string? GetDatabaseConnectionString()
-        {
-            return configuration.GetSection("Database").GetValue<string>("ConnectionString");
-        }
+    public static string? GetDatabaseConnectionString(this IConfiguration configuration)
+    {
+        return configuration.GetSection("Database").GetValue<string>("ConnectionString");
     }
 }

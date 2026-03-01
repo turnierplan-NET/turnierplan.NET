@@ -4,14 +4,11 @@ namespace Turnierplan.Dal.Extensions;
 
 public static class UnitOfWorkExtensions
 {
-    extension(IUnitOfWork unitOfWork)
+    public static async Task<TransactionWrapper> WrapTransactionAsync(this IUnitOfWork unitOfWork)
     {
-        public async Task<TransactionWrapper> WrapTransactionAsync()
-        {
-            await unitOfWork.BeginTransactionAsync();
+        await unitOfWork.BeginTransactionAsync();
 
-            return new TransactionWrapper(unitOfWork);
-        }
+        return new TransactionWrapper(unitOfWork);
     }
 
     public sealed class TransactionWrapper : IAsyncDisposable
