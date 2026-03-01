@@ -68,7 +68,7 @@
           <ng-container [ngTemplateOutlet]="excludedTournamentsNotice" />
         </div>
         <div class="mt-3 d-flex flex-row justify-content-center">
-          <div echarts [options]="outcomesBarChart" style="width: 600px; height: 300px"></div>
+          <tp-chart-wrapper [chartOptions]="outcomesBarChart" [width]="600" [height]="300" />
         </div>
       }
 
@@ -77,7 +77,7 @@
 
         <div class="text-center text-decoration-underline" translate="Portal.FolderStatistics.PageViewsPerTournament"></div>
         <div class="mt-3 d-flex flex-row justify-content-center">
-          <div echarts [options]="pageViewsBarChart" style="width: 600px; height: 300px"></div>
+          <tp-chart-wrapper [chartOptions]="pageViewsBarChart" [width]="600" [height]="300" />
         </div>
       }
     </div>
