@@ -48,43 +48,39 @@ internal static class QuestPdfContainerExtensions
         container.TranslateY(translateY, sizeUnit).Unconstrained().Width(size, sizeUnit).Height(size, sizeUnit).Image(image, imageStorage);
     }
 
-    extension(IContainer container)
+    /// <summary>
+    /// Pulls the specified image from the configured image storage and creates a QuestPDF image with the retrieved image data.
+    /// </summary>
+    public static void Image(this IContainer container, Image image, IImageStorage imageStorage)
     {
+        // Waiting for the task to complete is not ideal. However, attempting to use async
+        // inside the QuestPDF document structure is probably a much bigger nightmare...
+        var task = imageStorage.GetImageAsync(image);
+        task.Wait();
 
-        /// <summary>
-        /// Pulls the specified image from the configured image storage and creates a QuestPDF image with the retrieved image data.
-        /// </summary>
-        public void Image(Image image, IImageStorage imageStorage)
+        var stream = task.Result;
+        container.Image(stream);
+
+        // Dispose the stream (at this point, QuestPDF has read the stream content into an internal buffer)
+        stream.Dispose();
+    }
+
+    /// <remarks>
+    /// This code is taken from <see href="https://www.questpdf.com/api-reference/skiasharp-integration.html#helper-script"/>, last viewed on 2026-03-01
+    /// </remarks>
+    public static void SkiaSharpSvgCanvas(this IContainer container, Action<SKCanvas, Size> drawOnCanvas)
+    {
+        container.Svg(size =>
         {
-            // Waiting for the task to complete is not ideal. However, attempting to use async
-            // inside the QuestPDF document structure is probably a much bigger nightmare...
-            var task = imageStorage.GetImageAsync(image);
-            task.Wait();
+            using var stream = new MemoryStream();
 
-            var stream = task.Result;
-            container.Image(stream);
-
-            // Dispose the stream (at this point, QuestPDF has read the stream content into an internal buffer)
-            stream.Dispose();
-        }
-
-        /// <remarks>
-        /// This code is taken from <see href="https://www.questpdf.com/api-reference/skiasharp-integration.html#helper-script"/>, last viewed on 2026-03-01
-        /// </remarks>
-        public void SkiaSharpSvgCanvas(Action<SKCanvas, Size> drawOnCanvas)
-        {
-            container.Svg(size =>
+            using (var canvas = SKSvgCanvas.Create(new SKRect(0, 0, size.Width, size.Height), stream))
             {
-                using var stream = new MemoryStream();
+                drawOnCanvas(canvas, size);
+            }
 
-                using (var canvas = SKSvgCanvas.Create(new SKRect(0, 0, size.Width, size.Height), stream))
-                {
-                    drawOnCanvas(canvas, size);
-                }
-
-                var svgData = stream.ToArray();
-                return Encoding.UTF8.GetString(svgData);
-            });
-        }
+            var svgData = stream.ToArray();
+            return Encoding.UTF8.GetString(svgData);
+        });
     }
 }
