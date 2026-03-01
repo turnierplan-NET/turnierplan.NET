@@ -8,11 +8,11 @@ import { TitleService } from '../../services/title.service';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { NgTemplateOutlet, NgStyle, DecimalPipe, PercentPipe } from '@angular/common';
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
-import { NgxEchartsDirective } from 'ngx-echarts';
 import { EChartsCoreOption } from 'echarts/core';
 import { FolderStatisticsDto } from '../../../api/models/folder-statistics-dto';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { getFolderStatistics } from '../../../api/fn/folders/get-folder-statistics';
+import { ChartWrapperComponent } from '../../components/chart-wrapper/chart-wrapper.component';
 
 @Component({
   templateUrl: './folder-statistics.component.html',
@@ -26,7 +26,7 @@ import { getFolderStatistics } from '../../../api/fn/folders/get-folder-statisti
     DecimalPipe,
     PercentPipe,
     TranslatePipe,
-    NgxEchartsDirective
+    ChartWrapperComponent
   ]
 })
 export class FolderStatisticsComponent implements OnInit, OnDestroy {
