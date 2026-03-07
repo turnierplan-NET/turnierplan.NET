@@ -15,7 +15,9 @@ docs_dir = "pages"
 
 nav = [
     { "Startseite" = "index.md" },
-    { "Installation" = "installation.md" }
+    { "Installation" = "installation.md" },
+    { "Konfiguration" = "configuration.md" },
+    { "Erste Schritte" = "getting-started.md" }
 ]
 
 [project.theme]
