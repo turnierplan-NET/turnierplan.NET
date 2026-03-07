@@ -65,8 +65,8 @@ internal sealed class LoginEndpoint : IdentityEndpointBase<LoginEndpoint.LoginEn
 
         await userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-        var accessToken = CreateTokenForUser(user, false);
-        var refreshToken = CreateTokenForUser(user, true);
+        var accessToken = await CreateTokenForUserAsync(user, false, cancellationToken);
+        var refreshToken = await CreateTokenForUserAsync(user, true, cancellationToken);
 
         AddResponseCookieForToken(context, accessToken, false);
         AddResponseCookieForToken(context, refreshToken, true);
