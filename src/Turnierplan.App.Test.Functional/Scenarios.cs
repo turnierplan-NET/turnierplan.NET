@@ -55,4 +55,10 @@ public sealed class Scenarios
         _testServer.ExecuteContextAction(db => db.OrganizationRoleAssignments.Count()).Should().Be(0);
         _testServer.ExecuteContextAction(db => db.TournamentRoleAssignments.Count()).Should().Be(0);
     }
+
+    [Fact]
+    public async Task New_User_Can_Not_Create_Organization_Unless_Explicitly_Granted_Permission()
+    {
+        // TODO: Implement new test
+    }
 }
