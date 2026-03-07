@@ -1,0 +1,6 @@
+<div
+  echarts
+  class="shadow-sm"
+  [options]="chartOptions"
+  [theme]="(colorThemeService.theme$ | async) === 'dark' ? 'dark-bold' : ''"
+  [style]="style"></div>

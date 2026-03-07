@@ -31,9 +31,9 @@
       <span translate="Portal.ApiKeyUsage.LoadingData"></span>
     </div>
   } @else {
-    <div style="width: 50%">
-      <div echarts [options]="apiKeyUsageChart" style="height: 300px"></div>
-      <div class="text-center small">
+    <div style="width: 50%" class="pt-2 ps-4">
+      <tp-chart-wrapper [chartOptions]="apiKeyUsageChart" [height]="300" />
+      <div class="mt-2 text-center small">
         <span translate="Portal.ApiKeyUsage.Total"></span>
         <span class="ms-1 fw-bold">{{ totalCount }}</span>
       </div>

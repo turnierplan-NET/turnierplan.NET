@@ -34,15 +34,15 @@
                   [icon]="'check-lg'"
                   (buttonClick)="image.id !== currentImageId && modal.close({ type: 'ImageSelected', image: image })" />
               }
-              <span class="image-info small text-black text-nowrap tp-text-ellipsis mt-2" [title]="image.name">{{ image.name }}</span>
+              <span class="image-info small text-nowrap tp-text-ellipsis mt-2" [title]="image.name">{{ image.name }}</span>
               <span
-                class="image-info xsmall text-black text-nowrap tp-text-ellipsis"
+                class="image-info xsmall text-nowrap tp-text-ellipsis"
                 [translate]="'Portal.ImageChooser.Dimensions'"
                 [translateParams]="{ w: image.width, h: image.height }"></span>
-              <span class="image-info xsmall text-black text-nowrap tp-text-ellipsis">{{ image.fileSize | fileSize: 'de' }}</span>
+              <span class="image-info xsmall text-nowrap tp-text-ellipsis">{{ image.fileSize | fileSize: 'de' }}</span>
             </div>
             <div class="image-wrapper d-flex flex-column align-items-center justify-content-center">
-              <img style="max-width: 9em" [src]="image.url" [alt]="image.name" (click)="hoverOverrideImageId = image.id" />
+              <img style="max-width: 9em; max-height: 9em" [src]="image.url" [alt]="image.name" (click)="hoverOverrideImageId = image.id" />
             </div>
           </div>
         } @empty {

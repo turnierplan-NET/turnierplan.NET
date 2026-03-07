@@ -37,13 +37,13 @@ public sealed partial class ReceiptsRenderer(IImageStorage imageStorage) : Docum
                             if (configuration.ShowPrimaryLogo && tournament.PrimaryLogo is not null)
                             {
                                 using var _ = DocumentRendererActivitySource.LoadRemoteImage(CurrentActivity, tournament.PrimaryLogo, nameof(tournament.PrimaryLogo));
-                                column.Item().Unconstrained().Width(1.7f, Unit.Centimetre).Image(tournament.PrimaryLogo, imageStorage);
+                                column.Item().LogoImage(tournament.PrimaryLogo, imageStorage, 1.7f, Unit.Centimetre);
                             }
 
                             if (configuration.ShowSecondaryLogo && tournament.SecondaryLogo is not null)
                             {
                                 using var _ = DocumentRendererActivitySource.LoadRemoteImage(CurrentActivity, tournament.SecondaryLogo, nameof(tournament.SecondaryLogo));
-                                column.Item().AlignRight().Unconstrained().TranslateX(-1.7f, Unit.Centimetre).Width(1.7f, Unit.Centimetre).Image(tournament.SecondaryLogo, imageStorage);
+                                column.Item().LogoImage(tournament.SecondaryLogo, imageStorage, 1.7f, Unit.Centimetre, alignRight: true);
                             }
 
                             column.Item().PaddingVertical(10).MinHeight(12, Unit.Millimetre).AlignMiddle().Column(headerColumn =>

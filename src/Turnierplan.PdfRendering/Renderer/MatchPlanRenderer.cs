@@ -50,13 +50,13 @@ public sealed class MatchPlanRenderer(IImageStorage imageStorage, IApplicationUr
                     if (tournament.PrimaryLogo is not null)
                     {
                         using var _ = DocumentRendererActivitySource.LoadRemoteImage(CurrentActivity, tournament.PrimaryLogo, nameof(tournament.PrimaryLogo));
-                        column.Item().Unconstrained().Width(3, Unit.Centimetre).Image(tournament.PrimaryLogo, imageStorage);
+                        column.Item().LogoImage(tournament.PrimaryLogo, imageStorage, 3.0f, Unit.Centimetre);
                     }
 
                     if (tournament.SecondaryLogo is not null)
                     {
                         using var _ = DocumentRendererActivitySource.LoadRemoteImage(CurrentActivity, tournament.SecondaryLogo, nameof(tournament.SecondaryLogo));
-                        column.Item().AlignRight().Unconstrained().TranslateX(-3, Unit.Centimetre).Width(3, Unit.Centimetre).Image(tournament.SecondaryLogo, imageStorage);
+                        column.Item().LogoImage(tournament.SecondaryLogo, imageStorage, 3.0f, Unit.Centimetre, alignRight: true);
                     }
 
                     var organizerName = string.IsNullOrWhiteSpace(configuration.OrganizerNameOverride)
