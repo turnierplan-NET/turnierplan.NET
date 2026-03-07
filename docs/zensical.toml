@@ -1,0 +1,61 @@
+[project]
+
+site_name = "turnierplan.NET Dokumentation"
+site_author = "turnierplan.NET"
+site_url = "https://docs.turnierplan.net/"
+site_description = "Admin- und Benutzerdokumentation für turnierplan.NET"
+
+repo_name = "turnierplan-NET/turnierplan.NET"
+repo_url = "https://github.com/turnierplan-NET/turnierplan.NET"
+edit_uri = "blob/main/docs/pages/"
+
+copyright = "Copyright &copy; 2026 Elias Hörner"
+
+docs_dir = "pages"
+
+nav = [
+    { "Startseite" = "index.md" },
+    { "Installation" = "installation.md" },
+    { "Konfiguration" = "configuration.md" },
+    { "Erste Schritte" = "getting-started.md" }
+]
+
+[project.theme]
+
+favicon = "images/favicon.ico"
+logo = "images/logo-64.png"
+language = "de"
+font = false
+
+features = [
+    "content.action.edit",
+    "content.code.annotate",
+    "content.code.copy",
+    "content.footnote.tooltips",
+    "content.tabs.link",
+    "content.tooltips",
+    "navigation.expand",
+    "navigation.footer",
+    "navigation.indexes",
+    "navigation.instant",
+    "navigation.instant.prefetch",
+    "navigation.path",
+    "navigation.sections",
+    "navigation.top",
+    "navigation.tracking",
+    "search.highlight",
+    # "toc.follow",
+    # "toc.integrate",
+]
+
+[[project.theme.palette]]
+scheme = "default"
+accent = "green"
+toggle.icon = "lucide/sun"
+toggle.name = "In dunklen Modus wechseln"
+
+[[project.theme.palette]]
+scheme = "slate"
+accent = "green"
+toggle.icon = "lucide/moon"
+toggle.name = "In hellen Modus wechseln"
