@@ -1,9 +1,9 @@
 [project]
 
-site_name = "turnierplan.NET Documentation"
+site_name = "turnierplan.NET Dokumentation"
 site_author = "turnierplan.NET"
 site_url = "https://docs.turnierplan.net/"
-site_description = "The administrator and user documentation for turnierplan.NET"
+site_description = "Admin- und Benutzerdokumentation für turnierplan.NET"
 
 repo_name = "turnierplan-NET/turnierplan.NET"
 repo_url = "https://github.com/turnierplan-NET/turnierplan.NET"
@@ -14,13 +14,8 @@ copyright = "Copyright &copy; 2026 Elias Hörner"
 docs_dir = "pages"
 
 nav = [
-    { "Overview" = "index.md" },
-    { "Installation" = "installation.md" },
-    { "Installation 2" = [
-        "test/index.md",
-        { "Installation" = "installation3.md" },
-        { "Installation" = "installation4.md" },
-    ]}
+    { "Startseite" = "index.md" },
+    { "Installation" = "installation.md" }
 ]
 
 [project.theme]
@@ -55,10 +50,10 @@ features = [
 scheme = "default"
 accent = "green"
 toggle.icon = "lucide/sun"
-toggle.name = "Switch to dark mode"
+toggle.name = "In dunklen Modus wechseln"
 
 [[project.theme.palette]]
 scheme = "slate"
 accent = "green"
 toggle.icon = "lucide/moon"
-toggle.name = "Switch to light mode"
+toggle.name = "In hellen Modus wechseln"
