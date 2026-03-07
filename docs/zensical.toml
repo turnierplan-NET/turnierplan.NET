@@ -27,7 +27,7 @@ nav = [
 
 favicon = "images/favicon.ico"
 logo = "images/logo-64.png"
-language = "en"
+language = "de"
 font = false
 
 features = [

@@ -11,7 +11,7 @@
 Visit the **turnierplan.NET** documentation using the following link: [docs.turnierplan.net](https://docs.turnierplan.net).  If you want to install **turnierplan.NET** on your server, please visit the [Installation guide](https://docs.turnierplan.net/installation).
 
 > [!NOTE]  
-> The user interface is currently only available in German 🇩🇪
+> The user interface and documentation are currently only available in German 🇩🇪
 
 ## Development
 
