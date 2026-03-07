@@ -7,7 +7,6 @@ public sealed class User : Entity<Guid>
 {
     public User(string userName)
     {
-
         Id = Guid.NewGuid();
         PrincipalId = Guid.NewGuid();
         CreatedAt = DateTime.UtcNow;
@@ -22,7 +21,7 @@ public sealed class User : Entity<Guid>
         SecurityStamp = Guid.Empty;
     }
 
-    internal User(Guid id, Guid principalId, DateTime createdAt, string userName, string normalizedUserName, string? fullName, string? eMail, string? normalizedEMail, string passwordHash, bool isAdministrator, DateTime lastPasswordChange, Guid securityStamp)
+    internal User(Guid id, Guid principalId, DateTime createdAt, string userName, string normalizedUserName, string? fullName, string? eMail, string? normalizedEMail, string passwordHash, bool isAdministrator, bool allowCreateOrganization, DateTime lastPasswordChange, Guid securityStamp)
     {
         Id = id;
         PrincipalId = principalId;
@@ -34,6 +33,7 @@ public sealed class User : Entity<Guid>
         NormalizedEMail = normalizedEMail;
         PasswordHash = passwordHash;
         IsAdministrator = isAdministrator;
+        AllowCreateOrganization = allowCreateOrganization;
         LastPasswordChange = lastPasswordChange;
         SecurityStamp = securityStamp;
     }
@@ -57,6 +57,8 @@ public sealed class User : Entity<Guid>
     public string PasswordHash { get; private set; }
 
     public bool IsAdministrator { get; set; }
+
+    public bool AllowCreateOrganization { get; set; }
 
     public DateTime LastPasswordChange { get; private set; }
 
