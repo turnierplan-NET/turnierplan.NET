@@ -23,6 +23,7 @@ import { updateUser } from '../../../api/fn/users/update-user';
 import { deleteUser } from '../../../api/fn/users/delete-user';
 import { DeleteOffcanvasComponent } from '../../components/delete-offcanvas/delete-offcanvas.component';
 import { OffcanvasWrapperComponent } from '../../components/offcanvas-wrapper/offcanvas-wrapper.component';
+import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 
 @Component({
   templateUrl: './administration-page.component.html',
@@ -39,7 +40,8 @@ import { OffcanvasWrapperComponent } from '../../components/offcanvas-wrapper/of
     ReactiveFormsModule,
     AlertComponent,
     DeleteOffcanvasComponent,
-    OffcanvasWrapperComponent
+    OffcanvasWrapperComponent,
+    TooltipIconComponent
   ]
 })
 export class AdministrationPageComponent implements OnInit {
@@ -57,6 +59,7 @@ export class AdministrationPageComponent implements OnInit {
     fullName: new FormControl('', { nonNullable: true }),
     eMail: new FormControl('', { nonNullable: true, validators: [Validators.email] }),
     isAdministrator: new FormControl(false, { nonNullable: true }),
+    allowCreateOrganization: new FormControl(false, { nonNullable: true }),
     updatePassword: new FormControl(false, { nonNullable: true }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required] })
   });
@@ -105,6 +108,7 @@ export class AdministrationPageComponent implements OnInit {
         fullName: this.userSelectedForEditing.fullName ?? '',
         eMail: this.userSelectedForEditing.eMail ?? '',
         isAdministrator: this.userSelectedForEditing.isAdministrator,
+        allowCreateOrganization: this.userSelectedForEditing.allowCreateOrganization,
         updatePassword: false,
         password: ''
       });
@@ -144,6 +148,7 @@ export class AdministrationPageComponent implements OnInit {
       fullName: (formValue.fullName ?? '').trim().length > 0 ? formValue.fullName : undefined,
       eMail: (formValue.eMail ?? '').trim().length > 0 ? formValue.eMail : undefined,
       isAdministrator: formValue.isAdministrator,
+      allowCreateOrganization: formValue.allowCreateOrganization,
       updatePassword: formValue.updatePassword,
       password: formValue.updatePassword ? formValue.password : undefined
     };
