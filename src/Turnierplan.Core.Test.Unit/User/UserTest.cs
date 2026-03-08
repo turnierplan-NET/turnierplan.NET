@@ -53,6 +53,6 @@ public sealed class UserTest
         user.AllowCreateOrganization.Should().Be(true);
 
         var action = () => user.SetAllowCreateOrganization(false);
-        action.Should().ThrowExactly<TurnierplanException>().WithMessage("'AllowCreateOrganization' cannot be set to false in an administrator user.");
+        action.Should().ThrowExactly<TurnierplanException>().WithMessage("'AllowCreateOrganization' cannot be set to false for an administrator user.");
     }
 }

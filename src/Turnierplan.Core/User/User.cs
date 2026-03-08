@@ -117,7 +117,7 @@ public sealed class User : Entity<Guid>
     {
         if (IsAdministrator && !allowCreateOrganization)
         {
-            throw new TurnierplanException($"'{nameof(AllowCreateOrganization)}' cannot be set to false in an administrator user.");
+            throw new TurnierplanException($"'{nameof(AllowCreateOrganization)}' cannot be set to false for an administrator user.");
         }
 
         AllowCreateOrganization = allowCreateOrganization;
