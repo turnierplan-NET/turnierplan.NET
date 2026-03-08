@@ -1,5 +1,8 @@
+using System.Net;
+using System.Net.Http.Json;
 using FluentAssertions;
 using FluentAssertions.Extensions;
+using Turnierplan.App.Models;
 using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Organization;
@@ -59,6 +62,39 @@ public sealed class Scenarios
     [Fact]
     public async Task New_User_Can_Not_Create_Organization_Unless_Explicitly_Granted_Permission()
     {
-        // TODO: Implement new test
+        const string newUserName = "test_user";
+        const string newUserPassword = "test123";
+
+        var resp = await _testServer.Client.PostAsJsonAsync(
+            Routes.Users.Create(),
+            new { UserName = newUserName, Password = newUserPassword },
+            TestContext.Current.CancellationToken);
+        resp.EnsureSuccessStatusCode();
+
+        var userClient = _testServer.CreateNewClientAndLogIn(newUserName, newUserPassword);
+        resp = await userClient.PostAsJsonAsync(
+            Routes.Organizations.Create(),
+            new { Name = "test_org" },
+            TestContext.Current.CancellationToken);
+        resp.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+
+        // extra step required to get ID of new user
+        resp = await _testServer.Client.GetAsync(Routes.Users.List(), TestContext.Current.CancellationToken);
+        resp.EnsureSuccessStatusCode();
+        var allUsers = await resp.Content.ReadFromJsonAsync<UserDto[]>(TestContext.Current.CancellationToken);
+        var newUserId = allUsers!.Single(x => x.UserName.Equals(newUserName)).Id;
+
+        resp = await _testServer.Client.PutAsJsonAsync(
+            Routes.Users.Update(newUserId),
+            new { UserName = newUserName, IsAdministrator = false, AllowCreateOrganization = true, UpdatePassword = false },
+            TestContext.Current.CancellationToken);
+        resp.EnsureSuccessStatusCode();
+
+        userClient = _testServer.CreateNewClientAndLogIn(newUserName, newUserPassword);
+        resp = await userClient.PostAsJsonAsync(
+            Routes.Organizations.Create(),
+            new { Name = "test_org" },
+            TestContext.Current.CancellationToken);
+        resp.EnsureSuccessStatusCode();
     }
 }

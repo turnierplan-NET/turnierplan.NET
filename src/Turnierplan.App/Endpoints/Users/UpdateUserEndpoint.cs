@@ -54,6 +54,7 @@ internal sealed class UpdateUserEndpoint : EndpointBase
 
         user.FullName = request.FullName?.Trim();
         user.IsAdministrator = request.IsAdministrator;
+        user.AllowCreateOrganization = request.AllowCreateOrganization;
 
         user.SetUserName(request.UserName);
         user.SetEmailAddress(request.EMail);
@@ -76,9 +77,11 @@ internal sealed class UpdateUserEndpoint : EndpointBase
 
         public string? EMail { get; init; }
 
-        public bool IsAdministrator { get; init; }
+        public required bool IsAdministrator { get; init; }
 
-        public bool UpdatePassword { get; init; }
+        public required bool AllowCreateOrganization { get; init; }
+
+        public required bool UpdatePassword { get; init; }
 
         public string? Password { get; init; }
     }

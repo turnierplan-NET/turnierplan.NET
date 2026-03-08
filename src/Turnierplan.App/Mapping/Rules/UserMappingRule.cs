@@ -15,7 +15,8 @@ internal sealed class UserMappingRule : MappingRuleBase<User, UserDto>
             FullName = source.FullName,
             EMail = source.EMail,
             LastPasswordChange = source.LastPasswordChange,
-            IsAdministrator = source.IsAdministrator
+            IsAdministrator = source.IsAdministrator,
+            AllowCreateOrganization = source.AllowCreateOrganization
         };
     }
 }
