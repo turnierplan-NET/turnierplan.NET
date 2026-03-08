@@ -122,14 +122,6 @@
       </div>
 
       <div class="form-check mb-3">
-        <input class="form-check-input" id="allowCreateOrganization" type="checkbox" formControlName="allowCreateOrganization" />
-        <label
-          class="form-check-label"
-          for="allowCreateOrganization"
-          translate="Portal.Administration.EditUser.AllowCreateOrganization"></label>
-      </div>
-
-      <div class="form-check mb-3">
         <input class="form-check-input" id="isAdministrator" type="checkbox" formControlName="isAdministrator" />
         <label class="form-check-label" for="isAdministrator" translate="Portal.Administration.EditUser.IsAdministrator"></label>
       </div>
@@ -141,6 +133,16 @@
           [type]="'warning'"
           [icon]="'exclamation-triangle'"
           [text]="'Portal.Administration.EditUser.AdministratorWarning'" />
+      }
+
+      @if (!isAdministratorControl.value) {
+        <div class="form-check mb-3">
+          <input class="form-check-input" id="allowCreateOrganization" type="checkbox" formControlName="allowCreateOrganization" />
+          <label
+            class="form-check-label"
+            for="allowCreateOrganization"
+            translate="Portal.Administration.EditUser.AllowCreateOrganization"></label>
+        </div>
       }
 
       <div class="form-check mb-3">

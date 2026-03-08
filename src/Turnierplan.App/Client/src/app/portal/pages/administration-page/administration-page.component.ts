@@ -148,7 +148,7 @@ export class AdministrationPageComponent implements OnInit {
       fullName: (formValue.fullName ?? '').trim().length > 0 ? formValue.fullName : undefined,
       eMail: (formValue.eMail ?? '').trim().length > 0 ? formValue.eMail : undefined,
       isAdministrator: formValue.isAdministrator,
-      allowCreateOrganization: formValue.allowCreateOrganization,
+      allowCreateOrganization: formValue.isAdministrator || formValue.allowCreateOrganization,
       updatePassword: formValue.updatePassword,
       password: formValue.updatePassword ? formValue.password : undefined
     };
