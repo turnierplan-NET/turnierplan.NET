@@ -1,5 +1,6 @@
 using System.Globalization;
 using Turnierplan.Core.Entity;
+using Turnierplan.Core.Exceptions;
 
 namespace Turnierplan.Core.User;
 
@@ -56,9 +57,9 @@ public sealed class User : Entity<Guid>
 
     public string PasswordHash { get; private set; }
 
-    public bool IsAdministrator { get; set; }
+    public bool IsAdministrator { get; private set; }
 
-    public bool AllowCreateOrganization { get; set; }
+    public bool AllowCreateOrganization { get; private set; }
 
     public DateTime LastPasswordChange { get; private set; }
 
@@ -100,6 +101,26 @@ public sealed class User : Entity<Guid>
         }
 
         SecurityStamp = Guid.NewGuid();
+    }
+
+    public void SetIsAdministrator(bool isAdministrator)
+    {
+        IsAdministrator = isAdministrator;
+
+        if (isAdministrator)
+        {
+            AllowCreateOrganization = true;
+        }
+    }
+
+    public void SetAllowCreateOrganization(bool allowCreateOrganization)
+    {
+        if (IsAdministrator && !allowCreateOrganization)
+        {
+            throw new TurnierplanException($"'{nameof(AllowCreateOrganization)}' cannot be set to false in an administrator user.");
+        }
+
+        AllowCreateOrganization = allowCreateOrganization;
     }
 
     public static string Normalize(string value) => value.Trim().ToUpper(CultureInfo.InvariantCulture);

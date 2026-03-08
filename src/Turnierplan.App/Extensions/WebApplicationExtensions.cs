@@ -109,10 +109,10 @@ INSERT INTO {schema}."__TPVersionHistory" ("Version", "Major", "Minor", "Patch",
 
             var initialUser = new User(initialUserName)
             {
-                FullName = "Administrator",
-                IsAdministrator = true
+                FullName = "Administrator"
             };
 
+            initialUser.SetIsAdministrator(true);
             initialUser.UpdatePassword(passwordHasher.HashPassword(initialUser, initialUserPassword));
 
             await context.Users.AddAsync(initialUser);

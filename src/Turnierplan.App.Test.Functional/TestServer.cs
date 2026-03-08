@@ -33,11 +33,9 @@ internal sealed class TestServer
         {
             var ctx = scope.ServiceProvider.GetRequiredService<TurnierplanContext>();
 
-            var user = new User(username)
-            {
-                IsAdministrator = true
-            };
+            var user = new User(username);
 
+            user.SetIsAdministrator(true);
             user.UpdatePassword(scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>().HashPassword(user, password));
 
             ctx.Users.Add(user);
