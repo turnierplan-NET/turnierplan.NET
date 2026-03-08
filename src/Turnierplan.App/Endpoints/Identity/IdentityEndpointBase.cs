@@ -53,6 +53,11 @@ internal abstract class IdentityEndpointBase<TResponse> : EndpointBase<TResponse
             {
                 claims.Add(new Claim(ClaimTypes.Administrator, "true"));
             }
+
+            if (user.AllowCreateOrganization)
+            {
+                claims.Add(new Claim(ClaimTypes.AllowCreateOrg, "true"));
+            }
         }
 
         var identityOptions = _options.CurrentValue;

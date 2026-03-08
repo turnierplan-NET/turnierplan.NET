@@ -86,8 +86,8 @@ export const de = {
       Badges: {
         OrganizationCount: 'Organisationen'
       },
-      NoOrganizations:
-        'Sie sind keinen Organisationen zugehörig.\nErstellen Sie eine neue Organisation, um Turniere anzulegen und zu bearbeiten',
+      NoOrganizations: 'Sie sind keinen Organisationen zugehörig.',
+      CreateNewOrganization: 'Erstellen Sie eine neue Organisation, um Turniere anzulegen und zu bearbeiten',
       NewOrganization: 'Neue Organisation',
       OrganizationTile: {
         Open: 'öffnen'
