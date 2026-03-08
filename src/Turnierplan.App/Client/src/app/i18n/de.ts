@@ -86,8 +86,8 @@ export const de = {
       Badges: {
         OrganizationCount: 'Organisationen'
       },
-      NoOrganizations:
-        'Sie sind keinen Organisationen zugehörig.\nErstellen Sie eine neue Organisation, um Turniere anzulegen und zu bearbeiten',
+      NoOrganizations: 'Sie sind keinen Organisationen zugehörig.',
+      CreateNewOrganization: 'Erstellen Sie eine neue Organisation, um Turniere anzulegen und zu bearbeiten',
       NewOrganization: 'Neue Organisation',
       OrganizationTile: {
         Open: 'öffnen'
@@ -109,6 +109,8 @@ export const de = {
         EMail: 'E-Mail',
         CreatedAt: 'Erstellt am',
         LastPasswordChange: 'Letzte Passwortänderung',
+        AllowCreateOrganization: 'Org. Erstellen',
+        AllowCreateOrganizationTooltip: 'Legt fest, ob dieser Benutzer neue Organisationen erstellen darf.',
         Administrator: 'Admin'
       },
       EditUser: {
@@ -119,6 +121,7 @@ export const de = {
         FullName: 'Name:',
         Email: 'E-Mailadresse',
         EmailInvalid: 'Die eingegebene E-Mailadresse ist ungültig.',
+        AllowCreateOrganization: 'Benutzer darf neue Organisationen anlegen',
         IsAdministrator: 'Administrator',
         AdministratorWarning: 'Mit Administratorrechten kann dieser Nutzer ALLES machen!',
         UpdatePassword: 'Passwort ändern',
@@ -152,6 +155,8 @@ export const de = {
         PasswordInvalid: 'Das eingegebene Passwort ist ungültig.'
       },
       UserNotice: 'Der erstellte Nutzer kann sich unmittelbar danach mit Benutzername und Passwort anmelden.',
+      AllowCreateOrganizationNotice:
+        'Neue Benutzer können standardmäßig keine Organisationen anlegen. Dies kann in der "Benutzer bearbeiten"-Ansicht konfiguriert werden.',
       Submit: 'Erstellen'
     },
     CreateOrganization: {
@@ -162,7 +167,7 @@ export const de = {
         NameInvalid: 'Der Name einer neuen Organisation darf nicht leer sein.',
         NameValid: 'Dieser Name kann verwendet werden.'
       },
-      UserNotice: 'Eine Organisation ist z.B. Ihr Sportverein oder Ihre Firma.',
+      OrganizationExamples: 'Eine Organisation ist z.B. Ihr Sportverein oder Ihre Firma.',
       Submit: 'Erstellen'
     },
     ViewOrganization: {

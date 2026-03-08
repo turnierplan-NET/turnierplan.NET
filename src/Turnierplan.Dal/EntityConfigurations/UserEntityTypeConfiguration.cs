@@ -48,8 +48,17 @@ public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.PasswordHash)
             .IsRequired();
 
+        builder.Property(x => x.IsAdministrator)
+            .IsRequired();
+
+        builder.Property(x => x.AllowCreateOrganization)
+            .IsRequired();
+
         builder.Property(x => x.LastPasswordChange)
             .IsRequired();
+
+        builder.Property(x => x.LastLogin)
+            .IsRequired(false);
 
         builder.Property(x => x.SecurityStamp)
             .IsRequired();
