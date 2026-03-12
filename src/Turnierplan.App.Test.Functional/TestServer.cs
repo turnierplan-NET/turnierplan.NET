@@ -33,30 +33,35 @@ internal sealed class TestServer
         {
             var ctx = scope.ServiceProvider.GetRequiredService<TurnierplanContext>();
 
-            var user = new User(username)
-            {
-                IsAdministrator = true
-            };
+            var user = new User(username);
 
+            user.SetIsAdministrator(true);
             user.UpdatePassword(scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>().HashPassword(user, password));
 
             ctx.Users.Add(user);
             ctx.SaveChanges();
         }
 
+        Client = CreateNewClientAndLogIn(username, password);
+    }
+
+    public HttpClient Client { get; }
+
+    public HttpClient CreateNewClientAndLogIn(string username, string password)
+    {
         var loginRequest = new HttpRequestMessage(HttpMethod.Post, Routes.Identity.Login())
         {
             Content = JsonContent.Create(new { UserName = username, Password = password})
         };
 
-        Client = _application.CreateClient(new WebApplicationFactoryClientOptions { HandleCookies = true });
-        var loginResponseTask = Client.SendAsync(loginRequest);
+        var client = _application.CreateClient(new WebApplicationFactoryClientOptions { HandleCookies = true });
+        var loginResponseTask = client.SendAsync(loginRequest);
         loginResponseTask.Wait();
         var loginResponse = loginResponseTask.Result;
         loginResponse.EnsureSuccessStatusCode();
-    }
 
-    public HttpClient Client { get; }
+        return client;
+    }
 
     public void ExecuteContextAction(Action<TurnierplanContext> action)
     {

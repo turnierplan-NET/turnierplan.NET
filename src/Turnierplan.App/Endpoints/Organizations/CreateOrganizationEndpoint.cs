@@ -40,6 +40,11 @@ internal sealed class CreateOrganizationEndpoint : EndpointBase<OrganizationDto>
             return Results.Unauthorized();
         }
 
+        if (!user.AllowCreateOrganization)
+        {
+            return Results.Forbid();
+        }
+
         var organization = new Organization(request.Name.Trim());
 
         organization.AddRoleAssignment(Role.Owner, user.AsPrincipal());
