@@ -15,6 +15,7 @@ import { UpdatesCheckComponent } from '../../components/updates-check/updates-ch
 import { OrganizationDto } from '../../../api/models/organization-dto';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { getOrganizations } from '../../../api/fn/organizations/get-organizations';
+import { AllowCreateOrganizationDirective } from '../../directives/allow-create-organization.directive';
 
 @Component({
   templateUrl: './landing-page.component.html',
@@ -29,7 +30,8 @@ import { getOrganizations } from '../../../api/fn/organizations/get-organization
     BadgeComponent,
     TranslatePipe,
     E2eDirective,
-    UpdatesCheckComponent
+    UpdatesCheckComponent,
+    AllowCreateOrganizationDirective
   ]
 })
 export class LandingPageComponent implements OnInit {
