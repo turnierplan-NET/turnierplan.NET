@@ -83,10 +83,12 @@ Die turnierplan.NET-Anwendung speichert diverse Dateien in folgendem Verzeichnis
 - **Bild-Uploads**: Sofern keine anderweitige Speicherung von Bildern (wie z.B. S3) konfiguriert ist.
 - **JWT Signatur-Schlüssel**: Sofern kein Schlüssel via Umgebungsvariable spezifiziert wird, generiert die Anwendung beim ersten Start einen zufälligen symmetrischen SHA512 Schlüssel zur Signatur der JWT-Tokens. Wenn der Schlüssel nicht persistiert wird, wird er bei jedem Start des Servers neu generiert und alle zuvor ausgestellten JWT-Tokens werden ungültig.
 
-In der [Konfigurationsanleitung](./configuration) sind weitere Details beschrieben.
+## Konfiguration
+
+turnierplan.NET bietet zahlreiche Konfigurationsmöglichkeiten zur Anbindung von Externen System sowie zur Individualisierung. Alle Optionen können mit Umgebungsvariablen gesetzt werden und sind in der [Konfigurationsanleitung](./configuration) aufgelistet und beschrieben.
 
 ## Aktualisierung
 
 Die verwendete Version von turnierplan.NET kann jederzeit auf eine neuere aktualisiert werden. Etwaige Datenbankmigrationen werden beim ersten Start sequenziell angewandt - auch wenn Versionen übersprungen werden. Allerdings sollten vor jeder Aktualisierung *immer* die [Release-Notes](https://github.com/turnierplan-NET/turnierplan.NET/releases) gelesen werden! Es kann jederzeit nicht-rückwärtskompatible Änderungen geben.
 
-Zudem wird empfohlen, vor jeder Aktualisierung der turnierplan.NET-Anwenung *oder* der verwendeten PostgreSQL-Version ein Datenbankupdate zu erstellen. Dies kann z.B. mit dem [pg_dump](https://www.postgresql.org/docs/current/app-pgdump.html)-Tool gemacht werden.
+Zudem wird empfohlen, vor jeder Aktualisierung der turnierplan.NET-Anwendung *oder* der verwendeten PostgreSQL-Version ein Datenbankupdate zu erstellen. Dies kann z.B. mit dem [pg_dump](https://www.postgresql.org/docs/current/app-pgdump.html)-Tool gemacht werden.
