@@ -70,7 +70,20 @@ Alternativ können externe Services zum Speichern der Bilder konfiguriert werden
 
 ### AWS S3
 
-todo
+Um Bilder in einem AWS S3 oder S3-kompatiblen Bucket zu speichern, müssen die folgenden Umgebungsvariablen gesetzt werden:
+
+| Umgebungsvariable               | Beschreibung                                                     |
+|---------------------------------|------------------------------------------------------------------|
+| `ImageStorage__Type`            | Muss `S3` sein.                                                  |
+| `ImageStorage__RegionEndpoint`  | Der Name der AWS-Region, bspw. `eu-central-1`.                   |
+| `ImageStorage__ServiceUrl`      | Die Service-URL, falls ein S3-kompatibler Bucket verwendet wird. |
+| `ImageStorage__AccessKey`       | Der Name vom Access-Key.                                         |
+| `ImageStorage__AccessKeySecret` | Der geheime Schlüssel vom Access-Key.                            |
+| `ImageStorage__BucketName`      | Der Bucket-Name.                                                 |
+
+Der verwendete Access-Key benötigt Rechte zum Erstellen, Lesen und Löschen von Objekten.
+
+Die Eigenschaften `RegionEndpoint` und `ServiceUrl` schließen sich *gegenseitig aus*! Ersteres muss verwendet werden, wenn ein AWS S3-Bucket verwendet wird. Letztere muss verwendet werden, wenn ein S3-kompatibler Bucket von einem Drittanbieter verwendet wird.
 
 ### Azure Blob Storage
 
