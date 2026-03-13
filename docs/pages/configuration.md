@@ -115,8 +115,8 @@ Für ein produktives Deployment sind die Standardwerte ausreichend und müssen n
 
 ## Monitoring
 
-Der turnierplan.NET-Server kann Telemetriedaten (Logs, Metrics & Traces) an Azure Application Insights senden:
+Der turnierplan.NET-Server kann Telemetriedaten (Logs, Metrics & Traces) an [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview) senden:
 
-| Umgebungsvariable                       | Beschreibung                                                                                                                                              | Standard |
-|-----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
-| `ApplicationInsights__ConnectionString` | Kann gesetzt werden, um Daten an [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview) zu senden. | -        |
+| Umgebungsvariable                       | Beschreibung                                                           | Standard |
+|-----------------------------------------|------------------------------------------------------------------------|----------|
+| `ApplicationInsights__ConnectionString` | Kann gesetzt werden, um Daten an Azure Application Insights zu senden. | -        |
