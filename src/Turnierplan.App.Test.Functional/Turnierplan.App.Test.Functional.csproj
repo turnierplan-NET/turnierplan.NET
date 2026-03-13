@@ -17,7 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Turnierplan.App\Turnierplan.App.csproj" />
   </ItemGroup>
-  
+
   <Target Name="GenerateKiotaClient" BeforeTargets="Build">
     <Exec Command="dotnet tool restore"/>
     <Exec Command="dotnet tool run kiota generate -l CSharp -c TurnierplanClient -n Turnierplan.App.Test.Functional.Client -d ../Turnierplan.App/obj/Turnierplan.App_turnierplan.json -o ./Client"/>
