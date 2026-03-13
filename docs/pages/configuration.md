@@ -51,3 +51,28 @@ Die folgenden Einstellungen können gesetzt werden, um die Benutzerauthentifizie
 
 !!! note
     Die Gültigkeitsdauer muss als .NET `TimeSpan` formatiert werden. Das Format ist `HH:mm:ss` bzw. `d.HH:mm:ss` also bspw. `00:03:00` für 3 Minuten oder `1.00:00:00` für 1 Tag.
+
+## Bilder-Uploads
+
+Standardmäßig werden alle Bilder-Uploads als Dateien in einem Container-Verzeichnis gespeichert. Das entsprechende Verzeichnis sollte [als Volume persistiert](http://localhost:8000/installation/#volume-mounts) werden.
+
+| Umgebungsvariable           | Beschreibung                                                                     | Standard                  |
+|-----------------------------|----------------------------------------------------------------------------------|---------------------------|
+| `ImageStorage__StoragePath` | Das Verzeichnis innerhalb vom Container, hochgeladene Bilder gespeichert werden. | `/var/turnierplan/images` |
+
+Alternativ können externe Services zum Speichern der Bilder konfiguriert werden. Dies hat den Vorteil, dass das Bereitstellen von Bilddateien keine CPU- und Netzwerkresourcen vom turnierplan.NET-Server beansprucht. Aktuell werden die folgenden externen Services unterstützt:
+
+- **AWS S3** (oder kompatibler Dienst)
+- **Azure Blob Storage**
+
+!!! warning
+    Die nachfolgend vorgestellten Alternativen verwenden nicht zwangsläufig eine identische Verzeichnisstruktur zur Organisation der Dateien. Dadurch wird eine nachträgliche Umstellung ggf. erschwert!
+
+### AWS S3
+
+todo
+
+### Azure Blob Storage
+
+todo
+
