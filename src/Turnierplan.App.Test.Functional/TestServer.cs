@@ -1,9 +1,13 @@
-﻿using System.Net.Http.Json;
+﻿using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Kiota.Abstractions.Authentication;
+using Microsoft.Kiota.Http.HttpClientLibrary;
+using Turnierplan.App.Test.Functional.Client;
+using Turnierplan.App.Test.Functional.Client.Models;
 using Turnierplan.Core.User;
 using Turnierplan.Dal;
 
@@ -42,23 +46,25 @@ internal sealed class TestServer
             ctx.SaveChanges();
         }
 
-        Client = CreateNewClientAndLogIn(username, password);
+        Client = CreateNewClientAndLogInAsync(username, password).GetAwaiter().GetResult();
     }
 
-    public HttpClient Client { get; }
+    public TurnierplanClient Client { get; }
 
-    public HttpClient CreateNewClientAndLogIn(string username, string password)
+    public async Task<TurnierplanClient> CreateNewClientAndLogInAsync(string username, string password)
     {
-        var loginRequest = new HttpRequestMessage(HttpMethod.Post, Routes.Identity.Login())
-        {
-            Content = JsonContent.Create(new { UserName = username, Password = password})
-        };
+        var authenticationProvider = new AnonymousAuthenticationProvider();
+        var httpClient = _application.CreateClient(new WebApplicationFactoryClientOptions { HandleCookies = true });
+        var httpClientRequestAdapter = new HttpClientRequestAdapter(authenticationProvider, httpClient: httpClient);
+        var client = new TurnierplanClient(httpClientRequestAdapter);
 
-        var client = _application.CreateClient(new WebApplicationFactoryClientOptions { HandleCookies = true });
-        var loginResponseTask = client.SendAsync(loginRequest);
-        loginResponseTask.Wait();
-        var loginResponse = loginResponseTask.Result;
-        loginResponse.EnsureSuccessStatusCode();
+        var loginResponse = await client.Api.Identity.Login.PostAsync(new LoginEndpointRequest
+        {
+            UserName = username,
+            Password = password
+        });
+
+        loginResponse!.Success.Should().BeTrue();
 
         return client;
     }
