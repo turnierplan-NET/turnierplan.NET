@@ -1,12 +1,16 @@
+using System.Net;
 using FluentAssertions;
 using FluentAssertions.Extensions;
+using Microsoft.Kiota.Abstractions;
+using Turnierplan.App.Test.Functional.Client.Models;
 using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.Extensions;
 using Turnierplan.Core.Organization;
-using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.User;
 using Xunit;
+using Role = Turnierplan.Core.RoleAssignment.Role;
+using Visibility = Turnierplan.Core.Tournament.Visibility;
 
 namespace Turnierplan.App.Test.Functional;
 
@@ -43,54 +47,74 @@ public sealed class Scenarios
         _testServer.ExecuteContextAction(db => db.OrganizationRoleAssignments.Count()).Should().Be(1);
         _testServer.ExecuteContextAction(db => db.TournamentRoleAssignments.Count()).Should().Be(2);
 
-        await _testServer.Client.Api.ApiKeys[apiKeyId].DeleteAsync(cancellationToken: TestContext.Current.CancellationToken);
+        await _testServer.Client.ApiKeys[apiKeyId].DeleteAsync(cancellationToken: TestContext.Current.CancellationToken);
 
         _testServer.ExecuteContextAction(db => db.OrganizationRoleAssignments.Count()).Should().Be(1);
         _testServer.ExecuteContextAction(db => db.TournamentRoleAssignments.Count()).Should().Be(1);
 
-        await _testServer.Client.Api.Users[userId].DeleteAsync(cancellationToken: TestContext.Current.CancellationToken);
+        await _testServer.Client.Users[userId].DeleteAsync(cancellationToken: TestContext.Current.CancellationToken);
 
         _testServer.ExecuteContextAction(db => db.OrganizationRoleAssignments.Count()).Should().Be(0);
         _testServer.ExecuteContextAction(db => db.TournamentRoleAssignments.Count()).Should().Be(0);
     }
 
-    /*
     [Fact]
     public async Task New_User_Can_Not_Create_Organization_Unless_Explicitly_Granted_Permission()
     {
         const string newUserName = "test_user";
         const string newUserPassword = "test123";
 
-        var resp = await _testServer.Client.PostAsJsonAsync(
-            Routes.Users.Create(),
-            new { UserName = newUserName, Password = newUserPassword },
-            TestContext.Current.CancellationToken);
-        resp.EnsureSuccessStatusCode();
+        await _testServer.Client.Users.PostAsync(
+            new CreateUserEndpointRequest { UserName = newUserName, Password = newUserPassword },
+            cancellationToken: TestContext.Current.CancellationToken);
 
-        var userClient = _testServer.CreateNewClientAndLogIn(newUserName, newUserPassword);
-        resp = await userClient.PostAsJsonAsync(
-            Routes.Organizations.Create(),
-            new { Name = "test_org" },
-            TestContext.Current.CancellationToken);
-        resp.StatusCode.Should().Be(HttpStatusCode.Forbidden);
+        {
+            var userClient = await _testServer.CreateClientForUserAsync(newUserName, newUserPassword);
+
+            var tryToCreateOrganization = () => userClient.Organizations.PostAsync(
+                new CreateOrganizationEndpointRequest { Name = "test_org" },
+                cancellationToken: TestContext.Current.CancellationToken);
+
+            await ExpectErrorAsync(tryToCreateOrganization, HttpStatusCode.Forbidden);
+        }
 
         // extra step required to get ID of new user
-        resp = await _testServer.Client.GetAsync(Routes.Users.List(), TestContext.Current.CancellationToken);
-        resp.EnsureSuccessStatusCode();
-        var allUsers = await resp.Content.ReadFromJsonAsync<UserDto[]>(TestContext.Current.CancellationToken);
-        var newUserId = allUsers!.Single(x => x.UserName.Equals(newUserName)).Id;
+        var allUsers = await _testServer.Client.Users.GetAsync(cancellationToken: TestContext.Current.CancellationToken);
+        var newUserId = allUsers!.Single(x => x.UserName!.Equals(newUserName)).Id; // TODO: UserName and Id should not be nullable?
 
-        resp = await _testServer.Client.PutAsJsonAsync(
-            Routes.Users.Update(newUserId),
-            new { UserName = newUserName, IsAdministrator = false, AllowCreateOrganization = true, UpdatePassword = false },
-            TestContext.Current.CancellationToken);
-        resp.EnsureSuccessStatusCode();
+        await _testServer.Client.Users[newUserId!.Value].PutAsync(new UpdateUserEndpointRequest
+        {
+            UserName = newUserName,
+            IsAdministrator = false,
+            AllowCreateOrganization = true,
+            UpdatePassword = false
+        }, cancellationToken: TestContext.Current.CancellationToken);
 
-        userClient = _testServer.CreateNewClientAndLogIn(newUserName, newUserPassword);
-        resp = await userClient.PostAsJsonAsync(
-            Routes.Organizations.Create(),
-            new { Name = "test_org" },
-            TestContext.Current.CancellationToken);
-        resp.EnsureSuccessStatusCode();
-    }*/
+        {
+            // We need to create a new client because a fresh login is required to get the new claims in the token
+            var userClient = await _testServer.CreateClientForUserAsync(newUserName, newUserPassword);
+
+            await userClient.Organizations.PostAsync(
+                new CreateOrganizationEndpointRequest { Name = "test_org" },
+                cancellationToken: TestContext.Current.CancellationToken);
+        }
+    }
+
+    // TODO: Make pretty
+    private async Task ExpectErrorAsync(Func<Task> func, HttpStatusCode code)
+    {
+        ApiException? ex = null;
+
+        try
+        {
+            await func();
+        }
+        catch (ApiException ex2)
+        {
+            ex = ex2;
+        }
+
+        ex.Should().NotBeNull();
+        ex.ResponseStatusCode.Should().Be((int)code);
+    }
 }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Kiota.Abstractions.Authentication;
 using Microsoft.Kiota.Http.HttpClientLibrary;
 using Turnierplan.App.Test.Functional.Client;
+using Turnierplan.App.Test.Functional.Client.Api;
 using Turnierplan.App.Test.Functional.Client.Models;
 using Turnierplan.Core.User;
 using Turnierplan.Dal;
@@ -46,12 +47,12 @@ internal sealed class TestServer
             ctx.SaveChanges();
         }
 
-        Client = CreateNewClientAndLogInAsync(username, password).GetAwaiter().GetResult();
+        Client = CreateClientForUserAsync(username, password).GetAwaiter().GetResult();
     }
 
-    public TurnierplanClient Client { get; }
+    public ApiRequestBuilder Client { get; }
 
-    public async Task<TurnierplanClient> CreateNewClientAndLogInAsync(string username, string password)
+    public async Task<ApiRequestBuilder> CreateClientForUserAsync(string username, string password)
     {
         var authenticationProvider = new AnonymousAuthenticationProvider();
         var httpClient = _application.CreateClient(new WebApplicationFactoryClientOptions { HandleCookies = true });
@@ -66,7 +67,7 @@ internal sealed class TestServer
 
         loginResponse!.Success.Should().BeTrue();
 
-        return client;
+        return client.Api;
     }
 
     public void ExecuteContextAction(Action<TurnierplanContext> action)
