@@ -92,3 +92,14 @@ turnierplan.NET bietet zahlreiche Konfigurationsmöglichkeiten zur Anbindung von
 Die verwendete Version von turnierplan.NET kann jederzeit auf eine neuere aktualisiert werden. Etwaige Datenbankmigrationen werden beim ersten Start sequenziell angewandt - auch wenn Versionen übersprungen werden. Allerdings sollten vor jeder Aktualisierung *immer* die [Release-Notes](https://github.com/turnierplan-NET/turnierplan.NET/releases) gelesen werden! Es kann jederzeit nicht-rückwärtskompatible Änderungen geben.
 
 Zudem wird empfohlen, vor jeder Aktualisierung der turnierplan.NET-Anwendung *oder* der verwendeten PostgreSQL-Version ein Datenbankupdate zu erstellen. Dies kann z.B. mit dem [pg_dump](https://www.postgresql.org/docs/current/app-pgdump.html)-Tool gemacht werden.
+
+## Fehlerbehebung
+
+Nachfolgend beschrieben sind Fehler, welche bei einer Neuinstallation auftreten können.
+
+### Verbindung per HTTP
+
+Beim Zugriff auf einen nicht-lokalen turnierplan.NET-Server via HTTP sollte standardmäßig ein Fehler *401 Unauthorized* erscheinen. Dies liegt daran, dass turnierplan.NET für die Authentifizierung nach dem Login Cookies verwendet, welche standardmäßig als *secure* ausgestellt werden. Dies hat zur Folge, dass Browser den Cookie nur bei lokalen Verbindungen oder über HTTPS mitschicken. Um turnierplan.NET dennoch verwenden zu können, muss die `Identity__UseInsecureCookies` auf `true` gesetzt werden. Siehe auch [Konfiguration der Authentifizierung](configuration.md#authentifizierung).
+
+!!! warning
+    Die Verwendung von HTTP-Verbindungen über das Internet ist **absolut nicht empfohlen**, da persönliche Daten und Passwörter somit unverschlüsselt übertragen werden würden. Zudem ist nicht ausgeschlossen, dass Teile der Webanwendung nicht korrekt funktionieren, falls sie auf HTTPS-exklusiven Browser-APIs basieren (bspw. Zwischenablage oder *crypto*).
