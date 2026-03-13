@@ -78,7 +78,7 @@ Um Bilder in einem AWS S3 oder S3-kompatiblen Bucket zu speichern, müssen die f
 | `ImageStorage__RegionEndpoint`  | Der Name der AWS-Region, bspw. `eu-central-1`.                   |
 | `ImageStorage__ServiceUrl`      | Die Service-URL, falls ein S3-kompatibler Bucket verwendet wird. |
 | `ImageStorage__AccessKey`       | Der Name vom Access-Key.                                         |
-| `ImageStorage__AccessKeySecret` | Der geheime Schlüssel vom Access-Key.                            |
+| `ImageStorage__AccessKeySecret` | Der Schlüssel vom Access-Key.                                    |
 | `ImageStorage__BucketName`      | Der Bucket-Name.                                                 |
 
 Der verwendete Access-Key benötigt Rechte zum Erstellen, Lesen und Löschen von Objekten.
