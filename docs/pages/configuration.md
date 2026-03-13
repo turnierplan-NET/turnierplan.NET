@@ -30,28 +30,6 @@ Die folgenden Einstellungen können gesetzt werden, um das allgemeine Aussehen u
 | `Turnierplan__InitialUserName`     | Der Benutzername für den initalen Administratorbenutzer. Sofern nicht angegeben, wird der Benutzername von der Anwendung vorgegeben und beim ersten Start in der Konsole ausgegeben. | -         |
 | `Turnierplan__InitialUserPassword` | Das Passwort für den initialen Administratorbenutzer. Sofern nicht angegeben, wird beim ersten Start der Anwendung ein zufälliges Passwort generiert und in der Konsole ausgegeben.  | -         |
 
-## Monitoring
-
-Der turnierplan.NET-Server kann Telemetriedaten (Logs, Metrics & Traces) an Azure Application Insights senden:
-
-| Umgebungsvariable                       | Beschreibung                                                                                                                                              | Standard |
-|-----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
-| `ApplicationInsights__ConnectionString` | Kann gesetzt werden, um Daten an [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview) zu senden. | -        |
-
-## Authentifizierung
-
-Die folgenden Einstellungen können gesetzt werden, um die Benutzerauthentifizierung von turnierplan.NET zu konfigurieren:
-
-| Umgebungsvariable                | Beschreibung                                                                                                                                                 | Standard                    |
-|----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
-| `Identity__AccessTokenLifetime`  | Die Gültigkeitsdauer von ausgestellten Access-Tokens.                                                                                                        | `00:03:00`                  |
-| `Identity__RefreshTokenLifetime` | Die Gültigkeitsdauer von ausgestellten Refresh-Tokens. Innerhalb diesem Zeitraum ist kein erneuter Login erforderlich.                                       | `1.00:00:00`                |
-| `Identity__StoragePath`          | Das Verzeichnis innerhalb vom Container, wo der Schlüssel zur Signatur ausgesteller Tokens gespeichert wird.                                                 | `/var/turnierplan/identity` |
-| `Identity__UseInsecureCookies`   | Kann auf `true` gesetzt werde, um HTTP Cookies ohne *secure* auszustellen. Dies ist erforderlich, wenn nicht mit HTTPS auf turnierplan.NET zugegriffen wird. | `false`                     |
-
-!!! note
-    Die Gültigkeitsdauer muss als .NET `TimeSpan` formatiert werden. Das Format ist `HH:mm:ss` bzw. `d.HH:mm:ss` also bspw. `00:03:00` für 3 Minuten oder `1.00:00:00` für 1 Tag.
-
 ## Bilder-Uploads
 
 Standardmäßig werden alle Bilder-Uploads als Dateien in einem Container-Verzeichnis gespeichert. Das entsprechende Verzeichnis sollte [als Volume persistiert](http://localhost:8000/installation/#volume-mounts) werden.
@@ -118,3 +96,27 @@ Hierfür ist eine App-Registrierung innerhalb von Entra ID notwendig, welche wie
 | `ImageStorage__TenantId`        | Die ID des Tenant, wo die App-Registrierung angelegt wurde. |
 | `ImageStorage__ClientId`        | Die Client-ID der App-Registrierung.                        |
 | `ImageStorage__ClientSecret`    | Der Wert des angelegten Client Secrets.                     |
+
+## Authentifizierung
+
+Die folgenden Einstellungen können gesetzt werden, um die Benutzerauthentifizierung von turnierplan.NET zu konfigurieren:
+
+| Umgebungsvariable                | Beschreibung                                                                                                                                                 | Standard                    |
+|----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
+| `Identity__AccessTokenLifetime`  | Die Gültigkeitsdauer von ausgestellten Access-Tokens.                                                                                                        | `00:03:00`                  |
+| `Identity__RefreshTokenLifetime` | Die Gültigkeitsdauer von ausgestellten Refresh-Tokens. Innerhalb diesem Zeitraum ist kein erneuter Login erforderlich.                                       | `1.00:00:00`                |
+| `Identity__StoragePath`          | Das Verzeichnis innerhalb vom Container, wo der Schlüssel zur Signatur ausgesteller Tokens gespeichert wird.                                                 | `/var/turnierplan/identity` |
+| `Identity__UseInsecureCookies`   | Kann auf `true` gesetzt werde, um HTTP Cookies ohne *secure* auszustellen. Dies ist erforderlich, wenn nicht mit HTTPS auf turnierplan.NET zugegriffen wird. | `false`                     |
+
+Für ein produktives Deployment sind die Standardwerte ausreichend und müssen nicht geändert werden.
+
+!!! note
+    Die Gültigkeitsdauer muss als .NET `TimeSpan` formatiert werden. Das Format ist `HH:mm:ss` bzw. `d.HH:mm:ss` also bspw. `00:03:00` für 3 Minuten oder `1.00:00:00` für 1 Tag.
+
+## Monitoring
+
+Der turnierplan.NET-Server kann Telemetriedaten (Logs, Metrics & Traces) an Azure Application Insights senden:
+
+| Umgebungsvariable                       | Beschreibung                                                                                                                                              | Standard |
+|-----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `ApplicationInsights__ConnectionString` | Kann gesetzt werden, um Daten an [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview) zu senden. | -        |
