@@ -87,5 +87,34 @@ Die Eigenschaften `RegionEndpoint` und `ServiceUrl` schließen sich *gegenseitig
 
 ### Azure Blob Storage
 
-todo
+Um Bilder in einem [Azure Blob Storage](https://azure.microsoft.com/en-us/products/storage/blobs/) Container zu speichern, müssen die folgenden Umgebungsvariablen gesetzt werden:
 
+| Umgebungsvariable                  | Beschreibung                                                |
+|------------------------------------|-------------------------------------------------------------|
+| `ImageStorage__Type`               | Muss `Azure` sein.                                          |
+| `ImageStorage__StorageAccountName` | Der Name des Azure Blob Storage Account.                    |
+| `ImageStorage__ContainerName`      | Der Name des Containers innerhalb vom o.g. Storage Account. |
+
+Standardmäßig wird ein [DefaultAzureCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet) verwendet. Falls also bspw. der turnierplan.NET-Container innerhalb eines Azure App Service betrieben wird, kann für diesen App Service eine Managed Identity erstellt und auf den Blob Storage Account berechtigt werden. Weitere Konfigurationsmöglichkeiten für Deployment-Szenarien, in denen keine Managed Identities verwendet werden können, sind nachfolgend beschrieben.
+
+Sofern eine Entra ID-basierte Authentifizierung verwendet wird (dies betrifft alle Optionen außer Access Keys), muss die entsprechende Managed Identity bzw. App-Registrierung die Rechte zum Erstellen, Lesen und Löschen von Blobs innerhalb vom Storage Account haben. Dies kann am besten mit der Zuweisung der Rolle [Storage Blob Data Contributor](https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/storage#storage-blob-data-contributor) erreicht werden.
+
+#### Account Key
+
+Die Erstellung von einem Account Key ist in der [Dokumentation von Microsoft](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage?tabs=azure-portal) beschrieben. Um einen Account Key zu verwenden, müssen die folgenden Umgebungsvariablen *zusätzlich* zu den oben genannten gesetzt werden:
+
+| Umgebungsvariable             | Beschreibung                                  |
+|-------------------------------|-----------------------------------------------|
+| `ImageStorage__UseAccountKey` | Muss `true` sein, um Acount Key zu verwenden. |
+| `ImageStorage__AccountKey`    | Der eigentliche Account Key.                  |
+
+#### Client Secret
+
+Hierfür ist eine App-Registrierung innerhalb von Entra ID notwendig, welche wie o.g. die notwendigen Zugriffsrechte auf dem Blob Storage Account hat. Innerhalb der App-Registrierung muss zudem ein Client Secret angelegt werden. Um dieses zu verwenden, müssen die folgenden Umgebungsvariablen *zusätzlich* zu den oben genannten gesetzt werden:
+
+| Umgebungsvariable               | Beschreibung                                                |
+|---------------------------------|-------------------------------------------------------------|
+| `ImageStorage__UseClientSecret` | Muss `true` sein, um Client Secret zu verwenden.            |
+| `ImageStorage__TenantId`        | Die ID des Tenant, wo die App-Registrierung angelegt wurde. |
+| `ImageStorage__ClientId`        | Die Client-ID der App-Registrierung.                        |
+| `ImageStorage__ClientSecret`    | Der Wert des angelegten Client Secrets.                     |
