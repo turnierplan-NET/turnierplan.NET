@@ -53,3 +53,23 @@ Die Änderungen werden erst übernommen, wenn die *Übernehmen*-Schaltfläche am
 Anschließend erfolgt eine Weiterleitung auf die Startseite des Turniers. Dort ist der erstellte Spielplan nun sichtbar:
 
 ![Der neu erzeugte Spielplan](images/first-tournament-match-plan.png)
+
+### Turnierdurchführung
+
+Bei der Turnierdurchführung werden nacheinander die Ergebnisse der Spiele in den Spielplan eingetragen. Beim Klick auf eines der Spiele öffnet sich hierzu folgender Dialog:
+
+![Das erste Spielergebnis melden](images/report-first-match.png)
+
+Der Dialog zeigt die Spielpaarung und bietet die Möglichkeit, für die teilnehmenden Mannschaften die jeweilige Anzahl der Tore einzutagen. Zudem kann neben einem Standardergebnis auch zwischen *n.V.*, *n.E.* oder der sog. *Sonderwertung* entscheiden werden. Letztere eignet sich z.B. im Fall, dass eine Mannschaft nicht angetreten ist.
+
+Ein Ergebnis kann als *LIVE-Ergebnis* oder als *Endergebnis* gespeichert werden. Spiele mit *LIVE-Ergebnis* werden optisch gekennzeichnet und zählen zudem noch nicht in die Gruppenwertung ein. Erst wenn bei einem Spiel das *Endergebnis* gespeichert wird, zählt das Spiel als beendet.
+
+Im folgenden Beispiel ist Spiel 1 beendet und Spiel 2 ist derzeit am Laufen:
+
+![Der Spielplan mit zwei Ergebnissen](images/first-tournament-match-plan-2.png)
+
+Nach jedem beendeten Spiel werden alle Gruppen durchgerechnet. Beim Klick auf den Reiter *Gruppen* wird die Gruppenstatistik sichtbar:
+
+![Die Gruppenergebnisse nach drei Spielen](images/first-tournament-groups.png)
+
+Da es in diesem Turnier nur eine Gruppe sowie keine Finalrunde gibt, ist dies auch gleichzeitig die Endplatzierung des Turniers.
