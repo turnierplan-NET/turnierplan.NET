@@ -34,3 +34,22 @@ In der Eingabemaske, welche sich darauf öffnet, müssen folgende Informationen 
 ![Eingabemaske für ein neues Turnier](images/new-tournament.png)
 
 Alle o.g. Informationen können nachträglich geändert werden. Nach der Bestätigung der Eingaben öffnet sich die Konfigurationsseite des neu erstellen Turniers:
+
+### Spielplan konfigurieren
+
+Auf der Konfigurationsseite wird festgelegt, welche Mannschaften am Turnier teilnehmen, wie diese Mannschaften in Gruppen aufgeteilt sind und welchen Spielmodus das Turnier verwendet.
+
+Für ein einfaches Turnier genügen die folgenden beiden Schritte::
+
+- Erstellen Sie eine neue Gruppe mit der Schaltfläche *Neue Gruppe hinzufügen*
+- Legen Sie innerhalb der Gruppe drei Mannschaften an, indem Sie einen Namen in das Textfeld eingeben und die Schaltfläche *Hinzufügen* betätigen
+
+Die Turnierkonfiguration sieht nun folgendermaßen aus (der untere Teil der Seite ist nachfolgend nicht abgebildet):
+
+![Eine einfache Turnierkonfiguration mit 3 Mannschaften](images/basic-tournament-config.png)
+
+Die Änderungen werden erst übernommen, wenn die *Übernehmen*-Schaltfläche am Ende der Seite geklickt wird.
+
+Anschließend erfolgt eine Weiterleitung auf die Startseite des Turniers. Dort ist der erstellte Spielplan nun sichtbar:
+
+![Der neu erzeugte Spielplan](images/first-tournament-match-plan.png)
