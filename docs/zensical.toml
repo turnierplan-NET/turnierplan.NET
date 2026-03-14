@@ -18,7 +18,8 @@ nav = [
     { "Startseite" = "index.md" },
     { "Installation" = "installation/index.md" },
     { "Konfiguration" = "configuration/index.md" },
-    { "Erste Schritte" = "getting-started/index.md" }
+    { "Erste Schritte" = "getting-started/index.md" },
+    { "Releases" = "releases/index.md" }
 ]
 
 [project.theme]
