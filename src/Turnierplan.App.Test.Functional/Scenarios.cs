@@ -71,11 +71,9 @@ public sealed class Scenarios
         {
             var userClient = await _testServer.CreateClientForUserAsync(newUserName, newUserPassword);
 
-            var tryToCreateOrganization = () => userClient.Organizations.PostAsync(
+            await ExpectApiErrorAsync(() => userClient.Organizations.PostAsync(
                 new CreateOrganizationEndpointRequest { Name = "test_org" },
-                cancellationToken: TestContext.Current.CancellationToken);
-
-            await ExpectErrorAsync(tryToCreateOrganization, HttpStatusCode.Forbidden);
+                cancellationToken: TestContext.Current.CancellationToken), HttpStatusCode.Forbidden);
         }
 
         // extra step required to get ID of new user
@@ -100,21 +98,20 @@ public sealed class Scenarios
         }
     }
 
-    // TODO: Make pretty
-    private async Task ExpectErrorAsync(Func<Task> func, HttpStatusCode code)
+    private static async Task ExpectApiErrorAsync(Func<Task> func, HttpStatusCode code)
     {
-        ApiException? ex = null;
+        ApiException? exception = null;
 
         try
         {
             await func();
         }
-        catch (ApiException ex2)
+        catch (ApiException ex)
         {
-            ex = ex2;
+            exception = ex;
         }
 
-        ex.Should().NotBeNull();
-        ex.ResponseStatusCode.Should().Be((int)code);
+        exception.Should().NotBeNull();
+        exception.ResponseStatusCode.Should().Be((int)code);
     }
 }
