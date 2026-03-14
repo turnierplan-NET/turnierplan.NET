@@ -21,5 +21,10 @@
   <Target Name="GenerateKiotaClient" BeforeTargets="BeforeCompile">
     <Exec Command="dotnet tool restore"/>
     <Exec Command="dotnet tool run kiota generate -l CSharp -c TurnierplanClient -n Turnierplan.App.Test.Functional.Client -d ../Turnierplan.App/obj/Turnierplan.App_turnierplan.json -o ./Client --log-level error --exclude-backward-compatible"/>
+    <ItemGroup>
+      <!-- Required for the generated files to be discovered on the first build. -->
+      <Compile Remove="Client/**/*.cs" />
+      <Compile Include="Client/**/*.cs" />
+    </ItemGroup>
   </Target>
 </Project>
