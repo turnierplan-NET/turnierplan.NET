@@ -24,7 +24,8 @@ internal sealed class RefreshEndpoint : IdentityEndpointBase<RefreshEndpoint.Ref
 
     private async Task<IResult> Handle(
         HttpContext context,
-        IUserRepository userRepository)
+        IUserRepository userRepository,
+        CancellationToken cancellationToken)
     {
         Guid userIdFromToken;
         Guid securityStampFromToken;
@@ -35,10 +36,11 @@ internal sealed class RefreshEndpoint : IdentityEndpointBase<RefreshEndpoint.Ref
 
             var tokenHandler = new JwtSecurityTokenHandler();
 
+            var signingKey = await _signingKeyProvider.GetSigningKeyAsync(cancellationToken);
             var validationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = _signingKeyProvider.GetSigningKey(),
+                IssuerSigningKey = signingKey,
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 ValidateLifetime = true,
@@ -72,8 +74,8 @@ internal sealed class RefreshEndpoint : IdentityEndpointBase<RefreshEndpoint.Ref
             });
         }
 
-        var accessToken = CreateTokenForUser(user, false);
-        var refreshToken = CreateTokenForUser(user, true);
+        var accessToken = await CreateTokenForUserAsync(user, false, cancellationToken);
+        var refreshToken = await CreateTokenForUserAsync(user, true, cancellationToken);
 
         AddResponseCookieForToken(context, accessToken, false);
         AddResponseCookieForToken(context, refreshToken, true);

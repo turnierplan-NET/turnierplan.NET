@@ -84,7 +84,7 @@ internal sealed class ChangePasswordEndpoint : IdentityEndpointBase<ChangePasswo
 
         // Give the user a new refresh token since the one he currently
         // holds is invalidated due to the updated security stamp.
-        var refreshToken = CreateTokenForUser(user, true);
+        var refreshToken = await CreateTokenForUserAsync(user, true, cancellationToken);
         AddResponseCookieForToken(context, refreshToken, true);
 
         return Results.Ok(new ChangePasswordEndpointResponse

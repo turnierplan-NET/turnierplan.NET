@@ -21,11 +21,11 @@ internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityO
         _signingKeyProvider = signingKeyProvider;
     }
 
-    protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+    protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         if (!Request.Cookies.ContainsKey(CookieNames.AccessTokenCookieName))
         {
-            return Task.FromResult(AuthenticateResult.NoResult());
+            return AuthenticateResult.NoResult();
         }
 
         string token;
@@ -36,22 +36,23 @@ internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityO
         }
         catch
         {
-            return Task.FromResult(AuthenticateResult.Fail("Missing or malformed access token cookie."));
+            return AuthenticateResult.Fail("Missing or malformed access token cookie.");
         }
 
         if (string.IsNullOrEmpty(token))
         {
-            return Task.FromResult(AuthenticateResult.Fail("Empty access token cookie."));
+            return AuthenticateResult.Fail("Empty access token cookie.");
         }
 
         try
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
+            var signingKey = await _signingKeyProvider.GetSigningKeyAsync(CancellationToken.None);
             var validationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = _signingKeyProvider.GetSigningKey(),
+                IssuerSigningKey = signingKey,
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 ValidateLifetime = true,
@@ -64,16 +65,16 @@ internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityO
 
             if (!tokenType.Equals(JwtTokenTypes.Access))
             {
-                return Task.FromResult(AuthenticateResult.Fail("Incorrect token type."));
+                return AuthenticateResult.Fail("Incorrect token type.");
             }
 
             var ticket = new AuthenticationTicket(claimsPrincipal, Scheme.Name);
 
-            return Task.FromResult(AuthenticateResult.Success(ticket));
+            return AuthenticateResult.Success(ticket);
         }
         catch (Exception ex)
         {
-            return Task.FromResult(AuthenticateResult.Fail($"Invalid token: {ex.Message}"));
+            return AuthenticateResult.Fail($"Invalid token: {ex.Message}");
         }
     }
 }
