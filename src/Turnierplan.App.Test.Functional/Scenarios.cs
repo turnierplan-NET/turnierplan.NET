@@ -76,11 +76,11 @@ public sealed class Scenarios
                 cancellationToken: TestContext.Current.CancellationToken), HttpStatusCode.Forbidden);
         }
 
-        // extra step required to get ID of new user
+        // Extra step is required to get the ID of the created user
         var allUsers = await _testServer.Client.Users.GetAsync(cancellationToken: TestContext.Current.CancellationToken);
-        var newUserId = allUsers!.Single(x => x.UserName!.Equals(newUserName)).Id; // TODO: UserName and Id should not be nullable?
+        var newUserId = allUsers!.Single(x => x.UserName!.Equals(newUserName)).Id!.Value;
 
-        await _testServer.Client.Users[newUserId!.Value].PutAsync(new UpdateUserEndpointRequest
+        await _testServer.Client.Users[newUserId].PutAsync(new UpdateUserEndpointRequest
         {
             UserName = newUserName,
             IsAdministrator = false,
