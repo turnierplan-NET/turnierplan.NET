@@ -16,11 +16,11 @@ Um turnierplan.NET lokal zu testen, kann der folgende Befehl verwendet werden:
 docker run -p 80:8080 -e Database__InMemory="true" ghcr.io/turnierplan-net/turnierplan:latest
 ```
 
-Die Weboberfläche kann über [localhost:80](http://localhost:80) erreicht werden. Der Benutzername und das initiale Passwort für den Administratorbenutzer werden in den Container-Logs angezeigt. Nach einem Neustart des Containers gehen allerdings alle Daten verloren, da eine in-memory Datenbank verwendet wird.
+Die Weboberfläche kann über [localhost:80](http://localhost:80) erreicht werden. Der Benutzername und das initiale Passwort für den Administratorbenutzer werden in den Container-Logs angezeigt. Nach einem Neustart des Containers gehen allerdings alle Daten verloren, da nur eine in-memory Datenbank verwendet wird.
 
 ## Deployment
 
-Für ein produktives Deployment gibt es nachfolgende Möglichkeiten basierend auf dem Container-Image. Weitere Methoden werden in der Zukunft aufgelistet.
+Für ein produktives Deployment gibt es nachfolgende Möglichkeiten basierend auf dem Container-Image. Weitere Methoden werden in der Zukunft ergänzt.
 
 ### Docker Compose
 
@@ -106,4 +106,4 @@ Nachfolgend beschrieben sind Fehler, welche bei einer Neuinstallation auftreten 
 Beim Zugriff auf einen nicht-lokalen turnierplan.NET-Server via HTTP sollte standardmäßig ein Fehler *401 Unauthorized* erscheinen. Dies liegt daran, dass turnierplan.NET für die Authentifizierung nach dem Login Cookies verwendet, welche standardmäßig als *secure* ausgestellt werden. Dies hat zur Folge, dass Browser den Cookie nur bei lokalen Verbindungen oder über HTTPS mitschicken. Um turnierplan.NET dennoch verwenden zu können, muss die `Identity__UseInsecureCookies` auf `true` gesetzt werden. Siehe auch [Konfiguration der Authentifizierung](configuration.md#authentifizierung).
 
 !!! warning
-    Die Verwendung von HTTP-Verbindungen über das Internet ist **absolut nicht empfohlen**, da persönliche Daten und Passwörter somit unverschlüsselt übertragen werden würden. Zudem ist nicht ausgeschlossen, dass Teile der Webanwendung nicht korrekt funktionieren, falls sie auf HTTPS-exklusiven Browser-APIs basieren (bspw. Zwischenablage oder *crypto*).
+    Die Verwendung von HTTP-Verbindungen über das Internet ist **absolut nicht empfohlen**, da persönliche Daten und Passwörter somit unverschlüsselt übertragen werden würden. Zudem ist nicht ausgeschlossen, dass Teile der Webanwendung nicht korrekt funktionieren, falls diese HTTPS-exklusive Browser-APIs verwenden (bspw. Zwischenablage oder *crypto*).

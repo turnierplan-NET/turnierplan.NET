@@ -61,7 +61,7 @@ Um Bilder in einem AWS S3 oder S3-kompatiblen Bucket zu speichern, müssen die f
 
 Der verwendete Access-Key benötigt Rechte zum Erstellen, Lesen und Löschen von Objekten.
 
-Die Eigenschaften `RegionEndpoint` und `ServiceUrl` schließen sich *gegenseitig aus*! Ersteres muss verwendet werden, wenn ein AWS S3-Bucket verwendet wird. Letztere muss verwendet werden, wenn ein S3-kompatibler Bucket von einem Drittanbieter verwendet wird.
+Die Eigenschaften `RegionEndpoint` und `ServiceUrl` schließen sich *gegenseitig aus*! Erstere muss verwendet werden, wenn ein AWS S3-Bucket verwendet wird. Letztere muss verwendet werden, wenn ein S3-kompatibler Bucket von einem Drittanbieter verwendet wird.
 
 ### Azure Blob Storage
 
