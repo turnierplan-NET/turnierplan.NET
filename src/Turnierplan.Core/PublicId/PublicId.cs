@@ -143,4 +143,6 @@ public readonly record struct PublicId
     }
 
     public static implicit operator PublicId(ulong value) => new(value);
+
+    public static implicit operator string(PublicId value) => value.ToString();
 }

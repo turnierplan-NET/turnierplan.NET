@@ -11,9 +11,20 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.2" />
+    <PackageReference Include="Microsoft.Kiota.Bundle" Version="1.22.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Turnierplan.App\Turnierplan.App.csproj" />
   </ItemGroup>
+
+  <Target Name="GenerateKiotaClient" BeforeTargets="BeforeCompile">
+    <Exec Command="dotnet tool restore"/>
+    <Exec Command="dotnet tool run kiota generate -l CSharp -c TurnierplanClient -n Turnierplan.App.Test.Functional.Client -d ../Turnierplan.App/obj/Turnierplan.App_turnierplan.json -o ./Client --log-level error --exclude-backward-compatible"/>
+    <ItemGroup>
+      <!-- Required for the generated files to be discovered on the first build. -->
+      <Compile Remove="Client/**/*.cs" />
+      <Compile Include="Client/**/*.cs" />
+    </ItemGroup>
+  </Target>
 </Project>
