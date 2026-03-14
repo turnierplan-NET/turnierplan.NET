@@ -1,0 +1,11 @@
+.md-copyright {
+  /* Decrease size of the footer text */
+  font-size: 0.8em;
+}
+
+.md-content img {
+  /* Center images and add small shadow */
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}

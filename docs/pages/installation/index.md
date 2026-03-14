@@ -87,6 +87,10 @@ Die turnierplan.NET-Anwendung speichert diverse Dateien in folgendem Verzeichnis
 
 turnierplan.NET bietet zahlreiche Konfigurationsmöglichkeiten zur Anbindung von Externen System sowie zur Individualisierung. Alle Optionen können mit Umgebungsvariablen gesetzt werden und sind in der [Konfigurationsanleitung](./configuration) aufgelistet und beschrieben.
 
+## Erste Schritte
+
+Die Anmeldung als Administrator erfolgt mit den Zugangsdaten, welche beim ersten Programmstart generiert werden, bzw. in der Konfiguration vorgegeben sind. Weitere Schritte sind auf der entsprechenden Seite [Erste Schritte](../getting-started/index.md) der Dokumentation beschrieben.
+
 ## Aktualisierung
 
 Die verwendete Version von turnierplan.NET kann jederzeit auf eine neuere aktualisiert werden. Etwaige Datenbankmigrationen werden beim ersten Start sequenziell angewandt - auch wenn Versionen übersprungen werden. Allerdings sollten vor jeder Aktualisierung *immer* die [Release-Notes](https://github.com/turnierplan-NET/turnierplan.NET/releases) gelesen werden! Es kann jederzeit nicht-rückwärtskompatible Änderungen geben.

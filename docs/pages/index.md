@@ -19,9 +19,9 @@ turnierplan.NET ist eine **Open-Source Webanwendung zur Organisation von Turnier
 
 turnierplan.NET wird hauptsächlich von Fußballfreunden aus dem nordöstlichen Baden-Württemberg, Deutschland verwendet und maintained 🇩🇪.
 
-Aus diesem Grund sind die Benutzeroberfläche sowie die Dokumentation aktuell ausschließlich in deutscher Sprache verfügbar. Zudem sind die verwendeten Begriffe und Funktionen speziell für die hierzulande üblichen Turniere und Veranstaltungen ausgelegt. Verbesserungsvorschläge sind jederzeit gerne gesehen und können im [Repo](https://github.com/turnierplan-NET/turnierplan.NET) hinterlassen werden.
+Aus diesem Grund sind die Benutzeroberfläche sowie die Dokumentation aktuell ausschließlich in deutscher Sprache verfügbar. Zudem sind die verwendeten Begriffe und Funktionen speziell für die hierzulande üblichen Turniere und Veranstaltungen ausgelegt. Verbesserungsvorschläge sind jederzeit gerne gesehen und können im [Repository](https://github.com/turnierplan-NET/turnierplan.NET) hinterlassen werden.
 
-Falls turnierplan.NET dennoch für deinen Verein / deine Organisation infrage kommt: Der Quelltext und die Container-Images sind unter der [AGPL-3.0](https://github.com/turnierplan-NET/turnierplan.NET/blob/main/LICENSE) lizenziert und dementsprechend frei verwendbar. Mögliche Vorgehensweisen zum Erstellen eines eigenen Setups sind in der [Installationsanleitung](installation.md) beschrieben.
+Falls turnierplan.NET dennoch für deinen Verein / deine Organisation infrage kommt: Der Quelltext und die Container-Images sind unter der [AGPL-3.0](https://github.com/turnierplan-NET/turnierplan.NET/blob/main/LICENSE) lizenziert und dementsprechend frei verwendbar. Mögliche Vorgehensweisen zum Erstellen eines eigenen Setups sind in der [Installationsanleitung](installation/index.md) beschrieben.
 
 ## Technische Dokumentation
 
