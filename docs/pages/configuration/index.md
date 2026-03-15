@@ -25,18 +25,18 @@ Die folgenden Einstellungen können gesetzt werden, um das allgemeine Aussehen u
 | `Turnierplan__LogoUrl`             | Die URL für das Vereins-/Firmenlogo, welches in der Kopfzeile von öffentlichen Seiten angezeigt werden soll. Falls nicht spezifiert, wird das turnierplan.NET-Logo angezeigt.        | -         |
 | `Turnierplan__ImprintUrl`          | Die URL für den Verweis auf ein externes Impressum, welches bspw. auf Ihrer Vereins-/Firmenseite gehostet ist.                                                                       | -         |
 | `Turnierplan__PrivacyUrl`          | Die URL für den Verweis auf eine externe Datenschutz-Seite, welche bspw. auf Ihrer Vereins-/Firmenseite gehostet ist.                                                                | -         |
-| `Turnierplan__ImageMaxSize`        | Die maximale Dateigröße für Bild-Uploads in Bytes. Der Standard-Wert entspricht 8 MiB (8 &middot; 1024 &middot; 1024)                                                                | `8388608` |
-| `Turnierplan__ImageQuality`        | Die Qualitätseinstellung für Bild-Uploads. Ein Wert von `100` entspricht einer verlustfreien Komprimierung. Verwendet wird das `webp`-Format.                                        | `80`      |
 | `Turnierplan__InitialUserName`     | Der Benutzername für den initalen Administratorbenutzer. Sofern nicht angegeben, wird der Benutzername von der Anwendung vorgegeben und beim ersten Start in der Konsole ausgegeben. | -         |
 | `Turnierplan__InitialUserPassword` | Das Passwort für den initialen Administratorbenutzer. Sofern nicht angegeben, wird beim ersten Start der Anwendung ein zufälliges Passwort generiert und in der Konsole ausgegeben.  | -         |
 
 ## Bilder-Uploads
 
-Standardmäßig werden alle Bilder-Uploads als Dateien in einem Container-Verzeichnis gespeichert. Das entsprechende Verzeichnis sollte [als Volume persistiert](http://localhost:8000/installation/#volume-mounts) werden.
+In der Weboberfläche können Bilddateien hochgeladen werden. Diese werden mit einer bestimmten Qualitätseinstellung in das `webp`-Format konvertiert und anschließend standardmäßig als Dateien in einem Container-Verzeichnis gespeichert. Das entsprechende Verzeichnis sollte [als Volume persistiert](http://localhost:8000/installation/#volume-mounts) werden. Folgende Einstellungen sind verfügbar:
 
-| Umgebungsvariable           | Beschreibung                                                                     | Standard                  |
-|-----------------------------|----------------------------------------------------------------------------------|---------------------------|
-| `ImageStorage__StoragePath` | Das Verzeichnis innerhalb vom Container, hochgeladene Bilder gespeichert werden. | `/var/turnierplan/images` |
+| Umgebungsvariable           | Beschreibung                                                                                                          | Standard                  |
+|-----------------------------|-----------------------------------------------------------------------------------------------------------------------|---------------------------|
+| `Turnierplan__ImageMaxSize` | Die maximale Dateigröße für Bild-Uploads in Bytes. Der Standard-Wert entspricht 8 MiB (8 &middot; 1024 &middot; 1024) | `8388608`                 |
+| `Turnierplan__ImageQuality` | Die Qualitätseinstellung für Bild-Uploads. Ein Wert von `100` entspricht einer verlustfreien Komprimierung.           | `80`                      |
+| `ImageStorage__StoragePath` | Das Verzeichnis innerhalb vom Container, hochgeladene Bilder gespeichert werden.                                      | `/var/turnierplan/images` |
 
 Alternativ können externe Services zum Speichern der Bilder konfiguriert werden. Dies hat den Vorteil, dass das Bereitstellen von Bilddateien keine CPU- und Netzwerkresourcen vom turnierplan.NET-Server beansprucht. Aktuell werden die folgenden externen Services unterstützt:
 
