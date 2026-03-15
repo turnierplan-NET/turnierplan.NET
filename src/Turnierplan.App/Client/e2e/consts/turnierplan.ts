@@ -14,7 +14,6 @@ export const turnierplan = {
     logoLink: 'header-logo-link'
   },
   landingPage: {
-    organizationsPageId: 0,
     newOrganizationButton: 'landing-page-new-organization-button'
   },
   loginPage: {
