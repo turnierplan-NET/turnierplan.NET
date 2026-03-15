@@ -1474,7 +1474,7 @@ export const de = {
       Error: 'Beim Laden der Release-Information von GitHub ist ein Fehler aufgetreten',
       UpToDate: 'Die neuste Version <span class="fw-bold">{{version}}</span> ist installiert',
       Outdated: 'Es ist eine neue Version verfügbar: <span class="fw-bold">{{version}}</span>',
-      ShowOnGitHub: 'Release auf GitHub öffnen'
+      ShowOnGitHub: 'Release auf GitHub anzeigen'
     }
   }
 };
