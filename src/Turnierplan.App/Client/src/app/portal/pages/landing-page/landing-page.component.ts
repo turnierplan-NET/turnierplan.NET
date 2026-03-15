@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs';
 
-import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { TitleService } from '../../services/title.service';
 import { IsAdministratorDirective } from '../../directives/is-administrator.directive';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 import { RouterLink } from '@angular/router';
 import { IllustrationComponent } from '../../components/illustration/illustration.component';
-import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { TranslateDirective } from '@ngx-translate/core';
 import { BadgeComponent } from '../../components/badge/badge.component';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
 import { UpdatesCheckComponent } from '../../components/updates-check/updates-check.component';
@@ -21,14 +20,12 @@ import { AllowCreateOrganizationDirective } from '../../directives/allow-create-
   templateUrl: './landing-page.component.html',
   imports: [
     LoadingStateDirective,
-    PageFrameComponent,
     IsAdministratorDirective,
     ActionButtonComponent,
     RouterLink,
     IllustrationComponent,
     TranslateDirective,
     BadgeComponent,
-    TranslatePipe,
     E2eDirective,
     UpdatesCheckComponent,
     AllowCreateOrganizationDirective
@@ -37,14 +34,6 @@ import { AllowCreateOrganizationDirective } from '../../directives/allow-create-
 export class LandingPageComponent implements OnInit {
   protected loadingState: LoadingState = { isLoading: true };
   protected organizations: OrganizationDto[] = [];
-
-  protected pages: PageFrameNavigationTab[] = [
-    {
-      id: 0,
-      title: 'Portal.LandingPage.Pages.Organizations',
-      icon: 'bi-boxes'
-    }
-  ];
 
   constructor(
     private readonly turnierplanApi: TurnierplanApi,

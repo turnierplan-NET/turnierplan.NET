@@ -80,9 +80,6 @@ export const de = {
     },
     LandingPage: {
       Title: 'Startseite',
-      Pages: {
-        Organizations: 'Organisationen'
-      },
       Badges: {
         OrganizationCount: 'Organisationen'
       },
