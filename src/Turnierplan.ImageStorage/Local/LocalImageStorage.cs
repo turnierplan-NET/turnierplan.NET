@@ -11,6 +11,7 @@ internal sealed class LocalImageStorage : ILocalImageStorage
 {
     private readonly ILogger<LocalImageStorage> _logger;
     private readonly string _storagePath;
+    private readonly bool _skipMigration;
 
     public LocalImageStorage(ILogger<LocalImageStorage> logger, IOptions<LocalImageStorageOptions> options)
     {
@@ -26,6 +27,7 @@ internal sealed class LocalImageStorage : ILocalImageStorage
         if (!Directory.Exists(_storagePath))
         {
             _logger.LogCritical("The directory for local image storage does not exist and could not be created.");
+            _skipMigration = true;
         }
     }
 
@@ -101,6 +103,47 @@ internal sealed class LocalImageStorage : ILocalImageStorage
             RequestPath = "/images",
             FileProvider = new PhysicalFileProvider(_storagePath)
         });
+    }
+
+    internal async Task MigrateAsync(Func<Task<IList<Image>>> getImagesFunction, CancellationToken cancellationToken)
+    {
+        if (_skipMigration)
+        {
+            _logger.LogCritical("A previous initialization error of local image storage will cause the migrations to be skipped.");
+            return;
+        }
+
+        try
+        {
+            var version = "1";
+            var versionFile = Path.Join(_storagePath, ".version");
+
+            if (File.Exists(versionFile))
+            {
+                version = await File.ReadAllTextAsync(versionFile, cancellationToken);
+            }
+
+            if (version.Equals("2"))
+            {
+                // Latest version, no migrations required
+                _logger.LogInformation("Storage of local image storage is up to date.");
+                return;
+            }
+
+            if (!version.Equals("1"))
+            {
+                _logger.LogCritical("Version file in local image storage path contains an unknown version '{Version}'.", version);
+                return;
+            }
+
+            var images = await getImagesFunction();
+            // TODO: Run migration by copying the files & writing new version number
+            // TODO: Display info message if any old files still exist
+        }
+        catch (Exception ex)
+        {
+            _logger.LogCritical(ex, "An unexpected exception occurred while trying to run local image storage migrations.");
+        }
     }
 
     public void Dispose()
