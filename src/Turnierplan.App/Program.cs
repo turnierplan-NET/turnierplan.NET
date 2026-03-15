@@ -113,4 +113,7 @@ app.UseStaticFiles();
 // Migrate database and create admin user if DB is empty
 await app.InitializeDatabaseAsync();
 
+// Run image storage migrations if required by the configured image storage
+await app.MigrateImageStorageAsync();
+
 await app.RunAsync();

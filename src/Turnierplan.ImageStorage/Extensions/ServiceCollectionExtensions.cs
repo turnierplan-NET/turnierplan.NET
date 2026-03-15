@@ -21,6 +21,7 @@ public static class ServiceCollectionExtensions
             case "Local":
                 services.Configure<LocalImageStorageOptions>(configuration);
                 services.AddSingleton<IImageStorage, LocalImageStorage>();
+                services.AddScoped<IImageStorageMigration, LocalImageStorageMigration>();
                 break;
             case "S3":
                 services.Configure<S3ImageStorageOptions>(configuration);
