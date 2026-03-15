@@ -1,11 +1,11 @@
 @if (isInitializing) {
   <div class="border rounded-3 p-3 d-flex flex-row align-items-center gap-2 updates-tile-loading">
-    <tp-small-spinner />
+    <tp-small-spinner [color]="'primary-emphasis'" />
     <span [translate]="'Portal.UpdatesCheck.Loading'"></span>
   </div>
 } @else if (latestVersion === undefined) {
   <div class="border rounded-3 p-3 d-flex flex-row align-items-center gap-2 updates-tile-error">
-    <i class="bi bi-x-lg text-danger"></i>
+    <i class="bi bi-x-circle text-danger"></i>
     <span translate="Portal.UpdatesCheck.Error"></span>
   </div>
 } @else if (latestVersion === currentVersion) {
