@@ -12,7 +12,7 @@ edit_uri = "blob/main/docs/pages/"
 copyright = "Copyright &copy; 2026 Elias Hörner"
 
 docs_dir = "pages"
-extra_css = ["assets/turnierplan-docs.css"]
+extra_css = ["assets/turnierplan.css"]
 
 nav = [
     { "Startseite" = "index.md" },
