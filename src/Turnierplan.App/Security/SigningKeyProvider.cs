@@ -73,10 +73,12 @@ internal sealed class SigningKeyProvider : ISigningKeyProvider
     {
         if (!string.IsNullOrWhiteSpace(_options.SigningKey))
         {
+            _logger.LogInformation("Initializing signing key from app config.");
             InitializeSigningKeyFromAppConfig();
         }
         else if (!string.IsNullOrWhiteSpace(_options.StoragePath))
         {
+            _logger.LogInformation("Initializing signing key from file store.");
             await InitializeSigningKeyWithFileStore(cancellationToken);
         }
         else
