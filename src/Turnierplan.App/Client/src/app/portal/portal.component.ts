@@ -19,6 +19,7 @@ import { E2eDirective } from '../core/directives/e2e.directive';
 import { ColorThemeSelectorComponent } from '../core/components/color-theme-selector/color-theme-selector.component';
 
 echarts.use([BarChart, GridComponent, CanvasRenderer, TooltipComponent]);
+import 'echarts/theme/dark-bold.js';
 
 type UserInfoAction = 'ChangePassword' | 'Logout';
 

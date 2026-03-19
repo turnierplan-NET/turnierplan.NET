@@ -17,6 +17,7 @@ interface TurnierplanAccessToken {
   userName: string;
   fullName: string;
   adm?: string;
+  createorg?: string;
   uid: string;
 }
 
@@ -32,6 +33,7 @@ export class AuthenticationService implements OnDestroy {
   private static readonly localStorageUserFullNameKey = 'tp_id_userFullName';
   private static readonly localStorageUserEMailKey = 'tp_id_userEMail';
   private static readonly localStorageUserAdministratorKey = 'tp_id_userAdmin';
+  private static readonly localStorageUserAllowCreateOrganizationKey = 'tp_id_userAllowCreateOrg';
   private static readonly localStorageAccessTokenExpiryKey = 'tp_id_accTokenExp';
   private static readonly localStorageRefreshTokenExpiryKey = 'tp_id_rfsTokenExp';
 
@@ -41,6 +43,7 @@ export class AuthenticationService implements OnDestroy {
     AuthenticationService.localStorageUserFullNameKey,
     AuthenticationService.localStorageUserEMailKey,
     AuthenticationService.localStorageUserAdministratorKey,
+    AuthenticationService.localStorageUserAllowCreateOrganizationKey,
     AuthenticationService.localStorageAccessTokenExpiryKey,
     AuthenticationService.localStorageRefreshTokenExpiryKey
   ];
@@ -93,6 +96,7 @@ export class AuthenticationService implements OnDestroy {
             decodedAccessToken.fullName,
             decodedAccessToken.mail,
             decodedAccessToken.adm === 'true',
+            decodedAccessToken.createorg === 'true',
             decodedAccessToken.exp,
             decodedRefreshToken.exp
           );
@@ -144,6 +148,12 @@ export class AuthenticationService implements OnDestroy {
 
   public checkIfUserIsAdministrator(): Observable<boolean> {
     return this.authentication$.pipe(map(() => localStorage.getItem(AuthenticationService.localStorageUserAdministratorKey) === 'true'));
+  }
+
+  public checkIfUserIsAllowedToCreateOrganization(): Observable<boolean> {
+    return this.authentication$.pipe(
+      map(() => localStorage.getItem(AuthenticationService.localStorageUserAllowCreateOrganizationKey) === 'true')
+    );
   }
 
   public changePassword(
@@ -218,6 +228,7 @@ export class AuthenticationService implements OnDestroy {
               decodedAccessToken.fullName,
               decodedAccessToken.mail,
               decodedAccessToken.adm === 'true',
+              decodedAccessToken.createorg === 'true',
               decodedAccessToken.exp,
               decodedRefreshToken.exp
             );
@@ -303,6 +314,7 @@ export class AuthenticationService implements OnDestroy {
     userFullName: string | undefined,
     userEMail: string | undefined,
     userIsAdmin: boolean,
+    userAllowCreateOrg: boolean,
     accessTokenExpiry: number,
     refreshTokenExpiry: number
   ): void {
@@ -311,6 +323,7 @@ export class AuthenticationService implements OnDestroy {
     localStorage.setItem(AuthenticationService.localStorageUserFullNameKey, userFullName ?? '');
     localStorage.setItem(AuthenticationService.localStorageUserEMailKey, userEMail ?? '');
     localStorage.setItem(AuthenticationService.localStorageUserAdministratorKey, `${userIsAdmin}`);
+    localStorage.setItem(AuthenticationService.localStorageUserAllowCreateOrganizationKey, `${userAllowCreateOrg}`);
 
     localStorage.setItem(AuthenticationService.localStorageAccessTokenExpiryKey, `${accessTokenExpiry}`);
     localStorage.setItem(AuthenticationService.localStorageRefreshTokenExpiryKey, `${refreshTokenExpiry}`);

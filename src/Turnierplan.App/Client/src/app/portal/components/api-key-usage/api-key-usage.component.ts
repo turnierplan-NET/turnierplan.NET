@@ -7,15 +7,15 @@ import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { AlertComponent } from '../alert/alert.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
-import { NgxEchartsDirective } from 'ngx-echarts';
 import { EChartsCoreOption } from 'echarts/core';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { getApiKeyUsage } from '../../../api/fn/api-keys/get-api-key-usage';
+import { ChartWrapperComponent } from '../chart-wrapper/chart-wrapper.component';
 
 @Component({
   selector: 'tp-api-key-usage',
   templateUrl: './api-key-usage.component.html',
-  imports: [TranslateDirective, FormsModule, ActionButtonComponent, AlertComponent, SmallSpinnerComponent, NgxEchartsDirective]
+  imports: [TranslateDirective, FormsModule, ActionButtonComponent, AlertComponent, SmallSpinnerComponent, ChartWrapperComponent]
 })
 export class ApiKeyUsageComponent implements OnDestroy {
   @Output()

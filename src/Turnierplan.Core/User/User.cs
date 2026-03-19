@@ -1,5 +1,6 @@
 using System.Globalization;
 using Turnierplan.Core.Entity;
+using Turnierplan.Core.Exceptions;
 
 namespace Turnierplan.Core.User;
 
@@ -7,7 +8,6 @@ public sealed class User : Entity<Guid>
 {
     public User(string userName)
     {
-
         Id = Guid.NewGuid();
         PrincipalId = Guid.NewGuid();
         CreatedAt = DateTime.UtcNow;
@@ -22,7 +22,7 @@ public sealed class User : Entity<Guid>
         SecurityStamp = Guid.Empty;
     }
 
-    internal User(Guid id, Guid principalId, DateTime createdAt, string userName, string normalizedUserName, string? fullName, string? eMail, string? normalizedEMail, string passwordHash, bool isAdministrator, DateTime lastPasswordChange, Guid securityStamp)
+    internal User(Guid id, Guid principalId, DateTime createdAt, string userName, string normalizedUserName, string? fullName, string? eMail, string? normalizedEMail, string passwordHash, bool isAdministrator, bool allowCreateOrganization, DateTime lastPasswordChange, Guid securityStamp)
     {
         Id = id;
         PrincipalId = principalId;
@@ -34,6 +34,7 @@ public sealed class User : Entity<Guid>
         NormalizedEMail = normalizedEMail;
         PasswordHash = passwordHash;
         IsAdministrator = isAdministrator;
+        AllowCreateOrganization = allowCreateOrganization;
         LastPasswordChange = lastPasswordChange;
         SecurityStamp = securityStamp;
     }
@@ -56,7 +57,9 @@ public sealed class User : Entity<Guid>
 
     public string PasswordHash { get; private set; }
 
-    public bool IsAdministrator { get; set; }
+    public bool IsAdministrator { get; private set; }
+
+    public bool AllowCreateOrganization { get; private set; }
 
     public DateTime LastPasswordChange { get; private set; }
 
@@ -98,6 +101,26 @@ public sealed class User : Entity<Guid>
         }
 
         SecurityStamp = Guid.NewGuid();
+    }
+
+    public void SetIsAdministrator(bool isAdministrator)
+    {
+        IsAdministrator = isAdministrator;
+
+        if (isAdministrator)
+        {
+            AllowCreateOrganization = true;
+        }
+    }
+
+    public void SetAllowCreateOrganization(bool allowCreateOrganization)
+    {
+        if (IsAdministrator && !allowCreateOrganization)
+        {
+            throw new TurnierplanException($"'{nameof(AllowCreateOrganization)}' cannot be set to false for an administrator user.");
+        }
+
+        AllowCreateOrganization = allowCreateOrganization;
     }
 
     public static string Normalize(string value) => value.Trim().ToUpper(CultureInfo.InvariantCulture);

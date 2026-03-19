@@ -1,9 +1,14 @@
-﻿using System.Net.Http.Json;
+﻿using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Kiota.Abstractions.Authentication;
+using Microsoft.Kiota.Http.HttpClientLibrary;
+using Turnierplan.App.Test.Functional.Client;
+using Turnierplan.App.Test.Functional.Client.Api;
+using Turnierplan.App.Test.Functional.Client.Models;
 using Turnierplan.Core.User;
 using Turnierplan.Dal;
 
@@ -33,30 +38,37 @@ internal sealed class TestServer
         {
             var ctx = scope.ServiceProvider.GetRequiredService<TurnierplanContext>();
 
-            var user = new User(username)
-            {
-                IsAdministrator = true
-            };
+            var user = new User(username);
 
+            user.SetIsAdministrator(true);
             user.UpdatePassword(scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>().HashPassword(user, password));
 
             ctx.Users.Add(user);
             ctx.SaveChanges();
         }
 
-        var loginRequest = new HttpRequestMessage(HttpMethod.Post, Routes.Identity.Login())
-        {
-            Content = JsonContent.Create(new { UserName = username, Password = password})
-        };
-
-        Client = _application.CreateClient(new WebApplicationFactoryClientOptions { HandleCookies = true });
-        var loginResponseTask = Client.SendAsync(loginRequest);
-        loginResponseTask.Wait();
-        var loginResponse = loginResponseTask.Result;
-        loginResponse.EnsureSuccessStatusCode();
+        Client = CreateClientForUserAsync(username, password).GetAwaiter().GetResult();
     }
 
-    public HttpClient Client { get; }
+    public ApiRequestBuilder Client { get; }
+
+    public async Task<ApiRequestBuilder> CreateClientForUserAsync(string username, string password)
+    {
+        var authenticationProvider = new AnonymousAuthenticationProvider();
+        var httpClient = _application.CreateClient(new WebApplicationFactoryClientOptions { HandleCookies = true });
+        var httpClientRequestAdapter = new HttpClientRequestAdapter(authenticationProvider, httpClient: httpClient);
+        var client = new TurnierplanClient(httpClientRequestAdapter);
+
+        var loginResponse = await client.Api.Identity.Login.PostAsync(new LoginEndpointRequest
+        {
+            UserName = username,
+            Password = password
+        });
+
+        loginResponse!.Success.Should().BeTrue();
+
+        return client.Api;
+    }
 
     public void ExecuteContextAction(Action<TurnierplanContext> action)
     {

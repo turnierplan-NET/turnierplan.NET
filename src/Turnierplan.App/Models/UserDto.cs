@@ -15,4 +15,6 @@ public sealed record UserDto
     public required DateTime LastPasswordChange { get; init; }
 
     public required bool IsAdministrator { get; init; }
+
+    public required bool AllowCreateOrganization { get; init; }
 }

@@ -1,6 +1,10 @@
 <ng-container *tpLoadingState="loadingState">
-  <tp-page-frame [title]="'Portal.LandingPage.Title' | translate" [navigationTabs]="pages">
-    <ng-template #buttons>
+  <div class="mt-5 container">
+    <tp-updates-check />
+
+    <div class="d-flex flex-row flex-wrap align-items-center gap-2 mt-5">
+      <span class="fs-4 fw-bold" [translate]="'Portal.LandingPage.Title'"></span>
+      <div class="flex-grow-1"></div>
       <tp-action-button
         *tpIsAdministrator
         [title]="'Portal.Administration.Title'"
@@ -8,22 +12,22 @@
         [icon]="'gear'"
         [routerLink]="'administration'" />
       <tp-action-button
+        *tpAllowCreateOrganization
         [tpE2E]="'landing-page-new-organization-button'"
         [title]="'Portal.LandingPage.NewOrganization'"
         [type]="'outline-success'"
         [icon]="'plus-circle'"
         [routerLink]="'create/organization'" />
-    </ng-template>
-    <ng-template *tpIsAdministrator #preContent>
-      <tp-updates-check />
-    </ng-template>
-    <ng-template #mainContent>
+    </div>
+
+    <div class="mt-4">
       <div class="card">
         @if (organizations.length === 0) {
           <div class="card-body">
-            <div class="py-5 d-flex flex-column align-items-center gap-5">
+            <div class="py-5 d-flex flex-column align-items-center">
               <tp-illustration [name]="'select'" />
-              <span translate="Portal.LandingPage.NoOrganizations" class="tp-text-pre-wrap text-center"></span>
+              <span translate="Portal.LandingPage.NoOrganizations" class="mt-5 text-center"></span>
+              <span *tpAllowCreateOrganization translate="Portal.LandingPage.CreateNewOrganization" class="text-center"></span>
             </div>
           </div>
         } @else {
@@ -51,6 +55,6 @@
           </div>
         }
       </div>
-    </ng-template>
-  </tp-page-frame>
+    </div>
+  </div>
 </ng-container>
