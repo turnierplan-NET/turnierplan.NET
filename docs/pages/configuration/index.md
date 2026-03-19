@@ -105,13 +105,17 @@ Die folgenden Einstellungen können gesetzt werden, um die Benutzerauthentifizie
 |----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
 | `Identity__AccessTokenLifetime`  | Die Gültigkeitsdauer von ausgestellten Access-Tokens.                                                                                                        | `00:03:00`                  |
 | `Identity__RefreshTokenLifetime` | Die Gültigkeitsdauer von ausgestellten Refresh-Tokens. Innerhalb diesem Zeitraum ist kein erneuter Login erforderlich.                                       | `1.00:00:00`                |
-| `Identity__StoragePath`          | Das Verzeichnis innerhalb vom Container, wo der Schlüssel zur Signatur ausgesteller Tokens gespeichert wird.                                                 | `/var/turnierplan/identity` |
+| `Identity__SigningKey`           | Optional ein base64-kodierter 512-bit Schlüssel zur Signierung der ausgestellten Access- und Refresh-Tokens.                                                 | -                           |
+| `Identity__StoragePath`          | Falls kein Signature-Key angegeben wird, wird in diesem Verzeichnis ein zufällig generierter Schlüssel gespeichert.                                          | `/var/turnierplan/identity` |
 | `Identity__UseInsecureCookies`   | Kann auf `true` gesetzt werde, um HTTP Cookies ohne *secure* auszustellen. Dies ist erforderlich, wenn nicht mit HTTPS auf turnierplan.NET zugegriffen wird. | `false`                     |
 
 Für ein produktives Deployment sind die Standardwerte ausreichend und müssen nicht geändert werden.
 
 !!! note
     Die Gültigkeitsdauer muss als .NET `TimeSpan` formatiert werden. Das Format ist `HH:mm:ss` bzw. `d.HH:mm:ss` also bspw. `00:03:00` für 3 Minuten oder `1.00:00:00` für 1 Tag.
+
+!!! note
+    Falls kein Signaturschlüssel festgelegt wird, sollte der `Identity__StoragePath` auf einen Pfad im Container verweisen, welcher als Volume persistiert wird. Ansonsten werden nach jedem Neustart des Containers alle zuvor ausgestellten Tokens ungültig, da ein neuer Schlüssel generiert werden würde.
 
 ## Monitoring
 

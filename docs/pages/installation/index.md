@@ -81,7 +81,7 @@ Beim ersten Starten der Anwendung werden alle Datenbankmigrationen durchgeführt
 Die turnierplan.NET-Anwendung speichert diverse Dateien in folgendem Verzeichnis innerhalb vom Container: `/var/turnierplan`. Bei einer Standardkonfiguration sollte dieses Verzeichnis in einem Docker Volume oder vergleichbar persistiert werden. Die folgenden Daten werden innerhalb vom o.g. Verzeichnis gespeichert:
 
 - **Bild-Uploads**: Sofern keine anderweitige Speicherung von Bildern (wie z.B. S3) konfiguriert ist.
-- **JWT Signatur-Schlüssel**: Sofern kein Schlüssel via Umgebungsvariable spezifiziert wird, generiert die Anwendung beim ersten Start einen zufälligen symmetrischen SHA512 Schlüssel zur Signatur der JWT-Tokens. Wenn der Schlüssel nicht persistiert wird, wird er bei jedem Start des Servers neu generiert und alle zuvor ausgestellten JWT-Tokens werden ungültig.
+- **JWT Signatur-Schlüssel**: Sofern kein Schlüssel via Umgebungsvariable spezifiziert wird, wird ein zufällig generierter Schlüssel hier gespeichert. Siehe auch [Konfiguration der Authentifizierung](../configuration/index.md#authentifizierung).
 
 ## Konfiguration
 
