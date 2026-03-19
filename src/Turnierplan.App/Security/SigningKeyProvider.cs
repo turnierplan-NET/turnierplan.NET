@@ -17,7 +17,7 @@ internal sealed class SigningKeyProvider : ISigningKeyProvider
     private const int SigningKeySizeBytes = 512 / 8;
     private const string SigningAlgorithm = "http://www.w3.org/2001/04/xmldsig-more#hmac-sha512";
 
-    private readonly SemaphoreSlim _semaphore = new(1);
+    private readonly SemaphoreSlim _semaphore = new(1, 1);
     private readonly IdentityOptions _options;
     private readonly ILogger<SigningKeyProvider> _logger;
 
