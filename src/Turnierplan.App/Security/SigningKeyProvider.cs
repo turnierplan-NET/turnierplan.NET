@@ -61,7 +61,7 @@ internal sealed class SigningKeyProvider : ISigningKeyProvider
             }
 
             // If signing key is still null, the initialization failed
-            return _signingKey ?? throw new InvalidOperationException("Signing key initialization failed. Check the logs for more details");
+            return _signingKey ?? throw new InvalidOperationException("The signing key is not available: Check the startup logs for error details.");
         }
         finally
         {
