@@ -29,7 +29,7 @@ Für die Installation auf einem lokalen Rechner oder einer VM kann im einfachste
 ```yaml
 services:
   turnierplan.database:
-    image: postgres:latest
+    image: postgres:18
     environment:
       - POSTGRES_PASSWORD=P@ssw0rd
       - POSTGRES_DB=turnierplan
@@ -40,7 +40,7 @@ services:
     restart: unless-stopped
 
   turnierplan.application:
-    image: ghcr.io/turnierplan-net/turnierplan:latest
+    image: ghcr.io/turnierplan-net/turnierplan:2026.2.0
     depends_on:
       - turnierplan.database
     environment:
@@ -61,8 +61,6 @@ volumes:
 networks:
   turnierplan:
 ```
-
-Statt dem `latest`-Tag sollte immer eine spezifische Version für die Images der Datenbank und von turnierplan.NET verwendet werden. Dies ermöglicht eine bessere Kontrolle, welche Updates wann eingespielt werden. Die neuste Version ist auf der [Release-Seite](https://github.com/turnierplan-NET/turnierplan.NET/releases) der Repository auffindbar.
 
 Die URL, welche letztendlich für den Zugriff auf turnierplan.NET verwendet wird, sollte in der Umgebungsvariable `Turnierplan__ApplicationUrl` spezifiziert werden. Falls bspw. eine Domain `example.com` verwendet wird, sollte der Wert der Umgebungsvariable `https://example.com` sein. Falls turnierplan.NET im lokalen Netzwerk gehostet wird, könnte der Wert bspw. `http://192.168.0.187` sein. Es muss natürlich das korrekte Protokoll (HTTP vs. HTTPS) verwendet werden.
 

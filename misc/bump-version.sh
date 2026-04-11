@@ -36,3 +36,4 @@ update_file () {
 update_file "src/version.xml"
 update_file "src/Turnierplan.App/Client/package.json"
 update_file "src/Turnierplan.App/Client/src/environments/environment.prod.ts"
+update_file "docs/pages/installation/index.md"
