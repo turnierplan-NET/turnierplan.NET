@@ -13,13 +13,10 @@ Um das Modul zu verwenden, muss zunächst Terraform installiert sein. Zudem müs
 
 ```terraform
 module "turnierplan" {
-  source = "github.com/turnierplan-NET/turnierplan.NET-Terraform-Azure?ref=1.0.0"
+  source = "github.com/turnierplan-NET/turnierplan.NET-Terraform-Azure?ref=2026.2.0"
 
   name     = "turnierplan-example"
   location = "westeurope"
-
-  # Make sure you use the latest version for a new install
-  turnierplan_container_version = "2026.1.0"
 
   # DON'T set a secure admin password here! Run the deployment, then log in using credentials
   # specified below and change the admin password to a secure one in the web UI afterwards.
