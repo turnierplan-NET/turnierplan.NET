@@ -30,7 +30,7 @@ echo "Bumping version: '$current_version' -> '$next_version'"
 
 update_file () {
   echo "Updating file: $1"
-  sed -i -e "s/$current_version/$next_version/g" "../$1"
+  sed -i -e "s/${current_version//./\\.}/$next_version/g" "../$1"
 }
 
 update_file "src/version.xml"
