@@ -11,6 +11,3 @@ The resulting container image can be run as described in the [main readme](../RE
 ```shell
 docker run -p 80:8080 -e Turnierplan__ApplicationUrl="http://localhost" -e Database__InMemory="true" turnierplan:dev
 ```
-
-> [!WARNING]
-> Manually built container images should not be used in production! This is because the relevant GitHub workflow performs other important steps before actually building the images. 
