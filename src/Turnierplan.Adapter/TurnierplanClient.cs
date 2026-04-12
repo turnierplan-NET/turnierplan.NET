@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http.Extensions;
 using Turnierplan.Adapter.Models;
 
@@ -16,9 +17,7 @@ public sealed class TurnierplanClient : IDisposable
     private const string ApiKeySecretHeaderName = "X-Api-Key-Secret";
     private const string TurnierplanVersionHeaderName = "X-Turnierplan-Version";
 
-    private static readonly string __turnierplanAdapterVersion =
-        typeof(TurnierplanClient).Assembly.GetName().Version?.ToString()
-            ?? throw new InvalidOperationException("Could not determine Turnierplan.Adapter version from assembly name.");
+    private static readonly string __turnierplanAdapterVersion = DetermineAdapterVersion();
 
     private static readonly JsonSerializerOptions __serializerOptions = new()
     {
@@ -116,6 +115,22 @@ public sealed class TurnierplanClient : IDisposable
         {
             _httpClient.Dispose();
         }
+    }
+
+    private static string DetermineAdapterVersion()
+    {
+        var assemblyVersion = typeof(TurnierplanClient).Assembly.GetName().Version?.ToString();
+
+        if (assemblyVersion is null)
+        {
+            throw new InvalidOperationException("Could not determine Turnierplan.Adapter version from assembly name.");
+        }
+
+        var match = Regex.Match(assemblyVersion, @"^(?<Version>\d+\.\d+\.\d+)\.0$");
+
+        return match.Success
+            ? match.Groups["Version"].Value
+            : throw new InvalidOperationException("Could not determine Turnierplan.Adapter version from assembly name.");
     }
 
     private static void VerifyServerVersion(HttpResponseMessage response)
