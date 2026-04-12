@@ -37,14 +37,17 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        string apiKeyId, apiKeySecret;
+        string? apiKeyId, apiKeySecret;
 
-        try
+        if (Request.Headers.TryGetValue(ApiKeyIdHeaderName, out var apiKeyIdHeaderValue)
+            && Request.Headers.TryGetValue(ApiKeySecretHeaderName, out var apiKeySecretHeaderValue)
+            && apiKeyIdHeaderValue.Count == 1
+            && apiKeySecretHeaderValue.Count == 1)
         {
-            apiKeyId = Request.Headers[ApiKeyIdHeaderName][0]!;
-            apiKeySecret = Request.Headers[ApiKeySecretHeaderName][0]!;
+            apiKeyId = apiKeyIdHeaderValue.Single();
+            apiKeySecret = apiKeyIdHeaderValue.Single();
         }
-        catch
+        else
         {
             return AuthenticateResult.NoResult();
         }

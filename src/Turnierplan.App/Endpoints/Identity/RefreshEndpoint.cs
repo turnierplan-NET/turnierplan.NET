@@ -1,9 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Turnierplan.App.Options;
 using Turnierplan.App.Security;
 using Turnierplan.Dal.Repositories;
+using ClaimTypes = Turnierplan.App.Security.ClaimTypes;
 
 namespace Turnierplan.App.Endpoints.Identity;
 
@@ -27,46 +29,68 @@ internal sealed class RefreshEndpoint : IdentityEndpointBase<RefreshEndpoint.Ref
         IUserRepository userRepository,
         CancellationToken cancellationToken)
     {
-        Guid userIdFromToken;
-        Guid securityStampFromToken;
+        string? token = null;
 
-        try
+        foreach (var (cookieName, cookieValue) in context.Request.Cookies)
         {
-            var cookie = context.Request.Cookies.Single(x => x.Key.Equals(CookieNames.RefreshTokenCookieName));
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var signingKey = await _signingKeyProvider.GetSigningKeyAsync(cancellationToken);
-            var validationParameters = new TokenValidationParameters
+            if (cookieName.Equals(CookieNames.RefreshTokenCookieName))
             {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = signingKey,
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
-
-            var claimsPrincipal = tokenHandler.ValidateToken(cookie.Value, validationParameters, out _);
-
-            var tokenType = claimsPrincipal.Claims.Single(x => x.Type.Equals(ClaimTypes.TokenType)).Value;
-            if (!tokenType.Equals(JwtTokenTypes.Refresh))
-            {
-                return Results.Unauthorized();
+                token = cookieValue;
+                break;
             }
-
-            userIdFromToken = Guid.Parse(claimsPrincipal.Claims.Single(x => x.Type.Equals(ClaimTypes.UserId)).Value);
-            securityStampFromToken = Guid.Parse(claimsPrincipal.Claims.Single(x => x.Type.Equals(ClaimTypes.SecurityStamp)).Value);
         }
-        catch
+
+        if (string.IsNullOrEmpty(token))
         {
             return Results.Unauthorized();
         }
 
-        var user = await userRepository.GetByIdAsync(userIdFromToken);
+        var tokenHandler = new JwtSecurityTokenHandler();
+
+        var signingKey = await _signingKeyProvider.GetSigningKeyAsync(cancellationToken);
+        var validationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = signingKey,
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+
+        ClaimsPrincipal claimsPrincipal;
+
+        try
+        {
+            claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out _);
+        }
+        catch (SecurityTokenException)
+        {
+            return Results.Unauthorized();
+        }
+
+        var tokenType = claimsPrincipal.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.TokenType))?.Value;
+
+        if (!Equals(tokenType, JwtTokenTypes.Refresh))
+        {
+            return Results.Unauthorized();
+        }
+
+        var userIdFromToken = claimsPrincipal.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.UserId))?.Value;
+        var securityStampFromToken = claimsPrincipal.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.SecurityStamp))?.Value;
+
+        if (string.IsNullOrWhiteSpace(userIdFromToken)
+            || string.IsNullOrWhiteSpace(securityStampFromToken)
+            || !Guid.TryParse(userIdFromToken, out var userIdFromTokenGuid)
+            || !Guid.TryParse(securityStampFromToken, out var securityStampFromTokenGuid))
+        {
+            return Results.Unauthorized();
+        }
+
+        var user = await userRepository.GetByIdAsync(userIdFromTokenGuid);
 
         // If the security stamp has changed, that means the user has changed their password since the reset token was issued
-        if (user is null || user.SecurityStamp != securityStampFromToken)
+        if (user is null || user.SecurityStamp != securityStampFromTokenGuid)
         {
             return Results.Ok(new RefreshEndpointResponse
             {

@@ -97,7 +97,7 @@ internal sealed class SigningKeyProvider : ISigningKeyProvider
         {
             signingKey = Convert.FromBase64String(_options.SigningKey);
         }
-        catch (Exception ex)
+        catch (FormatException ex)
         {
             _logger.LogCritical(ex, "Signing key from app configuration could not be decoded.");
             return;
