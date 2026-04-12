@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Text.RegularExpressions;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -15,8 +14,6 @@ using Turnierplan.Core.Organization;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Dal;
 using Xunit;
-using Group = Turnierplan.Adapter.Models.Group;
-using Match = Turnierplan.Adapter.Models.Match;
 using MatchType = Turnierplan.Adapter.Enums.MatchType;
 
 namespace Turnierplan.Adapter.Test.Functional;
@@ -351,7 +348,7 @@ public sealed class TurnierplanAdapterTest
             _ = await client.GetTournament("x");
         };
 
-        var actualVersion = Regex.Replace(typeof(TurnierplanClient).Assembly.GetName().Version!.ToString(), @"\.0$", string.Empty);
+        var actualVersion = System.Text.RegularExpressions.Regex.Replace(typeof(TurnierplanClient).Assembly.GetName().Version!.ToString(), @"\.0$", string.Empty);
         var expectedMessage = sendHeader
             ? $"Server version '2024.0.0' does not match the Turnierplan.Adapter version '{actualVersion}'."
             : "Could not get 'X-Turnierplan-Version' header from response.";
