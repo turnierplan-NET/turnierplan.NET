@@ -12,6 +12,7 @@ namespace Turnierplan.App.Security;
 
 internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
+    private const string AuthenticationTypeName = "TurnierplanApiKeyAuthentication";
     private const string ApiKeyIdHeaderName = "x-api-key";
     private const string ApiKeySecretHeaderName = "x-api-key-secret";
 
@@ -67,7 +68,7 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
 
         await _apiKeyRepository.UnitOfWork.SaveChangesAsync();
 
-        var identity = new ClaimsIdentity(claims: [
+        var identity = new ClaimsIdentity(authenticationType: AuthenticationTypeName, claims: [
             new Claim(ClaimTypes.PrincipalId, apiKey.PrincipalId.ToString()),
             new Claim(ClaimTypes.PrincipalKind, nameof(PrincipalKind.ApiKey))
         ]);
