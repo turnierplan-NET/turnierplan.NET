@@ -126,7 +126,7 @@ public sealed class TurnierplanClient : IDisposable
             throw new InvalidOperationException("Could not determine Turnierplan.Adapter version from assembly name.");
         }
 
-        var match = Regex.Match(assemblyVersion, @"^(?<Version>\d+\.\d+\.\d+)\.\d+$");
+        var match = Regex.Match(assemblyVersion, @"^(?<Version>\d+\.\d+\.\d+)\.0$");
 
         return match.Success
             ? match.Groups["Version"].Value
