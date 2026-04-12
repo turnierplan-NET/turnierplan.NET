@@ -88,11 +88,11 @@
             }
         </div>
 
-        if (displayVenueTile && tournament.Venue is not null)
+        if (displayVenueTile)
         {
             // The 'd-none class is replaced with 'd-flex' when the user requests the data to be shown
             <div class="mb-3 d-none flex-column bg-white border p-3 shadow-sm" id="venue-information">
-                <div class="fw-bold mb-2">@tournament.Venue.Name</div>
+                <div class="fw-bold mb-2">@tournament.Venue!.Name</div>
 
                 @if (!string.IsNullOrWhiteSpace(tournament.Venue.Description))
                 {

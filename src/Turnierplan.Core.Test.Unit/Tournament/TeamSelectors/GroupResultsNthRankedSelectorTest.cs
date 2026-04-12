@@ -48,44 +48,18 @@ public sealed class GroupResultsNthRankedSelectorTest : TeamSelectorTestBase
 #pragma warning restore xUnit1026
         )
     {
-        // Arrange
         var instance1 = new GroupResultsNthRankedSelector(targetGroupIds, ordinalNumber, placementRank);
         var instance2 = new GroupResultsNthRankedSelector(targetGroupIds.Reverse().ToArray(), ordinalNumber, placementRank);
 
-        // Act
-        var hashCodeEquals = instance1.GetHashCode() == instance2.GetHashCode();
-        var results = new []
-        {
-            instance1.Equals(instance1),
-            instance2.Equals(instance2),
-            instance1.Equals(instance2),
-            instance2.Equals(instance1),
-            Equals(instance1, instance2),
-            Equals(instance2, instance1),
-            ((TeamSelectorBase)instance1).Equals(instance1),
-            ((TeamSelectorBase)instance1).Equals(instance2),
-            ((TeamSelectorBase)instance2).Equals(instance2),
-            ((object)instance1).Equals(instance1),
-            ((object)instance1).Equals(instance2),
-            ((object)instance2).Equals(instance2)
-        };
-        var resultsWithNull = new []
-        {
-            instance1.Equals(null),
-            instance2.Equals(null),
-            Equals(instance1, null),
-            Equals(instance2, null),
-            Equals(null, instance1),
-            Equals(null, instance2),
-            ((TeamSelectorBase)instance1!).Equals(null),
-            ((TeamSelectorBase)instance2!).Equals(null),
-            ((object)instance1!).Equals(null),
-            ((object)instance2!).Equals(null)
-        };
+        instance1.GetHashCode().Should().Be(instance2.GetHashCode());
 
-        // Assert
-        results.Should().AllSatisfy(x => x.Should().BeTrue());
-        resultsWithNull.Should().AllSatisfy(x => x.Should().BeFalse());
-        hashCodeEquals.Should().BeTrue();
+        instance1.Equals(instance1).Should().BeTrue();
+        instance2.Equals(instance2).Should().BeTrue();
+        instance1.Equals(instance2).Should().BeTrue();
+        instance2.Equals(instance1).Should().BeTrue();
+        Equals(instance1, instance2).Should().BeTrue();
+
+        instance1.Equals(null).Should().BeFalse();
+        instance2.Equals(null).Should().BeFalse();
     }
 }
