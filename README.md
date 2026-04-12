@@ -2,7 +2,7 @@
 
 *An open-source tournament planning application for football clubs*
 
-[![Build Status](https://github.com/turnierplan-NET/turnierplan.NET/actions/workflows/validate.yaml/badge.svg)](https://github.com/turnierplan-NET/turnierplan.NET/actions/workflows/validate.yaml) [![License](https://img.shields.io/github/license/turnierplan-NET/turnierplan.NET?color=blue)](./LICENSE) [![NuGet](https://img.shields.io/nuget/v/Turnierplan.Adapter)](https://www.nuget.org/packages/Turnierplan.Adapter)  [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=turnierplan-NET_turnierplan.NET&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=turnierplan-NET_turnierplan.NET) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=turnierplan-NET_turnierplan.NET&metric=coverage)](https://sonarcloud.io/summary/new_code?id=turnierplan-NET_turnierplan.NET)
+[![Build Status](https://github.com/turnierplan-NET/turnierplan.NET/actions/workflows/validate.yaml/badge.svg)](https://github.com/turnierplan-NET/turnierplan.NET/actions/workflows/validate.yaml) [![License](https://img.shields.io/github/license/turnierplan-NET/turnierplan.NET?color=blue)](./LICENSE) [![NuGet](https://img.shields.io/nuget/v/Turnierplan.Adapter)](https://www.nuget.org/packages/Turnierplan.Adapter)
 
 ## Introduction
 
