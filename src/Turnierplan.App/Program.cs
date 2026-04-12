@@ -8,6 +8,7 @@ using Turnierplan.App.Converters;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Helpers;
 using Turnierplan.App.Mapping;
+using Turnierplan.App.Middlewares;
 using Turnierplan.App.OpenApi;
 using Turnierplan.App.Options;
 using Turnierplan.Dal.Extensions;
@@ -82,6 +83,8 @@ app.MapHealthChecks("/health");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<TurnierplanVersionMiddleware>();
 
 app.Map(string.Empty, (HttpContext context) =>
 {

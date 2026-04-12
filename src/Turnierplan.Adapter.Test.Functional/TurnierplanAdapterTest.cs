@@ -348,7 +348,7 @@ public sealed class TurnierplanAdapterTest
             _ = await client.GetTournament("x");
         };
 
-        var actualVersion = typeof(TurnierplanClient).Assembly.GetName().Version!.ToString();
+        var actualVersion = System.Text.RegularExpressions.Regex.Replace(typeof(TurnierplanClient).Assembly.GetName().Version!.ToString(), @"\.0$", string.Empty);
         var expectedMessage = sendHeader
             ? $"Server version '2024.0.0' does not match the Turnierplan.Adapter version '{actualVersion}'."
             : "Could not get 'X-Turnierplan-Version' header from response.";
