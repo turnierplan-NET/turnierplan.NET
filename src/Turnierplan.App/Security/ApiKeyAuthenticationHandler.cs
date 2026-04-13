@@ -3,6 +3,7 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.RoleAssignment;
@@ -33,20 +34,21 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        string? apiKeyId, apiKeySecret;
+        var hasApiKeyIdHeader = Request.Headers.TryGetValue(ApiKeyIdHeaderName, out var apiKeyIdHeaderValue);
+        var hasApiKeySecretHeader = Request.Headers.TryGetValue(ApiKeySecretHeaderName, out var apiKeySecretHeaderValue);
 
-        if (Request.Headers.TryGetValue(ApiKeyIdHeaderName, out var apiKeyIdHeaderValue)
-            && Request.Headers.TryGetValue(ApiKeySecretHeaderName, out var apiKeySecretHeaderValue)
-            && apiKeyIdHeaderValue.Count == 1
-            && apiKeySecretHeaderValue.Count == 1)
-        {
-            apiKeyId = apiKeyIdHeaderValue.Single();
-            apiKeySecret = apiKeySecretHeaderValue.Single();
-        }
-        else
+        if (!hasApiKeyIdHeader && !hasApiKeySecretHeader)
         {
             return AuthenticateResult.NoResult();
         }
+
+        if (apiKeyIdHeaderValue.Count != 1 || apiKeySecretHeaderValue.Count != 1)
+        {
+            return AuthenticateResult.Fail("The API key ID and secret headers must each be specified exactly once.");
+        }
+
+        var apiKeyId = apiKeyIdHeaderValue.Single();
+        var apiKeySecret = apiKeySecretHeaderValue.Single();
 
         if (string.IsNullOrEmpty(apiKeyId) || string.IsNullOrEmpty(apiKeySecret) || !PublicId.TryParse(apiKeyId, out var apiKeyIdParsed))
         {
