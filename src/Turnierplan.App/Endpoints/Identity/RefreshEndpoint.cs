@@ -64,6 +64,10 @@ internal sealed class RefreshEndpoint : IdentityEndpointBase<RefreshEndpoint.Ref
         {
             claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out _);
         }
+        catch (SecurityTokenArgumentException)
+        {
+            return Results.Unauthorized();
+        }
         catch (SecurityTokenException)
         {
             return Results.Unauthorized();

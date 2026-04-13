@@ -24,11 +24,6 @@ internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityO
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if (!Request.Cookies.ContainsKey(CookieNames.AccessTokenCookieName))
-        {
-            return AuthenticateResult.NoResult();
-        }
-
         string? token = null;
 
         foreach (var (cookieName, cookieValue) in Request.Cookies)
@@ -40,9 +35,14 @@ internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityO
             }
         }
 
-        if (string.IsNullOrEmpty(token))
+        if (token is null)
         {
-            return AuthenticateResult.Fail("Missing or empty access token cookie.");
+            return AuthenticateResult.NoResult();
+        }
+
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            return AuthenticateResult.Fail("Invalid authentication token provided");
         }
 
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -63,6 +63,10 @@ internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityO
         try
         {
             claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out _);
+        }
+        catch (SecurityTokenArgumentException ex)
+        {
+            return AuthenticateResult.Fail($"Token validation failed: {ex.Message}");
         }
         catch (SecurityTokenException ex)
         {
