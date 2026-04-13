@@ -41,7 +41,7 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
             && apiKeySecretHeaderValue.Count == 1)
         {
             apiKeyId = apiKeyIdHeaderValue.Single();
-            apiKeySecret = apiKeyIdHeaderValue.Single();
+            apiKeySecret = apiKeySecretHeaderValue.Single();
         }
         else
         {

@@ -334,7 +334,7 @@ public sealed class TurnierplanAdapterTest
 
             if (sendHeader)
             {
-                response.Headers.Add("x-turnierplan-version", "2024.0.0"); // old version that does not exist
+                response.Headers.Add("X-Turnierplan-Version", "2024.0.0"); // old version that does not exist
             }
 
             return response;
