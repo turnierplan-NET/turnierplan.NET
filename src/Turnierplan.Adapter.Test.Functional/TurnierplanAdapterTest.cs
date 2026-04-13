@@ -330,7 +330,7 @@ public sealed class TurnierplanAdapterTest
         using var httpClient = new HttpClient(new MockHttpMessageHandler(_ =>
         {
             var response = new HttpResponseMessage();
-            response.StatusCode = HttpStatusCode.Unauthorized;
+            response.StatusCode = HttpStatusCode.OK;
 
             if (sendHeader)
             {
