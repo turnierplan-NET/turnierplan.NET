@@ -3,7 +3,6 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Primitives;
 using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.RoleAssignment;
