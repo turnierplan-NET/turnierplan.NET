@@ -14,7 +14,7 @@ using Visibility = Turnierplan.Core.Tournament.Visibility;
 
 namespace Turnierplan.App.Test.Functional;
 
-public sealed class Scenarios
+public sealed class Scenarios : IDisposable
 {
     private readonly TestServer _testServer = new();
 
@@ -96,6 +96,11 @@ public sealed class Scenarios
                 new CreateOrganizationEndpointRequest { Name = "test_org" },
                 cancellationToken: TestContext.Current.CancellationToken);
         }
+    }
+
+    public void Dispose()
+    {
+        _testServer.Dispose();
     }
 
     private static async Task ExpectApiErrorAsync(Func<Task> func, HttpStatusCode code)

@@ -10,6 +10,7 @@ namespace Turnierplan.PdfRendering.Renderer;
 public abstract class DocumentRendererBase<T> : IDocumentRenderer
     where T : IDocumentConfiguration
 {
+    private readonly Lock _lock = new();
     private bool _renderCalled;
 
     private protected DocumentRendererBase()
@@ -22,7 +23,7 @@ public abstract class DocumentRendererBase<T> : IDocumentRenderer
 
     public void Render(Tournament tournament, IDocumentConfiguration configuration, ILocalization localization, Stream destination)
     {
-        lock (this)
+        lock (_lock)
         {
             if (_renderCalled)
             {

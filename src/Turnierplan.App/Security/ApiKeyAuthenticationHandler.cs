@@ -33,17 +33,21 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        string apiKeyId, apiKeySecret;
+        var hasApiKeyIdHeader = Request.Headers.TryGetValue(ApiKeyIdHeaderName, out var apiKeyIdHeaderValue);
+        var hasApiKeySecretHeader = Request.Headers.TryGetValue(ApiKeySecretHeaderName, out var apiKeySecretHeaderValue);
 
-        try
-        {
-            apiKeyId = Request.Headers[ApiKeyIdHeaderName][0]!;
-            apiKeySecret = Request.Headers[ApiKeySecretHeaderName][0]!;
-        }
-        catch
+        if (!hasApiKeyIdHeader && !hasApiKeySecretHeader)
         {
             return AuthenticateResult.NoResult();
         }
+
+        if (apiKeyIdHeaderValue.Count != 1 || apiKeySecretHeaderValue.Count != 1)
+        {
+            return AuthenticateResult.Fail("The API key ID and secret headers must each be specified exactly once.");
+        }
+
+        var apiKeyId = apiKeyIdHeaderValue.Single();
+        var apiKeySecret = apiKeySecretHeaderValue.Single();
 
         if (string.IsNullOrEmpty(apiKeyId) || string.IsNullOrEmpty(apiKeySecret) || !PublicId.TryParse(apiKeyId, out var apiKeyIdParsed))
         {

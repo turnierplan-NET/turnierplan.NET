@@ -73,7 +73,7 @@ public sealed class MatchPlanRenderer(IImageStorage imageStorage, IApplicationUr
 
                     if (firstGroupMatch is not null && tournament.MatchPlanConfiguration?.ScheduleConfig is not null)
                     {
-                        column.Item().PaddingTop(16).AlignCenter().MatchTimeSection(firstGroupMatch.Kickoff, tournament.MatchPlanConfiguration.ScheduleConfig?.GroupPhasePlayTime, tournament.MatchPlanConfiguration.ScheduleConfig?.GroupPhasePauseTime, localization);
+                        column.Item().PaddingTop(16).AlignCenter().MatchTimeSection(firstGroupMatch.Kickoff, tournament.MatchPlanConfiguration.ScheduleConfig.GroupPhasePlayTime, tournament.MatchPlanConfiguration.ScheduleConfig.GroupPhasePauseTime, localization);
                     }
 
                     column.Item().PaddingVertical(16).Text(GetSectionHeader("Documents.MatchPlan.Sections.Participants")).Underline();
@@ -111,7 +111,7 @@ public sealed class MatchPlanRenderer(IImageStorage imageStorage, IApplicationUr
                             if (tournament.MatchPlanConfiguration?.ScheduleConfig is not null)
                             {
                                 var firstFinalsMatch = decidingMatches.MinBy(x => x.Kickoff);
-                                column2.Item().PaddingBottom(16).AlignCenter().MatchTimeSection(firstFinalsMatch!.Kickoff, tournament.MatchPlanConfiguration.ScheduleConfig?.FinalsPhasePlayTime, tournament.MatchPlanConfiguration.ScheduleConfig?.FinalsPhasePauseTime, localization);
+                                column2.Item().PaddingBottom(16).AlignCenter().MatchTimeSection(firstFinalsMatch!.Kickoff, tournament.MatchPlanConfiguration.ScheduleConfig.FinalsPhasePlayTime, tournament.MatchPlanConfiguration.ScheduleConfig.FinalsPhasePauseTime, localization);
                             }
 
                             // All matches of each group should appear on the same page. I.e. there shall be no page breaks between matches with the same "color"
@@ -288,9 +288,8 @@ public sealed class MatchPlanRenderer(IImageStorage imageStorage, IApplicationUr
                             _ => "Documents.MatchPlan.TournamentKickoff.DateAndDayOfWeekEvening"
                         }, kickoff);
                         break;
-                    case MatchPlanDateFormat.NoDate:
                     default:
-                        throw new InvalidOperationException($"Date format is invalid: {configuration.DateFormat}");
+                        throw new InvalidOperationException($"Encountered unexpected date format: {configuration.DateFormat}");
                 }
             }
         }
@@ -361,7 +360,7 @@ file static class MatchPlanQuestPdfExtensions
 
     extension(IContainer container)
     {
-        public void MatchTimeSection(DateTime? kickoff, TimeSpan? playTime, TimeSpan? pauseTime, ILocalization localization)
+        public void MatchTimeSection(DateTime? kickoff, TimeSpan playTime, TimeSpan pauseTime, ILocalization localization)
         {
             container.Row(row =>
             {
@@ -377,29 +376,23 @@ file static class MatchPlanQuestPdfExtensions
                     });
                 }
 
-                if (playTime.HasValue)
+                row.AutoItem().Text(text =>
                 {
-                    row.AutoItem().Text(text =>
-                    {
-                        text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PlayTimePre"));
-                        var minutes = (int)playTime.Value.TotalMinutes;
-                        var seconds = (int)playTime.Value.TotalSeconds - minutes * 60;
-                        text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PlayTime", minutes, seconds)).Underline().Bold();
-                        text.Span(localization.Get($"Documents.MatchPlan.MatchTimes.PlayTimePost.{(minutes == 1 && seconds == 0 ? "One" : "Many")}"));
-                    });
-                }
+                    text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PlayTimePre"));
+                    var minutes = (int)playTime.TotalMinutes;
+                    var seconds = (int)playTime.TotalSeconds - minutes * 60;
+                    text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PlayTime", minutes, seconds)).Underline().Bold();
+                    text.Span(localization.Get($"Documents.MatchPlan.MatchTimes.PlayTimePost.{(minutes == 1 && seconds == 0 ? "One" : "Many")}"));
+                });
 
-                if (pauseTime.HasValue)
+                row.AutoItem().Text(text =>
                 {
-                    row.AutoItem().Text(text =>
-                    {
-                        text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PauseTimePre"));
-                        var minutes = (int)pauseTime.Value.TotalMinutes;
-                        var seconds = (int)pauseTime.Value.TotalSeconds - minutes * 60;
-                        text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PauseTime", minutes, seconds)).Underline().Bold();
-                        text.Span(localization.Get($"Documents.MatchPlan.MatchTimes.PauseTimePost.{(minutes == 1 && seconds == 0 ? "One" : "Many")}"));
-                    });
-                }
+                    text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PauseTimePre"));
+                    var minutes = (int)pauseTime.TotalMinutes;
+                    var seconds = (int)pauseTime.TotalSeconds - minutes * 60;
+                    text.Span(localization.Get("Documents.MatchPlan.MatchTimes.PauseTime", minutes, seconds)).Underline().Bold();
+                    text.Span(localization.Get($"Documents.MatchPlan.MatchTimes.PauseTimePost.{(minutes == 1 && seconds == 0 ? "One" : "Many")}"));
+                });
             });
         }
 
