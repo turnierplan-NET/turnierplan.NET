@@ -10,14 +10,12 @@ internal sealed class JsonPublicIdConverter : JsonConverter<PublicId>
     {
         var representation = reader.GetString() ?? throw new InvalidOperationException("Expected string for public ID.");
 
-        try
+        if (PublicId.TryParse(representation, out var publicId))
         {
-            return new PublicId(representation);
+            return publicId;
         }
-        catch (Exception ex)
-        {
-            throw new JsonException("The string does not contain a valid public ID representation.", ex);
-        }
+
+        throw new JsonException("The string does not contain a valid public ID representation.");
     }
 
     public override void Write(Utf8JsonWriter writer, PublicId value, JsonSerializerOptions options)

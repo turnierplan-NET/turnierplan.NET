@@ -143,7 +143,7 @@ internal sealed class TournamentMappingRule : MappingRuleBase<Tournament, Tourna
                 FirstMatchKickoff = source.MatchPlanConfiguration?.ScheduleConfig?.FirstMatchKickoff,
                 GroupPhaseConfig = MapGroupRoundConfiguration(source.MatchPlanConfiguration?.GroupRoundConfig, source.MatchPlanConfiguration?.ScheduleConfig),
                 PauseBetweenGroupAndFinalsPhase =
-                    source.MatchPlanConfiguration?.GroupRoundConfig is not null && source.MatchPlanConfiguration?.FinalsRoundConfig is not null
+                    source.MatchPlanConfiguration?.GroupRoundConfig is not null && source.MatchPlanConfiguration.FinalsRoundConfig is not null
                         ? source.MatchPlanConfiguration.ScheduleConfig?.PauseBetweenGroupAndFinalsPhase
                         : null,
                 FinalsPhaseConfig = MapFinalsRoundConfiguration(source.MatchPlanConfiguration?.FinalsRoundConfig, source.MatchPlanConfiguration?.ScheduleConfig)

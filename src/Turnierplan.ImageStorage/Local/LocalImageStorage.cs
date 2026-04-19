@@ -109,7 +109,7 @@ internal sealed class LocalImageStorage : ILocalImageStorage
 
     private string GetImageFullPath(Image image)
     {
-        return Path.Combine(_storagePath, image.CreatedAt.Year.ToString(CultureInfo.InvariantCulture), GetImageFileName(image));
+        return Path.Join(_storagePath, image.CreatedAt.Year.ToString(CultureInfo.InvariantCulture), GetImageFileName(image));
     }
 
     private static string GetImageFileName(Image image)
