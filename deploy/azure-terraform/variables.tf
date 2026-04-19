@@ -56,7 +56,7 @@ variable "app_service_plan_sku_name" {
 }
 
 variable "app_service_custom_domain" {
-  description = "The domain name which should be bound to the app service or null if no custom domain should be used."
+  description = "The domain name which should be bound to the app service (e.g. 'turnierplan.example.com') or null if no custom domain should be used."
   type        = string
   nullable    = true
   default     = null

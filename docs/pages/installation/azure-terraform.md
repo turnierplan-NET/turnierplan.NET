@@ -15,6 +15,7 @@ Um das Modul zu verwenden, muss zunächst Terraform installiert sein. Zudem müs
 module "turnierplan" {
   source = "github.com/turnierplan-NET/turnierplan.NET-Terraform-Azure?ref=2026.2.0"
 
+  # Use a name with a unique suffix to prevent naming collisions
   name     = "turnierplan-example"
   location = "westeurope"
 
@@ -42,10 +43,10 @@ module "turnierplan" {
 ```
 
 !!! info
-    Der `name` wird als Suffix für die Namen aller erstellten Ressourcen verwendet. Um Konflikte bei global eindeutigen Ressourcennamen zu vermeiden, sollte der verwendete `name` möglichst eindeutig sein. Allerdings sollte der `name` nicht zu lang sein, da bei bestimmten Ressourcen auch Längenbegrenzungen für den Namen gelten.
+    Der Wert der Variable `name` wird als Suffix für die Namen aller erstellten Ressourcen verwendet. Um Konflikte bei global eindeutigen Ressourcennamen zu vermeiden, sollte der verwendete `name` möglichst eindeutig sein. Allerdings sollte der `name` nicht zu lang sein, da bei bestimmten Ressourcen auch Längenbegrenzungen für den Namen gelten.
 
 !!! danger
-    TODO (Datenbank nicht high-availability)
+    Die PostgreSQL-Datenbank ist *ohne* Hochverfügbarkeit konfiguriert. Es wird nur ein Replika in der spezifizierten Availability Zone (`postgresql_availability_zone`) deployt - vgl. [Terraform-Doku](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server) und [Microsoft-Doku](https://learn.microsoft.com/en-us/azure/postgresql/high-availability/concepts-high-availability)
 
 Die folgenden Azure-Ressourcen werden durch das Modul erstellt:
 
