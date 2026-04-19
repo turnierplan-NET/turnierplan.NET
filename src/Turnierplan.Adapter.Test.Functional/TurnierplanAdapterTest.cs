@@ -330,11 +330,11 @@ public sealed class TurnierplanAdapterTest
         using var httpClient = new HttpClient(new MockHttpMessageHandler(_ =>
         {
             var response = new HttpResponseMessage();
-            response.StatusCode = HttpStatusCode.Unauthorized;
+            response.StatusCode = HttpStatusCode.OK;
 
             if (sendHeader)
             {
-                response.Headers.Add("x-turnierplan-version", "2024.0.0"); // old version that does not exist
+                response.Headers.Add("X-Turnierplan-Version", "2024.0.0"); // old version that does not exist
             }
 
             return response;
