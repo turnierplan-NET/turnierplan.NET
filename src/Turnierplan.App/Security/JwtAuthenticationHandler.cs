@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
@@ -23,58 +24,64 @@ internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityO
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if (!Request.Cookies.ContainsKey(CookieNames.AccessTokenCookieName))
+        string? token = null;
+
+        foreach (var (cookieName, cookieValue) in Request.Cookies)
+        {
+            if (cookieName.Equals(CookieNames.AccessTokenCookieName))
+            {
+                token = cookieValue;
+                break;
+            }
+        }
+
+        if (token is null)
         {
             return AuthenticateResult.NoResult();
         }
 
-        string token;
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            return AuthenticateResult.Fail("Invalid authentication token provided");
+        }
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+
+        var signingKey = await _signingKeyProvider.GetSigningKeyAsync(CancellationToken.None);
+        var validationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = signingKey,
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+
+        ClaimsPrincipal claimsPrincipal;
 
         try
         {
-            token = Request.Cookies.Single(x => x.Key.Equals(CookieNames.AccessTokenCookieName)).Value;
+            claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out _);
         }
-        catch
+        catch (SecurityTokenArgumentException ex)
         {
-            return AuthenticateResult.Fail("Missing or malformed access token cookie.");
+            return AuthenticateResult.Fail($"Token validation failed: {ex.Message}");
         }
-
-        if (string.IsNullOrEmpty(token))
+        catch (SecurityTokenException ex)
         {
-            return AuthenticateResult.Fail("Empty access token cookie.");
+            return AuthenticateResult.Fail($"Token validation failed: {ex.Message}");
         }
 
-        try
+        var tokenType = claimsPrincipal.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.TokenType))?.Value;
+
+        if (!Equals(tokenType, JwtTokenTypes.Access))
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var signingKey = await _signingKeyProvider.GetSigningKeyAsync(CancellationToken.None);
-            var validationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = signingKey,
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
-
-            var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out _);
-
-            var tokenType = claimsPrincipal.Claims.Single(x => x.Type.Equals(ClaimTypes.TokenType)).Value;
-
-            if (!tokenType.Equals(JwtTokenTypes.Access))
-            {
-                return AuthenticateResult.Fail("Incorrect token type.");
-            }
-
-            var ticket = new AuthenticationTicket(claimsPrincipal, Scheme.Name);
-
-            return AuthenticateResult.Success(ticket);
+            return AuthenticateResult.Fail("Incorrect token type.");
         }
-        catch (Exception ex)
-        {
-            return AuthenticateResult.Fail($"Invalid token: {ex.Message}");
-        }
+
+        var ticket = new AuthenticationTicket(claimsPrincipal, Scheme.Name);
+
+        return AuthenticateResult.Success(ticket);
     }
 }
