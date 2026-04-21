@@ -43,15 +43,18 @@ module "turnierplan" {
 }
 ```
 
-!!! info
-    Der Wert der Variable `name` wird als Suffix für die Namen aller erstellten Ressourcen verwendet. Um Konflikte bei global eindeutigen Ressourcennamen zu vermeiden, sollte der verwendete `name` möglichst eindeutig sein. Allerdings sollte der `name` nicht zu lang sein, da bei bestimmten Ressourcen auch Längenbegrenzungen für den Namen gelten.
+Der Wert der Variable `name` wird als Suffix für die Namen aller erstellten Ressourcen verwendet. Um Konflikte bei global eindeutigen Ressourcennamen zu vermeiden, sollte der verwendete `name` möglichst eindeutig sein. Allerdings sollte der `name` nicht zu lang sein, da bei bestimmten Ressourcen auch Längenbegrenzungen für den Namen gelten.
 
-!!! danger
-    Die PostgreSQL-Datenbank ist *ohne* Hochverfügbarkeit konfiguriert. Es wird nur ein Replika in der spezifizierten Availability Zone (`postgresql_availability_zone`) erstellt - vgl. [Terraform-Doku](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server) und [Microsoft-Doku](https://learn.microsoft.com/en-us/azure/postgresql/high-availability/concepts-high-availability)
+Standardmäßig ist die turnierplan.NET-Instanz über die App Service-Domain `<name>.azurewebsites.net` erreichbar. Um eine eigene Domain zu verwenden, kann die Variable `app_service_custom_domain` entsprechend konfiguriert werden. Hierdurch wird ein Hostname-Binding mit einem durch Azure verwalteten SSL-Zertifikat konfiguriert. Hierfür muss entsprechend der [Microsoft-Doku](https://learn.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-custom-domain) ein entsprechender `CNAME`-Record (und ggf. auch ein `TXT`-Record) für die Domain angelegt werden.
+
+Unabhängig davon, ob eine eigene Domain konfiguriert wird, stellt das Modul den Output `turnierplan_application_url` bereit, welcher die vollständige URL der turnierplan.NET-Instanz beinhaltet.
 
 Die folgenden Azure-Ressourcen werden durch das Modul erstellt:
 
 ![Auflistung der Ressourcen in Azure Portal-Darstellung](./images/azure-terraform-resources.png)
+
+!!! danger
+    Die PostgreSQL-Datenbank ist *ohne* Hochverfügbarkeit konfiguriert. Es wird nur ein Replika in der spezifizierten Availability Zone (`postgresql_availability_zone`) erstellt - vgl. [Terraform-Doku](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server) und [Microsoft-Doku](https://learn.microsoft.com/en-us/azure/postgresql/high-availability/concepts-high-availability)
 
 Nachdem das Deployment alle Ressourcen erstellt hat, kann auf die Weboberfläche mit der Domain des Azure App Service zugegriffen werden. Anschließend ist der Login mit den festgelegten Zugangsdaten möglich. Weitere Schritte sind auf der entsprechenden Seite [Erste Schritte](../getting-started/index.md) der Dokumentation beschrieben.
 
