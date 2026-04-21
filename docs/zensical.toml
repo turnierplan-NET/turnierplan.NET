@@ -18,12 +18,12 @@ nav = [
     "index.md",
     { "Installation" = [
         "installation/index.md",
-        "installation/docker-compose.md",
+        { "Docker Compose" = "installation/docker-compose.md" },
         { "Azure (Terraform)" = "installation/azure-terraform.md" }
     ]},
-    "configuration/index.md",
-    "getting-started/index.md",
-    "releases/index.md"
+    { "Konfiguration" = "configuration/index.md" },
+    { "Erste Schritte" = "getting-started/index.md" },
+    { "Releases" = "releases/index.md" }
 ]
 
 [project.theme]
