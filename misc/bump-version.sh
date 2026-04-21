@@ -33,7 +33,9 @@ update_file () {
   sed -i -e "s/${current_version//./\\.}/$next_version/g" "../$1"
 }
 
-update_file "src/version.xml"
+update_file "deploy/azure-terraform/variables.tf"
+update_file "docs/pages/installation/azure-terraform.md"
+update_file "docs/pages/installation/docker-compose.md"
 update_file "src/Turnierplan.App/Client/package.json"
 update_file "src/Turnierplan.App/Client/src/environments/environment.prod.ts"
-update_file "docs/pages/installation/index.md"
+update_file "src/version.xml"
