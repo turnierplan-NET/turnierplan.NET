@@ -14,7 +14,7 @@ Um das Modul zu verwenden, muss zunächst Terraform installiert sein. Zudem müs
 
 ```terraform
 module "turnierplan" {
-  source = "github.com/turnierplan-NET/turnierplan.NET-Terraform-Azure?ref=2026.2.0"
+  source = "github.com/turnierplan-NET/turnierplan.NET//deploy/azure-terraform?ref=2026.2.0"
 
   # Use a name with a unique suffix to prevent naming collisions
   name     = "turnierplan-example"
