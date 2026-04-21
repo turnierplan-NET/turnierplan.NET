@@ -15,7 +15,7 @@ docs_dir = "pages"
 extra_css = ["assets/turnierplan.css"]
 
 nav = [
-    "index.md",
+    { "Startseite" = "index.md" },
     { "Installation" = [
         "installation/index.md",
         { "Docker Compose" = "installation/docker-compose.md" },
