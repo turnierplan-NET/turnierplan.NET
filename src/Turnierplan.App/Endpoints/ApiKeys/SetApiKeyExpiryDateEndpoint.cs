@@ -1,25 +1,32 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.ApiKeys;
 
-internal sealed class SetApiKeyStatusEndpoint : EndpointBase
+internal sealed class SetApiKeyExpiryDateEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Patch;
 
-    protected override string Route => "/api/api-keys/{id}/status";
+    protected override string Route => "/api/api-keys/{id}/expiry-date";
 
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
         [FromRoute] PublicId id,
-        [FromBody] SetApiKeyStatusRequest request,
+        [FromBody] SetApiKeyExpiryDateRequest request,
         IApiKeyRepository repository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
+        if (!Validator.Instance.ValidateAndGetResult(request, out var result))
+        {
+            return result;
+        }
+
         var apiKey = await repository.GetByPublicIdAsync(id);
 
         if (apiKey is null)
@@ -32,20 +39,27 @@ internal sealed class SetApiKeyStatusEndpoint : EndpointBase
             return Results.Forbid();
         }
 
-        if (apiKey.IsActive == request.IsActive)
-        {
-            return Results.NoContent();
-        }
-
-        apiKey.IsActive = request.IsActive;
+        apiKey.ExpiryDate = DateTime.UtcNow.AddDays(request.Validity);
 
         await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }
 
-    public sealed record SetApiKeyStatusRequest
+    public sealed record SetApiKeyExpiryDateRequest
     {
-        public required bool IsActive { get; init; }
+        public required int Validity { get; init; }
+    }
+
+    private sealed class Validator : AbstractValidator<SetApiKeyExpiryDateRequest>
+    {
+        public static readonly Validator Instance = new();
+
+        private Validator()
+        {
+            RuleFor(x => x.Validity)
+                .GreaterThanOrEqualTo(1)
+                .LessThanOrEqualTo(365);
+        }
     }
 }

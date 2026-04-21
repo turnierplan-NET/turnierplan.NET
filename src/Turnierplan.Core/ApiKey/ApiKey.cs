@@ -55,7 +55,7 @@ public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>, I
 
     public DateTime CreatedAt { get; }
 
-    public DateTime ExpiryDate { get; }
+    public DateTime ExpiryDate { get; set; }
 
     public bool IsExpired => DateTime.UtcNow >= ExpiryDate;
 
