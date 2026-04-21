@@ -46,6 +46,7 @@ import { getImages } from '../../../api/fn/images/get-images';
 import { GetImagesEndpointResponse } from '../../../api/models/get-images-endpoint-response';
 import { FileSizePipe } from '../../pipes/file-size.pipe';
 import { DeleteOffcanvasComponent } from '../../components/delete-offcanvas/delete-offcanvas.component';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   templateUrl: './view-organization.component.html',
@@ -75,7 +76,8 @@ import { DeleteOffcanvasComponent } from '../../components/delete-offcanvas/dele
     E2eDirective,
     ImageManagerComponent,
     FileSizePipe,
-    DeleteOffcanvasComponent
+    DeleteOffcanvasComponent,
+    NgbTooltip
   ]
 })
 export class ViewOrganizationComponent implements OnInit, OnDestroy {

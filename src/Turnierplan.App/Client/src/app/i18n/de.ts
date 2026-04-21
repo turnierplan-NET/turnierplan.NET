@@ -251,6 +251,7 @@ export const de = {
         Expired: 'Dieser API-Schlüssel ist abgelaufen',
         NoApiKeys: 'Keine API-Schlüssel vorhanden',
         ViewCharts: 'Aufrufstatistik',
+        ExtendExpiryDate: 'Verlängern',
         Delete: {
           Title: 'API-Schlüssel löschen',
           Info: 'Wenn Sie eine API-Schlüssel löschen, kann dieser Schlüssel nicht mehr für neue Anfragen verwendet werden. Außerdem sind alle vorherigen Anfragen, welche mit diesem Schlüssel getätigt wurden, nicht mehr nachvollziehbar.',
