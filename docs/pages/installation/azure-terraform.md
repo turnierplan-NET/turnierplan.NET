@@ -4,8 +4,9 @@ Dieser Artikel beschreibt das Deployment von turnierplan.NET auf Microsoft Azure
 
 ## Architektur
 
-!!! danger
-    TODO
+Die Cloud-Architektur umfasst im Wesentlichen einen Azure App Service sowie eine verwaltete Azure PostgreSQL-Datenbank. Ergänzt werden diese Services von Azure Application Insights zur Erfassung von Telemetriedaten sowie von einem Azure Blob Storage Account, worin die hochgeladenen Bilddateien gespeichert werden. Für die Authentifizierung beim Storage Account verwendet der App Service eine System-Assigned Managed Identity. Um die Datenbank vor Zugriffen aus dem Internet zu schützen, wird für App Service und Datenbank ein virtuelles Netzwerk inklusive Subnetzen verwendet. Der Endnutzer greift direkt per HTTPS auf den Azure App Service zu. Hierbei wird entweder der Standard-Domainname verwendet - oder, optional, ein eigens definierter Domainname.
+
+![Architektur des Terraform-Moduls](./images/azure-terraform-architecture.drawio.png)
 
 ## Verwendung
 
@@ -46,7 +47,7 @@ module "turnierplan" {
     Der Wert der Variable `name` wird als Suffix für die Namen aller erstellten Ressourcen verwendet. Um Konflikte bei global eindeutigen Ressourcennamen zu vermeiden, sollte der verwendete `name` möglichst eindeutig sein. Allerdings sollte der `name` nicht zu lang sein, da bei bestimmten Ressourcen auch Längenbegrenzungen für den Namen gelten.
 
 !!! danger
-    Die PostgreSQL-Datenbank ist *ohne* Hochverfügbarkeit konfiguriert. Es wird nur ein Replika in der spezifizierten Availability Zone (`postgresql_availability_zone`) deployt - vgl. [Terraform-Doku](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server) und [Microsoft-Doku](https://learn.microsoft.com/en-us/azure/postgresql/high-availability/concepts-high-availability)
+    Die PostgreSQL-Datenbank ist *ohne* Hochverfügbarkeit konfiguriert. Es wird nur ein Replika in der spezifizierten Availability Zone (`postgresql_availability_zone`) erstellt - vgl. [Terraform-Doku](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server) und [Microsoft-Doku](https://learn.microsoft.com/en-us/azure/postgresql/high-availability/concepts-high-availability)
 
 Die folgenden Azure-Ressourcen werden durch das Modul erstellt:
 
