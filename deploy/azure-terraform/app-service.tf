@@ -1,5 +1,6 @@
 locals {
   app_service_name = "app-${var.name}"
+  application_url = var.app_service_custom_domain == null ? "https://${local.app_service_name}.azurewebsites.net" : "https://${var.app_service_custom_domain}"
 }
 
 resource "azurerm_service_plan" "default" {
@@ -39,7 +40,7 @@ resource "azurerm_linux_web_app" "default" {
   }
 
   app_settings = merge(var.turnierplan_additional_app_settings, {
-    "Turnierplan__ApplicationUrl"      = var.app_service_custom_domain == null ? "https://${local.app_service_name}.azurewebsites.net" : "https://${var.app_service_custom_domain}"
+    "Turnierplan__ApplicationUrl"      = local.application_url
     "Turnierplan__InitialUserName"     = var.turnierplan_initial_user
     "Turnierplan__InitialUserPassword" = var.turnierplan_initial_password
 
