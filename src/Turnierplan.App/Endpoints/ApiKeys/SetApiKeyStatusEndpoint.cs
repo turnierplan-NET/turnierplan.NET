@@ -32,6 +32,11 @@ internal sealed class SetApiKeyStatusEndpoint : EndpointBase
             return Results.Forbid();
         }
 
+        if (apiKey.IsExpired)
+        {
+            return Results.BadRequest("API key is already expired.");
+        }
+
         if (apiKey.IsActive == request.IsActive)
         {
             return Results.NoContent();
