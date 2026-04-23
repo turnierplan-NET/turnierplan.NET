@@ -18,6 +18,7 @@ import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { getOrganization } from '../../../api/fn/organizations/get-organization';
 import { createApiKey } from '../../../api/fn/api-keys/create-api-key';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
+import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 @Component({
   templateUrl: './create-api-key.component.html',
@@ -33,13 +34,15 @@ import { E2eDirective } from '../../../core/directives/e2e.directive';
     ReactiveFormsModule,
     NgClass,
     TranslatePipe,
-    E2eDirective
+    E2eDirective,
+    TranslateDatePipe
   ]
 })
 export class CreateApiKeyComponent {
   protected loadingState: LoadingState = { isLoading: false };
   protected organization?: OrganizationDto;
   protected createdApiKey?: ApiKeyDto;
+  protected validUntil: Date = new Date();
 
   protected form = new FormGroup({
     name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
@@ -75,6 +78,11 @@ export class CreateApiKeyComponent {
           this.loadingState = { isLoading: false, error: error };
         }
       });
+
+    this.calculateValidUntil();
+    this.form.controls.validity.valueChanges.pipe(takeUntilDestroyed()).subscribe({
+      next: () => this.calculateValidUntil()
+    });
   }
 
   protected get nameControl(): AbstractControl {
@@ -105,5 +113,9 @@ export class CreateApiKeyComponent {
           }
         });
     }
+  }
+
+  private calculateValidUntil(): void {
+    this.validUntil = new Date(Date.now() + this.form.controls.validity.value * 86400000);
   }
 }
