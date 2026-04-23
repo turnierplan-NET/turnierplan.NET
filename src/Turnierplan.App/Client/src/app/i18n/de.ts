@@ -251,6 +251,14 @@ export const de = {
         Expired: 'Dieser API-Schlüssel ist abgelaufen',
         NoApiKeys: 'Keine API-Schlüssel vorhanden',
         ViewCharts: 'Aufrufstatistik',
+        Extend: {
+          Tooltip: 'Verlängern',
+          Title: 'API-Schlüssel verlängern',
+          ValidityInfo: 'Nach dem Verlängern ist der API-Schlüssel ab sofort für den angegebenen Zeitraum gültig.',
+          Confirm: 'Verlängern',
+          ValidUntil: 'Gültig bis {{date}}',
+          NotPossible: 'Dieser API-Schlüssel kann aktuell noch nicht verlängert werden.'
+        },
         Delete: {
           Title: 'API-Schlüssel löschen',
           Info: 'Wenn Sie eine API-Schlüssel löschen, kann dieser Schlüssel nicht mehr für neue Anfragen verwendet werden. Außerdem sind alle vorherigen Anfragen, welche mit diesem Schlüssel getätigt wurden, nicht mehr nachvollziehbar.',
@@ -1277,7 +1285,8 @@ export const de = {
         Validity30: '30 Tage',
         Validity90: '90 Tage',
         Validity180: '180 Tage',
-        Validity365: '365 Tage'
+        Validity365: '365 Tage',
+        ValidUntil: 'Gültig bis {{date}}'
       },
       OrganizationNotice: 'Es wird ein neuer API-Schlüssel in der Organisation <span class="fw-bold">{{organizationName}}</span> angelegt.',
       AccessNotice: 'Ein neuer API-Schlüssel erhält standardmäßig Leserechte für die aktuelle Organisation.',
