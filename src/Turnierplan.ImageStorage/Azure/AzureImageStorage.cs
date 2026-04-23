@@ -8,7 +8,7 @@ using Turnierplan.Core.Image;
 
 namespace Turnierplan.ImageStorage.Azure;
 
-internal sealed class AzureImageStorage : IImageStorage
+internal sealed class AzureImageStorage : ImageStorageBase
 {
     private readonly ILogger<AzureImageStorage> _logger;
     private readonly BlobContainerClient _client;
@@ -71,14 +71,14 @@ internal sealed class AzureImageStorage : IImageStorage
         _containerName = options.Value.ContainerName;
     }
 
-    public string GetFullImageUrl(Image image)
+    public override string GetFullImageUrl(Image image)
     {
         var blobName = GetBlobName(image);
 
         return $"{_storageAccountUrl}/{_containerName}/{blobName}";
     }
 
-    public async Task<bool> SaveImageAsync(Image image, MemoryStream imageData)
+    public override async Task<bool> SaveImageAsync(Image image, MemoryStream imageData)
     {
         var blobName = GetBlobName(image);
         var blobClient = _client.GetBlobClient(blobName);
@@ -97,7 +97,7 @@ internal sealed class AzureImageStorage : IImageStorage
         return false;
     }
 
-    public async Task<Stream> GetImageAsync(Image image)
+    public override async Task<Stream> GetImageAsync(Image image)
     {
         var blobName = GetBlobName(image);
         var blobClient = _client.GetBlobClient(blobName);
@@ -116,7 +116,7 @@ internal sealed class AzureImageStorage : IImageStorage
         }
     }
 
-    public async Task<bool> DeleteImageAsync(Image image)
+    public override async Task<bool> DeleteImageAsync(Image image)
     {
         var blobName = GetBlobName(image);
         var blobClient = _client.GetBlobClient(blobName);
@@ -133,10 +133,6 @@ internal sealed class AzureImageStorage : IImageStorage
         }
 
         return false;
-    }
-
-    public void Dispose()
-    {
     }
 
     private static string GetBlobName(Image image)

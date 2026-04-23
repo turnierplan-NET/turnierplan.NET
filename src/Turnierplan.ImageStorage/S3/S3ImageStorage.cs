@@ -9,7 +9,7 @@ using Turnierplan.Core.Image;
 
 namespace Turnierplan.ImageStorage.S3;
 
-internal sealed class S3ImageStorage : IImageStorage
+internal sealed class S3ImageStorage : ImageStorageBase
 {
     private readonly ILogger<S3ImageStorage> _logger;
     private readonly AmazonS3Client _client;
@@ -55,7 +55,7 @@ internal sealed class S3ImageStorage : IImageStorage
         _bucketName = options.Value.BucketName;
     }
 
-    public string GetFullImageUrl(Image image)
+    public override string GetFullImageUrl(Image image)
     {
         var objectKey = GetObjectKey(image);
 
@@ -64,7 +64,7 @@ internal sealed class S3ImageStorage : IImageStorage
             : $"{_client.Config.ServiceURL}/{objectKey}";
     }
 
-    public async Task<bool> SaveImageAsync(Image image, MemoryStream imageData)
+    public override async Task<bool> SaveImageAsync(Image image, MemoryStream imageData)
     {
         var objectKey = GetObjectKey(image);
 
@@ -95,7 +95,7 @@ internal sealed class S3ImageStorage : IImageStorage
         return false;
     }
 
-    public async Task<Stream> GetImageAsync(Image image)
+    public override async Task<Stream> GetImageAsync(Image image)
     {
         var objectKey = GetObjectKey(image);
 
@@ -117,7 +117,7 @@ internal sealed class S3ImageStorage : IImageStorage
         throw new InvalidOperationException($"Failed to read image from S3. Status code: {response.HttpStatusCode}");
     }
 
-    public async Task<bool> DeleteImageAsync(Image image)
+    public override async Task<bool> DeleteImageAsync(Image image)
     {
         var objectKey = GetObjectKey(image);
 
@@ -144,9 +144,14 @@ internal sealed class S3ImageStorage : IImageStorage
         return false;
     }
 
-    public void Dispose()
+    protected override void Dispose(bool disposing)
     {
-        _client.Dispose();
+        base.Dispose(disposing);
+
+        if (disposing)
+        {
+            _client.Dispose();
+        }
     }
 
     private static string GetObjectKey(Image image)

@@ -7,7 +7,7 @@ using Turnierplan.Core.Image;
 
 namespace Turnierplan.ImageStorage.Local;
 
-internal sealed class LocalImageStorage : ILocalImageStorage
+internal sealed class LocalImageStorage : ImageStorageBase
 {
     private readonly ILogger<LocalImageStorage> _logger;
     private readonly string _storagePath;
@@ -31,12 +31,12 @@ internal sealed class LocalImageStorage : ILocalImageStorage
         }
     }
 
-    public string GetFullImageUrl(Image image)
+    public override string GetFullImageUrl(Image image)
     {
         return $"/images/{image.CreatedAt.Year}/{GetImageFileName(image)}";
     }
 
-    public Task<bool> SaveImageAsync(Image image, MemoryStream imageData)
+    public override Task<bool> SaveImageAsync(Image image, MemoryStream imageData)
     {
         var filePath = GetImageFullPath(image);
 
@@ -73,12 +73,12 @@ internal sealed class LocalImageStorage : ILocalImageStorage
         }
     }
 
-    public Task<Stream> GetImageAsync(Image image)
+    public override Task<Stream> GetImageAsync(Image image)
     {
         return Task.FromResult<Stream>(new FileStream(GetImageFullPath(image), FileMode.Open));
     }
 
-    public Task<bool> DeleteImageAsync(Image image)
+    public override Task<bool> DeleteImageAsync(Image image)
     {
         var filePath = GetImageFullPath(image);
 
@@ -105,7 +105,7 @@ internal sealed class LocalImageStorage : ILocalImageStorage
         });
     }
 
-    internal async Task MigrateAsync(Func<Task<IList<Image>>> getImagesFunction, CancellationToken cancellationToken)
+    public override async Task MigrateAsync(IImageProvider imageProvider, CancellationToken cancellationToken)
     {
         if (_skipMigration)
         {
@@ -115,6 +115,8 @@ internal sealed class LocalImageStorage : ILocalImageStorage
 
         try
         {
+            // TODO: Don't use version file and detect whether migration is necessary by looking at the files.
+
             var version = "1";
             var versionFile = Path.Join(_storagePath, ".version");
 
@@ -136,7 +138,7 @@ internal sealed class LocalImageStorage : ILocalImageStorage
                 return;
             }
 
-            var images = await getImagesFunction();
+            var images = await imageProvider.GetImagesAsync();
             // TODO: Run migration by copying the files & writing new version number
             // TODO: Display info message if any old files still exist
         }
@@ -144,10 +146,6 @@ internal sealed class LocalImageStorage : ILocalImageStorage
         {
             _logger.LogCritical(ex, "An unexpected exception occurred while trying to run local image storage migrations.");
         }
-    }
-
-    public void Dispose()
-    {
     }
 
     private string GetImageFullPath(Image image)

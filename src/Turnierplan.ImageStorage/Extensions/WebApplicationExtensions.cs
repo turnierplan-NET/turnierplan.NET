@@ -10,7 +10,7 @@ public static class WebApplicationExtensions
     {
         var imageStorage = application.Services.GetRequiredService<IImageStorage>();
 
-        if (imageStorage is not ILocalImageStorage localImageStorage)
+        if (imageStorage is not LocalImageStorage localImageStorage)
         {
             return;
         }
@@ -22,13 +22,14 @@ public static class WebApplicationExtensions
     {
         await using var scope = application.Services.CreateAsyncScope();
 
-        var migration = scope.ServiceProvider.GetService<IImageStorageMigration>();
+        var migrator = scope.ServiceProvider.GetService<ImageStorageMigrator>();
 
-        if (migration is null)
+        if (migrator is null)
         {
             return;
         }
 
-        await migration.MigrateAsync(application.Lifetime.ApplicationStopping);
+        await migrator.MigrateAsync(application.Lifetime.ApplicationStopping);
+
     }
 }
