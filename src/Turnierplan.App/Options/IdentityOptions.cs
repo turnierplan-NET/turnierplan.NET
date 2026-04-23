@@ -4,7 +4,9 @@ namespace Turnierplan.App.Options;
 
 internal sealed class IdentityOptions : AuthenticationSchemeOptions
 {
-    public string? StoragePath { get; init; } = string.Empty;
+    public string? SigningKey { get; init; }
+
+    public string? StoragePath { get; init; }
 
     public TimeSpan AccessTokenLifetime { get; init; } = TimeSpan.Zero;
 

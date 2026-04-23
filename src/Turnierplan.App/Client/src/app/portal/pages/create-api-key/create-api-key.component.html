@@ -74,7 +74,7 @@
         <div class="valid-feedback" translate="Portal.CreateApiKey.Form.DescriptionValid"></div>
       </div>
 
-      <div class="mb-3">
+      <div class="mb-1">
         <label for="create_apiKey_validity" class="form-label" translate="Portal.CreateApiKey.Form.Validity"></label>
         <select id="create_apiKey_validity" class="form-select" formControlName="validity">
           <option value="1" [translate]="'Portal.CreateApiKey.Form.Validity1'"></option>
@@ -85,6 +85,10 @@
           <option value="365" [translate]="'Portal.CreateApiKey.Form.Validity365'"></option>
         </select>
       </div>
+      <span
+        class="small text-secondary"
+        [translate]="'Portal.CreateApiKey.Form.ValidUntil'"
+        [translateParams]="{ date: validUntil | translateDate: 'longDate' }"></span>
     </div>
 
     <hr />

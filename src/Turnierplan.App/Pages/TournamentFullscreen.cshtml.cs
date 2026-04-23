@@ -35,18 +35,7 @@ public sealed class TournamentFullscreen : PageModel
 
     public async Task OnGetAsync()
     {
-        if (string.IsNullOrEmpty(Id))
-        {
-            return;
-        }
-
-        PublicId publicId;
-
-        try
-        {
-            publicId = new PublicId(Id);
-        }
-        catch
+        if (string.IsNullOrEmpty(Id) || !PublicId.TryParse(Id, out var publicId))
         {
             return;
         }

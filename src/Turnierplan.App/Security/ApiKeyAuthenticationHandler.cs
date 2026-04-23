@@ -12,13 +12,9 @@ namespace Turnierplan.App.Security;
 
 internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
+    private const string AuthenticationTypeName = "TurnierplanApiKeyAuthentication";
     private const string ApiKeyIdHeaderName = "x-api-key";
     private const string ApiKeySecretHeaderName = "x-api-key-secret";
-    private const string TurnierplanVersionHeaderName = "x-turnierplan-version";
-
-    private static readonly string __turnierplanVersion =
-        typeof(ApiKeyAuthenticationHandler).Assembly.GetName().Version?.ToString()
-            ?? throw new InvalidOperationException("Could not determine turnierplan.NET version from assembly name.");
 
     private readonly IApiKeyRepository _apiKeyRepository;
     private readonly IPasswordHasher<ApiKey> _secretHasher;
@@ -37,17 +33,21 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        string apiKeyId, apiKeySecret;
+        var hasApiKeyIdHeader = Request.Headers.TryGetValue(ApiKeyIdHeaderName, out var apiKeyIdHeaderValue);
+        var hasApiKeySecretHeader = Request.Headers.TryGetValue(ApiKeySecretHeaderName, out var apiKeySecretHeaderValue);
 
-        try
-        {
-            apiKeyId = Request.Headers[ApiKeyIdHeaderName][0]!;
-            apiKeySecret = Request.Headers[ApiKeySecretHeaderName][0]!;
-        }
-        catch
+        if (!hasApiKeyIdHeader && !hasApiKeySecretHeader)
         {
             return AuthenticateResult.NoResult();
         }
+
+        if (apiKeyIdHeaderValue.Count != 1 || apiKeySecretHeaderValue.Count != 1)
+        {
+            return AuthenticateResult.Fail("The API key ID and secret headers must each be specified exactly once.");
+        }
+
+        var apiKeyId = apiKeyIdHeaderValue.Single();
+        var apiKeySecret = apiKeySecretHeaderValue.Single();
 
         if (string.IsNullOrEmpty(apiKeyId) || string.IsNullOrEmpty(apiKeySecret) || !PublicId.TryParse(apiKeyId, out var apiKeyIdParsed))
         {
@@ -72,16 +72,13 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
 
         await _apiKeyRepository.UnitOfWork.SaveChangesAsync();
 
-        var identity = new ClaimsIdentity(claims: [
+        var identity = new ClaimsIdentity(authenticationType: AuthenticationTypeName, claims: [
             new Claim(ClaimTypes.PrincipalId, apiKey.PrincipalId.ToString()),
             new Claim(ClaimTypes.PrincipalKind, nameof(PrincipalKind.ApiKey))
         ]);
 
         var principal = new ClaimsPrincipal([ identity ]);
         var ticket = new AuthenticationTicket(principal, Scheme.Name);
-
-        // Add the version as response header so that the Turnierplan.Adapter, if used, can detect a potential version mismatch
-        Context.Response.Headers.Append(TurnierplanVersionHeaderName, __turnierplanVersion);
 
         return AuthenticateResult.Success(ticket);
     }

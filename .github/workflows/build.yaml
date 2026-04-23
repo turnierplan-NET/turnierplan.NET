@@ -36,12 +36,6 @@ jobs:
       - extract-version
     steps:
       - uses: actions/checkout@v2
-      - name: 'Replace environment tokens'
-        uses: cschleiden/replace-tokens@v1
-        with:
-          files: '["**/environment.prod.ts"]'
-        env:
-          TOKEN_APPLICATION_VERSION: "${{ needs.extract-version.outputs.turnierplan_version }}"
       - name: Login to container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
@@ -89,22 +83,22 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v5
-      - name: "Set up Python 3.12"
+      - name: "Set up Python 3.x"
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.x"
       - name: "Install requirements"
         run: "python3 -m pip install -r requirements.txt"
         working-directory: "docs"
       - name: "Build documentation"
-        run: "python3 -m mkdocs build"
+        run: "zensical build --clean"
         working-directory: "docs"
       - name: "Setup Pages"
         uses: actions/configure-pages@v5
-      - name: Upload artifact
+      - name: "Upload artifact"
         uses: actions/upload-pages-artifact@v3
         with:
           path: "docs/site"
-      - name: Deploy to GitHub Pages
+      - name: "Deploy to GitHub Pages"
         id: deployment
         uses: actions/deploy-pages@v4

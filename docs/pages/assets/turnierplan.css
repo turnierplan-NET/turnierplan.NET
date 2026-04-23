@@ -1,46 +1,11 @@
-/*
- * Some style improvements for the footer
- */
-
-footer hr {
-    opacity: 0.2;
+.md-copyright {
+  /* Decrease size of the footer text */
+  font-size: 0.8em;
 }
 
-footer p {
-    font-size: 0.8em;
-    margin-bottom: 0.3em;
-}
-
-/*
- * Remove the sidebar on the homepage, copied from the mkdocs.org documentation
- *  => https://github.com/mkdocs/mkdocs/blob/2862536793b3c67d9d83c33e0dd6d50a791928f8/docs/css/extra.css#L48
- */
-
-body.homepage > div.container > div.row > div.col-md-3 {
-    display: none;
-}
-
-body.homepage > div.container > div.row > div.col-md-9 {
-    margin-left: 0;
-    flex: 0 0 100%;
-    max-width: 100%;
-}
-/*
- * Some additional style changes for the homepage
- */
-
-body.homepage h1 {
-    margin-top: 2em;
-    margin-bottom: 0.7em;
-    text-align: center;
-    font-weight: bold;
-}
-
-body.homepage > div.container p:first-of-type {
-    text-align: center;
-}
-
-body.homepage > div.container img:first-of-type {
-    padding: unset;
-    border: unset;
+.md-content img {
+  /* Center images and add small shadow */
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }

@@ -14,9 +14,10 @@ using Turnierplan.Dal;
 
 namespace Turnierplan.App.Test.Functional;
 
-internal sealed class TestServer
+internal sealed class TestServer : IDisposable
 {
     private readonly WebApplicationFactory<Program> _application;
+    private readonly List<HttpClientRequestAdapter> _httpClientRequestAdapters = [];
 
     public TestServer()
     {
@@ -59,6 +60,8 @@ internal sealed class TestServer
         var httpClientRequestAdapter = new HttpClientRequestAdapter(authenticationProvider, httpClient: httpClient);
         var client = new TurnierplanClient(httpClientRequestAdapter);
 
+        _httpClientRequestAdapters.Add(httpClientRequestAdapter);
+
         var loginResponse = await client.Api.Identity.Login.PostAsync(new LoginEndpointRequest
         {
             UserName = username,
@@ -80,5 +83,15 @@ internal sealed class TestServer
     {
         using var scope = _application.Services.CreateScope();
         return action(scope.ServiceProvider.GetRequiredService<TurnierplanContext>());
+    }
+
+    public void Dispose()
+    {
+        foreach (var httpClientRequestAdapter in _httpClientRequestAdapters)
+        {
+            httpClientRequestAdapter.Dispose();
+        }
+
+        _application.Dispose();
     }
 }

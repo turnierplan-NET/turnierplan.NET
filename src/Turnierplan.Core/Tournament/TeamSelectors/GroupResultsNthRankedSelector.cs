@@ -67,6 +67,6 @@ public sealed record GroupResultsNthRankedSelector(int[] TargetGroupIds, int Ord
         var groupIdsHashCode = TargetGroupIds.Order()
             .Aggregate(TargetGroupIds.Length, (current, groupId) => unchecked(current * 31 + groupId));
 
-        return (groupIdsHashCode, OrdinalNumber, PlacementRank).GetHashCode();
+        return HashCode.Combine(groupIdsHashCode, OrdinalNumber, PlacementRank);
     }
 }

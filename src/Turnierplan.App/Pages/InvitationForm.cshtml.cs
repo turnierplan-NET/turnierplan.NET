@@ -119,18 +119,7 @@ public sealed class InvitationForm : PageModel
 
     private async Task LoadInvitationLink()
     {
-        if (string.IsNullOrEmpty(Id))
-        {
-            return;
-        }
-
-        PublicId publicId;
-
-        try
-        {
-            publicId = new PublicId(Id);
-        }
-        catch
+        if (string.IsNullOrEmpty(Id) || !PublicId.TryParse(Id, out var publicId))
         {
             return;
         }

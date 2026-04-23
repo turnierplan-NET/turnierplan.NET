@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
@@ -21,59 +22,66 @@ internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityO
         _signingKeyProvider = signingKeyProvider;
     }
 
-    protected override Task<AuthenticateResult> HandleAuthenticateAsync()
+    protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        if (!Request.Cookies.ContainsKey(CookieNames.AccessTokenCookieName))
-        {
-            return Task.FromResult(AuthenticateResult.NoResult());
-        }
+        string? token = null;
 
-        string token;
-
-        try
+        foreach (var (cookieName, cookieValue) in Request.Cookies)
         {
-            token = Request.Cookies.Single(x => x.Key.Equals(CookieNames.AccessTokenCookieName)).Value;
-        }
-        catch
-        {
-            return Task.FromResult(AuthenticateResult.Fail("Missing or malformed access token cookie."));
-        }
-
-        if (string.IsNullOrEmpty(token))
-        {
-            return Task.FromResult(AuthenticateResult.Fail("Empty access token cookie."));
-        }
-
-        try
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var validationParameters = new TokenValidationParameters
+            if (cookieName.Equals(CookieNames.AccessTokenCookieName))
             {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = _signingKeyProvider.GetSigningKey(),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
-
-            var claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out _);
-
-            var tokenType = claimsPrincipal.Claims.Single(x => x.Type.Equals(ClaimTypes.TokenType)).Value;
-
-            if (!tokenType.Equals(JwtTokenTypes.Access))
-            {
-                return Task.FromResult(AuthenticateResult.Fail("Incorrect token type."));
+                token = cookieValue;
+                break;
             }
-
-            var ticket = new AuthenticationTicket(claimsPrincipal, Scheme.Name);
-
-            return Task.FromResult(AuthenticateResult.Success(ticket));
         }
-        catch (Exception ex)
+
+        if (token is null)
         {
-            return Task.FromResult(AuthenticateResult.Fail($"Invalid token: {ex.Message}"));
+            return AuthenticateResult.NoResult();
         }
+
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            return AuthenticateResult.Fail("Invalid authentication token provided");
+        }
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+
+        var signingKey = await _signingKeyProvider.GetSigningKeyAsync(CancellationToken.None);
+        var validationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = signingKey,
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+
+        ClaimsPrincipal claimsPrincipal;
+
+        try
+        {
+            claimsPrincipal = tokenHandler.ValidateToken(token, validationParameters, out _);
+        }
+        catch (SecurityTokenArgumentException ex)
+        {
+            return AuthenticateResult.Fail($"Token validation failed: {ex.Message}");
+        }
+        catch (SecurityTokenException ex)
+        {
+            return AuthenticateResult.Fail($"Token validation failed: {ex.Message}");
+        }
+
+        var tokenType = claimsPrincipal.Claims.FirstOrDefault(x => x.Type.Equals(ClaimTypes.TokenType))?.Value;
+
+        if (!Equals(tokenType, JwtTokenTypes.Access))
+        {
+            return AuthenticateResult.Fail("Incorrect token type.");
+        }
+
+        var ticket = new AuthenticationTicket(claimsPrincipal, Scheme.Name);
+
+        return AuthenticateResult.Success(ticket);
     }
 }

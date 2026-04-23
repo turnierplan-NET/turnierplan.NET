@@ -17,45 +17,57 @@ using Image = Turnierplan.Core.Image.Image;
 
 namespace Turnierplan.PdfRendering.Test.Unit.Renderer;
 
-public abstract partial class RendererTestBase<TRenderer>
+public abstract partial class RendererTestBase<TRenderer> : IDisposable
     where TRenderer : IDocumentRenderer
 {
-    // ReSharper disable StaticMemberInGenericType
     private static readonly string[] __languageCodes = ["de"];
-    private static readonly IServiceProvider __serviceProvider;
-    // ReSharper restore StaticMemberInGenericType
 
     static RendererTestBase()
     {
         QuestPDF.Settings.License = LicenseType.Community;
-
-        var serviceCollection = new ServiceCollection();
-        serviceCollection.AddLogging();
-        serviceCollection.AddSingleton(new TelemetryClient(new TelemetryConfiguration()));
-        serviceCollection.AddTurnierplanLocalization();
-        serviceCollection.AddTurnierplanDocumentRendering<TestApplicationUrlProvider>();
-        serviceCollection.AddSingleton<IImageStorage, TestImageStorage>();
-
-        __serviceProvider = serviceCollection.BuildServiceProvider();
     }
 
     private readonly ITestOutputHelper _testOutputHelper;
+    private readonly TelemetryConfiguration _telemetryConfiguration;
+    private readonly ServiceProvider _serviceProvider;
+    private bool _disposed;
 
     protected RendererTestBase(ITestOutputHelper testOutputHelper)
     {
         _testOutputHelper = testOutputHelper;
+        _telemetryConfiguration = new TelemetryConfiguration();
+
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddLogging();
+        serviceCollection.AddSingleton(new TelemetryClient(_telemetryConfiguration));
+        serviceCollection.AddTurnierplanLocalization();
+        serviceCollection.AddTurnierplanDocumentRendering<TestApplicationUrlProvider>();
+        serviceCollection.AddSingleton<IImageStorage, TestImageStorage>();
+
+        _serviceProvider = serviceCollection.BuildServiceProvider();
+    }
+
+    ~RendererTestBase()
+    {
+        Dispose(false);
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
     protected TRenderer GetRenderer()
     {
-        return (TRenderer)__serviceProvider.GetRequiredService<IEnumerable<IDocumentRenderer>>().Single(x => x.GetType() == typeof(TRenderer));
+        return (TRenderer)_serviceProvider.GetRequiredService<IEnumerable<IDocumentRenderer>>().Single(x => x.GetType() == typeof(TRenderer));
     }
 
     protected void AssertRender(Tournament tournament, IDocumentConfiguration configuration)
     {
         foreach(var languageCode in __languageCodes)
         {
-            __serviceProvider.GetRequiredService<ILocalizationProvider>().TryGetLocalization(languageCode, out var localization).Should().BeTrue();
+            _serviceProvider.GetRequiredService<ILocalizationProvider>().TryGetLocalization(languageCode, out var localization).Should().BeTrue();
 
             using var stream = new MemoryStream();
             GetRenderer().Render(tournament, configuration, new LocalizationWrapper(localization!), stream);
@@ -70,6 +82,22 @@ public abstract partial class RendererTestBase<TRenderer>
 
             Encoding.ASCII.GetString(pdfData, 0, 8).Should().MatchRegex(PdfHeaderRegex());
         }
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_disposed)
+        {
+            return;
+        }
+
+        if (disposing)
+        {
+            _telemetryConfiguration.Dispose();
+            _serviceProvider.Dispose();
+        }
+
+        _disposed = true;
     }
 
     private void SaveGeneratedPdf(string name, string languageCode, byte[] pdfData)

@@ -108,7 +108,7 @@ public sealed class ReceiptsRendererTest(ITestOutputHelper testOutputHelper) : R
         {
             TeamName = data.Name,
             TeamCount = data.Count,
-            Amount = 10 * data.Count
+            Amount = 10.0 * data.Count
         }));
     }
 }
