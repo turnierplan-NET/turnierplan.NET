@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router, RouterLink } from '@angular/router';
 import { mergeMap, Observable, of, Subject, switchMap, takeUntil, tap, zip } from 'rxjs';
 
 import { NotificationService } from '../../../core/services/notification.service';
@@ -46,7 +46,10 @@ import { getImages } from '../../../api/fn/images/get-images';
 import { GetImagesEndpointResponse } from '../../../api/models/get-images-endpoint-response';
 import { FileSizePipe } from '../../pipes/file-size.pipe';
 import { DeleteOffcanvasComponent } from '../../components/delete-offcanvas/delete-offcanvas.component';
-import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { NgbOffcanvas, NgbOffcanvasRef, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { ApiKeyExtendComponent } from '../../components/api-key-extend/api-key-extend.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs/operators';
 
 @Component({
   templateUrl: './view-organization.component.html',
@@ -140,6 +143,8 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     }
   ];
 
+  private extendApiKeyOffcanvas?: NgbOffcanvasRef;
+
   private readonly destroyed$ = new Subject<void>();
 
   constructor(
@@ -148,8 +153,20 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     private readonly route: ActivatedRoute,
     private readonly titleService: TitleService,
     private readonly router: Router,
-    private readonly notificationService: NotificationService
-  ) {}
+    private readonly notificationService: NotificationService,
+    private readonly offcanvasService: NgbOffcanvas
+  ) {
+    this.router.events
+      .pipe(
+        takeUntilDestroyed(),
+        filter((event) => event instanceof NavigationStart)
+      )
+      .subscribe({
+        next: () => {
+          this.extendApiKeyOffcanvas?.close();
+        }
+      });
+  }
 
   public ngOnInit(): void {
     this.route.paramMap
@@ -291,6 +308,23 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
         this.loadingState = { isLoading: false, error: error };
       }
     });
+  }
+
+  protected showExtendApiKeyOffcanvas(apiKey: ApiKeyDto): void {
+    this.extendApiKeyOffcanvas = this.offcanvasService.open(ApiKeyExtendComponent, { position: 'end' });
+
+    const component = this.extendApiKeyOffcanvas.componentInstance as ApiKeyExtendComponent;
+    component.apiKey = apiKey;
+
+    component.error$.subscribe({
+      next: (value) => {
+        this.extendApiKeyOffcanvas?.close();
+        this.loadingState = { isLoading: false, error: value };
+      }
+    });
+
+    this.extendApiKeyOffcanvas.hidden.subscribe(() => (this.extendApiKeyOffcanvas = undefined));
+    this.extendApiKeyOffcanvas.closed.pipe(switchMap(() => this.loadApiKeys())).subscribe();
   }
 
   protected deleteApiKey(id: string): void {

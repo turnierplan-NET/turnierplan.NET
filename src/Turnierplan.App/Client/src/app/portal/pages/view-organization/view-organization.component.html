@@ -218,12 +218,12 @@
                             </td>
                             @if (writeAllowed) {
                               <td class="align-middle text-nowrap" style="width: 1px">
-                                <!-- TODO: Add extend offcanvas & click handler -->
                                 <tp-action-button
                                   [icon]="'clock-history'"
                                   [type]="'outline-secondary'"
                                   [mode]="'IconOnly'"
-                                  [ngbTooltip]="'Portal.ViewOrganization.ApiKeys.ExtendExpiryDate' | translate" />
+                                  [ngbTooltip]="'Portal.ViewOrganization.ApiKeys.ExtendExpiryDate' | translate"
+                                  (click)="showExtendApiKeyOffcanvas(apiKey)" />
                                 <tp-action-button
                                   class="ms-2"
                                   [tpE2E]="['view-organization-page-delete-api-key-button', apiKey.id]"
