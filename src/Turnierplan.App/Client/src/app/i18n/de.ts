@@ -256,7 +256,8 @@ export const de = {
           Title: 'API-Schlüssel verlängern',
           ValidityInfo: 'Nach dem Verlängern ist der API-Schlüssel ab sofort für den angegebenen Zeitraum gültig.',
           Confirm: 'Verlängern',
-          ValidUntil: 'Gültig bis {{date}}'
+          ValidUntil: 'Gültig bis {{date}}',
+          NotPossible: 'Dieser API-Schlüssel kann aktuell noch nicht verlängert werden.'
         },
         Delete: {
           Title: 'API-Schlüssel löschen',
