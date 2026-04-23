@@ -1,4 +1,5 @@
 using Turnierplan.Core.Entity;
+using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.RoleAssignment;
 
 namespace Turnierplan.Core.ApiKey;
@@ -55,7 +56,7 @@ public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>, I
 
     public DateTime CreatedAt { get; }
 
-    public DateTime ExpiryDate { get; set; }
+    public DateTime ExpiryDate { get; private set; }
 
     public bool IsExpired => DateTime.UtcNow >= ExpiryDate;
 
@@ -80,6 +81,16 @@ public sealed class ApiKey : Entity<long>, IEntityWithRoleAssignments<ApiKey>, I
     {
         plainTextSecret = GenerateSecret();
         SecretHash = secretHashFunc(plainTextSecret);
+    }
+
+    public void SetExpiryDate(DateTime newExpiryDate)
+    {
+        if (newExpiryDate < ExpiryDate)
+        {
+            throw new TurnierplanException("The new expiry date must be after the currently set expiry date.");
+        }
+
+        ExpiryDate = newExpiryDate;
     }
 
     public void AddRequest(ApiKeyRequest request)

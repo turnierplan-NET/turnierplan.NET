@@ -39,7 +39,7 @@ internal sealed class SetApiKeyExpiryDateEndpoint : EndpointBase
             return Results.Forbid();
         }
 
-        apiKey.ExpiryDate = DateTime.UtcNow.AddDays(request.Validity);
+        apiKey.SetExpiryDate(DateTime.UtcNow.AddDays(request.Validity));
 
         await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
