@@ -64,6 +64,7 @@ public sealed class TurnierplanClient : IDisposable
     /// Fetches a single tournament from the API and returns the deserialized <see cref="Tournament"/>.
     /// </summary>
     /// <param name="tournamentId">The ID of the tournament to request.</param>
+    /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
     /// <returns>An instance of the <see cref="Tournament"/> class which contains the data returned by the API.</returns>
     /// <exception cref="TurnierplanClientException">
     /// <list type="bullet">
@@ -71,10 +72,10 @@ public sealed class TurnierplanClient : IDisposable
     /// <item>Thrown if the version of the server does not match the version of the <c>Turnierplan.Adapter</c> library.</item>
     /// </list>
     /// </exception>
-    public async Task<Tournament> GetTournament(string tournamentId)
+    public async Task<Tournament> GetTournament(string tournamentId, CancellationToken cancellationToken = default)
     {
         var request = new HttpRequestMessage(HttpMethod.Get, $"/api/tournaments/{tournamentId}");
-        var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+        var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
         EnsureSuccessResponse(response);
         VerifyServerVersion(response);
@@ -87,6 +88,7 @@ public sealed class TurnierplanClient : IDisposable
     /// <c>0..n</c> entries of the type <see cref="TournamentHeader"/>.
     /// </summary>
     /// <param name="folderId">The ID of the folder to request.</param>
+    /// <param name="cancellationToken">The cancellation token to cancel operation.</param>
     /// <returns>A list of <see cref="TournamentHeader"/> instances which contains the data returned by the API.</returns>
     /// <exception cref="TurnierplanClientException">
     /// <list type="bullet">
@@ -94,11 +96,11 @@ public sealed class TurnierplanClient : IDisposable
     /// <item>Thrown if the version of the server does not match the version of the <c>Turnierplan.Adapter</c> library.</item>
     /// </list>
     /// </exception>
-    public async Task<List<TournamentHeader>> GetTournaments(string folderId)
+    public async Task<List<TournamentHeader>> GetTournaments(string folderId, CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder { { "folderId", folderId } };
         var request = new HttpRequestMessage(HttpMethod.Get, $"/api/tournaments{query}");
-        var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+        var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
         EnsureSuccessResponse(response);
         VerifyServerVersion(response);
