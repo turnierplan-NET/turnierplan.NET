@@ -7,7 +7,7 @@ using Turnierplan.Core.Image;
 
 namespace Turnierplan.ImageStorage.Local;
 
-internal sealed class LocalImageStorage : ImageStorageBase
+internal sealed class LocalImageStorage : ImageStorageBase, IMigratableImageStorage
 {
     private readonly ILogger<LocalImageStorage> _logger;
     private readonly string _storagePath;
@@ -105,7 +105,7 @@ internal sealed class LocalImageStorage : ImageStorageBase
         });
     }
 
-    public override async Task MigrateAsync(IImageProvider imageProvider, CancellationToken cancellationToken)
+    public async Task MigrateAsync(IImageProvider imageProvider, CancellationToken cancellationToken)
     {
         if (_skipMigration)
         {
