@@ -69,22 +69,32 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
     }
 
     [Fact]
-    public async Task Migration___With_Some_Images_In_Old_Structure___Works_As_Expected()
+    public async Task Migration___With_Many_Images_In_Old_Structure___Works_As_Expected()
     {
-        var image1 = AddNewImage(new DateTime(2025, 05, 03));
-        var image2 = AddNewImage(new DateTime(2025, 05, 15));
-        var image3 = AddNewImage(new DateTime(2026, 02, 17));
+        var image1 = AddNewImage(new DateTime(2023, 07, 03));
+        var image2 = AddNewImage(new DateTime(2024, 08, 15));
+        var image3 = AddNewImage(new DateTime(2024, 08, 17));
+        var image4 = AddNewImage(new DateTime(2025, 03, 12));
+        var image5 = AddNewImage(new DateTime(2025, 03, 05));
+        var image6 = AddNewImage(new DateTime(2025, 06, 29));
+        var image7 = AddNewImage(new DateTime(2026, 04, 21));
+        var image8 = AddNewImage(new DateTime(2026, 06, 04));
 
-        CheckImageFiles([image1, image2, image3], []);
+        CheckImageFiles([image1, image2, image3, image4, image5, image6, image7, image8], []);
         await RunMigrationAsync();
 
         ExpectLogMessages(LogEventIdUsingDirectoryForStorage, LogEventIdMigrationWillBeAttempted, LogEventIdSuccessfullyMovedFileTo);
-        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2025[^\d]+{image1.ResourceIdentifier}\.{ImageExtension}' to '.+2025.+05.+{image1.ResourceIdentifier}\.{ImageExtension}'\.$");
-        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2025[^\d]+{image2.ResourceIdentifier}\.{ImageExtension}' to '.+2025.+05.+{image2.ResourceIdentifier}\.{ImageExtension}'\.$");
-        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2026[^\d]+{image3.ResourceIdentifier}\.{ImageExtension}' to '.+2026.+02.+{image3.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2023[^\d]+{image1.ResourceIdentifier}\.{ImageExtension}' to '.+2023.+07.+{image1.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2024[^\d]+{image2.ResourceIdentifier}\.{ImageExtension}' to '.+2024.+08.+{image2.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2024[^\d]+{image3.ResourceIdentifier}\.{ImageExtension}' to '.+2024.+08.+{image3.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2025[^\d]+{image4.ResourceIdentifier}\.{ImageExtension}' to '.+2025.+03.+{image4.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2025[^\d]+{image5.ResourceIdentifier}\.{ImageExtension}' to '.+2025.+03.+{image5.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2025[^\d]+{image6.ResourceIdentifier}\.{ImageExtension}' to '.+2025.+06.+{image6.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2026[^\d]+{image7.ResourceIdentifier}\.{ImageExtension}' to '.+2026.+04.+{image7.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2026[^\d]+{image8.ResourceIdentifier}\.{ImageExtension}' to '.+2026.+06.+{image8.ResourceIdentifier}\.{ImageExtension}'\.$");
 
         // Images should all be moved to the new structure - the old files should have been deleted
-        CheckImageFiles([], [image1, image2, image3]);
+        CheckImageFiles([], [image1, image2, image3, image4, image5, image6, image7, image8]);
     }
 
     [Fact]
