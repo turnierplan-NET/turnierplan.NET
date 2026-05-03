@@ -138,6 +138,8 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
 
         await RunMigrationAsync();
 
+        _imageProviderState.WasQueried.Should().BeTrue();
+
         ExpectLogMessages(LogEventIdUsingDirectoryForStorage, LogEventIdMigrationWillBeAttempted, LogEventIdSuccessfullyMovedFileTo, LogEventIdEncounteredFileWithoutCorrespondingImageFromProvider);
         ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2025[^\d]+{image1.ResourceIdentifier}\.{ImageExtension}' to '.+2025.+05.+{image1.ResourceIdentifier}\.{ImageExtension}'\.$");
         ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2026[^\d]+{image3.ResourceIdentifier}\.{ImageExtension}' to '.+2026.+02.+{image3.ResourceIdentifier}\.{ImageExtension}'\.$");
@@ -160,6 +162,8 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
 
         await RunMigrationAsync();
 
+        _imageProviderState.WasQueried.Should().BeTrue();
+
         ExpectLogMessages(LogEventIdUsingDirectoryForStorage, LogEventIdMigrationWillBeAttempted, LogEventIdImageProviderReturnedNoImages);
 
         // Images should still exist in the old structure
@@ -181,6 +185,8 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
         CheckImageFileInNewStructure(image2, expectExists: true);
 
         await RunMigrationAsync();
+
+        _imageProviderState.WasQueried.Should().BeTrue();
 
         ExpectLogMessages(LogEventIdUsingDirectoryForStorage, LogEventIdMigrationWillBeAttempted, LogEventIdSuccessfullyMovedFileTo, LogEventIdEncounteredTargetFileThatAlreadyExists);
         ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2025[^\d]+{image1.ResourceIdentifier}\.{ImageExtension}' to '.+2025.+05.+{image1.ResourceIdentifier}\.{ImageExtension}'\.$");
