@@ -43,7 +43,7 @@ internal sealed partial class LocalImageStorageLogger(ILogger<LocalImageStorage>
     [LoggerMessage(LogLevel.Warning, "Encountered a file in the image storage directory for which there exists no corresponding entry from the image provider: '{ImagePath}'", EventId = 13)]
     public partial void EncounteredFileWithoutCorrespondingImageFromProvider(string imagePath);
 
-    [LoggerMessage(LogLevel.Warning, "Encountered an already existing target file '{TargetPath}' while migrating '{SourcePath}' - the Move operation will be attempted again.", EventId = 14)]
+    [LoggerMessage(LogLevel.Warning, "Encountered an already existing target file '{TargetPath}' while migrating '{SourcePath}' - the move operation will be attempted again.", EventId = 14)]
     public partial void EncounteredTargetFileThatAlreadyExists(string targetPath, string sourcePath);
 
     [LoggerMessage(LogLevel.Information, "Successfully moved image file '{TargetPath}' to '{SourcePath}'.", EventId = 15)]

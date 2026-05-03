@@ -21,6 +21,7 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
     private const int LogEventIdMigrationWillBeAttempted = 9;
     private const int LogEventIdImageProviderReturnedNoImages = 10;
     private const int LogEventIdEncounteredFileWithoutCorrespondingImageFromProvider = 13;
+    private const int LogEventIdEncounteredTargetFileThatAlreadyExists = 14;
     private const int LogEventIdSuccessfullyMovedFileTo = 15;
 
     private readonly string _basePath;
@@ -74,6 +75,7 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
         var image2 = AddNewImage(new DateTime(2025, 05, 15));
         var image3 = AddNewImage(new DateTime(2026, 02, 17));
 
+        CheckImageFiles([image1, image2, image3], []);
         await RunMigrationAsync();
 
         ExpectLogMessages(LogEventIdUsingDirectoryForStorage, LogEventIdMigrationWillBeAttempted, LogEventIdSuccessfullyMovedFileTo);
@@ -82,12 +84,7 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
         ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.*{image3.ResourceIdentifier}\.{ImageExtension}' to '.*{image3.ResourceIdentifier}\.{ImageExtension}'\.$");
 
         // Images should all be moved to the new structure - the old files should have been deleted
-        CheckImageFileInOldStructure(image1, expectExists: false);
-        CheckImageFileInOldStructure(image2, expectExists: false);
-        CheckImageFileInOldStructure(image3, expectExists: false);
-        CheckImageFileInNewStructure(image1, expectExists: true);
-        CheckImageFileInNewStructure(image2, expectExists: true);
-        CheckImageFileInNewStructure(image3, expectExists: true);
+        CheckImageFiles([], [image1, image2, image3]);
     }
 
     [Fact]
@@ -99,6 +96,8 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
 
         _imageProviderState.Images.Remove(image2);
 
+        CheckImageFiles([image1, image2, image3], []);
+
         await RunMigrationAsync();
 
         ExpectLogMessages(LogEventIdUsingDirectoryForStorage, LogEventIdMigrationWillBeAttempted, LogEventIdSuccessfullyMovedFileTo, LogEventIdEncounteredFileWithoutCorrespondingImageFromProvider);
@@ -107,12 +106,7 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
         ExpectLogMessageExists(LogEventIdEncounteredFileWithoutCorrespondingImageFromProvider, $@"^Encountered a file in the image storage directory for which there exists no corresponding entry from the image provider: '.*{image2.ResourceIdentifier}\.{ImageExtension}'$");
 
         // Images 1 & 3 are moved to the new structure, while image 2 remains in the old structure
-        CheckImageFileInOldStructure(image1, expectExists: false);
-        CheckImageFileInOldStructure(image2, expectExists: true);
-        CheckImageFileInOldStructure(image3, expectExists: false);
-        CheckImageFileInNewStructure(image1, expectExists: true);
-        CheckImageFileInNewStructure(image2, expectExists: false);
-        CheckImageFileInNewStructure(image3, expectExists: true);
+        CheckImageFiles([image2], [image1, image3]);
     }
 
     [Fact]
@@ -122,6 +116,8 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
         var image2 = AddNewImage(new DateTime(2025, 05, 15));
         var image3 = AddNewImage(new DateTime(2026, 02, 17));
 
+        CheckImageFiles([image1, image2, image3], []);
+
         _imageProviderState.Images.Clear();
 
         await RunMigrationAsync();
@@ -129,12 +125,33 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
         ExpectLogMessages(LogEventIdUsingDirectoryForStorage, LogEventIdMigrationWillBeAttempted, LogEventIdImageProviderReturnedNoImages);
 
         // Images should still exist in the old structure
-        CheckImageFileInOldStructure(image1, expectExists: true);
+        CheckImageFiles([image1, image2, image3], []);
+    }
+
+    [Fact]
+    public async Task Migration___With_Some_Images_In_Old_Structure_But_One_Image_File_Already_Exists_In_New_Structure___Works_As_Expected()
+    {
+        var image1 = AddNewImage(new DateTime(2025, 05, 03));
+        var image2 = AddNewImage(new DateTime(2025, 05, 15));
+        var image3 = AddNewImage(new DateTime(2026, 02, 17));
+
+        CreateImageFileInNewStructure(image2.CreatedAt.Year, image2.CreatedAt.Month, GetImageFileName(image2), "data");
+
+        // Images 1 & 3 only exist in the old structure. Image 2 exists in both structures
+        CheckImageFiles([image1, image3], []);
         CheckImageFileInOldStructure(image2, expectExists: true);
-        CheckImageFileInOldStructure(image3, expectExists: true);
-        CheckImageFileInNewStructure(image1, expectExists: false);
-        CheckImageFileInNewStructure(image2, expectExists: false);
-        CheckImageFileInNewStructure(image3, expectExists: false);
+        CheckImageFileInNewStructure(image2, expectExists: true);
+
+        await RunMigrationAsync();
+
+        ExpectLogMessages(LogEventIdUsingDirectoryForStorage, LogEventIdMigrationWillBeAttempted, LogEventIdSuccessfullyMovedFileTo, LogEventIdEncounteredTargetFileThatAlreadyExists);
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.*{image1.ResourceIdentifier}\.{ImageExtension}' to '.*{image1.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.*{image2.ResourceIdentifier}\.{ImageExtension}' to '.*{image2.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.*{image3.ResourceIdentifier}\.{ImageExtension}' to '.*{image3.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdEncounteredTargetFileThatAlreadyExists, $@"^Encountered an already existing target file '.*{image2.ResourceIdentifier}\.{ImageExtension}' while migrating '.*{image2.ResourceIdentifier}\.{ImageExtension}' - the move operation will be attempted again\.$");
+
+        // All images only exist in the new structure
+        CheckImageFiles([], [image1, image2, image3]);
     }
 
     private async Task RunMigrationAsync()
@@ -164,6 +181,13 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
         File.WriteAllText(Path.Join(directory, fileName), contents);
     }
 
+    private void CreateImageFileInNewStructure(int year, int month, string fileName, string contents)
+    {
+        var directory = Path.Join(_basePath, $"{year}", $"{month:D2}");
+        Directory.CreateDirectory(directory);
+        File.WriteAllText(Path.Join(directory, fileName), contents);
+    }
+
     private void CheckImageFileInOldStructure(int year, string fileName, bool expectExists = true)
     {
         var path = Path.Join(_basePath, $"{year}", fileName);
@@ -184,6 +208,21 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
     private void CheckImageFileInNewStructure(Image image, bool expectExists = true)
     {
         CheckImageFileInNewStructure(image.CreatedAt.Year, image.CreatedAt.Month, GetImageFileName(image), expectExists);
+    }
+
+    private void CheckImageFiles(Image[] imagesInOldStructure, Image[] imagesInNewStructure)
+    {
+        foreach (var image in imagesInOldStructure)
+        {
+            CheckImageFileInOldStructure(image, expectExists: true);
+            CheckImageFileInNewStructure(image, expectExists: false);
+        }
+
+        foreach (var image in imagesInNewStructure)
+        {
+            CheckImageFileInOldStructure(image, expectExists: false);
+            CheckImageFileInNewStructure(image, expectExists: true);
+        }
     }
 
     private void ExpectLogMessages(params int[] expectedEventIds)
