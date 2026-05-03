@@ -2,7 +2,7 @@ namespace Turnierplan.ImageStorage;
 
 internal sealed class ImageStorageMigrator(IImageStorage imageStorage, IImageProvider imageProvider)
 {
-    public async Task MigrateAsync(CancellationToken cancellationToken)
+    public async Task MigrateAsync(CancellationToken cancellationToken = default)
     {
         if (imageStorage is not IMigratableImageStorage migratableImageStorage)
         {

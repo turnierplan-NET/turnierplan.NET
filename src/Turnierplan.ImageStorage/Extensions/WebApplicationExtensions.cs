@@ -22,14 +22,8 @@ public static class WebApplicationExtensions
     {
         await using var scope = application.Services.CreateAsyncScope();
 
-        var migrator = scope.ServiceProvider.GetService<ImageStorageMigrator>();
-
-        if (migrator is null)
-        {
-            return;
-        }
+        var migrator = scope.ServiceProvider.GetRequiredService<ImageStorageMigrator>();
 
         await migrator.MigrateAsync(application.Lifetime.ApplicationStopping);
-
     }
 }
