@@ -34,7 +34,7 @@ internal static class ServiceCollectionExtensions
             metrics.AddAspNetCoreInstrumentation();
             metrics.AddHttpClientInstrumentation();
             metrics.AddRuntimeInstrumentation();
-            metrics.AddNpgsqlInstrumentation();
+            metrics.AddMeter("Npgsql");
         });
 
         openTelemetryBuilder.WithTracing(tracing =>
