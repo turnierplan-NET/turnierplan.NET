@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
@@ -8,7 +9,6 @@ using Turnierplan.Core.Image;
 using Turnierplan.Core.PublicId;
 using Turnierplan.ImageStorage.Extensions;
 using Xunit;
-using BindingFlags = System.Reflection.BindingFlags;
 
 namespace Turnierplan.ImageStorage.Test.Migration.Local;
 
