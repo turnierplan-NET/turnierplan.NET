@@ -34,7 +34,7 @@ internal static class ServiceCollectionExtensions
             metrics.AddAspNetCoreInstrumentation();
             metrics.AddHttpClientInstrumentation();
             metrics.AddRuntimeInstrumentation();
-            metrics.AddMeter("Npgsql"); // TODO: Revert to AddNpgsqlInstrumentation() once Npgsql.OpenTelemetry is updated to use a non-vulnerable version of OpenTelemetry.Api
+            metrics.AddMeter("Npgsql");
         });
 
         openTelemetryBuilder.WithTracing(tracing =>
