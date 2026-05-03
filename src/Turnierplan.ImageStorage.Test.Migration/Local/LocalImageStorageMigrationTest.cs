@@ -140,9 +140,7 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
     private async Task RunMigrationAsync()
     {
         await using var scope = _serviceProvider.CreateAsyncScope();
-
         var migrator = scope.ServiceProvider.GetRequiredService<ImageStorageMigrator>();
-
         await migrator.MigrateAsync(TestContext.Current.CancellationToken);
     }
 
