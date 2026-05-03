@@ -46,8 +46,8 @@ internal sealed partial class LocalImageStorageLogger(ILogger<LocalImageStorage>
     [LoggerMessage(LogLevel.Warning, "Encountered an already existing target file '{TargetPath}' while migrating '{SourcePath}' - the move operation will be attempted again.", EventId = 14)]
     public partial void EncounteredTargetFileThatAlreadyExists(string targetPath, string sourcePath);
 
-    [LoggerMessage(LogLevel.Information, "Successfully moved image file '{TargetPath}' to '{SourcePath}'.", EventId = 15)]
-    public partial void SuccessfullyMovedFileTo(string targetPath, string sourcePath);
+    [LoggerMessage(LogLevel.Information, "Successfully moved image file '{SourcePath}' to '{TargetPath}'.", EventId = 15)]
+    public partial void SuccessfullyMovedFileTo(string sourcePath, string targetPath);
 
     [LoggerMessage(LogLevel.Critical, "An unexpected exception occurred while trying to run local image storage migrations.", EventId = 16)]
     public partial void ExceptionOccurredDuringMigration(Exception exception);

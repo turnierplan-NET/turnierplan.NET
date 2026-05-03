@@ -79,9 +79,9 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
         await RunMigrationAsync();
 
         ExpectLogMessages(LogEventIdUsingDirectoryForStorage, LogEventIdMigrationWillBeAttempted, LogEventIdSuccessfullyMovedFileTo);
-        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.*{image1.ResourceIdentifier}\.{ImageExtension}' to '.*{image1.ResourceIdentifier}\.{ImageExtension}'\.$");
-        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.*{image2.ResourceIdentifier}\.{ImageExtension}' to '.*{image2.ResourceIdentifier}\.{ImageExtension}'\.$");
-        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.*{image3.ResourceIdentifier}\.{ImageExtension}' to '.*{image3.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2025[^\d]+{image1.ResourceIdentifier}\.{ImageExtension}' to '.+2025.+05.+{image1.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2025[^\d]+{image2.ResourceIdentifier}\.{ImageExtension}' to '.+2025.+05.+{image2.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2026[^\d]+{image3.ResourceIdentifier}\.{ImageExtension}' to '.+2026.+02.+{image3.ResourceIdentifier}\.{ImageExtension}'\.$");
 
         // Images should all be moved to the new structure - the old files should have been deleted
         CheckImageFiles([], [image1, image2, image3]);
@@ -101,9 +101,9 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
         await RunMigrationAsync();
 
         ExpectLogMessages(LogEventIdUsingDirectoryForStorage, LogEventIdMigrationWillBeAttempted, LogEventIdSuccessfullyMovedFileTo, LogEventIdEncounteredFileWithoutCorrespondingImageFromProvider);
-        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.*{image1.ResourceIdentifier}\.{ImageExtension}' to '.*{image1.ResourceIdentifier}\.{ImageExtension}'\.$");
-        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.*{image3.ResourceIdentifier}\.{ImageExtension}' to '.*{image3.ResourceIdentifier}\.{ImageExtension}'\.$");
-        ExpectLogMessageExists(LogEventIdEncounteredFileWithoutCorrespondingImageFromProvider, $@"^Encountered a file in the image storage directory for which there exists no corresponding entry from the image provider: '.*{image2.ResourceIdentifier}\.{ImageExtension}'$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2025[^\d]+{image1.ResourceIdentifier}\.{ImageExtension}' to '.+2025.+05.+{image1.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2026[^\d]+{image3.ResourceIdentifier}\.{ImageExtension}' to '.+2026.+02.+{image3.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdEncounteredFileWithoutCorrespondingImageFromProvider, $@"^Encountered a file in the image storage directory for which there exists no corresponding entry from the image provider: '.+2025[^\d]+{image2.ResourceIdentifier}\.{ImageExtension}'$");
 
         // Images 1 & 3 are moved to the new structure, while image 2 remains in the old structure
         CheckImageFiles([image2], [image1, image3]);
@@ -145,10 +145,10 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
         await RunMigrationAsync();
 
         ExpectLogMessages(LogEventIdUsingDirectoryForStorage, LogEventIdMigrationWillBeAttempted, LogEventIdSuccessfullyMovedFileTo, LogEventIdEncounteredTargetFileThatAlreadyExists);
-        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.*{image1.ResourceIdentifier}\.{ImageExtension}' to '.*{image1.ResourceIdentifier}\.{ImageExtension}'\.$");
-        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.*{image2.ResourceIdentifier}\.{ImageExtension}' to '.*{image2.ResourceIdentifier}\.{ImageExtension}'\.$");
-        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.*{image3.ResourceIdentifier}\.{ImageExtension}' to '.*{image3.ResourceIdentifier}\.{ImageExtension}'\.$");
-        ExpectLogMessageExists(LogEventIdEncounteredTargetFileThatAlreadyExists, $@"^Encountered an already existing target file '.*{image2.ResourceIdentifier}\.{ImageExtension}' while migrating '.*{image2.ResourceIdentifier}\.{ImageExtension}' - the move operation will be attempted again\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2025[^\d]+{image1.ResourceIdentifier}\.{ImageExtension}' to '.+2025.+05.+{image1.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2025[^\d]+{image2.ResourceIdentifier}\.{ImageExtension}' to '.+2025.+05.+{image2.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2026[^\d]+{image3.ResourceIdentifier}\.{ImageExtension}' to '.+2026.+02.+{image3.ResourceIdentifier}\.{ImageExtension}'\.$");
+        ExpectLogMessageExists(LogEventIdEncounteredTargetFileThatAlreadyExists, $@"^Encountered an already existing target file '.+2025.+05.+{image2.ResourceIdentifier}\.{ImageExtension}' while migrating '.+2025[^\d]+{image2.ResourceIdentifier}\.{ImageExtension}' - the move operation will be attempted again\.$");
 
         // All images only exist in the new structure
         CheckImageFiles([], [image1, image2, image3]);

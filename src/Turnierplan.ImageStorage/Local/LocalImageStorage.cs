@@ -193,7 +193,7 @@ internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableI
                     }
 
                     File.Move(file, targetPath, overwrite: true);
-                    _logger.SuccessfullyMovedFileTo(targetPath, file);
+                    _logger.SuccessfullyMovedFileTo(file, targetPath);
                 }
             }
         }
