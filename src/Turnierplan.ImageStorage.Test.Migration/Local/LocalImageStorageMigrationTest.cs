@@ -69,7 +69,33 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
     }
 
     [Fact]
-    public async Task Migration___With_Many_Images_In_Old_Structure___Works_As_Expected()
+    public async Task Migration___With_Images_In_Provider_But_Storage_Directory_Is_Empty___Works_As_Expected()
+    {
+        var image1 = AddNewImage(new DateTime(2025, 07, 03), createImageFile: false);
+        var image2 = AddNewImage(new DateTime(2025, 08, 15), createImageFile: false);
+
+        // No image files exist in either old/new structure
+        CheckImageFileInOldStructure(image1, expectExists: false);
+        CheckImageFileInOldStructure(image2, expectExists: false);
+        CheckImageFileInNewStructure(image1, expectExists: false);
+        CheckImageFileInNewStructure(image2, expectExists: false);
+
+        await RunMigrationAsync();
+
+        // If no physical files exist, the image storage migration will never query the image provider.
+        _imageProviderState.WasQueried.Should().BeFalse();
+
+        ExpectLogMessages(LogEventIdUsingDirectoryForStorage, LogEventIdDirectoryStructureIsUpToDate);
+
+        // No image files exist in either old/new structure
+        CheckImageFileInOldStructure(image1, expectExists: false);
+        CheckImageFileInOldStructure(image2, expectExists: false);
+        CheckImageFileInNewStructure(image1, expectExists: false);
+        CheckImageFileInNewStructure(image2, expectExists: false);
+    }
+
+    [Fact]
+    public async Task Migration___With_Images_In_Old_Structure___Works_As_Expected()
     {
         var image1 = AddNewImage(new DateTime(2023, 07, 03));
         var image2 = AddNewImage(new DateTime(2024, 08, 15));
@@ -82,6 +108,8 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
 
         CheckImageFiles([image1, image2, image3, image4, image5, image6, image7, image8], []);
         await RunMigrationAsync();
+
+        _imageProviderState.WasQueried.Should().BeTrue();
 
         ExpectLogMessages(LogEventIdUsingDirectoryForStorage, LogEventIdMigrationWillBeAttempted, LogEventIdSuccessfullyMovedFileTo);
         ExpectLogMessageExists(LogEventIdSuccessfullyMovedFileTo, $@"^Successfully moved image file '.+2023[^\d]+{image1.ResourceIdentifier}\.{ImageExtension}' to '.+2023.+07.+{image1.ResourceIdentifier}\.{ImageExtension}'\.$");
@@ -98,7 +126,7 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
     }
 
     [Fact]
-    public async Task Migration___With_Some_Images_In_Old_Structure_But_Image_Is_Missing_One_Specific_Image___Works_As_Expected()
+    public async Task Migration___With_Images_In_Old_Structure_But_Image_Is_Missing_One_Specific_Image___Works_As_Expected()
     {
         var image1 = AddNewImage(new DateTime(2025, 05, 03));
         var image2 = AddNewImage(new DateTime(2025, 05, 15));
@@ -120,7 +148,7 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
     }
 
     [Fact]
-    public async Task Migration___With_Some_Images_In_Old_Structure_But_Image_Provider_Returns_No_Images___Works_As_Expected()
+    public async Task Migration___With_Images_In_Old_Structure_But_Image_Provider_Returns_No_Images___Works_As_Expected()
     {
         var image1 = AddNewImage(new DateTime(2025, 05, 03));
         var image2 = AddNewImage(new DateTime(2025, 05, 15));
@@ -139,7 +167,7 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
     }
 
     [Fact]
-    public async Task Migration___With_Some_Images_In_Old_Structure_But_One_Image_File_Already_Exists_In_New_Structure___Works_As_Expected()
+    public async Task Migration___With_Images_In_Old_Structure_But_One_Image_File_Already_Exists_In_New_Structure___Works_As_Expected()
     {
         var image1 = AddNewImage(new DateTime(2025, 05, 03));
         var image2 = AddNewImage(new DateTime(2025, 05, 15));
@@ -171,7 +199,7 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
         await migrator.MigrateAsync(TestContext.Current.CancellationToken);
     }
 
-    private Image AddNewImage(DateTime createdAt)
+    private Image AddNewImage(DateTime createdAt, bool createImageFile = true)
     {
         var ctor = typeof(Image).GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, [typeof(long), typeof(Guid), typeof(PublicId), typeof(DateTime), typeof(string), typeof(string), typeof(long), typeof(ushort), typeof(ushort)]);
         var id = (long)_imageProviderState.Images.Count + 1;
@@ -179,7 +207,10 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
 
         _imageProviderState.Images.Add(image);
 
-        CreateImageFile(image.CreatedAt.Year, GetImageFileName(image), image.Name);
+        if (createImageFile)
+        {
+            CreateImageFile(image.CreatedAt.Year, GetImageFileName(image), image.Name);
+        }
 
         return image;
     }
@@ -278,10 +309,16 @@ public sealed class LocalImageStorageMigrationTest : IDisposable
     private sealed class StateForTestImageProvider
     {
         public readonly List<Image> Images = [];
+        public bool WasQueried;
     }
 
     private sealed class TestImageProvider(StateForTestImageProvider state) : IImageProvider
     {
-        public Task<IReadOnlyCollection<Image>> GetImagesAsync() => Task.FromResult<IReadOnlyCollection<Image>>(state.Images.AsReadOnly());
+        public Task<IReadOnlyCollection<Image>> GetImagesAsync()
+        {
+            state.WasQueried = true;
+
+            return Task.FromResult<IReadOnlyCollection<Image>>(state.Images.AsReadOnly());
+        }
     }
 }
