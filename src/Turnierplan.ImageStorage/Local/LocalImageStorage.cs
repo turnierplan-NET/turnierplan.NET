@@ -10,26 +10,25 @@ namespace Turnierplan.ImageStorage.Local;
 
 internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableImageStorage
 {
-    private readonly ILogger<LocalImageStorage> _logger;
+    private readonly LocalImageStorageLogger _logger;
     private readonly string _storagePath;
-
     private readonly SemaphoreSlim _migrationSemaphore = new(1, 1);
     private readonly bool _skipMigration;
 
     public LocalImageStorage(ILogger<LocalImageStorage> logger, IOptions<LocalImageStorageOptions> options)
     {
-        _logger = logger;
+        _logger = new LocalImageStorageLogger(logger);
 
         ArgumentException.ThrowIfNullOrWhiteSpace(options.Value.StoragePath);
         _storagePath = Path.GetFullPath(options.Value.StoragePath);
 
-        _logger.LogInformation("Using the following directory for local image storage: '{LocalImageStoragePath}'", _storagePath);
+        _logger.UsingDirectoryForStorage(_storagePath);
 
         Directory.CreateDirectory(_storagePath);
 
         if (!Directory.Exists(_storagePath))
         {
-            _logger.LogCritical("The directory for local image storage does not exist and could not be created.");
+            _logger.RootDirectoryDoesNotExistAndCouldNotBeCreated();
             _skipMigration = true;
         }
     }
@@ -55,13 +54,13 @@ internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableI
 
                 if (!Directory.Exists(imageDirectoryPath))
                 {
-                    _logger.LogCritical("The directory for the image could not be created: '{ImageDirectory}'.", imageDirectoryPath);
+                    _logger.ImageDirectoryCouldNotBeCreated(imageDirectoryPath);
 
                     return Task.FromResult(false);
                 }
             }
 
-            _logger.LogDebug("Writing image to: {FilePath}", filePath);
+            _logger.WritingImageToPath(filePath);
 
             using var destination = new FileStream(filePath, FileMode.Create);
             imageData.CopyTo(destination);
@@ -70,7 +69,7 @@ internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableI
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to save image to file to '{FilePath}'.", filePath);
+            _logger.FailedToWriteImageToPath(filePath, ex);
 
             return Task.FromResult(false);
         }
@@ -91,7 +90,7 @@ internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableI
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to delete image file '{FilePath}'.", filePath);
+            _logger.FailedToDeleteImageFile(filePath, ex);
 
             return Task.FromResult(false);
         }
@@ -112,7 +111,7 @@ internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableI
     {
         if (_skipMigration)
         {
-            _logger.LogCritical("A previous initialization error of local image storage will cause the migrations to be skipped.");
+            _logger.SkippingMigration();
             return;
         }
 
@@ -139,11 +138,11 @@ internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableI
             var hasOldFiles = Directory.GetDirectories(_storagePath).SelectMany(Directory.GetFiles).Any();
             if (!hasOldFiles)
             {
-                _logger.LogInformation("The directory structure is up to date, no migration is needed.");
+                _logger.DirectoryStructureIsUpToDate();
                 return;
             }
 
-            _logger.LogInformation("A migration will be attempted because at least one file in the storage directory matches the old file pattern.");
+            _logger.MigrationWillBeAttempted();
 
             // Load images from DB because we need the months of creation
             var images = await imageProvider.GetImagesAsync();
@@ -151,7 +150,7 @@ internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableI
             // Consistency check - there might be an error in the image provider implementation causing invalid data to be returned.
             if (images.Count == 0)
             {
-                _logger.LogWarning("The image provider returned no images even though the image storage folder contains old image files - migration is skipped.");
+                _logger.ImageProviderReturnedNoImages();
                 return;
             }
 
@@ -165,13 +164,13 @@ internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableI
 
                     if (!match.Success)
                     {
-                        _logger.LogWarning("Encountered a file in the image storage directory which does not match the file name pattern: '{ImagePath}'", Path.GetFullPath(file));
+                        _logger.EncounteredFileWhichDoesNotMatchPattern(Path.GetFullPath(file));
                         continue;
                     }
 
                     if (!Guid.TryParse(match.Groups["identifier"].Value, out var resourceIdentifier))
                     {
-                        _logger.LogWarning("Encountered a file in the image storage directory which does not have a valid GUID in the file name: '{ImagePath}'", Path.GetFullPath(file));
+                        _logger.EncounteredFileThatHasNoValidGuidInName(Path.GetFullPath(file));
                         continue;
                     }
 
@@ -179,7 +178,7 @@ internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableI
 
                     if (image is null)
                     {
-                        _logger.LogWarning("Encountered a file in the image storage directory for which there exists no corresponding entry from the image provider: '{ImagePath}'", Path.GetFullPath(file));
+                        _logger.EncounteredFileWithoutCorrespondingImageFromProvider(Path.GetFullPath(file));
                         continue;
                     }
 
@@ -190,17 +189,17 @@ internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableI
 
                     if (File.Exists(targetPath))
                     {
-                        _logger.LogWarning("Encountered an already existing target file '{TargetPath}' while migrating '{SourcePath}' - the Move operation will be attempted again.", targetPath, file);
+                        _logger.EncounteredTargetFileThatAlreadyExists(targetPath, file);
                     }
 
                     File.Move(file, targetPath, overwrite: true);
-                    _logger.LogInformation("Successfully moved image file '{TargetPath}' to '{SourcePath}'.", targetPath, file);
+                    _logger.SuccessfullyMovedFileTo(targetPath, file);
                 }
             }
         }
         catch (Exception ex)
         {
-            _logger.LogCritical(ex, "An unexpected exception occurred while trying to run local image storage migrations.");
+            _logger.ExceptionOccurredDuringMigration(ex);
         }
         finally
         {
