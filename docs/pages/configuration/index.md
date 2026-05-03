@@ -43,9 +43,6 @@ Alternativ können externe Services zum Speichern der Bilder konfiguriert werden
 - **AWS S3** (oder kompatibler Dienst)
 - **Azure Blob Storage**
 
-!!! warning
-    Die nachfolgend vorgestellten Alternativen verwenden nicht zwangsläufig eine identische Verzeichnisstruktur zur Organisation der Dateien. Dadurch wird eine nachträgliche Umstellung ggf. erschwert!
-
 ### AWS S3
 
 Um Bilder in einem AWS S3 oder S3-kompatiblen Bucket zu speichern, müssen die folgenden Umgebungsvariablen gesetzt werden:
