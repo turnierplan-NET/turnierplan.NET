@@ -12,19 +12,19 @@ jobs:
     name: 'Build & Test'
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: 'Setup .NET SDK 10.x'
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '10.x'
       - name: 'Setup Node.js 24.x'
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: '24.x'
       - name: 'Setup Chrome'
-        uses: browser-actions/setup-chrome@v1
+        uses: browser-actions/setup-chrome@v2
         id: 'setup-chrome'
       - name: 'Set CHROME_BIN environment variable'
         run: 'echo "CHROME_BIN=${{ steps.setup-chrome.outputs.chrome-path }}" >> $env:GITHUB_ENV'
@@ -54,11 +54,11 @@ jobs:
     name: 'E2E Tests (amd64)'
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: 'Setup Node.js 24.x'
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: '24.x'
       - name: 'Install npm packages'
