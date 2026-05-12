@@ -72,7 +72,7 @@ public sealed class TurnierplanClient : IDisposable
     /// <item>Thrown if the version of the server does not match the version of the <c>Turnierplan.Adapter</c> library.</item>
     /// </list>
     /// </exception>
-    public async Task<Tournament> GetTournament(string tournamentId, CancellationToken cancellationToken = default)
+    public async Task<Tournament> GetTournamentAsync(string tournamentId, CancellationToken cancellationToken = default) // FIXME -> Async
     {
         var request = new HttpRequestMessage(HttpMethod.Get, $"/api/tournaments/{tournamentId}");
         var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
@@ -80,7 +80,7 @@ public sealed class TurnierplanClient : IDisposable
         EnsureSuccessResponse(response);
         VerifyServerVersion(response);
 
-        return await Deserialize<Tournament>(response).ConfigureAwait(false);
+        return await DeserializeAsync<Tournament>(response).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -96,7 +96,7 @@ public sealed class TurnierplanClient : IDisposable
     /// <item>Thrown if the version of the server does not match the version of the <c>Turnierplan.Adapter</c> library.</item>
     /// </list>
     /// </exception>
-    public async Task<List<TournamentHeader>> GetTournaments(string folderId, CancellationToken cancellationToken = default)
+    public async Task<List<TournamentHeader>> GetTournamentsAsync(string folderId, CancellationToken cancellationToken = default)
     {
         var query = new QueryBuilder { { "folderId", folderId } };
         var request = new HttpRequestMessage(HttpMethod.Get, $"/api/tournaments{query}");
@@ -105,7 +105,7 @@ public sealed class TurnierplanClient : IDisposable
         EnsureSuccessResponse(response);
         VerifyServerVersion(response);
 
-        return await Deserialize<List<TournamentHeader>>(response).ConfigureAwait(false);
+        return await DeserializeAsync<List<TournamentHeader>>(response).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -165,7 +165,7 @@ public sealed class TurnierplanClient : IDisposable
         }
     }
 
-    private static async Task<T> Deserialize<T>(HttpResponseMessage response)
+    private static async Task<T> DeserializeAsync<T>(HttpResponseMessage response)
     {
         var data = await response.Content.ReadFromJsonAsync<T>(__serializerOptions).ConfigureAwait(false);
 
