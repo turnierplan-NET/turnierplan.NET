@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Turnierplan.ImageStorage.Local;
 
 namespace Turnierplan.ImageStorage.Extensions;
 
@@ -10,7 +9,7 @@ public static class WebApplicationExtensions
     {
         var imageStorage = application.Services.GetRequiredService<IImageStorage>();
 
-        if (imageStorage is not LocalImageStorage localImageStorage)
+        if (imageStorage is not IHostedImageStorage localImageStorage)
         {
             return;
         }

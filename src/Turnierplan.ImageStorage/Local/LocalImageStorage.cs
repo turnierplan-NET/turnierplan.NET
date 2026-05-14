@@ -8,7 +8,7 @@ using Turnierplan.Core.Image;
 
 namespace Turnierplan.ImageStorage.Local;
 
-internal sealed partial class LocalImageStorage : IImageStorage, IMigratableImageStorage
+internal sealed partial class LocalImageStorage : IImageStorage, IHostedImageStorage, IMigratableImageStorage
 {
     private readonly LocalImageStorageLogger _logger;
     private readonly string _storagePath;
