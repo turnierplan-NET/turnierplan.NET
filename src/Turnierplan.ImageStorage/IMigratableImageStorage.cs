@@ -1,6 +1,6 @@
 namespace Turnierplan.ImageStorage;
 
-public interface IMigratableImageStorage
+internal interface IMigratableImageStorage
 {
     Task MigrateAsync(IImageProvider imageProvider, CancellationToken cancellationToken);
 }
