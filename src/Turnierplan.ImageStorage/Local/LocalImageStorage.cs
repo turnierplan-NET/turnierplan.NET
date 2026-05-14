@@ -8,7 +8,7 @@ using Turnierplan.Core.Image;
 
 namespace Turnierplan.ImageStorage.Local;
 
-internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableImageStorage
+internal sealed partial class LocalImageStorage : IImageStorage, IMigratableImageStorage
 {
     private readonly LocalImageStorageLogger _logger;
     private readonly string _storagePath;
@@ -33,12 +33,12 @@ internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableI
         }
     }
 
-    public override string GetFullImageUrl(Image image)
+    public string GetFullImageUrl(Image image)
     {
         return $"/images/{image.CreatedAt.Year}/{image.CreatedAt.Month:D2}/{GetImageFileName(image)}";
     }
 
-    public override Task<bool> SaveImageAsync(Image image, MemoryStream imageData)
+    public Task<bool> SaveImageAsync(Image image, MemoryStream imageData)
     {
         var filePath = GetImageFullPath(image);
 
@@ -75,12 +75,12 @@ internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableI
         }
     }
 
-    public override Task<Stream> GetImageAsync(Image image)
+    public Task<Stream> GetImageAsync(Image image)
     {
         return Task.FromResult<Stream>(new FileStream(GetImageFullPath(image), FileMode.Open));
     }
 
-    public override Task<bool> DeleteImageAsync(Image image)
+    public Task<bool> DeleteImageAsync(Image image)
     {
         var filePath = GetImageFullPath(image);
 
@@ -96,6 +96,10 @@ internal sealed partial class LocalImageStorage : ImageStorageBase, IMigratableI
         }
 
         return Task.FromResult(true);
+    }
+
+    public void Dispose()
+    {
     }
 
     public void MapEndpoint(IApplicationBuilder builder)
