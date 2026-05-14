@@ -72,7 +72,7 @@ public sealed class TurnierplanClient : IDisposable
     /// <item>Thrown if the version of the server does not match the version of the <c>Turnierplan.Adapter</c> library.</item>
     /// </list>
     /// </exception>
-    public async Task<Tournament> GetTournamentAsync(string tournamentId, CancellationToken cancellationToken = default) // FIXME -> Async
+    public async Task<Tournament> GetTournamentAsync(string tournamentId, CancellationToken cancellationToken = default)
     {
         var request = new HttpRequestMessage(HttpMethod.Get, $"/api/tournaments/{tournamentId}");
         var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
