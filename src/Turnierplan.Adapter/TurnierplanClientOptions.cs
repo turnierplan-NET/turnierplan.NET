@@ -9,12 +9,12 @@ public sealed record TurnierplanClientOptions
     /// Initializes a new instance of the <see cref="TurnierplanClientOptions"/> class with the specified options.
     /// </summary>
     /// <param name="applicationUri">The base URI of the turnierplan.NET instance that should be queried.</param>
-    /// <param name="apiKey">The id of the API key.</param>
+    /// <param name="apiKeyId">The id of the API key.</param>
     /// <param name="apiKeySecret">The secret of the API key.</param>
-    public TurnierplanClientOptions(Uri applicationUri, string apiKey, string apiKeySecret)
+    public TurnierplanClientOptions(Uri applicationUri, string apiKeyId, string apiKeySecret)
     {
         ApplicationUri = applicationUri;
-        ApiKey = apiKey;
+        ApiKeyId = apiKeyId;
         ApiKeySecret = apiKeySecret;
     }
 
@@ -22,10 +22,10 @@ public sealed record TurnierplanClientOptions
     /// Initializes a new instance of the <see cref="TurnierplanClientOptions"/> class with the specified options.
     /// </summary>
     /// <param name="applicationUri">The base URI of the turnierplan.NET instance that should be queried.</param>
-    /// <param name="apiKey">The id of the API key.</param>
+    /// <param name="apiKeyId">The id of the API key.</param>
     /// <param name="apiKeySecret">The secret of the API key.</param>
-    public TurnierplanClientOptions(string applicationUri, string apiKey, string apiKeySecret)
-        : this(new Uri(applicationUri), apiKey, apiKeySecret)
+    public TurnierplanClientOptions(string applicationUri, string apiKeyId, string apiKeySecret)
+        : this(new Uri(applicationUri), apiKeyId, apiKeySecret)
     {
     }
 
@@ -37,7 +37,7 @@ public sealed record TurnierplanClientOptions
     /// <summary>
     /// The id of the API key.
     /// </summary>
-    public string ApiKey { get; }
+    public string ApiKeyId { get; }
 
     /// <summary>
     /// The secret of the API key.
