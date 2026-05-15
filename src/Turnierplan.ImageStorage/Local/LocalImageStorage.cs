@@ -98,10 +98,6 @@ internal sealed partial class LocalImageStorage : IImageStorage, IHostedImageSto
         return Task.FromResult(true);
     }
 
-    public void Dispose()
-    {
-    }
-
     public void MapEndpoint(IApplicationBuilder builder)
     {
         builder.UseStaticFiles(new StaticFileOptions
@@ -209,6 +205,10 @@ internal sealed partial class LocalImageStorage : IImageStorage, IHostedImageSto
         {
             _migrationSemaphore.Release();
         }
+    }
+
+    public void Dispose()
+    {
     }
 
     private string GetImageFullPath(Image image)
