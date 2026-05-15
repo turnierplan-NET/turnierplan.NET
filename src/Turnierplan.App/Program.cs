@@ -37,7 +37,7 @@ builder.Services.Configure<TurnierplanOptions>(builder.Configuration.GetSection(
 builder.Services.AddTurnierplanMonitoring(builder.Configuration);
 builder.Services.AddTurnierplanDataAccessLayer(builder.Configuration);
 builder.Services.AddTurnierplanDocumentRendering<ApplicationUrlProvider>();
-builder.Services.AddTurnierplanImageStorage(builder.Configuration.GetSection("ImageStorage"));
+builder.Services.AddTurnierplanImageStorage<DatabaseImageProvider>(builder.Configuration.GetSection("ImageStorage"));
 builder.Services.AddTurnierplanLocalization();
 builder.Services.AddTurnierplanSecurity(builder.Configuration.GetSection("Identity"));
 
@@ -115,5 +115,8 @@ app.UseStaticFiles();
 
 // Migrate database and create admin user if DB is empty
 await app.InitializeDatabaseAsync();
+
+// Run image storage migrations if required by the configured image storage
+await app.MigrateImageStorageAsync();
 
 await app.RunAsync();
