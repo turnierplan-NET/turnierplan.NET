@@ -23,7 +23,7 @@ fi
 
 if [[ $current_version == $next_version ]]; then
   echo "Error: The current version is already '$1'."
-    exit 1
+  exit 1
 fi
 
 echo "Bumping version: '$current_version' -> '$next_version'"
@@ -31,6 +31,12 @@ echo "Bumping version: '$current_version' -> '$next_version'"
 update_file () {
   echo "Updating file: $1"
   sed -i -e "s/${current_version//./\\.}/$next_version/g" "../$1"
+  
+  if [[ $? -ne 0 ]]; then
+    echo ""
+    echo "Error: The file '$1' could not be found! Aborting."
+    exit 1
+  fi
 }
 
 update_file "deploy/azure-terraform/variables.tf"
@@ -39,3 +45,6 @@ update_file "docs/pages/installation/docker-compose.md"
 update_file "src/Turnierplan.App/Client/package.json"
 update_file "src/Turnierplan.App/Client/src/environments/environment.prod.ts"
 update_file "src/version.xml"
+
+echo ""
+echo "All files updated successfully!"
