@@ -10,6 +10,7 @@
     <Project Path="Turnierplan.Core.Test.Regression/Turnierplan.Core.Test.Regression.csproj" />
     <Project Path="Turnierplan.Core.Test.Unit/Turnierplan.Core.Test.Unit.csproj" />
     <Project Path="Turnierplan.Dal.Test.Unit/Turnierplan.Dal.Test.Unit.csproj" />
+    <Project Path="Turnierplan.ImageStorage.Test.Migration/Turnierplan.ImageStorage.Test.Migration.csproj" />
     <Project Path="Turnierplan.Localization.Test.Unit/Turnierplan.Localization.Test.Unit.csproj" />
     <Project Path="Turnierplan.PdfRendering.Test.Unit/Turnierplan.PdfRendering.Test.Unit.csproj" />
   </Folder>

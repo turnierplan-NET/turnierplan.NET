@@ -6,6 +6,8 @@ namespace Turnierplan.Dal.Repositories;
 
 public interface IImageRepository : IRepositoryWithPublicId<Image, long>
 {
+    Task<List<Image>> GetAllImagesAsync();
+
     Task<int> CountNumberOfReferencingTournamentsAsync(long imageId);
 }
 
@@ -20,6 +22,11 @@ internal sealed class ImageRepository(TurnierplanContext context) : RepositoryBa
             .Include(x => x.RoleAssignments)
             .AsSplitQuery()
             .FirstOrDefaultAsync();
+    }
+
+    public Task<List<Image>> GetAllImagesAsync()
+    {
+        return DbSet.ToListAsync();
     }
 
     public async Task<int> CountNumberOfReferencingTournamentsAsync(long imageId)

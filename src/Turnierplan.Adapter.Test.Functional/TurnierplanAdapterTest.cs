@@ -40,7 +40,7 @@ public sealed class TurnierplanAdapterTest
 
         var client = new TurnierplanClient(server.CreateClient(), options);
 
-        var tournaments = await client.GetTournaments(seedingResult.FolderId);
+        var tournaments = await client.GetTournamentsAsync(seedingResult.FolderId, TestContext.Current.CancellationToken);
 
         tournaments.Should().BeEquivalentTo([
             new TournamentHeader
@@ -61,8 +61,8 @@ public sealed class TurnierplanAdapterTest
             }
         ]);
 
-        var tournament1 = await client.GetTournament(seedingResult.Tournament1Id);
-        var tournament2 = await client.GetTournament(seedingResult.Tournament2Id);
+        var tournament1 = await client.GetTournamentAsync(seedingResult.Tournament1Id, TestContext.Current.CancellationToken);
+        var tournament2 = await client.GetTournamentAsync(seedingResult.Tournament2Id, TestContext.Current.CancellationToken);
 
         tournament1.Should().BeEquivalentTo(new Tournament
         {
@@ -345,7 +345,7 @@ public sealed class TurnierplanAdapterTest
 
         var action = async () =>
         {
-            _ = await client.GetTournament("x");
+            _ = await client.GetTournamentAsync("x");
         };
 
         var actualVersion = System.Text.RegularExpressions.Regex.Replace(typeof(TurnierplanClient).Assembly.GetName().Version!.ToString(), @"\.0$", string.Empty);

@@ -38,13 +38,10 @@ In der Weboberfläche können Bilddateien hochgeladen werden. Diese werden mit e
 | `Turnierplan__ImageQuality` | Die Qualitätseinstellung für Bild-Uploads. Ein Wert von `100` entspricht einer verlustfreien Komprimierung.           | `80`                      |
 | `ImageStorage__StoragePath` | Das Verzeichnis innerhalb vom Container, hochgeladene Bilder gespeichert werden.                                      | `/var/turnierplan/images` |
 
-Alternativ können externe Services zum Speichern der Bilder konfiguriert werden. Dies hat den Vorteil, dass das Bereitstellen von Bilddateien keine CPU- und Netzwerkresourcen vom turnierplan.NET-Server beansprucht. Aktuell werden die folgenden externen Services unterstützt:
+Alternativ können externe Services zum Speichern der Bilder konfiguriert werden. Dies hat den Vorteil, dass das Bereitstellen von Bilddateien keine CPU- und Netzwerkressourcen vom turnierplan.NET-Server beansprucht. Aktuell werden die folgenden externen Services unterstützt:
 
 - **AWS S3** (oder kompatibler Dienst)
 - **Azure Blob Storage**
-
-!!! warning
-    Die nachfolgend vorgestellten Alternativen verwenden nicht zwangsläufig eine identische Verzeichnisstruktur zur Organisation der Dateien. Dadurch wird eine nachträgliche Umstellung ggf. erschwert!
 
 ### AWS S3
 

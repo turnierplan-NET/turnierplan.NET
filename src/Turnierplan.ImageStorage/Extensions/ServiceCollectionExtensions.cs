@@ -8,7 +8,8 @@ namespace Turnierplan.ImageStorage.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddTurnierplanImageStorage(this IServiceCollection services, IConfigurationSection configuration)
+    public static void AddTurnierplanImageStorage<T>(this IServiceCollection services, IConfigurationSection configuration)
+        where T : IImageProvider
     {
         var type = configuration.GetValue<string>("Type");
 
@@ -29,5 +30,7 @@ public static class ServiceCollectionExtensions
             default:
                 throw new InvalidOperationException($"Invalid image storage type specified: '{type}'");
         }
+
+        services.AddTransient<ImageStorageMigrator>(sp => new ImageStorageMigrator(sp.GetRequiredService<IImageStorage>(), ActivatorUtilities.CreateInstance<T>(sp)));
     }
 }
