@@ -39,13 +39,13 @@ public sealed class TurnierplanClient : IDisposable
     /// </remarks>
     public TurnierplanClient(HttpClient httpClient, TurnierplanClientOptions options)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.ApiKey);
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.ApiKeyId);
         ArgumentException.ThrowIfNullOrWhiteSpace(options.ApiKeySecret);
 
         _httpClient = httpClient;
         _httpClient.BaseAddress = options.ApplicationUri;
 
-        _httpClient.DefaultRequestHeaders.Add(ApiKeyIdHeaderName, options.ApiKey);
+        _httpClient.DefaultRequestHeaders.Add(ApiKeyIdHeaderName, options.ApiKeyId);
         _httpClient.DefaultRequestHeaders.Add(ApiKeySecretHeaderName, options.ApiKeySecret);
     }
 
