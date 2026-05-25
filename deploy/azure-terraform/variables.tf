@@ -27,7 +27,7 @@ variable "turnierplan_container_image" {
 variable "turnierplan_container_version" {
   description = "The name and tag of the container image to pull"
   type        = string
-  default     = "2026.2.0"
+  default     = "2026.3.0"
   nullable    = false
 }
 
