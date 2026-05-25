@@ -10,7 +10,7 @@ Die Cloud-Architektur umfasst im Wesentlichen einen Azure App Service sowie eine
 
 ## Verwendung
 
-Um das Modul zu verwenden, muss zunächst Terraform installiert sein. Zudem müssen die Provider `hashicorp/azurerm` und `hashicorp/random` verfügbar sein. Mit dem nachfolgenden Terraform-Skript kann das Terraform-Modul direkt aus der [GitHub-Repository](https://github.com/turnierplan-NET/turnierplan.NET-Terraform-Azure) verwendet werden.
+Um das Modul zu verwenden, muss zunächst Terraform installiert sein. Zudem müssen die Provider `hashicorp/azurerm` und `hashicorp/random` verfügbar sein. Mit dem nachfolgenden Terraform-Skript kann das Terraform-Modul direkt aus der [GitHub-Repository](https://github.com/turnierplan-NET/turnierplan.NET/tree/main/deploy/azure-terraform) verwendet werden.
 
 ```terraform
 module "turnierplan" {
