@@ -8,13 +8,36 @@ namespace Turnierplan.App.OpenApi;
 /// content type in such a way that the caller cannot retrieve the <c>Blob</c> returned by the server. This can be
 /// fixed by modifying the <c>format</c> property and setting it to <c>binary</c>.
 /// </summary>
-internal sealed class PdfResponseOperationTransformer : IOpenApiOperationTransformer
+internal sealed class ResponseOperationTransformer : IOpenApiOperationTransformer
 {
     public Task TransformAsync(OpenApiOperation operation, OpenApiOperationTransformerContext context, CancellationToken cancellationToken)
     {
+        var csvResponseType = typeof(ICsvResponse);
         var pdfResponseType = typeof(IPdfResponse);
 
-        if (context.Description.SupportedResponseTypes.Any(x => x.Type == pdfResponseType) && operation.Responses is not null)
+        if (operation.Responses is null)
+        {
+            return Task.CompletedTask;
+        }
+
+        if (context.Description.SupportedResponseTypes.Any(x => x.Type == csvResponseType))
+        {
+            operation.Responses["200"] = new OpenApiResponse
+            {
+                Content = new Dictionary<string, OpenApiMediaType>
+                {
+                    ["text/csv"] = new()
+                    {
+                        Schema = new OpenApiSchema
+                        {
+                            Type = JsonSchemaType.String
+                        }
+                    }
+                }
+            };
+        }
+
+        if (context.Description.SupportedResponseTypes.Any(x => x.Type == pdfResponseType))
         {
             operation.Responses["200"] = new OpenApiResponse
             {
@@ -35,13 +58,20 @@ internal sealed class PdfResponseOperationTransformer : IOpenApiOperationTransfo
         return Task.CompletedTask;
     }
 
+    public interface ICsvResponse;
+
     public interface IPdfResponse;
 }
 
-internal static class PdfResponseOperationTransformerExtensions
+internal static class ResponseOperationTransformerExtensions
 {
+    public static void ProducesCsv(this RouteHandlerBuilder builder)
+    {
+        builder.Produces<ResponseOperationTransformer.ICsvResponse>();
+    }
+
     public static void ProducesPdf(this RouteHandlerBuilder builder)
     {
-        builder.Produces<PdfResponseOperationTransformer.IPdfResponse>();
+        builder.Produces<ResponseOperationTransformer.IPdfResponse>();
     }
 }

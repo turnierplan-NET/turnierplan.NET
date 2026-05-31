@@ -36,6 +36,7 @@ import { createApplication } from '../../../api/fn/applications/create-applicati
 import { updatePlanningRealm } from '../../../api/fn/planning-realms/update-planning-realm';
 import { deletePlanningRealm } from '../../../api/fn/planning-realms/delete-planning-realm';
 import { LabelsManagerComponent } from '../../components/labels-manager/labels-manager.component';
+import { exportApplications } from '../../../api/fn/applications/export-applications';
 
 export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
 
@@ -301,6 +302,23 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
           this.loadingState = { isLoading: false, error: error };
         }
       });
+  }
+
+  protected exportApplications(): void {
+    if (!this.planningRealm) {
+      return;
+    }
+
+    // TODO: Add dialog with option to include teams and to apply the current filter
+
+    this.turnierplanApi.invoke(exportApplications, { planningRealmId: this.planningRealm.id }).subscribe({
+      next: (result) => {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([result]));
+        a.download = 'asdf.csv'; // TODO: Add proper translated file name
+        a.click();
+      }
+    });
   }
 
   protected renamePlanningRealm(name: string): void {
