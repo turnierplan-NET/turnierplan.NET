@@ -1040,7 +1040,11 @@ export const de = {
           CheckboxLabel: 'Ich habe den Hinweis gelesen und möchte die Anmeldung erstellen'
         }
       },
-      ExportApplications:"Export (.csv)",
+      ExportApplications: {
+        Button: 'Export (.csv)',
+        DialogTitle: 'asdf',
+        Download: 'Herunterladen'
+      },
       TournamentClasses: {
         Name: 'Name',
         InvitationLinkCount: 'Anmeldelinks',

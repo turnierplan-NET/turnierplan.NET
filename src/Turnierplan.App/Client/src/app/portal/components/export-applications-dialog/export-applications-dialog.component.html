@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <div class="modal-title" translate="Portal.ViewPlanningRealm.ExportApplications.DialogTitle"></div>
+  <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body">todo: options</div>
+<div class="modal-footer">
+  @if (isDownloading) {
+    <tp-small-spinner />
+  }
+  <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" [disabled]="isDownloading" (buttonClick)="modal.dismiss()" />
+  <tp-action-button
+    [type]="'outline-primary'"
+    [title]="'Portal.ViewPlanningRealm.ExportApplications.Download'"
+    [icon]="'download'"
+    [disabled]="isDownloading"
+    (buttonClick)="exportApplications()" />
+</div>
