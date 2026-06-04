@@ -43,6 +43,7 @@ export class ExportApplicationsDialogComponent {
       }) as string
     )}.csv`;
 
+    this.form.disable();
     this.isDownloading = true;
 
     this.turnierplanApi
@@ -59,6 +60,9 @@ export class ExportApplicationsDialogComponent {
           a.click();
 
           this.modal.close();
+        },
+        error: (error) => {
+          this.modal.dismiss({ isApiError: true, apiError: error as unknown });
         }
       });
   }
