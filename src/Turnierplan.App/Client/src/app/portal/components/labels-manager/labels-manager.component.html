@@ -1,4 +1,4 @@
-@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
+@let writeAllowed = (authorizationService.isActionAllowed$(tournamentPlanner.id, Actions.GenericWrite) | async) ?? false;
 
 <table class="table">
   <thead>
@@ -13,7 +13,7 @@
   </thead>
 
   <tbody>
-    @for (label of planningRealm.labels; track label.id) {
+    @for (label of tournamentPlanner.labels; track label.id) {
       <tr>
         <td class="text-nowrap align-middle">
           <tp-label [label]="label" />
@@ -50,7 +50,7 @@
           @if (label.id > 0) {
             <!-- Navigation to search is not possible if this label has not been saved yet -->
             <tp-action-button
-              *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsRead]"
+              *tpIsActionAllowed="[tournamentPlanner.id, Actions.ApplicationsRead]"
               [type]="'light'"
               [icon]="'search'"
               [mode]="'IconOnly'"

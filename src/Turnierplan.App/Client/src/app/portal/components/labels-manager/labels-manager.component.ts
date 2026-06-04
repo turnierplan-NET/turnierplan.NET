@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
-import { UpdatePlanningRealmFunc, ViewPlanningRealmComponent } from '../../pages/view-planning-realm/view-planning-realm.component';
+import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
+import { UpdateTournamentPlannerFunc, ViewPlanningRealmComponent } from '../../pages/view-planning-realm/view-planning-realm.component';
 import { ApplicationsFilter } from '../../models/applications-filter';
 import { TranslateDirective } from '@ngx-translate/core';
 import { Actions } from '../../../generated/actions';
@@ -29,10 +29,10 @@ import { DeleteButtonComponent } from '../delete-button/delete-button.component'
 })
 export class LabelsManagerComponent {
   @Input()
-  public planningRealm!: PlanningRealmDto;
+  public tournamentPlanner!: TournamentPlannerDto;
 
   @Input()
-  public updatePlanningRealm!: UpdatePlanningRealmFunc;
+  public updateTournamentPlanner!: UpdateTournamentPlannerFunc;
 
   @Output()
   public filterRequested = new EventEmitter<ApplicationsFilter>();
@@ -43,7 +43,7 @@ export class LabelsManagerComponent {
   constructor(protected readonly authorizationService: AuthorizationService) {}
 
   protected setLabelName(id: number, name: string): void {
-    this.updatePlanningRealm((planningRealm) => {
+    this.updateTournamentPlanner((planningRealm) => {
       const label = planningRealm.labels.find((x) => x.id == id);
 
       if (!label) {
@@ -57,7 +57,7 @@ export class LabelsManagerComponent {
   }
 
   protected setLabelDescription(id: number, description: string): void {
-    this.updatePlanningRealm((planningRealm) => {
+    this.updateTournamentPlanner((planningRealm) => {
       const label = planningRealm.labels.find((x) => x.id == id);
 
       if (!label) {
@@ -71,7 +71,7 @@ export class LabelsManagerComponent {
   }
 
   protected setLabelColor(id: any, color: string): void {
-    this.updatePlanningRealm((planningRealm) => {
+    this.updateTournamentPlanner((planningRealm) => {
       const label = planningRealm.labels.find((x) => x.id == id);
 
       if (!label) {
@@ -86,7 +86,7 @@ export class LabelsManagerComponent {
   }
 
   protected deleteLabel(id: number): void {
-    this.updatePlanningRealm((planningRealm) => {
+    this.updateTournamentPlanner((planningRealm) => {
       const index = planningRealm.labels.findIndex((x) => x.id === id);
 
       if (index === -1) {

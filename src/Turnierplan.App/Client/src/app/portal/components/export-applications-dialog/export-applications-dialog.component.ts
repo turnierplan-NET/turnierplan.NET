@@ -5,7 +5,7 @@ import { ActionButtonComponent } from '../action-button/action-button.component'
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { exportApplications } from '../../../api/fn/applications/export-applications';
-import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
 import { makeSafeFileName } from '../../helpers/file-name';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
@@ -20,7 +20,7 @@ export class ExportApplicationsDialogComponent {
   });
 
   protected isDownloading = false;
-  private planningRealm?: PlanningRealmDto;
+  private tournamentPlanner?: TournamentPlannerDto;
 
   constructor(
     protected readonly modal: NgbActiveModal,
@@ -28,18 +28,18 @@ export class ExportApplicationsDialogComponent {
     private readonly translateService: TranslateService
   ) {}
 
-  public initialize(planningRealm: PlanningRealmDto) {
-    this.planningRealm = planningRealm;
+  public initialize(tournamentPlanner: TournamentPlannerDto) {
+    this.tournamentPlanner = tournamentPlanner;
   }
 
   protected exportApplications(): void {
-    if (!this.planningRealm) {
+    if (!this.tournamentPlanner) {
       return;
     }
 
     const fileName = `${makeSafeFileName(
       this.translateService.instant('Portal.ViewPlanningRealm.ExportApplications.FileName', {
-        planningRealmName: this.planningRealm?.name
+        planningRealmName: this.tournamentPlanner?.name
       }) as string
     )}.csv`;
 
@@ -48,7 +48,7 @@ export class ExportApplicationsDialogComponent {
 
     this.turnierplanApi
       .invoke(exportApplications, {
-        planningRealmId: this.planningRealm.id,
+        tournamentPlannerId: this.tournamentPlanner.id,
         languageCode: this.translateService.getCurrentLang(),
         includeApplicationTeams: this.form.getRawValue().includeApplicationTeams
       })

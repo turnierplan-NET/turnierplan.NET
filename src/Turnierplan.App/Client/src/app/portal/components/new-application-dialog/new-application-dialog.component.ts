@@ -6,7 +6,7 @@ import { NgClass } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { AlertComponent } from '../alert/alert.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
-import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
 import { CreateApplicationEndpointRequest } from '../../../api/models/create-application-endpoint-request';
 import { ConfirmationAlertComponent } from '../confirmation-alert/confirmation-alert.component';
 
@@ -85,10 +85,10 @@ export class NewApplicationDialogComponent implements OnDestroy {
     return this.form.get('entries')! as FormArray;
   }
 
-  public init(planningRealm: PlanningRealmDto): void {
+  public init(tournamentPlanner: TournamentPlannerDto): void {
     const entriesFormArray = this.form.get('entries') as FormArray;
 
-    for (const tournamentClass of planningRealm.tournamentClasses) {
+    for (const tournamentClass of tournamentPlanner.tournamentClasses) {
       this.tournamentClassNames[tournamentClass.id] = tournamentClass.name;
       entriesFormArray.push(
         new FormGroup({

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
-import { UpdatePlanningRealmFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
+import { UpdateTournamentPlannerFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
 import { NgbModal, NgbTooltip, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem } from '@ng-bootstrap/ng-bootstrap';
 import { FormArray, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { formatDate, NgStyle, NgClass, AsyncPipe } from '@angular/common';
@@ -15,7 +15,7 @@ import { IsActionAllowedDirective } from '../../directives/is-action-allowed.dir
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { AlertComponent } from '../alert/alert.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
-import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
 import { InvitationLinkDto } from '../../../api/models/invitation-link-dto';
 import { TournamentClassDto } from '../../../api/models/tournament-class-dto';
 import { InvitationLinkEntryDto } from '../../../api/models/invitation-link-entry-dto';
@@ -48,11 +48,11 @@ import { ImageDto } from '../../../api/models/image-dto';
   ]
 })
 export class InvitationLinkTileComponent {
-  private _planningRealm!: PlanningRealmDto;
+  private _tournamentPlanner!: TournamentPlannerDto;
   private _invitationLink!: InvitationLinkDto;
 
   @Input()
-  public updatePlanningRealm!: UpdatePlanningRealmFunc;
+  public updatePlanningRealm!: UpdateTournamentPlannerFunc;
 
   @Output()
   public errorOccured = new EventEmitter<unknown>();
@@ -100,8 +100,8 @@ export class InvitationLinkTileComponent {
   }
 
   @Input()
-  public set planningRealm(value: PlanningRealmDto) {
-    this._planningRealm = value;
+  public set tournamentPlanner(value: TournamentPlannerDto) {
+    this._tournamentPlanner = value;
     this.determineTournamentClassesToAdd();
   }
 
@@ -109,8 +109,8 @@ export class InvitationLinkTileComponent {
     return this._invitationLink;
   }
 
-  public get planningRealm(): PlanningRealmDto {
-    return this._planningRealm;
+  public get tournamentPlanner(): TournamentPlannerDto {
+    return this._tournamentPlanner;
   }
 
   protected get editPropertiesFormExternalLinks(): FormArray {
@@ -118,7 +118,7 @@ export class InvitationLinkTileComponent {
   }
 
   protected findTournamentClassById(id: number): TournamentClassDto {
-    const tournamentClass = this.planningRealm.tournamentClasses.find((x) => x.id === id);
+    const tournamentClass = this.tournamentPlanner.tournamentClasses.find((x) => x.id === id);
 
     if (!tournamentClass) {
       throw new Error(`Tournament class id ${id} does not exist in planning realm.`);
@@ -357,8 +357,8 @@ export class InvitationLinkTileComponent {
   }
 
   private determineTournamentClassesToAdd(): void {
-    if (this.planningRealm && this.invitationLink) {
-      this.tournamentClassesToAdd = this.planningRealm.tournamentClasses.filter(
+    if (this.tournamentPlanner && this.invitationLink) {
+      this.tournamentClassesToAdd = this.tournamentPlanner.tournamentClasses.filter(
         (tc) => tc.id > 0 && !this.invitationLink.entries.some((entry) => entry.tournamentClassId === tc.id)
       );
     } else {

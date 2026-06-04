@@ -38,7 +38,7 @@ import { deleteTournamentPlanner } from '../../../api/fn/tournament-planners/del
 import { LabelsManagerComponent } from '../../components/labels-manager/labels-manager.component';
 import { ExportApplicationsDialogComponent } from '../../components/export-applications-dialog/export-applications-dialog.component';
 
-export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: TournamentPlannerDto) => boolean) => void;
+export type UpdateTournamentPlannerFunc = (modifyFunc: (planningRealm: TournamentPlannerDto) => boolean) => void;
 
 @Component({
   templateUrl: './view-planning-realm.component.html',
@@ -100,7 +100,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   protected pageFrame!: PageFrameComponent;
 
   protected loadingState: LoadingState = { isLoading: true };
-  protected updateFunction: UpdatePlanningRealmFunc;
+  protected updateFunction: UpdateTournamentPlannerFunc;
   protected planningRealm?: TournamentPlannerDto;
   protected applicationsFilter: ApplicationsFilter = defaultApplicationsFilter;
   protected _hasUnsavedChanges = false;

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
-import { UpdatePlanningRealmFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
+import { UpdateTournamentPlannerFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
 import { ApplicationsFilter } from '../../models/applications-filter';
 import { TranslateDirective } from '@ngx-translate/core';
 import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
@@ -10,7 +10,7 @@ import { RenameButtonComponent } from '../rename-button/rename-button.component'
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { AsyncPipe } from '@angular/common';
-import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
 
 @Component({
   selector: 'tp-tournament-classes-manager',
@@ -27,10 +27,10 @@ import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
 })
 export class TournamentClassManagerComponent {
   @Input()
-  public planningRealm!: PlanningRealmDto;
+  public tournamentPlanner!: TournamentPlannerDto;
 
   @Input()
-  public updatePlanningRealm!: UpdatePlanningRealmFunc;
+  public updateTournamentPlanner!: UpdateTournamentPlannerFunc;
 
   @Output()
   public filterRequested = new EventEmitter<ApplicationsFilter>();
@@ -40,12 +40,12 @@ export class TournamentClassManagerComponent {
   constructor(protected readonly authorizationService: AuthorizationService) {}
 
   protected getNumberOfReferencingLinks(id: number): number {
-    return this.planningRealm.invitationLinks.filter((link) => link.entries.some((entry) => entry.tournamentClassId == id)).length;
+    return this.tournamentPlanner.invitationLinks.filter((link) => link.entries.some((entry) => entry.tournamentClassId == id)).length;
   }
 
   protected renameTournamentClass(id: number, name: string): void {
-    this.updatePlanningRealm((planningRealm) => {
-      const tournamentClass = planningRealm.tournamentClasses.find((x) => x.id == id);
+    this.updateTournamentPlanner((tournamentPlanner) => {
+      const tournamentClass = tournamentPlanner.tournamentClasses.find((x) => x.id == id);
 
       if (!tournamentClass) {
         return false;
@@ -58,7 +58,7 @@ export class TournamentClassManagerComponent {
   }
 
   protected deleteTournamentClass(id: number): void {
-    this.updatePlanningRealm((planningRealm) => {
+    this.updateTournamentPlanner((planningRealm) => {
       const index = planningRealm.tournamentClasses.findIndex((x) => x.id === id);
 
       if (index === -1) {

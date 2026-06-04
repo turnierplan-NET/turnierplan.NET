@@ -3,7 +3,7 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
 import { TournamentClassDto } from '../../../api/models/tournament-class-dto';
 import { CreateApplicationTeamEndpointRequest } from '../../../api/models/create-application-team-endpoint-request';
 
@@ -19,8 +19,8 @@ export class ManageApplicationsAddTeamComponent {
 
   constructor(protected readonly modal: NgbActiveModal) {}
 
-  public init(planningRealm: PlanningRealmDto): void {
-    this.tournamentClasses = [...planningRealm.tournamentClasses].sort((a, b) => a.name.localeCompare(b.name));
+  public init(tournamentPlanner: TournamentPlannerDto): void {
+    this.tournamentClasses = [...tournamentPlanner.tournamentClasses].sort((a, b) => a.name.localeCompare(b.name));
     this.tournamentClassId = this.tournamentClasses[0].id;
   }
 

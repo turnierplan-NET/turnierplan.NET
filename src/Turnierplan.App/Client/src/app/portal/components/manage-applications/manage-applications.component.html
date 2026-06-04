@@ -1,4 +1,4 @@
-@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
+@let writeAllowed = (authorizationService.isActionAllowed$(tournamentPlanner.id, Actions.GenericWrite) | async) ?? false;
 
 @if (isLoading) {
   <div class="mt-4">

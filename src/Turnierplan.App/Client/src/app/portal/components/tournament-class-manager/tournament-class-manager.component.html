@@ -1,4 +1,4 @@
-@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
+@let writeAllowed = (authorizationService.isActionAllowed$(tournamentPlanner.id, Actions.GenericWrite) | async) ?? false;
 
 <table class="table">
   <thead>
@@ -15,7 +15,7 @@
   </thead>
 
   <tbody>
-    @for (tournamentClass of planningRealm.tournamentClasses; track tournamentClass.id) {
+    @for (tournamentClass of tournamentPlanner.tournamentClasses; track tournamentClass.id) {
       <tr>
         <td class="align-middle">{{ tournamentClass.name }}</td>
         <td class="align-middle">{{ getNumberOfReferencingLinks(tournamentClass.id) }}</td>
@@ -24,7 +24,7 @@
           @if (tournamentClass.id > 0) {
             <!-- Navigation to search is not possible if this tournament class has not been saved yet -->
             <tp-action-button
-              *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsRead]"
+              *tpIsActionAllowed="[tournamentPlanner.id, Actions.ApplicationsRead]"
               [type]="'light'"
               [icon]="'search'"
               [mode]="'IconOnly'"

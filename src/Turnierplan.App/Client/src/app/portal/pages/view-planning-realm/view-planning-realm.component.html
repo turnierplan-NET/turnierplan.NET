@@ -85,8 +85,8 @@
               </div>
               <div class="card-body p-0">
                 <tp-tournament-classes-manager
-                  [planningRealm]="planningRealm"
-                  [updatePlanningRealm]="updateFunction"
+                  [tournamentPlanner]="planningRealm"
+                  [updateTournamentPlanner]="updateFunction"
                   (filterRequested)="navigateToApplicationsWithFilter($event)" />
               </div>
             }
@@ -104,7 +104,7 @@
                   <div class="d-flex flex-column gap-3">
                     @for (invitationLink of planningRealm.invitationLinks; track invitationLink.id) {
                       <tp-invitation-link-tile
-                        [planningRealm]="planningRealm"
+                        [tournamentPlanner]="planningRealm"
                         [invitationLink]="invitationLink"
                         [updatePlanningRealm]="updateFunction"
                         (errorOccured)="loadingState = { isLoading: false, error: $event }"
@@ -121,8 +121,8 @@
               </div>
               <div class="card-body p-0">
                 <tp-labels-manager
-                  [planningRealm]="planningRealm"
-                  [updatePlanningRealm]="updateFunction"
+                  [tournamentPlanner]="planningRealm"
+                  [updateTournamentPlanner]="updateFunction"
                   (filterRequested)="navigateToApplicationsWithFilter($event)" />
               </div>
             }
@@ -136,7 +136,7 @@
                 <!-- The actual applications manager is displayed as fullWidthContent below -->
                 <div class="card-body p-2">
                   <tp-manage-applications-filter
-                    [planningRealm]="planningRealm"
+                    [tournamentPlanner]="planningRealm"
                     [filter]="applicationsFilter"
                     (filterChange)="onApplicationsFilterChange($event)" />
                 </div>
@@ -168,7 +168,7 @@
           <div class="mt-3 d-flex flex-row justify-content-center px-3">
             <div style="max-width: 2400px" class="flex-grow-1 overflow-x-auto">
               <tp-manage-applications
-                [planningRealm]="planningRealm"
+                [tournamentPlanner]="planningRealm"
                 [filter]="applicationsFilter"
                 (errorOccured)="loadingState = { isLoading: false, error: $event }"
                 (filterRequested)="navigateToApplicationsWithFilter($event)" />

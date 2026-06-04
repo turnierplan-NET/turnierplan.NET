@@ -1,4 +1,4 @@
-@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
+@let writeAllowed = (authorizationService.isActionAllowed$(tournamentPlanner.id, Actions.GenericWrite) | async) ?? false;
 
 <div class="card shadow-sm">
   <div class="card-body d-flex flex-column gap-3">
@@ -84,7 +84,7 @@
         <tp-image-widget
           [currentImage]="invitationLink.primaryLogo"
           [imageAlt]="'PrimaryLogo'"
-          [organizationId]="planningRealm.organizationId"
+          [organizationId]="tournamentPlanner.organizationId"
           [allowChanging]="writeAllowed"
           (imageChange)="setImage('primaryLogo', $event)"
           (imageDelete)="onImageDeleted($event)"
@@ -92,7 +92,7 @@
         <tp-image-widget
           [currentImage]="invitationLink.secondaryLogo"
           [imageAlt]="'SecondaryLogo'"
-          [organizationId]="planningRealm.organizationId"
+          [organizationId]="tournamentPlanner.organizationId"
           [allowChanging]="writeAllowed"
           (imageChange)="setImage('secondaryLogo', $event)"
           (imageDelete)="onImageDeleted($event)"
@@ -162,7 +162,7 @@
                     @if (invitationLink.id > 0) {
                       <!-- Navigation to search is not possible if this invitation link has not been saved yet -->
                       <tp-action-button
-                        *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsRead]"
+                        *tpIsActionAllowed="[tournamentPlanner.id, Actions.ApplicationsRead]"
                         [type]="'light'"
                         [icon]="'search'"
                         [mode]="'IconOnly'"
@@ -247,7 +247,7 @@
       <!-- Navigation to search is not possible if this invitation link has not been saved yet -->
       <span class="flex-grow-1"></span>
       <tp-action-button
-        *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsRead]"
+        *tpIsActionAllowed="[tournamentPlanner.id, Actions.ApplicationsRead]"
         [type]="'outline-secondary'"
         [icon]="'search'"
         [title]="'Portal.ViewPlanningRealm.InvitationLink.ShowApplications'"
