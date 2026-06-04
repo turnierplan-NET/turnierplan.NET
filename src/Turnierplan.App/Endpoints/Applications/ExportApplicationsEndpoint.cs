@@ -93,7 +93,7 @@ internal sealed class ExportApplicationsEndpoint : EndpointBase
                             application.Notes,
                             team.Class.Name,
                             team.Name,
-                            string.Join(", ", team.Labels.Select(x => x.Name))
+                            team.Labels.Count == 0 ? string.Empty : string.Join(", ", team.Labels.Select(x => x.Name))
                         );
                     }
                 }
