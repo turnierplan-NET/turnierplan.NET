@@ -1043,8 +1043,7 @@ export const de = {
       ExportApplications: {
         Button: 'Export (.csv)',
         DialogTitle: 'Anmeldungen exportieren',
-        InfoTest:
-          'Nachfolgend können Sie eine CSV-Tabelle mit allen Anmeldungen in diesem Turnierplaner herunterladen. Wahlweise können die Mannschaften jeder Anmeldung ebenfalls aufgelistet werden.',
+        InfoTest: 'Nachfolgend können Sie eine CSV-Tabelle mit allen Anmeldungen in diesem Turnierplaner herunterladen.',
         IncludeApplicationTeams: 'Mannschaften auflisten',
         Download: 'Herunterladen',
         FileName: 'Anmeldungen {{planningRealmName}}'
