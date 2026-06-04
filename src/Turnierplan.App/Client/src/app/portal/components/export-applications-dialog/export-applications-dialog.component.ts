@@ -48,6 +48,7 @@ export class ExportApplicationsDialogComponent {
     this.turnierplanApi
       .invoke(exportApplications, {
         planningRealmId: this.planningRealm.id,
+        languageCode: this.translateService.getCurrentLang(),
         includeApplicationTeams: this.form.getRawValue().includeApplicationTeams
       })
       .subscribe({

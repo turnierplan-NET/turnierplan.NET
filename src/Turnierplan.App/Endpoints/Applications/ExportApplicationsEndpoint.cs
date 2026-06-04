@@ -4,6 +4,7 @@ using Turnierplan.App.OpenApi;
 using Turnierplan.App.Security;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Dal.Repositories;
+using Turnierplan.Localization;
 
 namespace Turnierplan.App.Endpoints.Applications;
 
@@ -22,10 +23,17 @@ internal sealed class ExportApplicationsEndpoint : EndpointBase
 
     private static async Task<IResult> Handle(
         [FromRoute] PublicId planningRealmId,
+        [FromQuery] string languageCode,
         [FromQuery] bool includeApplicationTeams,
         IPlanningRealmRepository planningRealmRepository,
-        IAccessValidator accessValidator)
+        IAccessValidator accessValidator,
+        ILocalizationProvider localizationProvider)
     {
+        if (!localizationProvider.TryGetLocalization(languageCode, out var localization))
+        {
+            return Results.BadRequest("Invalid language code specified.");
+        }
+
         var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.ApplicationsWithTeams);
 
         if (planningRealm is null)
@@ -43,29 +51,29 @@ internal sealed class ExportApplicationsEndpoint : EndpointBase
             if (includeApplicationTeams)
             {
                 await csv.WriteHeaderAsync(
-                    "ApplicationTag",
-                    "ApplicationCreatedAt",
-                    "ApplicationContactPerson",
-                    "ApplicationContactEmail",
-                    "ApplicationContactTelephone",
-                    "ApplicationComment",
-                    "ApplicationNotes",
-                    "TournamentClass",
-                    "TeamName",
-                    "TeamLabels"
+                    localization.Get("ApplicationsExport.Columns.Tag"),
+                    localization.Get("ApplicationsExport.Columns.CreatedAt"),
+                    localization.Get("ApplicationsExport.Columns.ContactPerson"),
+                    localization.Get("ApplicationsExport.Columns.ContactEmail"),
+                    localization.Get("ApplicationsExport.Columns.ContactTelephone"),
+                    localization.Get("ApplicationsExport.Columns.Comment"),
+                    localization.Get("ApplicationsExport.Columns.Notes"),
+                    localization.Get("ApplicationsExport.Columns.TournamentClass"),
+                    localization.Get("ApplicationsExport.Columns.TeamName"),
+                    localization.Get("ApplicationsExport.Columns.TeamLabels")
                 );
             }
             else
             {
                 await csv.WriteHeaderAsync(
-                    "Tag",
-                    "CreatedAt",
-                    "NumberOfTeams",
-                    "ContactPerson",
-                    "ContactEmail",
-                    "ContactTelephone",
-                    "Comment",
-                    "Notes"
+                    localization.Get("ApplicationsExport.Columns.Tag"),
+                    localization.Get("ApplicationsExport.Columns.CreatedAt"),
+                    localization.Get("ApplicationsExport.Columns.NumberOfTeams"),
+                    localization.Get("ApplicationsExport.Columns.ContactPerson"),
+                    localization.Get("ApplicationsExport.Columns.ContactEmail"),
+                    localization.Get("ApplicationsExport.Columns.ContactTelephone"),
+                    localization.Get("ApplicationsExport.Columns.Comment"),
+                    localization.Get("ApplicationsExport.Columns.Notes")
                 );
             }
 
