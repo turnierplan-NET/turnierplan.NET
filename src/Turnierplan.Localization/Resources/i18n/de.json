@@ -1,4 +1,19 @@
 ﻿{
+  "ApplicationsExport": {
+    "Columns": {
+      "Comment": "Bemerkung",
+      "ContactEmail": "E-Mail",
+      "ContactPerson": "Kontaktperson",
+      "ContactTelephone": "Telefon-Nr.",
+      "CreatedAt": "Erstellt am",
+      "Notes": "Notizen",
+      "NumberOfTeams": "Anzahl Mannschaften",
+      "Tag": "Tag (Anmeldung)",
+      "TeamLabels": "Label",
+      "TeamName": "Mannschaftsname",
+      "TournamentClass": "Turnierklasse"
+    }
+  },
   "Documents": {
     "Types": {
       "MatchPlan": "Spielplan",

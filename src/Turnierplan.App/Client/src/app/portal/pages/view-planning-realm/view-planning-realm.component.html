@@ -39,6 +39,13 @@
           }
           @case (2) {
             <!-- Applications page -->
+            <ng-container *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsRead]">
+              <tp-action-button
+                [title]="'Portal.ViewPlanningRealm.ExportApplications.Button'"
+                [type]="'outline-secondary'"
+                [icon]="'filetype-csv'"
+                (click)="exportApplications()" />
+            </ng-container>
             <ng-container *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsWrite]">
               @let canAddApplications = !_hasUnsavedChanges && planningRealm.tournamentClasses.length > 0;
               @if (!canAddApplications) {

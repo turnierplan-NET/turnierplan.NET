@@ -36,6 +36,7 @@ import { createApplication } from '../../../api/fn/applications/create-applicati
 import { updatePlanningRealm } from '../../../api/fn/planning-realms/update-planning-realm';
 import { deletePlanningRealm } from '../../../api/fn/planning-realms/delete-planning-realm';
 import { LabelsManagerComponent } from '../../components/labels-manager/labels-manager.component';
+import { ExportApplicationsDialogComponent } from '../../components/export-applications-dialog/export-applications-dialog.component';
 
 export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
 
@@ -301,6 +302,29 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
           this.loadingState = { isLoading: false, error: error };
         }
       });
+  }
+
+  protected exportApplications(): void {
+    if (!this.planningRealm) {
+      return;
+    }
+
+    const ref = this.modalService.open(ExportApplicationsDialogComponent, {
+      centered: true,
+      size: 'md',
+      fullscreen: 'md'
+    });
+
+    (ref.componentInstance as ExportApplicationsDialogComponent).initialize(this.planningRealm);
+
+    ref.dismissed.subscribe({
+      next: (reason?: { isApiError?: boolean; apiError?: unknown }) => {
+        if (reason?.isApiError === true) {
+          // If reason is specified, this means an error occurred
+          this.loadingState = { isLoading: false, error: reason.apiError };
+        }
+      }
+    });
   }
 
   protected renamePlanningRealm(name: string): void {

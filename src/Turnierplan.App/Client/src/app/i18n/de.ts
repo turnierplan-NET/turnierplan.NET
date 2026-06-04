@@ -1040,6 +1040,14 @@ export const de = {
           CheckboxLabel: 'Ich habe den Hinweis gelesen und möchte die Anmeldung erstellen'
         }
       },
+      ExportApplications: {
+        Button: 'Export (.csv)',
+        DialogTitle: 'Anmeldungen exportieren',
+        InfoTest: 'Nachfolgend können Sie eine CSV-Tabelle mit allen Anmeldungen in diesem Turnierplaner herunterladen.',
+        IncludeApplicationTeams: 'Mannschaften auflisten',
+        Download: 'Herunterladen',
+        FileName: 'Anmeldungen {{planningRealmName}}'
+      },
       TournamentClasses: {
         Name: 'Name',
         InvitationLinkCount: 'Anmeldelinks',

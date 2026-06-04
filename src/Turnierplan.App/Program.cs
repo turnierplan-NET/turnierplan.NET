@@ -49,7 +49,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddOpenApi("turnierplan", options =>
 {
-    options.AddOperationTransformer<PdfResponseOperationTransformer>();
+    options.AddOperationTransformer<ResponseOperationTransformer>();
     options.AddSchemaTransformer<EnumSchemaTransformer>();
     options.AddSchemaTransformer<NumberSchemaTransformer>();
 });
