@@ -21,6 +21,7 @@ internal sealed class ExportApplicationsEndpoint : EndpointBase
 
     private static async Task<IResult> Handle(
         [FromRoute] PublicId planningRealmId,
+        [FromQuery] bool includeApplicationTeams,
         IPlanningRealmRepository planningRealmRepository,
         IAccessValidator accessValidator)
     {

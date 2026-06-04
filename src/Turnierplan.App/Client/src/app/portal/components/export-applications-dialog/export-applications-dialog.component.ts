@@ -7,13 +7,18 @@ import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { exportApplications } from '../../../api/fn/applications/export-applications';
 import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
 import { makeSafeFileName } from '../../helpers/file-name';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'tp-export-applications-dialog',
-  imports: [TranslateDirective, ActionButtonComponent, SmallSpinnerComponent],
+  imports: [TranslateDirective, ActionButtonComponent, SmallSpinnerComponent, ReactiveFormsModule],
   templateUrl: './export-applications-dialog.component.html'
 })
 export class ExportApplicationsDialogComponent {
+  protected readonly form = new FormGroup({
+    includeApplicationTeams: new FormControl(false, { nonNullable: true })
+  });
+
   protected isDownloading = false;
   private planningRealm?: PlanningRealmDto;
 
@@ -40,15 +45,20 @@ export class ExportApplicationsDialogComponent {
 
     this.isDownloading = true;
 
-    this.turnierplanApi.invoke(exportApplications, { planningRealmId: this.planningRealm.id }).subscribe({
-      next: (result) => {
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(new Blob([result]));
-        a.download = fileName;
-        a.click();
+    this.turnierplanApi
+      .invoke(exportApplications, {
+        planningRealmId: this.planningRealm.id,
+        includeApplicationTeams: this.form.getRawValue().includeApplicationTeams
+      })
+      .subscribe({
+        next: (result) => {
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(new Blob([result]));
+          a.download = fileName;
+          a.click();
 
-        this.modal.close();
-      }
-    });
+          this.modal.close();
+        }
+      });
   }
 }
