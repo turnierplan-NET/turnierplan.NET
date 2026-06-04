@@ -24,7 +24,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
         [FromRoute] PublicId id,
         [FromBody] ConfigureTournamentEndpointRequest request,
         ITournamentRepository tournamentRepository,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
@@ -61,7 +61,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
 
         foreach (var planningRealmId in planningRealmIds)
         {
-            var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.ApplicationsWithTeams);
+            var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(planningRealmId, ITournamentPlannerRepository.Includes.ApplicationsWithTeams);
 
             if (planningRealm is null)
             {

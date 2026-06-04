@@ -18,12 +18,12 @@ internal sealed class GetApplicationChangeLogEndpoint : EndpointBase<IEnumerable
     private static async Task<IResult> Handle(
         [FromRoute] PublicId planningRealmId,
         [FromRoute] long applicationId,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         IApplicationChangeLogRepository applicationChangeLogRepository,
         IMapper mapper)
     {
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.Applications);
+        var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(planningRealmId, ITournamentPlannerRepository.Includes.Applications);
 
         if (planningRealm is null)
         {

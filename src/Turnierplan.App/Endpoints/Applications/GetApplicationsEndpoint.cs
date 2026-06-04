@@ -26,7 +26,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
         [FromQuery] string[] tournamentClass,
         [FromQuery] string[] invitationLink,
         [FromQuery] string[] label,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         IMapper mapper)
     {
@@ -45,7 +45,7 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
             return Results.BadRequest("Invalid label filter provided.");
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.TournamentClasses | IPlanningRealmRepository.Includes.ApplicationsWithTeamsAndTournamentLinks);
+        var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(planningRealmId, ITournamentPlannerRepository.Includes.TournamentClasses | ITournamentPlannerRepository.Includes.ApplicationsWithTeamsAndTournamentLinks);
 
         if (planningRealm is null)
         {

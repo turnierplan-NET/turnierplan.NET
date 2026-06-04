@@ -20,7 +20,7 @@ internal sealed class SetApplicationTeamNameEndpoint : EndpointBase
         [FromRoute] long applicationId,
         [FromRoute] long applicationTeamId,
         [FromBody] SetApplicationTeamNameEndpointRequest request,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
@@ -30,7 +30,7 @@ internal sealed class SetApplicationTeamNameEndpoint : EndpointBase
         }
 
         // Note: We must use 'ApplicationsWithTeamsAndTournamentLinks' because if a team link exists, the tournament team must also be renamed
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.ApplicationsWithTeamsAndTournamentLinks);
+        var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(planningRealmId, ITournamentPlannerRepository.Includes.ApplicationsWithTeamsAndTournamentLinks);
 
         if (planningRealm is null)
         {
@@ -58,7 +58,7 @@ internal sealed class SetApplicationTeamNameEndpoint : EndpointBase
 
         applicationTeam.SetName(request.Name);
 
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await tournamentPlannerRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

@@ -37,7 +37,7 @@ internal sealed class ImageRoleAssignmentRepository(TurnierplanContext context) 
 
 internal sealed class OrganizationRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<Organization>(context);
 
-internal sealed class PlanningRealmRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<TournamentPlanner>(context);
+internal sealed class TournamentPlannerRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<TournamentPlanner>(context);
 
 internal sealed class TournamentRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<Tournament>(context);
 

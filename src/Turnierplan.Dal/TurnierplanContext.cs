@@ -70,7 +70,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<TournamentPlanner> TournamentPlanners { get; set; } = null!;
 
-    public DbSet<RoleAssignment<TournamentPlanner>> PlanningRealmRoleAssignments { get; set; } = null!;
+    public DbSet<RoleAssignment<TournamentPlanner>> TournamentPlannerRoleAssignments { get; set; } = null!;
 
     public DbSet<Team> Teams { get; set; } = null!;
 

@@ -25,7 +25,7 @@ internal sealed class ExportApplicationsEndpoint : EndpointBase
         [FromRoute] PublicId planningRealmId,
         [FromQuery] string languageCode,
         [FromQuery] bool includeApplicationTeams,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         ILocalizationProvider localizationProvider)
     {
@@ -34,7 +34,7 @@ internal sealed class ExportApplicationsEndpoint : EndpointBase
             return Results.BadRequest("Invalid language code specified.");
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.ApplicationsWithTeams);
+        var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(planningRealmId, ITournamentPlannerRepository.Includes.ApplicationsWithTeams);
 
         if (planningRealm is null)
         {

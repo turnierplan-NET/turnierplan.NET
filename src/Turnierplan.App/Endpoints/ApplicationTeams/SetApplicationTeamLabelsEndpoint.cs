@@ -20,7 +20,7 @@ internal sealed class SetApplicationTeamLabelsEndpoint : EndpointBase
         [FromRoute] long applicationId,
         [FromRoute] long applicationTeamId,
         [FromBody] SetApplicationTeamLabelsEndpointRequest request,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
@@ -29,7 +29,7 @@ internal sealed class SetApplicationTeamLabelsEndpoint : EndpointBase
             return result;
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.ApplicationsWithTeams | IPlanningRealmRepository.Includes.Labels);
+        var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(planningRealmId, ITournamentPlannerRepository.Includes.ApplicationsWithTeams | ITournamentPlannerRepository.Includes.Labels);
 
         if (planningRealm is null)
         {
@@ -75,7 +75,7 @@ internal sealed class SetApplicationTeamLabelsEndpoint : EndpointBase
             applicationTeam.AddLabel(label);
         }
 
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await tournamentPlannerRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

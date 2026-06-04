@@ -23,7 +23,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
     private static async Task<IResult> Handle(
         [FromRoute] PublicId id,
         [FromBody] UpdatePlanningRealmEndpointRequest request,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         IImageRepository imageRepository,
         CancellationToken cancellationToken)
@@ -33,7 +33,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
             return result;
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(id, IPlanningRealmRepository.Includes.All);
+        var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(id, ITournamentPlannerRepository.Includes.All);
 
         if (planningRealm is null)
         {
@@ -60,7 +60,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
             return applyImageResult;
         }
 
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await tournamentPlannerRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

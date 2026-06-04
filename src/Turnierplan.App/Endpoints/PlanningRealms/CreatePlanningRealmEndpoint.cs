@@ -22,7 +22,7 @@ internal sealed class CreatePlanningRealmEndpoint : EndpointBase<PlanningRealmDt
         [FromBody] CreatePlanningRealmEndpointRequest request,
         IOrganizationRepository organizationRepository,
         IAccessValidator accessValidator,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IMapper mapper,
         CancellationToken cancellationToken)
     {
@@ -45,8 +45,8 @@ internal sealed class CreatePlanningRealmEndpoint : EndpointBase<PlanningRealmDt
 
         var planningRealm = new TournamentPlanner(organization, request.Name.Trim());
 
-        await planningRealmRepository.CreateAsync(planningRealm);
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await tournamentPlannerRepository.CreateAsync(planningRealm);
+        await tournamentPlannerRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         accessValidator.AddRolesToResponseHeader(planningRealm);
 

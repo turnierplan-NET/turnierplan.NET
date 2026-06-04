@@ -17,11 +17,11 @@ internal sealed class DeleteApplicationTeamEndpoint : EndpointBase
         [FromRoute] PublicId planningRealmId,
         [FromRoute] long applicationId,
         [FromRoute] long applicationTeamId,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.ApplicationsWithTeams);
+        var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(planningRealmId, ITournamentPlannerRepository.Includes.ApplicationsWithTeams);
 
         if (planningRealm is null)
         {
@@ -54,7 +54,7 @@ internal sealed class DeleteApplicationTeamEndpoint : EndpointBase
 
         application.RemoveTeam(applicationTeam);
 
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await tournamentPlannerRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

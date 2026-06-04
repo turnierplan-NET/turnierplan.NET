@@ -15,7 +15,7 @@ internal sealed class DeletePlanningRealmEndpoint : EndpointBase
 
     private static async Task<IResult> Handle(
         [FromRoute] PublicId id,
-        IPlanningRealmRepository repository,
+        ITournamentPlannerRepository repository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {

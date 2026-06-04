@@ -17,12 +17,12 @@ internal sealed class GetPlanningRealmEndpoint : EndpointBase<PlanningRealmDto>
 
     private static async Task<IResult> Handle(
         [FromRoute] PublicId id,
-        IPlanningRealmRepository repository,
+        ITournamentPlannerRepository repository,
         IAccessValidator accessValidator,
         IMapper mapper)
     {
         // Note: We must use 'ApplicationsWithTeams' in order to have access to the number of applications/teams per invitation link/tournament class
-        var planningRealm = await repository.GetByPublicIdAsync(id, IPlanningRealmRepository.Includes.All | IPlanningRealmRepository.Includes.ApplicationsWithTeams);
+        var planningRealm = await repository.GetByPublicIdAsync(id, ITournamentPlannerRepository.Includes.All | ITournamentPlannerRepository.Includes.ApplicationsWithTeams);
 
         if (planningRealm is null)
         {

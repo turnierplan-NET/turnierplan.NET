@@ -19,7 +19,7 @@ internal sealed class CreateApplicationTeamEndpoint : EndpointBase
         [FromRoute] PublicId planningRealmId,
         [FromRoute] long applicationId,
         [FromBody] CreateApplicationTeamEndpointRequest request,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
@@ -28,7 +28,7 @@ internal sealed class CreateApplicationTeamEndpoint : EndpointBase
             return result;
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.TournamentClasses | IPlanningRealmRepository.Includes.Applications);
+        var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(planningRealmId, ITournamentPlannerRepository.Includes.TournamentClasses | ITournamentPlannerRepository.Includes.Applications);
 
         if (planningRealm is null)
         {
@@ -50,7 +50,7 @@ internal sealed class CreateApplicationTeamEndpoint : EndpointBase
 
         application.AddTeam(tournamentClass, request.TeamName);
 
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await tournamentPlannerRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

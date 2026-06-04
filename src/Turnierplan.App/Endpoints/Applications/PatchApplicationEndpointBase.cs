@@ -29,7 +29,7 @@ internal abstract class PatchApplicationEndpointBase<TRequest> : EndpointBase
         [FromRoute] PublicId planningRealmId,
         [FromRoute] long applicationId,
         [FromBody] TRequest request,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
@@ -38,7 +38,7 @@ internal abstract class PatchApplicationEndpointBase<TRequest> : EndpointBase
             return result;
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.Applications);
+        var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(planningRealmId, ITournamentPlannerRepository.Includes.Applications);
 
         if (planningRealm is null)
         {
@@ -59,7 +59,7 @@ internal abstract class PatchApplicationEndpointBase<TRequest> : EndpointBase
 
         UpdateApplication(application, request);
 
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await tournamentPlannerRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

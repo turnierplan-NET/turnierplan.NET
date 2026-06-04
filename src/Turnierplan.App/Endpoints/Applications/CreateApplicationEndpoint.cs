@@ -20,7 +20,7 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
     private static async Task<IResult> Handle(
         [FromRoute] PublicId planningRealmId,
         [FromBody] CreateApplicationEndpointRequest request,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         IMapper mapper,
         CancellationToken cancellationToken)
@@ -30,7 +30,7 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
             return result;
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.TournamentClasses);
+        var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(planningRealmId, ITournamentPlannerRepository.Includes.TournamentClasses);
 
         if (planningRealm is null)
         {
@@ -66,7 +66,7 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
         // don't add change log entries for the previously changed properties & added teams
         application.ClearChangeLog();
 
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await tournamentPlannerRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.Ok(mapper.Map<ApplicationDto>(application));
     }
