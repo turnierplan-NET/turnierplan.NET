@@ -41,7 +41,7 @@ import { ExportApplicationsDialogComponent } from '../../components/export-appli
 export type UpdateTournamentPlannerFunc = (modifyFunc: (tournamentPlanner: TournamentPlannerDto) => boolean) => void;
 
 @Component({
-  templateUrl: './view-planning-realm.component.html',
+  templateUrl: './view-tournament-planner.component.html',
   imports: [
     LoadingStateDirective,
     PageFrameComponent,

@@ -10,7 +10,7 @@ import { CreateApiKeyComponent } from './pages/create-api-key/create-api-key.com
 import { CreateTournamentPlannerComponent } from './pages/create-planning-realm/create-planning-realm.component';
 import { CreateTournamentComponent } from './pages/create-tournament/create-tournament.component';
 import { CreateVenueComponent } from './pages/create-venue/create-venue.component';
-import { ViewTournamentPlannerComponent } from './pages/view-planning-realm/view-planning-realm.component';
+import { ViewTournamentPlannerComponent } from './pages/view-tournament-planner/view-tournament-planner.component';
 import { discardChangesGuard } from '../core/guards/discard-changes.guard';
 import { FolderStatisticsComponent } from './pages/folder-statistics/folder-statistics.component';
 import { FolderTimetableComponent } from './pages/folder-timetable/folder-timetable.component';

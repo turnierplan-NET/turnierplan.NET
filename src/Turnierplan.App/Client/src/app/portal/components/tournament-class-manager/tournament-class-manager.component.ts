@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
-import { UpdateTournamentPlannerFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
+import { UpdateTournamentPlannerFunc } from '../../pages/view-tournament-planner/view-tournament-planner.component';
 import { ApplicationsFilter } from '../../models/applications-filter';
 import { TranslateDirective } from '@ngx-translate/core';
 import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
-import { UpdateTournamentPlannerFunc } from '../../pages/view-planning-realm/view-planning-realm.component';
+import { UpdateTournamentPlannerFunc } from '../../pages/view-tournament-planner/view-tournament-planner.component';
 import { NgbModal, NgbTooltip, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem } from '@ng-bootstrap/ng-bootstrap';
 import { FormArray, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { formatDate, NgStyle, NgClass, AsyncPipe } from '@angular/common';

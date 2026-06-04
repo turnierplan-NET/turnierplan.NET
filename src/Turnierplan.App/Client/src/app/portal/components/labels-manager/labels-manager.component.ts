@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
-import { UpdateTournamentPlannerFunc, ViewTournamentPlannerComponent } from '../../pages/view-planning-realm/view-planning-realm.component';
+import {
+  UpdateTournamentPlannerFunc,
+  ViewTournamentPlannerComponent
+} from '../../pages/view-tournament-planner/view-tournament-planner.component';
 import { ApplicationsFilter } from '../../models/applications-filter';
 import { TranslateDirective } from '@ngx-translate/core';
 import { Actions } from '../../../generated/actions';
