@@ -315,7 +315,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       fullscreen: 'md'
     });
 
-    (ref.componentInstance as ExportApplicationsDialogComponent).initialize(this.planningRealm.id);
+    (ref.componentInstance as ExportApplicationsDialogComponent).initialize(this.planningRealm);
   }
 
   protected renamePlanningRealm(name: string): void {

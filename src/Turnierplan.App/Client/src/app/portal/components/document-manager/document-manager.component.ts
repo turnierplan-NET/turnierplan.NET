@@ -27,6 +27,7 @@ import { setMatchPlanDocumentConfiguration } from '../../../api/fn/documents/set
 import { MatchPlanDocumentConfiguration } from '../../../api/models/match-plan-document-configuration';
 import { setReceiptsDocumentConfiguration } from '../../../api/fn/documents/set-receipts-document-configuration';
 import { ReceiptsDocumentConfiguration } from '../../../api/models/receipts-document-configuration';
+import { makeSafeFileName } from '../../helpers/file-name';
 
 @Component({
   selector: 'tp-document-manager',
@@ -244,7 +245,7 @@ export class DocumentManagerComponent {
   }
 
   private getDocumentFileName(name: string): string {
-    return `${name} - ${this.tournamentName}.pdf`.replaceAll(/[^.A-Za-z0-9Ä-Öä-öß _-]/g, '_');
+    return `${makeSafeFileName(`${name} - ${this.tournamentName}`)}.pdf`;
   }
 
   private getDocumentConfig(document: DocumentDto): Observable<DocumentConfiguration> {

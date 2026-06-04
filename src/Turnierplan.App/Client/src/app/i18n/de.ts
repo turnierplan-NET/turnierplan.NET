@@ -1043,7 +1043,8 @@ export const de = {
       ExportApplications: {
         Button: 'Export (.csv)',
         DialogTitle: 'asdf',
-        Download: 'Herunterladen'
+        Download: 'Herunterladen',
+        FileName: 'Anmeldungen {{planningRealmName}}'
       },
       TournamentClasses: {
         Name: 'Name',
