@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using Turnierplan.Core.Entity;
 using Turnierplan.Core.Exceptions;
 
-namespace Turnierplan.Core.PlanningRealm;
+namespace Turnierplan.Core.TournamentPlanner;
 
 public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 {

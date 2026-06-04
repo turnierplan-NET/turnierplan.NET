@@ -1,5 +1,5 @@
 using FluentAssertions;
-using Turnierplan.Core.PlanningRealm;
+using Turnierplan.Core.TournamentPlanner;
 using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.PlanningRealm;

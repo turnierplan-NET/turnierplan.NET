@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.TournamentPlanner;
 
 namespace Turnierplan.Dal.Repositories;
 

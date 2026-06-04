@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Turnierplan.Core.Entity;
 
-namespace Turnierplan.Core.PlanningRealm;
+namespace Turnierplan.Core.TournamentPlanner;
 
 public sealed class ApplicationChangeLog : Entity<long>
 {

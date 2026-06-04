@@ -1,4 +1,4 @@
-namespace Turnierplan.Core.PlanningRealm;
+namespace Turnierplan.Core.TournamentPlanner;
 
 public enum ApplicationChangeLogProperty
 {

@@ -1,7 +1,7 @@
 using Turnierplan.Core.Entity;
 using Turnierplan.Core.Tournament;
 
-namespace Turnierplan.Core.PlanningRealm;
+namespace Turnierplan.Core.TournamentPlanner;
 
 public sealed class TeamLink : Entity<long>
 {

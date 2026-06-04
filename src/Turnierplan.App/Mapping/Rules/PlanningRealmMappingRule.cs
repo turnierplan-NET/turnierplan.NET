@@ -1,6 +1,6 @@
 using Turnierplan.App.Helpers;
 using Turnierplan.App.Models;
-using Turnierplan.Core.PlanningRealm;
+using Turnierplan.Core.TournamentPlanner;
 
 namespace Turnierplan.App.Mapping.Rules;
 

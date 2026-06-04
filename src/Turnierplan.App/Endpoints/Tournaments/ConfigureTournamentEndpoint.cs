@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
-using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.Tournament.Definitions;
+using Turnierplan.Core.TournamentPlanner;
 using Turnierplan.Dal.Extensions;
 using Turnierplan.Dal.Repositories;
 
