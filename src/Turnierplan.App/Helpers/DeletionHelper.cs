@@ -95,7 +95,7 @@ internal sealed class DeletionHelper : IDeletionHelper
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        foreach (var planningRealm in organization.PlanningRealms.ToList()) // ToList() to avoid invalid operation exception
+        foreach (var planningRealm in organization.TournamentPlanners.ToList()) // ToList() to avoid invalid operation exception
         {
             _planningRealmRepository.Remove(planningRealm);
         }

@@ -68,7 +68,7 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
     {
         if (!TournamentPlanner._tournamentClasses.Contains(tournamentClass))
         {
-            throw new TurnierplanException("Cannot add entry with a tournament class from another planning realm.");
+            throw new TurnierplanException("Cannot add entry with a tournament class from another tournament planner.");
         }
 
         var invitationLinkEntry = new InvitationLinkEntry(tournamentClass);

@@ -13,7 +13,7 @@ public sealed class TournamentPlanner : Entity<long>, IEntityWithRoleAssignments
 
     public TournamentPlanner(Organization.Organization organization, string name)
     {
-        organization._planningRealms.Add(this);
+        organization._tournamentPlanners.Add(this);
 
         Id = 0;
         PublicId = new PublicId.PublicId();

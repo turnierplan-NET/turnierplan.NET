@@ -71,7 +71,7 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
 
         if (includes.HasFlag(IOrganizationRepository.Includes.PlanningRealms))
         {
-            query = query.Include(x => x.PlanningRealms);
+            query = query.Include(x => x.TournamentPlanners);
         }
 
         query = query

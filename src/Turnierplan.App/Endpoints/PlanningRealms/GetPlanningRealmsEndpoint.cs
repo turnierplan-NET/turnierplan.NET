@@ -33,6 +33,6 @@ internal sealed class GetPlanningRealmsEndpoint : EndpointBase<IEnumerable<Plann
             return Results.Forbid();
         }
 
-        return Results.Ok(mapper.MapCollection<PlanningRealmHeaderDto>(organization.PlanningRealms));
+        return Results.Ok(mapper.MapCollection<PlanningRealmHeaderDto>(organization.TournamentPlanners));
     }
 }
