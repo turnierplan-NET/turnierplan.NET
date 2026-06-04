@@ -15,7 +15,7 @@ import { getOrganization } from '../../../api/fn/organizations/get-organization'
 import { createTournamentPlanner } from '../../../api/fn/tournament-planners/create-tournament-planner';
 
 @Component({
-  templateUrl: './create-planning-realm.component.html',
+  templateUrl: './create-tournament-planner.component.html',
   imports: [
     LoadingStateDirective,
     PageFrameComponent,

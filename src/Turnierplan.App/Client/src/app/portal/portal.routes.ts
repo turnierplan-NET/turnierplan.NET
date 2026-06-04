@@ -7,7 +7,7 @@ import { CreateUserComponent } from './pages/create-user/create-user.component';
 import { CreateOrganizationComponent } from './pages/create-organization/create-organization.component';
 import { ViewOrganizationComponent } from './pages/view-organization/view-organization.component';
 import { CreateApiKeyComponent } from './pages/create-api-key/create-api-key.component';
-import { CreateTournamentPlannerComponent } from './pages/create-planning-realm/create-planning-realm.component';
+import { CreateTournamentPlannerComponent } from './pages/create-tournament-planner/create-tournament-planner.component';
 import { CreateTournamentComponent } from './pages/create-tournament/create-tournament.component';
 import { CreateVenueComponent } from './pages/create-venue/create-venue.component';
 import { ViewTournamentPlannerComponent } from './pages/view-tournament-planner/view-tournament-planner.component';
