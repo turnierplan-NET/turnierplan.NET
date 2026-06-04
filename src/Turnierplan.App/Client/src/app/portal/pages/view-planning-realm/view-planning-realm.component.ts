@@ -62,7 +62,7 @@ export type UpdateTournamentPlannerFunc = (modifyFunc: (tournamentPlanner: Tourn
     LabelsManagerComponent
   ]
 })
-export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardChangesDetector {
+export class ViewTournamentPlannerComponent implements OnInit, OnDestroy, DiscardChangesDetector {
   // Note: The color codes are written with '#' such that the IDE detects it as a color code and displays the color preview.
   private static readonly DefaultInvitationLinkColorCodes: string[] = [
     '#ff9900',
@@ -114,28 +114,28 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   protected pages: PageFrameNavigationTab[] = [
     {
       id: 0,
-      title: 'Portal.ViewPlanningRealm.Pages.TournamentClasses',
+      title: 'Portal.ViewTournamentPlanner.Pages.TournamentClasses',
       icon: 'bi-x-diamond'
     },
     {
       id: 1,
-      title: 'Portal.ViewPlanningRealm.Pages.InvitationLinks',
+      title: 'Portal.ViewTournamentPlanner.Pages.InvitationLinks',
       icon: 'bi-link-45deg'
     },
     {
       id: 4,
-      title: 'Portal.ViewPlanningRealm.Pages.Labels',
+      title: 'Portal.ViewTournamentPlanner.Pages.Labels',
       icon: 'bi-tags'
     },
     {
-      id: ViewPlanningRealmComponent.ApplicationsManagerPageId,
-      title: 'Portal.ViewPlanningRealm.Pages.Applications',
+      id: ViewTournamentPlannerComponent.ApplicationsManagerPageId,
+      title: 'Portal.ViewTournamentPlanner.Pages.Applications',
       icon: 'bi-card-checklist',
       authorization: Actions.ApplicationsRead
     },
     {
       id: 3,
-      title: 'Portal.ViewPlanningRealm.Pages.Settings',
+      title: 'Portal.ViewTournamentPlanner.Pages.Settings',
       icon: 'bi-gear',
       authorization: Actions.GenericWrite
     }
@@ -280,7 +280,9 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       .pipe(
         tap(() => (this.loadingState = { isLoading: true })),
         switchMap((request: CreateApplicationEndpointRequest) =>
-          this.turnierplanApi.invoke(createApplication, { tournamentPlannerId: tournamentPlannerId, body: request }).pipe(map(() => request))
+          this.turnierplanApi
+            .invoke(createApplication, { tournamentPlannerId: tournamentPlannerId, body: request })
+            .pipe(map(() => request))
         )
       )
       .subscribe({
@@ -407,8 +409,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       next: () => {
         this.notificationService.showNotification(
           'info',
-          'Portal.ViewPlanningRealm.DeleteWidget.SuccessToast.Title',
-          'Portal.ViewPlanningRealm.DeleteWidget.SuccessToast.Message'
+          'Portal.ViewTournamentPlanner.DeleteWidget.SuccessToast.Title',
+          'Portal.ViewTournamentPlanner.DeleteWidget.SuccessToast.Message'
         );
         void this.router.navigate([`../../organization/${organizationId}`], { relativeTo: this.route });
       },
@@ -429,8 +431,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   protected navigateToApplicationsWithFilter(filter: ApplicationsFilter): void {
     this.onApplicationsFilterChange(filter);
 
-    if (this.currentPage !== ViewPlanningRealmComponent.ApplicationsManagerPageId) {
-      this.pageFrame.toggleNavigationTab(ViewPlanningRealmComponent.ApplicationsManagerPageId);
+    if (this.currentPage !== ViewTournamentPlannerComponent.ApplicationsManagerPageId) {
+      this.pageFrame.toggleNavigationTab(ViewTournamentPlannerComponent.ApplicationsManagerPageId);
     }
   }
 
@@ -452,7 +454,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
 
     const component = ref.componentInstance as TextInputDialogComponent;
     component.init(
-      `Portal.ViewPlanningRealm.${key}`,
+      `Portal.ViewTournamentPlanner.${key}`,
       '',
       false,
       true,
@@ -467,8 +469,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       return 'aaaaaa';
     }
 
-    return ViewPlanningRealmComponent.getColorCode(
-      ViewPlanningRealmComponent.DefaultInvitationLinkColorCodes,
+    return ViewTournamentPlannerComponent.getColorCode(
+      ViewTournamentPlannerComponent.DefaultInvitationLinkColorCodes,
       this.tournamentPlanner.invitationLinks
     );
   }
@@ -478,7 +480,10 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       return 'aaaaaa';
     }
 
-    return ViewPlanningRealmComponent.getColorCode(ViewPlanningRealmComponent.DefaultLabelColorCodes, this.tournamentPlanner.labels);
+    return ViewTournamentPlannerComponent.getColorCode(
+      ViewTournamentPlannerComponent.DefaultLabelColorCodes,
+      this.tournamentPlanner.labels
+    );
   }
 
   private static getColorCode(from: string[], currentlyUsed: { colorCode: string }[]): string {

@@ -1,12 +1,12 @@
 <div class="modal-header">
-  <div class="modal-title" translate="Portal.ViewPlanningRealm.AddApplication.DialogTitle"></div>
+  <div class="modal-title" translate="Portal.ViewTournamentPlanner.AddApplication.DialogTitle"></div>
   <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
 </div>
 <div class="modal-body">
   <form [formGroup]="form" class="row">
     <div class="col-6">
       <div class="form-group mb-2">
-        <label class="form-label" for="contact" translate="Portal.ViewPlanningRealm.AddApplication.Contact"></label>
+        <label class="form-label" for="contact" translate="Portal.ViewTournamentPlanner.AddApplication.Contact"></label>
         <input
           class="form-control"
           id="contact"
@@ -14,12 +14,12 @@
           formControlName="contact"
           [ngClass]="contact.touched ? (contact.invalid ? 'is-invalid' : 'is-valid') : ''" />
         @if (contact.touched && !contact.valid) {
-          <div class="invalid-feedback" translate="Portal.ViewPlanningRealm.AddApplication.ContactInvalid"></div>
+          <div class="invalid-feedback" translate="Portal.ViewTournamentPlanner.AddApplication.ContactInvalid"></div>
         }
       </div>
 
       <div class="form-group mb-2">
-        <label class="form-label" for="contactEmail" translate="Portal.ViewPlanningRealm.AddApplication.ContactEmail"></label>
+        <label class="form-label" for="contactEmail" translate="Portal.ViewTournamentPlanner.AddApplication.ContactEmail"></label>
         <input
           class="form-control"
           id="contactEmail"
@@ -27,12 +27,12 @@
           formControlName="contactEmail"
           [ngClass]="contactEmail.touched && contactEmail.value.length > 0 ? (contactEmail.invalid ? 'is-invalid' : 'is-valid') : ''" />
         @if (contactEmail.touched && !contactEmail.valid) {
-          <div class="invalid-feedback" translate="Portal.ViewPlanningRealm.AddApplication.ContactEmailInvalid"></div>
+          <div class="invalid-feedback" translate="Portal.ViewTournamentPlanner.AddApplication.ContactEmailInvalid"></div>
         }
       </div>
 
       <div class="form-group mb-2">
-        <label class="form-label" for="contactTelephone" translate="Portal.ViewPlanningRealm.AddApplication.ContactTelephone"></label>
+        <label class="form-label" for="contactTelephone" translate="Portal.ViewTournamentPlanner.AddApplication.ContactTelephone"></label>
         <input
           class="form-control"
           id="contactTelephone"
@@ -42,7 +42,7 @@
       </div>
 
       <div class="form-group mb-2">
-        <label class="form-label" for="name" translate="Portal.ViewPlanningRealm.AddApplication.Name"></label>
+        <label class="form-label" for="name" translate="Portal.ViewTournamentPlanner.AddApplication.Name"></label>
         <input
           class="form-control"
           id="name"
@@ -50,12 +50,12 @@
           formControlName="name"
           [ngClass]="name.touched ? (name.invalid ? 'is-invalid' : 'is-valid') : ''" />
         @if (name.touched && !name.valid) {
-          <div class="invalid-feedback" translate="Portal.ViewPlanningRealm.AddApplication.NameInvalid"></div>
+          <div class="invalid-feedback" translate="Portal.ViewTournamentPlanner.AddApplication.NameInvalid"></div>
         }
       </div>
     </div>
     <div class="col-6">
-      <div translate="Portal.ViewPlanningRealm.AddApplication.Teams" class="mb-2"></div>
+      <div translate="Portal.ViewTournamentPlanner.AddApplication.Teams" class="mb-2"></div>
 
       <ng-container formArrayName="entries">
         @for (entryGroup of entries.controls; track entryGroup; let i = $index) {
@@ -84,7 +84,7 @@
           <tp-alert
             [type]="'danger'"
             [icon]="'exclamation-triangle'"
-            [text]="'Portal.ViewPlanningRealm.AddApplication.InvalidNumberOfTeamsAlert'" />
+            [text]="'Portal.ViewTournamentPlanner.AddApplication.InvalidNumberOfTeamsAlert'" />
         </div>
       }
     </div>
@@ -92,7 +92,7 @@
   @if (explicitConfirmationRequired) {
     <hr />
     <tp-confirmation-alert
-      [translationKey]="'Portal.ViewPlanningRealm.AddApplication.ExplicitConfirmation'"
+      [translationKey]="'Portal.ViewTournamentPlanner.AddApplication.ExplicitConfirmation'"
       [(accepted)]="explicitConfirmationGiven"
       [textParameters]="{ teamCount: explicitConfirmationTeamCount }" />
   }

@@ -29,7 +29,7 @@
           @case (4) {
             <tp-action-button
               *tpIsActionAllowed="[organization.id, Actions.GenericWrite]"
-              [title]="'Portal.ViewOrganization.NewPlanningRealm'"
+              [title]="'Portal.ViewOrganization.NewTournamentPlanner'"
               [type]="'outline-success'"
               [icon]="'plus-circle'"
               [routerLink]="'create/planning-realm'" />
@@ -112,23 +112,23 @@
                 <tp-loading-indicator class="my-5" [marginY]="false" />
               } @else {
                 <div class="card-header d-flex flex-row align-items-center">
-                  <tp-badge context="ViewOrganization" label="PlanningRealmCount" [value]="tournamentPlanners.length" />
+                  <tp-badge context="ViewOrganization" label="TournamentPlannerCount" [value]="tournamentPlanners.length" />
                 </div>
                 <div class="card-body">
                   @if (tournamentPlanners.length === 0) {
                     <div class="d-flex flex-row justify-content-center py-4 text-center">
-                      <span class="tp-text-pre-wrap" translate="Portal.ViewOrganization.NoPlanningRealms"></span>
+                      <span class="tp-text-pre-wrap" translate="Portal.ViewOrganization.NoTournamentPlanners"></span>
                     </div>
                   } @else {
                     <div class="d-flex flex-column gap-3">
-                      @for (planningRealm of tournamentPlanners; track planningRealm.id) {
+                      @for (tournamentPlanner of tournamentPlanners; track tournamentPlanner.id) {
                         <div class="card shadow-sm">
                           <div class="card-body d-flex flex-column gap-2">
-                            <div class="fs-5 fw-bold card-title mb-0">{{ planningRealm.name }}</div>
+                            <div class="fs-5 fw-bold card-title mb-0">{{ tournamentPlanner.name }}</div>
                           </div>
                           <div class="card-footer text-end pe-2">
-                            <a class="card-link" [routerLink]="'/portal/planning-realm/' + planningRealm.id">
-                              <span translate="Portal.ViewOrganization.OpenPlanningRealm"></span>
+                            <a class="card-link" [routerLink]="'/portal/planning-realm/' + tournamentPlanner.id">
+                              <span translate="Portal.ViewOrganization.OpenTournamentPlanner"></span>
                               <i class="ms-2 bi bi-arrow-right-circle" aria-hidden="true"></i>
                             </a>
                           </div>

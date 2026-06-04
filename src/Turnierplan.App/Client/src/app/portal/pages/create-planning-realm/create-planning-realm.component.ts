@@ -27,7 +27,7 @@ import { createTournamentPlanner } from '../../../api/fn/tournament-planners/cre
     TranslatePipe
   ]
 })
-export class CreatePlanningRealmComponent implements OnDestroy {
+export class CreateTournamentPlannerComponent implements OnDestroy {
   protected loadingState: LoadingState = { isLoading: false };
 
   protected organization?: OrganizationDto;

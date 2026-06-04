@@ -13,7 +13,7 @@ import { IsActionAllowedDirective } from '../../directives/is-action-allowed.dir
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';
 import { defaultApplicationsFilter } from '../../models/applications-filter';
-import { ViewPlanningRealmComponent } from '../../pages/view-planning-realm/view-planning-realm.component';
+import { ViewTournamentPlannerComponent } from '../../pages/view-planning-realm/view-planning-realm.component';
 import { PublicId } from '../../../api/models/public-id';
 import { TeamLinkDto } from '../../../api/models/team-link-dto';
 
@@ -140,7 +140,7 @@ export class TeamListComponent {
   }
 
   protected navigateToTournamentPlanner(tournamentPlannerId: PublicId, applicationTeamId: number): void {
-    this.localStorageService.setNavigationTab(tournamentPlannerId, ViewPlanningRealmComponent.ApplicationsManagerPageId);
+    this.localStorageService.setNavigationTab(tournamentPlannerId, ViewTournamentPlannerComponent.ApplicationsManagerPageId);
     this.localStorageService.setTournamentPlannerApplicationsFilter(tournamentPlannerId, {
       ...defaultApplicationsFilter,
       searchTerm: `!${applicationTeamId}`

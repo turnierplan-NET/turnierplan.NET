@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
-import { UpdateTournamentPlannerFunc, ViewPlanningRealmComponent } from '../../pages/view-planning-realm/view-planning-realm.component';
+import { UpdateTournamentPlannerFunc, ViewTournamentPlannerComponent } from '../../pages/view-planning-realm/view-planning-realm.component';
 import { ApplicationsFilter } from '../../models/applications-filter';
 import { TranslateDirective } from '@ngx-translate/core';
 import { Actions } from '../../../generated/actions';
@@ -38,7 +38,7 @@ export class LabelsManagerComponent {
   public filterRequested = new EventEmitter<ApplicationsFilter>();
 
   protected readonly Actions = Actions;
-  protected readonly availableColors = ViewPlanningRealmComponent.DefaultLabelColorCodes;
+  protected readonly availableColors = ViewTournamentPlannerComponent.DefaultLabelColorCodes;
 
   constructor(protected readonly authorizationService: AuthorizationService) {}
 

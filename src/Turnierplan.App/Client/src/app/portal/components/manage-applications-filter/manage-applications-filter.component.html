@@ -2,27 +2,27 @@
   <div class="flex-grow-1 d-flex flex-column align-items-stretch gap-2">
     <input
       class="form-control form-control-sm flex-grow-1"
-      [placeholder]="'Portal.ViewPlanningRealm.Applications.FilterPanel.SearchTerm' | translate"
-      [attr.aria-label]="'Portal.ViewPlanningRealm.Applications.FilterPanel.SearchTerm' | translate"
+      [placeholder]="'Portal.ViewTournamentPlanner.Applications.FilterPanel.SearchTerm' | translate"
+      [attr.aria-label]="'Portal.ViewTournamentPlanner.Applications.FilterPanel.SearchTerm' | translate"
       [(ngModel)]="searchTerm"
       (keyup.enter)="emitFilter()" />
 
     <div class="d-flex flex-column flex-md-row gap-2">
       <tp-multi-select-filter
-        [title]="'Portal.ViewPlanningRealm.Applications.FilterPanel.TournamentClasses'"
+        [title]="'Portal.ViewTournamentPlanner.Applications.FilterPanel.TournamentClasses'"
         [idPrefix]="'tournament_class'"
         [options]="tournamentClassFilterOptions"
         [(selected)]="tournamentClass" />
 
       <tp-multi-select-filter
-        [title]="'Portal.ViewPlanningRealm.Applications.FilterPanel.InvitationLinks'"
+        [title]="'Portal.ViewTournamentPlanner.Applications.FilterPanel.InvitationLinks'"
         [idPrefix]="'invitation_link'"
         [options]="invitationLinkFilterOptions"
         [specialOption]="{ value: invitationLinkSpecialValue, label: 'ohne Anmeldelink' }"
         [(selected)]="invitationLink" />
 
       <tp-multi-select-filter
-        [title]="'Portal.ViewPlanningRealm.Applications.FilterPanel.Labels'"
+        [title]="'Portal.ViewTournamentPlanner.Applications.FilterPanel.Labels'"
         [idPrefix]="'label'"
         [options]="labelFilterOptions"
         [(selected)]="label" />
@@ -36,12 +36,12 @@
       [type]="'outline-secondary'"
       [icon]="'x-circle'"
       [mode]="'IconOnly'"
-      [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.FilterPanel.Reset' | translate"
+      [ngbTooltip]="'Portal.ViewTournamentPlanner.Applications.FilterPanel.Reset' | translate"
       (buttonClick)="resetAndEmitFilter()" />
     <tp-action-button
       [type]="'outline-primary'"
       [icon]="'search'"
-      [title]="'Portal.ViewPlanningRealm.Applications.FilterPanel.Search'"
+      [title]="'Portal.ViewTournamentPlanner.Applications.FilterPanel.Search'"
       (buttonClick)="emitFilter()" />
   </div>
 </div>

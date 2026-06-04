@@ -122,7 +122,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     },
     {
       id: ViewOrganizationComponent.tournamentPlannersPageId,
-      title: 'Portal.ViewOrganization.Pages.PlanningRealms',
+      title: 'Portal.ViewOrganization.Pages.TournamentPlanners',
       icon: 'bi-ticket-perforated'
     },
     {

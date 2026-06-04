@@ -7,10 +7,10 @@ import { CreateUserComponent } from './pages/create-user/create-user.component';
 import { CreateOrganizationComponent } from './pages/create-organization/create-organization.component';
 import { ViewOrganizationComponent } from './pages/view-organization/view-organization.component';
 import { CreateApiKeyComponent } from './pages/create-api-key/create-api-key.component';
-import { CreatePlanningRealmComponent } from './pages/create-planning-realm/create-planning-realm.component';
+import { CreateTournamentPlannerComponent } from './pages/create-planning-realm/create-planning-realm.component';
 import { CreateTournamentComponent } from './pages/create-tournament/create-tournament.component';
 import { CreateVenueComponent } from './pages/create-venue/create-venue.component';
-import { ViewPlanningRealmComponent } from './pages/view-planning-realm/view-planning-realm.component';
+import { ViewTournamentPlannerComponent } from './pages/view-planning-realm/view-planning-realm.component';
 import { discardChangesGuard } from '../core/guards/discard-changes.guard';
 import { FolderStatisticsComponent } from './pages/folder-statistics/folder-statistics.component';
 import { FolderTimetableComponent } from './pages/folder-timetable/folder-timetable.component';
@@ -64,7 +64,7 @@ export const portalRoutes: Routes = [
       },
       {
         path: 'organization/:id/create/tournament-planner',
-        component: CreatePlanningRealmComponent
+        component: CreateTournamentPlannerComponent
       },
       {
         path: 'organization/:id/create/tournament',
@@ -83,7 +83,7 @@ export const portalRoutes: Routes = [
       },
       {
         path: 'tournament-planner/:id',
-        component: ViewPlanningRealmComponent,
+        component: ViewTournamentPlannerComponent,
         canDeactivate: [discardChangesGuard]
       },
       {

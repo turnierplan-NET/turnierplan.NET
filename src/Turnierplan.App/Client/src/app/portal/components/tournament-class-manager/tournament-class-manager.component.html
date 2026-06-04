@@ -3,9 +3,9 @@
 <table class="table">
   <thead>
     <tr>
-      <th translate="Portal.ViewPlanningRealm.TournamentClasses.Name"></th>
-      <th translate="Portal.ViewPlanningRealm.TournamentClasses.InvitationLinkCount"></th>
-      <th translate="Portal.ViewPlanningRealm.TournamentClasses.ApplicationCount"></th>
+      <th translate="Portal.ViewTournamentPlanner.TournamentClasses.Name"></th>
+      <th translate="Portal.ViewTournamentPlanner.TournamentClasses.InvitationLinkCount"></th>
+      <th translate="Portal.ViewTournamentPlanner.TournamentClasses.ApplicationCount"></th>
       <th></th>
       @if (writeAllowed) {
         <th style="width: 1px"></th>
@@ -34,7 +34,7 @@
         @if (writeAllowed) {
           <td class="align-middle pe-0">
             <tp-rename-button
-              translationKey="Portal.ViewPlanningRealm.TournamentClasses.Rename"
+              translationKey="Portal.ViewTournamentPlanner.TournamentClasses.Rename"
               [displayLabel]="false"
               [current]="tournamentClass.name"
               (renamed)="renameTournamentClass(tournamentClass.id, $event)" />
@@ -44,7 +44,7 @@
             <div class="d-flex flex-row align-items-center">
               <tp-delete-button [disabled]="!canDelete" (confirmed)="deleteTournamentClass(tournamentClass.id)" />
               @if (!canDelete) {
-                <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.TournamentClasses.DeleteNotPossible'" />
+                <tp-tooltip-icon [tooltipText]="'Portal.ViewTournamentPlanner.TournamentClasses.DeleteNotPossible'" />
               }
             </div>
           </td>
@@ -52,7 +52,7 @@
       </tr>
     } @empty {
       <tr>
-        <td [attr.colspan]="writeAllowed ? 6 : 4" translate="Portal.ViewPlanningRealm.TournamentClasses.NoTournamentClasses"></td>
+        <td [attr.colspan]="writeAllowed ? 6 : 4" translate="Portal.ViewTournamentPlanner.TournamentClasses.NoTournamentClasses"></td>
       </tr>
     }
   </tbody>

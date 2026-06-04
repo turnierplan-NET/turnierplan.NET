@@ -475,7 +475,7 @@ export class ManageApplicationsComponent implements OnDestroy {
     });
 
     const component = ref.componentInstance as TextInputDialogComponent;
-    component.init(`Portal.ViewPlanningRealm.Applications.${translationKey}`, currentValue, textArea, isRequired);
+    component.init(`Portal.ViewTournamentPlanner.Applications.${translationKey}`, currentValue, textArea, isRequired);
 
     ref.closed
       .pipe(

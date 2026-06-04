@@ -1,11 +1,11 @@
 ﻿<tp-page-frame
   *tpLoadingState="loadingState"
   [ultraSlim]="true"
-  [title]="'Portal.CreatePlanningRealm.Title' | translate"
+  [title]="'Portal.CreateTournamentPlanner.Title' | translate"
   [backLink]="'../..'">
-  <label for="create_planning_realm_name" class="form-label" translate="Portal.CreatePlanningRealm.Form.Name"></label>
+  <label for="create_tournament_planner_name" class="form-label" translate="Portal.CreateTournamentPlanner.Form.Name"></label>
   <input
-    id="create_planning_realm_name"
+    id="create_tournament_planner_name"
     type="text"
     class="form-control"
     [formControl]="tournamentPlannerName"
@@ -14,8 +14,8 @@
     [ngClass]="
       tournamentPlannerName.dirty || tournamentPlannerName.touched ? (tournamentPlannerName.invalid ? 'is-invalid' : 'is-valid') : ''
     " />
-  <div class="invalid-feedback" translate="Portal.CreatePlanningRealm.Form.NameInvalid"></div>
-  <div class="valid-feedback" translate="Portal.CreatePlanningRealm.Form.NameValid"></div>
+  <div class="invalid-feedback" translate="Portal.CreateTournamentPlanner.Form.NameInvalid"></div>
+  <div class="valid-feedback" translate="Portal.CreateTournamentPlanner.Form.NameValid"></div>
 
   <hr />
 
@@ -23,7 +23,7 @@
     <i class="bi bi-info-circle"></i>
     <span
       class="ms-2"
-      [innerHTML]="'Portal.CreatePlanningRealm.OrganizationNotice' | translate: { organizationName: organization?.name }"></span>
+      [innerHTML]="'Portal.CreateTournamentPlanner.OrganizationNotice' | translate: { organizationName: organization?.name }"></span>
   </div>
 
   <hr />
@@ -31,7 +31,7 @@
   <div class="d-flex flex-row justify-content-end">
     <tp-action-button
       [type]="'success'"
-      [title]="'Portal.CreatePlanningRealm.Submit'"
+      [title]="'Portal.CreateTournamentPlanner.Submit'"
       [disabled]="tournamentPlannerName.invalid"
       (buttonClick)="confirmButtonClicked()" />
   </div>
