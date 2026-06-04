@@ -37,7 +37,6 @@ import { updatePlanningRealm } from '../../../api/fn/planning-realms/update-plan
 import { deletePlanningRealm } from '../../../api/fn/planning-realms/delete-planning-realm';
 import { LabelsManagerComponent } from '../../components/labels-manager/labels-manager.component';
 import { ExportApplicationsDialogComponent } from '../../components/export-applications-dialog/export-applications-dialog.component';
-import { ApiKeyExtendComponent } from '../../components/api-key-extend/api-key-extend.component';
 
 export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
 
