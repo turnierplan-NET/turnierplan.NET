@@ -28,10 +28,10 @@ public sealed class Application : Entity<long>
         _comment = comment;
     }
 
-    internal Application(PlanningRealm planningRealm, InvitationLink? sourceLink, int tag, string contact)
+    internal Application(TournamentPlanner tournamentPlanner, InvitationLink? sourceLink, int tag, string contact)
     {
         Id = 0;
-        PlanningRealm = planningRealm;
+        TournamentPlanner = tournamentPlanner;
         SourceLink = sourceLink;
         Tag = tag;
         CreatedAt = DateTime.UtcNow;
@@ -42,7 +42,7 @@ public sealed class Application : Entity<long>
 
     public override long Id { get; protected set; }
 
-    public PlanningRealm PlanningRealm { get; internal set; } = null!;
+    public TournamentPlanner TournamentPlanner { get; internal set; } = null!;
 
     public InvitationLink? SourceLink { get; internal set; }
 

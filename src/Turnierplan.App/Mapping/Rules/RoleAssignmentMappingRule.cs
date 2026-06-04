@@ -42,7 +42,7 @@ internal sealed class ImageRoleAssignmentMappingRule : RoleAssignmentMappingRule
 
 internal sealed class OrganizationRoleAssignmentMappingRule : RoleAssignmentMappingRuleBase<Organization>;
 
-internal sealed class PlanningRealmRoleAssignmentMappingRule : RoleAssignmentMappingRuleBase<PlanningRealm>;
+internal sealed class PlanningRealmRoleAssignmentMappingRule : RoleAssignmentMappingRuleBase<TournamentPlanner>;
 
 internal sealed class TournamentRoleAssignmentMappingRule : RoleAssignmentMappingRuleBase<Tournament>;
 

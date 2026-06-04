@@ -93,7 +93,7 @@ public sealed class InvitationForm : PageModel
             return;
         }
 
-        var application = Data.PlanningRealm.AddApplication(Data, contactPerson);
+        var application = Data.TournamentPlanner.AddApplication(Data, contactPerson);
 
         application.ContactEmail = contactEMail;
         application.ContactTelephone = contactTelephoneNr;

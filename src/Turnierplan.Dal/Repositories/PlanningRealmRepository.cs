@@ -4,9 +4,9 @@ using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.Dal.Repositories;
 
-public interface IPlanningRealmRepository : IRepositoryWithPublicId<PlanningRealm, long>
+public interface IPlanningRealmRepository : IRepositoryWithPublicId<TournamentPlanner, long>
 {
-    Task<PlanningRealm?> GetByPublicIdAsync(PublicId id, Includes includes);
+    Task<TournamentPlanner?> GetByPublicIdAsync(PublicId id, Includes includes);
 
     [Flags]
     public enum Includes
@@ -24,9 +24,9 @@ public interface IPlanningRealmRepository : IRepositoryWithPublicId<PlanningReal
     }
 }
 
-internal sealed class PlanningRealmRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<PlanningRealm>(context), IPlanningRealmRepository
+internal sealed class PlanningRealmRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<TournamentPlanner>(context), IPlanningRealmRepository
 {
-    public override Task<PlanningRealm?> GetByPublicIdAsync(PublicId id)
+    public override Task<TournamentPlanner?> GetByPublicIdAsync(PublicId id)
     {
         return DbSet.Where(x => x.PublicId == id)
             .Include(x => x.Organization).ThenInclude(x => x.RoleAssignments)
@@ -35,7 +35,7 @@ internal sealed class PlanningRealmRepository(TurnierplanContext context) : Repo
             .FirstOrDefaultAsync();
     }
 
-    public async Task<PlanningRealm?> GetByPublicIdAsync(PublicId id, IPlanningRealmRepository.Includes includes)
+    public async Task<TournamentPlanner?> GetByPublicIdAsync(PublicId id, IPlanningRealmRepository.Includes includes)
     {
         var query = DbSet.Where(x => x.PublicId == id);
 

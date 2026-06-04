@@ -46,7 +46,7 @@ internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
             "Folder" => DeleteRoleAssignmentAsync<Folder>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
             "Image" => DeleteRoleAssignmentAsync<Image>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
             "Organization" => DeleteRoleAssignmentAsync<Organization>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
-            "PlanningRealm" => DeleteRoleAssignmentAsync<PlanningRealm>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
+            "PlanningRealm" => DeleteRoleAssignmentAsync<TournamentPlanner>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
             "Tournament" => DeleteRoleAssignmentAsync<Tournament>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
             "Venue" => DeleteRoleAssignmentAsync<Venue>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
             _ => null

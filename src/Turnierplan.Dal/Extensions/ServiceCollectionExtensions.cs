@@ -66,7 +66,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRepositoryWithPublicId<InvitationLink, long>>(sp => sp.GetRequiredService<IInvitationLinkRepository>());
         services.AddScoped<IRepositoryWithPublicId<Image, long>>(sp => sp.GetRequiredService<IImageRepository>());
         services.AddScoped<IRepositoryWithPublicId<Organization, long>>(sp => sp.GetRequiredService<IOrganizationRepository>());
-        services.AddScoped<IRepositoryWithPublicId<PlanningRealm, long>>(sp => sp.GetRequiredService<IPlanningRealmRepository>());
+        services.AddScoped<IRepositoryWithPublicId<TournamentPlanner, long>>(sp => sp.GetRequiredService<IPlanningRealmRepository>());
         services.AddScoped<IRepositoryWithPublicId<Tournament, long>>(sp => sp.GetRequiredService<ITournamentRepository>());
         services.AddScoped<IRepositoryWithPublicId<Venue, long>>(sp => sp.GetRequiredService<IVenueRepository>());
 
@@ -74,7 +74,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRoleAssignmentRepository<Folder>, FolderRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Image>, ImageRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Organization>, OrganizationRoleAssignmentRepository>();
-        services.AddScoped<IRoleAssignmentRepository<PlanningRealm>, PlanningRealmRoleAssignmentRepository>();
+        services.AddScoped<IRoleAssignmentRepository<TournamentPlanner>, PlanningRealmRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Tournament>, TournamentRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Venue>, VenueRoleAssignmentRepository>();
 
@@ -82,7 +82,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Folder>>());
         services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Image>>());
         services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Organization>>());
-        services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<PlanningRealm>>());
+        services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<TournamentPlanner>>());
         services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Tournament>>());
         services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Venue>>());
     }

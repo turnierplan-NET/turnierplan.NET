@@ -7,7 +7,7 @@ public sealed class TeamLink : Entity<long>
 {
     public TeamLink(ApplicationTeam applicationTeam, Team team)
     {
-        var planningRealm = applicationTeam.Application.PlanningRealm;
+        var planningRealm = applicationTeam.Application.TournamentPlanner;
         var tournament = team.Tournament;
 
         if (planningRealm.Organization is null || planningRealm.Organization != tournament.Organization)

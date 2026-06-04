@@ -42,7 +42,7 @@ internal sealed class GetTournamentEndpoint : EndpointBase<TournamentDto>
 
         var planningRealms = tournament.Teams.Select(x => x.TeamLink)
             .WhereNotNull()
-            .Select(x => x.ApplicationTeam.Application.PlanningRealm)
+            .Select(x => x.ApplicationTeam.Application.TournamentPlanner)
             .Distinct();
 
         foreach (var planningRealm in planningRealms)

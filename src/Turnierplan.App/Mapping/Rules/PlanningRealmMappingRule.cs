@@ -4,9 +4,9 @@ using Turnierplan.Core.PlanningRealm;
 
 namespace Turnierplan.App.Mapping.Rules;
 
-internal sealed class PlanningRealmMappingRule : MappingRuleBase<PlanningRealm, PlanningRealmDto>
+internal sealed class PlanningRealmMappingRule : MappingRuleBase<TournamentPlanner, PlanningRealmDto>
 {
-    protected override PlanningRealmDto Map(IMapper mapper, MappingContext context, PlanningRealm source)
+    protected override PlanningRealmDto Map(IMapper mapper, MappingContext context, TournamentPlanner source)
     {
         return new PlanningRealmDto
         {

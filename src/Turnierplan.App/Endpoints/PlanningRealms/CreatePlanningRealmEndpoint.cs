@@ -43,7 +43,7 @@ internal sealed class CreatePlanningRealmEndpoint : EndpointBase<PlanningRealmDt
             return Results.Forbid();
         }
 
-        var planningRealm = new PlanningRealm(organization, request.Name.Trim());
+        var planningRealm = new TournamentPlanner(organization, request.Name.Trim());
 
         await planningRealmRepository.CreateAsync(planningRealm);
         await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);

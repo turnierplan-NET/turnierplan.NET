@@ -11,7 +11,8 @@ public sealed class RoleAssignmentEntityTypeConfiguration<T> : IEntityTypeConfig
 {
     public void Configure(EntityTypeBuilder<RoleAssignment<T>> builder)
     {
-        builder.ToTable($"IAM_{typeof(T).Name}", TurnierplanContext.Schema);
+        // TODO: Update table name
+        builder.ToTable(typeof(T).Name.Equals("TournamentPlanner") ? "IAM_PlanningRealm" : $"IAM_{typeof(T).Name}", TurnierplanContext.Schema);
 
         builder.HasKey(x => x.Id);
 

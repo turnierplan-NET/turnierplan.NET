@@ -68,9 +68,9 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<RoleAssignment<Organization>> OrganizationRoleAssignments { get; set; } = null!;
 
-    public DbSet<PlanningRealm> PlanningRealms { get; set; } = null!;
+    public DbSet<TournamentPlanner> TournamentPlanners { get; set; } = null!;
 
-    public DbSet<RoleAssignment<PlanningRealm>> PlanningRealmRoleAssignments { get; set; } = null!;
+    public DbSet<RoleAssignment<TournamentPlanner>> PlanningRealmRoleAssignments { get; set; } = null!;
 
     public DbSet<Team> Teams { get; set; } = null!;
 
@@ -168,7 +168,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new InvitationLinkEntryEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new MatchEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OrganizationEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new PlanningRealmEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new TournamentPlannerEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new RankingOverwriteEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TeamEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TeamLinkEntityTypeConfiguration());
@@ -181,7 +181,7 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Folder>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Image>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Organization>());
-        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<PlanningRealm>());
+        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<TournamentPlanner>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Tournament>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Venue>());
     }

@@ -90,9 +90,9 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
             _labelFilter = labelFilter;
         }
 
-        public PaginationResultDto<ApplicationDto> Process(PlanningRealm planningRealm, IMapper mapper)
+        public PaginationResultDto<ApplicationDto> Process(TournamentPlanner tournamentPlanner, IMapper mapper)
         {
-            var applications = planningRealm.Applications.AsEnumerable();
+            var applications = tournamentPlanner.Applications.AsEnumerable();
 
             if (_tournamentClassFilter is not null)
             {

@@ -45,7 +45,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
             return Results.Forbid();
         }
 
-        var planningRealms = new Dictionary<PublicId, PlanningRealm>();
+        var planningRealms = new Dictionary<PublicId, TournamentPlanner>();
 
         var planningRealmIds = request.Groups
             .SelectMany(x => x.Teams)
