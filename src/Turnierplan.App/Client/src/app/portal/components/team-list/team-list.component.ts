@@ -145,6 +145,6 @@ export class TeamListComponent {
       ...defaultApplicationsFilter,
       searchTerm: `!${applicationTeamId}`
     });
-    void this.router.navigate(['/portal/planning-realm/', planningRealmId]);
+    void this.router.navigate(['/portal/tournament-planner/', planningRealmId]);
   }
 }

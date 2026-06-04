@@ -83,7 +83,7 @@ export class CreatePlanningRealmComponent implements OnDestroy {
         })
         .pipe(
           switchMap((planningRealm) =>
-            from(this.router.navigate(['../../../../planning-realm/', planningRealm.id], { relativeTo: this.route }))
+            from(this.router.navigate(['../../../../tournament-planner/', planningRealm.id], { relativeTo: this.route }))
           )
         )
         .subscribe({

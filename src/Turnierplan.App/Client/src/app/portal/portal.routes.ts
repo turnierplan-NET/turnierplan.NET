@@ -57,6 +57,13 @@ export const portalRoutes: Routes = [
       },
       {
         path: 'organization/:id/create/planning-realm',
+        redirectTo: (data): string => {
+          // TODO: Test redirect works as expected
+          return `organization/${data.params['id']}/create-tournament-planner`;
+        }
+      },
+      {
+        path: 'organization/:id/create/tournament-planner',
         component: CreatePlanningRealmComponent
       },
       {
@@ -69,6 +76,13 @@ export const portalRoutes: Routes = [
       },
       {
         path: 'planning-realm/:id',
+        redirectTo: (data): string => {
+          // TODO: Test redirect works as expected
+          return `tournament-planner/${data.params['id']}`;
+        }
+      },
+      {
+        path: 'tournament-planner/:id',
         component: ViewPlanningRealmComponent,
         canDeactivate: [discardChangesGuard]
       },
