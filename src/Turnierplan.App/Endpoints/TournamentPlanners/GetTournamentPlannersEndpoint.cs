@@ -11,7 +11,7 @@ internal sealed class GetTournamentPlannersEndpoint : EndpointBase<IEnumerable<T
 {
     protected override HttpMethod Method => HttpMethod.Get;
 
-    protected override string Route => "/api/planning-realms";
+    protected override string Route => "/api/tournament-planners";
 
     protected override Delegate Handler => Handle;
 

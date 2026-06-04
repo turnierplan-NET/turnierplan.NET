@@ -9,7 +9,7 @@ internal sealed class DeleteTournamentPlannerEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Delete;
 
-    protected override string Route => "/api/planning-realm/{id}";
+    protected override string Route => "/api/tournament-planners/{id}";
 
     protected override Delegate Handler => Handle;
 
