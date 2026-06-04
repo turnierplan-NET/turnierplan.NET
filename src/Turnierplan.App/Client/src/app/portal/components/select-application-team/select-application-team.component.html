@@ -1,37 +1,37 @@
 <div class="mb-2" translate="Portal.SelectApplicationTeam.Explanation" id="selectApplicationTeamExplanation"></div>
 
-@if (isLoadingPlanningRealms) {
+@if (isLoadingTournamentPlanners) {
   <div class="d-flex flex-row gap-2">
     <tp-small-spinner />
     <span translate="Portal.SelectApplicationTeam.LoadingPlanningRealms"></span>
   </div>
-} @else if (planningRealms) {
-  @if (planningRealms.length === 0) {
+} @else if (tournamentPlanners) {
+  @if (tournamentPlanners.length === 0) {
     <div class="text-secondary fst-italic" translate="Portal.SelectApplicationTeam.NoPlanningRealms"></div>
   } @else {
     <select
       class="form-select"
       aria-labelledby="selectApplicationTeamExplanation"
-      [(ngModel)]="currentPlanningRealmId"
-      (ngModelChange)="onPlanningRealmChange($event)">
-      @for (planningRealm of planningRealms; track planningRealm) {
+      [(ngModel)]="currentTournamentPlannerId"
+      (ngModelChange)="onTournamentPlannerChange($event)">
+      @for (planningRealm of tournamentPlanners; track planningRealm) {
         <option [value]="planningRealm.id">{{ planningRealm.name }}</option>
       }
     </select>
 
-    @if (isLoadingPlanningRealmDetail) {
+    @if (isLoadingTournamentPlannerDetail) {
       <div class="mt-3 d-flex flex-row gap-2">
         <tp-small-spinner />
         <span translate="Portal.SelectApplicationTeam.LoadingPlanningRealmDetail"></span>
       </div>
-    } @else if (planningRealmDetail) {
+    } @else if (tournamentPlannerDetail) {
       <div class="mt-4">
         <span translate="Portal.SelectApplicationTeam.FilterExplanation"></span>
         <tp-tooltip-icon [tooltipText]="'Portal.SelectApplicationTeam.FilterTooltip'" />
       </div>
       <div class="mt-2 border rounded-2 p-2">
         <tp-manage-applications-filter
-          [tournamentPlanner]="planningRealmDetail"
+          [tournamentPlanner]="tournamentPlannerDetail"
           [filter]="applicationsFilter"
           (filterChange)="onApplicationsFilterChange($event)" />
       </div>

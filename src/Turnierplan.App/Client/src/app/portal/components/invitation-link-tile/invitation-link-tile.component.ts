@@ -52,7 +52,7 @@ export class InvitationLinkTileComponent {
   private _invitationLink!: InvitationLinkDto;
 
   @Input()
-  public updatePlanningRealm!: UpdateTournamentPlannerFunc;
+  public updateTournamentPlanner!: UpdateTournamentPlannerFunc;
 
   @Output()
   public errorOccured = new EventEmitter<unknown>();
@@ -271,8 +271,8 @@ export class InvitationLinkTileComponent {
 
   protected onImageDeleted(imageId: string): void {
     // If an image is deleted, make sure to remove it from all invitation links that refer to it
-    this.updatePlanningRealm((planningRealm) => {
-      for (const invitationLink of planningRealm.invitationLinks) {
+    this.updateTournamentPlanner((tournamentPlanner) => {
+      for (const invitationLink of tournamentPlanner.invitationLinks) {
         if (invitationLink.primaryLogo?.id === imageId) {
           invitationLink.primaryLogo = undefined;
         }
@@ -315,14 +315,14 @@ export class InvitationLinkTileComponent {
   }
 
   protected deleteInvitationLink(): void {
-    this.updatePlanningRealm((planningRealm) => {
-      const index = planningRealm.invitationLinks.findIndex((x) => x.id === this.invitationLink.id);
+    this.updateTournamentPlanner((tournamentPlanner) => {
+      const index = tournamentPlanner.invitationLinks.findIndex((x) => x.id === this.invitationLink.id);
 
       if (index === -1) {
         return false;
       }
 
-      planningRealm.invitationLinks.splice(index, 1);
+      tournamentPlanner.invitationLinks.splice(index, 1);
       return true;
     });
   }
@@ -341,8 +341,8 @@ export class InvitationLinkTileComponent {
   }
 
   private updateInvitationLink(updateFunc: (invitationLink: InvitationLinkDto) => boolean): void {
-    this.updatePlanningRealm((planningRealm) => {
-      const invitationLink = planningRealm.invitationLinks.find((x) => x.id === this.invitationLink.id);
+    this.updateTournamentPlanner((tournamentPlanner) => {
+      const invitationLink = tournamentPlanner.invitationLinks.find((x) => x.id === this.invitationLink.id);
 
       if (!invitationLink) {
         return false;

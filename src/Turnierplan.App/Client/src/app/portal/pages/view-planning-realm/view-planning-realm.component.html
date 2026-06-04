@@ -1,11 +1,11 @@
 <ng-container *tpLoadingState="loadingState">
-  @if (planningRealm) {
+  @if (tournamentPlanner) {
     <tp-page-frame
       #pageFrame
-      [title]="planningRealm.name"
-      [backLink]="'../../organization/' + planningRealm.organizationId"
+      [title]="tournamentPlanner.name"
+      [backLink]="'../../organization/' + tournamentPlanner.organizationId"
       [navigationTabs]="pages"
-      [contextEntityId]="planningRealm.id"
+      [contextEntityId]="tournamentPlanner.id"
       [rememberNavigationTab]="true"
       (navigationTabSelected)="togglePage($event.id)">
       <ng-template #buttons>
@@ -13,7 +13,7 @@
           @case (0) {
             <!-- Tournament classes page -->
             <tp-action-button
-              *tpIsActionAllowed="[planningRealm.id, Actions.GenericWrite]"
+              *tpIsActionAllowed="[tournamentPlanner.id, Actions.GenericWrite]"
               [title]="'Portal.ViewPlanningRealm.NewTournamentClass.Title'"
               [type]="'outline-success'"
               [icon]="'plus-circle'"
@@ -22,7 +22,7 @@
           @case (1) {
             <!-- Invitation links page -->
             <tp-action-button
-              *tpIsActionAllowed="[planningRealm.id, Actions.GenericWrite]"
+              *tpIsActionAllowed="[tournamentPlanner.id, Actions.GenericWrite]"
               [title]="'Portal.ViewPlanningRealm.NewInvitationLink.Title'"
               [type]="'outline-success'"
               [icon]="'plus-circle'"
@@ -31,7 +31,7 @@
           @case (4) {
             <!-- Labels page -->
             <tp-action-button
-              *tpIsActionAllowed="[planningRealm.id, Actions.GenericWrite]"
+              *tpIsActionAllowed="[tournamentPlanner.id, Actions.GenericWrite]"
               [title]="'Portal.ViewPlanningRealm.NewLabel.Title'"
               [type]="'outline-success'"
               [icon]="'plus-circle'"
@@ -39,15 +39,15 @@
           }
           @case (2) {
             <!-- Applications page -->
-            <ng-container *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsRead]">
+            <ng-container *tpIsActionAllowed="[tournamentPlanner.id, Actions.ApplicationsRead]">
               <tp-action-button
                 [title]="'Portal.ViewPlanningRealm.ExportApplications.Button'"
                 [type]="'outline-secondary'"
                 [icon]="'filetype-csv'"
                 (click)="exportApplications()" />
             </ng-container>
-            <ng-container *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsWrite]">
-              @let canAddApplications = !_hasUnsavedChanges && planningRealm.tournamentClasses.length > 0;
+            <ng-container *tpIsActionAllowed="[tournamentPlanner.id, Actions.ApplicationsWrite]">
+              @let canAddApplications = !_hasUnsavedChanges && tournamentPlanner.tournamentClasses.length > 0;
               @if (!canAddApplications) {
                 <tp-tooltip-icon
                   [margin]="false"
@@ -65,14 +65,14 @@
           @case (3) {
             <tp-rename-button
               translationKey="Portal.ViewPlanningRealm.Settings.Rename"
-              [current]="planningRealm.name"
-              (renamed)="renamePlanningRealm($event)" />
+              [current]="tournamentPlanner.name"
+              (renamed)="renameTournamentPlanner($event)" />
           }
         }
       </ng-template>
       <ng-template #preContent>
         @if (_hasUnsavedChanges) {
-          <tp-unsaved-changes-alert (save)="savePlanningRealm()" />
+          <tp-unsaved-changes-alert (save)="saveTournamentPlanner()" />
         }
       </ng-template>
       <ng-template #mainContent>
@@ -81,11 +81,11 @@
             @case (0) {
               <!-- Tournament classes page -->
               <div class="card-header d-flex flex-row align-items-center">
-                <tp-badge context="ViewPlanningRealm" label="TournamentClassesCount" [value]="planningRealm.tournamentClasses.length" />
+                <tp-badge context="ViewPlanningRealm" label="TournamentClassesCount" [value]="tournamentPlanner.tournamentClasses.length" />
               </div>
               <div class="card-body p-0">
                 <tp-tournament-classes-manager
-                  [tournamentPlanner]="planningRealm"
+                  [tournamentPlanner]="tournamentPlanner"
                   [updateTournamentPlanner]="updateFunction"
                   (filterRequested)="navigateToApplicationsWithFilter($event)" />
               </div>
@@ -93,20 +93,20 @@
             @case (1) {
               <!-- Invitation links page -->
               <div class="card-header d-flex flex-row align-items-center">
-                <tp-badge context="ViewPlanningRealm" label="InvitationLinksCount" [value]="planningRealm.invitationLinks.length" />
+                <tp-badge context="ViewPlanningRealm" label="InvitationLinksCount" [value]="tournamentPlanner.invitationLinks.length" />
               </div>
               <div class="card-body">
-                @if (planningRealm.invitationLinks.length === 0) {
+                @if (tournamentPlanner.invitationLinks.length === 0) {
                   <div class="d-flex flex-row justify-content-center py-4 text-center">
                     <span class="tp-text-pre-wrap" translate="Portal.ViewPlanningRealm.NoInvitationLinks"></span>
                   </div>
                 } @else {
                   <div class="d-flex flex-column gap-3">
-                    @for (invitationLink of planningRealm.invitationLinks; track invitationLink.id) {
+                    @for (invitationLink of tournamentPlanner.invitationLinks; track invitationLink.id) {
                       <tp-invitation-link-tile
-                        [tournamentPlanner]="planningRealm"
+                        [tournamentPlanner]="tournamentPlanner"
                         [invitationLink]="invitationLink"
-                        [updatePlanningRealm]="updateFunction"
+                        [updateTournamentPlanner]="updateFunction"
                         (errorOccured)="loadingState = { isLoading: false, error: $event }"
                         (filterRequested)="navigateToApplicationsWithFilter($event)" />
                     }
@@ -117,11 +117,11 @@
             @case (4) {
               <!-- Labels page -->
               <div class="card-header d-flex flex-row align-items-center">
-                <tp-badge context="ViewPlanningRealm" label="LabelsCount" [value]="planningRealm.labels.length" />
+                <tp-badge context="ViewPlanningRealm" label="LabelsCount" [value]="tournamentPlanner.labels.length" />
               </div>
               <div class="card-body p-0">
                 <tp-labels-manager
-                  [tournamentPlanner]="planningRealm"
+                  [tournamentPlanner]="tournamentPlanner"
                   [updateTournamentPlanner]="updateFunction"
                   (filterRequested)="navigateToApplicationsWithFilter($event)" />
               </div>
@@ -136,7 +136,7 @@
                 <!-- The actual applications manager is displayed as fullWidthContent below -->
                 <div class="card-body p-2">
                   <tp-manage-applications-filter
-                    [tournamentPlanner]="planningRealm"
+                    [tournamentPlanner]="tournamentPlanner"
                     [filter]="applicationsFilter"
                     (filterChange)="onApplicationsFilterChange($event)" />
                 </div>
@@ -144,11 +144,11 @@
             }
             @case (3) {
               <!-- Settings page -->
-              <ng-container *tpIsActionAllowed="[planningRealm.id, Actions.ReadOrWriteRoleAssignments]">
+              <ng-container *tpIsActionAllowed="[tournamentPlanner.id, Actions.ReadOrWriteRoleAssignments]">
                 <div class="card-body">
                   <tp-rbac-widget
                     [translationKey]="'Portal.ViewPlanningRealm.RbacWidget'"
-                    [target]="planningRealm"
+                    [target]="tournamentPlanner"
                     (errorOccured)="loadingState = { isLoading: false, error: $event }" />
                 </div>
                 <hr class="m-0" />
@@ -156,8 +156,8 @@
               <div class="card-body">
                 <tp-delete-widget
                   [translationKey]="'Portal.ViewPlanningRealm.DeleteWidget'"
-                  [targetObjectName]="planningRealm.name"
-                  (deleteClick)="deletePlanningRealm()" />
+                  [targetObjectName]="tournamentPlanner.name"
+                  (deleteClick)="deleteTournamentPlanner()" />
               </div>
             }
           }
@@ -168,7 +168,7 @@
           <div class="mt-3 d-flex flex-row justify-content-center px-3">
             <div style="max-width: 2400px" class="flex-grow-1 overflow-x-auto">
               <tp-manage-applications
-                [tournamentPlanner]="planningRealm"
+                [tournamentPlanner]="tournamentPlanner"
                 [filter]="applicationsFilter"
                 (errorOccured)="loadingState = { isLoading: false, error: $event }"
                 (filterRequested)="navigateToApplicationsWithFilter($event)" />

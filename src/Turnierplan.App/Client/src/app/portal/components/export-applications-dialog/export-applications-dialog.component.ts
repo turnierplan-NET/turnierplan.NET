@@ -39,7 +39,7 @@ export class ExportApplicationsDialogComponent {
 
     const fileName = `${makeSafeFileName(
       this.translateService.instant('Portal.ViewPlanningRealm.ExportApplications.FileName', {
-        planningRealmName: this.tournamentPlanner?.name
+        tournamentPlannerName: this.tournamentPlanner?.name
       }) as string
     )}.csv`;
 

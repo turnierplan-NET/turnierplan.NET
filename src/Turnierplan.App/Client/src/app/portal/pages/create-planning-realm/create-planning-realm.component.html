@@ -8,10 +8,12 @@
     id="create_planning_realm_name"
     type="text"
     class="form-control"
-    [formControl]="planningRealmName"
+    [formControl]="tournamentPlannerName"
     [required]="true"
     [minlength]="1"
-    [ngClass]="planningRealmName.dirty || planningRealmName.touched ? (planningRealmName.invalid ? 'is-invalid' : 'is-valid') : ''" />
+    [ngClass]="
+      tournamentPlannerName.dirty || tournamentPlannerName.touched ? (tournamentPlannerName.invalid ? 'is-invalid' : 'is-valid') : ''
+    " />
   <div class="invalid-feedback" translate="Portal.CreatePlanningRealm.Form.NameInvalid"></div>
   <div class="valid-feedback" translate="Portal.CreatePlanningRealm.Form.NameValid"></div>
 
@@ -30,7 +32,7 @@
     <tp-action-button
       [type]="'success'"
       [title]="'Portal.CreatePlanningRealm.Submit'"
-      [disabled]="planningRealmName.invalid"
+      [disabled]="tournamentPlannerName.invalid"
       (buttonClick)="confirmButtonClicked()" />
   </div>
 </tp-page-frame>

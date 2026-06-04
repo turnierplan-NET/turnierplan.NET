@@ -108,20 +108,20 @@
               }
             }
             @case (4) {
-              @if (isLoadingPlanningRealms || !planningRealms) {
+              @if (isLoadingTournamentPlanners || !tournamentPlanners) {
                 <tp-loading-indicator class="my-5" [marginY]="false" />
               } @else {
                 <div class="card-header d-flex flex-row align-items-center">
-                  <tp-badge context="ViewOrganization" label="PlanningRealmCount" [value]="planningRealms.length" />
+                  <tp-badge context="ViewOrganization" label="PlanningRealmCount" [value]="tournamentPlanners.length" />
                 </div>
                 <div class="card-body">
-                  @if (planningRealms.length === 0) {
+                  @if (tournamentPlanners.length === 0) {
                     <div class="d-flex flex-row justify-content-center py-4 text-center">
                       <span class="tp-text-pre-wrap" translate="Portal.ViewOrganization.NoPlanningRealms"></span>
                     </div>
                   } @else {
                     <div class="d-flex flex-column gap-3">
-                      @for (planningRealm of planningRealms; track planningRealm.id) {
+                      @for (planningRealm of tournamentPlanners; track planningRealm.id) {
                         <div class="card shadow-sm">
                           <div class="card-body d-flex flex-column gap-2">
                             <div class="fs-5 fw-bold card-title mb-0">{{ planningRealm.name }}</div>

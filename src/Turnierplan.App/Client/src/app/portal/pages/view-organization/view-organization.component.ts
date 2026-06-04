@@ -88,7 +88,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
 
   private static readonly venuesPageId = 1;
   private static readonly apiKeysPageId = 2;
-  private static readonly planningRealmsPageId = 4;
+  private static readonly tournamentPlannersPageId = 4;
 
   protected readonly Actions = Actions;
 
@@ -96,13 +96,13 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
   protected organization?: OrganizationDto;
   protected tournaments?: TournamentHeaderDto[];
   protected venues?: VenueDto[];
-  protected planningRealms?: TournamentPlannerHeaderDto[];
+  protected tournamentPlanners?: TournamentPlannerHeaderDto[];
   protected images?: GetImagesEndpointResponse;
   protected imagesTotalSize?: number;
   protected apiKeys?: ApiKeyDto[];
   protected displayApiKeyUsage?: string;
   protected isLoadingVenues = false;
-  protected isLoadingPlanningRealms = false;
+  protected isLoadingTournamentPlanners = false;
   protected isLoadingImages = false;
   protected isLoadingApiKeys = false;
 
@@ -121,7 +121,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       icon: 'bi-buildings'
     },
     {
-      id: ViewOrganizationComponent.planningRealmsPageId,
+      id: ViewOrganizationComponent.tournamentPlannersPageId,
       title: 'Portal.ViewOrganization.Pages.PlanningRealms',
       icon: 'bi-ticket-perforated'
     },
@@ -230,13 +230,13 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (number === ViewOrganizationComponent.planningRealmsPageId && !this.planningRealms && !this.isLoadingPlanningRealms) {
+    if (number === ViewOrganizationComponent.tournamentPlannersPageId && !this.tournamentPlanners && !this.isLoadingTournamentPlanners) {
       // Load planning realms only when the page is opened
-      this.isLoadingPlanningRealms = true;
+      this.isLoadingTournamentPlanners = true;
       this.turnierplanApi.invoke(getTournamentPlanners, { organizationId: this.organization.id }).subscribe({
-        next: (planningRealms) => {
-          this.planningRealms = planningRealms;
-          this.isLoadingPlanningRealms = false;
+        next: (tournamentPlanner) => {
+          this.tournamentPlanners = tournamentPlanner;
+          this.isLoadingTournamentPlanners = false;
         },
         error: (error) => {
           this.loadingState = { isLoading: false, error: error };

@@ -58,14 +58,14 @@ export class TournamentClassManagerComponent {
   }
 
   protected deleteTournamentClass(id: number): void {
-    this.updateTournamentPlanner((planningRealm) => {
-      const index = planningRealm.tournamentClasses.findIndex((x) => x.id === id);
+    this.updateTournamentPlanner((tournamentPlanner) => {
+      const index = tournamentPlanner.tournamentClasses.findIndex((x) => x.id === id);
 
       if (index === -1) {
         return false;
       }
 
-      planningRealm.tournamentClasses.splice(index, 1);
+      tournamentPlanner.tournamentClasses.splice(index, 1);
 
       return true;
     });

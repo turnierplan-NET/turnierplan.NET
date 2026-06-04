@@ -139,12 +139,12 @@ export class TeamListComponent {
     this.teamSetOutOfCompetition.emit({ teamId: teamId, outOfCompetition: !team.outOfCompetition });
   }
 
-  protected navigateToPlanningRealm(planningRealmId: PublicId, applicationTeamId: number): void {
-    this.localStorageService.setNavigationTab(planningRealmId, ViewPlanningRealmComponent.ApplicationsManagerPageId);
-    this.localStorageService.setPlanningRealmApplicationsFilter(planningRealmId, {
+  protected navigateToTournamentPlanner(tournamentPlannerId: PublicId, applicationTeamId: number): void {
+    this.localStorageService.setNavigationTab(tournamentPlannerId, ViewPlanningRealmComponent.ApplicationsManagerPageId);
+    this.localStorageService.setTournamentPlannerApplicationsFilter(tournamentPlannerId, {
       ...defaultApplicationsFilter,
       searchTerm: `!${applicationTeamId}`
     });
-    void this.router.navigate(['/portal/tournament-planner/', planningRealmId]);
+    void this.router.navigate(['/portal/tournament-planner/', tournamentPlannerId]);
   }
 }

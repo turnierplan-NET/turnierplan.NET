@@ -36,10 +36,10 @@ export class ApplicationChangeLogComponent implements OnDestroy {
     this.errorSubject$.complete();
   }
 
-  public init(planningRealmId: string, application: ApplicationDto): void {
+  public init(tournamentPlannerId: string, application: ApplicationDto): void {
     this.applicationCreatedAt = application.createdAt;
 
-    this.turnierplanApi.invoke(getApplicationChangeLog, { planningRealmId: planningRealmId, applicationId: application.id }).subscribe({
+    this.turnierplanApi.invoke(getApplicationChangeLog, { tournamentPlannerId: tournamentPlannerId, applicationId: application.id }).subscribe({
       next: (result) => {
         this.changeLog = result;
         this.changeLog.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());

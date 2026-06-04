@@ -43,8 +43,8 @@ export class LabelsManagerComponent {
   constructor(protected readonly authorizationService: AuthorizationService) {}
 
   protected setLabelName(id: number, name: string): void {
-    this.updateTournamentPlanner((planningRealm) => {
-      const label = planningRealm.labels.find((x) => x.id == id);
+    this.updateTournamentPlanner((tournamentPlanner) => {
+      const label = tournamentPlanner.labels.find((x) => x.id == id);
 
       if (!label) {
         return false;
@@ -57,8 +57,8 @@ export class LabelsManagerComponent {
   }
 
   protected setLabelDescription(id: number, description: string): void {
-    this.updateTournamentPlanner((planningRealm) => {
-      const label = planningRealm.labels.find((x) => x.id == id);
+    this.updateTournamentPlanner((tournamentPlanner) => {
+      const label = tournamentPlanner.labels.find((x) => x.id == id);
 
       if (!label) {
         return false;
@@ -71,8 +71,8 @@ export class LabelsManagerComponent {
   }
 
   protected setLabelColor(id: any, color: string): void {
-    this.updateTournamentPlanner((planningRealm) => {
-      const label = planningRealm.labels.find((x) => x.id == id);
+    this.updateTournamentPlanner((tournamentPlanner) => {
+      const label = tournamentPlanner.labels.find((x) => x.id == id);
 
       if (!label) {
         return false;
@@ -86,14 +86,14 @@ export class LabelsManagerComponent {
   }
 
   protected deleteLabel(id: number): void {
-    this.updateTournamentPlanner((planningRealm) => {
-      const index = planningRealm.labels.findIndex((x) => x.id === id);
+    this.updateTournamentPlanner((tournamentPlanner) => {
+      const index = tournamentPlanner.labels.findIndex((x) => x.id === id);
 
       if (index === -1) {
         return false;
       }
 
-      planningRealm.labels.splice(index, 1);
+      tournamentPlanner.labels.splice(index, 1);
 
       return true;
     });

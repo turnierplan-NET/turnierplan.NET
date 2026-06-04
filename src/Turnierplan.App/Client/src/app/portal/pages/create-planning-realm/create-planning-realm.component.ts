@@ -31,7 +31,7 @@ export class CreatePlanningRealmComponent implements OnDestroy {
   protected loadingState: LoadingState = { isLoading: false };
 
   protected organization?: OrganizationDto;
-  protected planningRealmName = new FormControl('', { nonNullable: true });
+  protected tournamentPlannerName = new FormControl('', { nonNullable: true });
 
   private readonly destroyed$ = new Subject<void>();
 
@@ -72,18 +72,18 @@ export class CreatePlanningRealmComponent implements OnDestroy {
   }
 
   protected confirmButtonClicked(): void {
-    if (this.planningRealmName.valid && !this.loadingState.isLoading && this.organization) {
+    if (this.tournamentPlannerName.valid && !this.loadingState.isLoading && this.organization) {
       this.loadingState = { isLoading: true };
       this.turnierplanApi
         .invoke(createTournamentPlanner, {
           body: {
             organizationId: this.organization.id,
-            name: this.planningRealmName.value
+            name: this.tournamentPlannerName.value
           }
         })
         .pipe(
-          switchMap((planningRealm) =>
-            from(this.router.navigate(['../../../../tournament-planner/', planningRealm.id], { relativeTo: this.route }))
+          switchMap((tournamentPlanner) =>
+            from(this.router.navigate(['../../../../tournament-planner/', tournamentPlanner.id], { relativeTo: this.route }))
           )
         )
         .subscribe({

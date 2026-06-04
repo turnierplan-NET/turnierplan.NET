@@ -1046,7 +1046,7 @@ export const de = {
         InfoTest: 'Nachfolgend können Sie eine CSV-Tabelle mit allen Anmeldungen in diesem Turnierplaner herunterladen.',
         IncludeApplicationTeams: 'Mannschaften auflisten',
         Download: 'Herunterladen',
-        FileName: 'Anmeldungen {{planningRealmName}}'
+        FileName: 'Anmeldungen {{tournamentPlannerName}}'
       },
       TournamentClasses: {
         Name: 'Name',

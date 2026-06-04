@@ -38,7 +38,7 @@ import { deleteTournamentPlanner } from '../../../api/fn/tournament-planners/del
 import { LabelsManagerComponent } from '../../components/labels-manager/labels-manager.component';
 import { ExportApplicationsDialogComponent } from '../../components/export-applications-dialog/export-applications-dialog.component';
 
-export type UpdateTournamentPlannerFunc = (modifyFunc: (planningRealm: TournamentPlannerDto) => boolean) => void;
+export type UpdateTournamentPlannerFunc = (modifyFunc: (tournamentPlanner: TournamentPlannerDto) => boolean) => void;
 
 @Component({
   templateUrl: './view-planning-realm.component.html',
@@ -101,7 +101,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
 
   protected loadingState: LoadingState = { isLoading: true };
   protected updateFunction: UpdateTournamentPlannerFunc;
-  protected planningRealm?: TournamentPlannerDto;
+  protected tournamentPlanner?: TournamentPlannerDto;
   protected applicationsFilter: ApplicationsFilter = defaultApplicationsFilter;
   protected _hasUnsavedChanges = false;
 
@@ -152,9 +152,9 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     private readonly modalService: NgbModal,
     private readonly localStorageService: LocalStorageService
   ) {
-    this.updateFunction = (modifyFunc: (planningRealm: TournamentPlannerDto) => boolean) => {
-      if (this.planningRealm) {
-        if (modifyFunc(this.planningRealm)) {
+    this.updateFunction = (modifyFunc: (tournamentPlanner: TournamentPlannerDto) => boolean) => {
+      if (this.tournamentPlanner) {
+        if (modifyFunc(this.tournamentPlanner)) {
           this._hasUnsavedChanges = true;
         }
       }
@@ -166,18 +166,18 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       .pipe(
         takeUntil(this.destroyed$),
         switchMap((params) => {
-          const planningRealmId = params.get('id');
-          if (planningRealmId === null) {
+          const tournamentPlannerId = params.get('id');
+          if (tournamentPlannerId === null) {
             this.loadingState = { isLoading: false };
             return of();
           }
           this.loadingState = { isLoading: true };
-          return this.turnierplanApi.invoke(getTournamentPlanner, { id: planningRealmId });
+          return this.turnierplanApi.invoke(getTournamentPlanner, { id: tournamentPlannerId });
         })
       )
       .subscribe({
-        next: (planningRealm) => {
-          this.setPlanningRealm(planningRealm);
+        next: (tournamentPlanner) => {
+          this.setTournamentPlanner(tournamentPlanner);
           this.loadingState = { isLoading: false };
         },
         error: (error) => {
@@ -201,8 +201,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   protected addTournamentClass(): void {
     this.openModalForEnteringName('NewTournamentClass').subscribe({
       next: (name) => {
-        this.updateFunction((planningRealm) => {
-          planningRealm.tournamentClasses.push({
+        this.updateFunction((tournamentPlanner) => {
+          tournamentPlanner.tournamentClasses.push({
             id: this.nextId--,
             name: name.trim(),
             numberOfTeams: 0
@@ -217,8 +217,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   protected addInvitationLink(): void {
     this.openModalForEnteringName('NewInvitationLink', true).subscribe({
       next: (name) => {
-        this.updateFunction((planningRealm) => {
-          planningRealm.invitationLinks.push({
+        this.updateFunction((tournamentPlanner) => {
+          tournamentPlanner.invitationLinks.push({
             colorCode: this.getColorCodeForInvitationLink(),
             isActive: true,
             contactEmail: undefined,
@@ -246,8 +246,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   protected addLabel(): void {
     this.openModalForEnteringName('NewLabel').subscribe({
       next: (name) => {
-        this.updateFunction((planningRealm) => {
-          planningRealm.labels.push({
+        this.updateFunction((tournamentPlanner) => {
+          tournamentPlanner.labels.push({
             colorCode: this.getColorCodeForLabel(),
             description: '',
             id: this.nextId--,
@@ -261,11 +261,11 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   }
 
   protected addApplication(): void {
-    if (!this.planningRealm || this._hasUnsavedChanges || this.planningRealm.tournamentClasses.length === 0) {
+    if (!this.tournamentPlanner || this._hasUnsavedChanges || this.tournamentPlanner.tournamentClasses.length === 0) {
       return;
     }
 
-    const planningRealmId = this.planningRealm.id;
+    const tournamentPlannerId = this.tournamentPlanner.id;
 
     const ref = this.modalService.open(NewApplicationDialogComponent, {
       centered: true,
@@ -274,13 +274,13 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     });
 
     const component = ref.componentInstance as NewApplicationDialogComponent;
-    component.init(this.planningRealm);
+    component.init(this.tournamentPlanner);
 
     ref.closed
       .pipe(
         tap(() => (this.loadingState = { isLoading: true })),
         switchMap((request: CreateApplicationEndpointRequest) =>
-          this.turnierplanApi.invoke(createApplication, { tournamentPlannerId: planningRealmId, body: request }).pipe(map(() => request))
+          this.turnierplanApi.invoke(createApplication, { tournamentPlannerId: tournamentPlannerId, body: request }).pipe(map(() => request))
         )
       )
       .subscribe({
@@ -289,9 +289,9 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
 
           // Modify the planning realm stored in the client to account for the newly added teams. By doing this "hack" we can prevent
           // a separate request for querying the entire planning realm when only the "numberOfTeams" property has changed.
-          if (this.planningRealm) {
+          if (this.tournamentPlanner) {
             for (const entry of request.entries) {
-              const tournamentClass = this.planningRealm.tournamentClasses?.find((x) => x.id === entry.tournamentClassId);
+              const tournamentClass = this.tournamentPlanner.tournamentClasses?.find((x) => x.id === entry.tournamentClassId);
               if (tournamentClass) {
                 tournamentClass.numberOfTeams += entry.numberOfTeams;
               }
@@ -305,7 +305,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   }
 
   protected exportApplications(): void {
-    if (!this.planningRealm) {
+    if (!this.tournamentPlanner) {
       return;
     }
 
@@ -315,7 +315,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       fullscreen: 'md'
     });
 
-    (ref.componentInstance as ExportApplicationsDialogComponent).initialize(this.planningRealm);
+    (ref.componentInstance as ExportApplicationsDialogComponent).initialize(this.tournamentPlanner);
 
     ref.dismissed.subscribe({
       next: (reason?: { isApiError?: boolean; apiError?: unknown }) => {
@@ -327,34 +327,34 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     });
   }
 
-  protected renamePlanningRealm(name: string): void {
-    if (!this.planningRealm) {
+  protected renameTournamentPlanner(name: string): void {
+    if (!this.tournamentPlanner) {
       return;
     }
 
-    this.updateFunction((planningRealm) => {
-      planningRealm.name = name;
+    this.updateFunction((tournamentPlanner) => {
+      tournamentPlanner.name = name;
       return true;
     });
 
-    this.titleService.setTitleFrom(this.planningRealm);
+    this.titleService.setTitleFrom(this.tournamentPlanner);
   }
 
-  protected savePlanningRealm(): void {
-    if (!this.planningRealm || this.loadingState.isLoading) {
+  protected saveTournamentPlanner(): void {
+    if (!this.tournamentPlanner || this.loadingState.isLoading) {
       return;
     }
 
-    const planningRealmId = this.planningRealm.id;
+    const tournamentPlannerId = this.tournamentPlanner.id;
     this.loadingState = { isLoading: true };
 
     const request: UpdateTournamentPlannerEndpointRequest = {
-      name: this.planningRealm.name,
-      tournamentClasses: this.planningRealm.tournamentClasses.map((x) => ({
+      name: this.tournamentPlanner.name,
+      tournamentClasses: this.tournamentPlanner.tournamentClasses.map((x) => ({
         id: x.id < 0 ? undefined : x.id,
         name: x.name
       })),
-      invitationLinks: this.planningRealm.invitationLinks.map((x) => ({
+      invitationLinks: this.tournamentPlanner.invitationLinks.map((x) => ({
         id: x.id < 0 ? undefined : x.id,
         name: x.name,
         colorCode: x.colorCode,
@@ -374,7 +374,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
           allowNewRegistrations: y.allowNewRegistrations
         }))
       })),
-      labels: this.planningRealm.labels.map((x) => ({
+      labels: this.tournamentPlanner.labels.map((x) => ({
         id: x.id < 0 ? undefined : x.id,
         name: x.name,
         description: x.description,
@@ -383,11 +383,11 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     };
 
     this.turnierplanApi
-      .invoke(updateTournamentPlanner, { id: planningRealmId, body: request })
-      .pipe(switchMap(() => this.turnierplanApi.invoke(getTournamentPlanner, { id: planningRealmId })))
+      .invoke(updateTournamentPlanner, { id: tournamentPlannerId, body: request })
+      .pipe(switchMap(() => this.turnierplanApi.invoke(getTournamentPlanner, { id: tournamentPlannerId })))
       .subscribe({
-        next: (planningRealm) => {
-          this.setPlanningRealm(planningRealm);
+        next: (tournamentPlanner) => {
+          this.setTournamentPlanner(tournamentPlanner);
           this.loadingState = { isLoading: false };
         },
         error: (error) => {
@@ -396,14 +396,14 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       });
   }
 
-  protected deletePlanningRealm(): void {
-    if (!this.planningRealm) {
+  protected deleteTournamentPlanner(): void {
+    if (!this.tournamentPlanner) {
       return;
     }
 
-    const organizationId = this.planningRealm.organizationId;
+    const organizationId = this.tournamentPlanner.organizationId;
     this.loadingState = { isLoading: true, error: undefined };
-    this.turnierplanApi.invoke(deleteTournamentPlanner, { id: this.planningRealm.id }).subscribe({
+    this.turnierplanApi.invoke(deleteTournamentPlanner, { id: this.tournamentPlanner.id }).subscribe({
       next: () => {
         this.notificationService.showNotification(
           'info',
@@ -421,8 +421,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   protected onApplicationsFilterChange(filter: ApplicationsFilter): void {
     this.applicationsFilter = filter;
 
-    if (this.planningRealm) {
-      this.localStorageService.setPlanningRealmApplicationsFilter(this.planningRealm.id, filter);
+    if (this.tournamentPlanner) {
+      this.localStorageService.setTournamentPlannerApplicationsFilter(this.tournamentPlanner.id, filter);
     }
   }
 
@@ -434,13 +434,13 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     }
   }
 
-  private setPlanningRealm(planningRealm: TournamentPlannerDto): void {
-    this.planningRealm = planningRealm;
+  private setTournamentPlanner(tournamentPlanner: TournamentPlannerDto): void {
+    this.tournamentPlanner = tournamentPlanner;
     this._hasUnsavedChanges = false;
 
-    this.titleService.setTitleFrom(this.planningRealm);
+    this.titleService.setTitleFrom(this.tournamentPlanner);
 
-    this.applicationsFilter = this.localStorageService.getPlanningRealmApplicationsFilter(planningRealm.id);
+    this.applicationsFilter = this.localStorageService.getTournamentPlannerApplicationsFilter(tournamentPlanner.id);
   }
 
   private openModalForEnteringName(key: string, showAlert: boolean = false): Observable<string> {
@@ -463,22 +463,22 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
   }
 
   private getColorCodeForInvitationLink(): string {
-    if (!this.planningRealm) {
+    if (!this.tournamentPlanner) {
       return 'aaaaaa';
     }
 
     return ViewPlanningRealmComponent.getColorCode(
       ViewPlanningRealmComponent.DefaultInvitationLinkColorCodes,
-      this.planningRealm.invitationLinks
+      this.tournamentPlanner.invitationLinks
     );
   }
 
   private getColorCodeForLabel(): string {
-    if (!this.planningRealm) {
+    if (!this.tournamentPlanner) {
       return 'aaaaaa';
     }
 
-    return ViewPlanningRealmComponent.getColorCode(ViewPlanningRealmComponent.DefaultLabelColorCodes, this.planningRealm.labels);
+    return ViewPlanningRealmComponent.getColorCode(ViewPlanningRealmComponent.DefaultLabelColorCodes, this.tournamentPlanner.labels);
   }
 
   private static getColorCode(from: string[], currentlyUsed: { colorCode: string }[]): string {
