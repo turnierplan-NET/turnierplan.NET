@@ -32,7 +32,7 @@
               [title]="'Portal.ViewOrganization.NewTournamentPlanner'"
               [type]="'outline-success'"
               [icon]="'plus-circle'"
-              [routerLink]="'create/planning-realm'" />
+              [routerLink]="'create/tournament-planner'" />
           }
           @case (5) {
             <tp-action-button
@@ -127,7 +127,7 @@
                             <div class="fs-5 fw-bold card-title mb-0">{{ tournamentPlanner.name }}</div>
                           </div>
                           <div class="card-footer text-end pe-2">
-                            <a class="card-link" [routerLink]="'/portal/planning-realm/' + tournamentPlanner.id">
+                            <a class="card-link" [routerLink]="'/portal/tournament-planner/' + tournamentPlanner.id">
                               <span translate="Portal.ViewOrganization.OpenTournamentPlanner"></span>
                               <i class="ms-2 bi bi-arrow-right-circle" aria-hidden="true"></i>
                             </a>

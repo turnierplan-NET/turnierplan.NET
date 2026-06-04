@@ -231,7 +231,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     }
 
     if (number === ViewOrganizationComponent.tournamentPlannersPageId && !this.tournamentPlanners && !this.isLoadingTournamentPlanners) {
-      // Load planning realms only when the page is opened
+      // Load tournament planners only when the page is opened
       this.isLoadingTournamentPlanners = true;
       this.turnierplanApi.invoke(getTournamentPlanners, { organizationId: this.organization.id }).subscribe({
         next: (tournamentPlanner) => {

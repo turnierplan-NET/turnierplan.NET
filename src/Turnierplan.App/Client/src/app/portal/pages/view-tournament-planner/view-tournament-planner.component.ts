@@ -289,8 +289,8 @@ export class ViewTournamentPlannerComponent implements OnInit, OnDestroy, Discar
         next: (request: CreateApplicationEndpointRequest) => {
           this.loadingState = { isLoading: false };
 
-          // Modify the planning realm stored in the client to account for the newly added teams. By doing this "hack" we can prevent
-          // a separate request for querying the entire planning realm when only the "numberOfTeams" property has changed.
+          // Modify the tournament planner stored in the client to account for the newly added teams. By doing this "hack" we can prevent
+          // a separate request for querying the entire tournament planner when only the "numberOfTeams" property has changed.
           if (this.tournamentPlanner) {
             for (const entry of request.entries) {
               const tournamentClass = this.tournamentPlanner.tournamentClasses?.find((x) => x.id === entry.tournamentClassId);

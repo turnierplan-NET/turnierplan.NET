@@ -335,8 +335,8 @@ export class ManageApplicationsComponent implements OnDestroy {
         next: (tournamentClassId: number) => {
           this.reload$.next(undefined); // reload will eventually set isLoading to false
 
-          // Modify the planning realm stored in the client to account for the newly added team. By doing this "hack" we can prevent
-          // a separate request for querying the entire planning realm when only the "numberOfTeams" property has changed.
+          // Modify the tournament planner stored in the client to account for the newly added team. By doing this "hack" we can prevent
+          // a separate request for querying the entire tournament planner when only the "numberOfTeams" property has changed.
           const tournamentClass = this.tournamentPlanner.tournamentClasses?.find((x) => x.id === tournamentClassId);
           if (tournamentClass) {
             tournamentClass.numberOfTeams++;

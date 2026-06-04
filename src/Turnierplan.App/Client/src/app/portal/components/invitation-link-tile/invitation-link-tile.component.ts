@@ -121,7 +121,7 @@ export class InvitationLinkTileComponent {
     const tournamentClass = this.tournamentPlanner.tournamentClasses.find((x) => x.id === id);
 
     if (!tournamentClass) {
-      throw new Error(`Tournament class id ${id} does not exist in planning realm.`);
+      throw new Error(`Tournament class id ${id} does not exist in tournament planner.`);
     }
 
     return tournamentClass;
