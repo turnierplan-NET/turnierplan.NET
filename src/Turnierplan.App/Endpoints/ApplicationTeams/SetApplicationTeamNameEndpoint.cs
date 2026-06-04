@@ -11,12 +11,12 @@ internal sealed class SetApplicationTeamNameEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Patch;
 
-    protected override string Route => "/api/planning-realms/{planningRealmId}/applications/{applicationId:int}/teams/{applicationTeamId:int}/name";
+    protected override string Route => "/api/tournament-planners/{tournamentPlannerId}/applications/{applicationId:int}/teams/{applicationTeamId:int}/name";
 
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
-        [FromRoute] PublicId planningRealmId,
+        [FromRoute] PublicId tournamentPlannerId,
         [FromRoute] long applicationId,
         [FromRoute] long applicationTeamId,
         [FromBody] SetApplicationTeamNameEndpointRequest request,
@@ -30,19 +30,19 @@ internal sealed class SetApplicationTeamNameEndpoint : EndpointBase
         }
 
         // Note: We must use 'ApplicationsWithTeamsAndTournamentLinks' because if a team link exists, the tournament team must also be renamed
-        var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(planningRealmId, ITournamentPlannerRepository.Includes.ApplicationsWithTeamsAndTournamentLinks);
+        var tournamentPlanner = await tournamentPlannerRepository.GetByPublicIdAsync(tournamentPlannerId, ITournamentPlannerRepository.Includes.ApplicationsWithTeamsAndTournamentLinks);
 
-        if (planningRealm is null)
+        if (tournamentPlanner is null)
         {
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsWrite))
+        if (!accessValidator.IsActionAllowed(tournamentPlanner, Actions.ApplicationsWrite))
         {
             return Results.Forbid();
         }
 
-        var application = planningRealm.Applications.FirstOrDefault(x => x.Id == applicationId);
+        var application = tournamentPlanner.Applications.FirstOrDefault(x => x.Id == applicationId);
 
         if (application is null)
         {

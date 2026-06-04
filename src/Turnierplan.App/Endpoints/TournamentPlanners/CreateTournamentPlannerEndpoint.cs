@@ -8,18 +8,18 @@ using Turnierplan.Core.PublicId;
 using Turnierplan.Core.TournamentPlanner;
 using Turnierplan.Dal.Repositories;
 
-namespace Turnierplan.App.Endpoints.PlanningRealms;
+namespace Turnierplan.App.Endpoints.TournamentPlanners;
 
-internal sealed class CreatePlanningRealmEndpoint : EndpointBase<PlanningRealmDto>
+internal sealed class CreateTournamentPlannerEndpoint : EndpointBase<TournamentPlannerDto>
 {
     protected override HttpMethod Method => HttpMethod.Post;
 
-    protected override string Route => "/api/planning-realms";
+    protected override string Route => "/api/tournament-planners";
 
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
-        [FromBody] CreatePlanningRealmEndpointRequest request,
+        [FromBody] CreateTournamentPlannerEndpointRequest request,
         IOrganizationRepository organizationRepository,
         IAccessValidator accessValidator,
         ITournamentPlannerRepository tournamentPlannerRepository,
@@ -43,24 +43,24 @@ internal sealed class CreatePlanningRealmEndpoint : EndpointBase<PlanningRealmDt
             return Results.Forbid();
         }
 
-        var planningRealm = new TournamentPlanner(organization, request.Name.Trim());
+        var tournamentPlanner = new TournamentPlanner(organization, request.Name.Trim());
 
-        await tournamentPlannerRepository.CreateAsync(planningRealm);
+        await tournamentPlannerRepository.CreateAsync(tournamentPlanner);
         await tournamentPlannerRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-        accessValidator.AddRolesToResponseHeader(planningRealm);
+        accessValidator.AddRolesToResponseHeader(tournamentPlanner);
 
-        return Results.Ok(mapper.Map<PlanningRealmDto>(planningRealm));
+        return Results.Ok(mapper.Map<TournamentPlannerDto>(tournamentPlanner));
     }
 
-    public sealed record CreatePlanningRealmEndpointRequest
+    public sealed record CreateTournamentPlannerEndpointRequest
     {
         public required PublicId OrganizationId { get; init; }
 
         public required string Name { get; init; }
     }
 
-    internal sealed class Validator : AbstractValidator<CreatePlanningRealmEndpointRequest>
+    internal sealed class Validator : AbstractValidator<CreateTournamentPlannerEndpointRequest>
     {
         public static readonly Validator Instance = new();
 

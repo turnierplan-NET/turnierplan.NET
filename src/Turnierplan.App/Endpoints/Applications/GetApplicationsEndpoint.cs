@@ -14,12 +14,12 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
 {
     protected override HttpMethod Method => HttpMethod.Get;
 
-    protected override string Route => "/api/planning-realms/{planningRealmId}/applications";
+    protected override string Route => "/api/tournament-planners/{tournamentPlannerId}/applications";
 
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
-        [FromRoute] PublicId planningRealmId,
+        [FromRoute] PublicId tournamentPlannerId,
         [FromQuery] int? page,
         [FromQuery] int? pageSize,
         [FromQuery] string? searchTerm,
@@ -45,20 +45,20 @@ internal sealed class GetApplicationsEndpoint : EndpointBase<PaginationResultDto
             return Results.BadRequest("Invalid label filter provided.");
         }
 
-        var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(planningRealmId, ITournamentPlannerRepository.Includes.TournamentClasses | ITournamentPlannerRepository.Includes.ApplicationsWithTeamsAndTournamentLinks);
+        var tournamentPlanner = await tournamentPlannerRepository.GetByPublicIdAsync(tournamentPlannerId, ITournamentPlannerRepository.Includes.TournamentClasses | ITournamentPlannerRepository.Includes.ApplicationsWithTeamsAndTournamentLinks);
 
-        if (planningRealm is null)
+        if (tournamentPlanner is null)
         {
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsRead))
+        if (!accessValidator.IsActionAllowed(tournamentPlanner, Actions.ApplicationsRead))
         {
             return Results.Forbid();
         }
 
         var queryLogic = new QueryLogic(page, pageSize, searchTerm, tournamentClassFilter, invitationLinkFilter, labelFilter);
-        var result = queryLogic.Process(planningRealm, mapper);
+        var result = queryLogic.Process(tournamentPlanner, mapper);
 
         return Results.Ok(result);
     }

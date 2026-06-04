@@ -40,14 +40,14 @@ internal sealed class GetTournamentEndpoint : EndpointBase<TournamentDto>
 
         accessValidator.AddRolesToResponseHeader(tournament);
 
-        var planningRealms = tournament.Teams.Select(x => x.TeamLink)
+        var tournamentPlanners = tournament.Teams.Select(x => x.TeamLink)
             .WhereNotNull()
             .Select(x => x.ApplicationTeam.Application.TournamentPlanner)
             .Distinct();
 
-        foreach (var planningRealm in planningRealms)
+        foreach (var tournamentPlanner in tournamentPlanners)
         {
-            accessValidator.AddRolesToResponseHeader(planningRealm);
+            accessValidator.AddRolesToResponseHeader(tournamentPlanner);
         }
 
         return Results.Ok(mapper.Map<TournamentDto>(tournament));

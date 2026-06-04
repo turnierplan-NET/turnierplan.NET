@@ -13,12 +13,12 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
 {
     protected override HttpMethod Method => HttpMethod.Post;
 
-    protected override string Route => "/api/planning-realms/{planningRealmId}/applications";
+    protected override string Route => "/api/tournament-planners/{tournamentPlannerId}/applications";
 
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
-        [FromRoute] PublicId planningRealmId,
+        [FromRoute] PublicId tournamentPlannerId,
         [FromBody] CreateApplicationEndpointRequest request,
         ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
@@ -30,26 +30,26 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
             return result;
         }
 
-        var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(planningRealmId, ITournamentPlannerRepository.Includes.TournamentClasses);
+        var tournamentPlanner = await tournamentPlannerRepository.GetByPublicIdAsync(tournamentPlannerId, ITournamentPlannerRepository.Includes.TournamentClasses);
 
-        if (planningRealm is null)
+        if (tournamentPlanner is null)
         {
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsWrite))
+        if (!accessValidator.IsActionAllowed(tournamentPlanner, Actions.ApplicationsWrite))
         {
             return Results.Forbid();
         }
 
-        var application = planningRealm.AddApplication(null, request.Contact);
+        var application = tournamentPlanner.AddApplication(null, request.Contact);
 
         application.ContactEmail = request.ContactEmail;
         application.ContactTelephone = request.ContactTelephone;
 
         foreach (var entry in request.Entries)
         {
-            var tournamentClass = planningRealm.TournamentClasses.FirstOrDefault(x => x.Id == entry.TournamentClassId);
+            var tournamentClass = tournamentPlanner.TournamentClasses.FirstOrDefault(x => x.Id == entry.TournamentClassId);
 
             if (tournamentClass is null)
             {

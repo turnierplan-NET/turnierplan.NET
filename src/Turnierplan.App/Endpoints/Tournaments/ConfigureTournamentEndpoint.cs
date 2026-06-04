@@ -45,40 +45,40 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
             return Results.Forbid();
         }
 
-        var planningRealms = new Dictionary<PublicId, TournamentPlanner>();
+        var tournamentPlanners = new Dictionary<PublicId, TournamentPlanner>();
 
-        var planningRealmIds = request.Groups
+        var tournamentPlannerIds = request.Groups
             .SelectMany(x => x.Teams)
             .Where(x => x.TeamLink is not null)
-            .Select(x => x.TeamLink!.PlanningRealmId)
+            .Select(x => x.TeamLink!.TournamentPlannerId)
             .Distinct()
             .ToList();
 
-        if (planningRealmIds.Count > 3)
+        if (tournamentPlannerIds.Count > 3)
         {
-            return Results.BadRequest("Cannot use more than 3 distinct planning realms across all team links.");
+            return Results.BadRequest("Cannot use more than 3 distinct tournament planners across all team links.");
         }
 
-        foreach (var planningRealmId in planningRealmIds)
+        foreach (var tournamentPlannerId in tournamentPlannerIds)
         {
-            var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(planningRealmId, ITournamentPlannerRepository.Includes.ApplicationsWithTeams);
+            var tournamentPlanner = await tournamentPlannerRepository.GetByPublicIdAsync(tournamentPlannerId, ITournamentPlannerRepository.Includes.ApplicationsWithTeams);
 
-            if (planningRealm is null)
+            if (tournamentPlanner is null)
             {
                 return Results.NotFound();
             }
 
-            if (planningRealm.Organization != tournament.Organization)
+            if (tournamentPlanner.Organization != tournament.Organization)
             {
-                return Results.BadRequest("Planning realm must belong to the same organization as the tournament.");
+                return Results.BadRequest("Tournament planner must belong to the same organization as the tournament.");
             }
 
-            if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsWrite))
+            if (!accessValidator.IsActionAllowed(tournamentPlanner, Actions.ApplicationsWrite))
             {
                 return Results.Forbid();
             }
 
-            planningRealms[planningRealmId] = planningRealm;
+            tournamentPlanners[tournamentPlannerId] = tournamentPlanner;
         }
 
         DeleteNoLongerNeededTeams(tournament, request);
@@ -149,15 +149,15 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
                 }
                 else if (requestTeam.TeamLink is not null)
                 {
-                    var planningRealm = planningRealms[requestTeam.TeamLink.PlanningRealmId];
+                    var tournamentPlanner = tournamentPlanners[requestTeam.TeamLink.TournamentPlannerId];
 
-                    var applicationTeam = planningRealm.Applications
+                    var applicationTeam = tournamentPlanner.Applications
                         .SelectMany(x => x.Teams)
                         .FirstOrDefault(x => x.Id == requestTeam.TeamLink.ApplicationTeamId);
 
                     if (applicationTeam is null)
                     {
-                        return Results.BadRequest($"No application team with id {requestTeam.TeamLink.ApplicationTeamId} exists in planning realm '{planningRealm.PublicId}'.");
+                        return Results.BadRequest($"No application team with id {requestTeam.TeamLink.ApplicationTeamId} exists in tournament planner '{tournamentPlanner.PublicId}'.");
                     }
 
                     team.LinkWithApplicationTeam(applicationTeam);
@@ -321,7 +321,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
 
     public sealed record ConfigureTournamentEndpointRequestTeamLink
     {
-        public required PublicId PlanningRealmId { get; init; }
+        public required PublicId TournamentPlannerId { get; init; }
 
         public required int ApplicationTeamId { get; init; }
     }

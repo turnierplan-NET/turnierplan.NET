@@ -4,11 +4,11 @@ using Turnierplan.Core.TournamentPlanner;
 
 namespace Turnierplan.App.Mapping.Rules;
 
-internal sealed class PlanningRealmMappingRule : MappingRuleBase<TournamentPlanner, PlanningRealmDto>
+internal sealed class TournamentPlannerMappingRule : MappingRuleBase<TournamentPlanner, TournamentPlannerDto>
 {
-    protected override PlanningRealmDto Map(IMapper mapper, MappingContext context, TournamentPlanner source)
+    protected override TournamentPlannerDto Map(IMapper mapper, MappingContext context, TournamentPlanner source)
     {
-        return new PlanningRealmDto
+        return new TournamentPlannerDto
         {
             Id = source.PublicId,
             OrganizationId = source.Organization.PublicId,

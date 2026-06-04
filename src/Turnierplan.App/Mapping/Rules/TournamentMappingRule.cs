@@ -44,8 +44,8 @@ internal sealed class TournamentMappingRule : MappingRuleBase<Tournament, Tourna
                     },
                     Link = team.TeamLink is null ? null : new TeamLinkDto
                     {
-                        PlanningRealmId = team.TeamLink.ApplicationTeam.Application.TournamentPlanner.PublicId,
-                        PlanningRealmName = team.TeamLink.ApplicationTeam.Application.TournamentPlanner.Name,
+                        TournamentPlannerId = team.TeamLink.ApplicationTeam.Application.TournamentPlanner.PublicId,
+                        TournamentPlannerName = team.TeamLink.ApplicationTeam.Application.TournamentPlanner.Name,
                         TournamentClassName = team.TeamLink.ApplicationTeam.Class.Name,
                         ApplicationTeamId = team.TeamLink.ApplicationTeam.Id
                     }

@@ -5,9 +5,9 @@ using Turnierplan.App.Security;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Dal.Repositories;
 
-namespace Turnierplan.App.Endpoints.PlanningRealms;
+namespace Turnierplan.App.Endpoints.TournamentPlanners;
 
-internal sealed class GetPlanningRealmsEndpoint : EndpointBase<IEnumerable<PlanningRealmHeaderDto>>
+internal sealed class GetTournamentPlannersEndpoint : EndpointBase<IEnumerable<TournamentPlannerHeaderDto>>
 {
     protected override HttpMethod Method => HttpMethod.Get;
 
@@ -33,6 +33,6 @@ internal sealed class GetPlanningRealmsEndpoint : EndpointBase<IEnumerable<Plann
             return Results.Forbid();
         }
 
-        return Results.Ok(mapper.MapCollection<PlanningRealmHeaderDto>(organization.TournamentPlanners));
+        return Results.Ok(mapper.MapCollection<TournamentPlannerHeaderDto>(organization.TournamentPlanners));
     }
 }

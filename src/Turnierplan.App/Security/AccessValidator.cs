@@ -103,7 +103,7 @@ internal sealed class AccessValidator : IAccessValidator
             ApiKey apiKey => IsActionAllowed(apiKey.Organization, action, principal),
             Image image => IsActionAllowed(image.Organization, action, principal),
             Folder folder => IsActionAllowed(folder.Organization, action, principal),
-            TournamentPlanner planningRealm => IsActionAllowed(planningRealm.Organization, action, principal),
+            TournamentPlanner tournamentPlanner => IsActionAllowed(tournamentPlanner.Organization, action, principal),
             Tournament tournament => (tournament.Folder is not null && IsActionAllowed(tournament.Folder, action, principal)) || IsActionAllowed(tournament.Organization, action, principal),
             Venue venue => IsActionAllowed(venue.Organization, action, principal),
             _ => false
@@ -126,8 +126,8 @@ internal sealed class AccessValidator : IAccessValidator
             case Folder folder:
                 AddAvailableRoles(folder.Organization, rolesList, principal);
                 break;
-            case TournamentPlanner planningRealm:
-                AddAvailableRoles(planningRealm.Organization, rolesList, principal);
+            case TournamentPlanner tournamentPlanner:
+                AddAvailableRoles(tournamentPlanner.Organization, rolesList, principal);
                 break;
             case Tournament tournament:
                 AddAvailableRoles(tournament.Organization, rolesList, principal);

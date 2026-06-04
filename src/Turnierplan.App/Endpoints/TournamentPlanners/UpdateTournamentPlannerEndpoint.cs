@@ -10,19 +10,19 @@ using Turnierplan.Core.PublicId;
 using Turnierplan.Core.TournamentPlanner;
 using Turnierplan.Dal.Repositories;
 
-namespace Turnierplan.App.Endpoints.PlanningRealms;
+namespace Turnierplan.App.Endpoints.TournamentPlanners;
 
-internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
+internal sealed partial class UpdateTournamentPlannerEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Put;
 
-    protected override string Route => "/api/planning-realms/{id}";
+    protected override string Route => "/api/tournament-planners/{id}";
 
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
         [FromRoute] PublicId id,
-        [FromBody] UpdatePlanningRealmEndpointRequest request,
+        [FromBody] UpdateTournamentPlannerEndpointRequest request,
         ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         IImageRepository imageRepository,
@@ -33,26 +33,26 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
             return result;
         }
 
-        var planningRealm = await tournamentPlannerRepository.GetByPublicIdAsync(id, ITournamentPlannerRepository.Includes.All);
+        var tournamentPlanner = await tournamentPlannerRepository.GetByPublicIdAsync(id, ITournamentPlannerRepository.Includes.All);
 
-        if (planningRealm is null)
+        if (tournamentPlanner is null)
         {
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.GenericWrite))
+        if (!accessValidator.IsActionAllowed(tournamentPlanner, Actions.GenericWrite))
         {
             return Results.Forbid();
         }
 
-        if (!TryApplyChangesToPlanningRealm(planningRealm, request, out var error))
+        if (!TryApplyChangesToTournamentPlanner(tournamentPlanner, request, out var error))
         {
             return Results.BadRequest(error);
         }
 
         // The invitation links are updated separately to avoid having to pass required services along multiple
         // nested method calls, and so we can use the Try..() pattern for the other apply methods.
-        var applyImageResult = await UpdateInvitationLinkImagesAsync(imageRepository, accessValidator, planningRealm, request);
+        var applyImageResult = await UpdateInvitationLinkImagesAsync(imageRepository, accessValidator, tournamentPlanner, request);
 
         if (applyImageResult is not null)
         {
@@ -65,7 +65,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         return Results.NoContent();
     }
 
-    private static bool TryApplyChangesToPlanningRealm(TournamentPlanner tournamentPlanner, UpdatePlanningRealmEndpointRequest request, [NotNullWhen(false)] out string? error)
+    private static bool TryApplyChangesToTournamentPlanner(TournamentPlanner tournamentPlanner, UpdateTournamentPlannerEndpointRequest request, [NotNullWhen(false)] out string? error)
     {
         tournamentPlanner.Name = request.Name.Trim();
 
@@ -83,7 +83,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         return true;
     }
 
-    private static bool TryDeleteNoLongerNeededTournamentClasses(TournamentPlanner tournamentPlanner, UpdatePlanningRealmEndpointRequest request, [NotNullWhen(false)] out string? error)
+    private static bool TryDeleteNoLongerNeededTournamentClasses(TournamentPlanner tournamentPlanner, UpdateTournamentPlannerEndpointRequest request, [NotNullWhen(false)] out string? error)
     {
         foreach (var tournamentClass in tournamentPlanner.TournamentClasses.ToList())
         {
@@ -111,7 +111,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         return true;
     }
 
-    private static bool TryDeleteNoLongerNeededInvitationLinks(TournamentPlanner tournamentPlanner, UpdatePlanningRealmEndpointRequest request, [NotNullWhen(false)] out string? error)
+    private static bool TryDeleteNoLongerNeededInvitationLinks(TournamentPlanner tournamentPlanner, UpdateTournamentPlannerEndpointRequest request, [NotNullWhen(false)] out string? error)
     {
         foreach (var invitationLink in tournamentPlanner.InvitationLinks.ToList())
         {
@@ -137,7 +137,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         return true;
     }
 
-    private static bool TryDeleteNoLongerNeededLabels(TournamentPlanner tournamentPlanner, UpdatePlanningRealmEndpointRequest request, [NotNullWhen(false)] out string? error)
+    private static bool TryDeleteNoLongerNeededLabels(TournamentPlanner tournamentPlanner, UpdateTournamentPlannerEndpointRequest request, [NotNullWhen(false)] out string? error)
     {
         foreach (var label in tournamentPlanner.Labels.ToList())
         {
@@ -153,7 +153,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         return true;
     }
 
-    private static bool TryCreateOrUpdateTournamentClasses(TournamentPlanner tournamentPlanner, UpdatePlanningRealmEndpointRequest request, [NotNullWhen(false)] out string? error)
+    private static bool TryCreateOrUpdateTournamentClasses(TournamentPlanner tournamentPlanner, UpdateTournamentPlannerEndpointRequest request, [NotNullWhen(false)] out string? error)
     {
         foreach (var requestTournamentClass in request.TournamentClasses)
         {
@@ -179,7 +179,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         return true;
     }
 
-    private static bool TryCreateOrUpdateInvitationLinks(TournamentPlanner tournamentPlanner, UpdatePlanningRealmEndpointRequest request, [NotNullWhen(false)] out string? error)
+    private static bool TryCreateOrUpdateInvitationLinks(TournamentPlanner tournamentPlanner, UpdateTournamentPlannerEndpointRequest request, [NotNullWhen(false)] out string? error)
     {
         foreach (var requestInvitationLink in request.InvitationLinks)
         {
@@ -255,7 +255,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         return true;
     }
 
-    private static bool TryCreateOrUpdateLabels(TournamentPlanner tournamentPlanner, UpdatePlanningRealmEndpointRequest request, [NotNullWhen(false)] out string? error)
+    private static bool TryCreateOrUpdateLabels(TournamentPlanner tournamentPlanner, UpdateTournamentPlannerEndpointRequest request, [NotNullWhen(false)] out string? error)
     {
         foreach (var requestLabel in request.Labels)
         {
@@ -291,7 +291,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         IImageRepository imageRepository,
         IAccessValidator accessValidator,
         TournamentPlanner tournamentPlanner,
-        UpdatePlanningRealmEndpointRequest request)
+        UpdateTournamentPlannerEndpointRequest request)
     {
         foreach (var requestInvitationLink in request.InvitationLinks)
         {
@@ -368,7 +368,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
 
         if (tournamentPlanner.Organization != requestImage.Organization)
         {
-            return Results.BadRequest("Image must belong to the same organization as the planning realm.");
+            return Results.BadRequest("Image must belong to the same organization as the tournament planner.");
         }
 
         updateImage(requestImage);
@@ -376,25 +376,25 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         return null; // means no error occurred
     }
 
-    public sealed record UpdatePlanningRealmEndpointRequest
+    public sealed record UpdateTournamentPlannerEndpointRequest
     {
         public required string Name { get; init; }
 
-        public required UpdatePlanningRealmEndpointRequestTournamentClass[] TournamentClasses { get; init; }
+        public required UpdateTournamentPlannerEndpointRequestTournamentClass[] TournamentClasses { get; init; }
 
-        public required UpdatePlanningRealmEndpointRequestInvitationLink[] InvitationLinks { get; init; }
+        public required UpdateTournamentPlannerEndpointRequestInvitationLink[] InvitationLinks { get; init; }
 
-        public required UpdatePlanningRealmEndpointRequestLabel[] Labels { get; init; }
+        public required UpdateTournamentPlannerEndpointRequestLabel[] Labels { get; init; }
     }
 
-    public sealed record UpdatePlanningRealmEndpointRequestTournamentClass
+    public sealed record UpdateTournamentPlannerEndpointRequestTournamentClass
     {
         public long? Id { get; init; }
 
         public required string Name { get; init; }
     }
 
-    public sealed record UpdatePlanningRealmEndpointRequestInvitationLink
+    public sealed record UpdateTournamentPlannerEndpointRequestInvitationLink
     {
         // The TryCreateOrUpdateInvitationLinks() method will save a reference to the InvitationLink entity
         // so that the UpdateInvitationLinkImagesAsync() method can update the image afterward.
@@ -425,12 +425,12 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
 
         public PublicId? SecondaryLogoId { get; init; }
 
-        public required UpdatePlanningRealmEndpointRequestInvitationLinkExternalLink[] ExternalLinks { get; init; }
+        public required UpdateTournamentPlannerEndpointRequestInvitationLinkExternalLink[] ExternalLinks { get; init; }
 
-        public required UpdatePlanningRealmEndpointRequestInvitationLinkEntry[] Entries { get; init; }
+        public required UpdateTournamentPlannerEndpointRequestInvitationLinkEntry[] Entries { get; init; }
     }
 
-    public sealed record UpdatePlanningRealmEndpointRequestInvitationLinkEntry
+    public sealed record UpdateTournamentPlannerEndpointRequestInvitationLinkEntry
     {
         public required long TournamentClassId { get; init; }
 
@@ -439,14 +439,14 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         public int? MaxTeamsPerRegistration { get; init; }
     }
 
-    public sealed record UpdatePlanningRealmEndpointRequestInvitationLinkExternalLink
+    public sealed record UpdateTournamentPlannerEndpointRequestInvitationLinkExternalLink
     {
         public required string Name { get; init; }
 
         public required string Url { get; init; }
     }
 
-    public sealed record UpdatePlanningRealmEndpointRequestLabel
+    public sealed record UpdateTournamentPlannerEndpointRequestLabel
     {
         public long? Id { get; init; }
 
@@ -457,7 +457,7 @@ internal sealed partial class UpdatePlanningRealmEndpoint : EndpointBase
         public required string ColorCode { get; init; }
     }
 
-    internal sealed class Validator : AbstractValidator<UpdatePlanningRealmEndpointRequest>
+    internal sealed class Validator : AbstractValidator<UpdateTournamentPlannerEndpointRequest>
     {
         public static readonly Validator Instance = new();
 

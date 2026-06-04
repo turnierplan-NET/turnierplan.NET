@@ -2,7 +2,7 @@ using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.App.Models;
 
-public sealed record PlanningRealmHeaderDto
+public sealed record TournamentPlannerHeaderDto
 {
     public required PublicId Id { get; init; }
 
