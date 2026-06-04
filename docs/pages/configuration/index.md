@@ -30,7 +30,7 @@ Die folgenden Einstellungen können gesetzt werden, um das allgemeine Aussehen u
 
 ## Bilder-Uploads
 
-In der Weboberfläche können Bilddateien hochgeladen werden. Diese werden mit einer bestimmten Qualitätseinstellung in das `webp`-Format konvertiert und anschließend standardmäßig als Dateien in einem Container-Verzeichnis gespeichert. Das entsprechende Verzeichnis sollte [als Volume persistiert](http://localhost:8000/installation/#volume-mounts) werden. Folgende Einstellungen sind verfügbar:
+In der Weboberfläche können Bilddateien hochgeladen werden. Diese werden mit einer bestimmten Qualitätseinstellung in das `webp`-Format konvertiert und anschließend standardmäßig als Dateien in einem Container-Verzeichnis gespeichert. Bei einem Docker-Deployment sollte das entsprechende Verzeichnis [als Volume persistiert](../installation/docker-compose.md#volume-mounts) werden. Folgende Einstellungen sind verfügbar:
 
 | Umgebungsvariable           | Beschreibung                                                                                                          | Standard                  |
 |-----------------------------|-----------------------------------------------------------------------------------------------------------------------|---------------------------|
