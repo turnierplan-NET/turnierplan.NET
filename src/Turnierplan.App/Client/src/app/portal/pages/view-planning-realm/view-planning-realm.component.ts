@@ -27,18 +27,18 @@ import { ManageApplicationsFilterComponent } from '../../components/manage-appli
 import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { ManageApplicationsComponent } from '../../components/manage-applications/manage-applications.component';
-import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { CreateApplicationEndpointRequest } from '../../../api/models/create-application-endpoint-request';
-import { UpdatePlanningRealmEndpointRequest } from '../../../api/models/update-planning-realm-endpoint-request';
-import { getPlanningRealm } from '../../../api/fn/planning-realms/get-planning-realm';
+import { UpdateTournamentPlannerEndpointRequest } from '../../../api/models/update-tournament-planner-endpoint-request';
+import { getTournamentPlanner } from '../../../api/fn/tournament-planners/get-tournament-planner';
 import { createApplication } from '../../../api/fn/applications/create-application';
-import { updatePlanningRealm } from '../../../api/fn/planning-realms/update-planning-realm';
-import { deletePlanningRealm } from '../../../api/fn/planning-realms/delete-planning-realm';
+import { updateTournamentPlanner } from '../../../api/fn/tournament-planners/update-tournament-planner';
+import { deleteTournamentPlanner } from '../../../api/fn/tournament-planners/delete-tournament-planner';
 import { LabelsManagerComponent } from '../../components/labels-manager/labels-manager.component';
 import { ExportApplicationsDialogComponent } from '../../components/export-applications-dialog/export-applications-dialog.component';
 
-export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => void;
+export type UpdatePlanningRealmFunc = (modifyFunc: (planningRealm: TournamentPlannerDto) => boolean) => void;
 
 @Component({
   templateUrl: './view-planning-realm.component.html',
@@ -101,7 +101,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
 
   protected loadingState: LoadingState = { isLoading: true };
   protected updateFunction: UpdatePlanningRealmFunc;
-  protected planningRealm?: PlanningRealmDto;
+  protected planningRealm?: TournamentPlannerDto;
   protected applicationsFilter: ApplicationsFilter = defaultApplicationsFilter;
   protected _hasUnsavedChanges = false;
 
@@ -152,7 +152,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     private readonly modalService: NgbModal,
     private readonly localStorageService: LocalStorageService
   ) {
-    this.updateFunction = (modifyFunc: (planningRealm: PlanningRealmDto) => boolean) => {
+    this.updateFunction = (modifyFunc: (planningRealm: TournamentPlannerDto) => boolean) => {
       if (this.planningRealm) {
         if (modifyFunc(this.planningRealm)) {
           this._hasUnsavedChanges = true;
@@ -172,7 +172,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
             return of();
           }
           this.loadingState = { isLoading: true };
-          return this.turnierplanApi.invoke(getPlanningRealm, { id: planningRealmId });
+          return this.turnierplanApi.invoke(getTournamentPlanner, { id: planningRealmId });
         })
       )
       .subscribe({
@@ -280,7 +280,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
       .pipe(
         tap(() => (this.loadingState = { isLoading: true })),
         switchMap((request: CreateApplicationEndpointRequest) =>
-          this.turnierplanApi.invoke(createApplication, { planningRealmId: planningRealmId, body: request }).pipe(map(() => request))
+          this.turnierplanApi.invoke(createApplication, { tournamentPlannerId: planningRealmId, body: request }).pipe(map(() => request))
         )
       )
       .subscribe({
@@ -348,7 +348,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     const planningRealmId = this.planningRealm.id;
     this.loadingState = { isLoading: true };
 
-    const request: UpdatePlanningRealmEndpointRequest = {
+    const request: UpdateTournamentPlannerEndpointRequest = {
       name: this.planningRealm.name,
       tournamentClasses: this.planningRealm.tournamentClasses.map((x) => ({
         id: x.id < 0 ? undefined : x.id,
@@ -383,8 +383,8 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     };
 
     this.turnierplanApi
-      .invoke(updatePlanningRealm, { id: planningRealmId, body: request })
-      .pipe(switchMap(() => this.turnierplanApi.invoke(getPlanningRealm, { id: planningRealmId })))
+      .invoke(updateTournamentPlanner, { id: planningRealmId, body: request })
+      .pipe(switchMap(() => this.turnierplanApi.invoke(getTournamentPlanner, { id: planningRealmId })))
       .subscribe({
         next: (planningRealm) => {
           this.setPlanningRealm(planningRealm);
@@ -403,7 +403,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
 
     const organizationId = this.planningRealm.organizationId;
     this.loadingState = { isLoading: true, error: undefined };
-    this.turnierplanApi.invoke(deletePlanningRealm, { id: this.planningRealm.id }).subscribe({
+    this.turnierplanApi.invoke(deleteTournamentPlanner, { id: this.planningRealm.id }).subscribe({
       next: () => {
         this.notificationService.showNotification(
           'info',
@@ -434,7 +434,7 @@ export class ViewPlanningRealmComponent implements OnInit, OnDestroy, DiscardCha
     }
   }
 
-  private setPlanningRealm(planningRealm: PlanningRealmDto): void {
+  private setPlanningRealm(planningRealm: TournamentPlannerDto): void {
     this.planningRealm = planningRealm;
     this._hasUnsavedChanges = false;
 

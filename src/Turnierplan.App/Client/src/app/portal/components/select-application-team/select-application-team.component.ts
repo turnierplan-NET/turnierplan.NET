@@ -10,13 +10,13 @@ import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { ApplicationTeamDto } from '../../../api/models/application-team-dto';
-import { PlanningRealmHeaderDto } from '../../../api/models/planning-realm-header-dto';
-import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { TournamentPlannerHeaderDto } from '../../../api/models/tournament-planner-header-dto';
+import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
 import { PaginationResultDtoOfApplicationDto } from '../../../api/models/pagination-result-dto-of-application-dto';
 import { PublicId } from '../../../api/models/public-id';
-import { getPlanningRealms } from '../../../api/fn/planning-realms/get-planning-realms';
+import { getTournamentPlanners } from '../../../api/fn/tournament-planners/get-tournament-planners';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getPlanningRealm } from '../../../api/fn/planning-realms/get-planning-realm';
+import { getTournamentPlanner } from '../../../api/fn/tournament-planners/get-tournament-planner';
 import { getApplications } from '../../../api/fn/applications/get-applications';
 import { LabelDto } from '../../../api/models/label-dto';
 import { LabelComponent } from '../label/label.component';
@@ -46,10 +46,10 @@ export type SelectApplicationTeamResult = {
 })
 export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   protected isLoadingPlanningRealms = true;
-  protected planningRealms?: PlanningRealmHeaderDto[];
+  protected planningRealms?: TournamentPlannerHeaderDto[];
   protected currentPlanningRealmId?: string;
   protected isLoadingPlanningRealmDetail = true;
-  protected planningRealmDetail?: PlanningRealmDto;
+  protected planningRealmDetail?: TournamentPlannerDto;
   protected applicationsFilter: ApplicationsFilter = defaultApplicationsFilter;
   protected isLoadingApplications = true;
   protected applicationsCurrentPage = 0;
@@ -78,7 +78,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.isLoadingPlanningRealms = true;
 
-    this.turnierplanApi.invoke(getPlanningRealms, { organizationId: this.organizationId }).subscribe({
+    this.turnierplanApi.invoke(getTournamentPlanners, { organizationId: this.organizationId }).subscribe({
       next: (result) => {
         this.planningRealms = result;
         this.isLoadingPlanningRealms = false;
@@ -109,7 +109,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
         switchMap((id) => {
           this.isLoadingPlanningRealmDetail = true;
 
-          return this.turnierplanApi.invoke(getPlanningRealm, { id: id });
+          return this.turnierplanApi.invoke(getTournamentPlanner, { id: id });
         }),
         catchError(() => of(undefined))
       )
@@ -127,7 +127,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
           this.isLoadingApplications = true;
 
           return this.turnierplanApi.invoke(getApplications, {
-            planningRealmId: this.planningRealmDetail!.id,
+            tournamentPlannerId: this.planningRealmDetail!.id,
             page: this.applicationsCurrentPage,
             pageSize: this.applicationsPageSize,
             ...applicationsFilterToQueryParameters(this.applicationsFilter)

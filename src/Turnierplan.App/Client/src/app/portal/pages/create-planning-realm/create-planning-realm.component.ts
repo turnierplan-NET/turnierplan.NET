@@ -12,7 +12,7 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
 import { OrganizationDto } from '../../../api/models/organization-dto';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { getOrganization } from '../../../api/fn/organizations/get-organization';
-import { createPlanningRealm } from '../../../api/fn/planning-realms/create-planning-realm';
+import { createTournamentPlanner } from '../../../api/fn/tournament-planners/create-tournament-planner';
 
 @Component({
   templateUrl: './create-planning-realm.component.html',
@@ -75,7 +75,7 @@ export class CreatePlanningRealmComponent implements OnDestroy {
     if (this.planningRealmName.valid && !this.loadingState.isLoading && this.organization) {
       this.loadingState = { isLoading: true };
       this.turnierplanApi
-        .invoke(createPlanningRealm, {
+        .invoke(createTournamentPlanner, {
           body: {
             organizationId: this.organization.id,
             name: this.planningRealmName.value
