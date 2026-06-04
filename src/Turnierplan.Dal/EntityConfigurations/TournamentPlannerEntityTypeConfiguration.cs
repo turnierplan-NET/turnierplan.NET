@@ -9,8 +9,7 @@ public sealed class TournamentPlannerEntityTypeConfiguration : IEntityTypeConfig
 {
     public void Configure(EntityTypeBuilder<TournamentPlanner> builder)
     {
-        // TODO: Update table name
-        builder.ToTable("PlanningRealms", TurnierplanContext.Schema);
+        builder.ToTable("TournamentPlanners", TurnierplanContext.Schema);
 
         builder.HasKey(x => x.Id);
 
