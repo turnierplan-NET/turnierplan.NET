@@ -1042,7 +1042,7 @@ export const de = {
       },
       ExportApplications: {
         Button: 'Export (.csv)',
-        DialogTitle: 'asdf',
+        DialogTitle: 'Anmeldungen exportieren',
         Download: 'Herunterladen',
         FileName: 'Anmeldungen {{planningRealmName}}'
       },
