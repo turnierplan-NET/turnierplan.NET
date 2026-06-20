@@ -579,7 +579,7 @@ namespace Turnierplan.Dal.Migrations
                     b.HasIndex("PublicId")
                         .IsUnique();
 
-                    b.ToTable("PlanningRealms", "turnierplan");
+                    b.ToTable("TournamentPlanners", "turnierplan");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.ApiKey.ApiKey>", b =>
@@ -709,7 +709,7 @@ namespace Turnierplan.Dal.Migrations
 
                     b.HasIndex("TournamentPlannerId");
 
-                    b.ToTable("IAM_PlanningRealm", "turnierplan");
+                    b.ToTable("IAM_TournamentPlanner", "turnierplan");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Tournament.Tournament>", b =>
