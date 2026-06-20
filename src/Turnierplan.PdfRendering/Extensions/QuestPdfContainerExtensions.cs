@@ -30,7 +30,7 @@ internal static class QuestPdfContainerExtensions
                 translateX = -size;
             }
 
-            container = container.AlignRight().TranslateX(translateX, sizeUnit);
+            container = container.AlignRight().OffsetX(translateX, sizeUnit);
         }
 
         float translateY;
@@ -45,7 +45,7 @@ internal static class QuestPdfContainerExtensions
             translateY = 0.0f;
         }
 
-        container.TranslateY(translateY, sizeUnit).Unconstrained().Width(size, sizeUnit).Height(size, sizeUnit).Image(image, imageStorage);
+        container.OffsetY(translateY, sizeUnit).Unconstrained().Width(size, sizeUnit).Height(size, sizeUnit).Image(image, imageStorage);
     }
 
     /// <summary>
