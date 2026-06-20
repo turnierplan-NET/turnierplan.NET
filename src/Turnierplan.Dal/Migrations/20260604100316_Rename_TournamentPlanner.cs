@@ -18,6 +18,10 @@ namespace Turnierplan.Dal.Migrations
          *
          * It had to be done this way, becuase if all properties and classes are renamed in the domain model at once, EF would
          * no longer correctly detect the renames and would rather drop the existing table and create everything new from scratch.
+         *
+         * Further note: PostgreSQL 18 introduces named NOT NULL constraints. We do not make an effort to rename those constraints
+         * because turnierplan.NET does not require a specific PostgreSQL version. Please refer to the PostgreSQL 18 release notes:
+         *  -> https://www.postgresql.org/docs/release/18.0/#:~:text=names%20to%20be%20specified%20for%20NOT%20NULL%20constraint
          */
 
         /// <inheritdoc />
@@ -246,32 +250,114 @@ namespace Turnierplan.Dal.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            // --- Start of Migration 1 ---
+            // --- Start of Migration 2 ---
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Applications_PlanningRealms_TournamentPlannerId",
+                name: "FK_Applications_TournamentPlanners_TournamentPlannerId",
                 schema: "turnierplan",
                 table: "Applications");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_IAM_PlanningRealm_PlanningRealms_TournamentPlannerId",
+                name: "FK_IAM_TournamentPlanner_TournamentPlanners_TournamentPlannerId",
                 schema: "turnierplan",
-                table: "IAM_PlanningRealm");
+                table: "IAM_TournamentPlanner");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_InvitationLinks_PlanningRealms_TournamentPlannerId",
+                name: "FK_InvitationLinks_TournamentPlanners_TournamentPlannerId",
                 schema: "turnierplan",
                 table: "InvitationLinks");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Labels_PlanningRealms_TournamentPlannerId",
+                name: "FK_Labels_TournamentPlanners_TournamentPlannerId",
                 schema: "turnierplan",
                 table: "Labels");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_TournamentClasses_PlanningRealms_TournamentPlannerId",
+                name: "FK_TournamentClasses_TournamentPlanners_TournamentPlannerId",
                 schema: "turnierplan",
                 table: "TournamentClasses");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_TournamentPlanners_Organizations_OrganizationId",
+                schema: "turnierplan",
+                table: "TournamentPlanners");
+
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_TournamentPlanners",
+                schema: "turnierplan",
+                table: "TournamentPlanners");
+
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_IAM_TournamentPlanner",
+                schema: "turnierplan",
+                table: "IAM_TournamentPlanner");
+
+            migrationBuilder.RenameTable(
+                name: "TournamentPlanners",
+                schema: "turnierplan",
+                newName: "PlanningRealms",
+                newSchema: "turnierplan");
+
+            migrationBuilder.RenameTable(
+                name: "IAM_TournamentPlanner",
+                schema: "turnierplan",
+                newName: "IAM_PlanningRealm",
+                newSchema: "turnierplan");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_TournamentPlanners_PublicId",
+                schema: "turnierplan",
+                table: "PlanningRealms",
+                newName: "IX_PlanningRealms_PublicId");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_TournamentPlanners_OrganizationId",
+                schema: "turnierplan",
+                table: "PlanningRealms",
+                newName: "IX_PlanningRealms_OrganizationId");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_IAM_TournamentPlanner_TournamentPlannerId",
+                schema: "turnierplan",
+                table: "IAM_PlanningRealm",
+                newName: "IX_IAM_PlanningRealm_TournamentPlannerId");
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_PlanningRealms",
+                schema: "turnierplan",
+                table: "PlanningRealms",
+                column: "Id");
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_IAM_PlanningRealm",
+                schema: "turnierplan",
+                table: "IAM_PlanningRealm",
+                column: "Id");
+
+            // would have added 'FK_Applications_PlanningRealms_TournamentPlannerId'
+            // would have added 'FK_IAM_PlanningRealm_PlanningRealms_TournamentPlannerId'
+            // would have added 'FK_InvitationLinks_PlanningRealms_TournamentPlannerId'
+            // would have added 'FK_Labels_PlanningRealms_TournamentPlannerId'
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_PlanningRealms_Organizations_OrganizationId",
+                schema: "turnierplan",
+                table: "PlanningRealms",
+                column: "OrganizationId",
+                principalSchema: "turnierplan",
+                principalTable: "Organizations",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            // would have added 'FK_TournamentClasses_PlanningRealms_TournamentPlannerId'
+
+            // --- Start of Migration 1 ---
+
+            // would have dropped 'FK_Applications_PlanningRealms_TournamentPlannerId'
+            // would have dropped 'FK_IAM_PlanningRealm_PlanningRealms_TournamentPlannerId'
+            // would have dropped 'FK_InvitationLinks_PlanningRealms_TournamentPlannerId'
+            // would have dropped 'FK_Labels_PlanningRealms_TournamentPlannerId'
+            // would have dropped 'FK_TournamentClasses_PlanningRealms_TournamentPlannerId'
 
             migrationBuilder.RenameColumn(
                 name: "TournamentPlannerId",
@@ -378,150 +464,6 @@ namespace Turnierplan.Dal.Migrations
                 schema: "turnierplan",
                 table: "TournamentClasses",
                 column: "PlanningRealmId",
-                principalSchema: "turnierplan",
-                principalTable: "PlanningRealms",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            // --- Start of Migration 2 ---
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Applications_TournamentPlanners_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "Applications");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_IAM_TournamentPlanner_TournamentPlanners_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "IAM_TournamentPlanner");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_InvitationLinks_TournamentPlanners_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "InvitationLinks");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Labels_TournamentPlanners_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "Labels");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_TournamentClasses_TournamentPlanners_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "TournamentClasses");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_TournamentPlanners_Organizations_OrganizationId",
-                schema: "turnierplan",
-                table: "TournamentPlanners");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_TournamentPlanners",
-                schema: "turnierplan",
-                table: "TournamentPlanners");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_IAM_TournamentPlanner",
-                schema: "turnierplan",
-                table: "IAM_TournamentPlanner");
-
-            migrationBuilder.RenameTable(
-                name: "TournamentPlanners",
-                schema: "turnierplan",
-                newName: "PlanningRealms",
-                newSchema: "turnierplan");
-
-            migrationBuilder.RenameTable(
-                name: "IAM_TournamentPlanner",
-                schema: "turnierplan",
-                newName: "IAM_PlanningRealm",
-                newSchema: "turnierplan");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_TournamentPlanners_PublicId",
-                schema: "turnierplan",
-                table: "PlanningRealms",
-                newName: "IX_PlanningRealms_PublicId");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_TournamentPlanners_OrganizationId",
-                schema: "turnierplan",
-                table: "PlanningRealms",
-                newName: "IX_PlanningRealms_OrganizationId");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_IAM_TournamentPlanner_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "IAM_PlanningRealm",
-                newName: "IX_IAM_PlanningRealm_TournamentPlannerId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_PlanningRealms",
-                schema: "turnierplan",
-                table: "PlanningRealms",
-                column: "Id");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_IAM_PlanningRealm",
-                schema: "turnierplan",
-                table: "IAM_PlanningRealm",
-                column: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Applications_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "Applications",
-                column: "TournamentPlannerId",
-                principalSchema: "turnierplan",
-                principalTable: "PlanningRealms",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_IAM_PlanningRealm_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "IAM_PlanningRealm",
-                column: "TournamentPlannerId",
-                principalSchema: "turnierplan",
-                principalTable: "PlanningRealms",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_InvitationLinks_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "InvitationLinks",
-                column: "TournamentPlannerId",
-                principalSchema: "turnierplan",
-                principalTable: "PlanningRealms",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Labels_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "Labels",
-                column: "TournamentPlannerId",
-                principalSchema: "turnierplan",
-                principalTable: "PlanningRealms",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_PlanningRealms_Organizations_OrganizationId",
-                schema: "turnierplan",
-                table: "PlanningRealms",
-                column: "OrganizationId",
-                principalSchema: "turnierplan",
-                principalTable: "Organizations",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_TournamentClasses_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "TournamentClasses",
-                column: "TournamentPlannerId",
                 principalSchema: "turnierplan",
                 principalTable: "PlanningRealms",
                 principalColumn: "Id",
