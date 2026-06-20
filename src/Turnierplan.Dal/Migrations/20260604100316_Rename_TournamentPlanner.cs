@@ -13,6 +13,9 @@ namespace Turnierplan.Dal.Migrations
          * Migration 1: Renames the "PlanningRealm" columns and indices to "TournamentPlanner"
          * Migration 2: Renames the "PlanningRealm" table to "TournamentPlanner" - becuase the table name is included in the index names, this also re-creates all relevant indices
          *
+         * After combining the migration code, several occurrences of an index being created by migration 1 being
+         * deleted immediately after by migration 2 were removed. Those occurrances are kept with comments.
+         *
          * It had to be done this way, becuase if all properties and classes are renamed in the domain model at once, EF would
          * no longer correctly detect the renames and would rather drop the existing table and create everything new from scratch.
          */
@@ -20,6 +23,8 @@ namespace Turnierplan.Dal.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            // --- Start of Migration 1 ---
+
             migrationBuilder.DropForeignKey(
                 name: "FK_Applications_PlanningRealms_PlanningRealmId",
                 schema: "turnierplan",
@@ -154,6 +159,8 @@ namespace Turnierplan.Dal.Migrations
                 principalTable: "PlanningRealms",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
+
+            // --- Start of Migration 2 ---
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Applications_PlanningRealms_TournamentPlannerId",
@@ -301,6 +308,8 @@ namespace Turnierplan.Dal.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            // --- Start of Migration 1 ---
+
             migrationBuilder.DropForeignKey(
                 name: "FK_Applications_PlanningRealms_TournamentPlannerId",
                 schema: "turnierplan",
@@ -435,6 +444,8 @@ namespace Turnierplan.Dal.Migrations
                 principalTable: "PlanningRealms",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
+
+            // --- Start of Migration 2 ---
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Applications_TournamentPlanners_TournamentPlannerId",
