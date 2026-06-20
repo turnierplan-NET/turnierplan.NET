@@ -39,15 +39,17 @@ export class ApplicationChangeLogComponent implements OnDestroy {
   public init(tournamentPlannerId: string, application: ApplicationDto): void {
     this.applicationCreatedAt = application.createdAt;
 
-    this.turnierplanApi.invoke(getApplicationChangeLog, { tournamentPlannerId: tournamentPlannerId, applicationId: application.id }).subscribe({
-      next: (result) => {
-        this.changeLog = result;
-        this.changeLog.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-        this.isLoadingChangeLog = false;
-      },
-      error: (error) => {
-        this.errorSubject$.next(error);
-      }
-    });
+    this.turnierplanApi
+      .invoke(getApplicationChangeLog, { tournamentPlannerId: tournamentPlannerId, applicationId: application.id })
+      .subscribe({
+        next: (result) => {
+          this.changeLog = result;
+          this.changeLog.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+          this.isLoadingChangeLog = false;
+        },
+        error: (error) => {
+          this.errorSubject$.next(error);
+        }
+      });
   }
 }
