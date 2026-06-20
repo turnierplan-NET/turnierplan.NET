@@ -58,8 +58,7 @@ export const portalRoutes: Routes = [
       {
         path: 'organization/:id/create/planning-realm',
         redirectTo: (data): string => {
-          // TODO: Test redirect works as expected
-          return `organization/${data.params['id']}/create-tournament-planner`;
+          return `organization/${data.params['id']}/create/tournament-planner`;
         }
       },
       {
@@ -77,7 +76,6 @@ export const portalRoutes: Routes = [
       {
         path: 'planning-realm/:id',
         redirectTo: (data): string => {
-          // TODO: Test redirect works as expected
           return `tournament-planner/${data.params['id']}`;
         }
       },
