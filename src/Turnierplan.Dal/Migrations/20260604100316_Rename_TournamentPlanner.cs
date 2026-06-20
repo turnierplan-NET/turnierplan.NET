@@ -110,87 +110,25 @@ namespace Turnierplan.Dal.Migrations
                 table: "Applications",
                 newName: "IX_Applications_TournamentPlannerId");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Applications_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "Applications",
-                column: "TournamentPlannerId",
-                principalSchema: "turnierplan",
-                principalTable: "PlanningRealms",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_IAM_PlanningRealm_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "IAM_PlanningRealm",
-                column: "TournamentPlannerId",
-                principalSchema: "turnierplan",
-                principalTable: "PlanningRealms",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_InvitationLinks_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "InvitationLinks",
-                column: "TournamentPlannerId",
-                principalSchema: "turnierplan",
-                principalTable: "PlanningRealms",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Labels_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "Labels",
-                column: "TournamentPlannerId",
-                principalSchema: "turnierplan",
-                principalTable: "PlanningRealms",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_TournamentClasses_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "TournamentClasses",
-                column: "TournamentPlannerId",
-                principalSchema: "turnierplan",
-                principalTable: "PlanningRealms",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+            // would have added 'FK_Applications_PlanningRealms_TournamentPlannerId'
+            // would have added 'FK_IAM_PlanningRealm_PlanningRealms_TournamentPlannerId'
+            // would have added 'FK_InvitationLinks_PlanningRealms_TournamentPlannerId'
+            // would have added 'FK_Labels_PlanningRealms_TournamentPlannerId'
+            // would have added 'FK_TournamentClasses_PlanningRealms_TournamentPlannerId'
 
             // --- Start of Migration 2 ---
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_Applications_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "Applications");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_IAM_PlanningRealm_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "IAM_PlanningRealm");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_InvitationLinks_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "InvitationLinks");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Labels_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "Labels");
+            // would have dropped 'FK_Applications_PlanningRealms_TournamentPlannerId'
+            // would have dropped 'FK_IAM_PlanningRealm_PlanningRealms_TournamentPlannerId'
+            // would have dropped 'FK_InvitationLinks_PlanningRealms_TournamentPlannerId'
+            // would have dropped 'FK_Labels_PlanningRealms_TournamentPlannerId'
 
             migrationBuilder.DropForeignKey(
                 name: "FK_PlanningRealms_Organizations_OrganizationId",
                 schema: "turnierplan",
                 table: "PlanningRealms");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_TournamentClasses_PlanningRealms_TournamentPlannerId",
-                schema: "turnierplan",
-                table: "TournamentClasses");
+            // would have dropped 'FK_TournamentClasses_PlanningRealms_TournamentPlannerId'
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_PlanningRealms",
