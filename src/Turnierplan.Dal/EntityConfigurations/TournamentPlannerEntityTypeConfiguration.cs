@@ -9,7 +9,13 @@ public sealed class TournamentPlannerEntityTypeConfiguration : IEntityTypeConfig
 {
     public void Configure(EntityTypeBuilder<TournamentPlanner> builder)
     {
-        builder.ToTable("TournamentPlanners", TurnierplanContext.Schema);
+        // TODO: Update table name and foreign key naming to 'tournament planner' when database schema naming is overhauled.
+
+        // For 2026.3, the naming of 'planning realm' was changed to 'tournament planner' in all application code occurrences.
+        // However, the database table and index names were not changed. This was done to prevent bloated and/or redundant
+        // migrations in the case that at some point in the future, the database schema naming will be overhauled.
+
+        builder.ToTable("PlanningRealms", TurnierplanContext.Schema);
 
         builder.HasKey(x => x.Id);
 
@@ -24,7 +30,7 @@ public sealed class TournamentPlannerEntityTypeConfiguration : IEntityTypeConfig
 
         builder.HasMany(x => x.RoleAssignments)
             .WithOne(x => x.Scope)
-            .HasForeignKey("TournamentPlannerId")
+            .HasForeignKey("PlanningRealmId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
@@ -36,25 +42,25 @@ public sealed class TournamentPlannerEntityTypeConfiguration : IEntityTypeConfig
 
         builder.HasMany(x => x.TournamentClasses)
             .WithOne()
-            .HasForeignKey("TournamentPlannerId")
+            .HasForeignKey("PlanningRealmId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         builder.HasMany(x => x.InvitationLinks)
             .WithOne(x => x.TournamentPlanner)
-            .HasForeignKey("TournamentPlannerId")
+            .HasForeignKey("PlanningRealmId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         builder.HasMany(x => x.Applications)
             .WithOne(x => x.TournamentPlanner)
-            .HasForeignKey("TournamentPlannerId")
+            .HasForeignKey("PlanningRealmId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         builder.HasMany(x => x.Labels)
             .WithOne()
-            .HasForeignKey("TournamentPlannerId")
+            .HasForeignKey("PlanningRealmId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
