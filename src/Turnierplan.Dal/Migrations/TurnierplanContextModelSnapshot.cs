@@ -270,6 +270,315 @@ namespace Turnierplan.Dal.Migrations
                     b.ToTable("Organizations", "turnierplan");
                 });
 
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.Application", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Contact")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactEmail")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactTelephone")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("FormSession")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("PlanningRealmId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("SourceLinkId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Tag")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FormSession")
+                        .IsUnique();
+
+                    b.HasIndex("PlanningRealmId");
+
+                    b.HasIndex("SourceLinkId");
+
+                    b.ToTable("Applications", "turnierplan");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.ApplicationChangeLog", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ApplicationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationId");
+
+                    b.ToTable("ApplicationChangeLogs", "turnierplan");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.ApplicationTeam", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ApplicationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ClassId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationId");
+
+                    b.HasIndex("ClassId");
+
+                    b.ToTable("ApplicationTeams", "turnierplan");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.InvitationLink", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("ColorCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactEmail")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactPerson")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContactTelephone")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("PlanningRealmId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PrimaryLogoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PublicId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("SecondaryLogoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ValidUntil")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanningRealmId");
+
+                    b.HasIndex("PrimaryLogoId");
+
+                    b.HasIndex("PublicId")
+                        .IsUnique();
+
+                    b.HasIndex("SecondaryLogoId");
+
+                    b.ToTable("InvitationLinks", "turnierplan");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.InvitationLinkEntry", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("AllowNewRegistrations")
+                        .HasColumnType("boolean");
+
+                    b.Property<long>("ClassId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("InvitationLinkId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("MaxTeamsPerRegistration")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
+
+                    b.HasIndex("InvitationLinkId");
+
+                    b.ToTable("InvitationLinkEntries", "turnierplan");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.Label", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("ColorCode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("PlanningRealmId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanningRealmId");
+
+                    b.ToTable("Labels", "turnierplan");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.PlanningRealm", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("OrganizationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PublicId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("PublicId")
+                        .IsUnique();
+
+                    b.ToTable("PlanningRealms", "turnierplan");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TeamLink", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ApplicationTeamId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("integer");
+
+                    b.Property<long>("TeamTournamentId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationTeamId")
+                        .IsUnique();
+
+                    b.HasIndex("TeamTournamentId", "TeamId")
+                        .IsUnique();
+
+                    b.ToTable("TeamLinks", "turnierplan");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TournamentClass", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("PlanningRealmId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanningRealmId");
+
+                    b.ToTable("TournamentClasses", "turnierplan");
+                });
+
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.ApiKey.ApiKey>", b =>
                 {
                     b.Property<Guid>("Id")
@@ -374,6 +683,32 @@ namespace Turnierplan.Dal.Migrations
                     b.ToTable("IAM_Organization", "turnierplan");
                 });
 
+            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.PlanningRealm.PlanningRealm>", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<long>("PlanningRealmId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Principal")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanningRealmId");
+
+                    b.ToTable("IAM_PlanningRealm", "turnierplan");
+                });
+
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Tournament.Tournament>", b =>
                 {
                     b.Property<Guid>("Id")
@@ -398,32 +733,6 @@ namespace Turnierplan.Dal.Migrations
                     b.HasIndex("TournamentId");
 
                     b.ToTable("IAM_Tournament", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.TournamentPlanner.TournamentPlanner>", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Principal")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
-                    b.Property<long>("TournamentPlannerId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TournamentPlannerId");
-
-                    b.ToTable("IAM_TournamentPlanner", "turnierplan");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Venue.Venue>", b =>
@@ -660,315 +969,6 @@ namespace Turnierplan.Dal.Migrations
                     b.ToTable("Tournaments", "turnierplan");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.Application", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Contact")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ContactEmail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ContactTelephone")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid?>("FormSession")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<long?>("SourceLinkId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Tag")
-                        .HasColumnType("integer");
-
-                    b.Property<long>("TournamentPlannerId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FormSession")
-                        .IsUnique();
-
-                    b.HasIndex("SourceLinkId");
-
-                    b.HasIndex("TournamentPlannerId");
-
-                    b.ToTable("Applications", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.ApplicationChangeLog", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("ApplicationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationId");
-
-                    b.ToTable("ApplicationChangeLogs", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.ApplicationTeam", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("ApplicationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ClassId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationId");
-
-                    b.HasIndex("ClassId");
-
-                    b.ToTable("ApplicationTeams", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.InvitationLink", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("ColorCode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ContactEmail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ContactPerson")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ContactTelephone")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<long?>("PrimaryLogoId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PublicId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("SecondaryLogoId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text");
-
-                    b.Property<long>("TournamentPlannerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("ValidUntil")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PrimaryLogoId");
-
-                    b.HasIndex("PublicId")
-                        .IsUnique();
-
-                    b.HasIndex("SecondaryLogoId");
-
-                    b.HasIndex("TournamentPlannerId");
-
-                    b.ToTable("InvitationLinks", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.InvitationLinkEntry", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<bool>("AllowNewRegistrations")
-                        .HasColumnType("boolean");
-
-                    b.Property<long>("ClassId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("InvitationLinkId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("MaxTeamsPerRegistration")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClassId");
-
-                    b.HasIndex("InvitationLinkId");
-
-                    b.ToTable("InvitationLinkEntries", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.Label", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("ColorCode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<long>("TournamentPlannerId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TournamentPlannerId");
-
-                    b.ToTable("Labels", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.TeamLink", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("ApplicationTeamId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("TeamId")
-                        .HasColumnType("integer");
-
-                    b.Property<long>("TeamTournamentId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationTeamId")
-                        .IsUnique();
-
-                    b.HasIndex("TeamTournamentId", "TeamId")
-                        .IsUnique();
-
-                    b.ToTable("TeamLinks", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.TournamentClass", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<long>("TournamentPlannerId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TournamentPlannerId");
-
-                    b.ToTable("TournamentClasses", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.TournamentPlanner", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<long>("OrganizationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PublicId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.HasIndex("PublicId")
-                        .IsUnique();
-
-                    b.ToTable("TournamentPlanners", "turnierplan");
-                });
-
             modelBuilder.Entity("Turnierplan.Core.User.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1076,13 +1076,13 @@ namespace Turnierplan.Dal.Migrations
 
             modelBuilder.Entity("ApplicationTeamLabel", b =>
                 {
-                    b.HasOne("Turnierplan.Core.TournamentPlanner.ApplicationTeam", null)
+                    b.HasOne("Turnierplan.Core.PlanningRealm.ApplicationTeam", null)
                         .WithMany()
                         .HasForeignKey("ApplicationTeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Turnierplan.Core.TournamentPlanner.Label", null)
+                    b.HasOne("Turnierplan.Core.PlanningRealm.Label", null)
                         .WithMany()
                         .HasForeignKey("LabelsId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1144,6 +1144,197 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Organization");
                 });
 
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.Application", b =>
+                {
+                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", "PlanningRealm")
+                        .WithMany("Applications")
+                        .HasForeignKey("PlanningRealmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Turnierplan.Core.PlanningRealm.InvitationLink", "SourceLink")
+                        .WithMany()
+                        .HasForeignKey("SourceLinkId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("PlanningRealm");
+
+                    b.Navigation("SourceLink");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.ApplicationChangeLog", b =>
+                {
+                    b.HasOne("Turnierplan.Core.PlanningRealm.Application", "Application")
+                        .WithMany("ChangeLog")
+                        .HasForeignKey("ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsMany("Turnierplan.Core.PlanningRealm.ApplicationChangeLog+Property", "Properties", b1 =>
+                        {
+                            b1.Property<long>("ApplicationChangeLogId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd();
+
+                            b1.Property<int>("Type")
+                                .HasJsonPropertyName("t");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasJsonPropertyName("v");
+
+                            b1.HasKey("ApplicationChangeLogId", "__synthesizedOrdinal");
+
+                            b1.ToTable("ApplicationChangeLogs", "turnierplan");
+
+                            b1.ToJson("Properties");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ApplicationChangeLogId");
+                        });
+
+                    b.Navigation("Application");
+
+                    b.Navigation("Properties");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.ApplicationTeam", b =>
+                {
+                    b.HasOne("Turnierplan.Core.PlanningRealm.Application", "Application")
+                        .WithMany("Teams")
+                        .HasForeignKey("ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Turnierplan.Core.PlanningRealm.TournamentClass", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Application");
+
+                    b.Navigation("Class");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.InvitationLink", b =>
+                {
+                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", "PlanningRealm")
+                        .WithMany("InvitationLinks")
+                        .HasForeignKey("PlanningRealmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Turnierplan.Core.Image.Image", "PrimaryLogo")
+                        .WithMany()
+                        .HasForeignKey("PrimaryLogoId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Turnierplan.Core.Image.Image", "SecondaryLogo")
+                        .WithMany()
+                        .HasForeignKey("SecondaryLogoId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.OwnsMany("Turnierplan.Core.PlanningRealm.InvitationLink+ExternalLink", "ExternalLinks", b1 =>
+                        {
+                            b1.Property<long>("InvitationLinkId");
+
+                            b1.Property<int>("__synthesizedOrdinal")
+                                .ValueGeneratedOnAdd();
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasJsonPropertyName("n");
+
+                            b1.Property<string>("Url")
+                                .IsRequired()
+                                .HasJsonPropertyName("u");
+
+                            b1.HasKey("InvitationLinkId", "__synthesizedOrdinal");
+
+                            b1.ToTable("InvitationLinks", "turnierplan");
+
+                            b1.ToJson("ExternalLinks");
+
+                            b1.WithOwner()
+                                .HasForeignKey("InvitationLinkId");
+                        });
+
+                    b.Navigation("ExternalLinks");
+
+                    b.Navigation("PlanningRealm");
+
+                    b.Navigation("PrimaryLogo");
+
+                    b.Navigation("SecondaryLogo");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.InvitationLinkEntry", b =>
+                {
+                    b.HasOne("Turnierplan.Core.PlanningRealm.TournamentClass", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Turnierplan.Core.PlanningRealm.InvitationLink", null)
+                        .WithMany("Entries")
+                        .HasForeignKey("InvitationLinkId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.Label", b =>
+                {
+                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", null)
+                        .WithMany("Labels")
+                        .HasForeignKey("PlanningRealmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.PlanningRealm", b =>
+                {
+                    b.HasOne("Turnierplan.Core.Organization.Organization", "Organization")
+                        .WithMany("PlanningRealms")
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TeamLink", b =>
+                {
+                    b.HasOne("Turnierplan.Core.PlanningRealm.ApplicationTeam", "ApplicationTeam")
+                        .WithOne("TeamLink")
+                        .HasForeignKey("Turnierplan.Core.PlanningRealm.TeamLink", "ApplicationTeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Turnierplan.Core.Tournament.Team", "Team")
+                        .WithOne("TeamLink")
+                        .HasForeignKey("Turnierplan.Core.PlanningRealm.TeamLink", "TeamTournamentId", "TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationTeam");
+
+                    b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.TournamentClass", b =>
+                {
+                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", null)
+                        .WithMany("TournamentClasses")
+                        .HasForeignKey("PlanningRealmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.ApiKey.ApiKey>", b =>
                 {
                     b.HasOne("Turnierplan.Core.ApiKey.ApiKey", "Scope")
@@ -1188,22 +1379,22 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Scope");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Tournament.Tournament>", b =>
+            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.PlanningRealm.PlanningRealm>", b =>
                 {
-                    b.HasOne("Turnierplan.Core.Tournament.Tournament", "Scope")
+                    b.HasOne("Turnierplan.Core.PlanningRealm.PlanningRealm", "Scope")
                         .WithMany("RoleAssignments")
-                        .HasForeignKey("TournamentId")
+                        .HasForeignKey("PlanningRealmId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Scope");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.TournamentPlanner.TournamentPlanner>", b =>
+            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Tournament.Tournament>", b =>
                 {
-                    b.HasOne("Turnierplan.Core.TournamentPlanner.TournamentPlanner", "Scope")
+                    b.HasOne("Turnierplan.Core.Tournament.Tournament", "Scope")
                         .WithMany("RoleAssignments")
-                        .HasForeignKey("TournamentPlannerId")
+                        .HasForeignKey("TournamentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1576,197 +1767,6 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Venue");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.Application", b =>
-                {
-                    b.HasOne("Turnierplan.Core.TournamentPlanner.InvitationLink", "SourceLink")
-                        .WithMany()
-                        .HasForeignKey("SourceLinkId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Turnierplan.Core.TournamentPlanner.TournamentPlanner", "TournamentPlanner")
-                        .WithMany("Applications")
-                        .HasForeignKey("TournamentPlannerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SourceLink");
-
-                    b.Navigation("TournamentPlanner");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.ApplicationChangeLog", b =>
-                {
-                    b.HasOne("Turnierplan.Core.TournamentPlanner.Application", "Application")
-                        .WithMany("ChangeLog")
-                        .HasForeignKey("ApplicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsMany("Turnierplan.Core.TournamentPlanner.ApplicationChangeLog+Property", "Properties", b1 =>
-                        {
-                            b1.Property<long>("ApplicationChangeLogId");
-
-                            b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAdd();
-
-                            b1.Property<int>("Type")
-                                .HasJsonPropertyName("t");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasJsonPropertyName("v");
-
-                            b1.HasKey("ApplicationChangeLogId", "__synthesizedOrdinal");
-
-                            b1.ToTable("ApplicationChangeLogs", "turnierplan");
-
-                            b1.ToJson("Properties");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ApplicationChangeLogId");
-                        });
-
-                    b.Navigation("Application");
-
-                    b.Navigation("Properties");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.ApplicationTeam", b =>
-                {
-                    b.HasOne("Turnierplan.Core.TournamentPlanner.Application", "Application")
-                        .WithMany("Teams")
-                        .HasForeignKey("ApplicationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turnierplan.Core.TournamentPlanner.TournamentClass", "Class")
-                        .WithMany()
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Application");
-
-                    b.Navigation("Class");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.InvitationLink", b =>
-                {
-                    b.HasOne("Turnierplan.Core.Image.Image", "PrimaryLogo")
-                        .WithMany()
-                        .HasForeignKey("PrimaryLogoId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Turnierplan.Core.Image.Image", "SecondaryLogo")
-                        .WithMany()
-                        .HasForeignKey("SecondaryLogoId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("Turnierplan.Core.TournamentPlanner.TournamentPlanner", "TournamentPlanner")
-                        .WithMany("InvitationLinks")
-                        .HasForeignKey("TournamentPlannerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsMany("Turnierplan.Core.TournamentPlanner.InvitationLink+ExternalLink", "ExternalLinks", b1 =>
-                        {
-                            b1.Property<long>("InvitationLinkId");
-
-                            b1.Property<int>("__synthesizedOrdinal")
-                                .ValueGeneratedOnAdd();
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasJsonPropertyName("n");
-
-                            b1.Property<string>("Url")
-                                .IsRequired()
-                                .HasJsonPropertyName("u");
-
-                            b1.HasKey("InvitationLinkId", "__synthesizedOrdinal");
-
-                            b1.ToTable("InvitationLinks", "turnierplan");
-
-                            b1.ToJson("ExternalLinks");
-
-                            b1.WithOwner()
-                                .HasForeignKey("InvitationLinkId");
-                        });
-
-                    b.Navigation("ExternalLinks");
-
-                    b.Navigation("PrimaryLogo");
-
-                    b.Navigation("SecondaryLogo");
-
-                    b.Navigation("TournamentPlanner");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.InvitationLinkEntry", b =>
-                {
-                    b.HasOne("Turnierplan.Core.TournamentPlanner.TournamentClass", "Class")
-                        .WithMany()
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turnierplan.Core.TournamentPlanner.InvitationLink", null)
-                        .WithMany("Entries")
-                        .HasForeignKey("InvitationLinkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Class");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.Label", b =>
-                {
-                    b.HasOne("Turnierplan.Core.TournamentPlanner.TournamentPlanner", null)
-                        .WithMany("Labels")
-                        .HasForeignKey("TournamentPlannerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.TeamLink", b =>
-                {
-                    b.HasOne("Turnierplan.Core.TournamentPlanner.ApplicationTeam", "ApplicationTeam")
-                        .WithOne("TeamLink")
-                        .HasForeignKey("Turnierplan.Core.TournamentPlanner.TeamLink", "ApplicationTeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turnierplan.Core.Tournament.Team", "Team")
-                        .WithOne("TeamLink")
-                        .HasForeignKey("Turnierplan.Core.TournamentPlanner.TeamLink", "TeamTournamentId", "TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationTeam");
-
-                    b.Navigation("Team");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.TournamentClass", b =>
-                {
-                    b.HasOne("Turnierplan.Core.TournamentPlanner.TournamentPlanner", null)
-                        .WithMany("TournamentClasses")
-                        .HasForeignKey("TournamentPlannerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.TournamentPlanner", b =>
-                {
-                    b.HasOne("Turnierplan.Core.Organization.Organization", "Organization")
-                        .WithMany("TournamentPlanners")
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Organization");
-                });
-
             modelBuilder.Entity("Turnierplan.Core.Venue.Venue", b =>
                 {
                     b.HasOne("Turnierplan.Core.Organization.Organization", "Organization")
@@ -1805,13 +1805,43 @@ namespace Turnierplan.Dal.Migrations
 
                     b.Navigation("Images");
 
-                    b.Navigation("RoleAssignments");
+                    b.Navigation("PlanningRealms");
 
-                    b.Navigation("TournamentPlanners");
+                    b.Navigation("RoleAssignments");
 
                     b.Navigation("Tournaments");
 
                     b.Navigation("Venues");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.Application", b =>
+                {
+                    b.Navigation("ChangeLog");
+
+                    b.Navigation("Teams");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.ApplicationTeam", b =>
+                {
+                    b.Navigation("TeamLink");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.InvitationLink", b =>
+                {
+                    b.Navigation("Entries");
+                });
+
+            modelBuilder.Entity("Turnierplan.Core.PlanningRealm.PlanningRealm", b =>
+                {
+                    b.Navigation("Applications");
+
+                    b.Navigation("InvitationLinks");
+
+                    b.Navigation("Labels");
+
+                    b.Navigation("RoleAssignments");
+
+                    b.Navigation("TournamentClasses");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.Tournament.Group", b =>
@@ -1837,36 +1867,6 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("RoleAssignments");
 
                     b.Navigation("Teams");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.Application", b =>
-                {
-                    b.Navigation("ChangeLog");
-
-                    b.Navigation("Teams");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.ApplicationTeam", b =>
-                {
-                    b.Navigation("TeamLink");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.InvitationLink", b =>
-                {
-                    b.Navigation("Entries");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.TournamentPlanner.TournamentPlanner", b =>
-                {
-                    b.Navigation("Applications");
-
-                    b.Navigation("InvitationLinks");
-
-                    b.Navigation("Labels");
-
-                    b.Navigation("RoleAssignments");
-
-                    b.Navigation("TournamentClasses");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.Venue.Venue", b =>
