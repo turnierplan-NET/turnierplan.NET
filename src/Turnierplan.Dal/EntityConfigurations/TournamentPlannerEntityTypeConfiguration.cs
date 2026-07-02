@@ -1,14 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Turnierplan.Core.PlanningRealm;
+using Turnierplan.Core.TournamentPlanner;
 using Turnierplan.Dal.Converters;
 
 namespace Turnierplan.Dal.EntityConfigurations;
 
-public sealed class PlanningRealmEntityTypeConfiguration : IEntityTypeConfiguration<PlanningRealm>
+public sealed class TournamentPlannerEntityTypeConfiguration : IEntityTypeConfiguration<TournamentPlanner>
 {
-    public void Configure(EntityTypeBuilder<PlanningRealm> builder)
+    public void Configure(EntityTypeBuilder<TournamentPlanner> builder)
     {
+        // TODO: Update table name and foreign key naming to 'tournament planner' when database schema naming is overhauled.
+
+        // For 2026.3, the naming of 'planning realm' was changed to 'tournament planner' in all application code occurrences.
+        // However, the database table and index names were not changed. This was done to prevent bloated and/or redundant
+        // migrations in the case that at some point in the future, the database schema naming will be overhauled.
+
         builder.ToTable("PlanningRealms", TurnierplanContext.Schema);
 
         builder.HasKey(x => x.Id);
@@ -41,13 +47,13 @@ public sealed class PlanningRealmEntityTypeConfiguration : IEntityTypeConfigurat
             .IsRequired();
 
         builder.HasMany(x => x.InvitationLinks)
-            .WithOne(x => x.PlanningRealm)
+            .WithOne(x => x.TournamentPlanner)
             .HasForeignKey("PlanningRealmId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
         builder.HasMany(x => x.Applications)
-            .WithOne(x => x.PlanningRealm)
+            .WithOne(x => x.TournamentPlanner)
             .HasForeignKey("PlanningRealmId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
@@ -58,10 +64,10 @@ public sealed class PlanningRealmEntityTypeConfiguration : IEntityTypeConfigurat
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
-        builder.Metadata.FindNavigation(nameof(PlanningRealm.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-        builder.Metadata.FindNavigation(nameof(PlanningRealm.TournamentClasses))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-        builder.Metadata.FindNavigation(nameof(PlanningRealm.InvitationLinks))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-        builder.Metadata.FindNavigation(nameof(PlanningRealm.Applications))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-        builder.Metadata.FindNavigation(nameof(PlanningRealm.Labels))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(TournamentPlanner.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(TournamentPlanner.TournamentClasses))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(TournamentPlanner.InvitationLinks))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(TournamentPlanner.Applications))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(TournamentPlanner.Labels))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

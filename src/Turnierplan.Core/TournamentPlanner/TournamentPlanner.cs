@@ -1,19 +1,19 @@
 using Turnierplan.Core.Entity;
 using Turnierplan.Core.RoleAssignment;
 
-namespace Turnierplan.Core.PlanningRealm;
+namespace Turnierplan.Core.TournamentPlanner;
 
-public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<PlanningRealm>, IEntityWithOrganization
+public sealed class TournamentPlanner : Entity<long>, IEntityWithRoleAssignments<TournamentPlanner>, IEntityWithOrganization
 {
-    internal readonly List<RoleAssignment<PlanningRealm>> _roleAssignments = [];
+    internal readonly List<RoleAssignment<TournamentPlanner>> _roleAssignments = [];
     internal readonly List<TournamentClass> _tournamentClasses = [];
     internal readonly List<InvitationLink> _invitationLinks = [];
     internal readonly List<Application> _applications = [];
     internal readonly List<Label> _labels = [];
 
-    public PlanningRealm(Organization.Organization organization, string name)
+    public TournamentPlanner(Organization.Organization organization, string name)
     {
-        organization._planningRealms.Add(this);
+        organization._tournamentPlanners.Add(this);
 
         Id = 0;
         PublicId = new PublicId.PublicId();
@@ -22,7 +22,7 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
         Name = name;
     }
 
-    internal PlanningRealm(long id, PublicId.PublicId publicId, DateTime createdAt, string name)
+    internal TournamentPlanner(long id, PublicId.PublicId publicId, DateTime createdAt, string name)
     {
         Id = id;
         PublicId = publicId;
@@ -36,7 +36,7 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
 
     public Organization.Organization Organization { get; internal set; } = null!;
 
-    public IReadOnlyList<RoleAssignment<PlanningRealm>> RoleAssignments => _roleAssignments.AsReadOnly();
+    public IReadOnlyList<RoleAssignment<TournamentPlanner>> RoleAssignments => _roleAssignments.AsReadOnly();
 
     public DateTime CreatedAt { get; }
 
@@ -50,15 +50,15 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
 
     public IReadOnlyList<Label> Labels => _labels.AsReadOnly();
 
-    public RoleAssignment<PlanningRealm> AddRoleAssignment(Role role, Principal principal)
+    public RoleAssignment<TournamentPlanner> AddRoleAssignment(Role role, Principal principal)
     {
-        var roleAssignment = new RoleAssignment<PlanningRealm>(this, role, principal);
+        var roleAssignment = new RoleAssignment<TournamentPlanner>(this, role, principal);
         _roleAssignments.Add(roleAssignment);
 
         return roleAssignment;
     }
 
-    public void RemoveRoleAssignment(RoleAssignment<PlanningRealm> roleAssignment)
+    public void RemoveRoleAssignment(RoleAssignment<TournamentPlanner> roleAssignment)
     {
         _roleAssignments.Remove(roleAssignment);
     }
@@ -76,7 +76,7 @@ public sealed class PlanningRealm : Entity<long>, IEntityWithRoleAssignments<Pla
         var invitationLink = new InvitationLink(name);
         _invitationLinks.Add(invitationLink);
 
-        invitationLink.PlanningRealm = this;
+        invitationLink.TournamentPlanner = this;
 
         return invitationLink;
     }

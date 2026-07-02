@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using Turnierplan.Core.Entity;
 using Turnierplan.Core.Exceptions;
 
-namespace Turnierplan.Core.PlanningRealm;
+namespace Turnierplan.Core.TournamentPlanner;
 
 public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 {
@@ -36,7 +36,7 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 
     public PublicId.PublicId PublicId { get; }
 
-    public PlanningRealm PlanningRealm { get; internal set; } = null!;
+    public TournamentPlanner TournamentPlanner { get; internal set; } = null!;
 
     public string Name { get; set; }
 
@@ -66,9 +66,9 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
 
     public InvitationLinkEntry AddEntry(TournamentClass tournamentClass)
     {
-        if (!PlanningRealm._tournamentClasses.Contains(tournamentClass))
+        if (!TournamentPlanner._tournamentClasses.Contains(tournamentClass))
         {
-            throw new TurnierplanException("Cannot add entry with a tournament class from another planning realm.");
+            throw new TurnierplanException("Cannot add entry with a tournament class from another tournament planner.");
         }
 
         var invitationLinkEntry = new InvitationLinkEntry(tournamentClass);
@@ -105,7 +105,7 @@ public sealed class InvitationLink : Entity<long>, IEntityWithPublicId
             return;
         }
 
-        if (provided.Organization != PlanningRealm.Organization)
+        if (provided.Organization != TournamentPlanner.Organization)
         {
             throw new TurnierplanException("Cannot assign an image from another organization.");
         }

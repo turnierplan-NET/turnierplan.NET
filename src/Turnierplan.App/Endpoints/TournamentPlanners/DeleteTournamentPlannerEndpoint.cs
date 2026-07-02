@@ -3,35 +3,35 @@ using Turnierplan.App.Security;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Dal.Repositories;
 
-namespace Turnierplan.App.Endpoints.PlanningRealms;
+namespace Turnierplan.App.Endpoints.TournamentPlanners;
 
-internal sealed class DeletePlanningRealmEndpoint : EndpointBase
+internal sealed class DeleteTournamentPlannerEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Delete;
 
-    protected override string Route => "/api/planning-realm/{id}";
+    protected override string Route => "/api/tournament-planners/{id}";
 
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
         [FromRoute] PublicId id,
-        IPlanningRealmRepository repository,
+        ITournamentPlannerRepository repository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var planningRealm = await repository.GetByPublicIdAsync(id);
+        var tournamentPlanner = await repository.GetByPublicIdAsync(id);
 
-        if (planningRealm is null)
+        if (tournamentPlanner is null)
         {
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.GenericWrite))
+        if (!accessValidator.IsActionAllowed(tournamentPlanner, Actions.GenericWrite))
         {
             return Results.Forbid();
         }
 
-        repository.Remove(planningRealm);
+        repository.Remove(tournamentPlanner);
 
         await repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 

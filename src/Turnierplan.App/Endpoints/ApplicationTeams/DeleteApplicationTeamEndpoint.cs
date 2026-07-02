@@ -9,31 +9,31 @@ internal sealed class DeleteApplicationTeamEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Delete;
 
-    protected override string Route => "/api/planning-realms/{planningRealmId}/applications/{applicationId:int}/teams/{applicationTeamId:int}";
+    protected override string Route => "/api/tournament-planners/{tournamentPlannerId}/applications/{applicationId:int}/teams/{applicationTeamId:int}";
 
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
-        [FromRoute] PublicId planningRealmId,
+        [FromRoute] PublicId tournamentPlannerId,
         [FromRoute] long applicationId,
         [FromRoute] long applicationTeamId,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.ApplicationsWithTeams);
+        var tournamentPlanner = await tournamentPlannerRepository.GetByPublicIdAsync(tournamentPlannerId, ITournamentPlannerRepository.Includes.ApplicationsWithTeams);
 
-        if (planningRealm is null)
+        if (tournamentPlanner is null)
         {
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsWrite))
+        if (!accessValidator.IsActionAllowed(tournamentPlanner, Actions.ApplicationsWrite))
         {
             return Results.Forbid();
         }
 
-        var application = planningRealm.Applications.FirstOrDefault(x => x.Id == applicationId);
+        var application = tournamentPlanner.Applications.FirstOrDefault(x => x.Id == applicationId);
 
         if (application is null)
         {
@@ -54,7 +54,7 @@ internal sealed class DeleteApplicationTeamEndpoint : EndpointBase
 
         application.RemoveTeam(applicationTeam);
 
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await tournamentPlannerRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

@@ -1,11 +1,11 @@
-@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
+@let writeAllowed = (authorizationService.isActionAllowed$(tournamentPlanner.id, Actions.GenericWrite) | async) ?? false;
 
 <table class="table">
   <thead>
     <tr>
-      <th translate="Portal.ViewPlanningRealm.TournamentClasses.Name"></th>
-      <th translate="Portal.ViewPlanningRealm.TournamentClasses.InvitationLinkCount"></th>
-      <th translate="Portal.ViewPlanningRealm.TournamentClasses.ApplicationCount"></th>
+      <th translate="Portal.ViewTournamentPlanner.TournamentClasses.Name"></th>
+      <th translate="Portal.ViewTournamentPlanner.TournamentClasses.InvitationLinkCount"></th>
+      <th translate="Portal.ViewTournamentPlanner.TournamentClasses.ApplicationCount"></th>
       <th></th>
       @if (writeAllowed) {
         <th style="width: 1px"></th>
@@ -15,7 +15,7 @@
   </thead>
 
   <tbody>
-    @for (tournamentClass of planningRealm.tournamentClasses; track tournamentClass.id) {
+    @for (tournamentClass of tournamentPlanner.tournamentClasses; track tournamentClass.id) {
       <tr>
         <td class="align-middle">{{ tournamentClass.name }}</td>
         <td class="align-middle">{{ getNumberOfReferencingLinks(tournamentClass.id) }}</td>
@@ -24,7 +24,7 @@
           @if (tournamentClass.id > 0) {
             <!-- Navigation to search is not possible if this tournament class has not been saved yet -->
             <tp-action-button
-              *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsRead]"
+              *tpIsActionAllowed="[tournamentPlanner.id, Actions.ApplicationsRead]"
               [type]="'light'"
               [icon]="'search'"
               [mode]="'IconOnly'"
@@ -34,7 +34,7 @@
         @if (writeAllowed) {
           <td class="align-middle pe-0">
             <tp-rename-button
-              translationKey="Portal.ViewPlanningRealm.TournamentClasses.Rename"
+              translationKey="Portal.ViewTournamentPlanner.TournamentClasses.Rename"
               [displayLabel]="false"
               [current]="tournamentClass.name"
               (renamed)="renameTournamentClass(tournamentClass.id, $event)" />
@@ -44,7 +44,7 @@
             <div class="d-flex flex-row align-items-center">
               <tp-delete-button [disabled]="!canDelete" (confirmed)="deleteTournamentClass(tournamentClass.id)" />
               @if (!canDelete) {
-                <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.TournamentClasses.DeleteNotPossible'" />
+                <tp-tooltip-icon [tooltipText]="'Portal.ViewTournamentPlanner.TournamentClasses.DeleteNotPossible'" />
               }
             </div>
           </td>
@@ -52,7 +52,7 @@
       </tr>
     } @empty {
       <tr>
-        <td [attr.colspan]="writeAllowed ? 6 : 4" translate="Portal.ViewPlanningRealm.TournamentClasses.NoTournamentClasses"></td>
+        <td [attr.colspan]="writeAllowed ? 6 : 4" translate="Portal.ViewTournamentPlanner.TournamentClasses.NoTournamentClasses"></td>
       </tr>
     }
   </tbody>

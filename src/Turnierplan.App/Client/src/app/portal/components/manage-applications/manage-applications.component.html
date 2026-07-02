@@ -1,4 +1,4 @@
-@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
+@let writeAllowed = (authorizationService.isActionAllowed$(tournamentPlanner.id, Actions.GenericWrite) | async) ?? false;
 
 @if (isLoading) {
   <div class="mt-4">
@@ -6,7 +6,7 @@
   </div>
 } @else if (result) {
   @if (result.totalItems === 0) {
-    <div class="mt-5 fst-italic text-center" translate="Portal.ViewPlanningRealm.Applications.NoResults"></div>
+    <div class="mt-5 fst-italic text-center" translate="Portal.ViewTournamentPlanner.Applications.NoResults"></div>
   } @else {
     <table class="table table-bordered">
       <thead>
@@ -15,38 +15,38 @@
             @if (allApplicationsExpanded) {
               <i
                 class="ms-2 bi bi-chevron-bar-contract tp-cursor-pointer"
-                [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.CollapseAllTooltip' | translate"
+                [ngbTooltip]="'Portal.ViewTournamentPlanner.Applications.CollapseAllTooltip' | translate"
                 (click)="setAllApplicationsExpanded(false)"></i>
             } @else {
               <i
                 class="ms-2 bi bi-chevron-bar-expand tp-cursor-pointer"
-                [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.ExpandAllTooltip' | translate"
+                [ngbTooltip]="'Portal.ViewTournamentPlanner.Applications.ExpandAllTooltip' | translate"
                 (click)="setAllApplicationsExpanded(true)"></i>
             }
           </th>
           <th style="width: 1px">
-            <span translate="Portal.ViewPlanningRealm.Applications.TableHeader.Tag"></span>
-            <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.Applications.TableHeader.TagTooltip'" />
+            <span translate="Portal.ViewTournamentPlanner.Applications.TableHeader.Tag"></span>
+            <tp-tooltip-icon [tooltipText]="'Portal.ViewTournamentPlanner.Applications.TableHeader.TagTooltip'" />
           </th>
-          <th style="width: 1px" translate="Portal.ViewPlanningRealm.Applications.TableHeader.CreatedAt"></th>
-          <th style="width: 1px" translate="Portal.ViewPlanningRealm.Applications.TableHeader.TeamCount"></th>
-          <th style="width: 15%" translate="Portal.ViewPlanningRealm.Applications.TableHeader.Contact"></th>
+          <th style="width: 1px" translate="Portal.ViewTournamentPlanner.Applications.TableHeader.CreatedAt"></th>
+          <th style="width: 1px" translate="Portal.ViewTournamentPlanner.Applications.TableHeader.TeamCount"></th>
+          <th style="width: 15%" translate="Portal.ViewTournamentPlanner.Applications.TableHeader.Contact"></th>
           <th style="width: 20%">
-            <span class="me-2" translate="Portal.ViewPlanningRealm.Applications.TableHeader.ContactEmail"></span>
+            <span class="me-2" translate="Portal.ViewTournamentPlanner.Applications.TableHeader.ContactEmail"></span>
             @if (combinedEmailAddresses && combinedEmailAddresses.length > 0) {
               <tp-copy-to-clipboard
-                [tooltipOverwrite]="'Portal.ViewPlanningRealm.Applications.TableHeader.CopyAllEmailAddresses'"
+                [tooltipOverwrite]="'Portal.ViewTournamentPlanner.Applications.TableHeader.CopyAllEmailAddresses'"
                 [value]="combinedEmailAddresses" />
             }
           </th>
-          <th style="width: 15%" translate="Portal.ViewPlanningRealm.Applications.TableHeader.ContactTelephone"></th>
+          <th style="width: 15%" translate="Portal.ViewTournamentPlanner.Applications.TableHeader.ContactTelephone"></th>
           <th style="width: 20%">
-            <span translate="Portal.ViewPlanningRealm.Applications.TableHeader.Comment"></span>
-            <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.Applications.TableHeader.CommentTooltip'" />
+            <span translate="Portal.ViewTournamentPlanner.Applications.TableHeader.Comment"></span>
+            <tp-tooltip-icon [tooltipText]="'Portal.ViewTournamentPlanner.Applications.TableHeader.CommentTooltip'" />
           </th>
           <th style="width: 20%">
-            <span translate="Portal.ViewPlanningRealm.Applications.TableHeader.Notes"></span>
-            <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.Applications.TableHeader.NotesTooltip'" />
+            <span translate="Portal.ViewTournamentPlanner.Applications.TableHeader.Notes"></span>
+            <tp-tooltip-icon [tooltipText]="'Portal.ViewTournamentPlanner.Applications.TableHeader.NotesTooltip'" />
           </th>
           <th style="width: 1px"></th>
         </tr>
@@ -76,7 +76,7 @@
                     class="d-inline-block text-center text-white"
                     style="width: 1.5em; border-radius: 0.4em"
                     [ngStyle]="{ 'background-color': '#' + invitationLink.colorCode }"
-                    [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.SourceLinkTooltip' | translate: { name: invitationLink.name }">
+                    [ngbTooltip]="'Portal.ViewTournamentPlanner.Applications.SourceLinkTooltip' | translate: { name: invitationLink.name }">
                     <i class="bi bi-link-45deg"></i
                   ></span>
                 }
@@ -85,7 +85,7 @@
                   [margin]="false"
                   [icon]="'vector-pen'"
                   [iconClass]="'text-secondary'"
-                  [tooltipText]="'Portal.ViewPlanningRealm.Applications.NoSourceLinkTooltip'" />
+                  [tooltipText]="'Portal.ViewTournamentPlanner.Applications.NoSourceLinkTooltip'" />
               }
             </td>
             <td class="text-nowrap align-correctly">
@@ -101,7 +101,7 @@
                 @if (visibleTeamsCount !== application.teams.length) {
                   <tp-tooltip-icon
                     [icon]="'exclamation-diamond'"
-                    [tooltipText]="'Portal.ViewPlanningRealm.Applications.HiddenTeamsTooltip'" />
+                    [tooltipText]="'Portal.ViewTournamentPlanner.Applications.HiddenTeamsTooltip'" />
                 }
               }
             </td>
@@ -170,7 +170,7 @@
             <td class="align-correctly">
               <i
                 class="bi bi-clock-history tp-cursor-pointer"
-                [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.ChangeLogTooltip' | translate"
+                [ngbTooltip]="'Portal.ViewTournamentPlanner.Applications.ChangeLogTooltip' | translate"
                 (click)="showApplicationChangeLog(application)"></i>
             </td>
           </tr>
@@ -181,10 +181,10 @@
                 <table style="max-width: 900px" class="mb-2 table table-sm table-bordered">
                   <thead>
                     <tr>
-                      <th translate="Portal.ViewPlanningRealm.Applications.TableHeader.TournamentClass"></th>
-                      <th translate="Portal.ViewPlanningRealm.Applications.TableHeader.TeamName"></th>
-                      <th translate="Portal.ViewPlanningRealm.Applications.TableHeader.Labels"></th>
-                      <th translate="Portal.ViewPlanningRealm.Applications.TableHeader.Tournament"></th>
+                      <th translate="Portal.ViewTournamentPlanner.Applications.TableHeader.TournamentClass"></th>
+                      <th translate="Portal.ViewTournamentPlanner.Applications.TableHeader.TeamName"></th>
+                      <th translate="Portal.ViewTournamentPlanner.Applications.TableHeader.Labels"></th>
+                      <th translate="Portal.ViewTournamentPlanner.Applications.TableHeader.Tournament"></th>
                       <th style="width: 1px"></th>
                     </tr>
                   </thead>
@@ -198,7 +198,7 @@
                             @if (writeAllowed) {
                               <tp-rename-button
                                 class="ms-2"
-                                translationKey="Portal.ViewPlanningRealm.Applications.RenameTeam"
+                                translationKey="Portal.ViewTournamentPlanner.Applications.RenameTeam"
                                 [current]="team.name"
                                 [displayLabel]="false"
                                 [reducedFootprint]="true"
@@ -211,7 +211,7 @@
                             } @empty {
                               <span
                                 class="fst-italic small text-secondary text-nowrap"
-                                [translate]="'Portal.ViewPlanningRealm.Applications.NoLabels'"></span>
+                                [translate]="'Portal.ViewTournamentPlanner.Applications.NoLabels'"></span>
                             }
                             @if (updatingLabelsOfApplicationTeamId === team.id) {
                               <tp-small-spinner class="ms-2" />
@@ -236,19 +236,19 @@
                             } @else {
                               <span
                                 class="fst-italic small text-secondary"
-                                translate="Portal.ViewPlanningRealm.Applications.NoLinkedTournament"></span>
+                                translate="Portal.ViewTournamentPlanner.Applications.NoLinkedTournament"></span>
                             }
                           </td>
                           <td class="align-middle px-2">
                             @if (team.linkedTournament) {
                               <tp-tooltip-icon
                                 [margin]="false"
-                                [tooltipText]="'Portal.ViewPlanningRealm.Applications.CannotDeleteTeamWhileLinked'" />
+                                [tooltipText]="'Portal.ViewTournamentPlanner.Applications.CannotDeleteTeamWhileLinked'" />
                             } @else {
                               <tp-delete-button
                                 [reducedFootprint]="true"
                                 [modalConfirmation]="true"
-                                [translationKey]="'Portal.ViewPlanningRealm.Applications.DeleteTeam'"
+                                [translationKey]="'Portal.ViewTournamentPlanner.Applications.DeleteTeam'"
                                 [targetObjectName]="team.name"
                                 (confirmed)="deleteTeam(application.id, team.id)" />
                             }
@@ -258,7 +258,9 @@
                     } @empty {
                       <tr>
                         <td colspan="5">
-                          <span class="fst-italic small text-secondary" translate="Portal.ViewPlanningRealm.Applications.NoTeams"></span>
+                          <span
+                            class="fst-italic small text-secondary"
+                            translate="Portal.ViewTournamentPlanner.Applications.NoTeams"></span>
                         </td>
                       </tr>
                     }
@@ -268,11 +270,11 @@
                         <td colspan="5">
                           <span
                             class="fst-italic small text-secondary"
-                            translate="Portal.ViewPlanningRealm.Applications.HiddenTeams"
+                            translate="Portal.ViewTournamentPlanner.Applications.HiddenTeams"
                             [translateParams]="{ count: hiddenTeamsCount }"></span>
                           <span
                             class="ms-2 small text-secondary text-decoration-underline tp-cursor-pointer"
-                            translate="Portal.ViewPlanningRealm.Applications.HiddenTeamsShowAll"
+                            translate="Portal.ViewTournamentPlanner.Applications.HiddenTeamsShowAll"
                             (click)="setFilterToApplicationTag(application.tag)"></span>
                         </td>
                       </tr>
@@ -283,7 +285,7 @@
                 <tp-action-button
                   [icon]="'plus-circle'"
                   [type]="'outline-secondary'"
-                  [title]="'Portal.ViewPlanningRealm.Applications.AddTeam.Button'"
+                  [title]="'Portal.ViewTournamentPlanner.Applications.AddTeam.Button'"
                   (buttonClick)="addTeam(application.id)" />
               </td>
             </tr>

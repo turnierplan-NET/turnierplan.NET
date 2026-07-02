@@ -2,8 +2,8 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
 using Turnierplan.App.Security;
-using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.TournamentPlanner;
 using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.Applications;
@@ -12,7 +12,7 @@ internal abstract class PatchApplicationEndpointBase<TRequest> : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Patch;
 
-    protected override string Route => $"/api/planning-realms/{{planningRealmId}}/applications/{{applicationId:int}}/{RouteSuffix}";
+    protected override string Route => $"/api/tournament-planners/{{tournamentPlannerId}}/applications/{{applicationId:int}}/{RouteSuffix}";
 
     protected override Delegate Handler => Handle;
 
@@ -26,10 +26,10 @@ internal abstract class PatchApplicationEndpointBase<TRequest> : EndpointBase
     protected abstract void UpdateApplication(Application application, TRequest request);
 
     private async Task<IResult> Handle(
-        [FromRoute] PublicId planningRealmId,
+        [FromRoute] PublicId tournamentPlannerId,
         [FromRoute] long applicationId,
         [FromBody] TRequest request,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
@@ -38,19 +38,19 @@ internal abstract class PatchApplicationEndpointBase<TRequest> : EndpointBase
             return result;
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.Applications);
+        var tournamentPlanner = await tournamentPlannerRepository.GetByPublicIdAsync(tournamentPlannerId, ITournamentPlannerRepository.Includes.Applications);
 
-        if (planningRealm is null)
+        if (tournamentPlanner is null)
         {
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsWrite))
+        if (!accessValidator.IsActionAllowed(tournamentPlanner, Actions.ApplicationsWrite))
         {
             return Results.Forbid();
         }
 
-        var application = planningRealm.Applications.FirstOrDefault(x => x.Id == applicationId);
+        var application = tournamentPlanner.Applications.FirstOrDefault(x => x.Id == applicationId);
 
         if (application is null)
         {
@@ -59,7 +59,7 @@ internal abstract class PatchApplicationEndpointBase<TRequest> : EndpointBase
 
         UpdateApplication(application, request);
 
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await tournamentPlannerRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

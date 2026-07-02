@@ -35,16 +35,16 @@ public enum Role
 
     #endregion
 
-    #region Planning Realm Roles
+    #region Tournament Planner Roles
 
     /// <summary>
-    /// This role grants the permission to view and modify applications in a planning realm. These actions
+    /// This role grants the permission to view and modify applications in a tournament planner. These actions
     /// are not allowed by the standard <see cref="Contributor"/> role because applications may contain PII.
     /// </summary>
     ApplicationOfficer = 3000,
 
     /// <summary>
-    /// This role grants the permission to view applications in a planning realm. These actions
+    /// This role grants the permission to view applications in a tournament planner. These actions
     /// are not allowed by the standard <see cref="Reader"/> role because applications may contain PII.
     /// </summary>
     ApplicationReader = 3001

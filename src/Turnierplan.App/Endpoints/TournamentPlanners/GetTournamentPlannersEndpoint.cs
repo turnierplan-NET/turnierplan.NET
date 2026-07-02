@@ -5,13 +5,13 @@ using Turnierplan.App.Security;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Dal.Repositories;
 
-namespace Turnierplan.App.Endpoints.PlanningRealms;
+namespace Turnierplan.App.Endpoints.TournamentPlanners;
 
-internal sealed class GetPlanningRealmsEndpoint : EndpointBase<IEnumerable<PlanningRealmHeaderDto>>
+internal sealed class GetTournamentPlannersEndpoint : EndpointBase<IEnumerable<TournamentPlannerHeaderDto>>
 {
     protected override HttpMethod Method => HttpMethod.Get;
 
-    protected override string Route => "/api/planning-realms";
+    protected override string Route => "/api/tournament-planners";
 
     protected override Delegate Handler => Handle;
 
@@ -21,7 +21,7 @@ internal sealed class GetPlanningRealmsEndpoint : EndpointBase<IEnumerable<Plann
         IAccessValidator accessValidator,
         IMapper mapper)
     {
-        var organization = await organizationRepository.GetByPublicIdAsync(organizationId.Value, IOrganizationRepository.Includes.PlanningRealms);
+        var organization = await organizationRepository.GetByPublicIdAsync(organizationId.Value, IOrganizationRepository.Includes.TournamentPlanners);
 
         if (organization is null)
         {
@@ -33,6 +33,6 @@ internal sealed class GetPlanningRealmsEndpoint : EndpointBase<IEnumerable<Plann
             return Results.Forbid();
         }
 
-        return Results.Ok(mapper.MapCollection<PlanningRealmHeaderDto>(organization.PlanningRealms));
+        return Results.Ok(mapper.MapCollection<TournamentPlannerHeaderDto>(organization.TournamentPlanners));
     }
 }

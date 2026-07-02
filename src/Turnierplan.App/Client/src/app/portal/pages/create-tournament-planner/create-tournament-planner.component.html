@@ -1,0 +1,38 @@
+﻿<tp-page-frame
+  *tpLoadingState="loadingState"
+  [ultraSlim]="true"
+  [title]="'Portal.CreateTournamentPlanner.Title' | translate"
+  [backLink]="'../..'">
+  <label for="create_tournament_planner_name" class="form-label" translate="Portal.CreateTournamentPlanner.Form.Name"></label>
+  <input
+    id="create_tournament_planner_name"
+    type="text"
+    class="form-control"
+    [formControl]="tournamentPlannerName"
+    [required]="true"
+    [minlength]="1"
+    [ngClass]="
+      tournamentPlannerName.dirty || tournamentPlannerName.touched ? (tournamentPlannerName.invalid ? 'is-invalid' : 'is-valid') : ''
+    " />
+  <div class="invalid-feedback" translate="Portal.CreateTournamentPlanner.Form.NameInvalid"></div>
+  <div class="valid-feedback" translate="Portal.CreateTournamentPlanner.Form.NameValid"></div>
+
+  <hr />
+
+  <div class="form-text d-flex flex-row align-items-center">
+    <i class="bi bi-info-circle"></i>
+    <span
+      class="ms-2"
+      [innerHTML]="'Portal.CreateTournamentPlanner.OrganizationNotice' | translate: { organizationName: organization?.name }"></span>
+  </div>
+
+  <hr />
+
+  <div class="d-flex flex-row justify-content-end">
+    <tp-action-button
+      [type]="'success'"
+      [title]="'Portal.CreateTournamentPlanner.Submit'"
+      [disabled]="tournamentPlannerName.invalid"
+      (buttonClick)="confirmButtonClicked()" />
+  </div>
+</tp-page-frame>

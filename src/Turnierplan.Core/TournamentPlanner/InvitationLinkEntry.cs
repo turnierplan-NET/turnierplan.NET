@@ -1,6 +1,6 @@
 using Turnierplan.Core.Entity;
 
-namespace Turnierplan.Core.PlanningRealm;
+namespace Turnierplan.Core.TournamentPlanner;
 
 public sealed class InvitationLinkEntry : Entity<long>
 {

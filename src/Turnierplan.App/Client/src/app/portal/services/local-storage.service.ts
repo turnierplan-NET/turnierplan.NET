@@ -44,12 +44,12 @@ export class LocalStorageService {
     return this.getValueFromLocalStorage('tp_openTournamentInNewTab', (x) => x === 'true') ?? true;
   }
 
-  public setPlanningRealmApplicationsFilter(planningRealmId: string, filter: ApplicationsFilter): void {
-    localStorage.setItem(`tp_applicationsFilter_${planningRealmId}`, JSON.stringify(filter));
+  public setTournamentPlannerApplicationsFilter(tournamentPlanner: string, filter: ApplicationsFilter): void {
+    localStorage.setItem(`tp_applicationsFilter_${tournamentPlanner}`, JSON.stringify(filter));
   }
 
-  public getPlanningRealmApplicationsFilter(planningRealmId: string): ApplicationsFilter {
-    const value = this.getValueFromLocalStorage(`tp_applicationsFilter_${planningRealmId}`, (x) => x);
+  public getTournamentPlannerApplicationsFilter(tournamentPlanner: string): ApplicationsFilter {
+    const value = this.getValueFromLocalStorage(`tp_applicationsFilter_${tournamentPlanner}`, (x) => x);
 
     if (value) {
       return { ...defaultApplicationsFilter, ...(JSON.parse(value) as ApplicationsFilter) };
@@ -66,12 +66,12 @@ export class LocalStorageService {
     return this.getValueFromLocalStorage('tp_addTeamDialogMode', (x) => x);
   }
 
-  public setSelectApplicationTeamPlanningRealmId(organizationId: string, planningRealmId: string): void {
-    localStorage.setItem(`tp_selectApplicationTeamPlanningRealmId_${organizationId}`, planningRealmId);
+  public setSelectApplicationTeamTournamentPlannerId(organizationId: string, tournamentPlannerId: string): void {
+    localStorage.setItem(`tp_selectApplicationTeamTournamentPlannerId_${organizationId}`, tournamentPlannerId);
   }
 
-  public getSelectApplicationTeamPlanningRealmId(organizationId: string): string | undefined {
-    return this.getValueFromLocalStorage(`tp_selectApplicationTeamPlanningRealmId_${organizationId}`, (x) => x);
+  public getSelectApplicationTeamTournamentPlannerId(organizationId: string): string | undefined {
+    return this.getValueFromLocalStorage(`tp_selectApplicationTeamTournamentPlannerId_${organizationId}`, (x) => x);
   }
 
   public setColorTheme(theme: string): void {

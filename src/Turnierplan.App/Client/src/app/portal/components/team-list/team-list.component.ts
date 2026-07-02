@@ -13,7 +13,7 @@ import { IsActionAllowedDirective } from '../../directives/is-action-allowed.dir
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';
 import { defaultApplicationsFilter } from '../../models/applications-filter';
-import { ViewPlanningRealmComponent } from '../../pages/view-planning-realm/view-planning-realm.component';
+import { ViewTournamentPlannerComponent } from '../../pages/view-tournament-planner/view-tournament-planner.component';
 import { PublicId } from '../../../api/models/public-id';
 import { TeamLinkDto } from '../../../api/models/team-link-dto';
 
@@ -139,12 +139,12 @@ export class TeamListComponent {
     this.teamSetOutOfCompetition.emit({ teamId: teamId, outOfCompetition: !team.outOfCompetition });
   }
 
-  protected navigateToPlanningRealm(planningRealmId: PublicId, applicationTeamId: number): void {
-    this.localStorageService.setNavigationTab(planningRealmId, ViewPlanningRealmComponent.ApplicationsManagerPageId);
-    this.localStorageService.setPlanningRealmApplicationsFilter(planningRealmId, {
+  protected navigateToTournamentPlanner(tournamentPlannerId: PublicId, applicationTeamId: number): void {
+    this.localStorageService.setNavigationTab(tournamentPlannerId, ViewTournamentPlannerComponent.ApplicationsManagerPageId);
+    this.localStorageService.setTournamentPlannerApplicationsFilter(tournamentPlannerId, {
       ...defaultApplicationsFilter,
       searchTerm: `!${applicationTeamId}`
     });
-    void this.router.navigate(['/portal/planning-realm/', planningRealmId]);
+    void this.router.navigate(['/portal/tournament-planner/', tournamentPlannerId]);
   }
 }

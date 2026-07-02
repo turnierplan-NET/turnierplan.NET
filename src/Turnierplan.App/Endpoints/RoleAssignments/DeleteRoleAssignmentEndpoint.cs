@@ -6,10 +6,10 @@ using Turnierplan.Core.Entity;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
-using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament;
+using Turnierplan.Core.TournamentPlanner;
 using Turnierplan.Core.Venue;
 using Turnierplan.Dal.Repositories;
 
@@ -46,8 +46,8 @@ internal sealed class DeleteRoleAssignmentEndpoint : EndpointBase
             "Folder" => DeleteRoleAssignmentAsync<Folder>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
             "Image" => DeleteRoleAssignmentAsync<Image>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
             "Organization" => DeleteRoleAssignmentAsync<Organization>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
-            "PlanningRealm" => DeleteRoleAssignmentAsync<PlanningRealm>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
             "Tournament" => DeleteRoleAssignmentAsync<Tournament>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
+            "TournamentPlanner" => DeleteRoleAssignmentAsync<TournamentPlanner>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
             "Venue" => DeleteRoleAssignmentAsync<Venue>(serviceProvider, accessValidator, targetId, roleAssignmentGuid, cancellationToken),
             _ => null
         };

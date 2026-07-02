@@ -12,10 +12,10 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
 import { OrganizationDto } from '../../../api/models/organization-dto';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { getOrganization } from '../../../api/fn/organizations/get-organization';
-import { createPlanningRealm } from '../../../api/fn/planning-realms/create-planning-realm';
+import { createTournamentPlanner } from '../../../api/fn/tournament-planners/create-tournament-planner';
 
 @Component({
-  templateUrl: './create-planning-realm.component.html',
+  templateUrl: './create-tournament-planner.component.html',
   imports: [
     LoadingStateDirective,
     PageFrameComponent,
@@ -27,11 +27,11 @@ import { createPlanningRealm } from '../../../api/fn/planning-realms/create-plan
     TranslatePipe
   ]
 })
-export class CreatePlanningRealmComponent implements OnDestroy {
+export class CreateTournamentPlannerComponent implements OnDestroy {
   protected loadingState: LoadingState = { isLoading: false };
 
   protected organization?: OrganizationDto;
-  protected planningRealmName = new FormControl('', { nonNullable: true });
+  protected tournamentPlannerName = new FormControl('', { nonNullable: true });
 
   private readonly destroyed$ = new Subject<void>();
 
@@ -72,18 +72,18 @@ export class CreatePlanningRealmComponent implements OnDestroy {
   }
 
   protected confirmButtonClicked(): void {
-    if (this.planningRealmName.valid && !this.loadingState.isLoading && this.organization) {
+    if (this.tournamentPlannerName.valid && !this.loadingState.isLoading && this.organization) {
       this.loadingState = { isLoading: true };
       this.turnierplanApi
-        .invoke(createPlanningRealm, {
+        .invoke(createTournamentPlanner, {
           body: {
             organizationId: this.organization.id,
-            name: this.planningRealmName.value
+            name: this.tournamentPlannerName.value
           }
         })
         .pipe(
-          switchMap((planningRealm) =>
-            from(this.router.navigate(['../../../../planning-realm/', planningRealm.id], { relativeTo: this.route }))
+          switchMap((tournamentPlanner) =>
+            from(this.router.navigate(['../../../../tournament-planner/', tournamentPlanner.id], { relativeTo: this.route }))
           )
         )
         .subscribe({

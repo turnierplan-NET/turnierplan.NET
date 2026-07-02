@@ -1,12 +1,12 @@
 using Microsoft.EntityFrameworkCore;
-using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.TournamentPlanner;
 
 namespace Turnierplan.Dal.Repositories;
 
-public interface IPlanningRealmRepository : IRepositoryWithPublicId<PlanningRealm, long>
+public interface ITournamentPlannerRepository : IRepositoryWithPublicId<TournamentPlanner, long>
 {
-    Task<PlanningRealm?> GetByPublicIdAsync(PublicId id, Includes includes);
+    Task<TournamentPlanner?> GetByPublicIdAsync(PublicId id, Includes includes);
 
     [Flags]
     public enum Includes
@@ -24,9 +24,9 @@ public interface IPlanningRealmRepository : IRepositoryWithPublicId<PlanningReal
     }
 }
 
-internal sealed class PlanningRealmRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<PlanningRealm>(context), IPlanningRealmRepository
+internal sealed class TournamentPlannerRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<TournamentPlanner>(context), ITournamentPlannerRepository
 {
-    public override Task<PlanningRealm?> GetByPublicIdAsync(PublicId id)
+    public override Task<TournamentPlanner?> GetByPublicIdAsync(PublicId id)
     {
         return DbSet.Where(x => x.PublicId == id)
             .Include(x => x.Organization).ThenInclude(x => x.RoleAssignments)
@@ -35,33 +35,33 @@ internal sealed class PlanningRealmRepository(TurnierplanContext context) : Repo
             .FirstOrDefaultAsync();
     }
 
-    public async Task<PlanningRealm?> GetByPublicIdAsync(PublicId id, IPlanningRealmRepository.Includes includes)
+    public async Task<TournamentPlanner?> GetByPublicIdAsync(PublicId id, ITournamentPlannerRepository.Includes includes)
     {
         var query = DbSet.Where(x => x.PublicId == id);
 
-        if (includes.HasFlag(IPlanningRealmRepository.Includes.TournamentClasses))
+        if (includes.HasFlag(ITournamentPlannerRepository.Includes.TournamentClasses))
         {
             query = query.Include(x => x.TournamentClasses);
         }
 
-        if (includes.HasFlag(IPlanningRealmRepository.Includes.InvitationLinks))
+        if (includes.HasFlag(ITournamentPlannerRepository.Includes.InvitationLinks))
         {
             query = query.Include(x => x.InvitationLinks).ThenInclude(x => x.PrimaryLogo);
             query = query.Include(x => x.InvitationLinks).ThenInclude(x => x.SecondaryLogo);
             query = query.Include(x => x.InvitationLinks).ThenInclude(x => x.Entries);
         }
 
-        if (includes.HasFlag(IPlanningRealmRepository.Includes.Applications))
+        if (includes.HasFlag(ITournamentPlannerRepository.Includes.Applications))
         {
             query = query.Include(x => x.Applications).ThenInclude(x => x.SourceLink);
         }
 
-        if (includes.HasFlag(IPlanningRealmRepository.Includes.Labels))
+        if (includes.HasFlag(ITournamentPlannerRepository.Includes.Labels))
         {
             query = query.Include(x => x.Labels);
         }
 
-        if (includes.HasFlag(IPlanningRealmRepository.Includes.ApplicationsWithTeams))
+        if (includes.HasFlag(ITournamentPlannerRepository.Includes.ApplicationsWithTeams))
         {
             query = query.Include(x => x.Applications).ThenInclude(x => x.SourceLink);
             query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.Class);
@@ -69,7 +69,7 @@ internal sealed class PlanningRealmRepository(TurnierplanContext context) : Repo
             query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.TeamLink);
         }
 
-        if (includes.HasFlag(IPlanningRealmRepository.Includes.ApplicationsWithTeamsAndTournamentLinks))
+        if (includes.HasFlag(ITournamentPlannerRepository.Includes.ApplicationsWithTeamsAndTournamentLinks))
         {
             query = query.Include(x => x.Applications).ThenInclude(x => x.SourceLink);
             query = query.Include(x => x.Applications).ThenInclude(x => x.Teams).ThenInclude(x => x.Class);

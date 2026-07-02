@@ -11,31 +11,31 @@ internal sealed class GetApplicationChangeLogEndpoint : EndpointBase<IEnumerable
 {
     protected override HttpMethod Method => HttpMethod.Get;
 
-    protected override string Route => "/api/planning-realms/{planningRealmId}/applications/{applicationId:int}/changelog";
+    protected override string Route => "/api/tournament-planners/{tournamentPlannerId}/applications/{applicationId:int}/changelog";
 
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
-        [FromRoute] PublicId planningRealmId,
+        [FromRoute] PublicId tournamentPlannerId,
         [FromRoute] long applicationId,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         IApplicationChangeLogRepository applicationChangeLogRepository,
         IMapper mapper)
     {
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.Applications);
+        var tournamentPlanner = await tournamentPlannerRepository.GetByPublicIdAsync(tournamentPlannerId, ITournamentPlannerRepository.Includes.Applications);
 
-        if (planningRealm is null)
+        if (tournamentPlanner is null)
         {
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsRead))
+        if (!accessValidator.IsActionAllowed(tournamentPlanner, Actions.ApplicationsRead))
         {
             return Results.Forbid();
         }
 
-        var application = planningRealm.Applications.FirstOrDefault(x => x.Id == applicationId);
+        var application = tournamentPlanner.Applications.FirstOrDefault(x => x.Id == applicationId);
 
         if (application is null)
         {

@@ -11,16 +11,16 @@ internal sealed class SetApplicationTeamLabelsEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Patch;
 
-    protected override string Route => "/api/planning-realms/{planningRealmId}/applications/{applicationId:int}/teams/{applicationTeamId:int}/labels";
+    protected override string Route => "/api/tournament-planners/{tournamentPlannerId}/applications/{applicationId:int}/teams/{applicationTeamId:int}/labels";
 
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
-        [FromRoute] PublicId planningRealmId,
+        [FromRoute] PublicId tournamentPlannerId,
         [FromRoute] long applicationId,
         [FromRoute] long applicationTeamId,
         [FromBody] SetApplicationTeamLabelsEndpointRequest request,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         CancellationToken cancellationToken)
     {
@@ -29,19 +29,19 @@ internal sealed class SetApplicationTeamLabelsEndpoint : EndpointBase
             return result;
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.ApplicationsWithTeams | IPlanningRealmRepository.Includes.Labels);
+        var tournamentPlanner = await tournamentPlannerRepository.GetByPublicIdAsync(tournamentPlannerId, ITournamentPlannerRepository.Includes.ApplicationsWithTeams | ITournamentPlannerRepository.Includes.Labels);
 
-        if (planningRealm is null)
+        if (tournamentPlanner is null)
         {
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsWrite))
+        if (!accessValidator.IsActionAllowed(tournamentPlanner, Actions.ApplicationsWrite))
         {
             return Results.Forbid();
         }
 
-        var application = planningRealm.Applications.FirstOrDefault(x => x.Id == applicationId);
+        var application = tournamentPlanner.Applications.FirstOrDefault(x => x.Id == applicationId);
 
         if (application is null)
         {
@@ -65,7 +65,7 @@ internal sealed class SetApplicationTeamLabelsEndpoint : EndpointBase
 
         foreach (var labelId in labelsToAdd)
         {
-            var label = planningRealm.Labels.FirstOrDefault(x => x.Id == labelId);
+            var label = tournamentPlanner.Labels.FirstOrDefault(x => x.Id == labelId);
 
             if (label is null)
             {
@@ -75,7 +75,7 @@ internal sealed class SetApplicationTeamLabelsEndpoint : EndpointBase
             applicationTeam.AddLabel(label);
         }
 
-        await planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await tournamentPlannerRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return Results.NoContent();
     }

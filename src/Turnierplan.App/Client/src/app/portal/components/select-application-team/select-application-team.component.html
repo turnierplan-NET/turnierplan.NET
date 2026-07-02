@@ -1,37 +1,37 @@
 <div class="mb-2" translate="Portal.SelectApplicationTeam.Explanation" id="selectApplicationTeamExplanation"></div>
 
-@if (isLoadingPlanningRealms) {
+@if (isLoadingTournamentPlanners) {
   <div class="d-flex flex-row gap-2">
     <tp-small-spinner />
-    <span translate="Portal.SelectApplicationTeam.LoadingPlanningRealms"></span>
+    <span translate="Portal.SelectApplicationTeam.LoadingTournamentPlanners"></span>
   </div>
-} @else if (planningRealms) {
-  @if (planningRealms.length === 0) {
-    <div class="text-secondary fst-italic" translate="Portal.SelectApplicationTeam.NoPlanningRealms"></div>
+} @else if (tournamentPlanners) {
+  @if (tournamentPlanners.length === 0) {
+    <div class="text-secondary fst-italic" translate="Portal.SelectApplicationTeam.NoTournamentPlanners"></div>
   } @else {
     <select
       class="form-select"
       aria-labelledby="selectApplicationTeamExplanation"
-      [(ngModel)]="currentPlanningRealmId"
-      (ngModelChange)="onPlanningRealmChange($event)">
-      @for (planningRealm of planningRealms; track planningRealm) {
-        <option [value]="planningRealm.id">{{ planningRealm.name }}</option>
+      [(ngModel)]="currentTournamentPlannerId"
+      (ngModelChange)="onTournamentPlannerChange($event)">
+      @for (tournamentPlanner of tournamentPlanners; track tournamentPlanner) {
+        <option [value]="tournamentPlanner.id">{{ tournamentPlanner.name }}</option>
       }
     </select>
 
-    @if (isLoadingPlanningRealmDetail) {
+    @if (isLoadingTournamentPlannerDetail) {
       <div class="mt-3 d-flex flex-row gap-2">
         <tp-small-spinner />
-        <span translate="Portal.SelectApplicationTeam.LoadingPlanningRealmDetail"></span>
+        <span translate="Portal.SelectApplicationTeam.LoadingTournamentPlannerDetail"></span>
       </div>
-    } @else if (planningRealmDetail) {
+    } @else if (tournamentPlannerDetail) {
       <div class="mt-4">
         <span translate="Portal.SelectApplicationTeam.FilterExplanation"></span>
         <tp-tooltip-icon [tooltipText]="'Portal.SelectApplicationTeam.FilterTooltip'" />
       </div>
       <div class="mt-2 border rounded-2 p-2">
         <tp-manage-applications-filter
-          [planningRealm]="planningRealmDetail"
+          [tournamentPlanner]="tournamentPlannerDetail"
           [filter]="applicationsFilter"
           (filterChange)="onApplicationsFilterChange($event)" />
       </div>
@@ -96,9 +96,9 @@
         <div class="mt-3 fw-bold text-danger" translate="Portal.SelectApplicationTeam.LoadingApplicationsFailed"></div>
       }
     } @else {
-      <div class="mt-3 fw-bold text-danger" translate="Portal.SelectApplicationTeam.LoadingPlanningRealmDetailFailed"></div>
+      <div class="mt-3 fw-bold text-danger" translate="Portal.SelectApplicationTeam.LoadingTournamentPlannerDetailFailed"></div>
     }
   }
 } @else {
-  <div class="fw-bold text-danger" translate="Portal.SelectApplicationTeam.LoadingPlanningRealmsFailed"></div>
+  <div class="fw-bold text-danger" translate="Portal.SelectApplicationTeam.LoadingTournamentPlannersFailed"></div>
 }

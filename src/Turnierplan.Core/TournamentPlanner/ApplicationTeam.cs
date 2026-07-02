@@ -1,7 +1,7 @@
 using Turnierplan.Core.Entity;
 using Turnierplan.Core.Exceptions;
 
-namespace Turnierplan.Core.PlanningRealm;
+namespace Turnierplan.Core.TournamentPlanner;
 
 public sealed class ApplicationTeam : Entity<long>
 {

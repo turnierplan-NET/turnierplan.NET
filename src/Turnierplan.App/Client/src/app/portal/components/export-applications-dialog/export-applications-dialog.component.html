@@ -1,9 +1,9 @@
 <div class="modal-header">
-  <div class="modal-title" translate="Portal.ViewPlanningRealm.ExportApplications.DialogTitle"></div>
+  <div class="modal-title" translate="Portal.ViewTournamentPlanner.ExportApplications.DialogTitle"></div>
   <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
 </div>
 <div class="modal-body">
-  <div class="mb-2" [translate]="'Portal.ViewPlanningRealm.ExportApplications.InfoTest'"></div>
+  <div class="mb-2" [translate]="'Portal.ViewTournamentPlanner.ExportApplications.InfoTest'"></div>
   <div [formGroup]="form">
     <div class="form-check form-switch">
       <input
@@ -15,7 +15,7 @@
       <label
         class="form-check-label"
         for="includeApplicationTeams"
-        translate="Portal.ViewPlanningRealm.ExportApplications.IncludeApplicationTeams"></label>
+        translate="Portal.ViewTournamentPlanner.ExportApplications.IncludeApplicationTeams"></label>
     </div>
   </div>
 </div>
@@ -26,7 +26,7 @@
   <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" [disabled]="isDownloading" (buttonClick)="modal.dismiss()" />
   <tp-action-button
     [type]="'outline-primary'"
-    [title]="'Portal.ViewPlanningRealm.ExportApplications.Download'"
+    [title]="'Portal.ViewTournamentPlanner.ExportApplications.Download'"
     [icon]="'download'"
     [disabled]="isDownloading"
     (buttonClick)="exportApplications()" />

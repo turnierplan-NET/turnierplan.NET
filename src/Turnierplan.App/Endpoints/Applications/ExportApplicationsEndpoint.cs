@@ -12,7 +12,7 @@ internal sealed class ExportApplicationsEndpoint : EndpointBase
 {
     protected override HttpMethod Method => HttpMethod.Get;
 
-    protected override string Route => "/api/planning-realms/{planningRealmId}/applications-export";
+    protected override string Route => "/api/tournament-planners/{tournamentPlannerId}/applications-export";
 
     protected override Delegate Handler => Handle;
 
@@ -22,10 +22,10 @@ internal sealed class ExportApplicationsEndpoint : EndpointBase
     }
 
     private static async Task<IResult> Handle(
-        [FromRoute] PublicId planningRealmId,
+        [FromRoute] PublicId tournamentPlannerId,
         [FromQuery] string languageCode,
         [FromQuery] bool includeApplicationTeams,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IAccessValidator accessValidator,
         ILocalizationProvider localizationProvider)
     {
@@ -34,14 +34,14 @@ internal sealed class ExportApplicationsEndpoint : EndpointBase
             return Results.BadRequest("Invalid language code specified.");
         }
 
-        var planningRealm = await planningRealmRepository.GetByPublicIdAsync(planningRealmId, IPlanningRealmRepository.Includes.ApplicationsWithTeams);
+        var tournamentPlanner = await tournamentPlannerRepository.GetByPublicIdAsync(tournamentPlannerId, ITournamentPlannerRepository.Includes.ApplicationsWithTeams);
 
-        if (planningRealm is null)
+        if (tournamentPlanner is null)
         {
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.ApplicationsRead))
+        if (!accessValidator.IsActionAllowed(tournamentPlanner, Actions.ApplicationsRead))
         {
             return Results.Forbid();
         }
@@ -77,7 +77,7 @@ internal sealed class ExportApplicationsEndpoint : EndpointBase
                 );
             }
 
-            foreach (var application in planningRealm.Applications.OrderBy(x => x.CreatedAt))
+            foreach (var application in tournamentPlanner.Applications.OrderBy(x => x.CreatedAt))
             {
                 if (includeApplicationTeams)
                 {

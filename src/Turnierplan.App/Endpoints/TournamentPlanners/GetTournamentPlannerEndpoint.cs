@@ -5,37 +5,37 @@ using Turnierplan.App.Security;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Dal.Repositories;
 
-namespace Turnierplan.App.Endpoints.PlanningRealms;
+namespace Turnierplan.App.Endpoints.TournamentPlanners;
 
-internal sealed class GetPlanningRealmEndpoint : EndpointBase<PlanningRealmDto>
+internal sealed class GetTournamentPlannerEndpoint : EndpointBase<TournamentPlannerDto>
 {
     protected override HttpMethod Method => HttpMethod.Get;
 
-    protected override string Route => "/api/planning-realms/{id}";
+    protected override string Route => "/api/tournament-planners/{id}";
 
     protected override Delegate Handler => Handle;
 
     private static async Task<IResult> Handle(
         [FromRoute] PublicId id,
-        IPlanningRealmRepository repository,
+        ITournamentPlannerRepository repository,
         IAccessValidator accessValidator,
         IMapper mapper)
     {
         // Note: We must use 'ApplicationsWithTeams' in order to have access to the number of applications/teams per invitation link/tournament class
-        var planningRealm = await repository.GetByPublicIdAsync(id, IPlanningRealmRepository.Includes.All | IPlanningRealmRepository.Includes.ApplicationsWithTeams);
+        var tournamentPlanner = await repository.GetByPublicIdAsync(id, ITournamentPlannerRepository.Includes.All | ITournamentPlannerRepository.Includes.ApplicationsWithTeams);
 
-        if (planningRealm is null)
+        if (tournamentPlanner is null)
         {
             return Results.NotFound();
         }
 
-        if (!accessValidator.IsActionAllowed(planningRealm, Actions.GenericRead))
+        if (!accessValidator.IsActionAllowed(tournamentPlanner, Actions.GenericRead))
         {
             return Results.Forbid();
         }
 
-        accessValidator.AddRolesToResponseHeader(planningRealm);
+        accessValidator.AddRolesToResponseHeader(tournamentPlanner);
 
-        return Results.Ok(mapper.Map<PlanningRealmDto>(planningRealm));
+        return Results.Ok(mapper.Map<TournamentPlannerDto>(tournamentPlanner));
     }
 }

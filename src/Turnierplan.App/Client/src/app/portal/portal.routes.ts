@@ -7,10 +7,10 @@ import { CreateUserComponent } from './pages/create-user/create-user.component';
 import { CreateOrganizationComponent } from './pages/create-organization/create-organization.component';
 import { ViewOrganizationComponent } from './pages/view-organization/view-organization.component';
 import { CreateApiKeyComponent } from './pages/create-api-key/create-api-key.component';
-import { CreatePlanningRealmComponent } from './pages/create-planning-realm/create-planning-realm.component';
+import { CreateTournamentPlannerComponent } from './pages/create-tournament-planner/create-tournament-planner.component';
 import { CreateTournamentComponent } from './pages/create-tournament/create-tournament.component';
 import { CreateVenueComponent } from './pages/create-venue/create-venue.component';
-import { ViewPlanningRealmComponent } from './pages/view-planning-realm/view-planning-realm.component';
+import { ViewTournamentPlannerComponent } from './pages/view-tournament-planner/view-tournament-planner.component';
 import { discardChangesGuard } from '../core/guards/discard-changes.guard';
 import { FolderStatisticsComponent } from './pages/folder-statistics/folder-statistics.component';
 import { FolderTimetableComponent } from './pages/folder-timetable/folder-timetable.component';
@@ -57,7 +57,13 @@ export const portalRoutes: Routes = [
       },
       {
         path: 'organization/:id/create/planning-realm',
-        component: CreatePlanningRealmComponent
+        redirectTo: (data): string => {
+          return `organization/${data.params['id']}/create/tournament-planner`;
+        }
+      },
+      {
+        path: 'organization/:id/create/tournament-planner',
+        component: CreateTournamentPlannerComponent
       },
       {
         path: 'organization/:id/create/tournament',
@@ -69,7 +75,13 @@ export const portalRoutes: Routes = [
       },
       {
         path: 'planning-realm/:id',
-        component: ViewPlanningRealmComponent,
+        redirectTo: (data): string => {
+          return `tournament-planner/${data.params['id']}`;
+        }
+      },
+      {
+        path: 'tournament-planner/:id',
+        component: ViewTournamentPlannerComponent,
         canDeactivate: [discardChangesGuard]
       },
       {
