@@ -6,8 +6,5 @@ import { routes } from './app.routes';
 export const appVersion = '2026.3.0';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideRouter(routes)
-  ]
+  providers: [provideBrowserGlobalErrorListeners(), provideRouter(routes)],
 };
