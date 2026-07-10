@@ -6,12 +6,12 @@ using Turnierplan.Dal.Converters;
 
 namespace Turnierplan.Dal.EntityConfigurations;
 
-public sealed class RoleAssignmentEntityTypeConfiguration<T> : IEntityTypeConfiguration<RoleAssignment<T>>
+public sealed class RoleAssignmentEntityTypeConfiguration<T>(string? tableNameOverwrite = null) : IEntityTypeConfiguration<RoleAssignment<T>>
     where T : Entity<long>, IEntityWithRoleAssignments<T>
 {
     public void Configure(EntityTypeBuilder<RoleAssignment<T>> builder)
     {
-        builder.ToTable($"IAM_{typeof(T).Name}", TurnierplanContext.Schema);
+        builder.ToTable(tableNameOverwrite ?? $"IAM_{typeof(T).Name}", TurnierplanContext.Schema);
 
         builder.HasKey(x => x.Id);
 

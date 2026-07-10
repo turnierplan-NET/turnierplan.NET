@@ -14,7 +14,7 @@ internal sealed class DeletionHelper : IDeletionHelper
     private readonly IOrganizationRepository _organizationRepository;
     private readonly ITournamentRepository _tournamentRepository;
     private readonly IVenueRepository _venueRepository;
-    private readonly IPlanningRealmRepository _planningRealmRepository;
+    private readonly ITournamentPlannerRepository _tournamentPlannerRepository;
     private readonly IImageRepository _imageRepository;
     private readonly IImageStorage _imageStorage;
     private readonly ILogger<DeletionHelper> _logger;
@@ -23,7 +23,7 @@ internal sealed class DeletionHelper : IDeletionHelper
         IOrganizationRepository organizationRepository,
         ITournamentRepository tournamentRepository,
         IVenueRepository venueRepository,
-        IPlanningRealmRepository planningRealmRepository,
+        ITournamentPlannerRepository tournamentPlannerRepository,
         IImageRepository imageRepository,
         IImageStorage imageStorage,
         ILogger<DeletionHelper> logger)
@@ -31,7 +31,7 @@ internal sealed class DeletionHelper : IDeletionHelper
         _organizationRepository = organizationRepository;
         _tournamentRepository = tournamentRepository;
         _venueRepository = venueRepository;
-        _planningRealmRepository = planningRealmRepository;
+        _tournamentPlannerRepository = tournamentPlannerRepository;
         _imageRepository = imageRepository;
         _imageStorage = imageStorage;
         _logger = logger;
@@ -95,12 +95,12 @@ internal sealed class DeletionHelper : IDeletionHelper
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        foreach (var planningRealm in organization.PlanningRealms.ToList()) // ToList() to avoid invalid operation exception
+        foreach (var tournamentPlanner in organization.TournamentPlanners.ToList()) // ToList() to avoid invalid operation exception
         {
-            _planningRealmRepository.Remove(planningRealm);
+            _tournamentPlannerRepository.Remove(tournamentPlanner);
         }
 
-        await _planningRealmRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+        await _tournamentPlannerRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         // Note that ApiKeys and Folders need not be deleted explicitly, because the corresponding
         // foreign keys in the database are configured with the 'Cascade' deletion behaviour.

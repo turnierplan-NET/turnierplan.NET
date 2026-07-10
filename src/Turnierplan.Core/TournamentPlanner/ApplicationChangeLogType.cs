@@ -1,0 +1,19 @@
+namespace Turnierplan.Core.TournamentPlanner;
+
+public enum ApplicationChangeLogType
+{
+    // Note: Don't change enum values (DB serialization)
+
+    NotesChanged = 1,
+    ContactChanged = 2,
+    ContactEmailChanged = 3,
+    ContactTelephoneChanged = 4,
+    CommentChanged = 5,
+    TeamAdded = 6,
+    TeamRenamed = 7,
+    TeamRemoved = 8,
+    LabelAdded = 9,
+    LabelRemoved = 10,
+    TeamLinkCreated = 11,
+    TeamLinkDestroyed = 12
+}

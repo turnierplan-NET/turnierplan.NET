@@ -5,9 +5,9 @@ using Turnierplan.Core.Entity;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
-using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament;
+using Turnierplan.Core.TournamentPlanner;
 using Turnierplan.Core.Venue;
 
 namespace Turnierplan.App.Mapping.Rules;
@@ -42,8 +42,8 @@ internal sealed class ImageRoleAssignmentMappingRule : RoleAssignmentMappingRule
 
 internal sealed class OrganizationRoleAssignmentMappingRule : RoleAssignmentMappingRuleBase<Organization>;
 
-internal sealed class PlanningRealmRoleAssignmentMappingRule : RoleAssignmentMappingRuleBase<PlanningRealm>;
-
 internal sealed class TournamentRoleAssignmentMappingRule : RoleAssignmentMappingRuleBase<Tournament>;
+
+internal sealed class TournamentPlannerRoleAssignmentMappingRule : RoleAssignmentMappingRuleBase<TournamentPlanner>;
 
 internal sealed class VenueRoleAssignmentMappingRule : RoleAssignmentMappingRuleBase<Venue>;

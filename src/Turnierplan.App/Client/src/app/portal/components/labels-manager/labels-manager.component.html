@@ -1,10 +1,10 @@
-@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
+@let writeAllowed = (authorizationService.isActionAllowed$(tournamentPlanner.id, Actions.GenericWrite) | async) ?? false;
 
 <table class="table">
   <thead>
     <tr>
-      <th translate="Portal.ViewPlanningRealm.Labels.Name" style="width: 1px"></th>
-      <th translate="Portal.ViewPlanningRealm.Labels.Description"></th>
+      <th translate="Portal.ViewTournamentPlanner.Labels.Name" style="width: 1px"></th>
+      <th translate="Portal.ViewTournamentPlanner.Labels.Description"></th>
       <th></th>
       @if (writeAllowed) {
         <th style="width: 1px"></th>
@@ -13,7 +13,7 @@
   </thead>
 
   <tbody>
-    @for (label of planningRealm.labels; track label.id) {
+    @for (label of tournamentPlanner.labels; track label.id) {
       <tr>
         <td class="text-nowrap align-middle">
           <tp-label [label]="label" />
@@ -26,7 +26,7 @@
               [container]="'body'"></i>
             <tp-rename-button
               class="ms-1 me-4"
-              [translationKey]="'Portal.ViewPlanningRealm.Labels.Rename'"
+              [translationKey]="'Portal.ViewTournamentPlanner.Labels.Rename'"
               [displayLabel]="false"
               [current]="label.name"
               [reducedFootprint]="true"
@@ -38,7 +38,7 @@
           @if (writeAllowed) {
             <tp-rename-button
               [class]="{ 'ms-2': label.description.trim().length > 0 }"
-              [translationKey]="'Portal.ViewPlanningRealm.Labels.ChangeDescription'"
+              [translationKey]="'Portal.ViewTournamentPlanner.Labels.ChangeDescription'"
               [displayLabel]="false"
               [current]="label.description"
               [allowReset]="true"
@@ -50,7 +50,7 @@
           @if (label.id > 0) {
             <!-- Navigation to search is not possible if this label has not been saved yet -->
             <tp-action-button
-              *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsRead]"
+              *tpIsActionAllowed="[tournamentPlanner.id, Actions.ApplicationsRead]"
               [type]="'light'"
               [icon]="'search'"
               [mode]="'IconOnly'"
@@ -61,7 +61,7 @@
           <td class="align-middle">
             <tp-delete-button
               [modalConfirmation]="true"
-              [translationKey]="'Portal.ViewPlanningRealm.Labels.Delete'"
+              [translationKey]="'Portal.ViewTournamentPlanner.Labels.Delete'"
               [targetObjectName]="label.name"
               (confirmed)="deleteLabel(label.id)" />
           </td>
@@ -69,20 +69,20 @@
       </tr>
     } @empty {
       <tr>
-        <td [attr.colspan]="writeAllowed ? 4 : 3" [translate]="'Portal.ViewPlanningRealm.Labels.NoLabels'"></td>
+        <td [attr.colspan]="writeAllowed ? 4 : 3" [translate]="'Portal.ViewTournamentPlanner.Labels.NoLabels'"></td>
       </tr>
     }
     <tr>
       <td [attr.colspan]="writeAllowed ? 4 : 3" class="small text-secondary">
         <i class="bi bi-info-circle me-2"></i>
-        <span [translate]="'Portal.ViewPlanningRealm.Labels.LabelsInfo'"></span>
+        <span [translate]="'Portal.ViewTournamentPlanner.Labels.LabelsInfo'"></span>
       </td>
     </tr>
   </tbody>
 </table>
 
 <ng-template #colorPickerPopoverTitle>
-  <div class="fw-bold" [translate]="'Portal.ViewPlanningRealm.Labels.ColorPicker'"></div>
+  <div class="fw-bold" [translate]="'Portal.ViewTournamentPlanner.Labels.ColorPicker'"></div>
 </ng-template>
 
 <ng-template #colorPickerPopover let-labelId="labelId">

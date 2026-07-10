@@ -102,8 +102,8 @@ export class ConfigureTournamentAddTeamComponent implements AfterViewInit {
                   id: undefined,
                   name: team.name,
                   teamLink: {
-                    planningRealmId: team.planningRealmId,
-                    planningRealmName: team.planningRealmName,
+                    tournamentPlannerId: team.tournamentPlannerId,
+                    tournamentPlannerName: team.tournamentPlannerName,
                     tournamentClassName: team.tournamentClassName,
                     applicationTeamId: team.applicationTeamId
                   }

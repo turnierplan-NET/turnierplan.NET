@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe } from '@ngx-translate/core';
-import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
 
 @Component({
   selector: 'tp-manage-applications-filter',
@@ -24,7 +24,7 @@ export class ManageApplicationsFilterComponent {
   protected labelFilterOptions: MultiSelectFilterOption[] = [];
 
   @Input()
-  public set planningRealm(value: PlanningRealmDto) {
+  public set tournamentPlanner(value: TournamentPlannerDto) {
     this.tournamentClassFilterOptions = value.tournamentClasses.map((x) => ({ value: x.id, label: x.name }));
     this.invitationLinkFilterOptions = value.invitationLinks.map((x) => ({ value: x.id, label: x.name }));
     this.labelFilterOptions = value.labels.map((x) => ({ value: x.id, label: x.name }));

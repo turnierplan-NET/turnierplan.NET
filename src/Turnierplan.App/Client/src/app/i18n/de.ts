@@ -171,7 +171,7 @@ export const de = {
       Pages: {
         Tournaments: 'Turniere',
         Venues: 'Spielstätten',
-        PlanningRealms: 'Turnierplaner',
+        TournamentPlanners: 'Turnierplaner',
         Images: 'Bilder',
         ApiKeys: 'API-Schlüssel',
         Settings: 'Einstellungen'
@@ -179,22 +179,22 @@ export const de = {
       Badges: {
         TournamentCount: 'Turniere',
         VenueCount: 'Spielstätten',
-        PlanningRealmCount: 'Turnierplaner',
+        TournamentPlannerCount: 'Turnierplaner',
         ImagesCount: 'Bilder',
         ImagesTotalSize: 'Gesamtgröße',
         ApiKeyCount: 'API-Schlüssel'
       },
       NewTournament: 'Neues Turnier',
       NewVenue: 'Neue Spielstätte',
-      NewPlanningRealm: 'Neuer Turnierplaner',
+      NewTournamentPlanner: 'Neuer Turnierplaner',
       UploadImage: 'Bild hochladen',
       NewApiKey: 'Neuer API-Schlüssel',
       NoTournaments: 'In dieser Organisation gibt es aktuell keine Turniere.\nErstellen Sie ein Turner mit der Schaltfläche oben rechts.',
       NoVenues:
         'In dieser Organisation gibt es aktuell keine Spielstätten.\nErstellen Sie eine Spielstätte mit der Schaltfläche oben rechts.',
-      NoPlanningRealms:
+      NoTournamentPlanners:
         'In dieser Organisation gibt es aktuell keine Turnierplaner.\nErstellen Sie einen Turnierplaner mit der Schaltfläche oben rechts.',
-      OpenPlanningRealm: 'öffnen',
+      OpenTournamentPlanner: 'öffnen',
       TournamentExplorer: {
         EmptyFolder: 'In diesem Ordner befinden sich keine Turniere. Wählen Sie einen anderen Ordner oder erstellen Sie ein Turnier.',
         RenameFolder: {
@@ -763,7 +763,7 @@ export const de = {
             EnterNewName: 'Geben Sie den neuen Namen für die Gruppe ein:',
             EmptyAllowed: 'Sie können das Feld leerlassen, um zum Standardnamen ("Gruppe A-Z") zurückzukehren.'
           },
-          TeamFromPlanningRealm: 'Diese Mannschaft stammt aus einen Turnierplaner: "{{planningRealm}}" ("{{tournamentClass}}")',
+          TeamFromTournamentPlanner: 'Diese Mannschaft stammt aus einen Turnierplaner: "{{tournamentPlanner}}" ("{{tournamentClass}}")',
           TeamRename: {
             Button: 'Teamnamen ändern',
             Title: 'Teamnamen ändern',
@@ -978,7 +978,7 @@ export const de = {
       },
       ExcludedTournamentsNotice: 'Folgende Turniere sind bei dieser Statistik ausgenommen: {{tournamentNames}}'
     },
-    CreatePlanningRealm: {
+    CreateTournamentPlanner: {
       Title: 'Neuen Turnierplaner erstellen',
       Form: {
         Name: 'Name',
@@ -988,7 +988,7 @@ export const de = {
       OrganizationNotice: 'Es wird ein neuer Turnierplaner in der Organisation <span class="fw-bold">{{organizationName}}</span> angelegt.',
       Submit: 'Erstellen'
     },
-    ViewPlanningRealm: {
+    ViewTournamentPlanner: {
       Pages: {
         TournamentClasses: 'Turnierklassen',
         InvitationLinks: 'Anmeldelinks',
@@ -1039,6 +1039,14 @@ export const de = {
           Text: 'Sie sind im Begriff, eine Anmeldung mit {{teamCount}} Mannschaften zu erstellen.',
           CheckboxLabel: 'Ich habe den Hinweis gelesen und möchte die Anmeldung erstellen'
         }
+      },
+      ExportApplications: {
+        Button: 'Export (.csv)',
+        DialogTitle: 'Anmeldungen exportieren',
+        InfoTest: 'Nachfolgend können Sie eine CSV-Tabelle mit allen Anmeldungen in diesem Turnierplaner herunterladen.',
+        IncludeApplicationTeams: 'Mannschaften auflisten',
+        Download: 'Herunterladen',
+        FileName: 'Anmeldungen {{tournamentPlannerName}}'
       },
       TournamentClasses: {
         Name: 'Name',
@@ -1360,11 +1368,11 @@ export const de = {
     },
     SelectApplicationTeam: {
       Explanation: 'Wählen Sie eine angemeldete Mannschaft aus einem Turnierplaner:',
-      LoadingPlanningRealms: 'Turnierplaner werden geladen',
-      LoadingPlanningRealmsFailed: 'Fehler beim Laden der Turnierplaner',
-      NoPlanningRealms: 'In dieser Organisation gibt es keine Turnierplaner',
-      LoadingPlanningRealmDetail: 'Turnierplaner wird geladen',
-      LoadingPlanningRealmDetailFailed: 'Fehler beim Laden des Turnierplaners',
+      LoadingTournamentPlanners: 'Turnierplaner werden geladen',
+      LoadingTournamentPlannersFailed: 'Fehler beim Laden der Turnierplaner',
+      NoTournamentPlanners: 'In dieser Organisation gibt es keine Turnierplaner',
+      LoadingTournamentPlannerDetail: 'Turnierplaner wird geladen',
+      LoadingTournamentPlannerDetailFailed: 'Fehler beim Laden des Turnierplaners',
       FilterExplanation: 'Suchen und wählen Sie die Mannschaften zum Hinzufügen:',
       FilterTooltip: 'Dieser Suchfilter wird synchronisiert mit dem Filter auf der Turnierplaner-Seite',
       LoadingApplications: 'Mannschaftsanmeldungen werden geladen',
@@ -1425,7 +1433,7 @@ export const de = {
           Tooltip: 'Organisation',
           NotInherited: 'Zuweisung liegt auf dieser Organisation'
         },
-        PlanningRealm: {
+        TournamentPlanner: {
           Tooltip: 'Turnierplaner',
           NotInherited: 'Zuweisung liegt auf diesem Turnierplaner'
         },

@@ -1,0 +1,37 @@
+using Turnierplan.Core.Entity;
+using Turnierplan.Core.Tournament;
+
+namespace Turnierplan.Core.TournamentPlanner;
+
+public sealed class TeamLink : Entity<long>
+{
+    public TeamLink(ApplicationTeam applicationTeam, Team team)
+    {
+        var tournamentPlanner = applicationTeam.Application.TournamentPlanner;
+        var tournament = team.Tournament;
+
+        if (tournamentPlanner.Organization is null || tournamentPlanner.Organization != tournament.Organization)
+        {
+            throw new ArgumentException("Both the tournament planner and the tournament must belong to the same organization which may not be null.");
+        }
+
+        Id = 0;
+        CreatedAt = DateTime.UtcNow;
+        ApplicationTeam = applicationTeam;
+        Team = team;
+    }
+
+    internal TeamLink(long id, DateTime createdAt)
+    {
+        Id = id;
+        CreatedAt = createdAt;
+    }
+
+    public override long Id { get; protected set; }
+
+    public DateTime CreatedAt { get; }
+
+    public ApplicationTeam ApplicationTeam { get; internal set; } = null!;
+
+    public Team Team { get; internal set; } = null!;
+}

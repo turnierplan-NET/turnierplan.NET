@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.TournamentPlanner;
 using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Pages;
@@ -93,7 +93,7 @@ public sealed class InvitationForm : PageModel
             return;
         }
 
-        var application = Data.PlanningRealm.AddApplication(Data, contactPerson);
+        var application = Data.TournamentPlanner.AddApplication(Data, contactPerson);
 
         application.ContactEmail = contactEMail;
         application.ContactTelephone = contactTelephoneNr;

@@ -6,19 +6,19 @@
       <span class="mx-1">&middot;</span>
       <span>{{ changeLogTimestamp | translateDate }}</span>
       <span class="mx-1">&middot;</span>
-      <span [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.Types.' + changeLogType"></span>
+      <span [translate]="'Portal.ViewTournamentPlanner.Applications.ChangeLog.Types.' + changeLogType"></span>
     </span>
 
     @if (changeLogType === ApplicationChangeLogType.LabelAdded) {
       <div class="d-flex flex-row align-items-center gap-1">
         <tp-label [label]="mockLabel!" />
-        <span class="ms-1" [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.LabelAdded'"></span>
+        <span class="ms-1" [translate]="'Portal.ViewTournamentPlanner.Applications.ChangeLog.LabelAdded'"></span>
         <span class="text-decoration-underline">{{ teamName }}</span>
       </div>
     } @else if (changeLogType === ApplicationChangeLogType.LabelRemoved) {
       <div class="d-flex flex-row align-items-center gap-1">
         <tp-label [label]="mockLabel!" />
-        <span class="ms-1" [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.LabelRemoved'"></span>
+        <span class="ms-1" [translate]="'Portal.ViewTournamentPlanner.Applications.ChangeLog.LabelRemoved'"></span>
         <span class="text-decoration-underline">{{ teamName }}</span>
       </div>
     } @else if (changeLogType === ApplicationChangeLogType.TeamAdded) {
@@ -29,7 +29,7 @@
           <span class="value-display p-1 border flex-grow-0">
             <i
               class="bi-x-diamond me-2"
-              [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.ChangeLog.TournamentClassTooltip' | translate"></i>
+              [ngbTooltip]="'Portal.ViewTournamentPlanner.Applications.ChangeLog.TournamentClassTooltip' | translate"></i>
             <span>{{ tournamentClassName }}</span>
           </span>
         </div>
@@ -44,7 +44,7 @@
           <span class="value-display p-1 border flex-grow-0">
             <i
               class="bi-x-diamond me-2"
-              [ngbTooltip]="'Portal.ViewPlanningRealm.Applications.ChangeLog.TournamentClassTooltip' | translate"></i>
+              [ngbTooltip]="'Portal.ViewTournamentPlanner.Applications.ChangeLog.TournamentClassTooltip' | translate"></i>
             <span>{{ tournamentClassName }}</span>
           </span>
         </div>
@@ -54,13 +54,13 @@
     } @else if (changeLogType === ApplicationChangeLogType.TeamLinkCreated) {
       <div class="d-flex flex-row align-items-center gap-1">
         <span class="text-decoration-underline">{{ teamName }}</span>
-        <span class="ms-1" [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.TeamLinkCreated'"></span>
+        <span class="ms-1" [translate]="'Portal.ViewTournamentPlanner.Applications.ChangeLog.TeamLinkCreated'"></span>
         <span class="ms-1 text-decoration-underline">{{ tournamentName }}</span>
       </div>
     } @else if (changeLogType === ApplicationChangeLogType.TeamLinkDestroyed) {
       <div class="d-flex flex-row align-items-center gap-1">
         <span class="text-decoration-underline">{{ teamName }}</span>
-        <span class="ms-1" [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.TeamLinkDestroyed'"></span>
+        <span class="ms-1" [translate]="'Portal.ViewTournamentPlanner.Applications.ChangeLog.TeamLinkDestroyed'"></span>
         <span class="ms-1 text-decoration-underline">{{ tournamentName }}</span>
       </div>
     } @else {
@@ -70,7 +70,7 @@
         } @else {
           <span
             class="value-display p-1 border text-secondary fst-italic flex-grow-0"
-            [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.EmptyText'"></span>
+            [translate]="'Portal.ViewTournamentPlanner.Applications.ChangeLog.EmptyText'"></span>
         }
 
         <span class="mt-1 bi bi-arrow-right"></span>
@@ -80,7 +80,7 @@
         } @else {
           <span
             class="value-display p-1 border text-secondary fst-italic flex-grow-0"
-            [translate]="'Portal.ViewPlanningRealm.Applications.ChangeLog.EmptyText'"></span>
+            [translate]="'Portal.ViewTournamentPlanner.Applications.ChangeLog.EmptyText'"></span>
         }
       </div>
     }

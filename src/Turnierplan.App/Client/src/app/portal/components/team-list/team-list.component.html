@@ -74,13 +74,13 @@
                     [margin]="false"
                     [icon]="'question-circle'"
                     [iconClass]="'text-secondary'"
-                    [tooltipText]="team.teamLink.planningRealmName" />
+                    [tooltipText]="team.teamLink.tournamentPlannerName" />
                   <tp-action-button
                     [icon]="'box-arrow-up-right'"
                     [mode]="'IconOnly'"
                     [type]="'outline-secondary'"
-                    *tpIsActionAllowed="[team.teamLink.planningRealmId, Actions.ApplicationsRead]"
-                    (buttonClick)="navigateToPlanningRealm(team.teamLink.planningRealmId, team.teamLink.applicationTeamId)" />
+                    *tpIsActionAllowed="[team.teamLink.tournamentPlannerId, Actions.ApplicationsRead]"
+                    (buttonClick)="navigateToTournamentPlanner(team.teamLink.tournamentPlannerId, team.teamLink.applicationTeamId)" />
                 </div>
               }
             </td>

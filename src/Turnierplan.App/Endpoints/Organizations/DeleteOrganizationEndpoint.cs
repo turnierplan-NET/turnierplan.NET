@@ -21,7 +21,7 @@ internal sealed class DeleteOrganizationEndpoint : EndpointBase
         IDeletionHelper deletionHelper,
         CancellationToken cancellationToken)
     {
-        var organization = await repository.GetByPublicIdAsync(id, IOrganizationRepository.Includes.Tournaments | IOrganizationRepository.Includes.Venues | IOrganizationRepository.Includes.Images | IOrganizationRepository.Includes.PlanningRealms);
+        var organization = await repository.GetByPublicIdAsync(id, IOrganizationRepository.Includes.Tournaments | IOrganizationRepository.Includes.Venues | IOrganizationRepository.Includes.Images | IOrganizationRepository.Includes.TournamentPlanners);
 
         if (organization is null)
         {

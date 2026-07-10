@@ -19,7 +19,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';
 import { RenameButtonComponent } from '../rename-button/rename-button.component';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
 import { PaginationResultDtoOfApplicationDto } from '../../../api/models/pagination-result-dto-of-application-dto';
 import { getApplications } from '../../../api/fn/applications/get-applications';
 import { InvitationLinkDto } from '../../../api/models/invitation-link-dto';
@@ -74,7 +74,7 @@ import { setApplicationContactTelephone } from '../../../api/fn/applications/set
 })
 export class ManageApplicationsComponent implements OnDestroy {
   @Input()
-  public planningRealm!: PlanningRealmDto;
+  public tournamentPlanner!: TournamentPlannerDto;
 
   @Input()
   public set filter(value: ApplicationsFilter) {
@@ -127,7 +127,7 @@ export class ManageApplicationsComponent implements OnDestroy {
         tap(() => (this.isLoading = true)),
         switchMap(([filter, _]) => {
           return this.turnierplanApi.invoke(getApplications, {
-            planningRealmId: this.planningRealm.id,
+            tournamentPlannerId: this.tournamentPlanner.id,
             page: this.currentPage,
             pageSize: this.pageSize,
             ...applicationsFilterToQueryParameters(filter)
@@ -183,15 +183,15 @@ export class ManageApplicationsComponent implements OnDestroy {
   }
 
   protected getTournamentClassName(id: number): string {
-    return this.planningRealm.tournamentClasses.find((x) => x.id === id)?.name ?? '?';
+    return this.tournamentPlanner.tournamentClasses.find((x) => x.id === id)?.name ?? '?';
   }
 
   protected getInvitationLink(id: number): InvitationLinkDto {
-    return this.planningRealm.invitationLinks.find((x) => x.id === id)!;
+    return this.tournamentPlanner.invitationLinks.find((x) => x.id === id)!;
   }
 
   protected getLabel(id: number): LabelDto {
-    return this.planningRealm.labels.find((x) => x.id === id)!;
+    return this.tournamentPlanner.labels.find((x) => x.id === id)!;
   }
 
   protected isTeamVisible(team: ApplicationTeamDto): boolean {
@@ -293,7 +293,7 @@ export class ManageApplicationsComponent implements OnDestroy {
     });
 
     const component = ref.componentInstance as ApplicationChangeLogComponent;
-    component.init(this.planningRealm.id, application);
+    component.init(this.tournamentPlanner.id, application);
 
     component.error$.subscribe({
       next: (value) => {
@@ -316,7 +316,7 @@ export class ManageApplicationsComponent implements OnDestroy {
     });
 
     const component = ref.componentInstance as ManageApplicationsAddTeamComponent;
-    component.init(this.planningRealm);
+    component.init(this.tournamentPlanner);
 
     ref.closed
       .pipe(
@@ -324,7 +324,7 @@ export class ManageApplicationsComponent implements OnDestroy {
         switchMap((request: CreateApplicationTeamEndpointRequest) =>
           this.turnierplanApi
             .invoke(createApplicationTeam, {
-              planningRealmId: this.planningRealm.id,
+              tournamentPlannerId: this.tournamentPlanner.id,
               applicationId: applicationId,
               body: request
             })
@@ -335,9 +335,9 @@ export class ManageApplicationsComponent implements OnDestroy {
         next: (tournamentClassId: number) => {
           this.reload$.next(undefined); // reload will eventually set isLoading to false
 
-          // Modify the planning realm stored in the client to account for the newly added team. By doing this "hack" we can prevent
-          // a separate request for querying the entire planning realm when only the "numberOfTeams" property has changed.
-          const tournamentClass = this.planningRealm.tournamentClasses?.find((x) => x.id === tournamentClassId);
+          // Modify the tournament planner stored in the client to account for the newly added team. By doing this "hack" we can prevent
+          // a separate request for querying the entire tournament planner when only the "numberOfTeams" property has changed.
+          const tournamentClass = this.tournamentPlanner.tournamentClasses?.find((x) => x.id === tournamentClassId);
           if (tournamentClass) {
             tournamentClass.numberOfTeams++;
           }
@@ -351,7 +351,7 @@ export class ManageApplicationsComponent implements OnDestroy {
   protected renameTeam(applicationId: number, applicationTeam: ApplicationTeamDto, name: string): void {
     this.turnierplanApi
       .invoke(setApplicationTeamName, {
-        planningRealmId: this.planningRealm.id,
+        tournamentPlannerId: this.tournamentPlanner.id,
         applicationId: applicationId,
         applicationTeamId: applicationTeam.id,
         body: {
@@ -381,7 +381,7 @@ export class ManageApplicationsComponent implements OnDestroy {
     });
 
     const component = ref.componentInstance as LabelsSelectComponent;
-    component.init(this.planningRealm.labels, applicationTeam.labelIds);
+    component.init(this.tournamentPlanner.labels, applicationTeam.labelIds);
 
     ref.closed
       .pipe(
@@ -389,7 +389,7 @@ export class ManageApplicationsComponent implements OnDestroy {
         switchMap((labelIds) =>
           this.turnierplanApi
             .invoke(setApplicationTeamLabels, {
-              planningRealmId: this.planningRealm.id,
+              tournamentPlannerId: this.tournamentPlanner.id,
               applicationId: applicationId,
               applicationTeamId: applicationTeam.id,
               body: { labelIds: labelIds }
@@ -413,7 +413,7 @@ export class ManageApplicationsComponent implements OnDestroy {
 
     this.turnierplanApi
       .invoke(deleteApplicationTeam, {
-        planningRealmId: this.planningRealm.id,
+        tournamentPlannerId: this.tournamentPlanner.id,
         applicationId: applicationId,
         applicationTeamId: applicationTeamId
       })
@@ -454,7 +454,7 @@ export class ManageApplicationsComponent implements OnDestroy {
     apiFunction: (
       http: HttpClient,
       rootUrl: string,
-      params: { planningRealmId: string; applicationId: number; body: TRequestBody },
+      params: { tournamentPlannerId: string; applicationId: number; body: TRequestBody },
       context?: HttpContext
     ) => Observable<StrictHttpResponse<void>>,
     requestBodyFactory: (value: string) => TRequestBody,
@@ -475,7 +475,7 @@ export class ManageApplicationsComponent implements OnDestroy {
     });
 
     const component = ref.componentInstance as TextInputDialogComponent;
-    component.init(`Portal.ViewPlanningRealm.Applications.${translationKey}`, currentValue, textArea, isRequired);
+    component.init(`Portal.ViewTournamentPlanner.Applications.${translationKey}`, currentValue, textArea, isRequired);
 
     ref.closed
       .pipe(
@@ -483,7 +483,7 @@ export class ManageApplicationsComponent implements OnDestroy {
         switchMap((value) =>
           this.turnierplanApi
             .invoke(apiFunction, {
-              planningRealmId: this.planningRealm.id,
+              tournamentPlannerId: this.tournamentPlanner.id,
               applicationId: applicationId,
               body: requestBodyFactory(value)
             })

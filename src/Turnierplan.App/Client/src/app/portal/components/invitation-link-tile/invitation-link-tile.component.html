@@ -1,4 +1,4 @@
-@let writeAllowed = (authorizationService.isActionAllowed$(planningRealm.id, Actions.GenericWrite) | async) ?? false;
+@let writeAllowed = (authorizationService.isActionAllowed$(tournamentPlanner.id, Actions.GenericWrite) | async) ?? false;
 
 <div class="card shadow-sm">
   <div class="card-body d-flex flex-column gap-3">
@@ -16,12 +16,12 @@
     @if (invitationLink.publicId) {
       <div>
         <div class="mb-2 d-flex flex-row align-items-center">
-          <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.PublicUrl"></div>
+          <div class="fw-bold" translate="Portal.ViewTournamentPlanner.InvitationLink.PublicUrl"></div>
           @if (!invitationLink.isActive || invitationLink.entries.length === 0) {
             <tp-tooltip-icon
               [icon]="'question-circle'"
               [iconClass]="'text-danger'"
-              [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.PublicUrlWarning'" />
+              [tooltipText]="'Portal.ViewTournamentPlanner.InvitationLink.PublicUrlWarning'" />
           }
         </div>
         <tp-share-link [resourcePath]="'/invitationForm?id=' + invitationLink.publicId" />
@@ -32,11 +32,11 @@
       <div class="col-12 col-lg-7 d-flex flex-column">
         <div class="row">
           <div class="col-12 col-md-6 d-flex flex-column">
-            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Title"></div>
+            <div class="fw-bold" translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.Title"></div>
             <div class="mb-2">{{ invitationLink.title ?? '-' }}</div>
-            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Description"></div>
+            <div class="fw-bold" translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.Description"></div>
             <div class="mb-2">{{ invitationLink.description ?? '-' }}</div>
-            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ValidUntil"></div>
+            <div class="fw-bold" translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.ValidUntil"></div>
             @if (invitationLink.validUntil) {
               <div class="mb-2">
                 <span>{{ invitationLink.validUntil | translateDate: 'medium' }}</span>
@@ -44,13 +44,13 @@
                   <tp-tooltip-icon
                     [icon]="'clock-fill'"
                     [iconClass]="'text-danger'"
-                    [ngbTooltip]="'Portal.ViewPlanningRealm.InvitationLink.ExpiredTooltip' | translate" />
+                    [ngbTooltip]="'Portal.ViewTournamentPlanner.InvitationLink.ExpiredTooltip' | translate" />
                 }
               </div>
             } @else {
               <div class="mb-2">-</div>
             }
-            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ExternalLinks"></div>
+            <div class="fw-bold" translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.ExternalLinks"></div>
             @for (ext of invitationLink.externalLinks; track ext; let isLast = $last) {
               <div [ngClass]="{ 'mb-2': isLast }" class="d-flex flex-row align-items-center gap-1">
                 <i class="bi bi-box-arrow-up-right" style="font-size: 0.9em"></i>
@@ -63,17 +63,17 @@
               <tp-action-button
                 class="mt-3"
                 [type]="'outline-secondary'"
-                [title]="'Portal.ViewPlanningRealm.InvitationLink.EditProperties'"
+                [title]="'Portal.ViewTournamentPlanner.InvitationLink.EditProperties'"
                 [icon]="'pencil'"
                 (buttonClick)="showEditPropertiesDialog(editPropertiesDialog)" />
             }
           </div>
           <div class="col-12 col-md-6 d-flex flex-column">
-            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactPerson"></div>
+            <div class="fw-bold" translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.ContactPerson"></div>
             <div class="mb-2">{{ invitationLink.contactPerson ?? '-' }}</div>
-            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactEmail"></div>
+            <div class="fw-bold" translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.ContactEmail"></div>
             <div class="mb-2">{{ invitationLink.contactEmail ?? '-' }}</div>
-            <div class="fw-bold" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactTelephone"></div>
+            <div class="fw-bold" translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.ContactTelephone"></div>
             <div class="mb-2">{{ invitationLink.contactTelephone ?? '-' }}</div>
           </div>
         </div>
@@ -84,7 +84,7 @@
         <tp-image-widget
           [currentImage]="invitationLink.primaryLogo"
           [imageAlt]="'PrimaryLogo'"
-          [organizationId]="planningRealm.organizationId"
+          [organizationId]="tournamentPlanner.organizationId"
           [allowChanging]="writeAllowed"
           (imageChange)="setImage('primaryLogo', $event)"
           (imageDelete)="onImageDeleted($event)"
@@ -92,7 +92,7 @@
         <tp-image-widget
           [currentImage]="invitationLink.secondaryLogo"
           [imageAlt]="'SecondaryLogo'"
-          [organizationId]="planningRealm.organizationId"
+          [organizationId]="tournamentPlanner.organizationId"
           [allowChanging]="writeAllowed"
           (imageChange)="setImage('secondaryLogo', $event)"
           (imageDelete)="onImageDeleted($event)"
@@ -102,28 +102,28 @@
 
     @if (invitationLink.entries.length === 0) {
       <div>
-        <div class="fw-bold mt-3" translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.Title"></div>
-        <div class="fst-italic" translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NoTournaments"></div>
+        <div class="fw-bold mt-3" translate="Portal.ViewTournamentPlanner.InvitationLink.Tournaments.Title"></div>
+        <div class="fst-italic" translate="Portal.ViewTournamentPlanner.InvitationLink.Tournaments.NoTournaments"></div>
       </div>
     } @else {
-      <div class="fw-bold mt-3" translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.Title"></div>
+      <div class="fw-bold mt-3" translate="Portal.ViewTournamentPlanner.InvitationLink.Tournaments.Title"></div>
       <table class="mb-0 table table-bordered">
         <thead>
           <tr>
-            <th translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.Tournament"></th>
+            <th translate="Portal.ViewTournamentPlanner.InvitationLink.Tournaments.Tournament"></th>
             <th>
-              <span translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.AllowNewRegistrations"></span>
+              <span translate="Portal.ViewTournamentPlanner.InvitationLink.Tournaments.AllowNewRegistrations"></span>
               <tp-tooltip-icon
                 [icon]="'question-circle'"
-                [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.AllowNewRegistrationsTooltip'" />
+                [tooltipText]="'Portal.ViewTournamentPlanner.InvitationLink.Tournaments.AllowNewRegistrationsTooltip'" />
             </th>
             <th>
-              <span translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.MaxTeamsPerRegistration"></span>
+              <span translate="Portal.ViewTournamentPlanner.InvitationLink.Tournaments.MaxTeamsPerRegistration"></span>
               <tp-tooltip-icon
                 [icon]="'question-circle'"
-                [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.MaxTeamsPerRegistrationTooltip'" />
+                [tooltipText]="'Portal.ViewTournamentPlanner.InvitationLink.Tournaments.MaxTeamsPerRegistrationTooltip'" />
             </th>
-            <th translate="Portal.ViewPlanningRealm.InvitationLink.Tournaments.NumberOfTeams"></th>
+            <th translate="Portal.ViewTournamentPlanner.InvitationLink.Tournaments.NumberOfTeams"></th>
             @if (writeAllowed) {
               <th style="width: 1px"></th>
             }
@@ -138,11 +138,11 @@
                 @if (entry.allowNewRegistrations) {
                   <i
                     class="text-success bi bi-check-circle-fill"
-                    [ngbTooltip]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.ActiveTooltip' | translate"></i>
+                    [ngbTooltip]="'Portal.ViewTournamentPlanner.InvitationLink.Tournaments.ActiveTooltip' | translate"></i>
                 } @else {
                   <i
                     class="text-secondary bi bi-pause-circle"
-                    [ngbTooltip]="'Portal.ViewPlanningRealm.InvitationLink.Tournaments.InactiveTooltip' | translate"></i>
+                    [ngbTooltip]="'Portal.ViewTournamentPlanner.InvitationLink.Tournaments.InactiveTooltip' | translate"></i>
                 }
               </td>
               <td class="align-middle">
@@ -162,7 +162,7 @@
                     @if (invitationLink.id > 0) {
                       <!-- Navigation to search is not possible if this invitation link has not been saved yet -->
                       <tp-action-button
-                        *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsRead]"
+                        *tpIsActionAllowed="[tournamentPlanner.id, Actions.ApplicationsRead]"
                         [type]="'light'"
                         [icon]="'search'"
                         [mode]="'IconOnly'"
@@ -199,7 +199,7 @@
             ngbDropdownToggle
             [ngClass]="{ disabled: addButtonDisabled }">
             <i class="bi bi-plus-circle" aria-hidden="true"></i>
-            <span class="ms-2 me-1" translate="Portal.ViewPlanningRealm.InvitationLink.AddTournament"></span>
+            <span class="ms-2 me-1" translate="Portal.ViewTournamentPlanner.InvitationLink.AddTournament"></span>
           </button>
           <div ngbDropdownMenu [attr.aria-labelledby]="addButtonId" class="shadow-sm">
             @for (tournamentClass of tournamentClassesToAdd; track tournamentClass) {
@@ -209,14 +209,14 @@
         </div>
 
         @if (addButtonDisabled) {
-          <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.AllClassesAdded'" />
+          <tp-tooltip-icon [tooltipText]="'Portal.ViewTournamentPlanner.InvitationLink.AllClassesAdded'" />
         }
       </div>
     }
 
     <div>
-      <div class="fw-bold mt-3" translate="Portal.ViewPlanningRealm.InvitationLink.IsActive.Title"></div>
-      <div class="fst-italic" translate="Portal.ViewPlanningRealm.InvitationLink.IsActive.Subtitle"></div>
+      <div class="fw-bold mt-3" translate="Portal.ViewTournamentPlanner.InvitationLink.IsActive.Title"></div>
+      <div class="fst-italic" translate="Portal.ViewTournamentPlanner.InvitationLink.IsActive.Subtitle"></div>
 
       @let activeFormInputId = 'invitationLink_' + invitationLink.id + '_isActive';
       <div class="form-check form-switch mt-2">
@@ -231,7 +231,7 @@
         <label
           class="form-check-label"
           [for]="activeFormInputId"
-          translate="Portal.ViewPlanningRealm.InvitationLink.IsActive.Label"></label>
+          translate="Portal.ViewTournamentPlanner.InvitationLink.IsActive.Label"></label>
       </div>
     </div>
   </div>
@@ -240,17 +240,17 @@
       @let canDelete = invitationLink.numberOfApplications === 0;
       <tp-delete-button [showLabel]="true" [disabled]="!canDelete" (confirmed)="deleteInvitationLink()" />
       @if (!canDelete) {
-        <tp-tooltip-icon [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.DeleteNotPossible'" />
+        <tp-tooltip-icon [tooltipText]="'Portal.ViewTournamentPlanner.InvitationLink.DeleteNotPossible'" />
       }
     }
     @if (invitationLink.id > 0) {
       <!-- Navigation to search is not possible if this invitation link has not been saved yet -->
       <span class="flex-grow-1"></span>
       <tp-action-button
-        *tpIsActionAllowed="[planningRealm.id, Actions.ApplicationsRead]"
+        *tpIsActionAllowed="[tournamentPlanner.id, Actions.ApplicationsRead]"
         [type]="'outline-secondary'"
         [icon]="'search'"
-        [title]="'Portal.ViewPlanningRealm.InvitationLink.ShowApplications'"
+        [title]="'Portal.ViewTournamentPlanner.InvitationLink.ShowApplications'"
         (buttonClick)="searchApplicationsClicked()" />
     }
   </div>
@@ -258,17 +258,17 @@
 
 <ng-template #editPropertiesDialog let-modal>
   <div class="modal-header">
-    <div class="modal-title" [translate]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.Title'"></div>
+    <div class="modal-title" [translate]="'Portal.ViewTournamentPlanner.InvitationLink.EditPropertiesDialog.Title'"></div>
     <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
   </div>
   <div class="modal-body d-flex flex-column">
     <form [formGroup]="editPropertiesForm">
       <div class="mb-3">
         <div>
-          <label for="name" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Name"></label>
+          <label for="name" class="form-label" translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.Name"></label>
           <tp-tooltip-icon
             [icon]="'info-circle'"
-            [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.InternalInformation'" />
+            [tooltipText]="'Portal.ViewTournamentPlanner.InvitationLink.EditPropertiesDialog.InternalInformation'" />
         </div>
         @let nameControl = editPropertiesForm.get('name')!;
         <input id="name" type="text" class="form-control" [ngClass]="nameControl.invalid ? 'is-invalid' : ''" formControlName="name" />
@@ -276,10 +276,10 @@
 
       <div>
         <div>
-          <label for="colorCode" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ColorCode"></label>
+          <label for="colorCode" class="form-label" translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.ColorCode"></label>
           <tp-tooltip-icon
             [icon]="'info-circle'"
-            [tooltipText]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.InternalInformation'" />
+            [tooltipText]="'Portal.ViewTournamentPlanner.InvitationLink.EditPropertiesDialog.InternalInformation'" />
         </div>
         <input id="colorCode" type="color" class="form-control form-control-color" formControlName="colorCode" />
       </div>
@@ -294,7 +294,7 @@
           <label
             class="form-check-label"
             for="hasValidUntilDate"
-            translate="Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.HasValidUntilDate"></label>
+            translate="Portal.ViewTournamentPlanner.InvitationLink.EditPropertiesDialog.HasValidUntilDate"></label>
         </div>
       </div>
 
@@ -307,7 +307,7 @@
             class="form-control"
             formControlName="validUntil"
             [ngClass]="control.invalid ? 'is-invalid' : ''"
-            [attr.aria-labelledby]="'Portal.ViewPlanningRealm.InvitationLink.Properties.ValidUntil' | translate" />
+            [attr.aria-labelledby]="'Portal.ViewTournamentPlanner.InvitationLink.Properties.ValidUntil' | translate" />
         </div>
       }
 
@@ -316,25 +316,31 @@
       <tp-alert
         [icon]="'info-circle'"
         [type]="'primary'"
-        [text]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.PublicInformation'" />
+        [text]="'Portal.ViewTournamentPlanner.InvitationLink.EditPropertiesDialog.PublicInformation'" />
 
       <div class="my-3">
-        <label for="title" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Title"></label>
+        <label for="title" class="form-label" translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.Title"></label>
         <input id="title" type="text" class="form-control" formControlName="title" />
       </div>
 
       <div class="mb-3">
-        <label for="description" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.Description"></label>
+        <label for="description" class="form-label" translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.Description"></label>
         <textarea id="description" rows="4" class="form-control" formControlName="description"></textarea>
       </div>
 
       <div class="mb-3">
-        <label for="contactPerson" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactPerson"></label>
+        <label
+          for="contactPerson"
+          class="form-label"
+          translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.ContactPerson"></label>
         <input id="contactPerson" type="text" class="form-control" formControlName="contactPerson" />
       </div>
 
       <div class="mb-3">
-        <label for="contactEmail" class="form-label" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactEmail"></label>
+        <label
+          for="contactEmail"
+          class="form-label"
+          translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.ContactEmail"></label>
         <input id="contactEmail" type="text" class="form-control" formControlName="contactEmail" />
       </div>
 
@@ -342,14 +348,14 @@
         <label
           for="contactTelephone"
           class="form-label"
-          translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ContactTelephone"></label>
+          translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.ContactTelephone"></label>
         <input id="contactTelephone" type="text" class="form-control" formControlName="contactTelephone" />
       </div>
 
       <hr class="my-3" />
 
       <div class="d-flex flex-row align-items-center mb-2">
-        <span class="flex-grow-1" translate="Portal.ViewPlanningRealm.InvitationLink.Properties.ExternalLinks"></span>
+        <span class="flex-grow-1" translate="Portal.ViewTournamentPlanner.InvitationLink.Properties.ExternalLinks"></span>
         <tp-action-button [type]="'outline-primary'" [icon]="'plus-circle'" [mode]="'IconOnly'" (buttonClick)="addExternalLinkToForm()" />
       </div>
 
@@ -364,8 +370,10 @@
                   class="form-control form-control-sm"
                   [ngClass]="linkNameControl.invalid && linkNameControl.touched ? 'is-invalid' : ''"
                   formControlName="name"
-                  [placeholder]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.ExternalLinkName' | translate"
-                  [attr.aria-labelledby]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.ExternalLinkName' | translate" />
+                  [placeholder]="'Portal.ViewTournamentPlanner.InvitationLink.EditPropertiesDialog.ExternalLinkName' | translate"
+                  [attr.aria-labelledby]="
+                    'Portal.ViewTournamentPlanner.InvitationLink.EditPropertiesDialog.ExternalLinkName' | translate
+                  " />
               </div>
               <div class="col-6">
                 @let linkUrlControl = editPropertiesFormExternalLinks.get('' + i)!.get('url')!;
@@ -374,8 +382,8 @@
                   class="form-control form-control-sm"
                   [ngClass]="linkUrlControl.invalid && linkUrlControl.touched ? 'is-invalid' : ''"
                   formControlName="url"
-                  [placeholder]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.ExternalLinkUrl' | translate"
-                  [attr.aria-labelledby]="'Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.ExternalLinkUrl' | translate" />
+                  [placeholder]="'Portal.ViewTournamentPlanner.InvitationLink.EditPropertiesDialog.ExternalLinkUrl' | translate"
+                  [attr.aria-labelledby]="'Portal.ViewTournamentPlanner.InvitationLink.EditPropertiesDialog.ExternalLinkUrl' | translate" />
               </div>
             </div>
             <tp-delete-button [reducedFootprint]="true" (confirmed)="editPropertiesFormExternalLinks.removeAt(i)" />
@@ -383,7 +391,7 @@
         } @empty {
           <div
             class="mt-1 text-secondary fst-italic"
-            translate="Portal.ViewPlanningRealm.InvitationLink.EditPropertiesDialog.NoExternalLinks"></div>
+            translate="Portal.ViewTournamentPlanner.InvitationLink.EditPropertiesDialog.NoExternalLinks"></div>
         }
       </ng-container>
     </form>
@@ -400,7 +408,7 @@
 
 <ng-template #editEntryDialog let-modal>
   <div class="modal-header">
-    <div class="modal-title" [translate]="'Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.Title'"></div>
+    <div class="modal-title" [translate]="'Portal.ViewTournamentPlanner.InvitationLink.EditEntryDialog.Title'"></div>
     <button type="button" class="btn-close" (click)="modal.dismiss()" [tabindex]="-1"></button>
   </div>
   <div class="modal-body d-flex flex-column">
@@ -416,7 +424,7 @@
           <label
             class="form-check-label"
             for="allowNewRegistrations"
-            translate="Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.AllowNewRegistrations"></label>
+            translate="Portal.ViewTournamentPlanner.InvitationLink.EditEntryDialog.AllowNewRegistrations"></label>
         </div>
       </div>
 
@@ -435,7 +443,7 @@
           <label
             class="form-check-label"
             for="limitTeamsPerRegistration"
-            translate="Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.LimitTeamsPerRegistration"></label>
+            translate="Portal.ViewTournamentPlanner.InvitationLink.EditEntryDialog.LimitTeamsPerRegistration"></label>
         </div>
       </div>
 
@@ -449,7 +457,7 @@
             [required]="true"
             formControlName="maxTeamsPerRegistration"
             [ngClass]="control.invalid ? 'is-invalid' : ''"
-            [attr.aria-labelledby]="'Portal.ViewPlanningRealm.InvitationLink.EditEntryDialog.MaxTeamsPerRegistration' | translate" />
+            [attr.aria-labelledby]="'Portal.ViewTournamentPlanner.InvitationLink.EditEntryDialog.MaxTeamsPerRegistration' | translate" />
         </div>
       }
     </form>

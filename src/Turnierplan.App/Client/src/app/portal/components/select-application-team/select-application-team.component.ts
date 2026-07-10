@@ -10,21 +10,21 @@ import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { ApplicationTeamDto } from '../../../api/models/application-team-dto';
-import { PlanningRealmHeaderDto } from '../../../api/models/planning-realm-header-dto';
-import { PlanningRealmDto } from '../../../api/models/planning-realm-dto';
+import { TournamentPlannerHeaderDto } from '../../../api/models/tournament-planner-header-dto';
+import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
 import { PaginationResultDtoOfApplicationDto } from '../../../api/models/pagination-result-dto-of-application-dto';
 import { PublicId } from '../../../api/models/public-id';
-import { getPlanningRealms } from '../../../api/fn/planning-realms/get-planning-realms';
+import { getTournamentPlanners } from '../../../api/fn/tournament-planners/get-tournament-planners';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getPlanningRealm } from '../../../api/fn/planning-realms/get-planning-realm';
+import { getTournamentPlanner } from '../../../api/fn/tournament-planners/get-tournament-planner';
 import { getApplications } from '../../../api/fn/applications/get-applications';
 import { LabelDto } from '../../../api/models/label-dto';
 import { LabelComponent } from '../label/label.component';
 
 export type SelectApplicationTeamResult = {
   name: string;
-  planningRealmId: string;
-  planningRealmName: string;
+  tournamentPlannerId: string;
+  tournamentPlannerName: string;
   tournamentClassName: string;
   applicationTeamId: number;
 }[];
@@ -45,11 +45,11 @@ export type SelectApplicationTeamResult = {
   styleUrl: './select-application-team.component.scss'
 })
 export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
-  protected isLoadingPlanningRealms = true;
-  protected planningRealms?: PlanningRealmHeaderDto[];
-  protected currentPlanningRealmId?: string;
-  protected isLoadingPlanningRealmDetail = true;
-  protected planningRealmDetail?: PlanningRealmDto;
+  protected isLoadingTournamentPlanners = true;
+  protected tournamentPlanners?: TournamentPlannerHeaderDto[];
+  protected currentTournamentPlannerId?: string;
+  protected isLoadingTournamentPlannerDetail = true;
+  protected tournamentPlannerDetail?: TournamentPlannerDto;
   protected applicationsFilter: ApplicationsFilter = defaultApplicationsFilter;
   protected isLoadingApplications = true;
   protected applicationsCurrentPage = 0;
@@ -67,7 +67,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   @Output()
   public teamSelected = new EventEmitter<SelectApplicationTeamResult>();
 
-  private readonly planningRealmId$ = new Subject<string>();
+  private readonly tournamentPlannerId$ = new Subject<string>();
   private readonly loadApplications$ = new Subject<void>();
 
   constructor(
@@ -76,47 +76,47 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.isLoadingPlanningRealms = true;
+    this.isLoadingTournamentPlanners = true;
 
-    this.turnierplanApi.invoke(getPlanningRealms, { organizationId: this.organizationId }).subscribe({
+    this.turnierplanApi.invoke(getTournamentPlanners, { organizationId: this.organizationId }).subscribe({
       next: (result) => {
-        this.planningRealms = result;
-        this.isLoadingPlanningRealms = false;
+        this.tournamentPlanners = result;
+        this.isLoadingTournamentPlanners = false;
 
-        if (this.planningRealms.length > 0) {
-          const currentId = this.localStorageService.getSelectApplicationTeamPlanningRealmId(this.organizationId);
+        if (this.tournamentPlanners.length > 0) {
+          const currentId = this.localStorageService.getSelectApplicationTeamTournamentPlannerId(this.organizationId);
 
-          if (currentId && this.planningRealms.some((x) => x.id === currentId)) {
-            this.currentPlanningRealmId = currentId;
-            this.onPlanningRealmChange(currentId);
+          if (currentId && this.tournamentPlanners.some((x) => x.id === currentId)) {
+            this.currentTournamentPlannerId = currentId;
+            this.onTournamentPlannerChange(currentId);
           } else {
-            this.currentPlanningRealmId = this.planningRealms[0].id;
-            this.onPlanningRealmChange(this.planningRealms[0].id);
+            this.currentTournamentPlannerId = this.tournamentPlanners[0].id;
+            this.onTournamentPlannerChange(this.tournamentPlanners[0].id);
           }
         }
       },
       error: () => {
-        this.isLoadingPlanningRealms = false;
+        this.isLoadingTournamentPlanners = false;
       }
     });
 
-    this.planningRealmId$
+    this.tournamentPlannerId$
       .pipe(
         tap(() => {
           this.currentSelection = [];
           this.emitSelectedTeams();
         }),
         switchMap((id) => {
-          this.isLoadingPlanningRealmDetail = true;
+          this.isLoadingTournamentPlannerDetail = true;
 
-          return this.turnierplanApi.invoke(getPlanningRealm, { id: id });
+          return this.turnierplanApi.invoke(getTournamentPlanner, { id: id });
         }),
         catchError(() => of(undefined))
       )
       .subscribe({
         next: (result) => {
-          this.planningRealmDetail = result;
-          this.isLoadingPlanningRealmDetail = false;
+          this.tournamentPlannerDetail = result;
+          this.isLoadingTournamentPlannerDetail = false;
           this.loadApplications$.next();
         }
       });
@@ -127,7 +127,7 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
           this.isLoadingApplications = true;
 
           return this.turnierplanApi.invoke(getApplications, {
-            planningRealmId: this.planningRealmDetail!.id,
+            tournamentPlannerId: this.tournamentPlannerDetail!.id,
             page: this.applicationsCurrentPage,
             pageSize: this.applicationsPageSize,
             ...applicationsFilterToQueryParameters(this.applicationsFilter)
@@ -151,13 +151,13 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.planningRealmId$.complete();
+    this.tournamentPlannerId$.complete();
   }
 
-  protected onPlanningRealmChange(id: string): void {
-    this.localStorageService.setSelectApplicationTeamPlanningRealmId(this.organizationId, id);
-    this.applicationsFilter = this.localStorageService.getPlanningRealmApplicationsFilter(id);
-    this.planningRealmId$.next(id);
+  protected onTournamentPlannerChange(id: string): void {
+    this.localStorageService.setSelectApplicationTeamTournamentPlannerId(this.organizationId, id);
+    this.applicationsFilter = this.localStorageService.getTournamentPlannerApplicationsFilter(id);
+    this.tournamentPlannerId$.next(id);
   }
 
   protected onApplicationsFilterChange(filter: ApplicationsFilter): void {
@@ -170,8 +170,8 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
     this.currentSelection = [];
     this.emitSelectedTeams();
 
-    if (this.planningRealmDetail) {
-      this.localStorageService.setPlanningRealmApplicationsFilter(this.planningRealmDetail.id, filter);
+    if (this.tournamentPlannerDetail) {
+      this.localStorageService.setTournamentPlannerApplicationsFilter(this.tournamentPlannerDetail.id, filter);
     }
 
     this.loadApplications$.next();
@@ -187,11 +187,11 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   }
 
   protected getTournamentClassName(id: number): string {
-    return this.planningRealmDetail?.tournamentClasses.find((x) => x.id === id)?.name ?? '';
+    return this.tournamentPlannerDetail?.tournamentClasses.find((x) => x.id === id)?.name ?? '';
   }
 
   protected getLabel(id: number): LabelDto {
-    return this.planningRealmDetail?.labels.find((x) => x.id === id)!;
+    return this.tournamentPlannerDetail?.labels.find((x) => x.id === id)!;
   }
 
   protected filterTeams(teams: ApplicationTeamDto[]): ApplicationTeamDto[] {
@@ -201,11 +201,11 @@ export class SelectApplicationTeamComponent implements OnInit, OnDestroy {
   protected setTeamSelected(id: number, selected: boolean, name?: string, tournamentClassName?: string): void {
     this.currentSelection = this.currentSelection.filter((x) => x.applicationTeamId !== id);
 
-    if (selected && name && tournamentClassName && this.planningRealmDetail) {
+    if (selected && name && tournamentClassName && this.tournamentPlannerDetail) {
       this.currentSelection.push({
         name: name,
-        planningRealmId: this.planningRealmDetail?.id,
-        planningRealmName: this.planningRealmDetail?.name,
+        tournamentPlannerId: this.tournamentPlannerDetail?.id,
+        tournamentPlannerName: this.tournamentPlannerDetail?.name,
         tournamentClassName: tournamentClassName,
         applicationTeamId: id
       });

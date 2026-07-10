@@ -9,8 +9,8 @@ using Turnierplan.Core.Document;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
-using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.Tournament;
+using Turnierplan.Core.TournamentPlanner;
 using Turnierplan.Core.Venue;
 using Turnierplan.Dal.Repositories;
 
@@ -55,8 +55,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IInvitationLinkRepository, InvitationLinkRepository>();
         services.AddScoped<IImageRepository, ImageRepository>();
         services.AddScoped<IOrganizationRepository, OrganizationRepository>();
-        services.AddScoped<IPlanningRealmRepository, PlanningRealmRepository>();
         services.AddScoped<ITournamentRepository, TournamentRepository>();
+        services.AddScoped<ITournamentPlannerRepository, TournamentPlannerRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IVenueRepository, VenueRepository>();
 
@@ -66,24 +66,24 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRepositoryWithPublicId<InvitationLink, long>>(sp => sp.GetRequiredService<IInvitationLinkRepository>());
         services.AddScoped<IRepositoryWithPublicId<Image, long>>(sp => sp.GetRequiredService<IImageRepository>());
         services.AddScoped<IRepositoryWithPublicId<Organization, long>>(sp => sp.GetRequiredService<IOrganizationRepository>());
-        services.AddScoped<IRepositoryWithPublicId<PlanningRealm, long>>(sp => sp.GetRequiredService<IPlanningRealmRepository>());
         services.AddScoped<IRepositoryWithPublicId<Tournament, long>>(sp => sp.GetRequiredService<ITournamentRepository>());
+        services.AddScoped<IRepositoryWithPublicId<TournamentPlanner, long>>(sp => sp.GetRequiredService<ITournamentPlannerRepository>());
         services.AddScoped<IRepositoryWithPublicId<Venue, long>>(sp => sp.GetRequiredService<IVenueRepository>());
 
         services.AddScoped<IRoleAssignmentRepository<ApiKey>, ApiKeyRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Folder>, FolderRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Image>, ImageRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Organization>, OrganizationRoleAssignmentRepository>();
-        services.AddScoped<IRoleAssignmentRepository<PlanningRealm>, PlanningRealmRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Tournament>, TournamentRoleAssignmentRepository>();
+        services.AddScoped<IRoleAssignmentRepository<TournamentPlanner>, TournamentPlannerRoleAssignmentRepository>();
         services.AddScoped<IRoleAssignmentRepository<Venue>, VenueRoleAssignmentRepository>();
 
         services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<ApiKey>>());
         services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Folder>>());
         services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Image>>());
         services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Organization>>());
-        services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<PlanningRealm>>());
         services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Tournament>>());
+        services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<TournamentPlanner>>());
         services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Venue>>());
     }
 }

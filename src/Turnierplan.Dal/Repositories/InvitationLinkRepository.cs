@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.TournamentPlanner;
 
 namespace Turnierplan.Dal.Repositories;
 
@@ -14,7 +14,7 @@ internal sealed class InvitationLinkRepository(TurnierplanContext context) : Rep
             .Include(x => x.PrimaryLogo)
             .Include(x => x.SecondaryLogo)
             .Include(x => x.Entries).ThenInclude(x => x.Class)
-            .Include(x => x.PlanningRealm).ThenInclude(x => x.TournamentClasses)
+            .Include(x => x.TournamentPlanner).ThenInclude(x => x.TournamentClasses)
             .AsSplitQuery()
             .FirstOrDefaultAsync();
     }

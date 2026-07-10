@@ -4,9 +4,9 @@ using Turnierplan.Core.ApiKey;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
-using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.Tournament;
+using Turnierplan.Core.TournamentPlanner;
 using Turnierplan.Core.Venue;
 using Xunit;
 
@@ -32,8 +32,8 @@ public sealed class RbacScopeHelperTest
     [InlineData("Folder:NobBmcA2jNc", nameof(Folder))]
     [InlineData("Image:NobBmcA2jNc", nameof(Image))]
     [InlineData("Organization:NobBmcA2jNc", nameof(Organization))]
-    [InlineData("PlanningRealm:NobBmcA2jNc", nameof(PlanningRealm))]
     [InlineData("Tournament:NobBmcA2jNc", nameof(Tournament))]
+    [InlineData("TournamentPlanner:NobBmcA2jNc", nameof(TournamentPlanner))]
     [InlineData("Venue:NobBmcA2jNc", nameof(Venue))]
     public void RbacScopeHelper___TryParseScopeId___Works_As_Expected(string scopeId, string expectedTypeName)
     {

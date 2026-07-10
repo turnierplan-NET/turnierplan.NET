@@ -4,9 +4,9 @@ using Turnierplan.Core.Entity;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
-using Turnierplan.Core.PlanningRealm;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament;
+using Turnierplan.Core.TournamentPlanner;
 using Turnierplan.Core.Venue;
 
 namespace Turnierplan.Dal.Repositories;
@@ -37,7 +37,7 @@ internal sealed class ImageRoleAssignmentRepository(TurnierplanContext context) 
 
 internal sealed class OrganizationRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<Organization>(context);
 
-internal sealed class PlanningRealmRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<PlanningRealm>(context);
+internal sealed class TournamentPlannerRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<TournamentPlanner>(context);
 
 internal sealed class TournamentRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<Tournament>(context);
 
