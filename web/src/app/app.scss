@@ -1,0 +1,34 @@
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #222;
+  display: flex;
+  flex-direction: row;
+}
+
+.tp-sidebar {
+  width: 250px;
+  background: #111;
+
+  .tp-sidebar-branding {
+    img {
+      width: 1.75em;
+    }
+  }
+
+  .tp-sidebar-version {
+    .tp-sidebar-version-indicator {
+      width: 0.5em;
+      height: 0.5em;
+      border-radius: 0.25em;
+    }
+  }
+}
+
+
+.tp-content-outer {
+
+}
