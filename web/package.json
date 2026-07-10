@@ -1,6 +1,6 @@
 {
   "name": "turnierplan-net",
-  "version": "2026.2.0",
+  "version": "2026.3.0",
   "description": "The client application of turnierplan.NET",
   "private": true,
   "license": "AGPL-3.0-only",
@@ -11,7 +11,7 @@
   "scripts": {
     "ng": "ng",
     "gen:api": "ng-openapi-gen --input ../src/Turnierplan.App/obj/Turnierplan.App_turnierplan.json --output src/api --endOfLineStyle lf --enumStyle pascal --promises false --apiService TurnierplanApi --functionIndex \"\" --modelIndex \"\" && replace-in-file \"PublicId = any\" \"PublicId = string\" src/api/models/public-id.ts && replace-in-file \"/null/g\" \"undefined\" src/api/**/*",
-    "start": "ng serve --port 45002",
+    "start": "npm run gen:api && ng serve --port 45002",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
