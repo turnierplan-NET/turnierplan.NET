@@ -1,12 +1,34 @@
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
 import { provideRouter } from '@angular/router';
+import {
+  provideTranslateLoader,
+  provideTranslateService,
+  TranslateLoader,
+  TranslationObject
+} from '@ngx-translate/core';
+import { Observable, of } from 'rxjs';
+
+// IDEA: Place this class along with provideTranslateService([...]) in a central location - shared among all unit tests
+class MockTranslateLoader extends TranslateLoader {
+  public override getTranslation(_: string): Observable<TranslationObject> {
+    return of({
+      ApplicationName: 'turnierplan.NET'
+    });
+  }
+}
 
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [App],
-      providers: [provideRouter([])]
+      providers: [
+        provideRouter([]),
+        provideTranslateService({
+          lang: 'en',
+          loader: provideTranslateLoader(() => new MockTranslateLoader())
+        })
+      ]
     }).compileComponents();
   });
 
