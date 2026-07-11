@@ -17,8 +17,8 @@
     "test": "ng test",
     "test:ci": "ng test --watch=false",
     "prettier": "prettier \"**/*.*css\" \"**/*.*js\" \"**/*.ts\" \"**/*.json\" \"**/*.html\"",
-    "lint": "npm run prettier -- --write",
-    "lint:ci": "npm run prettier -- --check"
+    "lint": "ng lint --fix && npm run prettier -- --write",
+    "lint:ci": "ng lint && npm run prettier -- --check"
   },
   "packageManager": "npm@11.16.0",
   "dependencies": {
@@ -39,11 +39,15 @@
     "@angular/build": "~22.0.6",
     "@angular/cli": "~22.0.6",
     "@angular/compiler-cli": "~22.0.6",
+    "@eslint/js": "~10.0.1",
+    "angular-eslint": "~22.0.0",
+    "eslint": "~10.7.0",
     "jsdom": "~29.1.1",
     "ng-openapi-gen": "~1.0.5",
     "prettier": "~3.9.5",
     "replace-in-file": "~8.4.0",
     "typescript": "~6.0.3",
+    "typescript-eslint": "~8.63.0",
     "vitest": "~4.1.10"
   },
   "allowScripts": {
