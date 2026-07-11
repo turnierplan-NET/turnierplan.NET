@@ -12,39 +12,39 @@
 }
 
 [data-bs-theme='light'] {
-  * {
-    color: #111;
-  }
-
-  .tp-shadow-sm {
-    box-shadow: #999 0 0 7px;
-  }
+  --bs-body-color: #111111; // default text color
 
   --tp-body-background: #f6f6f3;
   --tp-sidebar-background: #edede8;
   --tp-sidebar-button-background: #e3e3de;
+  --tp-sidebar-button-background-active: #ddddda;
   --tp-sidebar-button-background-hover: #dadad6;
-  --tp-version-indicator-loading: #777;
+  --tp-sidebar-button-color-active: #116611;
+  --tp-version-indicator-loading: #777777;
   --tp-version-indicator-error: #ff0000;
   --tp-version-indicator-up-to-date: #6fc644;
   --tp-version-indicator-outdated: #ff9830;
+
+  .tp-shadow-sm {
+    box-shadow: #999 0 0 7px;
+  }
 }
 
 [data-bs-theme='dark'] {
-  * {
-    color: #ddd;
-  }
-
-  .tp-shadow-sm {
-    box-shadow: black 0 0 7px;
-  }
+  --bs-body-color: #dddddd; // default text color
 
   --tp-body-background: #212425;
   --tp-sidebar-background: #131313;
   --tp-sidebar-button-background: #222222;
-  --tp-sidebar-button-background-hover: #333;
+  --tp-sidebar-button-background-active: #272727;
+  --tp-sidebar-button-background-hover: #333333;
+  --tp-sidebar-button-color-active: #bbffbb;
   --tp-version-indicator-loading: #aaa;
   --tp-version-indicator-error: #ff0000;
   --tp-version-indicator-up-to-date: #5da639;
   --tp-version-indicator-outdated: #ff811a;
+
+  .tp-shadow-sm {
+    box-shadow: black 0 0 7px;
+  }
 }

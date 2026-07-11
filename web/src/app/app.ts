@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { VersionIndicator } from './version/version-indicator/version-indicator';
 import { ColorThemeSelector } from './theme/color-theme-selector/color-theme-selector';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -8,7 +8,15 @@ import { Language } from './language/language';
 
 @Component({
   selector: 'tp-root',
-  imports: [RouterLink, VersionIndicator, ColorThemeSelector, TranslatePipe, LanguageSelector],
+  imports: [
+    RouterLink,
+    VersionIndicator,
+    ColorThemeSelector,
+    TranslatePipe,
+    LanguageSelector,
+    RouterOutlet,
+    RouterLinkActive
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

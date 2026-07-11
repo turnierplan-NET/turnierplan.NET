@@ -24,11 +24,21 @@
   .tp-sidebar-button {
     background: var(--tp-sidebar-button-background);
     border-radius: 0.4em;
-    padding: 0.4em 0.7em;
+    padding: 0.45em 0.7em 0.4em 0.7em;
     user-select: none;
 
     &:hover {
       background: var(--tp-sidebar-button-background-hover) !important;
+    }
+
+    &.tp-sidebar-button-active {
+      font-weight: 500;
+      background: var(--tp-sidebar-button-background-active) !important;
+      color: var(--tp-sidebar-button-color-active) !important;
+
+      &:hover {
+        background: var(--tp-sidebar-button-background-hover) !important;
+      }
     }
   }
 }

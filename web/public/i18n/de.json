@@ -1,6 +1,7 @@
 {
   "ApplicationName": "turnierplan.NET",
   "Tmp": {
+    "Home": "Startseite",
     "Organizations": "Organisationen",
     "Tournaments": "Turniere"
   }
