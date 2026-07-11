@@ -4,3 +4,5 @@
 bin
 obj
 *.user
+.angular
+node_modules
