@@ -1,12 +1,9 @@
-@let currentTheme = colorTheme.theme();
-
 <!-- TODO: Add tooltip for the icons -->
 
-@if (currentTheme === colorThemes.Light) {
-  <i class="tp-cursor-pointer bi bi-sun" (click)="colorTheme.setTheme(colorThemes.Dark)"></i>
-} @else if (currentTheme === colorThemes.Dark) {
-  <i
-    class="tp-cursor-pointer bi bi-moon-stars"
-    (click)="colorTheme.setTheme(colorThemes.Light)"
-  ></i>
-}
+<div tabindex="0" (click)="switchTheme()" (keyup.space)="switchTheme()">
+  @if (isDarkModeActive()) {
+    <i class="tp-cursor-pointer bi bi-moon-stars"></i>
+  } @else {
+    <i class="tp-cursor-pointer bi bi-sun"></i>
+  }
+</div>

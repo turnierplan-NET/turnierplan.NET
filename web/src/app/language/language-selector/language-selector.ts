@@ -8,4 +8,9 @@ import { Language } from '../language';
 })
 export class LanguageSelector {
   protected readonly language = inject(Language);
+
+  protected switchLanguage(): void {
+    const current = this.language.language();
+    this.language.setLanguage(current === 'de' ? 'en' : 'de');
+  }
 }

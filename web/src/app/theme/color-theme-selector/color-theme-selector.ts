@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, Signal } from '@angular/core';
 import { ColorTheme, ColorThemes } from '../color-theme';
 
 @Component({
@@ -6,6 +6,16 @@ import { ColorTheme, ColorThemes } from '../color-theme';
   templateUrl: './color-theme-selector.html'
 })
 export class ColorThemeSelector {
-  protected readonly colorTheme = inject(ColorTheme);
-  protected readonly colorThemes = ColorThemes;
+  protected readonly isDarkModeActive: Signal<boolean>;
+
+  private readonly colorTheme = inject(ColorTheme);
+
+  constructor() {
+    this.isDarkModeActive = computed(() => this.colorTheme.theme() === ColorThemes.Dark);
+  }
+
+  protected switchTheme(): void {
+    const current = this.colorTheme.theme();
+    this.colorTheme.setTheme(current === ColorThemes.Dark ? ColorThemes.Light : ColorThemes.Dark);
+  }
 }
