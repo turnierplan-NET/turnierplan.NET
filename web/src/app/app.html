@@ -1,27 +1,30 @@
-<div class="tp-sidebar tp-shadow-sm d-flex flex-column">
-  <div class="tp-sidebar-branding mt-4 mb-5 d-flex flex-column align-items-center">
-    <div class="tp-cursor-pointer d-flex flex-row gap-2" [routerLink]="'/portal'">
-      <img src="/public/turnierplan-logo.png" alt="turnierplan.NET Logo" />
-      <span class="fw-bold fs-5 pe-2">turnierplan.NET</span>
+@if (language.isLoaded()) {
+  <div class="tp-sidebar tp-shadow-sm d-flex flex-column">
+    <div class="tp-sidebar-branding mt-4 mb-5 d-flex flex-column align-items-center">
+      <div class="tp-cursor-pointer d-flex flex-row gap-2" [routerLink]="'/portal'">
+        <img src="/public/turnierplan-logo.png" alt="turnierplan.NET Logo" />
+        <span class="fw-bold fs-5 pe-2">turnierplan.NET</span>
+      </div>
+    </div>
+
+    <div class="tp-sidebar-button tp-cursor-pointer mx-3 mb-2">
+      <i class="bi bi-building me-2"></i>
+      <span>{{ 'Tmp.Organizations' | translate }}</span>
+    </div>
+
+    <div class="tp-sidebar-button tp-cursor-pointer mx-3 mb-2">
+      <i class="bi bi-trophy me-2"></i>
+      <span>{{ 'Tmp.Tournaments' | translate }}</span>
+    </div>
+
+    <div class="flex-grow-1"></div>
+
+    <div class="m-4 d-flex flex-row align-items-center">
+      <tp-version-indicator class="flex-grow-1" />
+      <tp-language-selector class="me-2" />
+      <tp-color-theme-selector />
     </div>
   </div>
 
-  <div class="tp-sidebar-button tp-cursor-pointer mx-3 mb-2">
-    <i class="bi bi-building me-2"></i>
-    <span>Organisationen</span>
-  </div>
-
-  <div class="tp-sidebar-button tp-cursor-pointer mx-3 mb-2">
-    <i class="bi bi-trophy me-2"></i>
-    <span>Turniere</span>
-  </div>
-
-  <div class="flex-grow-1"></div>
-
-  <div class="m-4 d-flex flex-row align-items-center">
-    <tp-version-indicator class="flex-grow-1" />
-    <tp-color-theme-selector />
-  </div>
-</div>
-
-<div class="tp-content-outer"></div>
+  <div class="tp-content-outer"></div>
+}
