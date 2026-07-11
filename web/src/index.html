@@ -20,7 +20,11 @@
       rel="stylesheet"
     />
 
+    <!-- Preload logo image to prevent flickering -->
+    <link rel="preload" href="./public/turnierplan-logo.png" as="image" type="image/png" />
+
     <script>
+      <!-- Set color theme on initial load -->
       const colorTheme = localStorage.getItem('tp_colorTheme');
       if (colorTheme === 'dark') {
         document.documentElement.dataset.bsTheme = 'dark';
