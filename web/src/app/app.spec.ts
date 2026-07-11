@@ -11,7 +11,7 @@ import { Observable, of } from 'rxjs';
 
 // IDEA: Place this class along with provideTranslateService([...]) in a central location - shared among all unit tests
 class MockTranslateLoader extends TranslateLoader {
-  public override getTranslation(_: string): Observable<TranslationObject> {
+  public override getTranslation(): Observable<TranslationObject> {
     return of({
       ApplicationName: 'turnierplan.NET'
     });
