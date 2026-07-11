@@ -2,7 +2,6 @@ on:
   push:
     branches:
       - main
-      - eliaspr/383-new-frontend
   pull_request:
     branches:
       - main
@@ -52,7 +51,7 @@ jobs:
         working-directory: './src/Turnierplan.App/Client/'
 
   build-and-test-new-frontend:
-    name: 'Build & Test (New Frontend)'
+    name: 'Build & Test (new frontend)'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
