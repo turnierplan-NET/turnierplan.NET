@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - main
+      - eliaspr/383-new-frontend
   pull_request:
     branches:
       - main
@@ -49,6 +50,23 @@ jobs:
       - name: 'Test client application'
         run: 'npm run test:ci'
         working-directory: './src/Turnierplan.App/Client/'
+
+  build-and-test-new-frontend:
+    name: 'Build & Test (New Frontend)'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: 'Install npm packages'
+        run: 'npm ci'
+        working-directory: './web/'
+      - name: 'Build client application'
+        run: 'npm run build'
+        working-directory: './web/'
+      - name: 'Lint client application'
+        run: 'npm run lint:ci'
+        working-directory: './web/'
+      - name: 'Test client application'
+        run: 'npm run test:ci'
+        working-directory: './web/'
 
   e2e-amd64:
     name: 'E2E Tests (amd64)'

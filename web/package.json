@@ -15,6 +15,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:ci": "ng test --watch=false",
     "prettier": "prettier \"**/*.*css\" \"**/*.*js\" \"**/*.ts\" \"**/*.json\" \"**/*.html\"",
     "lint": "npm run prettier -- --write",
     "lint:ci": "npm run prettier -- --check"
