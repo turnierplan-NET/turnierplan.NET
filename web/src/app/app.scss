@@ -4,18 +4,31 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #222;
+  background: var(--tp-body-background);
   display: flex;
   flex-direction: row;
 }
 
 .tp-sidebar {
-  width: 250px;
-  background: #111;
+  width: 275px;
+  background: var(--tp-sidebar-background);
 
   .tp-sidebar-branding {
+    user-select: none;
+
     img {
       width: 1.75em;
+    }
+  }
+
+  .tp-sidebar-button {
+    background: var(--tp-sidebar-button-background);
+    border-radius: 0.4em;
+    padding: 0.4em 0.7em;
+    user-select: none;
+
+    &:hover {
+      background: var(--tp-sidebar-button-background-hover) !important;
     }
   }
 

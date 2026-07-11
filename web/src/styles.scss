@@ -11,10 +11,36 @@
   cursor: pointer;
 }
 
-.tp-shadow-sm {
-  box-shadow: black 0 0 5px;
-}
-
 .tp-smaller {
   font-size: 0.9em;
+}
+
+[data-bs-theme='light'] {
+  * {
+    color: #111;
+  }
+
+  .tp-shadow-sm {
+    box-shadow: #999 0 0 7px;
+  }
+
+  --tp-body-background: #f6f6f3;
+  --tp-sidebar-background: #edede8;
+  --tp-sidebar-button-background: #e3e3de;
+  --tp-sidebar-button-background-hover: #dadad6;
+}
+
+[data-bs-theme='dark'] {
+  * {
+    color: #ddd;
+  }
+
+  .tp-shadow-sm {
+    box-shadow: black 0 0 7px;
+  }
+
+  --tp-body-background: #212425;
+  --tp-sidebar-background: #131313;
+  --tp-sidebar-button-background: #222222;
+  --tp-sidebar-button-background-hover: #333;
 }
