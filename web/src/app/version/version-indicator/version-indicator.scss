@@ -1,7 +1,7 @@
 .tp-version-indicator {
-  width: 0.7em;
-  height: 0.7em;
-  border-radius: 0.35em;
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 0.3em;
 
   &.tp-version-indicator-loading {
     background: var(--tp-version-indicator-loading);
@@ -18,4 +18,8 @@
   &.tp-version-indicator-outdated {
     background: var(--tp-version-indicator-outdated);
   }
+}
+
+.tp-version {
+  font-size: 0.9em;
 }
