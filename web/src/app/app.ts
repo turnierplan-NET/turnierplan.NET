@@ -4,8 +4,8 @@ import { appVersion } from './app.config';
 
 @Component({
   selector: 'tp-root',
-  templateUrl: './app.html',
   imports: [RouterLink],
+  templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App {
