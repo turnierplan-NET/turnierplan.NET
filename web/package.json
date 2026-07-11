@@ -42,5 +42,12 @@
     "replace-in-file": "~8.4.0",
     "typescript": "~6.0.3",
     "vitest": "~4.1.10"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "esbuild@0.27.7": true,
+    "@parcel/watcher@2.5.6": true,
+    "lmdb@3.5.4": true,
+    "msgpackr-extract@3.0.4": true
   }
 }
