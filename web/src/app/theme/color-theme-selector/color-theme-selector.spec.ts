@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ColorThemeSelector } from './color-theme-selector';
+
+describe('ColorThemeSelector', () => {
+  let component: ColorThemeSelector;
+  let fixture: ComponentFixture<ColorThemeSelector>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ColorThemeSelector],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(ColorThemeSelector);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
