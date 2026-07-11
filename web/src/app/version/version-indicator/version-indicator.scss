@@ -1,0 +1,21 @@
+.tp-version-indicator {
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 0.35em;
+
+  &.tp-version-indicator-loading {
+    background: var(--tp-version-indicator-loading);
+  }
+
+  &.tp-version-indicator-error {
+    background: var(--tp-version-indicator-error);
+  }
+
+  &.tp-version-indicator-up-to-date {
+    background: var(--tp-version-indicator-up-to-date);
+  }
+
+  &.tp-version-indicator-outdated {
+    background: var(--tp-version-indicator-outdated);
+  }
+}

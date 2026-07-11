@@ -1,13 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { appVersion } from './app.config';
+import { VersionIndicator } from './version/version-indicator/version-indicator';
 
 @Component({
   selector: 'tp-root',
-  imports: [RouterLink],
+  imports: [RouterLink, VersionIndicator],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {
-  protected readonly version = signal(appVersion);
-}
+export class App {}
