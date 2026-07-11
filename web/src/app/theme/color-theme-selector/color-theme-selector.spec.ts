@@ -8,7 +8,7 @@ describe('ColorThemeSelector', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ColorThemeSelector],
+      imports: [ColorThemeSelector]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ColorThemeSelector);

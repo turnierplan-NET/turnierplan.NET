@@ -8,7 +8,7 @@ describe('VersionIndicator', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VersionIndicator],
+      imports: [VersionIndicator]
     }).compileComponents();
 
     fixture = TestBed.createComponent(VersionIndicator);

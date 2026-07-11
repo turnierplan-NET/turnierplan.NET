@@ -7,7 +7,7 @@ type VersionIndicatorState = 'loading' | 'error' | 'up-to-date' | 'outdated';
   selector: 'tp-version-indicator',
   imports: [],
   templateUrl: './version-indicator.html',
-  styleUrl: './version-indicator.scss',
+  styleUrl: './version-indicator.scss'
 })
 export class VersionIndicator {
   protected readonly version = signal(appVersion);

@@ -2,7 +2,7 @@ import { Service, Signal, signal } from '@angular/core';
 
 export enum ColorThemes {
   Light = 'light',
-  Dark = 'dark',
+  Dark = 'dark'
 }
 
 @Service()
