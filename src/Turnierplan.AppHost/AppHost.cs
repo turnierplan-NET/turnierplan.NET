@@ -15,19 +15,11 @@ builder.AddProject<Turnierplan_App>("turnierplan-backend")
 
 var runClient = builder.Configuration.GetValue("TURNIERPLAN_ASPIRE_RUN_CLIENT", defaultValue: string.Empty);
 
-if (runClient.Equals("current"))
+if (builder.Configuration.GetValue("TURNIERPLAN_ASPIRE_RUN_CLIENT", defaultValue: false))
 {
     builder.AddJavaScriptApp("turnierplan-client", "../Turnierplan.App/Client")
         .WithRunScript("start")
         .WithHttpEndpoint(45001, isProxied: false)
-        .WithHttpHealthCheck("/index.html")
-        .WithNpm(install: true, installCommand: "ci");
-}
-else if (runClient.Equals("dev"))
-{
-    builder.AddJavaScriptApp("turnierplan-client", "../../web")
-        .WithRunScript("start")
-        .WithHttpEndpoint(45002, isProxied: false)
         .WithHttpHealthCheck("/index.html")
         .WithNpm(install: true, installCommand: "ci");
 }
