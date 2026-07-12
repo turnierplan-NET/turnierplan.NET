@@ -1,14 +1,16 @@
-﻿namespace Turnierplan.Core.Tournament.Definitions;
+﻿using System.Collections.Immutable;
+
+namespace Turnierplan.Core.Tournament.Definitions;
 
 public sealed record FinalsMatchDefinition
 {
-    public FinalsMatchDefinition(IEnumerable<MatchDefinition> matches)
+    public FinalsMatchDefinition(ImmutableArray<MatchDefinition> matches)
     {
-        Matches = matches.ToList();
+        Matches = matches;
         RequiredTeamsPerGroup = Matches.SelectMany(x => new[] { x.TeamA.PlacementRank, x.TeamB.PlacementRank }).Max();
     }
 
-    public IReadOnlyList<MatchDefinition> Matches { get; }
+    public ImmutableArray<MatchDefinition> Matches { get; }
 
     public int RequiredTeamsPerGroup { get; }
 
