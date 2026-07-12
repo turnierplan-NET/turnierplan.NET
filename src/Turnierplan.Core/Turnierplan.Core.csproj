@@ -11,8 +11,5 @@
     <EmbeddedResource Include="Tournament/Definitions/FinalsMatchDefinitions.json">
       <LogicalName>Definitions.FinalsMatchDefinitions.json</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tournament/Definitions/GroupMatchDefinitions.json">
-      <LogicalName>Definitions.GroupMatchDefinitions.json</LogicalName>
-    </EmbeddedResource>
   </ItemGroup>
 </Project>
