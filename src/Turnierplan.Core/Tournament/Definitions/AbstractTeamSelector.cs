@@ -8,11 +8,30 @@ namespace Turnierplan.Core.Tournament.Definitions;
 /// created yet and that therefore do not have a specific id. Abstract team selectors are used to configure the
 /// generation of tournaments because the group ids are only generated during the generation process.
 /// </summary>
-/// <remarks>
-/// If <paramref name="IsNthRanked"/> is <c>true</c>, <paramref name="PlacementRank"/> and <paramref name="OrdinalNumber"/>
-/// must be specified and denote the team selector parameters as used in <see cref="GroupResultsNthRankedSelector"/>.
-/// If <paramref name="IsNthRanked"/> is <c>false</c>, <paramref name="GroupIndex"/> and <paramref name="PlacementRank"/>
-/// must be specified and will be used to generate a team selector to select the team with that position in a specific
-/// group in the tournament.
-/// </remarks>
-public sealed record AbstractTeamSelector(bool IsNthRanked, int? GroupIndex, int PlacementRank, int? OrdinalNumber);
+public sealed record AbstractTeamSelector
+{
+    /// <remarks>
+    /// If <paramref name="isNthRanked"/> is <c>true</c>, <paramref name="placementRank"/> and <paramref name="ordinalNumber"/>
+    /// must be specified and denote the team selector parameters as used in <see cref="GroupResultsNthRankedSelector"/>.
+    /// If <paramref name="isNthRanked"/> is <c>false</c>, <paramref name="groupIndex"/> and <paramref name="placementRank"/>
+    /// must be specified and will be used to generate a team selector to select the team with that position in a specific
+    /// group in the tournament.
+    /// </remarks>
+    internal AbstractTeamSelector(bool isNthRanked, int? groupIndex, int placementRank, int? ordinalNumber)
+    {
+        // TODO: Add parameter validation -or- static 'create' methods
+
+        IsNthRanked = isNthRanked;
+        GroupIndex = groupIndex;
+        PlacementRank = placementRank;
+        OrdinalNumber = ordinalNumber;
+    }
+
+    public bool IsNthRanked { get; }
+
+    public int? GroupIndex { get; }
+
+    public int PlacementRank { get; }
+
+    public int? OrdinalNumber { get; }
+}
