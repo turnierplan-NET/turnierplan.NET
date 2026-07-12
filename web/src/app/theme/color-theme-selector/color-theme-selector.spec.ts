@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ColorThemeSelector } from './color-theme-selector';
 import { provideTranslateService } from '@ngx-translate/core';
 

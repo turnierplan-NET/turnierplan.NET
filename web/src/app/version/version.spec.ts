@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { Version } from './version';
 
 describe('Version', () => {

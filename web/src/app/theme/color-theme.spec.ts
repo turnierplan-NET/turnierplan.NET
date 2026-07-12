@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { ColorTheme } from './color-theme';
 
 describe('ColorTheme', () => {

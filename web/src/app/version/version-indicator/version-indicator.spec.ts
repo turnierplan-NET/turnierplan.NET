@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { VersionIndicator } from './version-indicator';
 import { provideTranslateService } from '@ngx-translate/core';
 
