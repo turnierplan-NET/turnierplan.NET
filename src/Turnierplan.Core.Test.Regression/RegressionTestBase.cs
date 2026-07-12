@@ -49,12 +49,52 @@ internal abstract class RegressionTestBase<TSubject> : IRegressionTest
         return result;
     }
 
+    protected void ExceptionalStep<TException>(Action<TSubject> step)
+        where TException : Exception
+    {
+        if (_subject is null)
+        {
+            throw new InvalidOperationException($"Call '{nameof(Subject)}()' first to initialize the test subject.");
+        }
+
+        TException? exception = null;
+
+        try
+        {
+            step(_subject);
+        }
+        catch (TException e)
+        {
+            exception = e;
+        }
+
+        if (exception is null)
+        {
+            throw new InvalidOperationException($"Expected the step to throw an exception of type '{typeof(TException).FullName}', but that did not happen.");
+        }
+
+        AddExceptionalSaveState(exception);
+    }
+
     private void AddSaveState()
     {
         _builder.Append('[');
         _builder.Append(++_saveStateIndex);
         _builder.Append(']');
         _builder.AppendLine();
+        _builder.AppendSubject(_subject);
+    }
+
+    private void AddExceptionalSaveState(Exception exception)
+    {
+        _builder.Append('[');
+        _builder.Append(++_saveStateIndex);
+        _builder.Append(']');
+        _builder.AppendLine();
+        _builder.Append("[Exception] ");
+        _builder.Append(exception.GetType().FullName);
+        _builder.Append(": ");
+        _builder.AppendLine(exception.Message);
         _builder.AppendSubject(_subject);
     }
 }

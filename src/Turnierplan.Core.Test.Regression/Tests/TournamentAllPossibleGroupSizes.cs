@@ -1,3 +1,4 @@
+using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.Tournament;
 
 namespace Turnierplan.Core.Test.Regression.Tests;
@@ -28,7 +29,7 @@ internal sealed class TournamentAllPossibleGroupSizes : TournamentRegressionTest
                 GroupRoundConfig = new GroupRoundConfig
                 {
                     GroupMatchOrder = GroupMatchOrder.Alternating,
-                    GroupPhaseRounds = 0
+                    GroupPhaseRounds = 1
                 }
             });
         });
@@ -40,6 +41,9 @@ internal sealed class TournamentAllPossibleGroupSizes : TournamentRegressionTest
         Step(AddAnotherTeam); // group with 7 teams
         Step(AddAnotherTeam); // group with 8 teams
         Step(AddAnotherTeam); // group with 9 teams
+
+        // Adding another team throws an exception because there exists no config for 10 teams
+        ExceptionalStep<TurnierplanException>(AddAnotherTeam);
 
         return;
 
@@ -53,9 +57,9 @@ internal sealed class TournamentAllPossibleGroupSizes : TournamentRegressionTest
                 GroupRoundConfig = new GroupRoundConfig
                 {
                     GroupMatchOrder = GroupMatchOrder.Alternating,
-                    GroupPhaseRounds = 0
+                    GroupPhaseRounds = 1
                 }
-            });
+            }, clearMatches: true);
         }
     }
 }
