@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace Turnierplan.Core.Tournament.Definitions;
 
@@ -8,32 +7,13 @@ public static class MatchPlanDefinitions
     private const string GroupMatchDefinitionsResource = "Definitions.GroupMatchDefinitions.json";
     private const string FinalsMatchDefinitionsResource = "Definitions.FinalsMatchDefinitions.json";
 
-    private static readonly Dictionary<int, GroupMatchDefinition> __groupMatchDefinitions = [];
-    private static readonly Dictionary<(int GroupCount, int MatchCount), FinalsMatchDefinition> __finalsMatchDefinitions = [];
+    private static readonly Dictionary<int, GroupMatchDefinition> __groupMatchDefinitions = new();
+    private static readonly Dictionary<(int GroupCount, int MatchCount), FinalsMatchDefinition> __finalsMatchDefinitions = new();
 
     static MatchPlanDefinitions()
     {
-        AddFinalsMatchDefinition(1, [
-            new FinalsMatchDefinition.MatchDefinition(Ranked(1, 'A'), Ranked(2, 'A'))
-        ]);
-        
         LoadGroupMatchDefinitions();
         LoadFinalsMatchDefinitions();
-    }
-
-    private static AbstractTeamSelector Ranked(int rank, char group)
-    {
-        return new AbstractTeamSelector(false, group - 'A', rank, null);
-    }
-
-    private static AbstractTeamSelector NthRanked(int ordinal, int rank)
-    {
-        return new AbstractTeamSelector(false, null, rank, ordinal - 1);
-    }
-
-    private static void AddFinalsMatchDefinition(int groupCount, ImmutableArray<FinalsMatchDefinition.MatchDefinition> matches)
-    {
-        __finalsMatchDefinitions[(groupCount, matches.Length)] = new FinalsMatchDefinition(matches);
     }
 
     public static GroupMatchDefinition? GetGroupMatchDefinition(int teamCount)
