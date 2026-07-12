@@ -1124,13 +1124,9 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
 
     private static TeamSelectorBase ConvertToSpecificInstance(AbstractTeamSelector abstractSelector, int[] groupIds)
     {
-        if (abstractSelector.IsNthRanked)
-        {
-            // AbstractTeamSelector.OrdinalNumber is in the range 1.. while GroupResultsNthRankedSelector.OrdinalNumber is 0..
-            return new GroupResultsNthRankedSelector(groupIds, abstractSelector.OrdinalNumber!.Value - 1, abstractSelector.PlacementRank);
-        }
-
-        return new GroupResultsSelector(groupIds[abstractSelector.GroupIndex!.Value], abstractSelector.PlacementRank);
+        return abstractSelector.IsNthRanked
+            ? new GroupResultsNthRankedSelector(groupIds, abstractSelector.OrdinalNumber!.Value, abstractSelector.PlacementRank)
+            : new GroupResultsSelector(groupIds[abstractSelector.GroupIndex!.Value], abstractSelector.PlacementRank);
     }
 
     private sealed class GroupMatchData
