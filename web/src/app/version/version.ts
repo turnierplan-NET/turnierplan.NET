@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { appVersion } from '../app.config';
 import { catchError, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { localStorageKeys } from '../consts/local-storage-keys';
 
 export type VersionInfo =
   | {
@@ -26,7 +27,6 @@ interface VersionCache {
 
 @Service()
 export class Version {
-  private static readonly localStorageKey = 'tp_version_cache'; // TODO: Move all local storage keys to shared location
   private static readonly maxCacheAgeMilliseconds = 6 * 60 * 60 * 1000; // 6 hours
 
   public readonly version: Signal<VersionInfo>;
@@ -41,7 +41,7 @@ export class Version {
       // Don't spam GitHub API when running locally
       this._version.set({ state: 'up-to-date', current: appVersion, latest: appVersion });
     } else {
-      const localStorageValue = localStorage.getItem(Version.localStorageKey);
+      const localStorageValue = localStorage.getItem(localStorageKeys.version.cache);
 
       if (localStorageValue) {
         try {
@@ -65,7 +65,7 @@ export class Version {
           .subscribe({
             next: (version) => {
               localStorage.setItem(
-                Version.localStorageKey,
+                localStorageKeys.version.cache,
                 JSON.stringify({
                   version: version,
                   timestamp: Date.now()

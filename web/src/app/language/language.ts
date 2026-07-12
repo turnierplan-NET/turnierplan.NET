@@ -3,13 +3,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { catchError, of, take } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
+import { localStorageKeys } from '../consts/local-storage-keys';
 
 export type LanguageCode = 'de' | 'en';
 
 @Service()
 export class Language {
-  private static readonly localStorageKey = 'tp_language';
-
   public readonly language: Signal<LanguageCode>;
   public readonly isLoaded: Signal<boolean>;
 
@@ -19,7 +18,7 @@ export class Language {
   constructor() {
     this.language = this._language.asReadonly();
 
-    const currentLanguage = localStorage.getItem(Language.localStorageKey);
+    const currentLanguage = localStorage.getItem(localStorageKeys.language.currentLanguage);
     if (currentLanguage === 'de' || currentLanguage === 'en') {
       this._language.set(currentLanguage);
     }
@@ -36,7 +35,7 @@ export class Language {
 
   public setLanguage(language: LanguageCode): void {
     if (language !== this._language()) {
-      localStorage.setItem(Language.localStorageKey, language);
+      localStorage.setItem(localStorageKeys.language.currentLanguage, language);
       this.translateService.use(language);
       this._language.set(language);
     }
