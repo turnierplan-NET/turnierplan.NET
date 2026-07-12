@@ -1,0 +1,261 @@
+[1]
+reg_name;Private;False;0;0;0;0;0;0
+[2]
+reg_name;Private;False;0;0;1;0;0;0
+G1;A;Test;0
+[3]
+reg_name;Private;False;0;2;1;1;0;0
+T2;Test 1;;False;0;0;0;0;0;0
+T3;Test 2;;False;0;0;0;0;0;0
+G1;A;Test;2
+>2;1;1;0;0;0;0;0;0;0;0;0;0
+>3;1;2;0;0;0;0;0;0;0;0;0;0
+M4;1;0;;G1/0;G1/1;;;1;True;False;;;;;;False
+[4]
+reg_name;Private;False;0;3;1;3;0;0
+T2;Test 1;;False;0;0;0;0;0;0
+T3;Test 2;;False;0;0;0;0;0;0
+T5;Test 3;;False;0;0;0;0;0;0
+G1;A;Test;3
+>2;1;1;0;0;0;0;0;0;0;0;0;0
+>3;1;2;0;0;0;0;0;0;0;0;0;0
+>5;1;3;0;0;0;0;0;0;0;0;0;0
+M6;1;0;;G1/0;G1/1;;;1;True;False;;;;;;False
+M7;2;0;;G1/1;G1/2;;;1;True;False;;;;;;False
+M8;3;0;;G1/2;G1/0;;;1;True;False;;;;;;False
+[5]
+reg_name;Private;False;0;4;1;6;0;0
+T2;Test 1;;False;0;0;0;0;0;0
+T3;Test 2;;False;0;0;0;0;0;0
+T5;Test 3;;False;0;0;0;0;0;0
+T9;Test 4;;False;0;0;0;0;0;0
+G1;A;Test;4
+>2;1;1;0;0;0;0;0;0;0;0;0;0
+>3;1;2;0;0;0;0;0;0;0;0;0;0
+>5;1;3;0;0;0;0;0;0;0;0;0;0
+>9;1;4;0;0;0;0;0;0;0;0;0;0
+M10;1;0;;G1/0;G1/1;;;1;True;False;;;;;;False
+M11;2;0;;G1/2;G1/3;;;1;True;False;;;;;;False
+M12;3;0;;G1/0;G1/2;;;1;True;False;;;;;;False
+M13;4;0;;G1/1;G1/3;;;1;True;False;;;;;;False
+M14;5;0;;G1/3;G1/0;;;1;True;False;;;;;;False
+M15;6;0;;G1/1;G1/2;;;1;True;False;;;;;;False
+[6]
+reg_name;Private;False;0;5;1;10;0;0
+T2;Test 1;;False;0;0;0;0;0;0
+T3;Test 2;;False;0;0;0;0;0;0
+T5;Test 3;;False;0;0;0;0;0;0
+T9;Test 4;;False;0;0;0;0;0;0
+T16;Test 5;;False;0;0;0;0;0;0
+G1;A;Test;5
+>2;1;1;0;0;0;0;0;0;0;0;0;0
+>3;1;2;0;0;0;0;0;0;0;0;0;0
+>5;1;3;0;0;0;0;0;0;0;0;0;0
+>9;1;4;0;0;0;0;0;0;0;0;0;0
+>16;1;5;0;0;0;0;0;0;0;0;0;0
+M17;1;0;;G1/0;G1/1;;;1;True;False;;;;;;False
+M18;2;0;;G1/2;G1/3;;;1;True;False;;;;;;False
+M19;3;0;;G1/4;G1/0;;;1;True;False;;;;;;False
+M20;4;0;;G1/1;G1/2;;;1;True;False;;;;;;False
+M21;5;0;;G1/3;G1/4;;;1;True;False;;;;;;False
+M22;6;0;;G1/2;G1/0;;;1;True;False;;;;;;False
+M23;7;0;;G1/1;G1/4;;;1;True;False;;;;;;False
+M24;8;0;;G1/0;G1/3;;;1;True;False;;;;;;False
+M25;9;0;;G1/4;G1/2;;;1;True;False;;;;;;False
+M26;10;0;;G1/3;G1/1;;;1;True;False;;;;;;False
+[7]
+reg_name;Private;False;0;6;1;15;0;0
+T2;Test 1;;False;0;0;0;0;0;0
+T3;Test 2;;False;0;0;0;0;0;0
+T5;Test 3;;False;0;0;0;0;0;0
+T9;Test 4;;False;0;0;0;0;0;0
+T16;Test 5;;False;0;0;0;0;0;0
+T27;Test 6;;False;0;0;0;0;0;0
+G1;A;Test;6
+>2;1;1;0;0;0;0;0;0;0;0;0;0
+>3;1;2;0;0;0;0;0;0;0;0;0;0
+>5;1;3;0;0;0;0;0;0;0;0;0;0
+>9;1;4;0;0;0;0;0;0;0;0;0;0
+>16;1;5;0;0;0;0;0;0;0;0;0;0
+>27;1;6;0;0;0;0;0;0;0;0;0;0
+M28;1;0;;G1/0;G1/1;;;1;True;False;;;;;;False
+M29;2;0;;G1/2;G1/3;;;1;True;False;;;;;;False
+M30;3;0;;G1/4;G1/5;;;1;True;False;;;;;;False
+M31;4;0;;G1/2;G1/0;;;1;True;False;;;;;;False
+M32;5;0;;G1/5;G1/1;;;1;True;False;;;;;;False
+M33;6;0;;G1/3;G1/4;;;1;True;False;;;;;;False
+M34;7;0;;G1/0;G1/5;;;1;True;False;;;;;;False
+M35;8;0;;G1/4;G1/2;;;1;True;False;;;;;;False
+M36;9;0;;G1/3;G1/1;;;1;True;False;;;;;;False
+M37;10;0;;G1/4;G1/0;;;1;True;False;;;;;;False
+M38;11;0;;G1/5;G1/3;;;1;True;False;;;;;;False
+M39;12;0;;G1/1;G1/2;;;1;True;False;;;;;;False
+M40;13;0;;G1/0;G1/3;;;1;True;False;;;;;;False
+M41;14;0;;G1/1;G1/4;;;1;True;False;;;;;;False
+M42;15;0;;G1/2;G1/5;;;1;True;False;;;;;;False
+[8]
+reg_name;Private;False;0;7;1;21;0;0
+T2;Test 1;;False;0;0;0;0;0;0
+T3;Test 2;;False;0;0;0;0;0;0
+T5;Test 3;;False;0;0;0;0;0;0
+T9;Test 4;;False;0;0;0;0;0;0
+T16;Test 5;;False;0;0;0;0;0;0
+T27;Test 6;;False;0;0;0;0;0;0
+T43;Test 7;;False;0;0;0;0;0;0
+G1;A;Test;7
+>2;1;1;0;0;0;0;0;0;0;0;0;0
+>3;1;2;0;0;0;0;0;0;0;0;0;0
+>5;1;3;0;0;0;0;0;0;0;0;0;0
+>9;1;4;0;0;0;0;0;0;0;0;0;0
+>16;1;5;0;0;0;0;0;0;0;0;0;0
+>27;1;6;0;0;0;0;0;0;0;0;0;0
+>43;1;7;0;0;0;0;0;0;0;0;0;0
+M44;1;0;;G1/0;G1/1;;;1;True;False;;;;;;False
+M45;2;0;;G1/2;G1/3;;;1;True;False;;;;;;False
+M46;3;0;;G1/4;G1/5;;;1;True;False;;;;;;False
+M47;4;0;;G1/3;G1/6;;;1;True;False;;;;;;False
+M48;5;0;;G1/0;G1/5;;;1;True;False;;;;;;False
+M49;6;0;;G1/4;G1/2;;;1;True;False;;;;;;False
+M50;7;0;;G1/5;G1/1;;;1;True;False;;;;;;False
+M51;8;0;;G1/6;G1/4;;;1;True;False;;;;;;False
+M52;9;0;;G1/2;G1/0;;;1;True;False;;;;;;False
+M53;10;0;;G1/3;G1/4;;;1;True;False;;;;;;False
+M54;11;0;;G1/1;G1/2;;;1;True;False;;;;;;False
+M55;12;0;;G1/6;G1/0;;;1;True;False;;;;;;False
+M56;13;0;;G1/2;G1/5;;;1;True;False;;;;;;False
+M57;14;0;;G1/0;G1/3;;;1;True;False;;;;;;False
+M58;15;0;;G1/1;G1/6;;;1;True;False;;;;;;False
+M59;16;0;;G1/4;G1/0;;;1;True;False;;;;;;False
+M60;17;0;;G1/5;G1/6;;;1;True;False;;;;;;False
+M61;18;0;;G1/3;G1/1;;;1;True;False;;;;;;False
+M62;19;0;;G1/6;G1/2;;;1;True;False;;;;;;False
+M63;20;0;;G1/1;G1/4;;;1;True;False;;;;;;False
+M64;21;0;;G1/5;G1/3;;;1;True;False;;;;;;False
+[9]
+reg_name;Private;False;0;8;1;28;0;0
+T2;Test 1;;False;0;0;0;0;0;0
+T3;Test 2;;False;0;0;0;0;0;0
+T5;Test 3;;False;0;0;0;0;0;0
+T9;Test 4;;False;0;0;0;0;0;0
+T16;Test 5;;False;0;0;0;0;0;0
+T27;Test 6;;False;0;0;0;0;0;0
+T43;Test 7;;False;0;0;0;0;0;0
+T65;Test 8;;False;0;0;0;0;0;0
+G1;A;Test;8
+>2;1;1;0;0;0;0;0;0;0;0;0;0
+>3;1;2;0;0;0;0;0;0;0;0;0;0
+>5;1;3;0;0;0;0;0;0;0;0;0;0
+>9;1;4;0;0;0;0;0;0;0;0;0;0
+>16;1;5;0;0;0;0;0;0;0;0;0;0
+>27;1;6;0;0;0;0;0;0;0;0;0;0
+>43;1;7;0;0;0;0;0;0;0;0;0;0
+>65;1;8;0;0;0;0;0;0;0;0;0;0
+M66;1;0;;G1/0;G1/1;;;1;True;False;;;;;;False
+M67;2;0;;G1/2;G1/3;;;1;True;False;;;;;;False
+M68;3;0;;G1/4;G1/5;;;1;True;False;;;;;;False
+M69;4;0;;G1/6;G1/7;;;1;True;False;;;;;;False
+M70;5;0;;G1/0;G1/3;;;1;True;False;;;;;;False
+M71;6;0;;G1/5;G1/1;;;1;True;False;;;;;;False
+M72;7;0;;G1/2;G1/7;;;1;True;False;;;;;;False
+M73;8;0;;G1/6;G1/4;;;1;True;False;;;;;;False
+M74;9;0;;G1/0;G1/5;;;1;True;False;;;;;;False
+M75;10;0;;G1/7;G1/3;;;1;True;False;;;;;;False
+M76;11;0;;G1/1;G1/6;;;1;True;False;;;;;;False
+M77;12;0;;G1/4;G1/2;;;1;True;False;;;;;;False
+M78;13;0;;G1/0;G1/7;;;1;True;False;;;;;;False
+M79;14;0;;G1/5;G1/6;;;1;True;False;;;;;;False
+M80;15;0;;G1/3;G1/4;;;1;True;False;;;;;;False
+M81;16;0;;G1/1;G1/2;;;1;True;False;;;;;;False
+M82;17;0;;G1/6;G1/0;;;1;True;False;;;;;;False
+M83;18;0;;G1/4;G1/7;;;1;True;False;;;;;;False
+M84;19;0;;G1/2;G1/5;;;1;True;False;;;;;;False
+M85;20;0;;G1/3;G1/1;;;1;True;False;;;;;;False
+M86;21;0;;G1/4;G1/0;;;1;True;False;;;;;;False
+M87;22;0;;G1/6;G1/2;;;1;True;False;;;;;;False
+M88;23;0;;G1/7;G1/1;;;1;True;False;;;;;;False
+M89;24;0;;G1/5;G1/3;;;1;True;False;;;;;;False
+M90;25;0;;G1/2;G1/0;;;1;True;False;;;;;;False
+M91;26;0;;G1/1;G1/4;;;1;True;False;;;;;;False
+M92;27;0;;G1/3;G1/6;;;1;True;False;;;;;;False
+M93;28;0;;G1/7;G1/5;;;1;True;False;;;;;;False
+[10]
+reg_name;Private;False;0;9;1;36;0;0
+T2;Test 1;;False;0;0;0;0;0;0
+T3;Test 2;;False;0;0;0;0;0;0
+T5;Test 3;;False;0;0;0;0;0;0
+T9;Test 4;;False;0;0;0;0;0;0
+T16;Test 5;;False;0;0;0;0;0;0
+T27;Test 6;;False;0;0;0;0;0;0
+T43;Test 7;;False;0;0;0;0;0;0
+T65;Test 8;;False;0;0;0;0;0;0
+T94;Test 9;;False;0;0;0;0;0;0
+G1;A;Test;9
+>2;1;1;0;0;0;0;0;0;0;0;0;0
+>3;1;2;0;0;0;0;0;0;0;0;0;0
+>5;1;3;0;0;0;0;0;0;0;0;0;0
+>9;1;4;0;0;0;0;0;0;0;0;0;0
+>16;1;5;0;0;0;0;0;0;0;0;0;0
+>27;1;6;0;0;0;0;0;0;0;0;0;0
+>43;1;7;0;0;0;0;0;0;0;0;0;0
+>65;1;8;0;0;0;0;0;0;0;0;0;0
+>94;1;9;0;0;0;0;0;0;0;0;0;0
+M95;1;0;;G1/0;G1/1;;;1;True;False;;;;;;False
+M96;2;0;;G1/2;G1/3;;;1;True;False;;;;;;False
+M97;3;0;;G1/4;G1/5;;;1;True;False;;;;;;False
+M98;4;0;;G1/6;G1/7;;;1;True;False;;;;;;False
+M99;5;0;;G1/8;G1/0;;;1;True;False;;;;;;False
+M100;6;0;;G1/1;G1/2;;;1;True;False;;;;;;False
+M101;7;0;;G1/3;G1/4;;;1;True;False;;;;;;False
+M102;8;0;;G1/5;G1/6;;;1;True;False;;;;;;False
+M103;9;0;;G1/7;G1/8;;;1;True;False;;;;;;False
+M104;10;0;;G1/2;G1/0;;;1;True;False;;;;;;False
+M105;11;0;;G1/5;G1/3;;;1;True;False;;;;;;False
+M106;12;0;;G1/1;G1/4;;;1;True;False;;;;;;False
+M107;13;0;;G1/8;G1/6;;;1;True;False;;;;;;False
+M108;14;0;;G1/0;G1/3;;;1;True;False;;;;;;False
+M109;15;0;;G1/4;G1/7;;;1;True;False;;;;;;False
+M110;16;0;;G1/1;G1/6;;;1;True;False;;;;;;False
+M111;17;0;;G1/2;G1/5;;;1;True;False;;;;;;False
+M112;18;0;;G1/3;G1/8;;;1;True;False;;;;;;False
+M113;19;0;;G1/0;G1/7;;;1;True;False;;;;;;False
+M114;20;0;;G1/5;G1/1;;;1;True;False;;;;;;False
+M115;21;0;;G1/4;G1/2;;;1;True;False;;;;;;False
+M116;22;0;;G1/7;G1/3;;;1;True;False;;;;;;False
+M117;23;0;;G1/6;G1/0;;;1;True;False;;;;;;False
+M118;24;0;;G1/8;G1/2;;;1;True;False;;;;;;False
+M119;25;0;;G1/3;G1/1;;;1;True;False;;;;;;False
+M120;26;0;;G1/6;G1/4;;;1;True;False;;;;;;False
+M121;27;0;;G1/7;G1/5;;;1;True;False;;;;;;False
+M122;28;0;;G1/1;G1/8;;;1;True;False;;;;;;False
+M123;29;0;;G1/4;G1/0;;;1;True;False;;;;;;False
+M124;30;0;;G1/6;G1/2;;;1;True;False;;;;;;False
+M125;31;0;;G1/5;G1/8;;;1;True;False;;;;;;False
+M126;32;0;;G1/7;G1/1;;;1;True;False;;;;;;False
+M127;33;0;;G1/0;G1/5;;;1;True;False;;;;;;False
+M128;34;0;;G1/3;G1/6;;;1;True;False;;;;;;False
+M129;35;0;;G1/8;G1/4;;;1;True;False;;;;;;False
+M130;36;0;;G1/2;G1/7;;;1;True;False;;;;;;False
+[11]
+[Exception] Turnierplan.Core.Exceptions.TurnierplanException: No group match definitions exist for a group with 10 teams.
+reg_name;Private;False;0;10;1;0;0;0
+T2;Test 1;;False;0;0;0;0;0;0
+T3;Test 2;;False;0;0;0;0;0;0
+T5;Test 3;;False;0;0;0;0;0;0
+T9;Test 4;;False;0;0;0;0;0;0
+T16;Test 5;;False;0;0;0;0;0;0
+T27;Test 6;;False;0;0;0;0;0;0
+T43;Test 7;;False;0;0;0;0;0;0
+T65;Test 8;;False;0;0;0;0;0;0
+T94;Test 9;;False;0;0;0;0;0;0
+T131;Test 10;;False;0;0;0;0;0;0
+G1;A;Test;10
+>2;1;1;0;0;0;0;0;0;0;0;0;0
+>3;1;2;0;0;0;0;0;0;0;0;0;0
+>5;1;3;0;0;0;0;0;0;0;0;0;0
+>9;1;4;0;0;0;0;0;0;0;0;0;0
+>16;1;5;0;0;0;0;0;0;0;0;0;0
+>27;1;6;0;0;0;0;0;0;0;0;0;0
+>43;1;7;0;0;0;0;0;0;0;0;0;0
+>65;1;8;0;0;0;0;0;0;0;0;0;0
+>94;1;9;0;0;0;0;0;0;0;0;0;0
+>131;1;10;0;0;0;0;0;0;0;0;0;0
