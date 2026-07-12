@@ -3,6 +3,34 @@
 @use 'bootstrap/scss/bootstrap-utilities';
 @use 'bootstrap-icons/font/bootstrap-icons.min.css';
 
+@font-face {
+  font-family: 'Inter';
+  src: url('/public/fonts/Inter_24pt-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/public/fonts/Inter_24pt-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/public/fonts/Inter_24pt-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/public/fonts/Inter_24pt-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
 * {
   font-family: 'Inter', sans-serif;
 }
