@@ -861,6 +861,8 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
                 throw new TurnierplanException($"No pre-defined first finals round configuration exists for {_groups.Count} groups and {firstFinalsRoundMatchCount} matches.");
             }
 
+            // TODO: #411 - Do we need a check that no group has less teams than 'definition.RequiredTeamsPerGroup'?
+
             for (var i = 0; i < definition.Matches.Count; i++)
             {
                 var teamSelectorA = definition.Matches[i].TeamA;
