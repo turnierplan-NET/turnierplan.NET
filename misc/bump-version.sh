@@ -45,6 +45,8 @@ update_file "docs/pages/installation/docker-compose.md"
 update_file "src/Turnierplan.App/Client/package.json"
 update_file "src/Turnierplan.App/Client/src/environments/environment.prod.ts"
 update_file "src/version.xml"
+update_file "web/src/app/app.config.ts"
+update_file "web/package.json"
 
 echo ""
 echo "All files updated successfully!"
