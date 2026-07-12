@@ -9,4 +9,5 @@ import { App } from './app/app';
 
 registerLocaleData(localeDe, 'de', localeDeExtra);
 
+// eslint-disable-next-line no-console
 bootstrapApplication(App, appConfig).catch((err) => console.error(err));
