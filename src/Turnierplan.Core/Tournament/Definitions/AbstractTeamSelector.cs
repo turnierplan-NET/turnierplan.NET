@@ -19,8 +19,6 @@ public sealed record AbstractTeamSelector
     /// </remarks>
     internal AbstractTeamSelector(bool isNthRanked, int? groupIndex, int placementRank, int? ordinalNumber)
     {
-        // TODO: Add parameter validation -or- static 'create' methods
-
         IsNthRanked = isNthRanked;
         GroupIndex = groupIndex;
         PlacementRank = placementRank;
