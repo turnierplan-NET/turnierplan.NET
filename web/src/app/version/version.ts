@@ -50,7 +50,7 @@ export class Version {
           if (Date.now() < cacheExpiry) {
             this.processLatestVersion(parsed.version);
           }
-        } catch (e) {
+        } catch {
           this.processLatestVersion(undefined);
         }
       } else {

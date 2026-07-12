@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-test-new-frontend:
-    name: 'Build & Test (new frontend)'
+    name: 'Build & Test'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
