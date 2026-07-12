@@ -1,4 +1,3 @@
-using Turnierplan.Core.Exceptions;
 using Turnierplan.Core.Tournament;
 
 namespace Turnierplan.Core.Test.Regression.Tests;
