@@ -117,6 +117,46 @@ public static class MatchPlanDefinitions
             f.Match().Group(1, 'C').Against().Group(1, 'D');
         });
 
+        builder.Finals(2, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(4, 'B');
+            f.Match().Group(2, 'A').Against().Group(3, 'B');
+            f.Match().Group(3, 'A').Against().Group(2, 'B');
+            f.Match().Group(4, 'A').Against().Group(1, 'B');
+        });
+
+        builder.Finals(3, f =>
+        {
+            f.Match().Group(1, 'A').Against().NthRanked(1, 3);
+            f.Match().Group(1, 'B').Against().NthRanked(2, 3);
+            f.Match().Group(2, 'A').Against().Group(2, 'C');
+            f.Match().Group(2, 'B').Against().Group(1, 'C');
+        });
+
+        builder.Finals(4, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(2, 'C');
+            f.Match().Group(1, 'B').Against().Group(2, 'D');
+            f.Match().Group(1, 'C').Against().Group(2, 'A');
+            f.Match().Group(1, 'D').Against().Group(2, 'B');
+        });
+
+        builder.Finals(5, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(1, 'B');
+            f.Match().Group(1, 'C').Against().NthRanked(1, 2);
+            f.Match().Group(1, 'D').Against().NthRanked(2, 2);
+            f.Match().Group(1, 'E').Against().NthRanked(3, 2);
+        });
+
+        builder.Finals(6, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(1, 'B');
+            f.Match().Group(1, 'C').Against().Group(1, 'D');
+            f.Match().Group(1, 'E').Against().NthRanked(1, 2);
+            f.Match().Group(1, 'F').Against().NthRanked(2, 2);
+        });
+
         (__groupMatchDefinitions, __finalsMatchDefinitions) = builder.Build();
     }
 
@@ -279,7 +319,8 @@ public static class MatchPlanDefinitions
                 throw new ArgumentException($"The ordinal must be between 1 and the group count {_groupCount}.");
             }
 
-            SetOpponent(new AbstractTeamSelector(false, null, position, ordinal));
+            // Subtract 1 from ordinal so the caller can specify 1..n which is more intuitive than 0..(n-1)
+            SetOpponent(new AbstractTeamSelector(true, null, position, ordinal - 1));
 
             return this;
         }
