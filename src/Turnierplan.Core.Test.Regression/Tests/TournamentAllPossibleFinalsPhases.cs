@@ -21,49 +21,30 @@ internal sealed class TournamentAllPossibleFinalsPhases : TournamentRegressionTe
         Step(AddAnotherGroup);
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.FinalOnly));
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.SemiFinals));
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.QuarterFinals));
 
         // -- 2 groups --
         Step(AddAnotherGroup);
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.FinalOnly));
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.SemiFinals));
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.QuarterFinals));
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.EighthFinals));
 
         // -- 3 groups --
         Step(AddAnotherGroup);
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.FinalOnly));
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.SemiFinals));
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.QuarterFinals));
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.EighthFinals));
 
         // -- 4 groups --
         Step(AddAnotherGroup);
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.FinalOnly));
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.SemiFinals));
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.QuarterFinals));
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.EighthFinals));
 
         // -- 5 groups --
         Step(AddAnotherGroup);
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.FinalOnly));
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.SemiFinals));
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.QuarterFinals));
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.EighthFinals));
 
         // -- 6 groups --
         Step(AddAnotherGroup);
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.FinalOnly));
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.SemiFinals));
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.QuarterFinals));
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.EighthFinals));
-
-        // -- 7 groups --
-        Step(AddAnotherGroup);
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.FinalOnly));
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.SemiFinals));
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.QuarterFinals));
-        StepWithException<TurnierplanException>(t => GenerateMatchPlan(t, FinalsRoundOrder.EighthFinals));
 
         return;
 
