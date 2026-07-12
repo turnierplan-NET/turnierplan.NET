@@ -1,8 +1,18 @@
 @let value = versionInfo();
+@let tooltip =
+  'Version.' + value.state
+    | translate
+      : {
+          current: value.current,
+          latest:
+            value.state === 'outdated' || value.state === 'newer' || value.state === 'up-to-date'
+              ? value.latest
+              : undefined
+        };
 
-<!-- TODO: Add tooltip with further details on the current state -->
-
-<div class="tp-version d-flex flex-row align-items-center gap-2">
+<div
+  class="tp-version tp-cursor-pointer d-flex flex-row align-items-center gap-2"
+  [ngbTooltip]="tooltip">
   <div class="tp-version-indicator tp-version-indicator-{{ value.state }}"></div>
   <span>v{{ value.current }}</span>
 </div>

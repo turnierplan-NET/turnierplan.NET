@@ -1,9 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { Language } from '../language';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'tp-language-selector',
-  imports: [],
+  imports: [NgbTooltip, TranslatePipe],
   templateUrl: './language-selector.html'
 })
 export class LanguageSelector {
