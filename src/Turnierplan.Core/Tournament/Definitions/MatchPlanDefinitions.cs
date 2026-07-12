@@ -83,7 +83,39 @@ public static class MatchPlanDefinitions
             g.Block(b => { b.Match(1, 6); b.Match(4, 7); b.Match(9, 5); b.Match(3, 8); });
         });
 
-        // Add finals definitions...
+        builder.Finals(1, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(2, 'A');
+        });
+
+        builder.Finals(2, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(1, 'B');
+        });
+
+        builder.Finals(1, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(4, 'A');
+            f.Match().Group(2, 'A').Against().Group(3, 'A');
+        });
+
+        builder.Finals(2, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(2, 'B');
+            f.Match().Group(1, 'B').Against().Group(2, 'A');
+        });
+
+        builder.Finals(3, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(1, 'B');
+            f.Match().Group(1, 'C').Against().NthRanked(1, 2);
+        });
+
+        builder.Finals(4, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(1, 'B');
+            f.Match().Group(1, 'C').Against().Group(1, 'D');
+        });
 
         (__groupMatchDefinitions, __finalsMatchDefinitions) = builder.Build();
     }
@@ -122,10 +154,25 @@ public static class MatchPlanDefinitions
 
             var builder = new GroupMatchDefinitionBuilder(teamCount);
             configure(builder);
+
             _groupMatchDefinitions[teamCount] = new GroupMatchDefinition(builder.Blocks);
         }
 
-        // Add builder methods here...
+        public void Finals(int groupCount, Action<FinalsMatchDefinitionBuilder> configure)
+        {
+            var builder = new FinalsMatchDefinitionBuilder(groupCount);
+            configure(builder);
+
+            var matches = builder.BuildMatches();
+            var key = (GroupCount: groupCount, MatchCount: matches.Length);
+
+            if (_finalsMatchDefinitions.ContainsKey(key))
+            {
+                throw new InvalidOperationException($"A finals match definition for {groupCount} groups and {matches.Length} matches already exists.");
+            }
+
+            _finalsMatchDefinitions[key] = new FinalsMatchDefinition(matches);
+        }
 
         public (IReadOnlyDictionary<int, GroupMatchDefinition> __groupMatchDefinitions, IReadOnlyDictionary<(int GroupCount, int MatchCount), FinalsMatchDefinition> __finalsMatchDefinitions) Build()
         {
@@ -174,6 +221,111 @@ public static class MatchPlanDefinitions
 
             // Subtract 1 so the caller can specify 1..n which is more intuitive than 0..(n-1)
             _matches.Add(new GroupMatchDefinition.MatchDefinition(teamA - 1, teamB - 1));
+        }
+    }
+
+    private sealed record FinalsMatchDefinitionBuilder
+    {
+        private readonly int _groupCount;
+        private readonly List<FinalsMatchDefinitionMatchBuilder> _matchBuilders = [];
+
+        public FinalsMatchDefinitionBuilder(int groupCount)
+        {
+            _groupCount = groupCount;
+        }
+
+        public FinalsMatchDefinitionMatchBuilder Match()
+        {
+            var builder = new FinalsMatchDefinitionMatchBuilder(_groupCount);
+            _matchBuilders.Add(builder);
+            return builder;
+        }
+
+        public ImmutableArray<FinalsMatchDefinition.MatchDefinition> BuildMatches()
+        {
+            return [.._matchBuilders.Select(x => x.Build())];
+        }
+    }
+
+    private sealed record FinalsMatchDefinitionMatchBuilder
+    {
+        private readonly int _groupCount;
+        private AbstractTeamSelector? _teamA, _teamB;
+        private bool _againstCalled;
+
+        public FinalsMatchDefinitionMatchBuilder(int groupCount)
+        {
+            _groupCount = groupCount;
+        }
+
+        public FinalsMatchDefinitionMatchBuilder Group(int position, char group)
+        {
+            var groupIndex = group - 'A';
+
+            if (groupIndex < 0 || groupIndex >= _groupCount)
+            {
+                throw new ArgumentException($"The group must be between 'A' and '{(char)('A' + _groupCount - 1)}'.");
+            }
+
+            SetOpponent(new AbstractTeamSelector(false, groupIndex, position, null));
+
+            return this;
+        }
+
+        public FinalsMatchDefinitionMatchBuilder NthRanked(int ordinal, int position)
+        {
+            if (ordinal < 1 || ordinal > _groupCount)
+            {
+                throw new ArgumentException($"The ordinal must be between 1 and the group count {_groupCount}.");
+            }
+
+            SetOpponent(new AbstractTeamSelector(false, null, position, ordinal));
+
+            return this;
+        }
+
+        public FinalsMatchDefinitionMatchBuilder Against()
+        {
+            if (_againstCalled)
+            {
+                throw new InvalidOperationException($"The '{nameof(Against)}()' method may only be called once.");
+            }
+
+            _againstCalled = true;
+
+            return this;
+        }
+
+        public FinalsMatchDefinition.MatchDefinition Build()
+        {
+            if (_teamA is null || _teamB is null)
+            {
+                throw new InvalidOperationException("One or both opponents are not defined.");
+            }
+
+            return new FinalsMatchDefinition.MatchDefinition(_teamA, _teamB);
+        }
+
+        private void SetOpponent(AbstractTeamSelector team)
+        {
+            if (_againstCalled)
+            {
+                if (_teamB is not null)
+                {
+                    throw new InvalidOperationException("Any of the two opponents may only be set once.");
+                }
+
+                _teamB = team;
+            }
+            else
+            {
+                if (_teamA is not null)
+                {
+                    throw new InvalidOperationException("Any of the two opponents may only be set once.");
+                }
+
+                _teamA = team;
+            }
         }
     }
 }
