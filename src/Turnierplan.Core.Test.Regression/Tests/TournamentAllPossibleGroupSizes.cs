@@ -43,7 +43,7 @@ internal sealed class TournamentAllPossibleGroupSizes : TournamentRegressionTest
         Step(AddAnotherTeam); // group with 9 teams
 
         // Adding another team throws an exception because there exists no config for 10 teams
-        ExceptionalStep<TurnierplanException>(AddAnotherTeam);
+        StepWithException<TurnierplanException>(AddAnotherTeam);
 
         return;
 

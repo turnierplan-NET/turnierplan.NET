@@ -49,7 +49,7 @@ internal abstract class RegressionTestBase<TSubject> : IRegressionTest
         return result;
     }
 
-    protected void ExceptionalStep<TException>(Action<TSubject> step)
+    protected void StepWithException<TException>(Action<TSubject> step)
         where TException : Exception
     {
         if (_subject is null)
@@ -73,7 +73,7 @@ internal abstract class RegressionTestBase<TSubject> : IRegressionTest
             throw new InvalidOperationException($"Expected the step to throw an exception of type '{typeof(TException).FullName}', but that did not happen.");
         }
 
-        AddExceptionalSaveState(exception);
+        AddSaveStateWithException(exception);
     }
 
     private void AddSaveState()
@@ -85,7 +85,7 @@ internal abstract class RegressionTestBase<TSubject> : IRegressionTest
         _builder.AppendSubject(_subject);
     }
 
-    private void AddExceptionalSaveState(Exception exception)
+    private void AddSaveStateWithException(Exception exception)
     {
         _builder.Append('[');
         _builder.Append(++_saveStateIndex);
