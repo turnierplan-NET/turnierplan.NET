@@ -1,0 +1,39 @@
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "web/**"
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-and-test-new-frontend:
+    name: 'Build & Test (new frontend)'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: 'Setup .NET SDK 10.x'
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.x'
+      - name: 'Setup Node.js 24.x'
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+      - name: 'Build .NET solution' # Required to generate OpenAPI files
+        run: 'dotnet build -c Release'
+        working-directory: './src'
+      - name: 'Install npm packages'
+        run: 'npm ci'
+        working-directory: './web/'
+      - name: 'Build client application'
+        run: 'npm run build'
+        working-directory: './web/'
+      - name: 'Lint client application'
+        run: 'npm run lint:ci'
+        working-directory: './web/'
+      - name: 'Test client application'
+        run: 'npm run test:ci'
+        working-directory: './web/'
