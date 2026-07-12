@@ -1,0 +1,9 @@
+<div tabindex="0" (click)="switchTheme()" (keyup.space)="switchTheme()">
+  @if (isDarkModeActive()) {
+    <i
+      class="tp-cursor-pointer bi bi-moon-stars"
+      [ngbTooltip]="'Theme.SwitchToLightMode' | translate"></i>
+  } @else {
+    <i class="tp-cursor-pointer bi bi-sun" [ngbTooltip]="'Theme.SwitchToDarkMode' | translate"></i>
+  }
+</div>

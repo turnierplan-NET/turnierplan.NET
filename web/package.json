@@ -1,0 +1,63 @@
+{
+  "name": "turnierplan-net",
+  "version": "2026.3.0",
+  "description": "The client application of turnierplan.NET",
+  "private": true,
+  "license": "AGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/turnierplan-NET/turnierplan.NET"
+  },
+  "scripts": {
+    "ng": "ng",
+    "gen:api": "ng-openapi-gen --input ../src/Turnierplan.App/obj/Turnierplan.App_turnierplan.json --output src/api --endOfLineStyle lf --enumStyle pascal --promises false --apiService TurnierplanApi --functionIndex \"\" --modelIndex \"\" && replace-in-file \"PublicId = any\" \"PublicId = string\" src/api/models/public-id.ts && replace-in-file \"/null/g\" \"undefined\" src/api/**/*",
+    "start": "npm run gen:api && ng serve --port 45002",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "test:ci": "ng test --watch=false",
+    "prettier": "prettier \"**/*.*css\" \"**/*.*js\" \"**/*.ts\" \"**/*.json\" \"**/*.html\"",
+    "lint": "ng lint --fix && npm run prettier -- --write",
+    "lint:ci": "ng lint && npm run prettier -- --check"
+  },
+  "packageManager": "npm@11.16.0",
+  "dependencies": {
+    "@angular/common": "~22.0.6",
+    "@angular/compiler": "~22.0.6",
+    "@angular/core": "~22.0.6",
+    "@angular/forms": "~22.0.6",
+    "@angular/platform-browser": "~22.0.6",
+    "@angular/router": "~22.0.6",
+    "@ng-bootstrap/ng-bootstrap": "~21.0.0",
+    "@ngx-translate/core": "~18.0.0",
+    "@ngx-translate/http-loader": "~18.0.0",
+    "@popperjs/core": "~2.11.8",
+    "bootstrap": "~5.3.8",
+    "bootstrap-icons": "~1.13.1",
+    "rxjs": "~7.8.2",
+    "tslib": "~2.8.1"
+  },
+  "devDependencies": {
+    "@angular/build": "~22.0.6",
+    "@angular/cli": "~22.0.6",
+    "@angular/compiler-cli": "~22.0.6",
+    "@angular/localize": "~22.0.6",
+    "@eslint/js": "~10.0.1",
+    "angular-eslint": "~22.0.0",
+    "eslint": "~10.7.0",
+    "jsdom": "~29.1.1",
+    "ng-openapi-gen": "~1.0.5",
+    "prettier": "~3.9.5",
+    "replace-in-file": "~8.4.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "~8.63.0",
+    "vitest": "~4.1.10"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "esbuild@0.27.7": true,
+    "@parcel/watcher@2.5.6": true,
+    "lmdb@3.5.4": true,
+    "msgpackr-extract@3.0.4": true
+  }
+}

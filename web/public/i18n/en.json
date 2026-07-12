@@ -1,0 +1,22 @@
+{
+  "ApplicationName": "turnierplan.NET",
+  "Language": {
+    "ToggleLanguage": "Switch language"
+  },
+  "Theme": {
+    "SwitchToLightMode": "Switch to light mode",
+    "SwitchToDarkMode": "Switch to dark mode"
+  },
+  "Version": {
+    "loading": "Loading release information...",
+    "error": "An error occurred while loading release information",
+    "up-to-date": "The installed version {{current}} is up to date",
+    "outdated": "There is a newer version available: {{latest}}",
+    "newer": "The installed version {{current}} is more recent than the latest release {{latest}}"
+  },
+  "Tmp": {
+    "Home": "Home",
+    "Organizations": "Organizations",
+    "Tournaments": "Tournaments"
+  }
+}
