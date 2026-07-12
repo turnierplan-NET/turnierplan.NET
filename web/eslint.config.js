@@ -22,7 +22,6 @@ module.exports = defineConfig([
     processor: angular.processInlineTemplates,
     rules: {
       'no-console': ['error'],
-      'max-classes-per-file': ['error'],
       '@angular-eslint/directive-selector': [
         'error',
         {
