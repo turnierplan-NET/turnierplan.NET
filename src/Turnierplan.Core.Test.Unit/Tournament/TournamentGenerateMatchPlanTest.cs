@@ -739,6 +739,66 @@ public sealed class TournamentGenerateMatchPlanTest
                 GroupRoundConfig = null,
                 FinalsRoundConfig = null
             }
+        },
+        {
+            "At least one group does not contain enough participants (present: 3, required: 4) for the pre-defined first finals round.",
+            [3],
+            new MatchPlanConfiguration
+            {
+                GroupRoundConfig = new GroupRoundConfig
+                {
+                    GroupMatchOrder = GroupMatchOrder.Alternating,
+                    GroupPhaseRounds = 1
+                },
+                FinalsRoundConfig = new FinalsRoundConfig
+                {
+                    FirstFinalsRoundOrder = FinalsRoundOrder.SemiFinals,
+                    EnableThirdPlacePlayoff = false,
+                    TeamSelectors = null,
+                    AdditionalPlayoffs = null
+                },
+                ScheduleConfig = null
+            }
+        },
+        {
+            "At least one group does not contain enough participants (present: 2, required: 3) for the pre-defined first finals round.",
+            [3, 3, 2],
+            new MatchPlanConfiguration
+            {
+                GroupRoundConfig = new GroupRoundConfig
+                {
+                    GroupMatchOrder = GroupMatchOrder.Alternating,
+                    GroupPhaseRounds = 1
+                },
+                FinalsRoundConfig = new FinalsRoundConfig
+                {
+                    FirstFinalsRoundOrder = FinalsRoundOrder.QuarterFinals,
+                    EnableThirdPlacePlayoff = false,
+                    TeamSelectors = null,
+                    AdditionalPlayoffs = null
+                },
+                ScheduleConfig = null
+            }
+        },
+        {
+            "At least one group does not contain enough participants (present: 3, required: 4) for the pre-defined first finals round.",
+            [4, 3],
+            new MatchPlanConfiguration
+            {
+                GroupRoundConfig = new GroupRoundConfig
+                {
+                    GroupMatchOrder = GroupMatchOrder.Alternating,
+                    GroupPhaseRounds = 1
+                },
+                FinalsRoundConfig = new FinalsRoundConfig
+                {
+                    FirstFinalsRoundOrder = FinalsRoundOrder.QuarterFinals,
+                    EnableThirdPlacePlayoff = false,
+                    TeamSelectors = null,
+                    AdditionalPlayoffs = null
+                },
+                ScheduleConfig = null
+            }
         }
     };
 
@@ -746,7 +806,7 @@ public sealed class TournamentGenerateMatchPlanTest
     /// the specified integer will be negated and that many teams will be created but without assigning them to a group.</remarks>
     [Theory]
     [MemberData(nameof(ValidTestData))]
-    public void Tournament___GenerateMatchPlan_With_Invalid_Config___Works_As_Expected(int[] teamsPerGroup, MatchPlanConfiguration configuration, MatchExpectation[] expectedMatchInfo)
+    public void Tournament___GenerateMatchPlan_With_Valid_Config___Works_As_Expected(int[] teamsPerGroup, MatchPlanConfiguration configuration, MatchExpectation[] expectedMatchInfo)
     {
         // Arrange
         var tournament = CreateTestTournament(teamsPerGroup);
