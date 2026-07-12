@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VersionIndicator } from './version-indicator';
+import { provideTranslateService } from '@ngx-translate/core';
 
 describe('VersionIndicator', () => {
   let component: VersionIndicator;
@@ -8,7 +9,8 @@ describe('VersionIndicator', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VersionIndicator]
+      imports: [VersionIndicator],
+      providers: [provideTranslateService()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(VersionIndicator);

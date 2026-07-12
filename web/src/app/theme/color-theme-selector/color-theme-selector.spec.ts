@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ColorThemeSelector } from './color-theme-selector';
+import { provideTranslateService } from '@ngx-translate/core';
 
 describe('ColorThemeSelector', () => {
   let component: ColorThemeSelector;
@@ -8,7 +9,8 @@ describe('ColorThemeSelector', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ColorThemeSelector]
+      imports: [ColorThemeSelector],
+      providers: [provideTranslateService()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ColorThemeSelector);
