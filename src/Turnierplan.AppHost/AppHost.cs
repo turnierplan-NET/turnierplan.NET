@@ -13,8 +13,6 @@ builder.AddProject<Turnierplan_App>("turnierplan-backend")
     .WithHttpHealthCheck("/health")
     .WithEnvironment("Database__ConnectionString", database.Resource.ConnectionStringExpression);
 
-var runClient = builder.Configuration.GetValue("TURNIERPLAN_ASPIRE_RUN_CLIENT", defaultValue: string.Empty);
-
 if (builder.Configuration.GetValue("TURNIERPLAN_ASPIRE_RUN_CLIENT", defaultValue: false))
 {
     builder.AddJavaScriptApp("turnierplan-client", "../Turnierplan.App/Client")
