@@ -18,6 +18,10 @@
   &.tp-version-indicator-outdated {
     background: var(--tp-version-indicator-outdated);
   }
+
+  &.tp-version-indicator-newer {
+    background: var(--tp-version-indicator-newer);
+  }
 }
 
 .tp-version {

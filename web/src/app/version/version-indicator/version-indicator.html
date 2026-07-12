@@ -1,4 +1,8 @@
+@let value = versionInfo();
+
+<!-- TODO: Add tooltip with further details on the current state -->
+
 <div class="tp-version d-flex flex-row align-items-center gap-2">
-  <div class="tp-version-indicator tp-version-indicator-{{ indicator() }}"></div>
-  <span>v{{ version() }}</span>
+  <div class="tp-version-indicator tp-version-indicator-{{ value.state }}"></div>
+  <span>v{{ value.current }}</span>
 </div>
