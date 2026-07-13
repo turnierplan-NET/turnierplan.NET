@@ -867,7 +867,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
                 throw new TurnierplanException($"At least one group does not contain enough participants (present: {lowestCount}, required: {definition.RequiredTeamsPerGroup}) for the pre-defined first finals round.");
             }
 
-            for (var i = 0; i < definition.Matches.Count; i++)
+            for (var i = 0; i < definition.Matches.Length; i++)
             {
                 var teamSelectorA = definition.Matches[i].TeamA;
                 var teamSelectorB = definition.Matches[i].TeamB;
@@ -1131,8 +1131,8 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
     private static TeamSelectorBase ConvertToSpecificInstance(AbstractTeamSelector abstractSelector, int[] groupIds)
     {
         return abstractSelector.IsNthRanked
-            ? new GroupResultsNthRankedSelector(groupIds, abstractSelector.OrdinalNumber!.Value, abstractSelector.PlacementRank)
-            : new GroupResultsSelector(groupIds[abstractSelector.GroupIndex!.Value], abstractSelector.PlacementRank);
+            ? new GroupResultsNthRankedSelector(groupIds, abstractSelector.OrdinalNumber.Value, abstractSelector.PlacementRank)
+            : new GroupResultsSelector(groupIds[abstractSelector.GroupIndex.Value], abstractSelector.PlacementRank);
     }
 
     private sealed class GroupMatchData

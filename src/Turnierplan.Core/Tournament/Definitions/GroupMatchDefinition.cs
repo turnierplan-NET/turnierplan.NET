@@ -4,14 +4,14 @@ namespace Turnierplan.Core.Tournament.Definitions;
 
 public sealed record GroupMatchDefinition
 {
-    public GroupMatchDefinition(IEnumerable<MatchBlock> matchBlocks)
+    public GroupMatchDefinition(ImmutableArray<MatchBlock> matchBlocks)
     {
-        MatchBlocks = matchBlocks.ToList();
+        MatchBlocks = matchBlocks;
     }
 
-    public IReadOnlyList<MatchBlock> MatchBlocks { get; }
+    public ImmutableArray<MatchBlock> MatchBlocks { get; }
 
-    public int BlockCount => MatchBlocks.Count;
+    public int BlockCount => MatchBlocks.Length;
 
     public sealed record MatchBlock(ImmutableArray<MatchDefinition> Matches);
 

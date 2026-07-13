@@ -6,13 +6,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Tournament/Definitions/FinalsMatchDefinitions.json">
-      <LogicalName>Definitions.FinalsMatchDefinitions.json</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Tournament/Definitions/GroupMatchDefinitions.json">
-      <LogicalName>Definitions.GroupMatchDefinitions.json</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
 </Project>
