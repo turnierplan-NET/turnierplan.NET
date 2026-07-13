@@ -157,6 +157,22 @@ public static class MatchPlanDefinitions
             f.Match().Group(1, 'F').Against().NthRanked(2, 2);
         });
 
+        builder.Finals(7, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(1, 'B');
+            f.Match().Group(1, 'C').Against().Group(1, 'D');
+            f.Match().Group(1, 'E').Against().Group(1, 'F');
+            f.Match().Group(1, 'G').Against().NthRanked(2, 1);
+        });
+
+        builder.Finals(8, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(1, 'B');
+            f.Match().Group(1, 'C').Against().Group(1, 'D');
+            f.Match().Group(1, 'E').Against().Group(1, 'F');
+            f.Match().Group(1, 'G').Against().Group(1, 'H');
+        });
+
         (__groupMatchDefinitions, __finalsMatchDefinitions) = builder.Build();
     }
 
