@@ -103,7 +103,7 @@ public sealed class MatchPlanDefinitionsTest
         var definitions = MatchPlanDefinitions.GetAllFinalsMatchDefinitions().ToList();
 
         // Assert
-        definitions.Should().HaveCount(11);
+        definitions.Should().HaveCount(18);
     }
 
     [Fact]
@@ -147,5 +147,48 @@ public sealed class MatchPlanDefinitionsTest
             new FinalsMatchDefinition.MatchDefinition(new AbstractTeamSelector(false, 3, 1, null), new AbstractTeamSelector(true, null, 2, 1)),
             new FinalsMatchDefinition.MatchDefinition(new AbstractTeamSelector(false, 4, 1, null), new AbstractTeamSelector(true, null, 2, 2))
         ]));
+    }
+
+    [Fact]
+    public void MatchPlanDefinitions___All_Finals_Match_Definitions___Contain_The_Expected_Teams()
+    {
+        foreach (var (groupCount, matchCount, definition) in MatchPlanDefinitions.GetAllFinalsMatchDefinitions())
+        {
+            var expectedTeams = new List<AbstractTeamSelector>();
+            var teamCount = matchCount * 2;
+            var currentPlacementRank = 1;
+
+            while (expectedTeams.Count < teamCount)
+            {
+                var missingTeamCount = teamCount - expectedTeams.Count;
+
+                if (missingTeamCount >= groupCount)
+                {
+                    // Insert the next rank from every group
+                    for (var i = 0; i < groupCount; i++)
+                    {
+                        expectedTeams.Add(new AbstractTeamSelector(false, i, currentPlacementRank, null));
+                    }
+
+                    currentPlacementRank++;
+                }
+                else
+                {
+                    // Insert n-th ranked selectors until team count is reached
+                    for (var i = 0; i < missingTeamCount; i++)
+                    {
+                        expectedTeams.Add(new AbstractTeamSelector(true, null, currentPlacementRank, i));
+                    }
+                }
+            }
+
+            var teams = definition.Matches.SelectMany(x => new[] { x.TeamA, x.TeamB }).ToList();
+            teams.Should().HaveCount(expectedTeams.Count);
+
+            foreach (var expectedTeam in expectedTeams)
+            {
+                teams.Should().ContainEquivalentOf(expectedTeam, because: $"finals match definition for {groupCount} groups and {matchCount} matches must be consistent");
+            }
+        }
     }
 }
