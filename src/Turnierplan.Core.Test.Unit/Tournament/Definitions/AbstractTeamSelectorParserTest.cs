@@ -7,7 +7,7 @@ namespace Turnierplan.Core.Test.Unit.Tournament.Definitions;
 
 public sealed class AbstractTeamSelectorParserTest
 {
-    public static readonly TheoryData<string, object> ParseAbstractTeamSelectorTestData = new()
+    public static readonly TheoryData<string, AbstractTeamSelector> ParseAbstractTeamSelectorTestData = new()
     {
         { "1.0", new AbstractTeamSelector(false, 0, 1, null) },
         { "2.0", new AbstractTeamSelector(false, 0, 2, null) },
@@ -23,16 +23,10 @@ public sealed class AbstractTeamSelectorParserTest
 
     [Theory]
     [MemberData(nameof(ParseAbstractTeamSelectorTestData))]
-    public void AbstractTeamSelectorParser___Parse_Valid_Abstract_Team_Selector___Works_As_Expected(string input, object expected)
+    public void AbstractTeamSelectorParser___Parse_Valid_Abstract_Team_Selector___Works_As_Expected(string input, AbstractTeamSelector expected)
     {
-        // Arrange
-        var expectedTeamSelector = (AbstractTeamSelector)expected;
-
-        // Act
         var parsed = AbstractTeamSelectorParser.ParseAbstractTeamSelector(input);
-
-        // Assert
-        parsed.Should().BeEquivalentTo(expectedTeamSelector);
+        parsed.Should().BeEquivalentTo(expected);
     }
 
     [Theory]
@@ -45,10 +39,7 @@ public sealed class AbstractTeamSelectorParserTest
     [InlineData("0C2")]
     public void AbstractTeamSelectorParser___Parse_Invalid_Abstract_Team_Selector___Throws_Exception(string input)
     {
-        // Act
         var func = void () => AbstractTeamSelectorParser.ParseAbstractTeamSelector(input);
-
-        // Assert
         func.Should().ThrowExactly<TurnierplanException>().WithMessage($"The abstract team selector '{input}' is not valid.");
     }
 }
