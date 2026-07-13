@@ -67,5 +67,13 @@
     "replace-in-file": "~8.4.0",
     "ts-node": "~10.9.2",
     "typescript": "~5.9.3"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.5.6": true,
+    "core-js@3.49.0": true,
+    "esbuild@0.28.0": true,
+    "esbuild@0.27.7": true,
+    "lmdb@3.4.2": true,
+    "msgpackr-extract@3.0.4": true
   }
 }
