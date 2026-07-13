@@ -1,4 +1,5 @@
-﻿using Turnierplan.Core.Tournament.TeamSelectors;
+﻿using System.Diagnostics.CodeAnalysis;
+using Turnierplan.Core.Tournament.TeamSelectors;
 
 namespace Turnierplan.Core.Tournament.Definitions;
 
@@ -25,6 +26,8 @@ public sealed record AbstractTeamSelector
         OrdinalNumber = ordinalNumber;
     }
 
+    [MemberNotNullWhen(true, nameof(OrdinalNumber))]
+    [MemberNotNullWhen(false, nameof(GroupIndex))]
     public bool IsNthRanked { get; }
 
     public int? GroupIndex { get; }
