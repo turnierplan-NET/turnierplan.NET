@@ -36,14 +36,27 @@ internal sealed class TournamentAllPossibleFinalsPhases : TournamentRegressionTe
         Step(AddAnotherGroup);
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.SemiFinals));
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.QuarterFinals));
+        Step(t => GenerateMatchPlan(t, FinalsRoundOrder.EighthFinals));
 
         // -- 5 groups --
         Step(AddAnotherGroup);
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.QuarterFinals));
+        Step(t => GenerateMatchPlan(t, FinalsRoundOrder.EighthFinals));
 
         // -- 6 groups --
         Step(AddAnotherGroup);
         Step(t => GenerateMatchPlan(t, FinalsRoundOrder.QuarterFinals));
+        Step(t => GenerateMatchPlan(t, FinalsRoundOrder.EighthFinals));
+
+        // -- 7 groups --
+        Step(AddAnotherGroup);
+        Step(t => GenerateMatchPlan(t, FinalsRoundOrder.QuarterFinals));
+        Step(t => GenerateMatchPlan(t, FinalsRoundOrder.EighthFinals));
+
+        // -- 8 groups --
+        Step(AddAnotherGroup);
+        Step(t => GenerateMatchPlan(t, FinalsRoundOrder.QuarterFinals));
+        Step(t => GenerateMatchPlan(t, FinalsRoundOrder.EighthFinals));
 
         return;
 
