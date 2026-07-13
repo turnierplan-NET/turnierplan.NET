@@ -157,6 +157,87 @@ public static class MatchPlanDefinitions
             f.Match().Group(1, 'F').Against().NthRanked(2, 2);
         });
 
+        builder.Finals(7, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(1, 'B');
+            f.Match().Group(1, 'C').Against().Group(1, 'D');
+            f.Match().Group(1, 'E').Against().Group(1, 'F');
+            f.Match().Group(1, 'G').Against().NthRanked(1, 2);
+        });
+
+        builder.Finals(8, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(1, 'B');
+            f.Match().Group(1, 'C').Against().Group(1, 'D');
+            f.Match().Group(1, 'E').Against().Group(1, 'F');
+            f.Match().Group(1, 'G').Against().Group(1, 'H');
+        });
+
+        builder.Finals(4, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(4, 'C');
+            f.Match().Group(1, 'B').Against().Group(4, 'D');
+            f.Match().Group(1, 'C').Against().Group(4, 'A');
+            f.Match().Group(1, 'D').Against().Group(4, 'B');
+
+            f.Match().Group(2, 'A').Against().Group(3, 'C');
+            f.Match().Group(2, 'B').Against().Group(3, 'D');
+            f.Match().Group(2, 'C').Against().Group(3, 'A');
+            f.Match().Group(2, 'D').Against().Group(3, 'B');
+        });
+
+        builder.Finals(5, f =>
+        {
+            f.Match().Group(1, 'A').Against().NthRanked(1, 4);
+            f.Match().Group(1, 'B').Against().Group(3, 'E');
+            f.Match().Group(1, 'C').Against().Group(3, 'A');
+            f.Match().Group(1, 'D').Against().Group(3, 'B');
+
+            f.Match().Group(1, 'E').Against().Group(3, 'D');
+            f.Match().Group(2, 'A').Against().Group(3, 'C');
+            f.Match().Group(2, 'B').Against().Group(2, 'D');
+            f.Match().Group(2, 'C').Against().Group(2, 'E');
+        });
+
+        builder.Finals(6, f =>
+        {
+            f.Match().Group(1, 'A').Against().NthRanked(1, 3);
+            f.Match().Group(1, 'B').Against().NthRanked(2, 3);
+            f.Match().Group(1, 'C').Against().NthRanked(3, 3);
+            f.Match().Group(1, 'D').Against().NthRanked(4, 3);
+
+            f.Match().Group(1, 'E').Against().Group(2, 'B');
+            f.Match().Group(1, 'F').Against().Group(2, 'A');
+            f.Match().Group(2, 'C').Against().Group(2, 'E');
+            f.Match().Group(2, 'D').Against().Group(2, 'F');
+        });
+
+        builder.Finals(7, f =>
+        {
+            f.Match().Group(1, 'A').Against().NthRanked(1, 3);
+            f.Match().Group(1, 'B').Against().NthRanked(2, 3);
+            f.Match().Group(1, 'C').Against().Group(2, 'F');
+            f.Match().Group(1, 'D').Against().Group(2, 'G');
+
+            f.Match().Group(1, 'E').Against().Group(2, 'B');
+            f.Match().Group(1, 'F').Against().Group(2, 'C');
+            f.Match().Group(1, 'G').Against().Group(2, 'D');
+            f.Match().Group(2, 'A').Against().Group(2, 'E');
+        });
+
+        builder.Finals(8, f =>
+        {
+            f.Match().Group(1, 'A').Against().Group(2, 'H');
+            f.Match().Group(1, 'B').Against().Group(2, 'G');
+            f.Match().Group(1, 'C').Against().Group(2, 'F');
+            f.Match().Group(1, 'D').Against().Group(2, 'E');
+
+            f.Match().Group(1, 'E').Against().Group(2, 'D');
+            f.Match().Group(1, 'F').Against().Group(2, 'C');
+            f.Match().Group(1, 'G').Against().Group(2, 'B');
+            f.Match().Group(1, 'H').Against().Group(2, 'A');
+        });
+
         (__groupMatchDefinitions, __finalsMatchDefinitions) = builder.Build();
     }
 
