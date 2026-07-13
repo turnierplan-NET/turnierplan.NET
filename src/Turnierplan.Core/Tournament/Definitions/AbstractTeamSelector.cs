@@ -20,6 +20,27 @@ public sealed record AbstractTeamSelector
     /// </remarks>
     internal AbstractTeamSelector(bool isNthRanked, int? groupIndex, int placementRank, int? ordinalNumber)
     {
+        if (isNthRanked)
+        {
+            if (groupIndex is not null || ordinalNumber is null)
+            {
+                throw new ArgumentException($"If '{nameof(isNthRanked)}' is true, '{nameof(groupIndex)}' must be null and '{nameof(ordinalNumber)}' must be non-null.");
+            }
+
+            ArgumentOutOfRangeException.ThrowIfLessThan(placementRank, 1);
+            ArgumentOutOfRangeException.ThrowIfLessThan(ordinalNumber.Value, 0);
+        }
+        else
+        {
+            if (groupIndex is null || ordinalNumber is not null)
+            {
+                throw new ArgumentException($"If '{nameof(isNthRanked)}' is false, '{nameof(groupIndex)}' must be non-null and '{nameof(ordinalNumber)}' must be null.");
+            }
+
+            ArgumentOutOfRangeException.ThrowIfLessThan(placementRank, 1);
+            ArgumentOutOfRangeException.ThrowIfLessThan(groupIndex.Value, 0);
+        }
+
         IsNthRanked = isNthRanked;
         GroupIndex = groupIndex;
         PlacementRank = placementRank;
