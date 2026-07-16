@@ -1,56 +1,95 @@
+using Turnierplan.Core.Entity;
+
 namespace Turnierplan.Core.ResourcePlanner;
 
-public sealed class Column
+public sealed class ResourceGroup : Entity<long>
 {
-    // - Type => "Day" or "General"
-    // - OrderIndex
-    // - Name (optional)
-    // - Description (optional)
+    // todo: List<ResourceAssignment> ResourceAssignments = [];
+    // todo: List<ExternalViewAssignment> ExternalViewAssignment = [];
 
-    // if type == "Day":
-    // - Date (yyyy/mm/dd)
+    public override long Id { get; protected set; }
 
-    List<Group> Groups = [];
+    public ResourcePlanner ResourcePlanner { get; internal set; } = null!;
+
+    public ResourceGroupType Type { get; }
+
+    public DateTime? Start { get; } // only for type=shift
+
+    public DateTime? End { get; } // only for type=shift
+
+    public string Name { get; } // mandatory for type=general
+
+    public string Description { get; } // can be empty?
 }
 
-public sealed class Group
+public enum ResourceGroupType
 {
-    // - Type => "Shift" or "General"
-    // - Name (optional / mandatory if type == "General")
-    // - Description (optional)
+    // Note: Don't change enum values (DB serialization)
 
-    // if type == "Shift":
-    //  - Start Timestamp
-    //  - End Timestamp
-
-    List<ResourceAssignment> ResourceAssignments = [];
-    List<ExternalViewAssignment> ExternalViewAssignment = [];
+    Shift = 1, // todo: name?
+    General = 2, // todo: name?
+    // ...todo: others?
 }
 
-public sealed class Resource
+public sealed class Resource : Entity<long>
 {
-    // - Type => "Personnel" or "Commodity"
-    // - Name
-    // - Description/Notes (optional)
+    public override long Id { get; protected set; }
+
+    public ResourcePlanner ResourcePlanner { get; internal set; } = null!;
+
+    public ResourceType Type { get; }
+
+    public string Name { get; }
+
+    public string Notes { get; } // can be empty?
 }
 
-public sealed class ResourceAssignment
+public enum ResourceType
 {
-    // - State => "Proposed" / "Requested" / "Confirmed" / "..." [custom?]
+    // Note: Don't change enum values (DB serialization)
 
-    Group Group;
-    Resource Resource;
+    Personnel = 1, // todo: name?
+    Commodity = 2, // todo: name?
+    // ...todo: others?
 }
 
-public sealed class ExternalView
+public sealed class ResourceAssignment // analogous to group participant
 {
-    // - Public ID (for externally visible URL)
-    // - IsEnabled (display 404 externally when false)
-    // - DisplayAllGroups (if false, assigned groups are configured via Group.ExternalViewAssignments)
+    public ResourceGroup ResourceGroup { get; internal set; } = null!;
+
+    public Resource Resource { get; internal set; } = null!;
+
+    public ResourceAssignmentState State { get; }
 }
 
-public sealed class ExternalViewAssignment
+public enum ResourceAssignmentState
 {
-    Group Group;
-    ExternalView ExternalView;
+    Proposed = 1,
+    Requested = 2,
+    Confirmed = 3,
+    // ...todo: others?
+}
+
+public sealed class ResourcePlannerView : Entity<long>
+{
+    public override long Id { get; protected set; }
+
+    public PublicId.PublicId PublicId { get; } // (for externally visible URL)
+
+    public ResourcePlanner ResourcePlanner { get; internal set; } = null!;
+
+    public bool IsActive { get; set; } // (display 404 externally when false)
+
+    public bool DisplayAllGroups { get; set; } // (if false, assigned groups are configured via Group.ExternalViewAssignments)
+
+    // todo: Valid until?
+    // todo: Primary/Secondary Images?
+}
+
+// maybe not necessary if no further properties are needed... then EF can implicitly create the join table
+public sealed class ExternalViewAssignment // analogous to group participant
+{
+    public ResourcePlannerView View { get; internal set; } = null!;
+
+    public ResourceGroup ResourceGroup { get; internal set; } = null!;
 }
