@@ -6,6 +6,8 @@ namespace Turnierplan.Core.ResourcePlanner;
 public sealed class ResourcePlanner : Entity<long>, IEntityWithRoleAssignments<ResourcePlanner>, IEntityWithOrganization
 {
     internal readonly List<RoleAssignment<ResourcePlanner>> _roleAssignments = [];
+    internal readonly List<ResourceGroup> _resourceGroups = [];
+    internal readonly List<ResourcePlannerView> _resourcePlannerViews = [];
 
     public ResourcePlanner(Organization.Organization organization, string name)
     {
@@ -34,6 +36,10 @@ public sealed class ResourcePlanner : Entity<long>, IEntityWithRoleAssignments<R
 
     public IReadOnlyList<RoleAssignment<ResourcePlanner>> RoleAssignments => _roleAssignments.AsReadOnly();
 
+    public IReadOnlyList<ResourceGroup> ResourceGroups => _resourceGroups.AsReadOnly();
+
+    public IReadOnlyList<ResourcePlannerView> ResourcePlannerViews => _resourcePlannerViews.AsReadOnly();
+
     public DateTime CreatedAt { get; }
 
     public string Name { get; }
@@ -49,5 +55,31 @@ public sealed class ResourcePlanner : Entity<long>, IEntityWithRoleAssignments<R
     public void RemoveRoleAssignment(RoleAssignment<ResourcePlanner> roleAssignment)
     {
         _roleAssignments.Remove(roleAssignment);
+    }
+
+    public ResourceGroup AddResourceGroup(string? name, string? description, ResourceGroupType type, DateTime? start, DateTime? end)
+    {
+        var resourceGroup = new ResourceGroup(this, name, description, type, start, end);
+        _resourceGroups.Add(resourceGroup);
+
+        return resourceGroup;
+    }
+
+    public void RemoveResourceGroup(ResourceGroup resourceGroup)
+    {
+        _resourceGroups.Remove(resourceGroup);
+    }
+
+    public ResourcePlannerView AddResourcePlannerView(bool isActive, bool displayAllGroups)
+    {
+        var view = new ResourcePlannerView(this, isActive, displayAllGroups);
+        _resourcePlannerViews.Add(view);
+
+        return view;
+    }
+
+    public void RemoveResourcePlannerView(ResourcePlannerView resourcePlannerView)
+    {
+        _resourcePlannerViews.Remove(resourcePlannerView);
     }
 }
