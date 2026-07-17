@@ -22,18 +22,32 @@ public sealed class ResourcePlannerEntityTypeConfiguration : IEntityTypeConfigur
         builder.HasIndex(x => x.PublicId)
             .IsUnique();
 
-        builder.HasMany(x => x.RoleAssignments)
-            .WithOne(x => x.Scope)
-            .HasForeignKey("ResourcePlannerId")
-            .OnDelete(DeleteBehavior.Cascade)
-            .IsRequired();
-
         builder.Property(x => x.CreatedAt)
             .IsRequired();
 
         builder.Property(x => x.Name)
             .IsRequired();
 
+        builder.HasMany(x => x.RoleAssignments)
+            .WithOne(x => x.Scope)
+            .HasForeignKey("ResourcePlannerId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
+        builder.HasMany(x => x.ResourceGroups)
+            .WithOne(x => x.ResourcePlanner)
+            .HasForeignKey("ResourcePlannerId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
+        builder.HasMany(x => x.ResourcePlannerViews)
+            .WithOne(x => x.ResourcePlanner)
+            .HasForeignKey("ResourcePlannerId")
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
+
         builder.Metadata.FindNavigation(nameof(ResourcePlanner.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(ResourcePlanner.ResourceGroups))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(ResourcePlanner.ResourcePlannerViews))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }
