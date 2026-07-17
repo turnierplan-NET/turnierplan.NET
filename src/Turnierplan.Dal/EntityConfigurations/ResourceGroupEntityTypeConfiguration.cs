@@ -28,7 +28,7 @@ internal sealed class ResourceGroupEntityTypeConfiguration : IEntityTypeConfigur
 
         builder.HasMany(x => x.ResourceAssignments)
             .WithOne(x => x.ResourceGroup)
-            .HasForeignKey("ResourcePlannerId", "ResourceGroupId")
+            .HasForeignKey("ResourceGroupId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 

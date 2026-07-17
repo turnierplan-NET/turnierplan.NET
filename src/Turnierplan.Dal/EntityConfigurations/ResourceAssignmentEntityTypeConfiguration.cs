@@ -10,7 +10,7 @@ internal sealed class ResourceAssignmentEntityTypeConfiguration : IEntityTypeCon
     {
         builder.ToTable("ResourceAssignments", TurnierplanContext.Schema);
 
-        builder.HasKey("ResourcePlannerId", "ResourceGroupId", "ResourceId");
+        builder.HasKey("ResourceGroupId", "ResourceId");
 
         builder.Property(x => x.State)
             .IsRequired();

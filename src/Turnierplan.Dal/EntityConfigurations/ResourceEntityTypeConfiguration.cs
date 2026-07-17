@@ -25,7 +25,7 @@ internal sealed class ResourceEntityTypeConfiguration : IEntityTypeConfiguration
 
         builder.HasMany<ResourceAssignment>()
             .WithOne(x => x.Resource)
-            .HasForeignKey("ResourcePlannerId", "ResourceId")
+            .HasForeignKey("ResourceId")
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
     }
