@@ -8,12 +8,25 @@ import { ActivatedRoute } from '@angular/router';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { TitleService } from '../../services/title.service';
 import { getResourcePlanner } from '../../../api/fn/resource-planners/get-resource-planner';
+import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
+import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
+import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
+import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
 
 @Component({
-  imports: [PageFrameComponent, LoadingStateDirective],
+  imports: [
+    PageFrameComponent,
+    LoadingStateDirective,
+    RenameButtonComponent,
+    DeleteWidgetComponent,
+    IsActionAllowedDirective,
+    RbacWidgetComponent
+  ],
   templateUrl: './view-resource-planner.component.html'
 })
 export class ViewResourcePlannerComponent {
+  protected readonly Actions = Actions;
+
   protected loadingState: LoadingState = { isLoading: true };
   protected resourcePlanner?: ResourcePlannerDto;
 
@@ -22,12 +35,12 @@ export class ViewResourcePlannerComponent {
     {
       id: 0,
       title: 'Portal.ViewResourcePlanner.Pages.Resources',
-      icon: 'bi-x-diamond'
+      icon: 'bi-box-seam'
     },
     {
       id: 1,
       title: 'Portal.ViewResourcePlanner.Pages.Views',
-      icon: 'bi-tags'
+      icon: 'bi-display'
     },
     {
       id: 2,
@@ -78,5 +91,13 @@ export class ViewResourcePlannerComponent {
 
   protected togglePage(number: number): void {
     this.currentPage = number;
+  }
+
+  protected renameResourcePlanner(name: string): void {
+    alert('Rename not implemented yet'); // TODO: Implement
+  }
+
+  protected deleteResourcePlanner(): void {
+    alert('Delete not implemented yet'); // TODO: Implement
   }
 }

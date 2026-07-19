@@ -1007,8 +1007,26 @@ export const de = {
     ViewResourcePlanner: {
       Pages: {
         Resources: 'Ressourcen',
-        Views: 'Views',
+        Views: 'Ansichten',
         Settings: 'Einstellungen'
+      },
+      Settings: {
+        Rename: {
+          Button: 'Umbenennen',
+          Title: 'Helferliste umbenennen',
+          EnterNewName: 'Geben Sie den neuen Namen für die Helferliste ein:'
+        }
+      },
+      RbacWidget: {
+        Info: 'Verwalten Sie, welche Nutzer auf diese Helferliste zugreifen können und welche Aktionen sie durchführen können.'
+      },
+      DeleteWidget: {
+        Title: 'Helferliste löschen',
+        Info: 'Wenn Sie eine Helferliste löschen, werden alle gespeicherten Ressourcen ebenfalls gelöscht.',
+        SuccessToast: {
+          Title: 'Helferliste wurde gelöscht',
+          Message: 'Ihre Helferliste wurde gelöscht.'
+        }
       }
     },
     ViewTournamentPlanner: {
