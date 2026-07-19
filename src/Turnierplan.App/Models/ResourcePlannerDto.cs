@@ -12,15 +12,9 @@ public sealed record ResourcePlannerDto
 
     public required string Name { get; init; }
 
-    // groups
-    // views
-}
+    public required ResourceDto[] Resources { get; init; }
 
-public sealed record ResourcePlannerHeaderDto
-{
-    public required PublicId Id { get; init; }
+    public required ResourceGroupDto[] ResourceGroups { get; init; }
 
-    public required PublicId OrganizationId { get; init; }
-
-    public required string Name { get; init; }
+    public required ResourcePlannerViewDto[] Views { get; init; }
 }
