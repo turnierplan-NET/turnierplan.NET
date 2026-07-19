@@ -4,6 +4,7 @@ using Turnierplan.Core.Entity;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.ResourcePlanner;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.TournamentPlanner;
@@ -103,6 +104,7 @@ internal sealed class AccessValidator : IAccessValidator
             ApiKey apiKey => IsActionAllowed(apiKey.Organization, action, principal),
             Image image => IsActionAllowed(image.Organization, action, principal),
             Folder folder => IsActionAllowed(folder.Organization, action, principal),
+            ResourcePlanner resourcePlanner => IsActionAllowed(resourcePlanner.Organization, action, principal),
             TournamentPlanner tournamentPlanner => IsActionAllowed(tournamentPlanner.Organization, action, principal),
             Tournament tournament => (tournament.Folder is not null && IsActionAllowed(tournament.Folder, action, principal)) || IsActionAllowed(tournament.Organization, action, principal),
             Venue venue => IsActionAllowed(venue.Organization, action, principal),
@@ -125,6 +127,9 @@ internal sealed class AccessValidator : IAccessValidator
                 break;
             case Folder folder:
                 AddAvailableRoles(folder.Organization, rolesList, principal);
+                break;
+            case ResourcePlanner resourcePlanner:
+                AddAvailableRoles(resourcePlanner.Organization, rolesList, principal);
                 break;
             case TournamentPlanner tournamentPlanner:
                 AddAvailableRoles(tournamentPlanner.Organization, rolesList, principal);
