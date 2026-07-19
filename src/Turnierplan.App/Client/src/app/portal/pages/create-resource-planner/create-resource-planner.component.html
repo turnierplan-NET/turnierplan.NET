@@ -1,0 +1,36 @@
+﻿<tp-page-frame
+  *tpLoadingState="loadingState"
+  [ultraSlim]="true"
+  [title]="'Portal.CreateResourcePlanner.Title' | translate"
+  [backLink]="'../..'">
+  <label for="create_resource_planner_name" class="form-label" translate="Portal.CreateResourcePlanner.Form.Name"></label>
+  <input
+    id="create_resource_planner_name"
+    type="text"
+    class="form-control"
+    [formControl]="resourcePlannerName"
+    [required]="true"
+    [minlength]="1"
+    [ngClass]="resourcePlannerName.dirty || resourcePlannerName.touched ? (resourcePlannerName.invalid ? 'is-invalid' : 'is-valid') : ''" />
+  <div class="invalid-feedback" translate="Portal.CreateResourcePlanner.Form.NameInvalid"></div>
+  <div class="valid-feedback" translate="Portal.CreateResourcePlanner.Form.NameValid"></div>
+
+  <hr />
+
+  <div class="form-text d-flex flex-row align-items-center">
+    <i class="bi bi-info-circle"></i>
+    <span
+      class="ms-2"
+      [innerHTML]="'Portal.CreateResourcePlanner.OrganizationNotice' | translate: { organizationName: organization?.name }"></span>
+  </div>
+
+  <hr />
+
+  <div class="d-flex flex-row justify-content-end">
+    <tp-action-button
+      [type]="'success'"
+      [title]="'Portal.CreateResourcePlanner.Submit'"
+      [disabled]="resourcePlannerName.invalid"
+      (buttonClick)="confirmButtonClicked()" />
+  </div>
+</tp-page-frame>

@@ -1,0 +1,69 @@
+<ng-container *tpLoadingState="loadingState">
+  @if (resourcePlanner) {
+    <tp-page-frame
+      #pageFrame
+      [title]="resourcePlanner.name"
+      [backLink]="'../../organization/' + resourcePlanner.organizationId"
+      [navigationTabs]="pages"
+      [contextEntityId]="resourcePlanner.id"
+      [rememberNavigationTab]="true"
+      (navigationTabSelected)="togglePage($event.id)">
+      <ng-template #buttons>
+        @switch (currentPage) {
+          @case (0) {
+            <!-- Resources page -->
+          }
+          @case (1) {
+            <!-- Views page -->
+          }
+          @case (2) {
+            <!-- Settings page -->
+            <tp-rename-button
+              translationKey="Portal.ViewResourcePlanner.Settings.Rename"
+              [current]="resourcePlanner.name"
+              (renamed)="renameResourcePlanner($event)" />
+          }
+        }
+      </ng-template>
+
+      <ng-template #mainContent>
+        <!-- Resources page does not need the div since it uses full-width content exlusively. -->
+        @if (currentPage !== 0) {
+          <div class="card">
+            @switch (currentPage) {
+              @case (1) {
+                <!-- Views page -->
+                views
+              }
+              @case (2) {
+                <!-- Settings page -->
+                <ng-container *tpIsActionAllowed="[resourcePlanner.id, Actions.ReadOrWriteRoleAssignments]">
+                  <div class="card-body">
+                    <tp-rbac-widget
+                      [translationKey]="'Portal.ViewResourcePlanner.RbacWidget'"
+                      [target]="resourcePlanner"
+                      (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+                  </div>
+                  <hr class="m-0" />
+                </ng-container>
+                <div class="card-body">
+                  <tp-delete-widget
+                    [translationKey]="'Portal.ViewResourcePlanner.DeleteWidget'"
+                    [targetObjectName]="resourcePlanner.name"
+                    (deleteClick)="deleteResourcePlanner()" />
+                </div>
+              }
+            }
+          </div>
+        }
+      </ng-template>
+
+      <ng-template #fullWidthContent>
+        @if (currentPage === 0) {
+          <!-- Resources page -->
+          resources
+        }
+      </ng-template>
+    </tp-page-frame>
+  }
+</ng-container>

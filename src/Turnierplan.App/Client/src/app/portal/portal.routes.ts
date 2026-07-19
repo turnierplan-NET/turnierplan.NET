@@ -19,6 +19,8 @@ import { ConfigureTournamentComponent } from './pages/configure-tournament/confi
 import { EditMatchPlanComponent } from './pages/edit-match-plan/edit-match-plan.component';
 import { ViewVenueComponent } from './pages/view-venue/view-venue.component';
 import { UploadImageComponent } from './pages/upload-image/upload-image.component';
+import { CreateResourcePlannerComponent } from './pages/create-resource-planner/create-resource-planner.component';
+import { ViewResourcePlannerComponent } from './pages/view-resource-planner/view-resource-planner.component';
 
 export const portalRoutes: Routes = [
   {
@@ -62,6 +64,10 @@ export const portalRoutes: Routes = [
         }
       },
       {
+        path: 'organization/:id/create/resource-planner',
+        component: CreateResourcePlannerComponent
+      },
+      {
         path: 'organization/:id/create/tournament-planner',
         component: CreateTournamentPlannerComponent
       },
@@ -78,6 +84,10 @@ export const portalRoutes: Routes = [
         redirectTo: (data): string => {
           return `tournament-planner/${data.params['id']}`;
         }
+      },
+      {
+        path: 'resource-planner/:id',
+        component: ViewResourcePlannerComponent
       },
       {
         path: 'tournament-planner/:id',
