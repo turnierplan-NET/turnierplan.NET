@@ -67,6 +67,18 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<Organization> Organizations { get; set; } = null!;
 
+    public DbSet<ResourceAssignment> ResourceAssignments { get; set; } = null!;
+
+    public DbSet<Resource> Resources { get; set; } = null!;
+
+    public DbSet<ResourceGroup> ResourceGroups { get; set; } = null!;
+
+    public DbSet<ResourcePlanner> ResourcePlanners { get; set; } = null!;
+
+    public DbSet<RoleAssignment<ResourcePlanner>> ResourcePlannerRoleAssignments { get; set; } = null!;
+
+    public DbSet<ResourcePlannerView> ResourcePlannerViews { get; set; } = null!;
+
     public DbSet<RoleAssignment<Organization>> OrganizationRoleAssignments { get; set; } = null!;
 
     public DbSet<TournamentPlanner> TournamentPlanners { get; set; } = null!;
