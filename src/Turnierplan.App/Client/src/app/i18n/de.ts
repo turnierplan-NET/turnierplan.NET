@@ -1004,6 +1004,13 @@ export const de = {
       OrganizationNotice: 'Es wird eine neue Helferliste in der Organisation <span class="fw-bold">{{organizationName}}</span> angelegt.',
       Submit: 'Erstellen'
     },
+    ViewResourcePlanner: {
+      Pages: {
+        Resources: 'Ressourcen',
+        Views: 'Views',
+        Settings: 'Einstellungen'
+      }
+    },
     ViewTournamentPlanner: {
       Pages: {
         TournamentClasses: 'Turnierklassen',

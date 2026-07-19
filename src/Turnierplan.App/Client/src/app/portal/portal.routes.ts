@@ -87,8 +87,7 @@ export const portalRoutes: Routes = [
       },
       {
         path: 'resource-planner/:id',
-        component: ViewResourcePlannerComponent,
-        canDeactivate: [discardChangesGuard]
+        component: ViewResourcePlannerComponent
       },
       {
         path: 'tournament-planner/:id',
