@@ -11,7 +11,7 @@ public sealed class ResourceAssignment
     {
         ResourceGroup = resourceGroup;
         Resource = resource;
-        State = ResourceAssignmentState.Confirmed; // Todo: What's the default state for a newly assigned resource?
+        State = ResourceAssignmentState.Confirmed; // TODO: Determine what the default state for a newly assigned resource should be
     }
 
     public ResourceGroup ResourceGroup { get; internal set; } = null!;

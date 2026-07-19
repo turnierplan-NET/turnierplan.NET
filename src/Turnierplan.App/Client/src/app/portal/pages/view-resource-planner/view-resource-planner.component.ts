@@ -94,10 +94,10 @@ export class ViewResourcePlannerComponent {
   }
 
   protected renameResourcePlanner(name: string): void {
-    alert('Rename not implemented yet'); // TODO: Implement
+    alert('Rename not implemented yet'); // TODO: Implement resource planner rename
   }
 
   protected deleteResourcePlanner(): void {
-    alert('Delete not implemented yet'); // TODO: Implement
+    alert('Delete not implemented yet'); // TODO: Implement delete resource planner
   }
 }

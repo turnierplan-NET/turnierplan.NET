@@ -4,6 +4,6 @@ public enum ResourceGroupType
 {
     // Note: Don't change enum values (DB serialization)
 
-    Workshift = 1, // Todo: Name?
-    General = 2 // Todo: Name?
+    Workshift = 1,
+    General = 2
 }
