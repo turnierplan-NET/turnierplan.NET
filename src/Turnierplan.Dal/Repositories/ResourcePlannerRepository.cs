@@ -21,6 +21,15 @@ public interface IResourcePlannerRepository : IRepositoryWithPublicId<ResourcePl
 
 internal sealed class ResourcePlannerRepository(TurnierplanContext context) : RepositoryBaseWithPublicId<ResourcePlanner>(context), IResourcePlannerRepository
 {
+    public override Task<ResourcePlanner?> GetByPublicIdAsync(PublicId id)
+    {
+        return DbSet.Where(x => x.PublicId == id)
+            .Include(x => x.Organization).ThenInclude(x => x.RoleAssignments)
+            .Include(x => x.RoleAssignments)
+            .AsSplitQuery()
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<ResourcePlanner?> GetByPublicIdAsync(PublicId id, IResourcePlannerRepository.Includes includes)
     {
         var query = DbSet.Where(x => x.PublicId == id);

@@ -9,6 +9,7 @@ using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
+using Turnierplan.Core.ResourcePlanner;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.TournamentPlanner;
 using Turnierplan.Core.Venue;
@@ -41,6 +42,7 @@ internal sealed class GetRoleAssignmentsEndpoint : EndpointBase<IEnumerable<Role
             "Folder" => GetRoleAssignmentsAsync<Folder>(serviceProvider, accessValidator, mapper, targetId),
             "Image" => GetRoleAssignmentsAsync<Image>(serviceProvider, accessValidator, mapper, targetId),
             "Organization" => GetRoleAssignmentsAsync<Organization>(serviceProvider, accessValidator, mapper, targetId),
+            "ResourcePlanner" => GetRoleAssignmentsAsync<ResourcePlanner>(serviceProvider, accessValidator, mapper, targetId),
             "Tournament" => GetRoleAssignmentsAsync<Tournament>(serviceProvider, accessValidator, mapper, targetId),
             "TournamentPlanner" => GetRoleAssignmentsAsync<TournamentPlanner>(serviceProvider, accessValidator, mapper, targetId),
             "Venue" => GetRoleAssignmentsAsync<Venue>(serviceProvider, accessValidator, mapper, targetId),
