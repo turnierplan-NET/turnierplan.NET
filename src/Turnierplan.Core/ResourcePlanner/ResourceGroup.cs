@@ -31,20 +31,14 @@ public sealed class ResourceGroup : Entity<long>
             throw new TurnierplanException($"Invalid resource type: '{type}'");
         }
 
-        if (isWorkshift)
+        if (isWorkshift && (!start.HasValue || !end.HasValue))
         {
-            if (!start.HasValue || end.HasValue)
-            {
-                throw new TurnierplanException($"Start and end time must be set if the type is '{ResourceGroupType.Workshift}'");
-            }
+            throw new TurnierplanException($"Start and end time must be set if the type is '{ResourceGroupType.Workshift}'");
         }
 
-        if (isGeneral)
+        if (isGeneral && string.IsNullOrWhiteSpace(name))
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new TurnierplanException($"Name must be a non-empty string if the type is '{ResourceGroupType.General}'");
-            }
+            throw new TurnierplanException($"Name must be a non-empty string if the type is '{ResourceGroupType.General}'");
         }
 
         Id = 0;
