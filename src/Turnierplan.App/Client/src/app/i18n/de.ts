@@ -172,6 +172,7 @@ export const de = {
         Tournaments: 'Turniere',
         Venues: 'Spielstätten',
         TournamentPlanners: 'Turnierplaner',
+        ResourcePlanners: 'Helferlisten',
         Images: 'Bilder',
         ApiKeys: 'API-Schlüssel',
         Settings: 'Einstellungen'
@@ -180,6 +181,7 @@ export const de = {
         TournamentCount: 'Turniere',
         VenueCount: 'Spielstätten',
         TournamentPlannerCount: 'Turnierplaner',
+        ResourcePlannerCount: 'Helferlisten',
         ImagesCount: 'Bilder',
         ImagesTotalSize: 'Gesamtgröße',
         ApiKeyCount: 'API-Schlüssel'
@@ -187,6 +189,7 @@ export const de = {
       NewTournament: 'Neues Turnier',
       NewVenue: 'Neue Spielstätte',
       NewTournamentPlanner: 'Neuer Turnierplaner',
+      NewResourcePlanner: 'Neue Helferliste',
       UploadImage: 'Bild hochladen',
       NewApiKey: 'Neuer API-Schlüssel',
       NoTournaments: 'In dieser Organisation gibt es aktuell keine Turniere.\nErstellen Sie ein Turner mit der Schaltfläche oben rechts.',
@@ -194,7 +197,10 @@ export const de = {
         'In dieser Organisation gibt es aktuell keine Spielstätten.\nErstellen Sie eine Spielstätte mit der Schaltfläche oben rechts.',
       NoTournamentPlanners:
         'In dieser Organisation gibt es aktuell keine Turnierplaner.\nErstellen Sie einen Turnierplaner mit der Schaltfläche oben rechts.',
+      NoResourcePlanners:
+        'In dieser Organisation gibt es aktuell keine Helferlisten.\nErstellen Sie eine Helferliste mit der Schaltfläche oben rechts.',
       OpenTournamentPlanner: 'öffnen',
+      OpenResourcePlanner: 'öffnen',
       TournamentExplorer: {
         EmptyFolder: 'In diesem Ordner befinden sich keine Turniere. Wählen Sie einen anderen Ordner oder erstellen Sie ein Turnier.',
         RenameFolder: {
@@ -987,6 +993,41 @@ export const de = {
       },
       OrganizationNotice: 'Es wird ein neuer Turnierplaner in der Organisation <span class="fw-bold">{{organizationName}}</span> angelegt.',
       Submit: 'Erstellen'
+    },
+    CreateResourcePlanner: {
+      Title: 'Neue Helferliste erstellen',
+      Form: {
+        Name: 'Name',
+        NameInvalid: 'Der Name einer neuen Helferliste darf nicht leer sein.',
+        NameValid: 'Dieser Name kann verwendet werden.'
+      },
+      OrganizationNotice: 'Es wird eine neue Helferliste in der Organisation <span class="fw-bold">{{organizationName}}</span> angelegt.',
+      Submit: 'Erstellen'
+    },
+    ViewResourcePlanner: {
+      Pages: {
+        Resources: 'Ressourcen',
+        Views: 'Ansichten',
+        Settings: 'Einstellungen'
+      },
+      Settings: {
+        Rename: {
+          Button: 'Umbenennen',
+          Title: 'Helferliste umbenennen',
+          EnterNewName: 'Geben Sie den neuen Namen für die Helferliste ein:'
+        }
+      },
+      RbacWidget: {
+        Info: 'Verwalten Sie, welche Nutzer auf diese Helferliste zugreifen können und welche Aktionen sie durchführen können.'
+      },
+      DeleteWidget: {
+        Title: 'Helferliste löschen',
+        Info: 'Wenn Sie eine Helferliste löschen, werden alle gespeicherten Ressourcen ebenfalls gelöscht.',
+        SuccessToast: {
+          Title: 'Helferliste wurde gelöscht',
+          Message: 'Ihre Helferliste wurde gelöscht.'
+        }
+      }
     },
     ViewTournamentPlanner: {
       Pages: {

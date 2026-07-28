@@ -50,6 +50,8 @@ import { NgbOffcanvas, NgbOffcanvasRef, NgbTooltip } from '@ng-bootstrap/ng-boot
 import { ApiKeyExtendComponent } from '../../components/api-key-extend/api-key-extend.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
+import { ResourcePlannerHeaderDto } from '../../../api/models/resource-planner-header-dto';
+import { getResourcePlanners } from '../../../api/fn/resource-planners/get-resource-planners';
 
 @Component({
   templateUrl: './view-organization.component.html',
@@ -89,6 +91,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
   private static readonly venuesPageId = 1;
   private static readonly apiKeysPageId = 2;
   private static readonly tournamentPlannersPageId = 4;
+  private static readonly resourcePlannersPageId = 6;
 
   protected readonly Actions = Actions;
 
@@ -97,12 +100,14 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
   protected tournaments?: TournamentHeaderDto[];
   protected venues?: VenueDto[];
   protected tournamentPlanners?: TournamentPlannerHeaderDto[];
+  protected resourcePlanners?: ResourcePlannerHeaderDto[];
   protected images?: GetImagesEndpointResponse;
   protected imagesTotalSize?: number;
   protected apiKeys?: ApiKeyDto[];
   protected displayApiKeyUsage?: string;
   protected isLoadingVenues = false;
   protected isLoadingTournamentPlanners = false;
+  protected isLoadingResourcePlanners = false;
   protected isLoadingImages = false;
   protected isLoadingApiKeys = false;
 
@@ -124,6 +129,11 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       id: ViewOrganizationComponent.tournamentPlannersPageId,
       title: 'Portal.ViewOrganization.Pages.TournamentPlanners',
       icon: 'bi-ticket-perforated'
+    },
+    {
+      id: ViewOrganizationComponent.resourcePlannersPageId,
+      title: 'Portal.ViewOrganization.Pages.ResourcePlanners',
+      icon: 'bi-file-earmark-spreadsheet'
     },
     {
       id: ViewOrganizationComponent.imagesPageId,
@@ -237,6 +247,20 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
         next: (tournamentPlanner) => {
           this.tournamentPlanners = tournamentPlanner;
           this.isLoadingTournamentPlanners = false;
+        },
+        error: (error) => {
+          this.loadingState = { isLoading: false, error: error };
+        }
+      });
+    }
+
+    if (number === ViewOrganizationComponent.resourcePlannersPageId && !this.resourcePlanners && !this.isLoadingResourcePlanners) {
+      // Load resource planners only when the page is opened
+      this.isLoadingResourcePlanners = true;
+      this.turnierplanApi.invoke(getResourcePlanners, { organizationId: this.organization.id }).subscribe({
+        next: (resourcePlanner) => {
+          this.resourcePlanners = resourcePlanner;
+          this.isLoadingResourcePlanners = false;
         },
         error: (error) => {
           this.loadingState = { isLoading: false, error: error };

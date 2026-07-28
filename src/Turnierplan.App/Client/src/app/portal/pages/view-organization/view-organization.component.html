@@ -42,6 +42,14 @@
               [icon]="'upload'"
               [routerLink]="'upload/image'" />
           }
+          @case (6) {
+            <tp-action-button
+              *tpIsActionAllowed="[organization.id, Actions.GenericWrite]"
+              [title]="'Portal.ViewOrganization.NewResourcePlanner'"
+              [type]="'outline-success'"
+              [icon]="'plus-circle'"
+              [routerLink]="'create/resource-planner'" />
+          }
           @case (2) {
             <tp-action-button
               *tpIsActionAllowed="[organization.id, Actions.GenericWrite]"
@@ -151,6 +159,38 @@
                 </div>
                 <div class="card-body p-0">
                   <tp-image-manager [images]="images" (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+                </div>
+              }
+            }
+            @case (6) {
+              @if (isLoadingResourcePlanners || !resourcePlanners) {
+                <tp-loading-indicator class="my-5" [marginY]="false" />
+              } @else {
+                <div class="card-header d-flex flex-row align-items-center">
+                  <tp-badge context="ViewOrganization" label="ResourcePlannerCount" [value]="resourcePlanners.length" />
+                </div>
+                <div class="card-body">
+                  @if (resourcePlanners.length === 0) {
+                    <div class="d-flex flex-row justify-content-center py-4 text-center">
+                      <span class="tp-text-pre-wrap" translate="Portal.ViewOrganization.NoResourcePlanners"></span>
+                    </div>
+                  } @else {
+                    <div class="d-flex flex-column gap-3">
+                      @for (resourcePlanner of resourcePlanners; track resourcePlanner.id) {
+                        <div class="card shadow-sm">
+                          <div class="card-body d-flex flex-column gap-2">
+                            <div class="fs-5 fw-bold card-title mb-0">{{ resourcePlanner.name }}</div>
+                          </div>
+                          <div class="card-footer text-end pe-2">
+                            <a class="card-link" [routerLink]="'/portal/resource-planner/' + resourcePlanner.id">
+                              <span translate="Portal.ViewOrganization.OpenResourcePlanner"></span>
+                              <i class="ms-2 bi bi-arrow-right-circle" aria-hidden="true"></i>
+                            </a>
+                          </div>
+                        </div>
+                      }
+                    </div>
+                  }
                 </div>
               }
             }

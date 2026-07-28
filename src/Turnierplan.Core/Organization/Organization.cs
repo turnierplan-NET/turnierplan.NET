@@ -9,6 +9,7 @@ public sealed class Organization : Entity<long>, IEntityWithRoleAssignments<Orga
     internal readonly List<ApiKey.ApiKey> _apiKeys = [];
     internal readonly List<Folder.Folder> _folders = [];
     internal readonly List<Image.Image> _images = [];
+    internal readonly List<ResourcePlanner.ResourcePlanner> _resourcePlanners = [];
     internal readonly List<TournamentPlanner.TournamentPlanner> _tournamentPlanners = [];
     internal readonly List<Tournament.Tournament> _tournaments = [];
     internal readonly List<Venue.Venue> _venues = [];
@@ -44,6 +45,8 @@ public sealed class Organization : Entity<long>, IEntityWithRoleAssignments<Orga
     public IReadOnlyList<Folder.Folder> Folders => _folders.AsReadOnly();
 
     public IReadOnlyList<Image.Image> Images => _images.AsReadOnly();
+
+    public IReadOnlyList<ResourcePlanner.ResourcePlanner> ResourcePlanners => _resourcePlanners.AsReadOnly();
 
     public IReadOnlyList<TournamentPlanner.TournamentPlanner> TournamentPlanners => _tournamentPlanners.AsReadOnly();
 
