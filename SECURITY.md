@@ -18,4 +18,4 @@ The used version scheme is `YYYY.N.P` consisting of the year of the major releas
 
 **Do not report security vulnerabilities using GitHub issues!**
 
-If you found a security vulnerability, please report via the problem via GitHub [security advisories](https://github.com/turnierplan-NET/turnierplan.NET/security/advisories) or contact the following email address: [security@turnierplan.net](mailto:security@turnierplan.net).
+If you found a security vulnerability, please report via the problem via GitHub [security advisories](https://github.com/turnierplan-NET/turnierplan.NET/security/advisories/new) or contact the following email address: [security@turnierplan.net](mailto:security@turnierplan.net).
