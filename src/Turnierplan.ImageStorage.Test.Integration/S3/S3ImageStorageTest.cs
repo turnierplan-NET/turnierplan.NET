@@ -1,11 +1,9 @@
 using FluentAssertions;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using S3ServerLibrary;
 using S3ServerLibrary.S3Objects;
 using Turnierplan.Core.Image;
-using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
 using Turnierplan.ImageStorage.S3;
 using WatsonWebserver.Core;
@@ -16,16 +14,27 @@ namespace Turnierplan.ImageStorage.Test.Integration.S3;
 
 public sealed class S3ImageStorageTest : IDisposable
 {
+    private readonly int _port;
     private readonly S3Server _server;
+    private readonly S3ImageStorageOptions _options;
     private readonly TestLogger _logger;
 
     public S3ImageStorageTest(ITestOutputHelper testOutputHelper)
     {
-        var port = Random.Shared.Next(50000, 51000);
+        _port = Random.Shared.Next(50000, 51000);
+
         var settings = new S3ServerSettings
         {
-            Webserver = new WebserverSettings("localhost", port),
+            Webserver = new WebserverSettings("localhost", _port),
             Logger = testOutputHelper.WriteLine
+        };
+
+        _options = new S3ImageStorageOptions
+        {
+            ServiceUrl = $"http://localhost:{_port}",
+            AccessKey = "key",
+            AccessKeySecret = "s3cr3t",
+            BucketName = "test_bucket"
         };
 
         _server = new S3Server(settings);
@@ -39,20 +48,45 @@ public sealed class S3ImageStorageTest : IDisposable
         _server.Dispose();
     }
 
+    [Fact]
+    public void S3ImageStorage_Throws_Exception_When_Both_ServiceUrl_And_RegionEndpoint_Are_Specified()
+    {
+        var invalidOptions = _options with { RegionEndpoint = "us-east-1" };
+        var action = () => new S3ImageStorage(new OptionsWrapper<S3ImageStorageOptions>(invalidOptions), _logger);
+        action.Should().ThrowExactly<InvalidOperationException>().WithMessage("Please specify either 'RegionEndpoint' or 'ServiceUrl'.");
+    }
+
+    [Fact]
+    public void S3ImageStorage_Throws_Exception_When_Invalid_RegionEndpoint_Is_Specified()
+    {
+        var invalidOptions = _options with { RegionEndpoint = "test" };
+        var action = () => new S3ImageStorage(new OptionsWrapper<S3ImageStorageOptions>(invalidOptions), _logger);
+        action.Should().ThrowExactly<InvalidOperationException>().WithMessage("The specified region endpoint 'test' seems to be unknown.");
+    }
+
+    [Fact]
+    public void S3ImageStorage_GetFullImageUrl_Returns_Correct_Value()
+    {
+        using var storage = new S3ImageStorage(new OptionsWrapper<S3ImageStorageOptions>(_options), _logger);
+
+        var image = CreateImage(Guid.Parse("969bd4c6-c7bb-4631-8c25-1e196bc77512"), new DateTime(2026, 7, 27), "png");
+        storage.GetFullImageUrl(image).Should().Be($"http://localhost:{_port}/images/2026/07/969bd4c6-c7bb-4631-8c25-1e196bc77512.png");
+
+        var image2 = CreateImage(Guid.Parse("88a530a9-0272-4b2d-a495-b876ba30b005"), new DateTime(2025, 12, 27), "jpeg");
+        storage.GetFullImageUrl(image2).Should().Be($"http://localhost:{_port}/images/2025/12/88a530a9-0272-4b2d-a495-b876ba30b005.jpeg");
+
+        var awsOptions = _options with { ServiceUrl = null, RegionEndpoint = "us-east-1" };
+        using var awsStorage = new S3ImageStorage(new OptionsWrapper<S3ImageStorageOptions>(awsOptions), _logger);
+
+        awsStorage.GetFullImageUrl(image).Should().Be("https://test_bucket.s3.us-east-1.amazonaws.com/images/2026/07/969bd4c6-c7bb-4631-8c25-1e196bc77512.png");
+    }
+
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
     public async Task S3ImageStorage_With_Non_Aws_Options_Can_Upload_File(bool isAuthenticated)
     {
-        var options = new S3ImageStorageOptions
-        {
-            ServiceUrl = $"http://localhost:{_server.Webserver.Settings.Port}",
-            AccessKey = "key",
-            AccessKeySecret = "s3cr3t",
-            BucketName = "test_bucket"
-        };
-
-        var storage = new S3ImageStorage(new OptionsWrapper<S3ImageStorageOptions>(options), _logger);
+        using var storage = new S3ImageStorage(new OptionsWrapper<S3ImageStorageOptions>(_options), _logger);
 
         var image = CreateImage(Guid.Parse("969bd4c6-c7bb-4631-8c25-1e196bc77512"), new DateTime(2026, 7, 27), "png");
         var imageData = new MemoryStream([0x00, 0x01, 0x02, 0x03]);
