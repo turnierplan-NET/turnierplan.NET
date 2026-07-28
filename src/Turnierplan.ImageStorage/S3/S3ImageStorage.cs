@@ -14,6 +14,7 @@ internal sealed class S3ImageStorage : IImageStorage
     private readonly ILogger<S3ImageStorage> _logger;
     private readonly AmazonS3Client _client;
     private readonly string _bucketName;
+    private readonly string? _serviceUrl;
 
     public S3ImageStorage(IOptions<S3ImageStorageOptions> options, ILogger<S3ImageStorage> logger)
     {
@@ -49,6 +50,7 @@ internal sealed class S3ImageStorage : IImageStorage
             }
 
             s3Config.ServiceURL = options.Value.ServiceUrl;
+            _serviceUrl = s3Config.ServiceURL.TrimEnd('/');
         }
 
         _client = new AmazonS3Client(s3Credentials, s3Config);
@@ -59,9 +61,9 @@ internal sealed class S3ImageStorage : IImageStorage
     {
         var objectKey = GetObjectKey(image);
 
-        return string.IsNullOrWhiteSpace(_client.Config.ServiceURL)
+        return string.IsNullOrWhiteSpace(_serviceUrl)
             ? $"https://{_bucketName}.s3.{_client.Config.RegionEndpoint.SystemName}.amazonaws.com/{objectKey}"
-            : $"{_client.Config.ServiceURL}/{objectKey}";
+            : $"{_serviceUrl}/{objectKey}";
     }
 
     public async Task<bool> SaveImageAsync(Image image, MemoryStream imageData)
