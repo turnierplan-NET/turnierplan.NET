@@ -108,15 +108,17 @@ public sealed class S3ImageStorageTest : IDisposable
         };
 
         writeCalled.Should().BeFalse();
-        await storage.SaveImageAsync(image, imageData);
+        var result = await storage.SaveImageAsync(image, imageData);
         writeCalled.Should().BeTrue();
 
         if (isAuthenticated)
         {
+            result.Should().BeTrue();
             _logger.Messages.Should().BeEmpty();
         }
         else
         {
+            result.Should().BeFalse();
             _logger.Messages.Single().Should().Be("Failed to upload image 'images/2026/07/969bd4c6-c7bb-4631-8c25-1e196bc77512.png' to S3 because of an exception.");
         }
     }
@@ -188,6 +190,46 @@ public sealed class S3ImageStorageTest : IDisposable
         }
 
         readCalled.Should().BeTrue();
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public async Task S3ImageStorage_With_Local_Server_Can_Delete_Image(bool isAuthenticated)
+    {
+        using var storage = new S3ImageStorage(new OptionsWrapper<S3ImageStorageOptions>(_options), _logger);
+
+        var image = CreateImage(Guid.Parse("969bd4c6-c7bb-4631-8c25-1e196bc77512"), new DateTime(2026, 7, 27), "png");
+
+        var writeCalled = false;
+        _server.Object.Delete = async ctx =>
+        {
+            writeCalled = true;
+
+            if (!isAuthenticated)
+            {
+                ctx.Response.StatusCode = 401;
+                await ctx.Response.Send(ErrorCode.AccessDenied);
+            }
+
+            ctx.Request.Bucket.Should().Be("test_bucket");
+            ctx.Request.Key.Should().Be("images/2026/07/969bd4c6-c7bb-4631-8c25-1e196bc77512.png");
+        };
+
+        writeCalled.Should().BeFalse();
+        var result = await storage.DeleteImageAsync(image);
+        writeCalled.Should().BeTrue();
+
+        if (isAuthenticated)
+        {
+            result.Should().BeTrue();
+            _logger.Messages.Should().BeEmpty();
+        }
+        else
+        {
+            result.Should().BeFalse();
+            _logger.Messages.Single().Should().Be("Failed to delete image 'images/2026/07/969bd4c6-c7bb-4631-8c25-1e196bc77512.png' from S3 because of an exception.");
+        }
     }
 
     private static Image CreateImage(Guid resourceIdentifier, DateTime createdAt, string extension)
