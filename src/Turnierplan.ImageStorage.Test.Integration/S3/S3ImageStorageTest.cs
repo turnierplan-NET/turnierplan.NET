@@ -1,3 +1,4 @@
+using Amazon.S3;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -84,7 +85,7 @@ public sealed class S3ImageStorageTest : IDisposable
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
-    public async Task S3ImageStorage_With_Non_Aws_Options_Can_Upload_File(bool isAuthenticated)
+    public async Task S3ImageStorage_With_Local_Server_Can_Upload_Image(bool isAuthenticated)
     {
         using var storage = new S3ImageStorage(new OptionsWrapper<S3ImageStorageOptions>(_options), _logger);
 
@@ -118,6 +119,75 @@ public sealed class S3ImageStorageTest : IDisposable
         {
             _logger.Messages.Single().Should().Be("Failed to upload image 'images/2026/07/969bd4c6-c7bb-4631-8c25-1e196bc77512.png' to S3 because of an exception.");
         }
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public async Task S3ImageStorage_With_Local_Server_Can_Read_Image(bool isAuthenticated)
+    {
+        using var storage = new S3ImageStorage(new OptionsWrapper<S3ImageStorageOptions>(_options), _logger);
+
+        var image = CreateImage(Guid.Parse("969bd4c6-c7bb-4631-8c25-1e196bc77512"), new DateTime(2026, 7, 27), "png");
+
+        var readCalled = false;
+        _server.Object.Read = async ctx =>
+        {
+            readCalled = true;
+
+            if (!isAuthenticated)
+            {
+                ctx.Response.StatusCode = 401;
+                await ctx.Response.Send(ErrorCode.AccessDenied);
+            }
+
+            ctx.Request.Bucket.Should().Be("test_bucket");
+            ctx.Request.Key.Should().Be("images/2026/07/969bd4c6-c7bb-4631-8c25-1e196bc77512.png");
+
+            var data = "Hello, S3!"u8;
+
+            return new S3Object(
+                ctx.Request.Key,
+                "version-1",
+                true,
+                DateTime.UtcNow,
+                "etag-123",
+                data.Length,
+                new Owner("admin", "Administrator"),
+                [.. data],
+                "text/plain"
+            );
+        };
+
+        readCalled.Should().BeFalse();
+
+        if (!isAuthenticated)
+        {
+            var func = () => storage.GetImageAsync(image);
+            await func.Should().ThrowAsync<AmazonS3Exception>().WithMessage("Access denied.");
+            readCalled.Should().BeTrue();
+
+            return;
+        }
+
+        await using var result = await storage.GetImageAsync(image);
+        readCalled.Should().BeTrue();
+
+        using var temp = new MemoryStream();
+        await result.CopyToAsync(temp, TestContext.Current.CancellationToken);
+
+        temp.ToArray().Should().BeEquivalentTo([0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x2c, 0x20, 0x53, 0x33, 0x21], opt => opt.WithStrictOrdering());
+
+        if (isAuthenticated)
+        {
+            _logger.Messages.Should().BeEmpty();
+        }
+        else
+        {
+            _logger.Messages.Single().Should().Be("Failed to upload image 'images/2026/07/969bd4c6-c7bb-4631-8c25-1e196bc77512.png' to S3 because of an exception.");
+        }
+
+        readCalled.Should().BeTrue();
     }
 
     private static Image CreateImage(Guid resourceIdentifier, DateTime createdAt, string extension)
