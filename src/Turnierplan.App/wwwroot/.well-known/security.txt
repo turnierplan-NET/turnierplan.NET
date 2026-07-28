@@ -1,0 +1,10 @@
+# This site is running turnierplan.NET
+# ====================================
+# turnierplan.NET is an open-source tournament hosting software.
+# Security problems related to this software shall be reported to the maintainers of the open-source repository:
+Policy: https://github.com/turnierplan-NET/turnierplan.NET/security/policy
+Contact: https://github.com/turnierplan-NET/turnierplan.NET/security/advisories/new
+Contact: mailto:security@turnierplan.net
+Preferred-Languages: de, en
+# Security problems related to this installation of the software shall be reported to the corresponding administrators instead.
+Expires: 2027-08-31T23:59:00Z
