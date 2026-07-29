@@ -16,7 +16,7 @@ public sealed class Resource : Entity<long>
         _notes = notes;
     }
 
-    public Resource(ResourcePlanner resourcePlanner, ResourceType type, string name, string? notes)
+    internal Resource(ResourcePlanner resourcePlanner, ResourceType type, string name, string? notes)
     {
         Id = 0;
         ResourcePlanner = resourcePlanner;
@@ -34,7 +34,17 @@ public sealed class Resource : Entity<long>
     public string Name
     {
         get => _name;
-        set => _name = value.Trim();
+        set
+        {
+            var trimmed = value.Trim();
+
+            if (string.IsNullOrEmpty(trimmed))
+            {
+                throw new TurnierplanException($"The resource {nameof(Name)} must be a non-empty string.");
+            }
+
+            _name = trimmed;
+        }
     }
 
     public string? Notes

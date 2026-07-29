@@ -6,11 +6,9 @@ public sealed record ResourceGroupDto
 {
     public required long Id { get; init; }
 
-    public required string? Name { get; init; }
+    public required string Name { get; init; }
 
-    public required string? Description { get; init; }
-
-    public required ResourceGroupType Type { get; init; }
+    public required string? Notes { get; init; }
 
     public required DateTime? Start { get; init; }
 

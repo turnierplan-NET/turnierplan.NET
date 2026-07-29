@@ -57,9 +57,9 @@ public sealed class ResourcePlanner : Entity<long>, IEntityWithRoleAssignments<R
         _roleAssignments.Remove(roleAssignment);
     }
 
-    public ResourceGroup AddResourceGroup(string? name, string? description, ResourceGroupType type, DateTime? start, DateTime? end)
+    public ResourceGroup AddResourceGroup(string name, string? description, DateTime? start, DateTime? end)
     {
-        var resourceGroup = new ResourceGroup(this, name, description, type, start, end);
+        var resourceGroup = new ResourceGroup(this, name, description, start, end);
         _resourceGroups.Add(resourceGroup);
 
         return resourceGroup;

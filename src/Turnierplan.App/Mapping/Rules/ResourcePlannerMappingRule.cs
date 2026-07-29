@@ -34,8 +34,7 @@ internal sealed class ResourcePlannerMappingRule : MappingRuleBase<ResourcePlann
                 {
                     Id = group.Id,
                     Name = group.Name,
-                    Description = group.Description,
-                    Type = group.Type,
+                    Notes = group.Notes,
                     Start = group.Start,
                     End = group.End,
                     Assignment =
