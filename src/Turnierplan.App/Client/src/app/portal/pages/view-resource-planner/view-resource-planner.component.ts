@@ -16,6 +16,7 @@ import { setResourcePlannerName } from '../../../api/fn/resource-planners/set-re
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NotificationService } from '../../../core/services/notification.service';
 import { deleteResourcePlanner } from '../../../api/fn/resource-planners/delete-resource-planner';
+import { ManageResourcesComponent } from '../../components/manage-resources/manage-resources.component';
 
 @Component({
   imports: [
@@ -25,7 +26,8 @@ import { deleteResourcePlanner } from '../../../api/fn/resource-planners/delete-
     DeleteWidgetComponent,
     IsActionAllowedDirective,
     RbacWidgetComponent,
-    SmallSpinnerComponent
+    SmallSpinnerComponent,
+    ManageResourcesComponent
   ],
   templateUrl: './view-resource-planner.component.html'
 })
@@ -41,7 +43,7 @@ export class ViewResourcePlannerComponent {
     {
       id: 0,
       title: 'Portal.ViewResourcePlanner.Pages.Resources',
-      icon: 'bi-box-seam'
+      icon: 'bi-columns'
     },
     {
       id: 1,

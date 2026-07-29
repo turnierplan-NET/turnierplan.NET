@@ -1,0 +1,32 @@
+@if (viewModel) {
+  <div class="mb-5 d-flex flex-row gap-3">
+    @for (column of viewModel.columns; track $index) {
+      <div class="d-flex flex-column gap-3" style="min-width: 300px; max-width: 300px">
+        @for (group of column.groups; track group.id) {
+          <div class="card">
+            <div class="card-header tp-text-ellipsis">{{ group.name }}</div>
+            <ul class="list-group list-group-flush">
+              @for (resource of group.resources; track resource.id) {
+                <li class="list-group-item tp-text-ellipsis">
+                  @switch (resource.type) {
+                    @case (resourceType.Commodity) {
+                      <i class="bi bi-box-seam me-2"></i>
+                    }
+                    @case (resourceType.Personnel) {
+                      <i class="bi bi-person me-2"></i>
+                    }
+                  }
+                  <span>{{ resource.name }}</span>
+                </li>
+              } @empty {
+                <li
+                  class="list-group-item fst-italic text-muted small"
+                  [translate]="'Portal.ViewResourcePlanner.ManageResources.EmptyGroup'"></li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    }
+  </div>
+}

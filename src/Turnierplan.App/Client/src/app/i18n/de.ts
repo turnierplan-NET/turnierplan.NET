@@ -1010,6 +1010,9 @@ export const de = {
         Views: 'Ansichten',
         Settings: 'Einstellungen'
       },
+      ManageResources: {
+        EmptyGroup: 'Keine Einträge vorhanden'
+      },
       Settings: {
         Rename: {
           Button: 'Umbenennen',
