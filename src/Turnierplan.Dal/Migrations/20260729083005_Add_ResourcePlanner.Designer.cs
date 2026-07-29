@@ -13,7 +13,7 @@ using Turnierplan.Dal;
 namespace Turnierplan.Dal.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20260717182006_Add_ResourcePlanner")]
+    [Migration("20260729083005_Add_ResourcePlanner")]
     partial class Add_ResourcePlanner
     {
         /// <inheritdoc />
@@ -342,13 +342,14 @@ namespace Turnierplan.Dal.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
                     b.Property<DateTime?>("End")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Notes")
                         .HasColumnType("text");
 
                     b.Property<long>("ResourcePlannerId")
@@ -356,9 +357,6 @@ namespace Turnierplan.Dal.Migrations
 
                     b.Property<DateTime?>("Start")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
