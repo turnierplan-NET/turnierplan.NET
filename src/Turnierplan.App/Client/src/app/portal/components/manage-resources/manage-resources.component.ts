@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ResourcePlannerDto } from '../../../api/models/resource-planner-dto';
-import { ResourceGroupType } from '../../../api/models/resource-group-type';
 import { ResourceAssignmentState } from '../../../api/models/resource-assignment-state';
 import { ResourceType } from '../../../api/models/resource-type';
 import { TranslateDirective } from '@ngx-translate/core';
@@ -11,7 +10,6 @@ type ResourcesViewModel = {
       id: number;
       name: string;
       description?: string;
-      type: ResourceGroupType;
       range?: {
         start: Date;
         end: Date;
@@ -61,7 +59,6 @@ export class ManageResourcesComponent {
         {
           id: id++,
           name: 'Ansprechperson',
-          type: ResourceGroupType.Workshift,
           range: {
             start: time(11, 30),
             end: time(17, 30)
@@ -78,7 +75,6 @@ export class ManageResourcesComponent {
         {
           id: id++,
           name: 'Schicht 1',
-          type: ResourceGroupType.Workshift,
           range: {
             start: time(10, 0),
             end: time(13, 0)
@@ -107,7 +103,6 @@ export class ManageResourcesComponent {
         {
           id: id++,
           name: 'Schicht 2',
-          type: ResourceGroupType.Workshift,
           range: {
             start: time(13, 0),
             end: time(16, 0)
@@ -136,7 +131,6 @@ export class ManageResourcesComponent {
         {
           id: id++,
           name: 'Schicht 3',
-          type: ResourceGroupType.Workshift,
           range: {
             start: time(16, 0),
             end: time(19, 0)
@@ -165,7 +159,6 @@ export class ManageResourcesComponent {
         {
           id: id++,
           name: 'Kuchen',
-          type: ResourceGroupType.General,
           resources: [
             {
               id: id++,
@@ -190,7 +183,6 @@ export class ManageResourcesComponent {
         {
           id: id++,
           name: 'Turnierleitung',
-          type: ResourceGroupType.General,
           resources:
             k == 3
               ? []
@@ -206,7 +198,6 @@ export class ManageResourcesComponent {
         {
           id: id++,
           name: 'Turnieraufsicht',
-          type: ResourceGroupType.General,
           resources: [
             {
               id: id++,
@@ -225,7 +216,6 @@ export class ManageResourcesComponent {
         {
           id: id++,
           name: 'Hallensprecher',
-          type: ResourceGroupType.General,
           resources: [
             {
               id: id++,
@@ -244,7 +234,6 @@ export class ManageResourcesComponent {
         {
           id: id++,
           name: 'Siegerehrung',
-          type: ResourceGroupType.General,
           resources: [
             {
               id: id++,
@@ -257,7 +246,6 @@ export class ManageResourcesComponent {
         {
           id: id++,
           name: 'Sanitäter',
-          type: ResourceGroupType.General,
           resources: [
             {
               id: id++,
