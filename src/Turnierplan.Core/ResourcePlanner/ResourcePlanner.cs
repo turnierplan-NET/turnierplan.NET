@@ -42,7 +42,7 @@ public sealed class ResourcePlanner : Entity<long>, IEntityWithRoleAssignments<R
 
     public DateTime CreatedAt { get; }
 
-    public string Name { get; }
+    public string Name { get; set; }
 
     public RoleAssignment<ResourcePlanner> AddRoleAssignment(Role role, Principal principal)
     {

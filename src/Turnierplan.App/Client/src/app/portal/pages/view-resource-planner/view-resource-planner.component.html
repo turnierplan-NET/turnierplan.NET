@@ -18,9 +18,13 @@
           }
           @case (2) {
             <!-- Settings page -->
+            @if (isUpdatingName) {
+              <tp-small-spinner />
+            }
             <tp-rename-button
               translationKey="Portal.ViewResourcePlanner.Settings.Rename"
               [current]="resourcePlanner.name"
+              [disabled]="isUpdatingName"
               (renamed)="renameResourcePlanner($event)" />
           }
         }

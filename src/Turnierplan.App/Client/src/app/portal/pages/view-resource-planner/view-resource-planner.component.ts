@@ -4,7 +4,7 @@ import { Actions } from '../../../generated/actions';
 import { ResourcePlannerDto } from '../../../api/models/resource-planner-dto';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { of, Subject, switchMap, takeUntil } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { TitleService } from '../../services/title.service';
 import { getResourcePlanner } from '../../../api/fn/resource-planners/get-resource-planner';
@@ -12,6 +12,10 @@ import { RenameButtonComponent } from '../../components/rename-button/rename-but
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
 import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
+import { setResourcePlannerName } from '../../../api/fn/resource-planners/set-resource-planner-name';
+import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
+import { NotificationService } from '../../../core/services/notification.service';
+import { deleteResourcePlanner } from '../../../api/fn/resource-planners/delete-resource-planner';
 
 @Component({
   imports: [
@@ -20,7 +24,8 @@ import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.co
     RenameButtonComponent,
     DeleteWidgetComponent,
     IsActionAllowedDirective,
-    RbacWidgetComponent
+    RbacWidgetComponent,
+    SmallSpinnerComponent
   ],
   templateUrl: './view-resource-planner.component.html'
 })
@@ -29,6 +34,7 @@ export class ViewResourcePlannerComponent {
 
   protected loadingState: LoadingState = { isLoading: true };
   protected resourcePlanner?: ResourcePlannerDto;
+  protected isUpdatingName = false;
 
   protected currentPage = 0;
   protected pages: PageFrameNavigationTab[] = [
@@ -55,7 +61,9 @@ export class ViewResourcePlannerComponent {
   constructor(
     private readonly turnierplanApi: TurnierplanApi,
     private readonly route: ActivatedRoute,
-    private readonly titleService: TitleService
+    private readonly router: Router,
+    private readonly titleService: TitleService,
+    private readonly notificationService: NotificationService
   ) {}
 
   public ngOnInit(): void {
@@ -94,10 +102,45 @@ export class ViewResourcePlannerComponent {
   }
 
   protected renameResourcePlanner(name: string): void {
-    alert('Rename not implemented yet'); // TODO: Implement resource planner rename
+    if (!this.resourcePlanner || name === this.resourcePlanner.name || this.isUpdatingName) {
+      return;
+    }
+
+    this.isUpdatingName = true;
+
+    this.turnierplanApi.invoke(setResourcePlannerName, { id: this.resourcePlanner.id, body: { name: name } }).subscribe({
+      next: () => {
+        if (this.resourcePlanner) {
+          this.resourcePlanner.name = name;
+          this.titleService.setTitleFrom(this.resourcePlanner);
+        }
+        this.isUpdatingName = false;
+      },
+      error: (error) => {
+        this.loadingState = { isLoading: false, error: error };
+      }
+    });
   }
 
   protected deleteResourcePlanner(): void {
-    alert('Delete not implemented yet'); // TODO: Implement delete resource planner
+    if (!this.resourcePlanner) {
+      return;
+    }
+
+    const organizationId = this.resourcePlanner.organizationId;
+    this.loadingState = { isLoading: true, error: undefined };
+    this.turnierplanApi.invoke(deleteResourcePlanner, { id: this.resourcePlanner.id }).subscribe({
+      next: () => {
+        this.notificationService.showNotification(
+          'info',
+          'Portal.ViewResourcePlanner.DeleteWidget.SuccessToast.Title',
+          'Portal.ViewResourcePlanner.DeleteWidget.SuccessToast.Message'
+        );
+        void this.router.navigate([`../../organization/${organizationId}`], { relativeTo: this.route });
+      },
+      error: (error) => {
+        this.loadingState = { isLoading: false, error: error };
+      }
+    });
   }
 }
