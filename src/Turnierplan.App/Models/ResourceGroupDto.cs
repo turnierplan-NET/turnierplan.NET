@@ -14,5 +14,5 @@ public sealed record ResourceGroupDto
 
     public required DateTime? End { get; init; }
 
-    public required ResourceAssignmentDto[] Assignment { get; init; }
+    public required ResourceAssignmentDto[] Assignments { get; init; }
 }

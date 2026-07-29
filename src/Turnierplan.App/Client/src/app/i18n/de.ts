@@ -1011,6 +1011,7 @@ export const de = {
         Settings: 'Einstellungen'
       },
       ManageResources: {
+        NoGroups: 'Keine Einträge vorhanden',
         EmptyGroup: 'Keine Einträge vorhanden'
       },
       Settings: {

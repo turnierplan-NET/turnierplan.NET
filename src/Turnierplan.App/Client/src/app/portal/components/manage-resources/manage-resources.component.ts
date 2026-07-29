@@ -3,17 +3,16 @@ import { ResourcePlannerDto } from '../../../api/models/resource-planner-dto';
 import { ResourceAssignmentState } from '../../../api/models/resource-assignment-state';
 import { ResourceType } from '../../../api/models/resource-type';
 import { TranslateDirective } from '@ngx-translate/core';
+import { ResourceGroupDto } from '../../../api/models/resource-group-dto';
 
 type ResourcesViewModel = {
   columns: {
     groups: {
       id: number;
       name: string;
-      description?: string;
-      range?: {
-        start: Date;
-        end: Date;
-      };
+      notes?: string;
+      start?: Date;
+      end?: Date;
       resources: {
         id: number;
         type: ResourceType;
@@ -46,220 +45,69 @@ export class ManageResourcesComponent {
   private _resourcePlanner?: ResourcePlannerDto;
 
   private updateViewModel(): void {
-    // TODO: Convert resource planner to view model
+    if (!this._resourcePlanner) {
+      this.viewModel = undefined;
+      return;
+    }
 
-    const time = (h: number, m: number) => {
-      return new Date(2026, 7, 29, h, m, 0);
-    };
+    const dateColumns: { key: string | undefined; groups: ResourceGroupDto[] }[] = [];
 
-    let id = 1;
+    // Group the resource groups into columns based on the start/end date if available.
+    // Any group without a start or end state will be placed in a separate column.
 
-    const column = (k: number) => ({
-      groups: [
-        {
-          id: id++,
-          name: 'Ansprechperson',
-          range: {
-            start: time(11, 30),
-            end: time(17, 30)
-          },
-          resources: [
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Confirmed
-            }
-          ]
-        },
-        {
-          id: id++,
-          name: 'Schicht 1',
-          range: {
-            start: time(10, 0),
-            end: time(13, 0)
-          },
-          resources: [
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Requested
-            },
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Confirmed
-            },
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Confirmed
-            }
-          ]
-        },
-        {
-          id: id++,
-          name: 'Schicht 2',
-          range: {
-            start: time(13, 0),
-            end: time(16, 0)
-          },
-          resources: [
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Requested
-            },
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Confirmed
-            },
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Proposed
-            }
-          ]
-        },
-        {
-          id: id++,
-          name: 'Schicht 3',
-          range: {
-            start: time(16, 0),
-            end: time(19, 0)
-          },
-          resources: [
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Confirmed
-            },
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Confirmed
-            },
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Confirmed
-            }
-          ]
-        },
-        {
-          id: id++,
-          name: 'Kuchen',
-          resources: [
-            {
-              id: id++,
-              name: 'Quark Sahne Torte',
-              type: ResourceType.Commodity,
-              state: ResourceAssignmentState.Confirmed
-            },
-            {
-              id: id++,
-              name: 'Käsekuchen',
-              type: ResourceType.Commodity,
-              state: ResourceAssignmentState.Confirmed
-            },
-            {
-              id: id++,
-              name: 'Hasselnuss-Gugelhupf',
-              type: ResourceType.Commodity,
-              state: ResourceAssignmentState.Requested
-            }
-          ]
-        },
-        {
-          id: id++,
-          name: 'Turnierleitung',
-          resources:
-            k == 3
-              ? []
-              : [
-                  {
-                    id: id++,
-                    name: 'Max Mustermann',
-                    type: ResourceType.Personnel,
-                    state: ResourceAssignmentState.Confirmed
-                  }
-                ]
-        },
-        {
-          id: id++,
-          name: 'Turnieraufsicht',
-          resources: [
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Confirmed
-            },
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Confirmed
-            }
-          ]
-        },
-        {
-          id: id++,
-          name: 'Hallensprecher',
-          resources: [
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Confirmed
-            },
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Confirmed
-            }
-          ]
-        },
-        {
-          id: id++,
-          name: 'Siegerehrung',
-          resources: [
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Confirmed
-            }
-          ]
-        },
-        {
-          id: id++,
-          name: 'Sanitäter',
-          resources: [
-            {
-              id: id++,
-              name: 'Max Mustermann',
-              type: ResourceType.Personnel,
-              state: ResourceAssignmentState.Confirmed
-            }
-          ]
-        }
-      ]
-    });
+    for (const group of this._resourcePlanner.resourceGroups) {
+      const rawDate = group.start ?? group.end;
+      let columnKey: string | undefined = undefined;
+
+      if (rawDate) {
+        const jsDate = new Date(rawDate);
+        columnKey = `${jsDate.getFullYear()}-${jsDate.getMonth() + 1}-${jsDate.getDate()}`; // Format must be sortable
+      }
+
+      const existingColumn = dateColumns.find((x) => x.key === columnKey);
+      if (existingColumn) {
+        existingColumn.groups.push(group);
+      } else {
+        dateColumns.push({
+          key: columnKey,
+          groups: [group]
+        });
+      }
+    }
+
+    const columnsForProcessing = [
+      // First column: Groups without date information
+      dateColumns.find((x) => x.key === undefined)?.groups ?? [],
+
+      // Other columns: Groups with date information ordered ascending
+      ...dateColumns
+        .filter((x) => !!x.key)
+        .sort((a, b) => a.key!.localeCompare(b.key!))
+        .map((x) => x.groups)
+    ];
 
     this.viewModel = {
-      columns: [column(0), column(1), column(2), column(3), column(4)]
+      columns: columnsForProcessing
+        .filter((x) => x.length > 0)
+        .map((x) => ({
+          groups: x.map((group) => ({
+            id: group.id,
+            name: group.name,
+            notes: group.notes,
+            start: group.start ? new Date(group.start) : undefined,
+            end: group.end ? new Date(group.end) : undefined,
+            resources: group.assignments.map((assignment) => {
+              const resource = this._resourcePlanner?.resources.find((x) => x.id === assignment.resourceId)!;
+              return {
+                id: resource.id,
+                type: resource.type,
+                name: resource.name,
+                notes: resource.notes,
+                state: assignment.state
+              };
+            })
+          }))
+        }))
     };
   }
 }

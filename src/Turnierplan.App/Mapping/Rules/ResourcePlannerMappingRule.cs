@@ -37,7 +37,7 @@ internal sealed class ResourcePlannerMappingRule : MappingRuleBase<ResourcePlann
                     Notes = group.Notes,
                     Start = group.Start,
                     End = group.End,
-                    Assignment =
+                    Assignments =
                     [
                         ..group.ResourceAssignments.Select(assignment => new ResourceAssignmentDto
                         {
