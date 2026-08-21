@@ -12,6 +12,12 @@
         @switch (currentPage) {
           @case (0) {
             <!-- Resources page -->
+            <tp-action-button
+              *tpIsActionAllowed="[resourcePlanner.id, Actions.GenericWrite]"
+              [title]="'Portal.ViewResourcePlanner.NewResourceGroup.Title'"
+              [type]="'outline-success'"
+              [icon]="'plus-circle'"
+              (buttonClick)="manageResourcesComponent?.requestAddResourceGroup()" />
           }
           @case (1) {
             <!-- Views page -->
@@ -69,6 +75,7 @@
             <div class="flex-grow-1"></div>
             <div style="max-width: 2400px" class="overflow-x-auto">
               <tp-manage-resources
+                #manageResourcesComponent
                 [resourcePlanner]="resourcePlanner"
                 (errorOccured)="loadingState = { isLoading: false, error: $event }" />
             </div>

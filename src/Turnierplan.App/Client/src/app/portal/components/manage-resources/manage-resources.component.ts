@@ -4,6 +4,13 @@ import { ResourceAssignmentState } from '../../../api/models/resource-assignment
 import { ResourceType } from '../../../api/models/resource-type';
 import { TranslateDirective } from '@ngx-translate/core';
 import { ResourceGroupDto } from '../../../api/models/resource-group-dto';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NewResourceGroupDialogComponent } from '../new-resource-group-dialog/new-resource-group-dialog.component';
+import { switchMap, tap } from 'rxjs';
+import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicator.component';
+import { CreateResourceGroupEndpointRequest } from '../../../api/models/create-resource-group-endpoint-request';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { createResourceGroup } from '../../../api/fn/resource-groups/create-resource-group';
 
 type ResourcesViewModel = {
   columns: {
@@ -26,7 +33,7 @@ type ResourcesViewModel = {
 
 @Component({
   selector: 'tp-manage-resources',
-  imports: [TranslateDirective],
+  imports: [TranslateDirective, LoadingIndicatorComponent],
   templateUrl: './manage-resources.component.html'
 })
 export class ManageResourcesComponent {
@@ -41,8 +48,46 @@ export class ManageResourcesComponent {
 
   protected readonly resourceType = ResourceType;
 
+  protected isLoading = false;
   protected viewModel?: ResourcesViewModel;
   private _resourcePlanner?: ResourcePlannerDto;
+
+  constructor(
+    private readonly turnierplanApi: TurnierplanApi,
+    private readonly modalService: NgbModal
+  ) {}
+
+  public requestAddResourceGroup(): void {
+    if (!this._resourcePlanner) {
+      return;
+    }
+
+    const resourcePlannerId = this._resourcePlanner.id;
+
+    const ref = this.modalService.open(NewResourceGroupDialogComponent, {
+      centered: true,
+      size: 'md',
+      fullscreen: 'md'
+    });
+
+    ref.closed
+      .pipe(
+        tap(() => (this.isLoading = true)),
+        switchMap((request: CreateResourceGroupEndpointRequest) =>
+          this.turnierplanApi.invoke(createResourceGroup, { resourcePlannerId: resourcePlannerId, body: request })
+        )
+      )
+      .subscribe({
+        next: (createdGroup) => {
+          this._resourcePlanner?.resourceGroups.push(createdGroup);
+          this.updateViewModel();
+          this.isLoading = false;
+        },
+        error: (error) => {
+          this.errorOccured.emit(error);
+        }
+      });
+  }
 
   private updateViewModel(): void {
     if (!this._resourcePlanner) {

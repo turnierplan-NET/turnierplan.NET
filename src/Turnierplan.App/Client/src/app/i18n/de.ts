@@ -1010,6 +1010,12 @@ export const de = {
         Views: 'Ansichten',
         Settings: 'Einstellungen'
       },
+      NewResourceGroup: {
+        Title: 'Neue Gruppe',
+        Name: 'Name',
+        NameInvalid: 'Der Name muss angegeben werden',
+        Description: 'Beschreibung'
+      },
       ManageResources: {
         NoGroups: 'Keine Einträge vorhanden',
         EmptyGroup: 'Keine Einträge vorhanden'

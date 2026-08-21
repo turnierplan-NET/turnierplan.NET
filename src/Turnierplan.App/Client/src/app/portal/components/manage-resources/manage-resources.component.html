@@ -1,4 +1,6 @@
-@if (viewModel) {
+@if (isLoading) {
+  <tp-loading-indicator />
+} @else if (viewModel) {
   <div class="mb-5 d-flex flex-row gap-3">
     @for (column of viewModel.columns; track $index) {
       <div class="d-flex flex-column gap-3" style="min-width: 300px; max-width: 300px">

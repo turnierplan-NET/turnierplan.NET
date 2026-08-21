@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, viewChild } from '@angular/core';
 import { PageFrameComponent, PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
 import { ResourcePlannerDto } from '../../../api/models/resource-planner-dto';
@@ -17,6 +17,7 @@ import { SmallSpinnerComponent } from '../../../core/components/small-spinner/sm
 import { NotificationService } from '../../../core/services/notification.service';
 import { deleteResourcePlanner } from '../../../api/fn/resource-planners/delete-resource-planner';
 import { ManageResourcesComponent } from '../../components/manage-resources/manage-resources.component';
+import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 
 @Component({
   imports: [
@@ -27,11 +28,15 @@ import { ManageResourcesComponent } from '../../components/manage-resources/mana
     IsActionAllowedDirective,
     RbacWidgetComponent,
     SmallSpinnerComponent,
-    ManageResourcesComponent
+    ManageResourcesComponent,
+    ActionButtonComponent
   ],
   templateUrl: './view-resource-planner.component.html'
 })
 export class ViewResourcePlannerComponent {
+  @ViewChild('manageResourcesComponent')
+  protected manageResourcesComponent?: ManageResourcesComponent;
+
   protected readonly Actions = Actions;
 
   protected loadingState: LoadingState = { isLoading: true };
