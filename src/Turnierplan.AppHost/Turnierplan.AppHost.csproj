@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <OutputType>Exe</OutputType>
+    <AspireUseCliBundle>true</AspireUseCliBundle>
     <UserSecretsId>523f324d-1695-4d45-a000-a79765a1468a</UserSecretsId>
   </PropertyGroup>
 
