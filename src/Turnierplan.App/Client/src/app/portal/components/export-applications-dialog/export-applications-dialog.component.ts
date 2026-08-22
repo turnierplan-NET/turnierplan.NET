@@ -50,7 +50,7 @@ export class ExportApplicationsDialogComponent {
     this.turnierplanApi
       .invoke(exportApplications, {
         tournamentPlannerId: this.tournamentPlanner.id,
-        languageCode: this.translateService.getCurrentLang(),
+        languageCode: this.translateService.getCurrentLang() ?? 'de',
         includeApplicationTeams: this.form.getRawValue().includeApplicationTeams
       })
       .subscribe({

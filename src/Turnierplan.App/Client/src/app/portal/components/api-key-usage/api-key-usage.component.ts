@@ -54,7 +54,7 @@ export class ApiKeyUsageComponent implements OnDestroy {
           for (let i = 0; i < data.bucketCount; i++) {
             const bucketStart = new Date(new Date(data.timeFrameStart).getTime() + i * data.bucketWidthSeconds * 1000);
             const bucketCount = data.buckets.find((x) => x.bucketIndex === i)?.count ?? 0;
-            labels.push(formatDate(bucketStart, 'short', translateService.getCurrentLang()));
+            labels.push(formatDate(bucketStart, 'short', translateService.getCurrentLang() ?? 'de'));
             values.push(bucketCount);
             this.totalCount += bucketCount;
           }
