@@ -1,6 +1,6 @@
 /// <reference types="@angular/localize" />
 
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { enableProdMode, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { environment } from './environments/environment';
@@ -56,6 +56,7 @@ registerLocaleData(localeDe, 'de', localeDeExtra);
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideZoneChangeDetection(),
     importProvidersFrom(CommonModule, BrowserModule),
     provideHttpClient(withInterceptors([authenticationInterceptor, rolesInterceptor])),
     provideTranslateService({
