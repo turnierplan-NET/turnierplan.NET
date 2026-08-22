@@ -56,9 +56,8 @@ class IsLoadingFalseWith500ErrorTestComponent {}
 describe('LoadingStateDirective', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [TitleService],
+      providers: [TitleService, provideTranslateService()],
       imports: [
-        provideTranslateService(),
         RouterModule.forRoot([]),
         LoadingStateDirective,
         LoadingErrorComponent,
