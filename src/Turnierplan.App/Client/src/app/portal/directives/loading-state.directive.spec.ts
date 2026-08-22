@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService } from '@ngx-translate/core';
 
 import { ActionButtonComponent } from '../components/action-button/action-button.component';
 import { ErrorPageComponent } from '../components/error-page/error-page.component';
@@ -58,7 +58,7 @@ describe('LoadingStateDirective', () => {
     await TestBed.configureTestingModule({
       providers: [TitleService],
       imports: [
-        TranslateModule.forRoot(),
+        provideTranslateService(),
         RouterModule.forRoot([]),
         LoadingStateDirective,
         LoadingErrorComponent,
