@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -22,6 +22,7 @@ import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 
 @Component({
   templateUrl: './create-api-key.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     PageFrameComponent,
     AlertComponent,

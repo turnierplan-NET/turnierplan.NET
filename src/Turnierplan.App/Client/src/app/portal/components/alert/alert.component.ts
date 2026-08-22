@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { TranslateDirective } from '@ngx-translate/core';
 
@@ -7,6 +7,7 @@ export type AlertType = 'primary' | 'secondary' | 'success' | 'warning' | 'dange
 @Component({
   selector: 'tp-alert',
   templateUrl: './alert.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgClass, TranslateDirective]
 })
 export class AlertComponent {

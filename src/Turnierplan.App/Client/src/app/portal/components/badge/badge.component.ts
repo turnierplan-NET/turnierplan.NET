@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateDirective } from '@ngx-translate/core';
 
 @Component({
   selector: 'tp-badge',
   templateUrl: './badge.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective]
 })
 export class BadgeComponent {

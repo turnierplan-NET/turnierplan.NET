@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -16,6 +16,7 @@ import { LoadingStateDirective } from './loading-state.directive';
 @Component({
   imports: [LoadingStateDirective],
   selector: 'tp-is-loading-true-test-component',
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<ng-container *tpLoadingState="{ isLoading: true }">
     <p>Hello World</p>
   </ng-container>`
@@ -25,6 +26,7 @@ class IsLoadingTrueTestComponent {}
 @Component({
   imports: [LoadingStateDirective],
   selector: 'tp-is-loading-false-test-component',
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<ng-container *tpLoadingState="{ isLoading: false }">
     <p>Hello World</p>
   </ng-container>`
@@ -34,6 +36,7 @@ class IsLoadingFalseTestComponent {}
 @Component({
   imports: [LoadingStateDirective],
   selector: 'tp-is-loading-false-with-404-error-test-component',
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<ng-container *tpLoadingState="{ isLoading: false, error: { status: 404 } }">
     <p>Hello World</p>
   </ng-container>`
@@ -43,6 +46,7 @@ class IsLoadingFalseWith404ErrorTestComponent {}
 @Component({
   imports: [LoadingStateDirective],
   selector: 'tp-is-loading-false-with-500-error-test-component',
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<ng-container *tpLoadingState="{ isLoading: false, error: { status: 500 } }">
     <p>Hello World</p>
   </ng-container>`

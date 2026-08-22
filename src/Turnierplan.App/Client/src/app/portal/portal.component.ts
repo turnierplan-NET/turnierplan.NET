@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, DOCUMENT } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, DOCUMENT, ChangeDetectionStrategy } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
 import { AuthenticatedUser } from '../core/models/identity';
@@ -39,6 +39,7 @@ type UserInfoAction = 'ChangePassword' | 'Logout';
     E2eDirective,
     ColorThemeSelectorComponent
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [provideEchartsCore({ echarts })]
 })
 export class PortalComponent implements OnInit, OnDestroy {

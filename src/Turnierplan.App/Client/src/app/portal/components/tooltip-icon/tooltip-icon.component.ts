@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -6,6 +6,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'tp-tooltip-icon',
   templateUrl: './tooltip-icon.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgClass, NgbTooltip, TranslatePipe]
 })
 export class TooltipIconComponent {

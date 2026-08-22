@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActionButtonComponent } from '../action-button/action-button.component';
@@ -12,6 +12,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'tp-export-applications-dialog',
   imports: [TranslateDirective, ActionButtonComponent, SmallSpinnerComponent, ReactiveFormsModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './export-applications-dialog.component.html'
 })
 export class ExportApplicationsDialogComponent {

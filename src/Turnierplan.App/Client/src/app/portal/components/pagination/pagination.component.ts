@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateDirective } from '@ngx-translate/core';
 
@@ -14,6 +14,7 @@ export interface PaginationParams {
 @Component({
   selector: 'tp-pagination',
   imports: [NgbPagination, TranslateDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './pagination.component.html'
 })
 export class PaginationComponent {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
@@ -18,6 +18,7 @@ type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 
 @Component({
   templateUrl: './move-tournament-to-folder.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslateDirective,
     FormsModule,
@@ -75,9 +76,7 @@ export class MoveTournamentToFolderComponent {
     switch (this.folderMode) {
       case 'NoFolder':
         if (this.currentFolderId !== undefined) {
-          command = {
-            /* Specify nothing will reset folder */
-          };
+          command = {/* Specify nothing will reset folder */};
         }
         break;
       case 'ExistingFolder':

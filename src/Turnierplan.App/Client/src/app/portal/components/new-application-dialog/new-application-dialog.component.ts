@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateDirective } from '@ngx-translate/core';
@@ -27,6 +27,7 @@ const numberOfTeamsValidator = () => {
 
 @Component({
   templateUrl: './new-application-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslateDirective,
     FormsModule,

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 
 import { GroupView } from '../groups/groups.component';
 import { NgClass } from '@angular/common';
@@ -50,6 +50,7 @@ interface MatchViewGrouping {
   selector: 'tp-match-plan',
   templateUrl: './match-plan.component.html',
   styleUrls: ['./match-plan.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgClass, TranslateDirective, SmallSpinnerComponent, LiveIndicatorComponent, TranslatePipe, TranslateDatePipe, E2eDirective]
 })
 export class MatchPlanComponent implements OnChanges {

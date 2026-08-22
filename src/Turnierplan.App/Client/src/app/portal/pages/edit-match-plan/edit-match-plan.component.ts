@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { DndDropEvent, DndDropzoneDirective, DndDraggableDirective, DndHandleDirective, DndPlaceholderRefDirective } from 'ngx-drag-drop';
@@ -36,6 +36,7 @@ type ExtendedMatchEntry = SetTournamentMatchPlanEndpointRequestEntry & {
 
 @Component({
   templateUrl: './edit-match-plan.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     LoadingStateDirective,
     PageFrameComponent,

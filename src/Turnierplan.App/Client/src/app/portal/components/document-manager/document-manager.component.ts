@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, Output, Type, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, Output, Type, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { PdfJsViewerComponent, PdfJsViewerModule } from 'ng2-pdfjs-viewer';
@@ -33,6 +33,7 @@ import { makeSafeFileName } from '../../helpers/file-name';
   selector: 'tp-document-manager',
   templateUrl: './document-manager.component.html',
   styleUrls: ['document-manager.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslateDirective,
     NgClass,

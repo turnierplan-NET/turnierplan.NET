@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 
 import { NgClass, NgStyle } from '@angular/common';
 import { TournamentHeaderDto } from '../../../api/models/tournament-header-dto';
@@ -16,6 +16,7 @@ export type FolderTreeEntry = {
 @Component({
   selector: 'tp-folder-tree',
   templateUrl: './folder-tree.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgClass, NgStyle]
 })
 export class FolderTreeComponent {

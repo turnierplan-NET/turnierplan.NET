@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, switchMap, tap } from 'rxjs';
 
@@ -15,6 +15,7 @@ import { getDocuments } from '../../../api/fn/documents/get-documents';
 @Component({
   templateUrl: './document-copy.component.html',
   styleUrl: './document-copy.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [LoadingStateDirective, TranslateDirective, FolderTreeComponent, NgClass, SmallSpinnerComponent]
 })
 export class DocumentCopyComponent implements OnInit, OnDestroy {

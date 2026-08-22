@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 const pad = (i: number): string => (i < 10 ? `0${i}` : `${i}`);
@@ -6,6 +6,7 @@ const pad = (i: number): string => (i < 10 ? `0${i}` : `${i}`);
 @Component({
   selector: 'tp-duration-picker',
   templateUrl: './duration-picker.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormsModule]
 })
 export class DurationPickerComponent {

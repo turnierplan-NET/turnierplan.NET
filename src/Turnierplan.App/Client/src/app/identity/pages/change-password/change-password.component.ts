@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, switchMap, take, takeUntil } from 'rxjs';
 
@@ -21,6 +21,7 @@ enum PasswordChangeFailedReason {
 
 @Component({
   templateUrl: './change-password.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, FormsModule, SmallSpinnerComponent, NgClass, TranslatePipe]
 })
 export class ChangePasswordComponent implements OnInit, OnDestroy {

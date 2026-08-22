@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateService, TranslateDirective } from '@ngx-translate/core';
 import { BehaviorSubject, combineLatestWith, delay, distinctUntilChanged, map, Subject, switchMap, tap } from 'rxjs';
 
@@ -15,6 +15,7 @@ import { ChartWrapperComponent } from '../chart-wrapper/chart-wrapper.component'
 @Component({
   selector: 'tp-api-key-usage',
   templateUrl: './api-key-usage.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, FormsModule, ActionButtonComponent, AlertComponent, SmallSpinnerComponent, ChartWrapperComponent]
 })
 export class ApiKeyUsageComponent implements OnDestroy {

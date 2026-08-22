@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ErrorPageComponent } from '../error-page/error-page.component';
 import { TranslateDirective } from '@ngx-translate/core';
 
 @Component({
   templateUrl: './loading-error.component.html',
   styleUrls: ['./loading-error.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ErrorPageComponent, TranslateDirective]
 })
 export class LoadingErrorComponent {

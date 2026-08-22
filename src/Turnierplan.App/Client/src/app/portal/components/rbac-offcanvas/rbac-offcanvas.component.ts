@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { finalize, Observable, Subject } from 'rxjs';
 import { NotificationService } from '../../../core/services/notification.service';
 import { NgbActiveOffcanvas, NgbModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
@@ -23,6 +23,7 @@ interface IRbacOffcanvasTarget {
 
 @Component({
   templateUrl: './rbac-offcanvas.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslateDirective,
     SmallSpinnerComponent,

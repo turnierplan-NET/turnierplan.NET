@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService, TranslateDirective } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
@@ -15,6 +15,7 @@ type DocumentTypeEntry = {
 @Component({
   templateUrl: './document-select.component.html',
   styleUrl: './document-select.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [LoadingStateDirective, TranslateDirective]
 })
 export class DocumentSelectComponent implements OnInit {

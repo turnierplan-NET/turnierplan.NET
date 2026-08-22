@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 import { RbacOffcanvasComponent } from '../rbac-offcanvas/rbac-offcanvas.component';
 import { NavigationStart, Router } from '@angular/router';
@@ -16,6 +16,7 @@ interface IRbacWidgetTarget {
 @Component({
   selector: 'tp-rbac-widget',
   templateUrl: './rbac-widget.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ActionButtonComponent, TranslateDirective, E2eDirective]
 })
 export class RbacWidgetComponent {

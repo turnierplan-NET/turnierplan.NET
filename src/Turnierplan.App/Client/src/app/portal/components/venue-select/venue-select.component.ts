@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
@@ -14,6 +14,7 @@ import { PublicId } from '../../../api/models/public-id';
 
 @Component({
   templateUrl: './venue-select.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, SmallSpinnerComponent, FormsModule, ActionButtonComponent, NgClass]
 })
 export class VenueSelectComponent {

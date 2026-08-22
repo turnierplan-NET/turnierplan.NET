@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ApplicationDto } from '../../../api/models/application-dto';
 import { ApplicationChangeLogDto } from '../../../api/models/application-change-log-dto';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
@@ -14,6 +14,7 @@ import { ApplicationChangeLogEntryComponent } from '../application-change-log-en
   selector: 'tp-application-change-log',
   imports: [TranslateDirective, LoadingStateDirective, TranslateDatePipe, ApplicationChangeLogEntryComponent],
   templateUrl: './application-change-log.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './application-change-log.component.scss'
 })
 export class ApplicationChangeLogComponent implements OnDestroy {

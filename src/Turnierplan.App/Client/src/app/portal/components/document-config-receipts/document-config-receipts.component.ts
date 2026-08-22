@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 
@@ -11,6 +11,7 @@ import { ReceiptsDocumentConfiguration } from '../../../api/models/receipts-docu
 
 @Component({
   templateUrl: './document-config-receipts.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormsModule, ReactiveFormsModule, TranslateDirective, NgClass, TooltipIconComponent, ActionButtonComponent, TranslatePipe]
 })
 export class DocumentConfigReceiptsComponent extends DocumentConfigComponent<ReceiptsDocumentConfiguration> implements OnDestroy {

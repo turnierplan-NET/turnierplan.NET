@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
@@ -12,6 +12,7 @@ import { ComputationConfigurationDto } from '../../../api/models/computation-con
 
 @Component({
   templateUrl: './computation-configuration.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, FormsModule, NgClass, NgbTooltip, SmallSpinnerComponent, ActionButtonComponent, TranslatePipe]
 })
 export class ComputationConfigurationComponent {

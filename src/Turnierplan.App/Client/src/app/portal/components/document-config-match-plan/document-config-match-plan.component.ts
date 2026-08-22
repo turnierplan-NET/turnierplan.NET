@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -13,6 +13,7 @@ import { MatchPlanOutcomes } from '../../../api/models/match-plan-outcomes';
 
 @Component({
   templateUrl: './document-config-match-plan.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormsModule, ReactiveFormsModule, TranslateDirective, TooltipIconComponent, NgClass, AlertComponent, TranslatePipe]
 })
 export class DocumentConfigMatchPlanComponent extends DocumentConfigComponent<MatchPlanDocumentConfiguration> implements OnInit, OnDestroy {

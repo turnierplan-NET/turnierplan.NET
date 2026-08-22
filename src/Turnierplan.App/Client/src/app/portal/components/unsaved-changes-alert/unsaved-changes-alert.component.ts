@@ -1,4 +1,16 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, inject, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { AlertComponent } from '../alert/alert.component';
 import { TranslateDirective } from '@ngx-translate/core';
@@ -9,6 +21,7 @@ import { ColorThemeService } from '../../../core/services/color-theme.service';
 @Component({
   selector: 'tp-unsaved-changes-alert',
   templateUrl: './unsaved-changes-alert.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [AlertComponent, TranslateDirective, SmallSpinnerComponent, ActionButtonComponent]
 })
 export class UnsavedChangesAlertComponent implements OnInit, AfterViewInit, OnDestroy {

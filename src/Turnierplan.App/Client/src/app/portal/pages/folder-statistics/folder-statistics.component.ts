@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { of, Subject, switchMap, takeUntil, tap } from 'rxjs';
@@ -16,6 +16,7 @@ import { ChartWrapperComponent } from '../../components/chart-wrapper/chart-wrap
 
 @Component({
   templateUrl: './folder-statistics.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     LoadingStateDirective,
     PageFrameComponent,

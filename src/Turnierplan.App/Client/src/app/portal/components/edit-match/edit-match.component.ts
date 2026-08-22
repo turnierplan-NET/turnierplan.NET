@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
@@ -20,6 +20,7 @@ import { MatchOutcomeType } from '../../../api/models/match-outcome-type';
 @Component({
   templateUrl: './edit-match.component.html',
   styleUrls: ['./edit-match.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslateDirective,
     NgTemplateOutlet,

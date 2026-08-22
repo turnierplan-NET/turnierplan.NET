@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateDirective } from '@ngx-translate/core';
 import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
@@ -6,6 +6,7 @@ import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 @Component({
   selector: 'tp-id-widget',
   imports: [TranslateDirective, CopyToClipboardComponent, TooltipIconComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './id-widget.component.html'
 })
 export class IdWidgetComponent {

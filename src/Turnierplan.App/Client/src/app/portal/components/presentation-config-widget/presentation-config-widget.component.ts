@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { switchMap } from 'rxjs';
 
@@ -20,6 +20,7 @@ import { getTournamentPresentationConfiguration } from '../../../api/fn/tourname
 @Component({
   selector: 'tp-presentation-config-widget',
   templateUrl: './presentation-config-widget.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, ActionButtonComponent, NgClass, FormsModule, UnsavedChangesAlertComponent, AlertComponent, TranslatePipe]
 })
 export class PresentationConfigWidgetComponent {
