@@ -4,7 +4,7 @@ import { enableProdMode, importProvidersFrom, provideZoneChangeDetection } from 
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { environment } from './environments/environment';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/http';
 import { authenticationInterceptor } from './app/core/interceptors/authentication.interceptor';
 import { rolesInterceptor } from './app/core/interceptors/roles.interceptor';
 import { CommonModule, registerLocaleData } from '@angular/common';
@@ -58,7 +58,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideZoneChangeDetection(),
     importProvidersFrom(CommonModule, BrowserModule),
-    provideHttpClient(withInterceptors([authenticationInterceptor, rolesInterceptor])),
+    provideHttpClient(withXhr(), withInterceptors([authenticationInterceptor, rolesInterceptor])),
     provideTranslateService({
       loader: provideTranslateLoader(ImmediateTranslateLoader)
     }),
