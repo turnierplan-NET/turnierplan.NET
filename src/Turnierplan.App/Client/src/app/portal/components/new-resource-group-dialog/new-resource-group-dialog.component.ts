@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
-import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { TranslateDirective } from '@ngx-translate/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActionButtonComponent } from '../action-button/action-button.component';
-import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CreateResourceGroupEndpointRequest } from '../../../api/models/create-resource-group-endpoint-request';
 
 @Component({
   selector: 'tp-new-resource-group-dialog',
-  imports: [TranslateDirective, ActionButtonComponent, FormsModule, ReactiveFormsModule, TranslatePipe],
+  imports: [TranslateDirective, ActionButtonComponent, FormsModule, ReactiveFormsModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './new-resource-group-dialog.component.html'
 })
 export class NewResourceGroupDialogComponent {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ResourcePlannerDto } from '../../../api/models/resource-planner-dto';
 import { ResourceAssignmentState } from '../../../api/models/resource-assignment-state';
 import { ResourceType } from '../../../api/models/resource-type';
@@ -34,6 +34,7 @@ type ResourcesViewModel = {
 @Component({
   selector: 'tp-manage-resources',
   imports: [TranslateDirective, LoadingIndicatorComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './manage-resources.component.html'
 })
 export class ManageResourcesComponent {
