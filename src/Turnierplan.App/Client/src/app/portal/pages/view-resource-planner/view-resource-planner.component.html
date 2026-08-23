@@ -12,22 +12,32 @@
         @switch (currentPage) {
           @case (0) {
             <!-- Resources page -->
+            <tp-action-button
+              *tpIsActionAllowed="[resourcePlanner.id, Actions.GenericWrite]"
+              [title]="'Portal.ViewResourcePlanner.NewResourceGroup.Title'"
+              [type]="'outline-success'"
+              [icon]="'plus-circle'"
+              (buttonClick)="manageResourcesComponent?.requestAddResourceGroup()" />
           }
           @case (1) {
             <!-- Views page -->
           }
           @case (2) {
             <!-- Settings page -->
+            @if (isUpdatingName) {
+              <tp-small-spinner />
+            }
             <tp-rename-button
               translationKey="Portal.ViewResourcePlanner.Settings.Rename"
               [current]="resourcePlanner.name"
+              [disabled]="isUpdatingName"
               (renamed)="renameResourcePlanner($event)" />
           }
         }
       </ng-template>
 
       <ng-template #mainContent>
-        <!-- Resources page does not need the div since it uses full-width content exlusively. -->
+        <!-- Resources page does not need the div since it uses full-width content exclusively. -->
         @if (currentPage !== 0) {
           <div class="card">
             @switch (currentPage) {
@@ -61,7 +71,16 @@
       <ng-template #fullWidthContent>
         @if (currentPage === 0) {
           <!-- Resources page -->
-          resources
+          <div class="mt-3 d-flex flex-row px-3">
+            <div class="flex-grow-1"></div>
+            <div style="max-width: 2400px" class="overflow-x-auto">
+              <tp-manage-resources
+                #manageResourcesComponent
+                [resourcePlanner]="resourcePlanner"
+                (errorOccured)="loadingState = { isLoading: false, error: $event }" />
+            </div>
+            <div class="flex-grow-1"></div>
+          </div>
         }
       </ng-template>
     </tp-page-frame>

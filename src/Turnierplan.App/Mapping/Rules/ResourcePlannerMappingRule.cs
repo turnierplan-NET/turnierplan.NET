@@ -30,23 +30,7 @@ internal sealed class ResourcePlannerMappingRule : MappingRuleBase<ResourcePlann
             ],
             ResourceGroups =
             [
-                ..source.ResourceGroups.Select(group => new ResourceGroupDto
-                {
-                    Id = group.Id,
-                    Name = group.Name,
-                    Description = group.Description,
-                    Type = group.Type,
-                    Start = group.Start,
-                    End = group.End,
-                    Assignment =
-                    [
-                        ..group.ResourceAssignments.Select(assignment => new ResourceAssignmentDto
-                        {
-                            ResourceId = assignment.Resource.Id,
-                            State = assignment.State
-                        })
-                    ]
-                })
+                ..mapper.MapCollection<ResourceGroupDto>(source.ResourceGroups)
             ],
             Views =
             [

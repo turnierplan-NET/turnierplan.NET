@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <div class="modal-title" translate="Portal.ViewResourcePlanner.NewResourceGroup.Title"></div>
+  <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form">
+    <div class="form-group mb-2">
+      @let nameControl = form.get('name')!;
+      <label class="form-label" for="name" translate="Portal.ViewResourcePlanner.NewResourceGroup.Name"></label>
+      <input
+        class="form-control"
+        id="name"
+        type="text"
+        [formControlName]="'name'"
+        [class]="nameControl.touched ? (nameControl.invalid ? 'is-invalid' : 'is-valid') : ''" />
+      @if (nameControl.touched && !nameControl.valid) {
+        <div class="invalid-feedback" translate="Portal.ViewResourcePlanner.NewResourceGroup.NameInvalid"></div>
+      }
+    </div>
+    <div class="form-group mb-2">
+      <label class="form-label" for="description" translate="Portal.ViewResourcePlanner.NewResourceGroup.Description"></label>
+      <input class="form-control" id="description" type="text" [formControlName]="'description'" />
+    </div>
+    <div class="form-group mb-2">
+      @let startControl = form.get('start')!;
+      <label class="form-label" for="start" translate="Portal.ViewResourcePlanner.NewResourceGroup.Start"></label>
+      <input
+        id="start"
+        type="datetime-local"
+        class="form-control"
+        [formControlName]="'start'"
+        [class]="startControl.invalid ? 'is-invalid' : ''" />
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <tp-action-button [type]="'outline-dark'" [title]="'Portal.General.Cancel'" (buttonClick)="modal.dismiss()" />
+  <tp-action-button [type]="'success'" [title]="'Portal.General.Save'" (buttonClick)="submit()" />
+</div>

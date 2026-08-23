@@ -15,12 +15,10 @@ internal sealed class ResourceGroupEntityTypeConfiguration : IEntityTypeConfigur
         builder.Property(x => x.Id)
             .IsRequired();
 
-        builder.Property(x => x.Name);
-
-        builder.Property(x => x.Description);
-
-        builder.Property(x => x.Type)
+        builder.Property(x => x.Name)
             .IsRequired();
+
+        builder.Property(x => x.Notes);
 
         builder.Property(x => x.Start);
 
