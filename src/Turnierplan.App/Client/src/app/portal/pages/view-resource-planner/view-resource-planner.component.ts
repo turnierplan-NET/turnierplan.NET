@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PageFrameComponent, PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
 import { ResourcePlannerDto } from '../../../api/models/resource-planner-dto';
@@ -22,6 +22,7 @@ import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.co
     IsActionAllowedDirective,
     RbacWidgetComponent
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './view-resource-planner.component.html'
 })
 export class ViewResourcePlannerComponent {

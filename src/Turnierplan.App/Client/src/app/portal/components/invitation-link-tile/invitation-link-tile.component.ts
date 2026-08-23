@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { UpdateTournamentPlannerFunc } from '../../pages/view-tournament-planner/view-tournament-planner.component';
@@ -24,6 +24,7 @@ import { ImageDto } from '../../../api/models/image-dto';
 @Component({
   selector: 'tp-invitation-link-tile',
   templateUrl: './invitation-link-tile.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     NgStyle,
     TranslateDirective,

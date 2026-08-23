@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateDirective } from '@ngx-translate/core';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { FormsModule } from '@angular/forms';
@@ -42,6 +42,7 @@ export type SelectApplicationTeamResult = {
     LabelComponent
   ],
   templateUrl: './select-application-team.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './select-application-team.component.scss'
 })
 export class SelectApplicationTeamComponent implements OnInit, OnDestroy {

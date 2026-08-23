@@ -1,4 +1,4 @@
-﻿import { Component, OnDestroy } from '@angular/core';
+﻿import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, from, of, Subject, switchMap, takeUntil } from 'rxjs';
@@ -25,6 +25,7 @@ type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 
 @Component({
   templateUrl: './create-tournament.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     LoadingStateDirective,
     PageFrameComponent,

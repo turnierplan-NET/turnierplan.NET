@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
@@ -19,6 +19,7 @@ type VersionCache = {
   selector: 'tp-updates-check',
   imports: [SmallSpinnerComponent, TranslateDirective, TranslatePipe, NgbTooltip],
   templateUrl: './updates-check.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: 'updates-check.component.scss'
 })
 export class UpdatesCheckComponent implements OnInit {

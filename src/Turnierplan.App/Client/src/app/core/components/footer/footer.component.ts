@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { environment } from '../../../../environments/environment';
 import { NgTemplateOutlet, NgClass } from '@angular/common';
@@ -9,6 +9,7 @@ import { ColorThemeSelectorComponent } from '../color-theme-selector/color-theme
 @Component({
   selector: 'tp-footer',
   templateUrl: './footer.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgTemplateOutlet, TranslateDirective, RouterLink, NgClass, ColorThemeSelectorComponent]
 })
 export class FooterComponent {

@@ -1,4 +1,4 @@
-﻿import { Component, OnDestroy } from '@angular/core';
+﻿import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { from, of, Subject, switchMap, takeUntil } from 'rxjs';
@@ -16,6 +16,7 @@ import { createVenue } from '../../../api/fn/venues/create-venue';
 
 @Component({
   templateUrl: './create-venue.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     LoadingStateDirective,
     PageFrameComponent,

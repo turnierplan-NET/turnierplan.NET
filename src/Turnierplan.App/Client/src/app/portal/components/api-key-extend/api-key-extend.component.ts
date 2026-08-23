@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { ApiKeyDto } from '../../../api/models/api-key-dto';
 import { Observable, Subject } from 'rxjs';
 import { ActionButtonComponent } from '../action-button/action-button.component';
@@ -22,6 +22,7 @@ import { AlertComponent } from '../alert/alert.component';
     TranslateDatePipe,
     AlertComponent
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './api-key-extend.component.html'
 })
 export class ApiKeyExtendComponent implements OnDestroy {

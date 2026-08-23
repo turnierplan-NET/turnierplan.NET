@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, ChangeDetectionStrategy } from '@angular/core';
 
 import { LocalStorageService } from '../../services/local-storage.service';
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
@@ -20,6 +20,7 @@ import { setFolderName } from '../../../api/fn/folders/set-folder-name';
 @Component({
   selector: 'tp-tournament-explorer',
   templateUrl: './tournament-explorer.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     FolderTreeComponent,
     SmallSpinnerComponent,

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Actions } from '../../../generated/actions';
@@ -20,6 +20,7 @@ export interface ImageChooserResult {
 @Component({
   templateUrl: './image-chooser.component.html',
   styleUrls: ['./image-chooser.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, LoadingIndicatorComponent, ActionButtonComponent, NgClass, FileSizePipe]
 })
 export class ImageChooserComponent {

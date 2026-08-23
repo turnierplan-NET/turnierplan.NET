@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { ApplicationsFilter, defaultApplicationsFilter, InvitationLinkFilterValue } from '../../models/applications-filter';
 import { MultiSelectFilterOption, MultiSelectFilterComponent } from '../multi-select-filter/multi-select-filter.component';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +10,7 @@ import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto
 @Component({
   selector: 'tp-manage-applications-filter',
   templateUrl: './manage-applications-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormsModule, MultiSelectFilterComponent, ActionButtonComponent, NgbTooltip, TranslatePipe]
 })
 export class ManageApplicationsFilterComponent {

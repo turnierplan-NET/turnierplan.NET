@@ -1,4 +1,15 @@
-import { Component, ContentChild, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef } from '@angular/core';
+import {
+  Component,
+  ContentChild,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { take } from 'rxjs';
 
 import { LocalStorageService } from '../../services/local-storage.service';
@@ -20,6 +31,7 @@ export interface PageFrameNavigationTab {
   selector: 'tp-page-frame',
   templateUrl: './page-frame.component.html',
   styleUrls: ['./page-frame.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgClass, NgTemplateOutlet, RouterLink, AsyncPipe, TranslatePipe, E2eDirective]
 })
 export class PageFrameComponent implements OnInit, OnChanges {

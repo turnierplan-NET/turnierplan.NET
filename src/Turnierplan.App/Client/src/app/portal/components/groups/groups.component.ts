@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { Actions } from '../../../generated/actions';
 import { NgClass } from '@angular/common';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
@@ -32,6 +32,7 @@ export interface GroupTeamView {
 @Component({
   selector: 'tp-groups',
   templateUrl: './groups.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgClass, SmallSpinnerComponent, IsActionAllowedDirective, RenameButtonComponent, TranslateDirective]
 })
 export class GroupsComponent {

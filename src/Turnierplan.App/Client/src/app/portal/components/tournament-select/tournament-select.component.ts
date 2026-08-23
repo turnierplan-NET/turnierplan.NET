@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
@@ -10,6 +10,7 @@ import { getTournaments } from '../../../api/fn/tournaments/get-tournaments';
 @Component({
   templateUrl: './tournament-select.component.html',
   styleUrl: './tournament-select.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [LoadingStateDirective, TranslateDirective, FolderTreeComponent]
 })
 export class TournamentSelectComponent implements OnInit {

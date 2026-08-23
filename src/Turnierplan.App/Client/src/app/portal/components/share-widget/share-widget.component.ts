@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
 import { TranslateDirective } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
@@ -11,6 +11,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 @Component({
   selector: 'tp-share-widget',
   templateUrl: './share-widget.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, NgClass, ShareLinkComponent, QRCodeComponent, AutoReloadToggleComponent, ReactiveFormsModule, FormsModule]
 })
 export class ShareWidgetComponent {

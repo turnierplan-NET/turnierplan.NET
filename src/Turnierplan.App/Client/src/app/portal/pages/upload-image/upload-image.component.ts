@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
@@ -31,6 +31,7 @@ import { ViewOrganizationComponent } from '../view-organization/view-organizatio
     ActionButtonComponent,
     LoadingIndicatorComponent
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './upload-image.component.html'
 })
 export class UploadImageComponent implements OnDestroy {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem } from '@ng-bootstrap/ng-bootstrap';
 import { NgClass } from '@angular/common';
 import { TranslateDirective } from '@ngx-translate/core';
@@ -12,6 +12,7 @@ export type MultiSelectFilterOption = {
 @Component({
   selector: 'tp-multi-select-filter',
   templateUrl: './multi-select-filter.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgbDropdown, NgbDropdownToggle, NgClass, TranslateDirective, NgbDropdownMenu, FormsModule, NgbDropdownItem]
 })
 export class MultiSelectFilterComponent {

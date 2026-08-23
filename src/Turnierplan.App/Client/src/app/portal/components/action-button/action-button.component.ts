@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { ColorThemeService } from '../../../core/services/color-theme.service';
@@ -7,6 +7,7 @@ import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'tp-action-button',
   templateUrl: './action-button.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgClass, TranslateDirective, TranslatePipe]
 })
 export class ActionButtonComponent implements OnInit, OnDestroy {

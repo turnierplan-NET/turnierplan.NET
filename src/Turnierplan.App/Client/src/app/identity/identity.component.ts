@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from '../core/components/footer/footer.component';
 
 @Component({
   templateUrl: './identity.component.html',
   styleUrls: ['./identity.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RouterOutlet, FooterComponent]
 })
 export class IdentityComponent {}

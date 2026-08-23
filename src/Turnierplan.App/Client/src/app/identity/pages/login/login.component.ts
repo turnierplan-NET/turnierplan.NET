@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -11,6 +11,7 @@ import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 @Component({
   templateUrl: './login.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, FormsModule, SmallSpinnerComponent, NgClass, E2eDirective]
 })
 export class LoginComponent implements OnInit, OnDestroy {

@@ -1,10 +1,11 @@
-import { Component, inject, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, TemplateRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgbOffcanvas, NgbOffcanvasRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'tp-offcanvas-wrapper',
   imports: [ActionButtonComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './offcanvas-wrapper.component.html'
 })
 export class OffcanvasWrapperComponent implements OnDestroy {

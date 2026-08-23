@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { take } from 'rxjs';
 
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
@@ -18,6 +18,7 @@ import { AllowCreateOrganizationDirective } from '../../directives/allow-create-
 
 @Component({
   templateUrl: './landing-page.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     LoadingStateDirective,
     IsAdministratorDirective,

@@ -1,5 +1,5 @@
 import { formatDate, NgStyle } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, combineLatestWith, delayWhen, interval, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
@@ -46,6 +46,7 @@ type TimetableViewDayRowEntry = {
 @Component({
   templateUrl: './folder-timetable.component.html',
   styleUrl: './folder-timetable.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     LoadingStateDirective,
     PageFrameComponent,

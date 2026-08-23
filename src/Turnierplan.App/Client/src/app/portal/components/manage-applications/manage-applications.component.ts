@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, ChangeDetectionStrategy } from '@angular/core';
 import { ApplicationsFilter, applicationsFilterToQueryParameters } from '../../models/applications-filter';
 import { BehaviorSubject, combineLatestWith, Observable, ReplaySubject, switchMap, tap } from 'rxjs';
 import { TextInputDialogComponent } from '../text-input-dialog/text-input-dialog.component';
@@ -53,6 +53,7 @@ import { setApplicationContactTelephone } from '../../../api/fn/applications/set
   selector: 'tp-manage-applications',
   templateUrl: './manage-applications.component.html',
   styleUrl: './manage-applications.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     LoadingIndicatorComponent,
     TranslateDirective,

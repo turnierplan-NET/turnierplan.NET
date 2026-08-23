@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { Actions } from '../../../generated/actions';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
@@ -37,6 +37,7 @@ export interface TeamView {
 @Component({
   selector: 'tp-team-list',
   templateUrl: './team-list.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslateDirective,
     TooltipIconComponent,

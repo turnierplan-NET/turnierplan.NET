@@ -10,7 +10,7 @@
   <Import Project="../Turnierplan.Test.Common.props" />
 
   <ItemGroup>
-    <PackageReference Include="S3Server" Version="7.3.1" />
+    <PackageReference Include="S3Server" Version="7.3.2" />
   </ItemGroup>
 
   <ItemGroup>

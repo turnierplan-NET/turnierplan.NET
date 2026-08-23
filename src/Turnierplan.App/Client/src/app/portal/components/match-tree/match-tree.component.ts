@@ -9,7 +9,8 @@ import {
   QueryList,
   SimpleChanges,
   ViewChild,
-  ViewChildren
+  ViewChildren,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import { GroupView } from '../groups/groups.component';
@@ -38,6 +39,7 @@ type ConnectingLine = {
   selector: 'tp-match-tree',
   templateUrl: './match-tree.component.html',
   styleUrl: './match-tree.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgClass, NgTemplateOutlet, NgStyle, SmallSpinnerComponent, LiveIndicatorComponent, TranslateDirective, TranslateDatePipe]
 })
 export class MatchTreeComponent implements OnChanges, AfterViewInit {

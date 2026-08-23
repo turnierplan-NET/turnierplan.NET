@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 import { EChartsCoreOption } from 'echarts/core';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import { ColorThemeService } from '../../../core/services/color-theme.service';
@@ -7,6 +7,7 @@ import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'tp-chart-wrapper',
   imports: [NgxEchartsDirective, AsyncPipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './chart-wrapper.component.html'
 })
 export class ChartWrapperComponent {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateDirective } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
@@ -9,6 +9,7 @@ import { CreateApplicationTeamEndpointRequest } from '../../../api/models/create
 
 @Component({
   imports: [ActionButtonComponent, TranslateDirective, FormsModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './manage-applications-add-team.component.html'
 })
 export class ManageApplicationsAddTeamComponent {

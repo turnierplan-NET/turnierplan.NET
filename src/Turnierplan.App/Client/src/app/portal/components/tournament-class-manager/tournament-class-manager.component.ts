@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { Actions } from '../../../generated/actions';
 import { AuthorizationService } from '../../../core/services/authorization.service';
 import { UpdateTournamentPlannerFunc } from '../../pages/view-tournament-planner/view-tournament-planner.component';
@@ -15,6 +15,7 @@ import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto
 @Component({
   selector: 'tp-tournament-classes-manager',
   templateUrl: './tournament-class-manager.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslateDirective,
     IsActionAllowedDirective,

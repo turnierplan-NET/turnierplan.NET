@@ -7,7 +7,8 @@ import {
   Injector,
   Type,
   ViewChild,
-  ViewContainerRef
+  ViewContainerRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
@@ -27,6 +28,7 @@ export const CURRENT_CONFIGURATION = new InjectionToken<string>('CURRENT_CONFIGU
 
 @Component({
   templateUrl: './document-config-frame.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, ActionButtonComponent]
 })
 export class DocumentConfigFrameComponent implements AfterViewInit {

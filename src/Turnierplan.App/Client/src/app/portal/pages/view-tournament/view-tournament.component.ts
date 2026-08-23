@@ -1,4 +1,4 @@
-﻿import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
+﻿import { Component, Injector, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateDirective, TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -79,6 +79,7 @@ import { deleteRankingOverwrite } from '../../../api/fn/ranking-overwrites/delet
 
 @Component({
   templateUrl: './view-tournament.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     LoadingStateDirective,
     PageFrameComponent,

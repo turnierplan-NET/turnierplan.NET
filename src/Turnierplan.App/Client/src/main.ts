@@ -1,14 +1,14 @@
 /// <reference types="@angular/localize" />
 
-import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { enableProdMode, provideZoneChangeDetection } from '@angular/core';
 import localeDe from '@angular/common/locales/de';
 import localeDeExtra from '@angular/common/locales/extra/de';
 import { environment } from './environments/environment';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/http';
 import { authenticationInterceptor } from './app/core/interceptors/authentication.interceptor';
 import { rolesInterceptor } from './app/core/interceptors/roles.interceptor';
-import { CommonModule, registerLocaleData } from '@angular/common';
-import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import { registerLocaleData } from '@angular/common';
+import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter, Routes, UrlSegment } from '@angular/router';
 import { TranslateLoader, TranslationObject, provideTranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
@@ -56,10 +56,10 @@ registerLocaleData(localeDe, 'de', localeDeExtra);
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(CommonModule, BrowserModule),
-    provideHttpClient(withInterceptors([authenticationInterceptor, rolesInterceptor])),
+    provideZoneChangeDetection(),
+    provideHttpClient(withXhr(), withInterceptors([authenticationInterceptor, rolesInterceptor])),
     provideTranslateService({
-      loader: provideTranslateLoader(ImmediateTranslateLoader)
+      loader: provideTranslateLoader(() => new ImmediateTranslateLoader()) // Use factory function instead of raw type - Otherwise, the built application will not work due to an error
     }),
     provideRouter(routes)
   ]
