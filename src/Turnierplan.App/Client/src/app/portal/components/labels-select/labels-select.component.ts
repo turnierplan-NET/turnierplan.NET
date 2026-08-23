@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateDirective } from '@ngx-translate/core';
@@ -8,6 +8,7 @@ import { LabelComponent } from '../label/label.component';
 
 @Component({
   imports: [ActionButtonComponent, TranslateDirective, FormsModule, LabelComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './labels-select.component.html'
 })
 export class LabelsSelectComponent {

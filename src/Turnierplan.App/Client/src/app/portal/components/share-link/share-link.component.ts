@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { CopyToClipboardComponent } from '../copy-to-clipboard/copy-to-clipboard.component';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
@@ -7,6 +7,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 @Component({
   selector: 'tp-share-link',
   templateUrl: './share-link.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CopyToClipboardComponent, NgbTooltip, TranslatePipe]
 })
 export class ShareLinkComponent {

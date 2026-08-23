@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { IllustrationComponent } from '../illustration/illustration.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { RouterLink } from '@angular/router';
@@ -7,6 +7,7 @@ import { RouterLink } from '@angular/router';
   selector: 'tp-error-page',
   templateUrl: './error-page.component.html',
   styleUrls: ['./error-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [IllustrationComponent, ActionButtonComponent, RouterLink]
 })
 export class ErrorPageComponent {

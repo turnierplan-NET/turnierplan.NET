@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertType, AlertComponent } from '../alert/alert.component';
 import { TranslateDirective } from '@ngx-translate/core';
@@ -13,6 +13,7 @@ export interface TextInputDialogAlert {
 
 @Component({
   templateUrl: './text-input-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, FormsModule, NgClass, AlertComponent, ActionButtonComponent]
 })
 export class TextInputDialogComponent {

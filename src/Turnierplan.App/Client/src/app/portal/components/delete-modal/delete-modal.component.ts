@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
@@ -24,6 +24,7 @@ export const showDeleteModal = (ngbModal: NgbModal, translationKey: string, targ
 
 @Component({
   imports: [ActionButtonComponent, TranslatePipe, TranslateDirective, E2eDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './delete-modal.component.html'
 })
 export class DeleteModalComponent {

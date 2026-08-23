@@ -1,4 +1,4 @@
-﻿import { Component, OnDestroy } from '@angular/core';
+﻿import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { from, of, Subject, switchMap, takeUntil } from 'rxjs';
@@ -16,6 +16,7 @@ import { createResourcePlanner } from '../../../api/fn/resource-planners/create-
 
 @Component({
   templateUrl: './create-resource-planner.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     LoadingStateDirective,
     PageFrameComponent,

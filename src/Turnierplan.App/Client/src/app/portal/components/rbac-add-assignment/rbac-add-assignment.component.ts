@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { NgbActiveModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { finalize, Observable, Subject } from 'rxjs';
 import { NotificationService } from '../../../core/services/notification.service';
@@ -18,6 +18,7 @@ type Step = 'SelectRole' | 'SelectPrincipal';
 @Component({
   templateUrl: './rbac-add-assignment.component.html',
   styleUrl: './rbac-add-assignment.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, NgClass, ActionButtonComponent, FormsModule, NgbTooltip, SmallSpinnerComponent, TranslatePipe]
 })
 export class RbacAddAssignmentComponent implements OnDestroy {

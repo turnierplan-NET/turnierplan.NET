@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
@@ -12,6 +12,7 @@ import { getPrincipalName } from '../../../api/fn/principals/get-principal-name'
 @Component({
   selector: 'tp-rbac-principal',
   templateUrl: './rbac-principal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgbTooltip, NgClass, AsyncPipe, TranslatePipe]
 })
 export class RbacPrincipalComponent implements OnInit {

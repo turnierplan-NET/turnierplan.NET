@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +10,7 @@ import { showDeleteModal } from '../delete-modal/delete-modal.component';
 @Component({
   selector: 'tp-delete-widget',
   templateUrl: './delete-widget.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, NgClass, FormsModule, ActionButtonComponent, TranslatePipe, E2eDirective]
 })
 export class DeleteWidgetComponent {

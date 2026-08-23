@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ColorThemeService } from './core/services/color-theme.service';
@@ -7,6 +7,7 @@ import { NotificationsComponent } from './core/components/notifications/notifica
 @Component({
   selector: 'tp-root',
   templateUrl: './app.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RouterOutlet, NotificationsComponent]
 })
 export class AppComponent {

@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { turnierplan } from 'e2e/consts/turnierplan';
+import { turnierplan } from '../consts/turnierplan';
 
 export class LandingPage {
   constructor(private readonly page: Page) {}

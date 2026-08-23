@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { of, Subject, switchMap, takeUntil } from 'rxjs';
@@ -28,6 +28,7 @@ import { deleteVenue } from '../../../api/fn/venues/delete-venue';
 
 @Component({
   templateUrl: './view-venue.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     LoadingStateDirective,
     PageFrameComponent,

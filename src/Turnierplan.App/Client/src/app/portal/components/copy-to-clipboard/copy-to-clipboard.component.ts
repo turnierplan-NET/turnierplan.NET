@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'tp-copy-to-clipboard',
   templateUrl: './copy-to-clipboard.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgbTooltip, TranslatePipe]
 })
 export class CopyToClipboardComponent {

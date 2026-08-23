@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ColorTheme, ColorThemeService } from '../../services/color-theme.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Visibility } from '../../../api/models/visibility';
@@ -8,6 +8,7 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'tp-color-theme-selector',
   imports: [TranslateDirective, TranslatePipe, NgbTooltip],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './color-theme-selector.component.html'
 })
 export class ColorThemeSelectorComponent {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -6,6 +6,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   selector: 'tp-illustration',
   templateUrl: './illustration.component.html',
   styleUrls: ['./illustration.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgClass, TranslatePipe]
 })
 export class IllustrationComponent {

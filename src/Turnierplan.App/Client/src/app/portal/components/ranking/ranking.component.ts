@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
 import { RankingReason } from '../../../api/models/ranking-reason';
@@ -16,6 +16,7 @@ export interface RankingView {
 @Component({
   selector: 'tp-ranking',
   templateUrl: './ranking.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, TranslatePipe, E2eDirective, DeleteButtonComponent, TooltipIconComponent]
 })
 export class RankingComponent {

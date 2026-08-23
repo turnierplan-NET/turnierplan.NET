@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { DeleteWidgetComponent } from '../delete-widget/delete-widget.component';
 import { TranslateDirective } from '@ngx-translate/core';
 import { OffcanvasWrapperComponent } from '../offcanvas-wrapper/offcanvas-wrapper.component';
@@ -6,6 +6,7 @@ import { OffcanvasWrapperComponent } from '../offcanvas-wrapper/offcanvas-wrappe
 @Component({
   selector: 'tp-delete-offcanvas',
   imports: [DeleteWidgetComponent, TranslateDirective, OffcanvasWrapperComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './delete-offcanvas.component.html'
 })
 export class DeleteOffcanvasComponent {

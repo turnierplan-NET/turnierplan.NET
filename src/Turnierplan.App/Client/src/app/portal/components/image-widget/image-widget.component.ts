@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ImageChooserComponent, ImageChooserResult } from '../image-chooser/image-chooser.component';
@@ -9,6 +9,7 @@ import { ImageDto } from '../../../api/models/image-dto';
 @Component({
   selector: 'tp-image-widget',
   templateUrl: './image-widget.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, ActionButtonComponent]
 })
 export class ImageWidgetComponent {

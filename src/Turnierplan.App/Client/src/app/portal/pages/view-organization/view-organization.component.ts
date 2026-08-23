@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router, RouterLink } from '@angular/router';
 import { mergeMap, Observable, of, Subject, switchMap, takeUntil, tap, zip } from 'rxjs';
 
@@ -55,6 +55,7 @@ import { getResourcePlanners } from '../../../api/fn/resource-planners/get-resou
 
 @Component({
   templateUrl: './view-organization.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     LoadingStateDirective,
     PageFrameComponent,

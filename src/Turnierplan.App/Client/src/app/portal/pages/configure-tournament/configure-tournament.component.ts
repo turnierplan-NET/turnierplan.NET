@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { combineLatestWith, from, of, Subject, switchMap, takeUntil } from 'rxjs';
@@ -73,6 +73,7 @@ interface TemporaryAdditionalPlayoff {
 
 @Component({
   templateUrl: './configure-tournament.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     LoadingStateDirective,
     PageFrameComponent,
@@ -705,35 +706,29 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
             additionalPlayoffs: this.enableAdditionalPlayoffs
               ? this.additionalPlayoffPositions
                   .filter((position) => this.additionalPlayoffs[position].isEnabled)
-                  .map(
-                    (position): AdditionalPlayoffDto => ({
-                      playoffPosition: position,
-                      teamSelectorA: this.additionalPlayoffs[position].teamSelectorA,
-                      teamSelectorB: this.additionalPlayoffs[position].teamSelectorB
-                    })
-                  )
+                  .map((position): AdditionalPlayoffDto => ({
+                    playoffPosition: position,
+                    teamSelectorA: this.additionalPlayoffs[position].teamSelectorA,
+                    teamSelectorB: this.additionalPlayoffs[position].teamSelectorB
+                  }))
               : []
           }
         : undefined;
 
     return {
-      groups: this.groups.map(
-        (group): ConfigureTournamentEndpointRequestGroupEntry => ({
-          id: group.id,
-          alphabeticalId: group.alphabeticalId,
-          displayName: group.displayName.length === 0 ? undefined : group.displayName,
-          teams: group.teams.map(
-            (team): ConfigureTournamentEndpointRequestTeamEntry => ({
-              id: team.id,
-              name: team.teamLink === undefined ? team.name : undefined,
-              teamLink:
-                team.teamLink === undefined
-                  ? undefined
-                  : { tournamentPlannerId: team.teamLink.tournamentPlannerId, applicationTeamId: team.teamLink.applicationTeamId }
-            })
-          )
-        })
-      ),
+      groups: this.groups.map((group): ConfigureTournamentEndpointRequestGroupEntry => ({
+        id: group.id,
+        alphabeticalId: group.alphabeticalId,
+        displayName: group.displayName.length === 0 ? undefined : group.displayName,
+        teams: group.teams.map((team): ConfigureTournamentEndpointRequestTeamEntry => ({
+          id: team.id,
+          name: team.teamLink === undefined ? team.name : undefined,
+          teamLink:
+            team.teamLink === undefined
+              ? undefined
+              : { tournamentPlannerId: team.teamLink.tournamentPlannerId, applicationTeamId: team.teamLink.applicationTeamId }
+        }))
+      })),
       firstMatchKickoff: this.firstMatchKickoff.toISOString(),
       groupPhase: {
         schedule: {

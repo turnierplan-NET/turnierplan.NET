@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { PageFrameComponent, PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
@@ -42,6 +42,7 @@ export type UpdateTournamentPlannerFunc = (modifyFunc: (tournamentPlanner: Tourn
 
 @Component({
   templateUrl: './view-tournament-planner.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     LoadingStateDirective,
     PageFrameComponent,

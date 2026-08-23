@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateDirective } from '@ngx-translate/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActionButtonComponent } from '../action-button/action-button.component';
@@ -13,6 +13,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'tp-new-ranking-overwrite-dialog',
   imports: [TranslateDirective, ActionButtonComponent, ReactiveFormsModule, TooltipIconComponent, NgClass, AlertComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './new-ranking-overwrite-dialog.component.html'
 })
 export class NewRankingOverwriteDialogComponent {

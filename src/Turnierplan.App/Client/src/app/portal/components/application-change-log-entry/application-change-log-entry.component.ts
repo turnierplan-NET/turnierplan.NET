@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { LabelComponent } from '../label/label.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { ApplicationChangeLogType } from '../../../api/models/application-change-log-type';
@@ -12,6 +12,7 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
   selector: 'tp-application-change-log-entry',
   imports: [LabelComponent, TranslateDatePipe, TranslateDirective, NgbTooltip, TranslatePipe],
   templateUrl: './application-change-log-entry.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './application-change-log-entry.component.scss'
 })
 export class ApplicationChangeLogEntryComponent {

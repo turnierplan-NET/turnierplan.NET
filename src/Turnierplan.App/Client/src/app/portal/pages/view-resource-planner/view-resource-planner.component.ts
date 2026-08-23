@@ -1,4 +1,4 @@
-import { Component, ViewChild, viewChild } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { PageFrameComponent, PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
 import { ResourcePlannerDto } from '../../../api/models/resource-planner-dto';
@@ -31,6 +31,7 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
     ManageResourcesComponent,
     ActionButtonComponent
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './view-resource-planner.component.html'
 })
 export class ViewResourcePlannerComponent {

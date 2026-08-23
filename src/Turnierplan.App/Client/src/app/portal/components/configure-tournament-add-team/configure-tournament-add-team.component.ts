@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { FormsModule } from '@angular/forms';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
@@ -30,6 +30,7 @@ enum AddTeamMode {
     SelectApplicationTeamComponent,
     E2eDirective
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './configure-tournament-add-team.component.html'
 })
 export class ConfigureTournamentAddTeamComponent implements AfterViewInit {

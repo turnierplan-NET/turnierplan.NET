@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, Output, Type, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, Output, Type, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService, TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { PdfJsViewerComponent, PdfJsViewerModule } from 'ng2-pdfjs-viewer';
@@ -33,6 +33,7 @@ import { makeSafeFileName } from '../../helpers/file-name';
   selector: 'tp-document-manager',
   templateUrl: './document-manager.component.html',
   styleUrls: ['document-manager.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     TranslateDirective,
     NgClass,
@@ -146,7 +147,7 @@ export class DocumentManagerComponent {
       const fileName = this.getDocumentFileName(documentName);
 
       this.turnierplanApi
-        .invoke(getDocumentPdf, { id: id, languageCode: this.translateService.getCurrentLang(), timeZone: this.getTimeZoneName() })
+        .invoke(getDocumentPdf, { id: id, languageCode: this.translateService.getCurrentLang() ?? 'de', timeZone: this.getTimeZoneName() })
         .subscribe({
           next: (result) => {
             this.documents.find((x) => x.id === id)!.generationCount += 1;
@@ -224,7 +225,7 @@ export class DocumentManagerComponent {
     this.currentlyViewedDocumentId = id;
 
     this.turnierplanApi
-      .invoke(getDocumentPdf, { id: id, languageCode: this.translateService.getCurrentLang(), timeZone: this.getTimeZoneName() })
+      .invoke(getDocumentPdf, { id: id, languageCode: this.translateService.getCurrentLang() ?? 'de', timeZone: this.getTimeZoneName() })
       .pipe(
         tap(() => {
           this.currentlyLoadingPreview = undefined;

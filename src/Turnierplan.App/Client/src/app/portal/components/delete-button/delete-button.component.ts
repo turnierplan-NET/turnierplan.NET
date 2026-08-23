@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { NgbModal, NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { NgClass } from '@angular/common';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
@@ -7,6 +7,7 @@ import { showDeleteModal } from '../delete-modal/delete-modal.component';
 @Component({
   selector: 'tp-delete-button',
   templateUrl: './delete-button.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [NgbPopover, NgClass, TranslateDirective, TranslatePipe]
 })
 export class DeleteButtonComponent {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { ImageDto } from '../../../api/models/image-dto';
 import { TranslateDirective } from '@ngx-translate/core';
 import { AsyncPipe } from '@angular/common';
@@ -33,6 +33,7 @@ type ImageView = ImageDto & { referenceCount?: number; isUpdatingName: boolean }
     TranslateDatePipe,
     FileSizePipe
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './image-manager.component.html'
 })
 export class ImageManagerComponent {

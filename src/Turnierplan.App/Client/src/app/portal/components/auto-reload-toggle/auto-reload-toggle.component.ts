@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { AutoReloadConfig } from '../../models/auto-reload-config';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +9,7 @@ const defaultConfig: AutoReloadConfig = { enableAutoReload: true, autoReloadInte
 @Component({
   selector: 'tp-auto-reload-toggle',
   imports: [FormsModule, TranslateDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './auto-reload-toggle.component.html'
 })
 export class AutoReloadToggleComponent implements OnInit {

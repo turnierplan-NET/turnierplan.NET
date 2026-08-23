@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateDirective } from '@ngx-translate/core';
@@ -7,6 +7,7 @@ import { ActionButtonComponent } from '../action-button/action-button.component'
 
 @Component({
   templateUrl: './text-list-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, FormsModule, ReactiveFormsModule, NgClass, ActionButtonComponent]
 })
 export class TextListDialogComponent {

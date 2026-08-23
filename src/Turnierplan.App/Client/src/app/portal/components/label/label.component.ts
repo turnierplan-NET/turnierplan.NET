@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { LabelDto } from '../../../api/models/label-dto';
 
 @Component({
   selector: 'tp-label',
   imports: [],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './label.component.html'
 })
 export class LabelComponent {

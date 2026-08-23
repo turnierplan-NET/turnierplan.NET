@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { RenameDialogComponent } from '../rename-dialog/rename-dialog.component';
@@ -8,6 +8,7 @@ import { NgClass } from '@angular/common';
 @Component({
   selector: 'tp-rename-button',
   templateUrl: './rename-button.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateDirective, NgClass]
 })
 export class RenameButtonComponent {
