@@ -25,7 +25,6 @@ resource "azurerm_subnet" "database" {
   resource_group_name  = azurerm_resource_group.default.name
   virtual_network_name = azurerm_virtual_network.default.name
   address_prefixes     = ["10.0.2.0/24"]
-  service_endpoints    = ["Microsoft.Storage"]
 
   delegation {
     name = "psql"
@@ -42,9 +41,8 @@ resource "azurerm_private_dns_zone" "database" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "database" {
-  name                  = "database-vnet-link"
-  private_dns_zone_name = azurerm_private_dns_zone.database.name
-  virtual_network_id    = azurerm_virtual_network.default.id
-  resource_group_name   = azurerm_resource_group.default.name
-  depends_on            = [azurerm_subnet.database]
+  name                = "database-vnet-link"
+  private_dns_zone_id = azurerm_private_dns_zone.database.id
+  virtual_network_id  = azurerm_virtual_network.default.id
+  depends_on          = [azurerm_subnet.database]
 }
