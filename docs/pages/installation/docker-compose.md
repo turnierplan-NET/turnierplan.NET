@@ -80,7 +80,7 @@ Nachfolgend beschrieben sind Fehler, welche bei einer Neuinstallation auftreten 
 
 ### Verbindung per HTTP
 
-Beim Zugriff auf einen nicht-lokalen turnierplan.NET-Server via HTTP sollte standardmäßig ein Fehler *401 Unauthorized* erscheinen. Dies liegt daran, dass turnierplan.NET für die Authentifizierung nach dem Login Cookies verwendet, welche standardmäßig als *secure* ausgestellt werden. Dies hat zur Folge, dass Browser den Cookie nur bei lokalen Verbindungen oder über HTTPS mitschicken. Um turnierplan.NET dennoch verwenden zu können, muss die `Identity__UseInsecureCookies` auf `true` gesetzt werden. Siehe auch [Konfiguration der Authentifizierung](configuration.md#authentifizierung).
+Beim Zugriff auf einen nicht-lokalen turnierplan.NET-Server via HTTP sollte standardmäßig ein Fehler *401 Unauthorized* erscheinen. Dies liegt daran, dass turnierplan.NET für die Authentifizierung nach dem Login Cookies verwendet, welche standardmäßig als *secure* ausgestellt werden. Dies hat zur Folge, dass Browser den Cookie nur bei lokalen Verbindungen oder über HTTPS mitschicken. Um turnierplan.NET dennoch verwenden zu können, muss die `Identity__UseInsecureCookies` auf `true` gesetzt werden. Siehe auch [Konfiguration der Authentifizierung](../configuration/index.md#authentifizierung).
 
 !!! warning
     Die Verwendung von HTTP-Verbindungen über das Internet ist **absolut nicht empfohlen**, da persönliche Daten und Passwörter somit unverschlüsselt übertragen werden würden. Zudem ist nicht ausgeschlossen, dass Teile der Webanwendung nicht korrekt funktionieren, falls diese HTTPS-exklusive Browser-APIs verwenden (bspw. Zwischenablage oder *crypto*).
