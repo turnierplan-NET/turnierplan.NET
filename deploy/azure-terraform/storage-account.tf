@@ -7,7 +7,8 @@ resource "azurerm_storage_account" "default" {
   account_tier             = "Standard"
   account_replication_type = var.storage_account_replication_type
 
-  public_network_access_enabled = true
+  public_network_access_enabled   = true
+  allow_nested_items_to_be_public = true
 
   lifecycle {
     prevent_destroy = true
