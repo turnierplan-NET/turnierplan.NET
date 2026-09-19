@@ -26,7 +26,9 @@ public interface IOrganizationRepository : IRepositoryWithPublicId<Organization,
         Images = 8,
         ApiKeys = 16,
         TournamentPlanners = 32,
+#if TP_RESOURCE_PLANNER
         ResourcePlanners = 64
+#endif
     }
 }
 
@@ -75,10 +77,12 @@ internal sealed class OrganizationRepository(TurnierplanContext context) : Repos
             query = query.Include(x => x.TournamentPlanners);
         }
 
+#if TP_RESOURCE_PLANNER
         if (includes.HasFlag(IOrganizationRepository.Includes.ResourcePlanners))
         {
             query = query.Include(x => x.ResourcePlanners);
         }
+#endif
 
         query = query
             .Include(x => x.RoleAssignments)

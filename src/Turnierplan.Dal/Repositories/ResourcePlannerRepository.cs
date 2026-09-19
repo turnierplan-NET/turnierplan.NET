@@ -1,3 +1,5 @@
+#if TP_RESOURCE_PLANNER
+
 using Microsoft.EntityFrameworkCore;
 using Turnierplan.Core.PublicId;
 using Turnierplan.Core.ResourcePlanner;
@@ -52,3 +54,5 @@ internal sealed class ResourcePlannerRepository(TurnierplanContext context) : Re
         return await query.FirstOrDefaultAsync();
     }
 }
+
+#endif

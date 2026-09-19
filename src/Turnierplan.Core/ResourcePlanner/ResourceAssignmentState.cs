@@ -1,3 +1,5 @@
+#if TP_RESOURCE_PLANNER
+
 namespace Turnierplan.Core.ResourcePlanner;
 
 public enum ResourceAssignmentState
@@ -7,3 +9,5 @@ public enum ResourceAssignmentState
     Confirmed = 3,
     // TODO: Do we need these states, additional ones, other ones?
 }
+
+#endif

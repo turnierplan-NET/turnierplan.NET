@@ -1,3 +1,5 @@
+#if TP_RESOURCE_PLANNER
+
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
@@ -36,3 +38,5 @@ internal sealed class GetResourcePlannersEndpoint : EndpointBase<IEnumerable<Res
         return Results.Ok(mapper.MapCollection<ResourcePlannerHeaderDto>(organization.ResourcePlanners));
     }
 }
+
+#endif

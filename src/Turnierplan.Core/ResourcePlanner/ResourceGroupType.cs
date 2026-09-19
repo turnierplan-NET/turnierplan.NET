@@ -1,3 +1,5 @@
+#if TP_RESOURCE_PLANNER
+
 namespace Turnierplan.Core.ResourcePlanner;
 
 public enum ResourceGroupType
@@ -7,3 +9,5 @@ public enum ResourceGroupType
     Workshift = 1,
     General = 2
 }
+
+#endif

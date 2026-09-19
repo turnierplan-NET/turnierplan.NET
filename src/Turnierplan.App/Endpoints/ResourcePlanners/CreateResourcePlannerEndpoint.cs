@@ -1,3 +1,5 @@
+#if TP_RESOURCE_PLANNER
+
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
@@ -9,6 +11,7 @@ using Turnierplan.Core.ResourcePlanner;
 using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.ResourcePlanners;
+
 
 internal sealed class CreateResourcePlannerEndpoint : EndpointBase<ResourcePlannerDto>
 {
@@ -71,3 +74,5 @@ internal sealed class CreateResourcePlannerEndpoint : EndpointBase<ResourcePlann
         }
     }
 }
+
+#endif

@@ -1,3 +1,5 @@
+#if TP_RESOURCE_PLANNER
+
 namespace Turnierplan.Core.ResourcePlanner;
 
 public enum ResourceType
@@ -7,3 +9,5 @@ public enum ResourceType
     Personnel = 1,
     Commodity = 2
 }
+
+#endif

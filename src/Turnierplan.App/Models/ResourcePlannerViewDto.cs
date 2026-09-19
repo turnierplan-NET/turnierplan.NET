@@ -1,3 +1,5 @@
+#if TP_RESOURCE_PLANNER
+
 using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.App.Models;
@@ -14,3 +16,5 @@ public sealed record ResourcePlannerViewDto
 
     public required long[] ResourceGroupIds { get; init; }
 }
+
+#endif

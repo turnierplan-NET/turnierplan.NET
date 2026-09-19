@@ -1,3 +1,5 @@
+#if TP_RESOURCE_PLANNER
+
 namespace Turnierplan.Core.ResourcePlanner;
 
 public sealed class ResourceAssignment
@@ -20,3 +22,5 @@ public sealed class ResourceAssignment
 
     public ResourceAssignmentState State { get; set; }
 }
+
+#endif
