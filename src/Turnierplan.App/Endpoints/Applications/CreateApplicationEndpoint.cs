@@ -30,7 +30,10 @@ internal sealed class CreateApplicationEndpoint : EndpointBase<ApplicationDto>
             return result;
         }
 
-        var tournamentPlanner = await tournamentPlannerRepository.GetByPublicIdAsync(tournamentPlannerId, ITournamentPlannerRepository.Includes.TournamentClasses);
+        // Applications must be included in the query to ensure that we can generate a unique application tag
+        var tournamentPlanner = await tournamentPlannerRepository.GetByPublicIdAsync(
+            tournamentPlannerId,
+            ITournamentPlannerRepository.Includes.TournamentClasses | ITournamentPlannerRepository.Includes.Applications);
 
         if (tournamentPlanner is null)
         {
