@@ -52,6 +52,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
 import { ResourcePlannerHeaderDto } from '../../../api/models/resource-planner-header-dto';
 import { getResourcePlanners } from '../../../api/fn/resource-planners/get-resource-planners';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   templateUrl: './view-organization.component.html',
@@ -131,11 +132,15 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       title: 'Portal.ViewOrganization.Pages.TournamentPlanners',
       icon: 'bi-ticket-perforated'
     },
-    {
-      id: ViewOrganizationComponent.resourcePlannersPageId,
-      title: 'Portal.ViewOrganization.Pages.ResourcePlanners',
-      icon: 'bi-file-earmark-spreadsheet'
-    },
+    ...(environment.featureFlags.resourcePlanners
+      ? [
+          {
+            id: ViewOrganizationComponent.resourcePlannersPageId,
+            title: 'Portal.ViewOrganization.Pages.ResourcePlanners',
+            icon: 'bi-file-earmark-spreadsheet'
+          }
+        ]
+      : []),
     {
       id: ViewOrganizationComponent.imagesPageId,
       title: 'Portal.ViewOrganization.Pages.Images',

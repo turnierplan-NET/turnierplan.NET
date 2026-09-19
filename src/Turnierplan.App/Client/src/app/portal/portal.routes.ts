@@ -21,6 +21,7 @@ import { ViewVenueComponent } from './pages/view-venue/view-venue.component';
 import { UploadImageComponent } from './pages/upload-image/upload-image.component';
 import { CreateResourcePlannerComponent } from './pages/create-resource-planner/create-resource-planner.component';
 import { ViewResourcePlannerComponent } from './pages/view-resource-planner/view-resource-planner.component';
+import { environment } from '../../environments/environment';
 
 export const portalRoutes: Routes = [
   {
@@ -63,10 +64,15 @@ export const portalRoutes: Routes = [
           return `organization/${data.params['id']}/create/tournament-planner`;
         }
       },
-      {
-        path: 'organization/:id/create/resource-planner',
-        component: CreateResourcePlannerComponent
-      },
+      ...(environment.featureFlags.resourcePlanners
+        ? [
+            {
+              path: 'organization/:id/create/resource-planner',
+              component: CreateResourcePlannerComponent
+            }
+          ]
+        : []),
+
       {
         path: 'organization/:id/create/tournament-planner',
         component: CreateTournamentPlannerComponent
@@ -85,10 +91,15 @@ export const portalRoutes: Routes = [
           return `tournament-planner/${data.params['id']}`;
         }
       },
-      {
-        path: 'resource-planner/:id',
-        component: ViewResourcePlannerComponent
-      },
+      ...(environment.featureFlags.resourcePlanners
+        ? [
+            {
+              path: 'resource-planner/:id',
+              component: ViewResourcePlannerComponent
+            }
+          ]
+        : []),
+
       {
         path: 'tournament-planner/:id',
         component: ViewTournamentPlannerComponent,
