@@ -12,7 +12,7 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
 import { OrganizationDto } from '../../../api/models/organization-dto';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { getOrganization } from '../../../api/fn/organizations/get-organization';
-// import { createResourcePlanner } from '../../../api/fn/resource-planners/create-resource-planner';
+import { createResourcePlanner } from '../../../api/fn/resource-planners/create-resource-planner';
 
 @Component({
   templateUrl: './create-resource-planner.component.html',
@@ -75,8 +75,7 @@ export class CreateResourcePlannerComponent implements OnDestroy {
   protected confirmButtonClicked(): void {
     if (this.resourcePlannerName.valid && !this.loadingState.isLoading && this.organization) {
       this.loadingState = { isLoading: true };
-      // TODO: Uncomment once endpoint is integrated fully
-      /*this.turnierplanApi
+      this.turnierplanApi
         .invoke(createResourcePlanner, {
           body: {
             organizationId: this.organization.id,
@@ -95,7 +94,7 @@ export class CreateResourcePlannerComponent implements OnDestroy {
           error: (error) => {
             this.loadingState = { isLoading: false, error: error };
           }
-        });*/
+        });
     }
   }
 }
