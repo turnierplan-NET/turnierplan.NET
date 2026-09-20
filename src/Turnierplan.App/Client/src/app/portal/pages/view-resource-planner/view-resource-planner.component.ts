@@ -1,13 +1,11 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PageFrameComponent, PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
-import { ResourcePlannerDto } from '../../../api/models/resource-planner-dto';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
-import { of, Subject, switchMap, takeUntil } from 'rxjs';
+import { NEVER, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { TitleService } from '../../services/title.service';
-import { getResourcePlanner } from '../../../api/fn/resource-planners/get-resource-planner';
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';
@@ -29,7 +27,14 @@ export class ViewResourcePlannerComponent {
   protected readonly Actions = Actions;
 
   protected loadingState: LoadingState = { isLoading: true };
-  protected resourcePlanner?: ResourcePlannerDto;
+
+  // TODO: Remove hard-coded temp values once resource planner is loaded from backend
+  protected resourcePlanner = {
+    id: 'not-implemented',
+    name: 'not-implemented',
+    organizationId: 'not-implemented',
+    rbacScopeId: 'not-implemented'
+  };
 
   protected currentPage = 0;
   protected pages: PageFrameNavigationTab[] = [
@@ -70,7 +75,10 @@ export class ViewResourcePlannerComponent {
             return of();
           }
           this.loadingState = { isLoading: true };
-          return this.turnierplanApi.invoke(getResourcePlanner, { id: resourcePlannerId });
+
+          return NEVER;
+          // TODO: Load resource planner from backend
+          // return this.turnierplanApi.invoke(getResourcePlanner, { id: resourcePlannerId });
         })
       )
       .subscribe({
