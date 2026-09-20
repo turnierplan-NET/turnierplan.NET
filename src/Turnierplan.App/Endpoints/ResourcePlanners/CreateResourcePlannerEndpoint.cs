@@ -6,9 +6,7 @@ using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
 using Turnierplan.App.Security;
 using Turnierplan.Core.PublicId;
-#if TP_RESOURCE_PLANNER
 using Turnierplan.Core.ResourcePlanner;
-#endif
 using Turnierplan.Dal.Repositories;
 
 namespace Turnierplan.App.Endpoints.ResourcePlanners;
