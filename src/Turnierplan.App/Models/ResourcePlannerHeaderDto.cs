@@ -1,5 +1,3 @@
-#if TP_RESOURCE_PLANNER
-
 using Turnierplan.Core.PublicId;
 
 namespace Turnierplan.App.Models;
@@ -12,5 +10,3 @@ public sealed record ResourcePlannerHeaderDto
 
     public required string Name { get; init; }
 }
-
-#endif
