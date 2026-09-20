@@ -50,8 +50,6 @@ import { NgbOffcanvas, NgbOffcanvasRef, NgbTooltip } from '@ng-bootstrap/ng-boot
 import { ApiKeyExtendComponent } from '../../components/api-key-extend/api-key-extend.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs/operators';
-import { ResourcePlannerHeaderDto } from '../../../api/models/resource-planner-header-dto';
-import { getResourcePlanners } from '../../../api/fn/resource-planners/get-resource-planners';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -102,7 +100,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
   protected tournaments?: TournamentHeaderDto[];
   protected venues?: VenueDto[];
   protected tournamentPlanners?: TournamentPlannerHeaderDto[];
-  protected resourcePlanners?: ResourcePlannerHeaderDto[];
+  protected resourcePlanners?: { id: string; name: string }[] = [];
   protected images?: GetImagesEndpointResponse;
   protected imagesTotalSize?: number;
   protected apiKeys?: ApiKeyDto[];
@@ -263,7 +261,8 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     if (number === ViewOrganizationComponent.resourcePlannersPageId && !this.resourcePlanners && !this.isLoadingResourcePlanners) {
       // Load resource planners only when the page is opened
       this.isLoadingResourcePlanners = true;
-      this.turnierplanApi.invoke(getResourcePlanners, { organizationId: this.organization.id }).subscribe({
+      // TODO: Implement loading of resource planners
+      /*this.turnierplanApi.invoke(getResourcePlanners, { organizationId: this.organization.id }).subscribe({
         next: (resourcePlanner) => {
           this.resourcePlanners = resourcePlanner;
           this.isLoadingResourcePlanners = false;
@@ -271,7 +270,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
         error: (error) => {
           this.loadingState = { isLoading: false, error: error };
         }
-      });
+      });*/
     }
 
     if (number === ViewOrganizationComponent.imagesPageId && !this.images && !this.isLoadingImages) {
