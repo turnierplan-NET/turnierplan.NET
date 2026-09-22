@@ -1,3 +1,5 @@
+#if TP_RESOURCE_PLANNER
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Turnierplan.Core.ResourcePlanner;
@@ -51,3 +53,5 @@ public sealed class ResourcePlannerEntityTypeConfiguration : IEntityTypeConfigur
         builder.Metadata.FindNavigation(nameof(ResourcePlanner.ResourcePlannerViews))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }
+
+#endif

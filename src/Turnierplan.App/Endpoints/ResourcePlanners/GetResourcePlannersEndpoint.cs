@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Mapping;
 using Turnierplan.App.Models;
@@ -15,6 +16,7 @@ internal sealed class GetResourcePlannersEndpoint : EndpointBase<IEnumerable<Res
 
     protected override Delegate Handler => Handle;
 
+#if TP_RESOURCE_PLANNER
     private static async Task<IResult> Handle(
         [FromQuery] PublicId organizationId,
         IOrganizationRepository organizationRepository,
@@ -35,4 +37,10 @@ internal sealed class GetResourcePlannersEndpoint : EndpointBase<IEnumerable<Res
 
         return Results.Ok(mapper.MapCollection<ResourcePlannerHeaderDto>(organization.ResourcePlanners));
     }
+#else
+    private static IResult Handle([FromQuery] PublicId organizationId)
+    {
+        return Results.StatusCode((int)HttpStatusCode.NotImplemented);
+    }
+#endif
 }

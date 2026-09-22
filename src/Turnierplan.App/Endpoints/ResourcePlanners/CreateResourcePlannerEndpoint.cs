@@ -1,3 +1,4 @@
+using System.Net;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.App.Extensions;
@@ -18,6 +19,7 @@ internal sealed class CreateResourcePlannerEndpoint : EndpointBase<ResourcePlann
 
     protected override Delegate Handler => Handle;
 
+#if TP_RESOURCE_PLANNER
     private static async Task<IResult> Handle(
         [FromBody] CreateResourcePlannerEndpointRequest request,
         IOrganizationRepository organizationRepository,
@@ -52,6 +54,12 @@ internal sealed class CreateResourcePlannerEndpoint : EndpointBase<ResourcePlann
 
         return Results.Ok(mapper.Map<ResourcePlannerDto>(resourcePlanner));
     }
+#else
+    private static IResult Handle([FromBody] CreateResourcePlannerEndpointRequest request)
+    {
+        return Results.StatusCode((int)HttpStatusCode.NotImplemented);
+    }
+#endif
 
     public sealed record CreateResourcePlannerEndpointRequest
     {
@@ -60,6 +68,7 @@ internal sealed class CreateResourcePlannerEndpoint : EndpointBase<ResourcePlann
         public required string Name { get; init; }
     }
 
+#if TP_RESOURCE_PLANNER
     internal sealed class Validator : AbstractValidator<CreateResourcePlannerEndpointRequest>
     {
         public static readonly Validator Instance = new();
@@ -70,4 +79,5 @@ internal sealed class CreateResourcePlannerEndpoint : EndpointBase<ResourcePlann
                 .NotEmpty();
         }
     }
+#endif
 }

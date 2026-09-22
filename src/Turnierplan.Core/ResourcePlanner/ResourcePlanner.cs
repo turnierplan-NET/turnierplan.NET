@@ -1,3 +1,5 @@
+#if TP_RESOURCE_PLANNER
+
 using Turnierplan.Core.Entity;
 using Turnierplan.Core.RoleAssignment;
 
@@ -83,3 +85,5 @@ public sealed class ResourcePlanner : Entity<long>, IEntityWithRoleAssignments<R
         _resourcePlannerViews.Remove(resourcePlannerView);
     }
 }
+
+#endif

@@ -4,5 +4,8 @@
   version: '2026.3.0',
   originOverwrite: undefined,
   includeE2EData: false,
-  doUpdatesCheck: true
+  doUpdatesCheck: true,
+  featureFlags: {
+    resourcePlanners: false
+  }
 };

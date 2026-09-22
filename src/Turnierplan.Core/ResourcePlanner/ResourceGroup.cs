@@ -1,3 +1,5 @@
+#if TP_RESOURCE_PLANNER
+
 using Turnierplan.Core.Entity;
 using Turnierplan.Core.Exceptions;
 
@@ -156,3 +158,5 @@ public sealed class ResourceGroup : Entity<long>
         _resourceAssignments.Remove(assignment);
     }
 }
+
+#endif

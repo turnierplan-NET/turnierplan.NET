@@ -4,5 +4,8 @@ export const environment = {
   version: '0.0.0',
   originOverwrite: 'http://localhost:45000',
   includeE2EData: true,
-  doUpdatesCheck: false
+  doUpdatesCheck: false,
+  featureFlags: {
+    resourcePlanners: true
+  }
 };

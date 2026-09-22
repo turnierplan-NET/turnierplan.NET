@@ -4,7 +4,9 @@ using Turnierplan.Core.Entity;
 using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
+#if TP_RESOURCE_PLANNER
 using Turnierplan.Core.ResourcePlanner;
+#endif
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.TournamentPlanner;
@@ -38,7 +40,9 @@ internal sealed class ImageRoleAssignmentRepository(TurnierplanContext context) 
 
 internal sealed class OrganizationRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<Organization>(context);
 
+#if TP_RESOURCE_PLANNER
 internal sealed class ResourcePlannerRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<ResourcePlanner>(context);
+#endif
 
 internal sealed class TournamentPlannerRoleAssignmentRepository(TurnierplanContext context) : RoleAssignmentRepositoryBase<TournamentPlanner>(context);
 

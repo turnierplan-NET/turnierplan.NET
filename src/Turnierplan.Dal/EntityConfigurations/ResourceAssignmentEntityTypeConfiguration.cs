@@ -1,3 +1,5 @@
+#if TP_RESOURCE_PLANNER
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Turnierplan.Core.ResourcePlanner;
@@ -16,3 +18,5 @@ internal sealed class ResourceAssignmentEntityTypeConfiguration : IEntityTypeCon
             .IsRequired();
     }
 }
+
+#endif

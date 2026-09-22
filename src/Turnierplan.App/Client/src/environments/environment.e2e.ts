@@ -4,5 +4,8 @@
   version: '1.0.0',
   originOverwrite: undefined,
   includeE2EData: true,
-  doUpdatesCheck: false
+  doUpdatesCheck: false,
+  featureFlags: {
+    resourcePlanners: false
+  }
 };

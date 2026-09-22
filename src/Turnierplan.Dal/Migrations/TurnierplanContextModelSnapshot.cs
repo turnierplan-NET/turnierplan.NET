@@ -38,21 +38,6 @@ namespace Turnierplan.Dal.Migrations
                     b.ToTable("ApplicationTeamLabel", "turnierplan");
                 });
 
-            modelBuilder.Entity("ResourceGroupResourcePlannerView", b =>
-                {
-                    b.Property<long>("ResourceGroupsId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ResourcePlannerViewId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ResourceGroupsId", "ResourcePlannerViewId");
-
-                    b.HasIndex("ResourcePlannerViewId");
-
-                    b.ToTable("ResourceGroupResourcePlannerView", "turnierplan");
-                });
-
             modelBuilder.Entity("Turnierplan.Core.ApiKey.ApiKey", b =>
                 {
                     b.Property<long>("Id")
@@ -285,143 +270,6 @@ namespace Turnierplan.Dal.Migrations
                     b.ToTable("Organizations", "turnierplan");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.ResourcePlanner.Resource", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("text");
-
-                    b.Property<long>("ResourcePlannerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResourcePlannerId");
-
-                    b.ToTable("Resources", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.ResourcePlanner.ResourceAssignment", b =>
-                {
-                    b.Property<long>("ResourceGroupId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ResourceId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("State")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ResourceGroupId", "ResourceId");
-
-                    b.HasIndex("ResourceId");
-
-                    b.ToTable("ResourceAssignments", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.ResourcePlanner.ResourceGroup", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("End")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<long>("ResourcePlannerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("Start")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResourcePlannerId");
-
-                    b.ToTable("ResourceGroups", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.ResourcePlanner.ResourcePlanner", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<long>("OrganizationId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PublicId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.HasIndex("PublicId")
-                        .IsUnique();
-
-                    b.ToTable("ResourcePlanners", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.ResourcePlanner.ResourcePlannerView", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<bool>("DisplayAllGroups")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<long>("PublicId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ResourcePlannerId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResourcePlannerId");
-
-                    b.ToTable("ResourcePlannerViews", "turnierplan");
-                });
-
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.ApiKey.ApiKey>", b =>
                 {
                     b.Property<Guid>("Id")
@@ -524,32 +372,6 @@ namespace Turnierplan.Dal.Migrations
                     b.HasIndex("OrganizationId");
 
                     b.ToTable("IAM_Organization", "turnierplan");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.ResourcePlanner.ResourcePlanner>", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Principal")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<long>("ResourcePlannerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResourcePlannerId");
-
-                    b.ToTable("IAM_ResourcePlanner", "turnierplan");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.Tournament.Tournament>", b =>
@@ -1267,21 +1089,6 @@ namespace Turnierplan.Dal.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ResourceGroupResourcePlannerView", b =>
-                {
-                    b.HasOne("Turnierplan.Core.ResourcePlanner.ResourceGroup", null)
-                        .WithMany()
-                        .HasForeignKey("ResourceGroupsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turnierplan.Core.ResourcePlanner.ResourcePlannerView", null)
-                        .WithMany()
-                        .HasForeignKey("ResourcePlannerViewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Turnierplan.Core.ApiKey.ApiKey", b =>
                 {
                     b.HasOne("Turnierplan.Core.Organization.Organization", "Organization")
@@ -1337,69 +1144,6 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Organization");
                 });
 
-            modelBuilder.Entity("Turnierplan.Core.ResourcePlanner.Resource", b =>
-                {
-                    b.HasOne("Turnierplan.Core.ResourcePlanner.ResourcePlanner", "ResourcePlanner")
-                        .WithMany()
-                        .HasForeignKey("ResourcePlannerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ResourcePlanner");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.ResourcePlanner.ResourceAssignment", b =>
-                {
-                    b.HasOne("Turnierplan.Core.ResourcePlanner.ResourceGroup", "ResourceGroup")
-                        .WithMany("ResourceAssignments")
-                        .HasForeignKey("ResourceGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turnierplan.Core.ResourcePlanner.Resource", "Resource")
-                        .WithMany()
-                        .HasForeignKey("ResourceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Resource");
-
-                    b.Navigation("ResourceGroup");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.ResourcePlanner.ResourceGroup", b =>
-                {
-                    b.HasOne("Turnierplan.Core.ResourcePlanner.ResourcePlanner", "ResourcePlanner")
-                        .WithMany("ResourceGroups")
-                        .HasForeignKey("ResourcePlannerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ResourcePlanner");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.ResourcePlanner.ResourcePlanner", b =>
-                {
-                    b.HasOne("Turnierplan.Core.Organization.Organization", "Organization")
-                        .WithMany("ResourcePlanners")
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Organization");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.ResourcePlanner.ResourcePlannerView", b =>
-                {
-                    b.HasOne("Turnierplan.Core.ResourcePlanner.ResourcePlanner", "ResourcePlanner")
-                        .WithMany("ResourcePlannerViews")
-                        .HasForeignKey("ResourcePlannerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ResourcePlanner");
-                });
-
             modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.ApiKey.ApiKey>", b =>
                 {
                     b.HasOne("Turnierplan.Core.ApiKey.ApiKey", "Scope")
@@ -1438,17 +1182,6 @@ namespace Turnierplan.Dal.Migrations
                     b.HasOne("Turnierplan.Core.Organization.Organization", "Scope")
                         .WithMany("RoleAssignments")
                         .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Scope");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.RoleAssignment.RoleAssignment<Turnierplan.Core.ResourcePlanner.ResourcePlanner>", b =>
-                {
-                    b.HasOne("Turnierplan.Core.ResourcePlanner.ResourcePlanner", "Scope")
-                        .WithMany("RoleAssignments")
-                        .HasForeignKey("ResourcePlannerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -2072,8 +1805,6 @@ namespace Turnierplan.Dal.Migrations
 
                     b.Navigation("Images");
 
-                    b.Navigation("ResourcePlanners");
-
                     b.Navigation("RoleAssignments");
 
                     b.Navigation("TournamentPlanners");
@@ -2081,20 +1812,6 @@ namespace Turnierplan.Dal.Migrations
                     b.Navigation("Tournaments");
 
                     b.Navigation("Venues");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.ResourcePlanner.ResourceGroup", b =>
-                {
-                    b.Navigation("ResourceAssignments");
-                });
-
-            modelBuilder.Entity("Turnierplan.Core.ResourcePlanner.ResourcePlanner", b =>
-                {
-                    b.Navigation("ResourceGroups");
-
-                    b.Navigation("ResourcePlannerViews");
-
-                    b.Navigation("RoleAssignments");
                 });
 
             modelBuilder.Entity("Turnierplan.Core.Tournament.Group", b =>

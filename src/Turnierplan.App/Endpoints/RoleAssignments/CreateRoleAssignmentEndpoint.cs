@@ -12,7 +12,9 @@ using Turnierplan.Core.Folder;
 using Turnierplan.Core.Image;
 using Turnierplan.Core.Organization;
 using Turnierplan.Core.PublicId;
+#if TP_RESOURCE_PLANNER
 using Turnierplan.Core.ResourcePlanner;
+#endif
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.TournamentPlanner;
@@ -52,7 +54,9 @@ internal sealed class CreateRoleAssignmentEndpoint : EndpointBase<RoleAssignment
             "Folder" => CreateRoleAssignmentAsync<Folder>(request, serviceProvider, accessValidator, mapper, targetId, cancellationToken),
             "Image" => CreateRoleAssignmentAsync<Image>(request, serviceProvider, accessValidator, mapper, targetId, cancellationToken),
             "Organization" => CreateRoleAssignmentAsync<Organization>(request, serviceProvider, accessValidator, mapper, targetId, cancellationToken),
+#if TP_RESOURCE_PLANNER
             "ResourcePlanner" => CreateRoleAssignmentAsync<ResourcePlanner>(request, serviceProvider, accessValidator, mapper, targetId, cancellationToken),
+#endif
             "Tournament" => CreateRoleAssignmentAsync<Tournament>(request, serviceProvider, accessValidator, mapper, targetId, cancellationToken),
             "TournamentPlanner" => CreateRoleAssignmentAsync<TournamentPlanner>(request, serviceProvider, accessValidator, mapper, targetId, cancellationToken),
             "Venue" => CreateRoleAssignmentAsync<Venue>(request, serviceProvider, accessValidator, mapper, targetId, cancellationToken),

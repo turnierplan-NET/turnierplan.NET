@@ -1,3 +1,5 @@
+#if TP_RESOURCE_PLANNER
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Turnierplan.Core.ResourcePlanner;
@@ -29,3 +31,5 @@ internal sealed class ResourcePlannerViewEntityTypeConfiguration : IEntityTypeCo
             .WithMany();
     }
 }
+
+#endif

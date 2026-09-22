@@ -1,3 +1,5 @@
+#if TP_RESOURCE_PLANNER
+
 using Turnierplan.App.Helpers;
 using Turnierplan.App.Models;
 using Turnierplan.Core.ResourcePlanner;
@@ -65,3 +67,5 @@ internal sealed class ResourcePlannerMappingRule : MappingRuleBase<ResourcePlann
         };
     }
 }
+
+#endif
