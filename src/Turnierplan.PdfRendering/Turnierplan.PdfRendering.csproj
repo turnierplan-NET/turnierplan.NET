@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="OpenTelemetry.Api" Version="1.19.1" />
     <PackageReference Include="QuestPDF" Version="2026.9.0" />
-    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="4.152.1" />
+    <PackageReference Include="SkiaSharp.NativeAssets.Linux.NoDependencies" Version="4.148.0" />
     <PackageReference Include="SkiaSharp.QrCode" Version="1.2.0" />
   </ItemGroup>
 
