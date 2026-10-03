@@ -1,8 +1,8 @@
 using System.Security.Cryptography;
 
-namespace Turnierplan.Core.PublicId;
+namespace Turnierplan.Server;
 
-public readonly record struct PublicId
+public readonly record struct PublicId // TODO: Decide correct namespace
 {
     public static readonly PublicId Empty = 0;
 

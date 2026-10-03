@@ -1,8 +1,6 @@
-using Microsoft.Extensions.Configuration;
+namespace Turnierplan.Server.Infrastructure.Database.Extensions;
 
-namespace Turnierplan.Dal.Extensions;
-
-public static class ConfigurationExtensions
+internal static class ConfigurationExtensions
 {
     extension(IConfiguration configuration)
     {

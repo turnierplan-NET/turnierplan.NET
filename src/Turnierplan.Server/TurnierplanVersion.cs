@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace Turnierplan.App.Constants;
+namespace Turnierplan.Server;
 
 internal static partial class TurnierplanVersion
 {

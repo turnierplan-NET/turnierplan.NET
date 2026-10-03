@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Turnierplan.Core.PublicId;
 
-namespace Turnierplan.Dal.Converters;
+namespace Turnierplan.Server.Infrastructure.Database.Converters;
 
 internal sealed class PublicIdConverter() : ValueConverter<PublicId, long>(publicId => publicId.ToSignedInt64(), input => new PublicId(input));

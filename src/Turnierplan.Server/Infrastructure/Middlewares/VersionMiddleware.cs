@@ -1,8 +1,6 @@
-using Turnierplan.App.Constants;
+namespace Turnierplan.Server.Infrastructure.Middlewares;
 
-namespace Turnierplan.App.Middlewares;
-
-internal sealed class TurnierplanVersionMiddleware(RequestDelegate next)
+internal sealed class VersionMiddleware(RequestDelegate next)
 {
     private const string TurnierplanVersionHeaderName = "X-Turnierplan-Version";
 

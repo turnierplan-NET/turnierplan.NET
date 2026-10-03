@@ -1,8 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Turnierplan.Core.PublicId;
 
-namespace Turnierplan.App.Converters;
+namespace Turnierplan.Server.Infrastructure.Json;
 
 internal sealed class JsonPublicIdConverter : JsonConverter<PublicId>
 {

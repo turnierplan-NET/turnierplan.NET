@@ -1,27 +1,11 @@
-﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Turnierplan.Core.ApiKey;
-using Turnierplan.Core.Document;
-using Turnierplan.Core.Folder;
-using Turnierplan.Core.Image;
-using Turnierplan.Core.Organization;
-#if TP_RESOURCE_PLANNER
-using Turnierplan.Core.ResourcePlanner;
-#endif
-using Turnierplan.Core.Tournament;
-using Turnierplan.Core.TournamentPlanner;
-using Turnierplan.Core.Venue;
-using Turnierplan.Dal.Repositories;
 
-namespace Turnierplan.Dal.Extensions;
+namespace Turnierplan.Server.Infrastructure.Database.Extensions;
 
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
-    public static void AddTurnierplanDataAccessLayer(this IServiceCollection services, IConfiguration configuration)
+    public static void AddTurnierplanContext(this IServiceCollection services, IConfiguration configuration)
     {
         string? inMemoryDatabaseName = null;
 
@@ -47,9 +31,14 @@ public static class ServiceCollectionExtensions
                     npgsqlOptions.MigrationsAssembly(typeof(TurnierplanContext).Assembly.GetName().Name);
                     npgsqlOptions.MigrationsHistoryTable("__EFMigrationHistory", TurnierplanContext.Schema);
                 });
+
+                options.UseSnakeCaseNamingConvention();
             }
         });
 
+        // TODO: Add repositories, if required
+
+        /*
         services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
         services.AddScoped<IApplicationRepository, ApplicationRepository>();
         services.AddScoped<IApplicationChangeLogRepository, ApplicationChangeLogRepository>();
@@ -100,5 +89,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Tournament>>());
         services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<TournamentPlanner>>());
         services.AddScoped<IRoleAssignmentRepository>(sp => sp.GetRequiredService<IRoleAssignmentRepository<Venue>>());
+        */
     }
 }

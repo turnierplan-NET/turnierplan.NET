@@ -1,4 +1,4 @@
-namespace Turnierplan.App.Options;
+namespace Turnierplan.Server.Options;
 
 internal sealed record TurnierplanOptions
 {

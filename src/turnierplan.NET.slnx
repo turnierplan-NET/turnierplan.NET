@@ -23,4 +23,5 @@
   <Project Path="Turnierplan.ImageStorage/Turnierplan.ImageStorage.csproj" />
   <Project Path="Turnierplan.Localization/Turnierplan.Localization.csproj" />
   <Project Path="Turnierplan.PdfRendering/Turnierplan.PdfRendering.csproj" />
+  <Project Path="Turnierplan.Server/Turnierplan.Server.csproj" />
 </Solution>
