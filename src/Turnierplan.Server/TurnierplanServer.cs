@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using FluentValidation;
 using Microsoft.AspNetCore.Http.Json;
 using Scalar.AspNetCore;
+using Turnierplan.Server.Infrastructure.Authentication.Extensions;
 using Turnierplan.Server.Infrastructure.Authorization.Extensions;
 using Turnierplan.Server.Infrastructure.Database.Extensions;
 using Turnierplan.Server.Infrastructure.Endpoints.Extensions;
@@ -19,8 +20,7 @@ internal sealed class TurnierplanServer
 
     static TurnierplanServer()
     {
-        // TODO: Enable once FluentValidation is installed
-        //ValidatorOptions.Global.LanguageManager.Enabled = false;
+        ValidatorOptions.Global.LanguageManager.Enabled = false;
     }
 
     public TurnierplanServer(string[] args)
@@ -34,9 +34,8 @@ internal sealed class TurnierplanServer
         // builder.Services.AddTurnierplanDocumentRendering<ApplicationUrlProvider>();
         // builder.Services.AddTurnierplanImageStorage<DatabaseImageProvider>(builder.Configuration.GetSection("ImageStorage"));
         // builder.Services.AddTurnierplanLocalization();
-        // builder.Services.AddTurnierplanSecurity(builder.Configuration.GetSection("Identity"));
-        builder.Services.AddAuthentication();
-        builder.Services.AddAuthorizationBuilder().AddTurnierplanPolicies();
+        builder.Services.AddTurnierplanAuthentication(builder.Configuration.GetSection("Identity")); // TODO: Rename to "Auth" or "Authentication"?
+        builder.Services.AddTurnierplanAuthorization();
 
         builder.Services.AddValidatorsFromAssembly(typeof(TurnierplanServer).Assembly, includeInternalTypes: true);
 

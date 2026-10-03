@@ -1,4 +1,4 @@
-namespace Turnierplan.App.Security;
+namespace Turnierplan.Server.Infrastructure.Authentication;
 
 internal static class ClaimTypes
 {

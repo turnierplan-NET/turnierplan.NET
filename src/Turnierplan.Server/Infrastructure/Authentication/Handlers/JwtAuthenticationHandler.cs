@@ -1,25 +1,40 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Turnierplan.App.Options;
+using Turnierplan.Server.Infrastructure.Authentication.Options;
+using Turnierplan.Server.Options;
 
-namespace Turnierplan.App.Security;
+namespace Turnierplan.Server.Infrastructure.Authentication.Handlers;
+
+// TODO: Refactor to session-based authentication
+
+internal static class CookieNames
+{
+    public const string AccessTokenCookieName = "acc_token";
+    public const string RefreshTokenCookieName = "rfs_token";
+}
+
+internal static class JwtTokenTypes
+{
+    public const string Access = "acc";
+    public const string Refresh = "rfs";
+}
 
 internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityOptions>
 {
-    private readonly ISigningKeyProvider _signingKeyProvider;
+    private const int SigningKeySizeBytes = 512 / 8;
+    private static readonly SymmetricSecurityKey __signingKey = new(RandomNumberGenerator.GetBytes(SigningKeySizeBytes)); // Use a temp in-memory key bc this handler will be removed anyway
 
     public JwtAuthenticationHandler(
         IOptionsMonitor<IdentityOptions> options,
-        ISigningKeyProvider signingKeyProvider,
         ILoggerFactory logger,
         UrlEncoder encoder)
         : base(options, logger, encoder)
     {
-        _signingKeyProvider = signingKeyProvider;
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -47,11 +62,10 @@ internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityO
 
         var tokenHandler = new JwtSecurityTokenHandler();
 
-        var signingKey = await _signingKeyProvider.GetSigningKeyAsync(CancellationToken.None);
         var validationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = signingKey,
+            IssuerSigningKey = __signingKey,
             ValidateIssuer = false,
             ValidateAudience = false,
             ValidateLifetime = true,

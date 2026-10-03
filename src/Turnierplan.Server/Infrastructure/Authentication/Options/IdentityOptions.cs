@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication;
 
-namespace Turnierplan.App.Options;
+namespace Turnierplan.Server.Infrastructure.Authentication.Options;
 
 internal sealed class IdentityOptions : AuthenticationSchemeOptions
 {
