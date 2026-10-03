@@ -69,7 +69,7 @@ internal sealed class TurnierplanServer
              _application.MapScalarApiReference(configure =>
              {
                  configure.Title = "turnierplan.NET";
-                 // configure.Favicon = "/favicon.ico";
+                 configure.Favicon = "/favicon.ico";
                  configure.OpenApiRoutePattern = "/openapi/turnierplan.json";
              });
          }

@@ -8,7 +8,7 @@ var database = builder.AddPostgres("turnierplan-postgres")
     .WithLifetime(ContainerLifetime.Persistent)
     .AddDatabase("turnierplan-database");
 
-builder.AddProject<Turnierplan_App>("turnierplan-backend")
+builder.AddProject<Turnierplan_Server>("turnierplan-server")
     .WaitFor(database)
     .WithHttpHealthCheck("/health")
     .WithEnvironment("Database__ConnectionString", database.Resource.ConnectionStringExpression);
