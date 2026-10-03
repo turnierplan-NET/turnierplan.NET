@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi;
 
-namespace Turnierplan.App.OpenApi;
+namespace Turnierplan.Server.Infrastructure.OpenApi;
 
 /// <summary>
 /// By default, the ng-openapi-gen package generates HTTP client code for endpoints which <c>application/pdf</c>
@@ -61,17 +61,4 @@ internal sealed class ResponseOperationTransformer : IOpenApiOperationTransforme
     public interface ICsvResponse;
 
     public interface IPdfResponse;
-}
-
-internal static class ResponseOperationTransformerExtensions
-{
-    public static void ProducesCsv(this RouteHandlerBuilder builder)
-    {
-        builder.Produces<ResponseOperationTransformer.ICsvResponse>();
-    }
-
-    public static void ProducesPdf(this RouteHandlerBuilder builder)
-    {
-        builder.Produces<ResponseOperationTransformer.IPdfResponse>();
-    }
 }

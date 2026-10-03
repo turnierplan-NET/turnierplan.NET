@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi;
 
-namespace Turnierplan.App.OpenApi;
+namespace Turnierplan.Server.Infrastructure.OpenApi;
 
 /// <summary>
 /// By default, the ng-openapi-gen package generates the following typescript code for OpenAPI enum schemas:

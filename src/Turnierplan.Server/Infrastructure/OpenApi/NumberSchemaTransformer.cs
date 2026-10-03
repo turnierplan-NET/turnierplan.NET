@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi;
 
-namespace Turnierplan.App.OpenApi;
+namespace Turnierplan.Server.Infrastructure.OpenApi;
 
 /// <summary>
-/// By default, the OpenAPI generator generates the following schema for numeric properties (int, double, etc.):
+/// By default, the OpenAPI Generator generates the following schema for numeric properties (int, double, etc.):
 ///
 /// <code>
 /// "propertyXYZ": {

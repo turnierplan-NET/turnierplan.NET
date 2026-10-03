@@ -32,4 +32,4 @@ To run the application from source, follow these steps:
 3. The Aspire dashboard will open up from which you can navigate to the client application ([http://localhost:45001](http://localhost:45001)).
 4. Now you can log in using default credentials: The username is `admin` and the password is `P@ssw0rd`.
 
-When running locally, the API documentation can be viewed by opening [http://localhost:45000/scalar](http://localhost:45000/scalar).
+When running locally, the API documentation can be viewed by opening [http://localhost:3350/scalar](http://localhost:3350/scalar).

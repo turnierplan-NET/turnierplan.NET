@@ -2,11 +2,13 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using FluentValidation;
 using Microsoft.AspNetCore.Http.Json;
+using Scalar.AspNetCore;
 using Turnierplan.Server.Infrastructure.Authorization.Extensions;
 using Turnierplan.Server.Infrastructure.Database.Extensions;
 using Turnierplan.Server.Infrastructure.Endpoints.Extensions;
 using Turnierplan.Server.Infrastructure.Json;
 using Turnierplan.Server.Infrastructure.Middlewares;
+using Turnierplan.Server.Infrastructure.OpenApi;
 using Turnierplan.Server.Options;
 
 namespace Turnierplan.Server;
@@ -37,18 +39,16 @@ internal sealed class TurnierplanServer
         builder.Services.AddAuthorizationBuilder().AddTurnierplanPolicies();
 
         builder.Services.AddValidatorsFromAssembly(typeof(TurnierplanServer).Assembly, includeInternalTypes: true);
-        // builder.Services.AddSingleton<IMapper, Mapper>();
-        // builder.Services.AddScoped<IDeletionHelper, DeletionHelper>();
 
         builder.Services.AddHealthChecks();
         // builder.Services.AddRazorPages();
 
-        // builder.Services.AddOpenApi("turnierplan", options =>
-        // {
-        //     options.AddOperationTransformer<ResponseOperationTransformer>();
-        //     options.AddSchemaTransformer<EnumSchemaTransformer>();
-        //     options.AddSchemaTransformer<NumberSchemaTransformer>();
-        // });
+        builder.Services.AddOpenApi("turnierplan", options =>
+        {
+            options.AddOperationTransformer<ResponseOperationTransformer>();
+            options.AddSchemaTransformer<EnumSchemaTransformer>();
+            options.AddSchemaTransformer<NumberSchemaTransformer>();
+        });
 
         builder.Services.Configure<JsonOptions>(configure =>
         {
@@ -63,32 +63,33 @@ internal sealed class TurnierplanServer
 
         _application = builder.Build();
 
-//         if (app.Environment.IsDevelopment())
-//         {
-//             app.MapOpenApi();
-//
-//             app.MapScalarApiReference(configure =>
-//             {
-//                 configure.Title = "turnierplan.NET";
-//                 configure.Favicon = "/favicon.ico";
-//                 configure.OpenApiRoutePattern = "/openapi/turnierplan.json";
-//             });
-//         }
-//
-//         app.MapHealthChecks("/health");
-//
+         if (_application.Environment.IsDevelopment())
+         {
+             _application.MapOpenApi();
+
+             _application.MapScalarApiReference(configure =>
+             {
+                 configure.Title = "turnierplan.NET";
+                 // configure.Favicon = "/favicon.ico";
+                 configure.OpenApiRoutePattern = "/openapi/turnierplan.json";
+             });
+         }
+
+         _application.MapHealthChecks("/health");
+
          _application.UseAuthentication();
          _application.UseAuthorization();
 
          _application.UseMiddleware<VersionMiddleware>();
-//
+
 //         app.Map(string.Empty, (HttpContext context) =>
 //         {
 //             context.Response.StatusCode = StatusCodes.Status303SeeOther;
 //             context.Response.Headers.Location = "/portal/login";
 //         });
-//
+
         _application.MapTurnierplanEndpoints();
+
 //         app.MapImageStorageEndpoint();
 //         app.MapRazorPages();
 //
@@ -105,19 +106,19 @@ internal sealed class TurnierplanServer
 //
 //             return next(httpContext);
 //         });
-//
-//         app.UseDefaultFiles();
-//         app.UseStaticFiles();
-//
+
+        _application.UseDefaultFiles();
+        _application.UseStaticFiles();
+    }
+
+    public async Task RunAsync()
+    {
 // // Migrate database and create admin user if DB is empty
 //         await app.InitializeDatabaseAsync();
 //
 // // Run image storage migrations if required by the configured image storage
 //         await app.MigrateImageStorageAsync();
-    }
 
-    public async Task RunAsync()
-    {
         await _application.RunAsync();
     }
 }

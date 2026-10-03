@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.4">
       <PrivateAssets>all</PrivateAssets>
       <!-- The section 'contentfiles;' was removed due to an active issue: https://github.com/dotnet/efcore/issues/36970#issuecomment-3543760035
@@ -18,6 +19,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.17.13" />
     <PackageReference Include="EFCore.NamingConventions" Version="10.0.1" />
   </ItemGroup>
 </Project>
