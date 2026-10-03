@@ -112,8 +112,8 @@ internal sealed class TurnierplanServer
 
     public async Task RunAsync()
     {
-// // Migrate database and create admin user if DB is empty
-//         await app.InitializeDatabaseAsync();
+        // Migrate database and create admin user if DB is empty
+        await _application.InitializeDatabaseAsync();
 //
 // // Run image storage migrations if required by the configured image storage
 //         await app.MigrateImageStorageAsync();

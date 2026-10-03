@@ -1,18 +1,11 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Npgsql;
-using Turnierplan.App.Constants;
-using Turnierplan.App.Options;
-using Turnierplan.Core.User;
-using Turnierplan.Dal;
-using Turnierplan.Dal.Extensions;
 
-namespace Turnierplan.App.Extensions;
+namespace Turnierplan.Server.Infrastructure.Database.Extensions;
 
 internal static class WebApplicationExtensions
 {
-    private const string DatabaseMigratorLoggerName = "Turnierplan.App.DatabaseMigrator";
+    private const string DatabaseMigratorLoggerName = "Turnierplan.Server.DatabaseMigrator";
 
     public static async Task InitializeDatabaseAsync(this WebApplication app)
     {
@@ -33,7 +26,8 @@ internal static class WebApplicationExtensions
             await EnsureNoDowngradeAsync(context, logger);
         }
 
-        await EnsureInitialUserCreatedAsync(scope.ServiceProvider, context, logger);
+        // TODO: Re-enable once new schema contains 'User' table
+        // await EnsureInitialUserCreatedAsync(scope.ServiceProvider, context, logger);
     }
 
     private static async Task EnsureNoDowngradeAsync(TurnierplanContext context, ILogger logger)
@@ -62,14 +56,14 @@ internal static class WebApplicationExtensions
 
         await context.Database.ExecuteSqlRawAsync($"""
 CREATE TABLE IF NOT EXISTS {schema}."__TPVersionHistory" (
-    "Version"   text NOT NULL UNIQUE,
-    "Major"     integer NOT NULL,
-    "Minor"     integer NOT NULL,
-    "Patch"     integer NOT NULL,
-    "Timestamp" timestamp with time zone NOT NULL
+    "version"   text NOT NULL UNIQUE,
+    "major"     integer NOT NULL,
+    "minor"     integer NOT NULL,
+    "patch"     integer NOT NULL,
+    "timestamp" timestamp with time zone NOT NULL
 );
 
-INSERT INTO {schema}."__TPVersionHistory" ("Version", "Major", "Minor", "Patch", "Timestamp")
+INSERT INTO {schema}."__TPVersionHistory" ("version", "major", "minor", "patch", "timestamp")
     VALUES (@version, @major, @minor, @patch, now())
     ON CONFLICT DO NOTHING;
 """, versionParameter, majorParameter, minorParameter, patchParameter);
@@ -92,6 +86,7 @@ INSERT INTO {schema}."__TPVersionHistory" ("Version", "Major", "Minor", "Patch",
         await context.Database.CommitTransactionAsync();
     }
 
+#if false
     private static async Task EnsureInitialUserCreatedAsync(IServiceProvider serviceProvider, TurnierplanContext context, ILogger logger)
     {
         var userCount = await context.Users.CountAsync();
@@ -133,6 +128,7 @@ INSERT INTO {schema}."__TPVersionHistory" ("Version", "Major", "Minor", "Patch",
             logger.LogInformation("Database contains {UserCount} user(s). No administrator account was created.", userCount);
         }
     }
+#endif
 
     private sealed record VersionHistory(string Version, int Major, int Minor, int Patch);
 }
