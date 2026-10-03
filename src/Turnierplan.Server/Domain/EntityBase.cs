@@ -1,4 +1,4 @@
-namespace Turnierplan.Server.Infrastructure.Database.Entities;
+namespace Turnierplan.Server.Domain;
 
 internal abstract class EntityBase<TIdentifier>
 {

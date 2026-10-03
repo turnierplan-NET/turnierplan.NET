@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Turnierplan.Server.Domain;
 
 namespace Turnierplan.Server.Infrastructure.Database.Converters;
 

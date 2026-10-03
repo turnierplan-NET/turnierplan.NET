@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Turnierplan.Server.Domain.Organizations;
 using Turnierplan.Server.Infrastructure.Database.Converters;
-using Turnierplan.Server.Infrastructure.Database.Entities;
 
 namespace Turnierplan.Server.Infrastructure.Database.EntityTypeConfigurations;
 
-internal sealed class OrganizationEntityTypeConfiguration : IEntityTypeConfiguration<OrganizationEntity>
+internal sealed class OrganizationEntityTypeConfiguration : IEntityTypeConfiguration<Organization>
 {
-    public void Configure(EntityTypeBuilder<OrganizationEntity> builder)
+    public void Configure(EntityTypeBuilder<Organization> builder)
     {
         builder.ToTable("organization", TurnierplanContext.Schema);
 

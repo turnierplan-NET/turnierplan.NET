@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Turnierplan.Server.Infrastructure.Database.Entities;
+using Turnierplan.Server.Domain.Organizations;
 using Turnierplan.Server.Infrastructure.Database.EntityTypeConfigurations;
 
 namespace Turnierplan.Server.Infrastructure.Database;
@@ -16,7 +16,7 @@ internal sealed class TurnierplanContext : DbContext
         _logger = logger;
     }
 
-    public DbSet<OrganizationEntity> Organizations { get; set; } = null!;
+    public DbSet<Organization> Organizations { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

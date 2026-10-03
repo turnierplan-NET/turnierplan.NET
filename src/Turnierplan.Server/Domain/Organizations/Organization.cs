@@ -1,8 +1,8 @@
-namespace Turnierplan.Server.Infrastructure.Database.Entities;
+namespace Turnierplan.Server.Domain.Organizations;
 
-internal sealed class OrganizationEntity : EntityBase<long>
+internal sealed class Organization : EntityBase<long>, IEntityWithPublicId
 {
-    public OrganizationEntity(string name)
+    public Organization(string name)
     {
         Id = 0;
         PublicId = new PublicId();
@@ -10,7 +10,7 @@ internal sealed class OrganizationEntity : EntityBase<long>
         Name = name;
     }
 
-    public OrganizationEntity(long id, PublicId publicId, DateTime createdAt, string name)
+    public Organization(long id, PublicId publicId, DateTime createdAt, string name)
     {
         Id = id;
         PublicId = publicId;
