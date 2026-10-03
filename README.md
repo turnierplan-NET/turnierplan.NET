@@ -4,6 +4,9 @@
 
 [![Build Status](https://github.com/turnierplan-NET/turnierplan.NET/actions/workflows/validate.yaml/badge.svg)](https://github.com/turnierplan-NET/turnierplan.NET/actions/workflows/validate.yaml) [![License](https://img.shields.io/github/license/turnierplan-NET/turnierplan.NET?color=blue)](./LICENSE) [![NuGet](https://img.shields.io/nuget/v/Turnierplan.Adapter)](https://www.nuget.org/packages/Turnierplan.Adapter)
 
+> [!WARNING]
+> The current `main` branch is not fully buildable due to a large-scale refactoring which is currently going on. If you wish to run the app locally or build from source, please check out the `2026.3.0` tag.
+
 ## Introduction
 
 **turnierplan.NET** is mostly written in C# using [.NET](https://dotnet.microsoft.com/). This includes the core logic, the backend API and database connection as well as all publicly visible web pages. In addition, it serves the *turnierplan.NET portal*, the client application for authenticated users, based on the [Angular](https://angular.dev/) framework.
