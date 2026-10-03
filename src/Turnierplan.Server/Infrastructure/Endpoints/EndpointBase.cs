@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc;
 using Turnierplan.Server.Infrastructure.OpenApi;
 
 namespace Turnierplan.Server.Infrastructure.Endpoints;
@@ -55,7 +56,7 @@ internal abstract partial class EndpointBase
 
         var builder = endpoints.MapMethods($"{GlobalRoutePrefix}{_route}", [_method.ToString()], handleDelegate)
             .RequireAuthorization(_policy)
-            .AddEndpointFilter<ValidationEndpointFilter>()
+            .AddEndpointFilterFactory(CreateValidationEndpointFilter)
             .DisableAntiforgery()
             .WithName(name)
             .WithSummary(FormatSummary(name))
@@ -85,6 +86,26 @@ internal abstract partial class EndpointBase
         }
     }
 
+    private static EndpointFilterDelegate CreateValidationEndpointFilter(EndpointFilterFactoryContext context, EndpointFilterDelegate next)
+    {
+        var bodyParameter = context.MethodInfo.GetParameters()
+            .SingleOrDefault(param => param.GetCustomAttribute<FromBodyAttribute>() is not null);
+
+        if (bodyParameter is null)
+        {
+            return next;
+        }
+
+        var filterType = typeof(ValidationEndpointFilter<>).MakeGenericType(bodyParameter.ParameterType);
+        var instance = ActivatorUtilities.CreateInstance(context.ApplicationServices, filterType);
+
+        if (instance is not IEndpointFilter filter)
+        {
+            throw new InvalidOperationException($"Failed to instantiate filter class '{filterType.FullName}'.");
+        }
+
+        return invocationContext => filter.InvokeAsync(invocationContext, next);
+    }
 
     private static string FormatSummary(string name)
     {

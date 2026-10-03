@@ -37,7 +37,7 @@ internal sealed class TurnierplanServer
         builder.Services.AddTurnierplanAuthentication(builder.Configuration.GetSection("Identity")); // TODO: Rename to "Auth" or "Authentication"?
         builder.Services.AddTurnierplanAuthorization();
 
-        builder.Services.AddValidatorsFromAssembly(typeof(TurnierplanServer).Assembly, includeInternalTypes: true);
+        builder.Services.AddValidatorsFromAssembly(typeof(TurnierplanServer).Assembly, lifetime: ServiceLifetime.Singleton, includeInternalTypes: true);
 
         builder.Services.AddHealthChecks();
         // builder.Services.AddRazorPages();
