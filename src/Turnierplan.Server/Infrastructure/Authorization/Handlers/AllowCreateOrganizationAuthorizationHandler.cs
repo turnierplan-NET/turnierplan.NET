@@ -8,7 +8,7 @@ internal sealed class AllowCreateOrganizationAuthorizationHandler : Authorizatio
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, AllowCreateOrganizationRequirement requirement)
     {
         // TODO: Check if user has the 'allow create org' flag or the user is an administrator
-        context.Fail();
+        context.Succeed(requirement);
         return Task.CompletedTask;
     }
 }

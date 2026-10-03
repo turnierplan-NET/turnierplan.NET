@@ -1,7 +1,10 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.Server.Infrastructure.Authorization;
+using Turnierplan.Server.Infrastructure.Database;
+using Turnierplan.Server.Infrastructure.Database.Entities;
 using Turnierplan.Server.Infrastructure.Endpoints;
+using Turnierplan.Server.Infrastructure.Validation;
 
 namespace Turnierplan.Server.Application.Organization.CreateOrganization;
 
@@ -12,13 +15,26 @@ internal sealed class CreateOrganizationEndpoint : EndpointBase
     {
     }
 
-    public static Task<IResult> HandleAsync([FromBody] CreateOrganizationRequest request)
+    public static async Task<IResult> HandleAsync(
+        [FromBody] CreateOrganizationRequest request,
+        TurnierplanContext context,
+        CancellationToken cancellationToken)
     {
-        return Task.FromResult(Results.Ok(request.Name));
+        var organization = new OrganizationEntity(request.Name);
+
+        await context.Organizations.AddAsync(organization, cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
+
+        // TODO: accessValidator.AddRolesToResponseHeader(organization);
+
+        return Results.Ok(new CreateOrganizationResponse
+        {
+            Id = organization.PublicId,
+            Name = organization.Name
+        });
     }
 }
 
-// [NoValidation]
 internal sealed record CreateOrganizationRequest
 {
     public required string Name { get; init; }
@@ -38,6 +54,6 @@ internal sealed class CreateOrganizationRequestValidator : AbstractValidator<Cre
     public CreateOrganizationRequestValidator()
     {
         RuleFor(x => x.Name)
-            .NotEmpty();
+            .NotEmptyAndTrimmed();
     }
 }

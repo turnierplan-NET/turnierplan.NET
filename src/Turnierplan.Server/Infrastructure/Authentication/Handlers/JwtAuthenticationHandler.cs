@@ -39,6 +39,19 @@ internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityO
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
+        // TODO: Actual implementation is temporarily disabled to allow easy local testing
+
+        var identity = new ClaimsIdentity(authenticationType: AuthenticationTypes.Session, claims: [
+            new Claim(ClaimTypes.PrincipalId, "f8df4abc-3879-4a5e-bddc-ba02350b0447"),
+            new Claim(ClaimTypes.PrincipalKind, nameof(PrincipalKind.User))
+        ]);
+
+        var principal = new ClaimsPrincipal([ identity ]);
+        var ticket = new AuthenticationTicket(principal, Scheme.Name);
+
+        return AuthenticateResult.Success(ticket);
+
+#if false
         string? token = null;
 
         foreach (var (cookieName, cookieValue) in Request.Cookies)
@@ -97,5 +110,6 @@ internal sealed class JwtAuthenticationHandler : AuthenticationHandler<IdentityO
         var ticket = new AuthenticationTicket(claimsPrincipal, Scheme.Name);
 
         return AuthenticateResult.Success(ticket);
+#endif
     }
 }
