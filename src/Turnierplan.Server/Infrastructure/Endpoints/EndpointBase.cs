@@ -1,6 +1,5 @@
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.Server.Infrastructure.OpenApi;
@@ -59,7 +58,6 @@ internal abstract partial class EndpointBase
             .AddEndpointFilterFactory(CreateValidationEndpointFilter)
             .DisableAntiforgery()
             .WithName(name)
-            .WithSummary(FormatSummary(name))
             .WithTags(NamespacePrefix().Match(GetType().Namespace!).Groups[1].Value);
 
         if (_specialResponseKind.HasValue)
@@ -105,23 +103,6 @@ internal abstract partial class EndpointBase
         }
 
         return invocationContext => filter.InvokeAsync(invocationContext, next);
-    }
-
-    private static string FormatSummary(string name)
-    {
-        var result = new StringBuilder();
-
-        for (var i = 0; i < name.Length; i++)
-        {
-            if (i > 0 && char.IsUpper(name[i]))
-            {
-                result.Append(' ');
-            }
-
-            result.Append(name[i]);
-        }
-
-        return result.ToString();
     }
 
     [GeneratedRegex("Endpoint$")]
