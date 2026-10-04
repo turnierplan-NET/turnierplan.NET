@@ -1,5 +1,9 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Npgsql;
+using Turnierplan.Server.Domain.Users;
+using Turnierplan.Server.Options;
 
 namespace Turnierplan.Server.Infrastructure.Database.Extensions;
 
@@ -26,8 +30,7 @@ internal static class WebApplicationExtensions
             await EnsureNoDowngradeAsync(context, logger);
         }
 
-        // TODO: Re-enable once new schema contains 'User' table
-        // await EnsureInitialUserCreatedAsync(scope.ServiceProvider, context, logger);
+        await EnsureInitialUserCreatedAsync(scope.ServiceProvider, context, logger);
     }
 
     private static async Task EnsureNoDowngradeAsync(TurnierplanContext context, ILogger logger)
@@ -86,7 +89,6 @@ INSERT INTO {schema}."__TPVersionHistory" ("version", "major", "minor", "patch",
         await context.Database.CommitTransactionAsync();
     }
 
-#if false
     private static async Task EnsureInitialUserCreatedAsync(IServiceProvider serviceProvider, TurnierplanContext context, ILogger logger)
     {
         var userCount = await context.Users.CountAsync();
@@ -128,7 +130,6 @@ INSERT INTO {schema}."__TPVersionHistory" ("version", "major", "minor", "patch",
             logger.LogInformation("Database contains {UserCount} user(s). No administrator account was created.", userCount);
         }
     }
-#endif
 
     private sealed record VersionHistory(string Version, int Major, int Minor, int Patch);
 }

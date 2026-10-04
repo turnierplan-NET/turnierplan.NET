@@ -24,7 +24,6 @@ internal static class ServiceCollectionExtensions
             .Build();
 
         builder.AddDefaultPolicy(PolicyNames.Default, defaultPolicy);
-        builder.SetFallbackPolicy(defaultPolicy);
 
         builder.AddPolicy(PolicyNames.CreateOrganization, policy =>
         {

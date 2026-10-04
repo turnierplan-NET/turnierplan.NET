@@ -1,14 +1,12 @@
 using System.Globalization;
-using Turnierplan.Core.Entity;
-using Turnierplan.Core.Exceptions;
 
-namespace Turnierplan.Core.User;
+namespace Turnierplan.Server.Domain.Users;
 
-public sealed class User : Entity<Guid>
+internal sealed class User : EntityBase<long>
 {
     public User(string userName)
     {
-        Id = Guid.NewGuid();
+        Id = 0;
         PrincipalId = Guid.NewGuid();
         CreatedAt = DateTime.UtcNow;
         UserName = userName;
@@ -22,7 +20,7 @@ public sealed class User : Entity<Guid>
         SecurityStamp = Guid.Empty;
     }
 
-    internal User(Guid id, Guid principalId, DateTime createdAt, string userName, string normalizedUserName, string? fullName, string? eMail, string? normalizedEMail, string passwordHash, bool isAdministrator, bool allowCreateOrganization, DateTime lastPasswordChange, Guid securityStamp)
+    public User(long id, Guid principalId, DateTime createdAt, string userName, string normalizedUserName, string? fullName, string? eMail, string? normalizedEMail, string passwordHash, bool isAdministrator, bool allowCreateOrganization, DateTime lastPasswordChange, Guid securityStamp)
     {
         Id = id;
         PrincipalId = principalId;
@@ -39,7 +37,7 @@ public sealed class User : Entity<Guid>
         SecurityStamp = securityStamp;
     }
 
-    public override Guid Id { get; protected set; }
+    public override long Id { get; protected set; }
 
     public Guid PrincipalId { get; }
 
@@ -117,7 +115,7 @@ public sealed class User : Entity<Guid>
     {
         if (IsAdministrator && !allowCreateOrganization)
         {
-            throw new TurnierplanException($"'{nameof(AllowCreateOrganization)}' cannot be set to false for an administrator user.");
+            throw new TurnierplanDomainException($"'{nameof(AllowCreateOrganization)}' cannot be set to false for an administrator user.");
         }
 
         AllowCreateOrganization = allowCreateOrganization;

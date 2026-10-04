@@ -95,6 +95,88 @@ namespace Turnierplan.Server.Infrastructure.Database.Migrations
                     b.ToTable("organization_role_assignment", "turnierplan_v2");
                 });
 
+            modelBuilder.Entity("Turnierplan.Server.Domain.Users.User", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<bool>("AllowCreateOrganization")
+                        .HasColumnType("boolean")
+                        .HasColumnName("allow_create_organization");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("EMail")
+                        .HasColumnType("text")
+                        .HasColumnName("e_mail");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("text")
+                        .HasColumnName("full_name");
+
+                    b.Property<bool>("IsAdministrator")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_administrator");
+
+                    b.Property<DateTime?>("LastLogin")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_login");
+
+                    b.Property<DateTime>("LastPasswordChange")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_password_change");
+
+                    b.Property<string>("NormalizedEMail")
+                        .HasColumnType("text")
+                        .HasColumnName("normalized_e_mail");
+
+                    b.Property<string>("NormalizedUserName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("normalized_user_name");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
+
+                    b.Property<Guid>("PrincipalId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("principal_id");
+
+                    b.Property<Guid>("SecurityStamp")
+                        .HasColumnType("uuid")
+                        .HasColumnName("security_stamp");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("user_name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_user");
+
+                    b.HasIndex("NormalizedEMail")
+                        .IsUnique()
+                        .HasDatabaseName("ix_user_normalized_e_mail");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("ix_user_normalized_user_name");
+
+                    b.HasIndex("PrincipalId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_user_principal_id");
+
+                    b.ToTable("user", "turnierplan_v2");
+                });
+
             modelBuilder.Entity("Turnierplan.Server.Domain.RoleAssignments.RoleAssignment<Turnierplan.Server.Domain.Organizations.Organization>", b =>
                 {
                     b.HasOne("Turnierplan.Server.Domain.Organizations.Organization", "Scope")

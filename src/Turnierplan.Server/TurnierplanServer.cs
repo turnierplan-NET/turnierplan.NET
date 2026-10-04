@@ -35,10 +35,20 @@ internal sealed class TurnierplanServer
         // builder.Services.AddTurnierplanDocumentRendering<ApplicationUrlProvider>();
         // builder.Services.AddTurnierplanImageStorage<DatabaseImageProvider>(builder.Configuration.GetSection("ImageStorage"));
         // builder.Services.AddTurnierplanLocalization();
-        builder.Services.AddTurnierplanAuthentication(builder.Configuration.GetSection("Identity")); // TODO: Rename to "Auth" or "Authentication"?
+        builder.Services.AddTurnierplanAuthentication();
         builder.Services.AddTurnierplanAuthorization();
 
         builder.Services.AddValidatorsFromAssembly(typeof(TurnierplanServer).Assembly, lifetime: ServiceLifetime.Singleton, includeInternalTypes: true);
+
+        builder.Services.AddDistributedMemoryCache();
+
+        builder.Services.AddSession(options =>
+        {
+            // TODO: Make configurable via options
+            options.IdleTimeout = TimeSpan.FromHours(12);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+        });
 
         builder.Services.AddHealthChecks();
         // builder.Services.AddRazorPages();
@@ -77,6 +87,7 @@ internal sealed class TurnierplanServer
 
          _application.MapHealthChecks("/health");
 
+         _application.UseSession();
          _application.UseAuthentication();
          _application.UseAuthorization();
 
@@ -88,6 +99,7 @@ internal sealed class TurnierplanServer
 //             context.Response.Headers.Location = "/portal/login";
 //         });
 
+        _application.MapAuthenticationEndpoints();
         _application.MapTurnierplanEndpoints();
 
 //         app.MapImageStorageEndpoint();

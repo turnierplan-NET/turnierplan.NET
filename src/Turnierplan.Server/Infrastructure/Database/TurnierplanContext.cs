@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Turnierplan.Server.Domain;
 using Turnierplan.Server.Domain.Organizations;
 using Turnierplan.Server.Domain.RoleAssignments;
+using Turnierplan.Server.Domain.Users;
 using Turnierplan.Server.Infrastructure.Database.EntityTypeConfigurations;
 
 namespace Turnierplan.Server.Infrastructure.Database;
@@ -22,6 +23,8 @@ internal sealed class TurnierplanContext : DbContext
 
     public DbSet<RoleAssignment<Organization>> OrganizationRoleAssignments { get; set; } = null!;
 
+    public DbSet<User> Users { get; set; } = null!;
+
     public DbSet<RoleAssignment<T>> GetRoleAssignmentsForType<T>()
         where T : EntityBase<long>
     {
@@ -37,6 +40,8 @@ internal sealed class TurnierplanContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new OrganizationEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
+
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Organization>());
     }
 }

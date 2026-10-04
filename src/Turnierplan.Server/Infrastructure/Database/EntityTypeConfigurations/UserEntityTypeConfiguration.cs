@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Turnierplan.Core.User;
+using Turnierplan.Server.Domain.Users;
 
-namespace Turnierplan.Dal.EntityConfigurations;
+namespace Turnierplan.Server.Infrastructure.Database.EntityTypeConfigurations;
 
-public sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
+internal sealed class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.ToTable("Users", TurnierplanContext.Schema);
+        builder.ToTable("user", TurnierplanContext.Schema);
 
         builder.HasKey(x => x.Id);
 
