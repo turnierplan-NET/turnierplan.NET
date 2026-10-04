@@ -15,50 +15,6 @@ namespace Turnierplan.App.Extensions;
 
 internal static class ServiceCollectionExtensions
 {
-    public static void AddTurnierplanMonitoring(this IServiceCollection services, IConfiguration configuration)
-    {
-        var applicationInsightsConnectionString = configuration.GetSection("ApplicationInsights").GetValue<string>("ConnectionString");
-        var hasApplicationInsights = !string.IsNullOrEmpty(applicationInsightsConnectionString);
-        var hasOltpExporter = !string.IsNullOrWhiteSpace(configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]);
-
-        if (!hasApplicationInsights && !hasOltpExporter)
-        {
-            return;
-        }
-
-        var openTelemetryBuilder = services.AddOpenTelemetry();
-
-        openTelemetryBuilder.WithMetrics(metrics =>
-        {
-            metrics.AddAspNetCoreInstrumentation();
-            metrics.AddHttpClientInstrumentation();
-            metrics.AddRuntimeInstrumentation();
-            metrics.AddMeter("Npgsql"); // TODO: Revert to AddNpgsqlInstrumentation() once Npgsql.OpenTelemetry is updated to use a non-vulnerable version of OpenTelemetry.Api
-        });
-
-        openTelemetryBuilder.WithTracing(tracing =>
-        {
-            tracing.AddAspNetCoreInstrumentation(options =>
-            {
-                // Exclude health check requests from tracing
-                options.Filter = context => !context.Request.Path.StartsWithSegments("/health");
-            });
-            tracing.AddHttpClientInstrumentation();
-            tracing.AddTurnierplanDataAccessLayer();
-            tracing.AddTurnierplanDocumentRendering();
-        });
-
-        if (hasApplicationInsights)
-        {
-            openTelemetryBuilder.UseAzureMonitor(opt => opt.ConnectionString = applicationInsightsConnectionString);
-        }
-
-        if (hasOltpExporter)
-        {
-            openTelemetryBuilder.UseOtlpExporter();
-        }
-    }
-
     public static void AddTurnierplanSecurity(this IServiceCollection services, IConfigurationSection configuration)
     {
         services.Configure<IdentityOptions>(configuration);

@@ -9,6 +9,7 @@ using Turnierplan.Server.Infrastructure.Database.Extensions;
 using Turnierplan.Server.Infrastructure.Endpoints.Extensions;
 using Turnierplan.Server.Infrastructure.Json;
 using Turnierplan.Server.Infrastructure.Middlewares;
+using Turnierplan.Server.Infrastructure.Monitoring.Extensions;
 using Turnierplan.Server.Infrastructure.OpenApi;
 using Turnierplan.Server.Options;
 
@@ -29,7 +30,7 @@ internal sealed class TurnierplanServer
 
         builder.Services.Configure<TurnierplanOptions>(builder.Configuration.GetSection("Turnierplan"));
 
-        // builder.Services.AddTurnierplanMonitoring(builder.Configuration);
+        builder.Services.AddTurnierplanMonitoring(builder.Configuration);
         builder.Services.AddTurnierplanContext(builder.Configuration);
         // builder.Services.AddTurnierplanDocumentRendering<ApplicationUrlProvider>();
         // builder.Services.AddTurnierplanImageStorage<DatabaseImageProvider>(builder.Configuration.GetSection("ImageStorage"));

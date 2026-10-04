@@ -40,7 +40,7 @@ internal sealed class ResponseRolesStore // TODO: Find better name
 
         var roleAssignments = await dbSet
             .Where(ra => entityIds.Contains(ra.Scope.Id))
-            .Select(ra => new { ScopePublicId = ra.Scope.PublicId, Role = ra.Role })
+            .Select(ra => new { scope_public_id = ra.Scope.PublicId, role = ra.Role })
             .ToArrayAsync(cancellationToken: cancellationToken);
 
         if (roleAssignments.Length == 0)
@@ -48,9 +48,9 @@ internal sealed class ResponseRolesStore // TODO: Find better name
             return;
         }
 
-        foreach (var group in roleAssignments.GroupBy(x => x.ScopePublicId))
+        foreach (var group in roleAssignments.GroupBy(x => x.scope_public_id))
         {
-            var rolesList = string.Join('+', group.Select(x => x.Role.ToString()));
+            var rolesList = string.Join('+', group.Select(x => x.role.ToString()));
             var rolesHeaderValue = $"{group.Key}={rolesList}";
 
             httpContext.Response.Headers.Append(RolesHeaderName, rolesHeaderValue);
