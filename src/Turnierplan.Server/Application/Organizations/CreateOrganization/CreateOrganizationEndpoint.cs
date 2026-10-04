@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.Server.Domain.Organizations;
+using Turnierplan.Server.Domain.RoleAssignments;
+using Turnierplan.Server.Infrastructure.Authentication;
 using Turnierplan.Server.Infrastructure.Authorization;
 using Turnierplan.Server.Infrastructure.Database;
 using Turnierplan.Server.Infrastructure.Endpoints;
@@ -15,17 +17,22 @@ internal sealed class CreateOrganizationEndpoint : EndpointBase
 
     public static async Task<IResult> HandleAsync(
         [FromBody] CreateOrganizationRequest request,
+        PrincipalProvider principalProvider,
         TurnierplanContext context,
+        ResponseRolesStore responseRolesStore,
         CancellationToken cancellationToken)
     {
         var organization = new Organization(request.Name);
 
-        // TODO: organization.AddRoleAssignment(Role.Owner, user.AsPrincipal());
+        var principal = principalProvider.GetCurrentPrincipal();
+        var roleAssignment = new RoleAssignment<Organization>(organization, Role.Owner, principal.Kind, principal.Id);
 
         await context.Organizations.AddAsync(organization, cancellationToken);
+        await context.OrganizationRoleAssignments.AddAsync(roleAssignment, cancellationToken);
+
         await context.SaveChangesAsync(cancellationToken);
 
-        // TODO: accessValidator.AddRolesToResponseHeader(organization);
+        await responseRolesStore.AddRolesToResponseHeaderAsync(organization, cancellationToken);
 
         return Results.Ok(new CreateOrganizationResponse
         {

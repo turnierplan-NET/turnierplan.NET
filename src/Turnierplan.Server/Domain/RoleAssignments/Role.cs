@@ -1,4 +1,6 @@
-namespace Turnierplan.Core.RoleAssignment;
+namespace Turnierplan.Server.Domain.RoleAssignments;
+
+// TODO: Add attributes to define for which entities the corresponding roles are valid -> Then, we can filter in the frontend when assigning roles
 
 public enum Role
 {

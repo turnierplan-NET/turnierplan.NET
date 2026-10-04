@@ -5,6 +5,7 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Turnierplan.Server.Domain.RoleAssignments;
 using Turnierplan.Server.Infrastructure.Authentication.Options;
 using Turnierplan.Server.Options;
 

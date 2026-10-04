@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Turnierplan.Server.Domain;
 using Turnierplan.Server.Domain.Organizations;
+using Turnierplan.Server.Domain.RoleAssignments;
 using Turnierplan.Server.Infrastructure.Database.EntityTypeConfigurations;
 
 namespace Turnierplan.Server.Infrastructure.Database;
@@ -18,12 +20,23 @@ internal sealed class TurnierplanContext : DbContext
 
     public DbSet<Organization> Organizations { get; set; } = null!;
 
+    public DbSet<RoleAssignment<Organization>> OrganizationRoleAssignments { get; set; } = null!;
+
+    public DbSet<RoleAssignment<T>> GetRoleAssignmentsForType<T>()
+        where T : EntityBase<long>
+    {
+        var contextType = typeof(TurnierplanContext);
+        var prop = contextType.GetProperty($"{typeof(T).Name}RoleAssignments");
+
+        return prop?.GetValue(this) as DbSet<RoleAssignment<T>>
+            ?? throw new InvalidOperationException($"Could not find or access role assignments set for type '{typeof(T).FullName}'.");
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new OrganizationEntityTypeConfiguration());
-        // TODO: Add EF naming conventions for postgres
-        // TODO: Entity configs
+        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Organization>());
     }
 }

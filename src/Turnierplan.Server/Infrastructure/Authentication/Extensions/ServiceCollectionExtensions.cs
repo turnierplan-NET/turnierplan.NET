@@ -10,12 +10,15 @@ internal static class ServiceCollectionExtensions
     {
         services.Configure<IdentityOptions>(configuration);
 
+        services.AddAuthentication(AuthenticationSchemes.Session)
+            .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(AuthenticationSchemes.ApiKey, _ => { })
+            .AddScheme<IdentityOptions, JwtAuthenticationHandler>(AuthenticationSchemes.Session, _ => { });
+
         // TODO: Add once ApiKey & User are available
         // services.AddScoped<IPasswordHasher<ApiKey>, PasswordHasher<ApiKey>>();
         // services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
-        services.AddAuthentication(AuthenticationSchemes.Session)
-            .AddScheme<AuthenticationSchemeOptions, ApiKeyAuthenticationHandler>(AuthenticationSchemes.ApiKey, _ => { })
-            .AddScheme<IdentityOptions, JwtAuthenticationHandler>(AuthenticationSchemes.Session, _ => { });
+        services.AddHttpContextAccessor();
+        services.AddScoped<PrincipalProvider>();
     }
 }

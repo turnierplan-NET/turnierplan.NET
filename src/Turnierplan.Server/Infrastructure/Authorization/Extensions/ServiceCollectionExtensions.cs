@@ -12,6 +12,9 @@ internal static class ServiceCollectionExtensions
         services.AddAuthorizationBuilder().AddPolicies();
 
         services.AddScoped<IAuthorizationHandler, AllowCreateOrganizationAuthorizationHandler>();
+
+        services.AddHttpContextAccessor();
+        services.AddScoped<ResponseRolesStore>();
     }
 
     private static void AddPolicies(this AuthorizationBuilder builder)
