@@ -35,12 +35,12 @@ internal sealed class GetOrganizationsEndpoint : EndpointBase
 
         return Results.Ok(new GetOrganizationsResponse
         {
-            Entries =
+            Organizations =
             [
-                .. organizations.Select(organization => new GetOrganizationsResponseEntry
+                .. organizations.Select(organization => new GetOrganizationsResponseItem
                 {
                     Id = organization.PublicId,
-                    ScopeId = ScopeIdentifier.Create(organization),
+                    Scope = ScopeIdentifier.Create(organization),
                     Name = organization.Name
                 })
             ]
