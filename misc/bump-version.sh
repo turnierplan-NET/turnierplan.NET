@@ -12,8 +12,8 @@ if (( $# != 1 )); then
   exit 1
 fi
 
-# The 'version.xml' file is considered leading
-current_version=$(grep -Po '\d+\.\d+\.\d+' ../src/version.xml)
+# The 'Turnierplan.Version.props' file is considered leading
+current_version=$(grep -Po '\d+\.\d+\.\d+' ../src/Turnierplan.Version.props)
 
 next_version="$1"
 if [[ ! $next_version =~ ^20[2-9][0-9]+\.[1-9][0-9]*\.[0-9]+$ ]]; then
@@ -44,7 +44,7 @@ update_file "docs/pages/installation/azure-terraform.md"
 update_file "docs/pages/installation/docker-compose.md"
 update_file "src/Turnierplan.App/Client/package.json"
 update_file "src/Turnierplan.App/Client/src/environments/environment.prod.ts"
-update_file "src/version.xml"
+update_file "src/Turnierplan.Version.props"
 update_file "web/src/app/app.config.ts"
 update_file "web/package.json"
 

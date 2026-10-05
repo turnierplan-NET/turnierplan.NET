@@ -1,9 +1,9 @@
 <Solution>
   <Folder Name="/Solution Files/">
-    <File Path="version.xml" />
+    <File Path="Turnierplan.Test.Common.props" />
+    <File Path="Turnierplan.Version.props" />
   </Folder>
   <Folder Name="/Test/">
-    <File Path="Turnierplan.Test.Common.props" />
     <Project Path="Turnierplan.Adapter.Test.Functional/Turnierplan.Adapter.Test.Functional.csproj" />
     <Project Path="Turnierplan.App.Test.Functional/Turnierplan.App.Test.Functional.csproj" />
     <Project Path="Turnierplan.App.Test.Unit/Turnierplan.App.Test.Unit.csproj" />
