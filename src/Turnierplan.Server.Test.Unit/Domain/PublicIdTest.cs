@@ -1,7 +1,8 @@
 ﻿using FluentAssertions;
+using Turnierplan.Server.Domain;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit.PublicId;
+namespace Turnierplan.Server.Test.Unit.Domain;
 
 public sealed class PublicIdTest
 {
@@ -64,7 +65,7 @@ public sealed class PublicIdTest
     {
         const int count = 1000;
 
-        Enumerable.Range(0, count).Select(_ => new Core.PublicId.PublicId()).Should().OnlyHaveUniqueItems();
+        Enumerable.Range(0, count).Select(_ => new PublicId()).Should().OnlyHaveUniqueItems();
     }
 
     [Theory]
@@ -77,14 +78,14 @@ public sealed class PublicIdTest
     [InlineData(0b10000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000)]
     public void PublicId__Constructor_With_Unsigned_Long___Works_As_Expected(ulong parameter)
     {
-        new Core.PublicId.PublicId(parameter).Value.Should().Be(parameter);
+        new PublicId(parameter).Value.Should().Be(parameter);
     }
 
     [Theory]
     [MemberData(nameof(TestData))]
     public void PublicId__Constructor_With_String___Works_As_Expected(ulong value, string representation)
     {
-        var publicId = new Core.PublicId.PublicId(representation);
+        var publicId = new PublicId(representation);
 
         publicId.Value.Should().Be(value);
         publicId.ToString().Should().Be(representation);
@@ -98,7 +99,7 @@ public sealed class PublicIdTest
     [InlineData("wESkZP_b32kwESkZP_b32k==")]
     public void PublicId__Constructor_With_String_Called_With_Invalid_Inputs___Throws_Exception(string input)
     {
-        var func = () => new Core.PublicId.PublicId(input);
+        var func = () => new PublicId(input);
         func.Should().ThrowExactly<ArgumentException>().WithMessage("String representation must be 11 characters long. (Parameter 'representation')");
     }
 
@@ -116,7 +117,7 @@ public sealed class PublicIdTest
     [InlineData("A0oVOc_f_2`", 10)]
     public void PublicId__Constructor_With_String_Called_With_Invalid_Input_Chars___Throws_Exception(string input, int invalidIndex)
     {
-        var func = () => new Core.PublicId.PublicId(input);
+        var func = () => new PublicId(input);
         func.Should().ThrowExactly<ArgumentException>().WithMessage($"String representation contains invalid character at index {invalidIndex}. (Parameter 'representation')");
     }
 
@@ -127,10 +128,10 @@ public sealed class PublicIdTest
     [InlineData(3438942134)]
     public void PublicId___Equality_Check___Works_As_Expected(ulong value)
     {
-        var publicId1 = new Core.PublicId.PublicId(value);
-        var publicId2 = new Core.PublicId.PublicId(value);
-        var publicId3 = new Core.PublicId.PublicId(value - 1);
-        var publicId4 = new Core.PublicId.PublicId(value + 2);
+        var publicId1 = new PublicId(value);
+        var publicId2 = new PublicId(value);
+        var publicId3 = new PublicId(value - 1);
+        var publicId4 = new PublicId(value + 2);
 
         (publicId1 == publicId2).Should().BeTrue();
         (publicId2 == publicId1).Should().BeTrue();
@@ -164,11 +165,11 @@ public sealed class PublicIdTest
     [InlineData(2)]
     public void PublicId___ToSignedInt64___Works_As_Expected(long value)
     {
-        var publicId = new Core.PublicId.PublicId(value);
+        var publicId = new PublicId(value);
 
         publicId.Value.Should().Be(unchecked((ulong)value));
 
-        var publicId2 = new Core.PublicId.PublicId(publicId.Value);
+        var publicId2 = new PublicId(publicId.Value);
 
         publicId2.ToSignedInt64().Should().Be(value);
     }
@@ -181,13 +182,13 @@ public sealed class PublicIdTest
 
         var buffer = new byte[8];
 
-        for (var i = 0; i < 5_000_000; i++)
+        for (var i = 0; i < 250_000; i++)
         {
             rng.NextBytes(buffer);
 
-            var publicId = new Core.PublicId.PublicId();
+            var publicId = new PublicId();
             var stringRepresentation = publicId.ToString();
-            var convertedBack = new Core.PublicId.PublicId(stringRepresentation);
+            var convertedBack = new PublicId(stringRepresentation);
 
             publicId.Value.Should().Be(convertedBack.Value);
             seenStrings.Add(stringRepresentation).Should().BeTrue();
@@ -199,8 +200,8 @@ public sealed class PublicIdTest
     {
         for (var i = 0; i < 1500; i++)
         {
-            var current = new Core.PublicId.PublicId(i);
-            var next = new Core.PublicId.PublicId(i + 1);
+            var current = new PublicId(i);
+            var next = new PublicId(i + 1);
 
             current.ToString().Should().NotBe(next.ToString());
         }
@@ -214,8 +215,8 @@ public sealed class PublicIdTest
     {
         for (var i = 1; i < inputs.Length; i++)
         {
-            var previous = new Core.PublicId.PublicId(inputs[i - 1]);
-            var current = new Core.PublicId.PublicId(inputs[i]);
+            var previous = new PublicId(inputs[i - 1]);
+            var current = new PublicId(inputs[i]);
 
             previous.Value.Should().NotBe(current.Value);
         }

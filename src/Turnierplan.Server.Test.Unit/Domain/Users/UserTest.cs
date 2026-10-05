@@ -1,8 +1,9 @@
 using FluentAssertions;
-using Turnierplan.Core.Exceptions;
+using Turnierplan.Server.Domain;
+using Turnierplan.Server.Domain.Users;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit.User;
+namespace Turnierplan.Server.Test.Unit.Domain.Users;
 
 public sealed class UserTest
 {
@@ -16,7 +17,7 @@ public sealed class UserTest
         bool setIsAdministrator,
         bool expectedAllowCreateOrganization)
     {
-        var user = new Core.User.User(Guid.Empty, Guid.Empty, DateTime.UtcNow, string.Empty, string.Empty, null, null, null, string.Empty, currentIsAdministrator, currentAllowCreateOrganization, DateTime.UtcNow, Guid.Empty);
+        var user = new User(0, Guid.Empty, DateTime.UtcNow, string.Empty, string.Empty, null, null, null, string.Empty, currentIsAdministrator, currentAllowCreateOrganization, DateTime.UtcNow, Guid.Empty);
 
         user.IsAdministrator.Should().Be(currentIsAdministrator);
         user.AllowCreateOrganization.Should().Be(currentAllowCreateOrganization);
@@ -34,7 +35,7 @@ public sealed class UserTest
         bool currentAllowCreateOrganization,
         bool setAllowCreateOrganization)
     {
-        var user = new Core.User.User(Guid.Empty, Guid.Empty, DateTime.UtcNow, string.Empty, string.Empty, null, null, null, string.Empty, false, currentAllowCreateOrganization, DateTime.UtcNow, Guid.Empty);
+        var user = new User(0, Guid.Empty, DateTime.UtcNow, string.Empty, string.Empty, null, null, null, string.Empty, false, currentAllowCreateOrganization, DateTime.UtcNow, Guid.Empty);
 
         user.IsAdministrator.Should().Be(false);
         user.AllowCreateOrganization.Should().Be(currentAllowCreateOrganization);
@@ -47,12 +48,12 @@ public sealed class UserTest
     [Fact]
     public void User___When_SetAllowCreateOrganization_Is_Called_With_False_On_Admin_User___Works_As_Expected()
     {
-        var user = new Core.User.User(Guid.Empty, Guid.Empty, DateTime.UtcNow, string.Empty, string.Empty, null, null, null, string.Empty, true, true, DateTime.UtcNow, Guid.Empty);
+        var user = new User(0, Guid.Empty, DateTime.UtcNow, string.Empty, string.Empty, null, null, null, string.Empty, true, true, DateTime.UtcNow, Guid.Empty);
 
         user.IsAdministrator.Should().Be(true);
         user.AllowCreateOrganization.Should().Be(true);
 
         var action = () => user.SetAllowCreateOrganization(false);
-        action.Should().ThrowExactly<TurnierplanException>().WithMessage("'AllowCreateOrganization' cannot be set to false for an administrator user.");
+        action.Should().ThrowExactly<TurnierplanDomainException>().WithMessage("'AllowCreateOrganization' cannot be set to false for an administrator user.");
     }
 }
