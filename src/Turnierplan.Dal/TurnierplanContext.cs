@@ -12,7 +12,6 @@ using Turnierplan.Core.ResourcePlanner;
 using Turnierplan.Core.RoleAssignment;
 using Turnierplan.Core.Tournament;
 using Turnierplan.Core.TournamentPlanner;
-using Turnierplan.Core.User;
 using Turnierplan.Core.Venue;
 using Turnierplan.Dal.EntityConfigurations;
 using Turnierplan.Dal.UnitOfWork;
@@ -67,8 +66,6 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
 
     public DbSet<Match> Matches { get; set; } = null!;
 
-    public DbSet<Organization> Organizations { get; set; } = null!;
-
 #if TP_RESOURCE_PLANNER
 
     public DbSet<ResourceAssignment> ResourceAssignments { get; set; } = null!;
@@ -100,8 +97,6 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
     public DbSet<RoleAssignment<Tournament>> TournamentRoleAssignments { get; set; } = null!;
 
     public DbSet<TournamentClass> TournamentClasses { get; set; } = null!;
-
-    public DbSet<User> Users { get; set; } = null!;
 
     public DbSet<Venue> Venues { get; set; } = null!;
 
@@ -186,7 +181,6 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new InvitationLinkEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new InvitationLinkEntryEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new MatchEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new OrganizationEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new RankingOverwriteEntityTypeConfiguration());
 #if TP_RESOURCE_PLANNER
         modelBuilder.ApplyConfiguration(new ResourceAssignmentEntityTypeConfiguration());
@@ -200,13 +194,11 @@ public sealed class TurnierplanContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new TournamentEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TournamentClassEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new TournamentPlannerEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new VenueEntityTypeConfiguration());
 
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<ApiKey>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Folder>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Image>());
-        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Organization>());
 #if TP_RESOURCE_PLANNER
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<ResourcePlanner>());
 #endif
