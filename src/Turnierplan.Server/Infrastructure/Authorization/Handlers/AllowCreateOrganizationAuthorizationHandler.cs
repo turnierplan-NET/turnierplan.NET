@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
-using Turnierplan.Server.Infrastructure.Authentication;
+using Turnierplan.Server.Infrastructure.Authentication.Extensions;
 using Turnierplan.Server.Infrastructure.Authorization.Requirements;
 
 namespace Turnierplan.Server.Infrastructure.Authorization.Handlers;
@@ -8,8 +8,7 @@ internal sealed class AllowCreateOrganizationAuthorizationHandler : Authorizatio
 {
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, AllowCreateOrganizationRequirement requirement)
     {
-        if (context.User.HasClaim(ClaimTypes.AllowCreateOrganization, ClaimValues.True)
-            || context.User.HasClaim(ClaimTypes.IsAdministrator, ClaimValues.True))
+        if (context.User.HasAllowCreateOrganizationClaim() || context.User.HasIsAdministratorClaim())
         {
             context.Succeed(requirement);
         }
