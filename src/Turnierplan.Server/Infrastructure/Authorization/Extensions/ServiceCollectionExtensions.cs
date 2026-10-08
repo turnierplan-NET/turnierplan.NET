@@ -34,7 +34,8 @@ internal static class ServiceCollectionExtensions
 
     private static AuthorizationPolicyBuilder RequireDefaults(this AuthorizationPolicyBuilder builder)
     {
-        builder.AuthenticationSchemes = [AuthenticationSchemes.Session]; // TODO: Allow API key for certain policies
+        // TODO: Should api key be allowed for all policies?
+        builder.AuthenticationSchemes = [AuthenticationSchemes.ApiKey, AuthenticationSchemes.Session];
 
         builder.RequireAuthenticatedUser();
         builder.RequireClaim(ClaimTypes.PrincipalKind);

@@ -1,6 +1,13 @@
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Turnierplan.Server.Domain;
+using Turnierplan.Server.Domain.ApiKeys;
+using Turnierplan.Server.Domain.RoleAssignments;
+using Turnierplan.Server.Infrastructure.Database;
 
 namespace Turnierplan.Server.Infrastructure.Authentication.Handlers;
 
@@ -9,29 +16,23 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
     private const string ApiKeyIdHeaderName = "x-api-key";
     private const string ApiKeySecretHeaderName = "x-api-key-secret";
 
-    // TODO: Undo changes once ApiKey is re-introduces into database
-    // private readonly IApiKeyRepository _apiKeyRepository;
-    // private readonly IPasswordHasher<ApiKey> _secretHasher;
+    private readonly TurnierplanContext _turnierplanContext;
+    private readonly IPasswordHasher<ApiKey> _secretHasher;
 
     public ApiKeyAuthenticationHandler(
         IOptionsMonitor<AuthenticationSchemeOptions> options,
         ILoggerFactory logger,
-        UrlEncoder encoder
-        // IApiKeyRepository apiKeyRepository,
-        // IPasswordHasher<ApiKey> secretHasher
-        )
+        UrlEncoder encoder,
+        TurnierplanContext turnierplanContext,
+        IPasswordHasher<ApiKey> secretHasher)
         : base(options, logger, encoder)
     {
-        // _apiKeyRepository = apiKeyRepository;
-        // _secretHasher = secretHasher;
+        _turnierplanContext = turnierplanContext;
+        _secretHasher = secretHasher;
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        // API key is not implemented at the moment.
-        return AuthenticateResult.NoResult();
-
-    #if false
         var hasApiKeyIdHeader = Request.Headers.TryGetValue(ApiKeyIdHeaderName, out var apiKeyIdHeaderValue);
         var hasApiKeySecretHeader = Request.Headers.TryGetValue(ApiKeySecretHeaderName, out var apiKeySecretHeaderValue);
 
@@ -53,7 +54,7 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
             return AuthenticateResult.Fail("There exists no valid API key with the specified ID and secret.");
         }
 
-        var apiKey = await _apiKeyRepository.GetByPublicIdAsync(apiKeyIdParsed.Value);
+        var apiKey = await _turnierplanContext.ApiKeys.Where(x => x.PublicId == apiKeyIdParsed.Value).FirstOrDefaultAsync();
 
         if (apiKey is null || !apiKey.IsActive || apiKey.IsExpired)
         {
@@ -67,9 +68,9 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
             return AuthenticateResult.Fail("There exists no valid API key with the specified ID and secret.");
         }
 
-        apiKey.AddRequest(new ApiKeyRequest($"{Request.Path}{Request.QueryString}"));
+        apiKey.AddRequest($"{Request.Path}{Request.QueryString}");
 
-        await _apiKeyRepository.UnitOfWork.SaveChangesAsync();
+        await _turnierplanContext.SaveChangesAsync();
 
         var identity = new ClaimsIdentity(authenticationType: AuthenticationTypes.ApiKey, claims: [
             new Claim(ClaimTypes.PrincipalId, apiKey.PrincipalId.ToString()),
@@ -80,6 +81,5 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
         var ticket = new AuthenticationTicket(principal, Scheme.Name);
 
         return AuthenticateResult.Success(ticket);
-#endif
     }
 }

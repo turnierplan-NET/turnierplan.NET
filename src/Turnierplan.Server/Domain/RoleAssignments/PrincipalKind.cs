@@ -2,6 +2,8 @@ namespace Turnierplan.Server.Domain.RoleAssignments;
 
 public enum PrincipalKind
 {
-    ApiKey,
-    User
+    // Note: Don't change enum values (DB serialization)
+
+    ApiKey = 1,
+    User = 2
 }
