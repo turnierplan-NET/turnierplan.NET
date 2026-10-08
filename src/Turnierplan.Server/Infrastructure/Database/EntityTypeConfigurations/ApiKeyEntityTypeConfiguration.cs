@@ -1,26 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Turnierplan.Core.ApiKey;
-using Turnierplan.Dal.Converters;
+using Turnierplan.Server.Domain.ApiKeys;
+using Turnierplan.Server.Infrastructure.Database.Converters;
 
-namespace Turnierplan.Dal.EntityConfigurations;
+namespace Turnierplan.Server.Infrastructure.Database.EntityTypeConfigurations;
 
-public sealed class ApiKeyEntityTypeConfiguration : IEntityTypeConfiguration<ApiKey>
+internal sealed class ApiKeyEntityTypeConfiguration : IEntityTypeConfiguration<ApiKey>
 {
     public void Configure(EntityTypeBuilder<ApiKey> builder)
     {
-        builder.ToTable("ApiKeys", TurnierplanContext.Schema);
+        builder.ToTable("api_key", TurnierplanContext.Schema);
 
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Id)
             .IsRequired();
-
-        builder.Property(x => x.PrincipalId)
-            .IsRequired();
-
-        builder.HasIndex(x => x.PrincipalId)
-            .IsUnique();
 
         builder.Property(x => x.PublicId)
             .HasConversion<PublicIdConverter>();
@@ -28,10 +22,13 @@ public sealed class ApiKeyEntityTypeConfiguration : IEntityTypeConfiguration<Api
         builder.HasIndex(x => x.PublicId)
             .IsUnique();
 
-        builder.HasMany(x => x.RoleAssignments)
-            .WithOne(x => x.Scope)
-            .HasForeignKey("ApiKeyId")
-            .OnDelete(DeleteBehavior.Cascade)
+        builder.Property(x => x.PrincipalId)
+            .IsRequired();
+
+        builder.HasIndex(x => x.PrincipalId)
+            .IsUnique();
+
+        builder.Property(x => x.CreatedAt)
             .IsRequired();
 
         builder.Property(x => x.Name)
@@ -43,9 +40,6 @@ public sealed class ApiKeyEntityTypeConfiguration : IEntityTypeConfiguration<Api
         builder.Property(x => x.SecretHash)
             .IsRequired();
 
-        builder.Property(x => x.CreatedAt)
-            .IsRequired();
-
         builder.Property(x => x.ExpiryDate)
             .IsRequired();
 
@@ -55,12 +49,11 @@ public sealed class ApiKeyEntityTypeConfiguration : IEntityTypeConfiguration<Api
             .IsRequired();
 
         builder.HasMany(x => x.Requests)
-            .WithOne(x => x.ApiKey)
-            .HasForeignKey("ApiKeyId")
+            .WithOne()
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
 
-        builder.Metadata.FindNavigation(nameof(ApiKey.RoleAssignments))!.SetPropertyAccessMode(PropertyAccessMode.Field);
-        builder.Metadata.FindNavigation(nameof(ApiKey.Requests))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        // TODO: Necessary?
+        // builder.Metadata.FindNavigation(nameof(ApiKey.Requests))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

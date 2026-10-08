@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Turnierplan.Core.ApiKey;
+using Turnierplan.Server.Domain.ApiKeys;
 
-namespace Turnierplan.Dal.EntityConfigurations;
+namespace Turnierplan.Server.Infrastructure.Database.EntityTypeConfigurations;
 
-public sealed class ApiKeyRequestEntityTypeConfiguration : IEntityTypeConfiguration<ApiKeyRequest>
+internal sealed class ApiKeyRequestEntityTypeConfiguration : IEntityTypeConfiguration<ApiKeyRequest>
 {
     public void Configure(EntityTypeBuilder<ApiKeyRequest> builder)
     {
-        builder.ToTable("ApiKeyRequests", TurnierplanContext.Schema);
+        builder.ToTable("api_key_request", TurnierplanContext.Schema);
 
         builder.HasKey(x => x.Id);
 
@@ -18,7 +18,7 @@ public sealed class ApiKeyRequestEntityTypeConfiguration : IEntityTypeConfigurat
         builder.Property(x => x.Timestamp)
             .IsRequired();
 
-        builder.HasIndex(x => x.Timestamp);
+        // TODO: index on timestamp?
 
         builder.Property(x => x.Path)
             .IsRequired();

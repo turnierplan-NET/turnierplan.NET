@@ -1,8 +1,6 @@
-using Turnierplan.Core.Entity;
+namespace Turnierplan.Server.Domain.ApiKeys;
 
-namespace Turnierplan.Core.ApiKey;
-
-public sealed class ApiKeyRequest : Entity<long>
+internal sealed class ApiKeyRequest : EntityBase<long>
 {
     public ApiKeyRequest(string path)
     {
@@ -11,7 +9,7 @@ public sealed class ApiKeyRequest : Entity<long>
         Path = path;
     }
 
-    internal ApiKeyRequest(long id, DateTime timestamp, string path)
+    public ApiKeyRequest(long id, DateTime timestamp, string path)
     {
         Id = id;
         Timestamp = timestamp;
@@ -19,8 +17,6 @@ public sealed class ApiKeyRequest : Entity<long>
     }
 
     public override long Id { get; protected set; }
-
-    public ApiKey ApiKey { get; internal set; } = null!;
 
     public DateTime Timestamp { get; }
 

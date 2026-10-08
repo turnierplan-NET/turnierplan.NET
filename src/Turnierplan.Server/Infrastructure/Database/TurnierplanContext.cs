@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Turnierplan.Server.Domain;
+using Turnierplan.Server.Domain.ApiKeys;
 using Turnierplan.Server.Domain.Organizations;
 using Turnierplan.Server.Domain.RoleAssignments;
 using Turnierplan.Server.Domain.Users;
@@ -18,6 +19,10 @@ internal sealed class TurnierplanContext : DbContext
     {
         _logger = logger;
     }
+
+    public DbSet<ApiKey> ApiKeys { get; set; } = null!;
+
+    public DbSet<RoleAssignment<ApiKey>> ApiKeyRoleAssignments { get; set; } = null!;
 
     public DbSet<Organization> Organizations { get; set; } = null!;
 
@@ -39,9 +44,12 @@ internal sealed class TurnierplanContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.ApplyConfiguration(new ApiKeyEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ApiKeyRequestEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OrganizationEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
 
+        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<ApiKey>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Organization>());
     }
 }
