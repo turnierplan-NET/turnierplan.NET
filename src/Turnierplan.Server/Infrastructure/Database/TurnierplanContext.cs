@@ -49,7 +49,7 @@ internal sealed class TurnierplanContext : DbContext
         modelBuilder.ApplyConfiguration(new OrganizationEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
 
-        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<ApiKey>());
+        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<ApiKey>("api_key"));
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Organization>());
     }
 }

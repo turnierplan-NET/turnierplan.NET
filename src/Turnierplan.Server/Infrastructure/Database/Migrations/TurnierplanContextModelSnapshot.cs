@@ -168,20 +168,20 @@ namespace Turnierplan.Server.Infrastructure.Database.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("role");
 
-                    b.Property<long>("apikey_id")
+                    b.Property<long>("api_key_id")
                         .HasColumnType("bigint")
-                        .HasColumnName("apikey_id");
+                        .HasColumnName("api_key_id");
 
                     b.HasKey("Id")
-                        .HasName("pk_apikey_role_assignment");
+                        .HasName("pk_api_key_role_assignment");
 
                     b.HasIndex("PrincipalId")
-                        .HasDatabaseName("ix_apikey_role_assignment_principal_id");
+                        .HasDatabaseName("ix_api_key_role_assignment_principal_id");
 
-                    b.HasIndex("apikey_id")
-                        .HasDatabaseName("ix_apikey_role_assignment_apikey_id");
+                    b.HasIndex("api_key_id")
+                        .HasDatabaseName("ix_api_key_role_assignment_api_key_id");
 
-                    b.ToTable("apikey_role_assignment", "turnierplan_v2");
+                    b.ToTable("api_key_role_assignment", "turnierplan_v2");
                 });
 
             modelBuilder.Entity("Turnierplan.Server.Domain.RoleAssignments.RoleAssignment<Turnierplan.Server.Domain.Organizations.Organization>", b =>
@@ -321,10 +321,10 @@ namespace Turnierplan.Server.Infrastructure.Database.Migrations
                 {
                     b.HasOne("Turnierplan.Server.Domain.ApiKeys.ApiKey", "Scope")
                         .WithMany()
-                        .HasForeignKey("apikey_id")
+                        .HasForeignKey("api_key_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_apikey_role_assignment_api_key_apikey_id");
+                        .HasConstraintName("fk_api_key_role_assignment_api_key_api_key_id");
 
                     b.Navigation("Scope");
                 });
