@@ -61,7 +61,7 @@ internal static class EndpointRouteBuilderExtensions
             return Results.NoContent();
         })
         .DisableAntiforgery()
-        .RequireAuthorization(PolicyNames.Logout)
+        .RequireAuthorization(PolicyNames.User)
         .WithName("Logout")
         .WithTags("Authentication");
     }

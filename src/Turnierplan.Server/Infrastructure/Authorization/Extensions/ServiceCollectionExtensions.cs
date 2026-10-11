@@ -24,15 +24,15 @@ internal static class ServiceCollectionExtensions
             policy.RequireDefaults();
         });
 
+        builder.AddDefaultPolicy(PolicyNames.User, policy =>
+        {
+            policy.RequireDefaults(allowApiKey: false);
+        });
+
         builder.AddPolicy(PolicyNames.CreateOrganization, policy =>
         {
             policy.RequireDefaults();
             policy.AddRequirements(new AllowCreateOrganizationRequirement());
-        });
-
-        builder.AddDefaultPolicy(PolicyNames.Logout, policy =>
-        {
-            policy.RequireDefaults(allowApiKey: false);
         });
     }
 
