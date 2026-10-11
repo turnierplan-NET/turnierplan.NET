@@ -76,7 +76,18 @@
 [ ] Integrate DDL for schema and update test bash script accordingly
 [ ] Add all tables to assertions.sql in tests
 */
--- Delete all existing data from the v2 tables
+-- Delete all existing data from the v2 tables | THIS PART WILL BE REPLACED WITH EF CORE DDL!!!
+-- TODO: REmove the "if not exists part"
+create table if not exists turnierplan_v2."__TPVersionHistory"
+(
+    version   text                     not null
+        unique,
+    major     integer                  not null,
+    minor     integer                  not null,
+    patch     integer                  not null,
+    timestamp timestamp with time zone not null
+);
+
 delete
 from turnierplan_v2."__TPVersionHistory";
 delete

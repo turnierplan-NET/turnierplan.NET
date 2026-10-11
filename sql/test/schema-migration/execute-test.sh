@@ -18,7 +18,6 @@ docker compose exec postgres psql -U postgres -d turnierplan_test -f "/test-setu
 
 # TODO: Remove this part once the DDL is integrated into the main migration script
 echo "Applying schema v2 DDL"
-docker compose exec postgres psql -U postgres -d turnierplan_test -c "create schema turnierplan_v2;" > /dev/null
 docker compose exec postgres psql -U postgres -d turnierplan_test -f "/schema-v2-ddl.sql" > /dev/null
 
 echo "Applying migration"
