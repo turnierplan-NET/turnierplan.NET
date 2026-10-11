@@ -59,7 +59,7 @@
 [ ]  InvitationLinks
 [ ]  Labels
 [ ]  Matches
-[ ]  Organizations
+[X]  Organizations
 [ ]  PlanningRealms
 [ ]  RankingOverwrites
 [ ]  ResourceAssignments
@@ -82,6 +82,16 @@
 -- Delete all existing data from the v2 tables
 delete
 from turnierplan_v2."__TPVersionHistory";
+delete
+from turnierplan_v2.api_key;
+delete
+from turnierplan_v2.api_key_request;
+delete
+from turnierplan_v2.api_key_role_assignment;
+delete
+from turnierplan_v2.organization;
+delete
+from turnierplan_v2.organization_role_assignment;
 delete
 from turnierplan_v2.user;
 -- END OF PART THAT WILL BE REMOVED
@@ -132,5 +142,13 @@ select turnierplan_v2.user.id, turnierplan."Users"."Id", turnierplan_v2.user.nor
 from turnierplan_v2.user
          inner join turnierplan."Users" on normalized_user_name = "NormalizedUserName";
 
+-- Migrate organizations (incl. role assignments) and update the primary key sequence accordingly
 
+insert into turnierplan_v2.organization (id, public_id, created_at, name)
+select "Id", "PublicId", "CreatedAt", "Name"
+from turnierplan."Organizations";
+
+select setval(pg_get_serial_sequence('turnierplan_v2.organization', 'id'),
+              coalesce((select max(id) from turnierplan_v2.organization), 1),
+              exists(select 1 FROM turnierplan_v2.organization));
 
