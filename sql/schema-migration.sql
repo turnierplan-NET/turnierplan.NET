@@ -20,7 +20,7 @@
 --
 --  1) All migrations up to turnierplan.NET 2026.3.0 have been applied. This can be verified using the following command:
 --         select "MigrationId" from turnierplan."__EFMigrationHistory" order by "MigrationId" desc limit 1;
---     It should return '20260717182006_Add_ResourcePlanner'. If not, install and run turnierplan.NET 2026.3.0
+--     It should return '20260307185525_Add_UserAllowCreateOrganization'. If not, install and run turnierplan.NET 2026.3.0
 --     once to apply the missing migrations.
 --
 --  2) The 'turnierplan_v2' schema does not exist yet. In other words, you must not run turnierplan.NET 2027.1 or newer
@@ -51,7 +51,6 @@
 [X]  IAM_Image
 [X]  IAM_Organization
 [X]  IAM_PlanningRealm
-[X]  IAM_ResourcePlanner
 [X]  IAM_Tournament
 [X]  IAM_Venue
 [ ]  Images
@@ -62,12 +61,6 @@
 [X]  Organizations
 [ ]  PlanningRealms
 [ ]  RankingOverwrites
-[ ]  ResourceAssignments
-[ ]  ResourceGroupResourcePlannerView
-[ ]  ResourceGroups
-[ ]  ResourcePlanners
-[ ]  ResourcePlannerViews
-[ ]  Resources
 [ ]  TeamLinks
 [ ]  Teams
 [ ]  TournamentClasses
@@ -80,6 +73,8 @@
 [ ] Ensure the numeric role ids are consistent
 [ ] Remove delete commands at the top and insert DDL for the entire schema v2 (once finished)
 [ ] Check if the 'turnierplan_temporary.user_mappings' is necessary
+[ ] Integrate DDL for schema and update test bash script accordingly
+[ ] Add all tables to assertions.sql in tests
 */
 -- Delete all existing data from the v2 tables
 delete
@@ -172,6 +167,7 @@ select 'IAM_ApiKey',
        0,
        split_part("Principal", ':', 2)::uuid
 from turnierplan."IAM_ApiKey";
+
 insert into turnierplan_temporary.role_assignments (source_table, source_principal, entity_id, created_at, role,
                                                     principal_kind, principal_kind_n, principal_id)
 select 'IAM_Folder',
@@ -183,6 +179,7 @@ select 'IAM_Folder',
        0,
        split_part("Principal", ':', 2)::uuid
 from turnierplan."IAM_Folder";
+
 insert into turnierplan_temporary.role_assignments (source_table, source_principal, entity_id, created_at, role,
                                                     principal_kind, principal_kind_n, principal_id)
 select 'IAM_Image',
@@ -194,6 +191,7 @@ select 'IAM_Image',
        0,
        split_part("Principal", ':', 2)::uuid
 from turnierplan."IAM_Image";
+
 insert into turnierplan_temporary.role_assignments (source_table, source_principal, entity_id, created_at, role,
                                                     principal_kind, principal_kind_n, principal_id)
 select 'IAM_Organization',
@@ -205,6 +203,7 @@ select 'IAM_Organization',
        0,
        split_part("Principal", ':', 2)::uuid
 from turnierplan."IAM_Organization";
+
 insert into turnierplan_temporary.role_assignments (source_table, source_principal, entity_id, created_at, role,
                                                     principal_kind, principal_kind_n, principal_id)
 select 'IAM_PlanningRealm',
@@ -216,17 +215,7 @@ select 'IAM_PlanningRealm',
        0,
        split_part("Principal", ':', 2)::uuid
 from turnierplan."IAM_PlanningRealm";
-insert into turnierplan_temporary.role_assignments (source_table, source_principal, entity_id, created_at, role,
-                                                    principal_kind, principal_kind_n, principal_id)
-select 'IAM_ResourcePlanner',
-       "Principal",
-       "ResourcePlannerId",
-       "CreatedAt",
-       "Role",
-       split_part("Principal", ':', 1),
-       0,
-       split_part("Principal", ':', 2)::uuid
-from turnierplan."IAM_ResourcePlanner";
+
 insert into turnierplan_temporary.role_assignments (source_table, source_principal, entity_id, created_at, role,
                                                     principal_kind, principal_kind_n, principal_id)
 select 'IAM_Tournament',
@@ -238,6 +227,7 @@ select 'IAM_Tournament',
        0,
        split_part("Principal", ':', 2)::uuid
 from turnierplan."IAM_Tournament";
+
 insert into turnierplan_temporary.role_assignments (source_table, source_principal, entity_id, created_at, role,
                                                     principal_kind, principal_kind_n, principal_id)
 select 'IAM_Venue',
