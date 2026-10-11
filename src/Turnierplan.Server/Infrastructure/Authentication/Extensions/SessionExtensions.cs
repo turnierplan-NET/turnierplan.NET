@@ -10,6 +10,11 @@ internal static class SessionExtensions
         session.Set(SessionKeys.UserId, BitConverter.GetBytes(user.Id));
     }
 
+    public static void ResetUser(this ISession session)
+    {
+        session.Remove(SessionKeys.UserId);
+    }
+
     public static bool TryGetUserId(this ISession session, [NotNullWhen(true)] out long? userId)
     {
         if (!session.TryGetValue(SessionKeys.UserId, out var data))

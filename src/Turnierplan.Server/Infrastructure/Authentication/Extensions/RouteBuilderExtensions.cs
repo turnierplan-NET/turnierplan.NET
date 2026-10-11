@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Turnierplan.Server.Domain.Users;
+using Turnierplan.Server.Infrastructure.Authorization;
 using Turnierplan.Server.Infrastructure.Database;
 
 namespace Turnierplan.Server.Infrastructure.Authentication.Extensions;
@@ -53,6 +54,15 @@ internal static class EndpointRouteBuilderExtensions
         .WithName("Login")
         .WithTags("Authentication");
 
-        // TODO: logout endpoint to reset the session
+        builder.MapPost("/auth/logout", (HttpContext httpContext) =>
+        {
+            httpContext.Session.ResetUser();
+
+            return Results.NoContent();
+        })
+        .DisableAntiforgery()
+        .RequireAuthorization(PolicyNames.Logout)
+        .WithName("Logout")
+        .WithTags("Authentication");
     }
 }

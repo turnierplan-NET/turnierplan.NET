@@ -19,23 +19,29 @@ internal static class ServiceCollectionExtensions
 
     private static void AddPolicies(this AuthorizationBuilder builder)
     {
-        var defaultPolicy = new AuthorizationPolicyBuilder()
-            .RequireDefaults()
-            .Build();
-
-        builder.AddDefaultPolicy(PolicyNames.Default, defaultPolicy);
+        builder.AddDefaultPolicy(PolicyNames.Default, policy =>
+        {
+            policy.RequireDefaults();
+        });
 
         builder.AddPolicy(PolicyNames.CreateOrganization, policy =>
         {
             policy.RequireDefaults();
             policy.AddRequirements(new AllowCreateOrganizationRequirement());
         });
+
+        builder.AddDefaultPolicy(PolicyNames.Logout, policy =>
+        {
+            policy.RequireDefaults(allowApiKey: false);
+        });
     }
 
-    private static AuthorizationPolicyBuilder RequireDefaults(this AuthorizationPolicyBuilder builder)
+    // TODO: Should allowApiKey=true be the default?
+    private static AuthorizationPolicyBuilder RequireDefaults(this AuthorizationPolicyBuilder builder, bool allowApiKey = true)
     {
-        // TODO: Should api key be allowed for all policies?
-        builder.AuthenticationSchemes = [AuthenticationSchemes.ApiKey, AuthenticationSchemes.Session];
+        builder.AuthenticationSchemes = allowApiKey
+            ? [AuthenticationSchemes.ApiKey, AuthenticationSchemes.Session]
+            : [AuthenticationSchemes.Session];
 
         builder.RequireAuthenticatedUser();
         builder.RequireClaim(ClaimTypes.PrincipalKind);
