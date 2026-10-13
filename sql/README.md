@@ -2,7 +2,7 @@
 
 This directory contains the SQL script `schema-migration.sql` to execute a migration from the v1 database schema used until 2026.3 to the v2 database schema for 2027.1 and newer releases. Instructions regarding usage are included in the script itself. Additionally, you can find corresponding tests in the `test` subdirectory. 
 
-Each test is composed of a setup SQL script and a test expectation file. The tests are executed via a bash script:
+Each test case has a corresponding setup SQL script and an expected test output file. The tests are executed via a bash script:
 
 ```shell
 cd test/schema-migration
