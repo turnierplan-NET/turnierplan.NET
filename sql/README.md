@@ -13,7 +13,7 @@ chmod +x execute-test.sh
 The script will run through the following steps:
 
 1. Start a temporary PostgreSQL database using the accompanying `docker-compose.yaml` file.
-2. Apply the test setup SQL script `test/schema-migration/setup/<test_name>.sql`. The setup script is a database dump created using `pg_dump` which will create a copy of the v1 schema and populate it with some specific test data.
+2. Apply the test setup SQL script `test/schema-migration/setup/<test_name>.sql`. The setup script is a database dump created from a *turnierplan.NET 2026.3* instance using `pg_dump`. Thus, the setup script basically represents an instance of the v1 schema with some arbitrary data.
 3. Apply the migration script `schema-migration.sql`.
 4. Run through the test assertions defined as `select` statements inside `test/schema-migration/assertions.sql` and print the resulting output to a file.
 5. Use `diff` to compare the output from the test assertions with the expected output `test/schema-migration/setup/<test_name>.txt`.
