@@ -405,12 +405,14 @@ namespace Turnierplan.Server.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Turnierplan.Server.Domain.Projects.Project", b =>
                 {
-                    b.HasOne("Turnierplan.Server.Domain.Organizations.Organization", null)
+                    b.HasOne("Turnierplan.Server.Domain.Organizations.Organization", "Organization")
                         .WithMany("Projects")
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("fk_project_organization_organization_id");
+                        .HasConstraintName("fk_project_organizations_organization_id");
+
+                    b.Navigation("Organization");
                 });
 
             modelBuilder.Entity("Turnierplan.Server.Domain.RoleAssignments.RoleAssignment<Turnierplan.Server.Domain.ApiKeys.ApiKey>", b =>

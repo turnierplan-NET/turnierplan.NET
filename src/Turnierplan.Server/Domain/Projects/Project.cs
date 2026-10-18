@@ -1,3 +1,5 @@
+using Turnierplan.Server.Domain.Organizations;
+
 namespace Turnierplan.Server.Domain.Projects;
 
 internal sealed class Project : EntityBase<long>, IEntityWithPublicId
@@ -19,6 +21,8 @@ internal sealed class Project : EntityBase<long>, IEntityWithPublicId
     }
 
     public override long Id { get; protected set; }
+
+    public Organization Organization { get; private set; } = null!;
 
     public PublicId PublicId { get; }
 
