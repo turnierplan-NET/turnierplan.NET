@@ -100,6 +100,12 @@ delete
 from turnierplan_v2.api_key_request;
 delete
 from turnierplan_v2.api_key_role_assignment;
+
+delete
+from turnierplan_v2.project;
+delete
+from turnierplan_v2.project_role_assignment;
+
 delete
 from turnierplan_v2.organization;
 delete
@@ -113,6 +119,19 @@ from turnierplan_v2.user;
 
 drop schema if exists turnierplan_temporary cascade;
 create schema turnierplan_temporary;
+
+-- Define a function to create a pseudo-random public ID
+
+create or replace function turnierplan_temporary.random_public_id() returns bigint
+    language plpgsql as
+$$
+declare
+    result bigint;
+begin
+    select * into result from random(-9223372036854775808, 9223372036854775807);
+    return result;
+end;
+$$;
 
 -- Copy entries from the version history table
 
@@ -277,3 +296,33 @@ select setval(pg_get_serial_sequence('turnierplan_v2.organization', 'id'),
               coalesce((select max(id) from turnierplan_v2.organization), 1),
               exists(select 1 FROM turnierplan_v2.organization));
 
+-- Create a "default" project inside each organization
+
+insert into turnierplan_v2.project (public_id, created_at, name, organization_id)
+select turnierplan_temporary.random_public_id(),
+       NOW(),
+       ('Default project (' || organization.name || ')'),
+       organization.id
+from turnierplan_v2.organization;
+
+create table turnierplan_temporary.default_projects
+(
+    id                 serial primary key,
+    organization_id    bigint not null,
+    default_project_id bigint not null
+);
+
+insert into turnierplan_temporary.default_projects (organization_id, default_project_id)
+select project.organization_id, project.id
+from turnierplan_v2.project;
+
+-- Migrate existing folders (incl. role assignments) as projects
+
+insert into turnierplan_v2.project (public_id, created_at, name, organization_id)
+select "PublicId", "CreatedAt", "Name", "OrganizationId"
+from turnierplan."Folders";
+
+insert into turnierplan_v2.project_role_assignment (created_at, project_id, role, principal_kind, principal_id)
+select created_at, entity_id, role, principal_kind_n, principal_id
+from turnierplan_temporary.role_assignment
+where source_table = 'IAM_Folder';
