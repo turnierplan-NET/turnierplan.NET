@@ -79,7 +79,7 @@
 [ ] Wrap in transaction
 [ ] Ensure the numeric role ids are consistent
 [ ] Remove delete commands at the top and insert DDL for the entire schema v2 (once finished)
-[ ] Check if the 'turnierplan_temporary.user_mappings' is necessary
+[ ] Check if the 'turnierplan_temporary.user_mapping' is necessary
 [ ] Integrate DDL for schema and update test bash script accordingly
 [ ] Add all tables to assertions.sql in tests
 */
@@ -164,14 +164,14 @@ select "PrincipalId",
        "SecurityStamp"
 from turnierplan."Users";
 
-create table turnierplan_temporary.user_mappings
+create table turnierplan_temporary.user_mapping
 (
     new_identifier       bigint primary key,
     old_identifier       uuid not null unique,
     normalized_user_name text not null unique
 );
 
-insert into turnierplan_temporary.user_mappings (new_identifier, old_identifier, normalized_user_name)
+insert into turnierplan_temporary.user_mapping (new_identifier, old_identifier, normalized_user_name)
 select turnierplan_v2.user.id, turnierplan."Users"."Id", turnierplan_v2.user.normalized_user_name
 from turnierplan_v2.user
          inner join turnierplan."Users" on normalized_user_name = "NormalizedUserName";
@@ -180,7 +180,7 @@ from turnierplan_v2.user
 -- commands required for the mapping of the API key and user principal IDs. The old schema stores the principal as a
 -- formatted string whereas the new schema uses separate columns for the numeric principal kind and the principal uuid.
 
-create table turnierplan_temporary.role_assignments
+create table turnierplan_temporary.role_assignment
 (
     id               serial primary key,
     source_table     text        not null,
@@ -193,7 +193,7 @@ create table turnierplan_temporary.role_assignments
     principal_id     uuid        not null
 );
 
-insert into turnierplan_temporary.role_assignments (source_table, source_principal, entity_id, created_at, role,
+insert into turnierplan_temporary.role_assignment (source_table, source_principal, entity_id, created_at, role,
                                                     principal_kind, principal_kind_n, principal_id)
 select 'IAM_ApiKey',
        "Principal",
@@ -205,7 +205,7 @@ select 'IAM_ApiKey',
        split_part("Principal", ':', 2)::uuid
 from turnierplan."IAM_ApiKey";
 
-insert into turnierplan_temporary.role_assignments (source_table, source_principal, entity_id, created_at, role,
+insert into turnierplan_temporary.role_assignment (source_table, source_principal, entity_id, created_at, role,
                                                     principal_kind, principal_kind_n, principal_id)
 select 'IAM_Folder',
        "Principal",
@@ -217,7 +217,7 @@ select 'IAM_Folder',
        split_part("Principal", ':', 2)::uuid
 from turnierplan."IAM_Folder";
 
-insert into turnierplan_temporary.role_assignments (source_table, source_principal, entity_id, created_at, role,
+insert into turnierplan_temporary.role_assignment (source_table, source_principal, entity_id, created_at, role,
                                                     principal_kind, principal_kind_n, principal_id)
 select 'IAM_Image',
        "Principal",
@@ -229,7 +229,7 @@ select 'IAM_Image',
        split_part("Principal", ':', 2)::uuid
 from turnierplan."IAM_Image";
 
-insert into turnierplan_temporary.role_assignments (source_table, source_principal, entity_id, created_at, role,
+insert into turnierplan_temporary.role_assignment (source_table, source_principal, entity_id, created_at, role,
                                                     principal_kind, principal_kind_n, principal_id)
 select 'IAM_Organization',
        "Principal",
@@ -241,7 +241,7 @@ select 'IAM_Organization',
        split_part("Principal", ':', 2)::uuid
 from turnierplan."IAM_Organization";
 
-insert into turnierplan_temporary.role_assignments (source_table, source_principal, entity_id, created_at, role,
+insert into turnierplan_temporary.role_assignment (source_table, source_principal, entity_id, created_at, role,
                                                     principal_kind, principal_kind_n, principal_id)
 select 'IAM_PlanningRealm',
        "Principal",
@@ -253,7 +253,7 @@ select 'IAM_PlanningRealm',
        split_part("Principal", ':', 2)::uuid
 from turnierplan."IAM_PlanningRealm";
 
-insert into turnierplan_temporary.role_assignments (source_table, source_principal, entity_id, created_at, role,
+insert into turnierplan_temporary.role_assignment (source_table, source_principal, entity_id, created_at, role,
                                                     principal_kind, principal_kind_n, principal_id)
 select 'IAM_Tournament',
        "Principal",
@@ -265,7 +265,7 @@ select 'IAM_Tournament',
        split_part("Principal", ':', 2)::uuid
 from turnierplan."IAM_Tournament";
 
-insert into turnierplan_temporary.role_assignments (source_table, source_principal, entity_id, created_at, role,
+insert into turnierplan_temporary.role_assignment (source_table, source_principal, entity_id, created_at, role,
                                                     principal_kind, principal_kind_n, principal_id)
 select 'IAM_Venue',
        "Principal",
@@ -277,12 +277,12 @@ select 'IAM_Venue',
        split_part("Principal", ':', 2)::uuid
 from turnierplan."IAM_Venue";
 
-update turnierplan_temporary.role_assignments
+update turnierplan_temporary.role_assignment
 set principal_kind_n = 1
-where role_assignments.principal_kind = 'ApiKey';
-update turnierplan_temporary.role_assignments
+where role_assignment.principal_kind = 'ApiKey';
+update turnierplan_temporary.role_assignment
 set principal_kind_n = 2
-where role_assignments.principal_kind = 'User';
+where role_assignment.principal_kind = 'User';
 
 -- Migrate organizations (incl. role assignments) and update the primary key sequence accordingly
 
@@ -292,7 +292,7 @@ from turnierplan."Organizations";
 
 insert into turnierplan_v2.organization_role_assignment (created_at, organization_id, role, principal_kind, principal_id)
 select created_at, entity_id, role, principal_kind_n, principal_id
-from turnierplan_temporary.role_assignments
+from turnierplan_temporary.role_assignment
 where source_table = 'IAM_Organization';
 
 select setval(pg_get_serial_sequence('turnierplan_v2.organization', 'id'),
