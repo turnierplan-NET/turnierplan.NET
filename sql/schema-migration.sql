@@ -12,18 +12,21 @@
 --
 -- This SQL script will migrate existing data from a turnierplan.NET <= 2026.3 database to the new database
 -- schema required by versions 2027.1 and later. This script will migrate ALL data from the old schema to the
--- new schema with the EXCEPTION of the following:
+-- new schema except for the following:
 --
 --  * API keys and existing API key request logs are not migrated due to a change of API key ownership.
 --
--- Run this script if and ONLY if ALL of the following conditions are met!
+-- Run this script if and only if all the following conditions are met!
 --
---  1) All migrations up to turnierplan.NET 2026.3.0 have been applied. This can be verified using the following command:
+--  1) You are running PostgreSQL 17 or later. This is required for the random() function used to generate pseudo-random
+--     identifiers based on 8-byte integers (bigint).
+--
+--  2) All migrations up to turnierplan.NET 2026.3.0 have been applied. This can be verified using the following command:
 --         select "MigrationId" from turnierplan."__EFMigrationHistory" order by "MigrationId" desc limit 1;
 --     It should return '20260307185525_Add_UserAllowCreateOrganization'. If not, install and run turnierplan.NET 2026.3.0
 --     once to apply the missing migrations.
 --
---  2) The 'turnierplan_v2' schema does not exist yet. In other words, you must not run turnierplan.NET 2027.1 or newer
+--  3) The 'turnierplan_v2' schema does not exist yet. In other words, you must not run turnierplan.NET 2027.1 or newer
 --     before executing this migration script. This script will drop the 'turnierplan_v2' if it already exists.
 --
 -- Note that this script does not delete or change any existing data in the v1 schema. Also, this script is designed
