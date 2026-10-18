@@ -308,14 +308,14 @@ select turnierplan_temporary.random_public_id(),
        organization.id
 from turnierplan_v2.organization;
 
-create table turnierplan_temporary.default_projects
+create table turnierplan_temporary.default_project
 (
     id                 serial primary key,
     organization_id    bigint not null,
     default_project_id bigint not null
 );
 
-insert into turnierplan_temporary.default_projects (organization_id, default_project_id)
+insert into turnierplan_temporary.default_project (organization_id, default_project_id)
 select project.organization_id, project.id
 from turnierplan_v2.project;
 
