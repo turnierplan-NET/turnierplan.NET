@@ -29,6 +29,10 @@
 -- Note that this script does not delete or change any existing data in the v1 schema. Also, this script is designed
 -- to run idempotently such that running the migration multiple times will always result in the exact same result.
 --
+--
+--                  **** ALWAYS CREATE A BACKUP OF THE DATABASE BEFORE RUNNING THIS SCRIPT! ****
+--
+--
 -- This script is licensed under AGPL-3.0
 -- (C) 2026 Elias Hörner
 --
