@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Turnierplan.Server.Domain;
 using Turnierplan.Server.Domain.ApiKeys;
 using Turnierplan.Server.Domain.Organizations;
+using Turnierplan.Server.Domain.Projects;
 using Turnierplan.Server.Domain.RoleAssignments;
 using Turnierplan.Server.Domain.Users;
 using Turnierplan.Server.Infrastructure.Database.EntityTypeConfigurations;
@@ -24,6 +25,10 @@ internal sealed class TurnierplanContext : DbContext
 
     public DbSet<RoleAssignment<ApiKey>> ApiKeyRoleAssignments { get; set; } = null!;
 
+    public DbSet<Project> Projects { get; set; } = null!;
+
+    public DbSet<RoleAssignment<Project>> ProjectRoleAssignments { get; set; } = null!;
+
     public DbSet<Organization> Organizations { get; set; } = null!;
 
     public DbSet<RoleAssignment<Organization>> OrganizationRoleAssignments { get; set; } = null!;
@@ -36,10 +41,12 @@ internal sealed class TurnierplanContext : DbContext
 
         modelBuilder.ApplyConfiguration(new ApiKeyEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ApiKeyRequestEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ProjectEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OrganizationEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
 
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<ApiKey>("api_key"));
+        modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Project>());
         modelBuilder.ApplyConfiguration(new RoleAssignmentEntityTypeConfiguration<Organization>());
     }
 }
