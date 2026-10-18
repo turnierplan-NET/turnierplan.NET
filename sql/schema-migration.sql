@@ -50,7 +50,7 @@
 [ ]  ApplicationTeamLabel
 [ ]  ApplicationTeams
 [ ]  Documents
-[ ]  Folders
+[X]  Folders
 [ ]  GroupParticipants
 [ ]  Groups
 [X]  IAM_ApiKey
