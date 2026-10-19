@@ -54,6 +54,8 @@ internal abstract partial class EndpointBase
 
         var name = EndpointTypeSuffix().Replace(GetType().Name, string.Empty);
 
+        // TODO: Verify endpoint filter execution order
+
         var builder = endpoints.MapMethods($"{GlobalRoutePrefix}{_route}", [_method.ToString()], handleDelegate)
             .RequireAuthorization(_policy)
             .AddEndpointFilterFactory(CreatePermissionEndpointFilter)
