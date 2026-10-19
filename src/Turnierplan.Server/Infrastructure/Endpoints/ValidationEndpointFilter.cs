@@ -9,13 +9,6 @@ internal sealed class ValidationEndpointFilter<T> : IEndpointFilter
 {
     private static readonly Type __targetType = typeof(T);
 
-    private readonly IServiceProvider _serviceProvider;
-
-    public ValidationEndpointFilter(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
-
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
         var arguments = context.Arguments.OfType<T>().ToArray();
@@ -26,7 +19,7 @@ internal sealed class ValidationEndpointFilter<T> : IEndpointFilter
         }
 
         var hasNoValidationAttribute = __targetType.GetCustomAttribute<NoValidationAttribute>() is not null;
-        var validator = _serviceProvider.GetService<IValidator<T>>();
+        var validator = context.HttpContext.RequestServices.GetService<IValidator<T>>();
 
         if (validator is null)
         {
