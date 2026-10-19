@@ -44,5 +44,7 @@ internal sealed class RoleAssignmentEntityTypeConfiguration<T> : IEntityTypeConf
 
         builder.Property(x => x.PrincipalKind)
             .IsRequired();
+
+        builder.HasIndex(x => x.PrincipalKind);
     }
 }
