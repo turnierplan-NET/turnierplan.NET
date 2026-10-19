@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
+using Turnierplan.Server.Domain;
 using Turnierplan.Server.Infrastructure.OpenApi;
 
 namespace Turnierplan.Server.Infrastructure.Endpoints;
@@ -55,6 +56,7 @@ internal abstract partial class EndpointBase
 
         var builder = endpoints.MapMethods($"{GlobalRoutePrefix}{_route}", [_method.ToString()], handleDelegate)
             .RequireAuthorization(_policy)
+            .AddEndpointFilterFactory(CreatePermissionEndpointFilter)
             .AddEndpointFilterFactory(CreateValidationEndpointFilter)
             .DisableAntiforgery()
             .WithName(name)
@@ -82,6 +84,42 @@ internal abstract partial class EndpointBase
         {
             builder.Produces(204);
         }
+    }
+
+    private static EndpointFilterDelegate CreatePermissionEndpointFilter(EndpointFilterFactoryContext context, EndpointFilterDelegate next)
+    {
+        var parameters = context.MethodInfo.GetParameters();
+        PermissionEndpointFilter? filter = null;
+
+        for (var i = 0; i < parameters.Length; i++)
+        {
+            var parameter = parameters[i];
+
+            var isPublicId = parameter.ParameterType == typeof(PublicId);
+            var attribute = parameter.GetCustomAttribute<PermissionAttribute>();
+
+            if (attribute is null)
+            {
+                if (isPublicId)
+                {
+                    throw new InvalidOperationException($"The handler method in '{context.MethodInfo.DeclaringType?.FullName}' has a parameter of type '{nameof(PublicId)}' at index {i} which does not have a '{typeof(PermissionAttribute)}'.");
+                }
+
+                continue;
+            }
+
+            if (!isPublicId)
+            {
+                throw new InvalidOperationException($"The handler method in '{context.MethodInfo.DeclaringType?.FullName}' has a parameter of type '{parameter.ParameterType.FullName}' at index {i} which does have a '{typeof(PermissionAttribute)}'.");
+            }
+
+            filter ??= new PermissionEndpointFilter(context.ApplicationServices);
+            filter.AddPermissionCheck(i, attribute.TargetType, attribute.Action);
+        }
+
+        return filter is not null
+            ? invocationContext => filter.InvokeAsync(invocationContext, next)
+            : next;
     }
 
     private static EndpointFilterDelegate CreateValidationEndpointFilter(EndpointFilterFactoryContext context, EndpointFilterDelegate next)
