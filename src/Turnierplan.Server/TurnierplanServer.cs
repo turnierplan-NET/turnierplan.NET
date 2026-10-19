@@ -1,11 +1,14 @@
+using System.Net.Mime;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using FluentValidation;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Json;
 using Scalar.AspNetCore;
 using Turnierplan.Server.Infrastructure.Authentication.Extensions;
 using Turnierplan.Server.Infrastructure.Authorization.Extensions;
 using Turnierplan.Server.Infrastructure.Database.Extensions;
+using Turnierplan.Server.Infrastructure.Endpoints;
 using Turnierplan.Server.Infrastructure.Endpoints.Extensions;
 using Turnierplan.Server.Infrastructure.Json;
 using Turnierplan.Server.Infrastructure.Middlewares;
@@ -121,6 +124,32 @@ internal sealed class TurnierplanServer
 
         _application.UseDefaultFiles();
         _application.UseStaticFiles();
+
+        _application.UseExceptionHandler(new ExceptionHandlerOptions
+        {
+            ExceptionHandler = async context =>
+            {
+                var exception = context.Features.Get<IExceptionHandlerPathFeature>()?.Error;
+
+                switch (exception)
+                {
+                    case ValidationException validationException:
+                        context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                        await context.Response.WriteAsJsonAsync(validationException.Errors.ToDictionary(error => error.PropertyName, error => error.ErrorMessage));
+                        break;
+                    case PermissionException:
+                        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                        context.Response.ContentType = MediaTypeNames.Text.Plain;
+                        await context.Response.WriteAsync("The authenticated user does not have the necessary permissions to access/modify the target resource.");
+                        break;
+                    default:
+                        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                        context.Response.ContentType = MediaTypeNames.Text.Plain;
+                        await context.Response.WriteAsync("An unexpected error occurred while processing the request.");
+                        break;
+                }
+            }
+        });
     }
 
     public async Task RunAsync()

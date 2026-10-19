@@ -4,7 +4,6 @@ using FluentValidation.Results;
 
 namespace Turnierplan.Server.Infrastructure.Endpoints;
 
-// TODO: Add global exception handler to "convert" the exception into a 400 Bad Request
 internal sealed class ValidationEndpointFilter<T> : IEndpointFilter
 {
     private static readonly Type __targetType = typeof(T);
