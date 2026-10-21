@@ -72,8 +72,6 @@ internal sealed class TurnierplanServer
             configure.SerializerOptions.Converters.Add(new JsonPublicIdConverter());
         });
 
-        builder.Services.Configure<RouteHandlerOptions>(options => options.ThrowOnBadRequest = false);
-
         _application = builder.Build();
 
          if (_application.Environment.IsDevelopment())
@@ -133,6 +131,10 @@ internal sealed class TurnierplanServer
 
                 switch (exception)
                 {
+                    case BadHttpRequestException:
+                        context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                        await context.Response.WriteAsync("The request has an invalid format.");
+                        break;
                     case ValidationException validationException:
                         context.Response.StatusCode = StatusCodes.Status400BadRequest;
                         await context.Response.WriteAsJsonAsync(validationException.Errors.ToDictionary(error => error.PropertyName, error => error.ErrorMessage));

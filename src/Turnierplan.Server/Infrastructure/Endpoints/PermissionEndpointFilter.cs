@@ -30,12 +30,6 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
     }
 
     private readonly List<IPermissionCheck> _checks = [];
-    private readonly IServiceProvider _serviceProvider;
-
-    public PermissionEndpointFilter(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
 
     public void AddPermissionCheck(int parameterIndex, Type targetType, Actions action)
     {
@@ -61,7 +55,7 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
 
         if (context.HttpContext.User.HasIsAdministratorClaim())
         {
-            return true;
+            return await next(context);
         }
 
         var services = context.HttpContext.RequestServices;

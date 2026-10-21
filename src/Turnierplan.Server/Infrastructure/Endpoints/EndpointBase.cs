@@ -54,8 +54,6 @@ internal abstract partial class EndpointBase
 
         var name = EndpointTypeSuffix().Replace(GetType().Name, string.Empty);
 
-        // TODO: Verify endpoint filter execution order
-
         var builder = endpoints.MapMethods($"{GlobalRoutePrefix}{_route}", [_method.ToString()], handleDelegate)
             .RequireAuthorization(_policy)
             .AddEndpointFilterFactory(CreatePermissionEndpointFilter)
@@ -115,7 +113,7 @@ internal abstract partial class EndpointBase
                 throw new InvalidOperationException($"The handler method in '{context.MethodInfo.DeclaringType?.FullName}' has a parameter of type '{parameter.ParameterType.FullName}' at index {i} which does have a '{typeof(PermissionAttribute)}'.");
             }
 
-            filter ??= new PermissionEndpointFilter(context.ApplicationServices);
+            filter ??= new PermissionEndpointFilter();
             filter.AddPermissionCheck(i, attribute.TargetType, attribute.Action);
         }
 

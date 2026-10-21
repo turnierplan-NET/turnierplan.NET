@@ -54,7 +54,7 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
             return AuthenticateResult.Fail("There exists no valid API key with the specified ID and secret.");
         }
 
-        var apiKey = await _turnierplanContext.ApiKeys.Where(x => x.PublicId == apiKeyIdParsed.Value).FirstOrDefaultAsync();
+        var apiKey = await _turnierplanContext.ApiKeys.Where(x => x.PublicId == apiKeyIdParsed).FirstOrDefaultAsync();
 
         if (apiKey is null || !apiKey.IsActive || apiKey.IsExpired)
         {
