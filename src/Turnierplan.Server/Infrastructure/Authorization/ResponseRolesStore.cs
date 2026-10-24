@@ -31,7 +31,7 @@ internal sealed class ResponseRolesStore // TODO: Find better name
             throw new InvalidOperationException($"The {nameof(HttpContext)} is currently not available.");
         }
 
-        var roleAssignments = await _authorizationService.Blubb(entities, cancellationToken);
+        var roleAssignments = await _authorizationService.GetAssignedRolesAsync(entities, cancellationToken);
 
         if (roleAssignments.Length == 0)
         {

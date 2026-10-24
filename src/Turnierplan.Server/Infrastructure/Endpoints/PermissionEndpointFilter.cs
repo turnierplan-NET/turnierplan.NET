@@ -2,7 +2,6 @@ using System.Collections.Immutable;
 using System.Reflection;
 using Turnierplan.Server.Domain;
 using Turnierplan.Server.Domain.RoleAssignments;
-using Turnierplan.Server.Infrastructure.Authentication;
 using Turnierplan.Server.Infrastructure.Authentication.Extensions;
 using Turnierplan.Server.Infrastructure.Authorization;
 using BindingFlags = System.Reflection.BindingFlags;
@@ -58,13 +57,12 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
         }
 
         var services = context.HttpContext.RequestServices;
-        var principal = services.GetRequiredService<PrincipalProvider>().GetCurrentPrincipal();
         var authorizationService = services.GetRequiredService<AuthorizationService>();
 
         foreach (var permissionCheck in _checks)
         {
             var publicId = context.GetArgument<PublicId>(permissionCheck.ParameterIndex);
-            var hasPermission = await permissionCheck.EvaluateAsync(authorizationService, publicId, principal.Kind, principal.Id, context.HttpContext.RequestAborted);
+            var hasPermission = await permissionCheck.EvaluateAsync(authorizationService, publicId, context.HttpContext.RequestAborted);
 
             if (!hasPermission)
             {
@@ -79,12 +77,7 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
     {
         int ParameterIndex { get; }
 
-        Task<bool> EvaluateAsync(
-            AuthorizationService authorizationService,
-            PublicId publicId,
-            PrincipalKind principalKind,
-            Guid principalId,
-            CancellationToken cancellationToken);
+        Task<bool> EvaluateAsync(AuthorizationService authorizationService, PublicId publicId, CancellationToken cancellationToken);
     }
 
     private sealed class PermissionCheck<T> : IPermissionCheck
@@ -100,19 +93,9 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
 
         public int ParameterIndex { get; }
 
-        public async Task<bool> EvaluateAsync(
-            AuthorizationService authorizationService,
-            PublicId publicId,
-            PrincipalKind principalKind,
-            Guid principalId,
-            CancellationToken cancellationToken)
+        public async Task<bool> EvaluateAsync(AuthorizationService authorizationService, PublicId publicId, CancellationToken cancellationToken)
         {
-            return await authorizationService.Blubb3<T>(
-                publicId,
-                principalKind,
-                principalId,
-                __permissionRolesCache[_permission],
-                cancellationToken);
+            return await authorizationService.HasAnyOfRolesAsync<T>(publicId, __permissionRolesCache[_permission], cancellationToken);
         }
     }
 }
