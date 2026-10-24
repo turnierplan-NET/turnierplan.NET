@@ -1,11 +1,10 @@
 using System.Collections.Immutable;
 using System.Reflection;
-using Microsoft.EntityFrameworkCore;
 using Turnierplan.Server.Domain;
 using Turnierplan.Server.Domain.RoleAssignments;
 using Turnierplan.Server.Infrastructure.Authentication;
 using Turnierplan.Server.Infrastructure.Authentication.Extensions;
-using Turnierplan.Server.Infrastructure.Database;
+using Turnierplan.Server.Infrastructure.Authorization;
 using BindingFlags = System.Reflection.BindingFlags;
 
 namespace Turnierplan.Server.Infrastructure.Endpoints;
@@ -60,12 +59,12 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
 
         var services = context.HttpContext.RequestServices;
         var principal = services.GetRequiredService<PrincipalProvider>().GetCurrentPrincipal();
-        var turnierplanContext = services.GetRequiredService<TurnierplanContext>();
+        var authorizationService = services.GetRequiredService<AuthorizationService>();
 
         foreach (var permissionCheck in _checks)
         {
             var publicId = context.GetArgument<PublicId>(permissionCheck.ParameterIndex);
-            var hasPermission = await permissionCheck.EvaluateAsync(turnierplanContext, publicId, principal.Kind, principal.Id);
+            var hasPermission = await permissionCheck.EvaluateAsync(authorizationService, publicId, principal.Kind, principal.Id, context.HttpContext.RequestAborted);
 
             if (!hasPermission)
             {
@@ -80,7 +79,12 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
     {
         int ParameterIndex { get; }
 
-        Task<bool> EvaluateAsync(TurnierplanContext turnierplanContext, PublicId publicId, PrincipalKind principalKind, Guid principalId);
+        Task<bool> EvaluateAsync(
+            AuthorizationService authorizationService,
+            PublicId publicId,
+            PrincipalKind principalKind,
+            Guid principalId,
+            CancellationToken cancellationToken);
     }
 
     private sealed class PermissionCheck<T> : IPermissionCheck
@@ -96,18 +100,19 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
 
         public int ParameterIndex { get; }
 
-        public async Task<bool> EvaluateAsync(TurnierplanContext turnierplanContext, PublicId publicId, PrincipalKind principalKind, Guid principalId)
+        public async Task<bool> EvaluateAsync(
+            AuthorizationService authorizationService,
+            PublicId publicId,
+            PrincipalKind principalKind,
+            Guid principalId,
+            CancellationToken cancellationToken)
         {
-            var dbSet = turnierplanContext.GetRoleAssignmentsForType<T>();
-            var anyOfRoles = __actionRequiresRolesCache[_action].AsEnumerable();
-
-            // TODO: Consider roles that are 'inherited' from the parent - if applicable in the future
-
-            var roleAssignment = await dbSet
-                .Where(ra => ra.Scope.PublicId == publicId && ra.PrincipalKind == principalKind && ra.PrincipalId == principalId && anyOfRoles.Contains(ra.Role))
-                .FirstOrDefaultAsync();
-
-            return roleAssignment is not null;
+            return await authorizationService.Blubb3<T>(
+                publicId,
+                principalKind,
+                principalId,
+                __actionRequiresRolesCache[_action],
+                cancellationToken);
         }
     }
 }

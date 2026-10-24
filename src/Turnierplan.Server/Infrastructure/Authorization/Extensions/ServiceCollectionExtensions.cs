@@ -14,6 +14,7 @@ internal static class ServiceCollectionExtensions
         services.AddScoped<IAuthorizationHandler, AllowCreateOrganizationAuthorizationHandler>();
 
         services.AddHttpContextAccessor();
+        services.AddScoped<AuthorizationService>();
         services.AddScoped<ResponseRolesStore>();
     }
 

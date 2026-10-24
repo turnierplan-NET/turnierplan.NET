@@ -1,4 +1,6 @@
-namespace Turnierplan.Server.Domain.RoleAssignments;
+using Turnierplan.Server.Domain.RoleAssignments;
+
+namespace Turnierplan.Server.Infrastructure.Authorization;
 
 /// <remarks>
 /// The contents of this source file are parsed using regex during the build of the Angular client application. Because

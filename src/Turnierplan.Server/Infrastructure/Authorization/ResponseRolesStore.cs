@@ -1,6 +1,4 @@
-using Microsoft.EntityFrameworkCore;
 using Turnierplan.Server.Domain;
-using Turnierplan.Server.Infrastructure.Database;
 
 namespace Turnierplan.Server.Infrastructure.Authorization;
 
@@ -9,12 +7,12 @@ internal sealed class ResponseRolesStore // TODO: Find better name
     private const string RolesHeaderName = "X-Turnierplan-Roles";
 
     private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly TurnierplanContext _turnierplanContext;
+    private readonly AuthorizationService _authorizationService;
 
-    public ResponseRolesStore(IHttpContextAccessor httpContextAccessor, TurnierplanContext turnierplanContext)
+    public ResponseRolesStore(IHttpContextAccessor httpContextAccessor, AuthorizationService authorizationService)
     {
         _httpContextAccessor = httpContextAccessor;
-        _turnierplanContext = turnierplanContext;
+        _authorizationService = authorizationService;
     }
 
     public async Task AddRolesToResponseHeaderAsync<T>(T entity, CancellationToken cancellationToken)
@@ -33,24 +31,16 @@ internal sealed class ResponseRolesStore // TODO: Find better name
             throw new InvalidOperationException($"The {nameof(HttpContext)} is currently not available.");
         }
 
-        var dbSet = _turnierplanContext.GetRoleAssignmentsForType<T>();
-        var entityIds = entities.Select(x => x.Id).ToArray();
-
-        // TODO: Consider roles that are 'inherited' from the parent - if applicable in the future
-
-        var roleAssignments = await dbSet
-            .Where(ra => entityIds.Contains(ra.Scope.Id))
-            .Select(ra => new { scope_public_id = ra.Scope.PublicId, role = ra.Role })
-            .ToArrayAsync(cancellationToken: cancellationToken);
+        var roleAssignments = await _authorizationService.Blubb(entities, cancellationToken);
 
         if (roleAssignments.Length == 0)
         {
             return;
         }
 
-        foreach (var group in roleAssignments.GroupBy(x => x.scope_public_id))
+        foreach (var group in roleAssignments.GroupBy(x => x.ScopeId))
         {
-            var rolesList = string.Join('+', group.Select(x => x.role.ToString()));
+            var rolesList = string.Join('+', group.Select(x => x.Role.ToString()));
             var rolesHeaderValue = $"{group.Key}={rolesList}";
 
             httpContext.Response.Headers.Append(RolesHeaderName, rolesHeaderValue);

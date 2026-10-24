@@ -1,5 +1,5 @@
 using Turnierplan.Server.Domain;
-using Turnierplan.Server.Domain.RoleAssignments;
+using Turnierplan.Server.Infrastructure.Authorization;
 
 namespace Turnierplan.Server.Infrastructure.Endpoints;
 

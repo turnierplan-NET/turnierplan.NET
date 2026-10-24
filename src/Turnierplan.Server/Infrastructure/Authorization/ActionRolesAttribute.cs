@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
+using Turnierplan.Server.Domain.RoleAssignments;
 
-namespace Turnierplan.Server.Domain.RoleAssignments;
+namespace Turnierplan.Server.Infrastructure.Authorization;
 
 [AttributeUsage(AttributeTargets.Field)]
 internal sealed class ActionRolesAttribute : Attribute
