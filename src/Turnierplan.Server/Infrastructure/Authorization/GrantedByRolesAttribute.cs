@@ -4,17 +4,17 @@ using Turnierplan.Server.Domain.RoleAssignments;
 namespace Turnierplan.Server.Infrastructure.Authorization;
 
 [AttributeUsage(AttributeTargets.Field)]
-internal sealed class ActionRolesAttribute : Attribute
+internal sealed class GrantedByRolesAttribute : Attribute
 {
     public ImmutableArray<Role> RequiresAnyOf { get; }
 
-    public ActionRolesAttribute(params Role[] requiresAnyOf)
+    public GrantedByRolesAttribute(params Role[] anyOf)
     {
-        if (requiresAnyOf.Length == 0)
+        if (anyOf.Length == 0)
         {
             throw new ArgumentException("The required roles array must not be empty.");
         }
 
-        RequiresAnyOf = [.. requiresAnyOf];
+        RequiresAnyOf = [.. anyOf];
     }
 }

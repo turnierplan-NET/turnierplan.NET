@@ -11,17 +11,17 @@ namespace Turnierplan.Server.Infrastructure.Endpoints;
 
 internal sealed class PermissionEndpointFilter : IEndpointFilter
 {
-    private static readonly IReadOnlyDictionary<Actions, ImmutableArray<Role>> __actionRequiresRolesCache;
+    private static readonly IReadOnlyDictionary<Permission, ImmutableArray<Role>> __permissionRolesCache;
 
     static PermissionEndpointFilter()
     {
-        __actionRequiresRolesCache = Enum.GetValues<Actions>().ToDictionary(action => action, action =>
+        __permissionRolesCache = Enum.GetValues<Permission>().ToDictionary(permission => permission, permission =>
         {
-            var attribute = typeof(Actions).GetField(action.ToString())?.GetCustomAttribute<ActionRolesAttribute>();
+            var attribute = typeof(Permission).GetField(permission.ToString())?.GetCustomAttribute<GrantedByRolesAttribute>();
 
             if (attribute is null)
             {
-                throw new InvalidOperationException($"The enum member '{typeof(Actions).FullName}.{action}' does not declare a '{nameof(ActionRolesAttribute)}'.");
+                throw new InvalidOperationException($"The enum member '{typeof(Permission).FullName}.{permission}' does not declare a '{nameof(GrantedByRolesAttribute)}'.");
             }
 
             return attribute.RequiresAnyOf;
@@ -30,12 +30,12 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
 
     private readonly List<IPermissionCheck> _checks = [];
 
-    public void AddPermissionCheck(int parameterIndex, Type targetType, Actions action)
+    public void AddPermissionCheck(int parameterIndex, Type targetType, Permission permission)
     {
         var checkType = typeof(PermissionCheck<>).MakeGenericType(targetType);
-        var ctor = checkType.GetConstructor(BindingFlags.Instance | BindingFlags.Public, [typeof(int), typeof(Actions)]);
+        var ctor = checkType.GetConstructor(BindingFlags.Instance | BindingFlags.Public, [typeof(int), typeof(Permission)]);
 
-        if (ctor?.Invoke([parameterIndex, action]) is not IPermissionCheck check)
+        if (ctor?.Invoke([parameterIndex, permission]) is not IPermissionCheck check)
         {
             throw new InvalidOperationException($"Failed to instantiate permission check. Is '{targetType.FullName}' a valid permission check target?");
         }
@@ -90,12 +90,12 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
     private sealed class PermissionCheck<T> : IPermissionCheck
         where T : EntityBase<long>, IEntityWithPublicId
     {
-        private readonly Actions _action;
+        private readonly Permission _permission;
 
-        public PermissionCheck(int parameterIndex, Actions action)
+        public PermissionCheck(int parameterIndex, Permission permission)
         {
             ParameterIndex = parameterIndex;
-            _action = action;
+            _permission = permission;
         }
 
         public int ParameterIndex { get; }
@@ -111,7 +111,7 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
                 publicId,
                 principalKind,
                 principalId,
-                __actionRequiresRolesCache[_action],
+                __permissionRolesCache[_permission],
                 cancellationToken);
         }
     }

@@ -114,7 +114,7 @@ internal abstract partial class EndpointBase
             }
 
             filter ??= new PermissionEndpointFilter();
-            filter.AddPermissionCheck(i, attribute.TargetType, attribute.Action);
+            filter.AddPermissionCheck(i, attribute.TargetType, attribute.Permission);
         }
 
         return filter is not null

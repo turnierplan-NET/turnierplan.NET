@@ -6,7 +6,7 @@ namespace Turnierplan.Server.Infrastructure.Endpoints;
 [AttributeUsage(AttributeTargets.Parameter)]
 internal sealed class PermissionAttribute : Attribute
 {
-    public PermissionAttribute(Type targetType, Actions action)
+    public PermissionAttribute(Type targetType, Permission permission)
     {
         if (!targetType.IsAssignableTo(typeof(EntityBase<long>)))
         {
@@ -14,10 +14,10 @@ internal sealed class PermissionAttribute : Attribute
         }
 
         TargetType = targetType;
-        Action = action;
+        Permission = permission;
     }
 
     public Type TargetType { get; }
 
-    public Actions Action { get; }
+    public Permission Permission { get; }
 }
