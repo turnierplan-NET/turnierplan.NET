@@ -8,6 +8,7 @@ using Turnierplan.Server.Domain;
 using Turnierplan.Server.Domain.ApiKeys;
 using Turnierplan.Server.Domain.RoleAssignments;
 using Turnierplan.Server.Infrastructure.Database;
+using Turnierplan.Server.Infrastructure.Database.Extensions;
 
 namespace Turnierplan.Server.Infrastructure.Authentication.Handlers;
 
@@ -54,7 +55,7 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
             return AuthenticateResult.Fail("There exists no valid API key with the specified ID and secret.");
         }
 
-        var apiKey = await _turnierplanContext.ApiKeys.Where(x => x.PublicId == apiKeyIdParsed).FirstOrDefaultAsync();
+        var apiKey = await _turnierplanContext.ApiKeys.FindByPublicIdAsync(apiKeyIdParsed, Context.RequestAborted);
 
         if (apiKey is null || !apiKey.IsActive || apiKey.IsExpired)
         {
@@ -70,7 +71,7 @@ internal sealed class ApiKeyAuthenticationHandler : AuthenticationHandler<Authen
 
         apiKey.AddRequest($"{Request.Path}{Request.QueryString}");
 
-        await _turnierplanContext.SaveChangesAsync();
+        await _turnierplanContext.SaveChangesAsync(Context.RequestAborted);
 
         var identity = new ClaimsIdentity(authenticationType: AuthenticationTypes.ApiKey, claims: [
             new Claim(ClaimTypes.PrincipalId, apiKey.PrincipalId.ToString()),

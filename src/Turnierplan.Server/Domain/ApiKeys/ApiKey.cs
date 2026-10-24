@@ -2,7 +2,7 @@ namespace Turnierplan.Server.Domain.ApiKeys;
 
 // TODO: Should API keys be owned by an organization or by a user?
 
-internal sealed class ApiKey : EntityBase<long>
+internal sealed class ApiKey : EntityBase<long>, IEntityWithPublicId
 {
     private readonly List<ApiKeyRequest> _requests = [];
 

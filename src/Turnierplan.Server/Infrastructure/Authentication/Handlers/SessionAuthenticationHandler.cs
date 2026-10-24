@@ -29,7 +29,7 @@ internal sealed class SessionAuthenticationHandler : AuthenticationHandler<Authe
             return AuthenticateResult.NoResult();
         }
 
-        var user = await _turnierplanContext.Users.FindAsync(userId);
+        var user = await _turnierplanContext.Users.FindAsync([userId], Context.RequestAborted);
 
         if (user is null)
         {
