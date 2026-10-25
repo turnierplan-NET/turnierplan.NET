@@ -1,13 +1,13 @@
 console.log('Generating TypeScript code for IAM actions/roles...');
 
-const sourcePath = '../Security/Actions.cs';
+const sourcePath = '../../Turnierplan.Server/Infrastructure/Authorization/Permission.cs';
 console.log(`Loading .cs source file from: '${sourcePath}'`);
 
 const fs = require('node:fs');
 const content = fs.readFileSync(sourcePath, 'utf8');
 
 console.log('Applying regex to extract data');
-const regex = /^\s+public static readonly Action (\w+) = new\((Role\.\w+(?:, Role\.\w+)*)\);$/gm;
+const regex = /\[GrantedByRoles\((Role\.\w+(?:, Role\.\w+)*)\)]\s*\n\s*(\w+),?\n/g;
 const matches = [...content.matchAll(regex)];
 console.log(`Found ${matches.length} matches:`);
 
@@ -15,8 +15,8 @@ let generatedActionDefinitions = '';
 
 for (let i = 0; i < matches.length; i++) {
   const match = matches[i];
-  const actionName = match[1];
-  const rolesList = match[2];
+  const rolesList = match[1];
+  const actionName = match[2];
   const processedRoles = rolesList
     .split(',')
     .flatMap((x) => [...x.matchAll(/Role\.(\w+)/g)])
