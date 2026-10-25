@@ -8,7 +8,7 @@ internal static class EndpointRouteBuilderExtensions
 
         foreach (var type in baseType.Assembly.GetTypes())
         {
-            if (!type.IsAssignableTo(baseType) || type == baseType)
+            if (!type.IsAssignableTo(baseType) || type.IsAbstract)
             {
                 continue;
             }

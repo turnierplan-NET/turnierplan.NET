@@ -8,7 +8,7 @@ using Turnierplan.Server.Infrastructure.Endpoints;
 
 namespace Turnierplan.Server.Application.Organizations.GetOrganizations;
 
-internal sealed class GetOrganizationsEndpoint : EndpointBase
+internal sealed class GetOrganizationsEndpoint : EndpointBase<GetOrganizationsResponse>
 {
     public GetOrganizationsEndpoint()
         : base(HttpMethod.Get, "/organizations", PolicyNames.Default)

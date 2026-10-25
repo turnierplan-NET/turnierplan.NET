@@ -7,6 +7,14 @@ using Turnierplan.Server.Infrastructure.OpenApi;
 
 namespace Turnierplan.Server.Infrastructure.Endpoints;
 
+internal abstract class EndpointBase<T> : EndpointBase
+{
+    protected EndpointBase(HttpMethod method, string route, string policy)
+        : base(method, route, policy, responseType: typeof(T))
+    {
+    }
+}
+
 internal abstract partial class EndpointBase
 {
     private const string GlobalRoutePrefix = "/api/v1";

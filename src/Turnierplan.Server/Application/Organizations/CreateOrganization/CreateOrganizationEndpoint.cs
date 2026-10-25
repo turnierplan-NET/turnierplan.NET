@@ -8,7 +8,7 @@ using Turnierplan.Server.Infrastructure.Endpoints;
 
 namespace Turnierplan.Server.Application.Organizations.CreateOrganization;
 
-internal sealed class CreateOrganizationEndpoint : EndpointBase
+internal sealed class CreateOrganizationEndpoint : EndpointBase<CreateOrganizationResponse>
 {
     public CreateOrganizationEndpoint()
         : base(HttpMethod.Post, "/organizations", PolicyNames.CreateOrganization)
