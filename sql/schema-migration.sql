@@ -194,7 +194,7 @@ create table turnierplan_temporary.role_assignment
 );
 
 insert into turnierplan_temporary.role_assignment (source_table, source_principal, entity_id, created_at, role,
-                                                    principal_kind, principal_kind_n, principal_id)
+                                                   principal_kind, principal_kind_n, principal_id)
 select 'IAM_ApiKey',
        "Principal",
        "ApiKeyId",
@@ -206,7 +206,7 @@ select 'IAM_ApiKey',
 from turnierplan."IAM_ApiKey";
 
 insert into turnierplan_temporary.role_assignment (source_table, source_principal, entity_id, created_at, role,
-                                                    principal_kind, principal_kind_n, principal_id)
+                                                   principal_kind, principal_kind_n, principal_id)
 select 'IAM_Folder',
        "Principal",
        "FolderId",
@@ -218,7 +218,7 @@ select 'IAM_Folder',
 from turnierplan."IAM_Folder";
 
 insert into turnierplan_temporary.role_assignment (source_table, source_principal, entity_id, created_at, role,
-                                                    principal_kind, principal_kind_n, principal_id)
+                                                   principal_kind, principal_kind_n, principal_id)
 select 'IAM_Image',
        "Principal",
        "ImageId",
@@ -230,7 +230,7 @@ select 'IAM_Image',
 from turnierplan."IAM_Image";
 
 insert into turnierplan_temporary.role_assignment (source_table, source_principal, entity_id, created_at, role,
-                                                    principal_kind, principal_kind_n, principal_id)
+                                                   principal_kind, principal_kind_n, principal_id)
 select 'IAM_Organization',
        "Principal",
        "OrganizationId",
@@ -242,7 +242,7 @@ select 'IAM_Organization',
 from turnierplan."IAM_Organization";
 
 insert into turnierplan_temporary.role_assignment (source_table, source_principal, entity_id, created_at, role,
-                                                    principal_kind, principal_kind_n, principal_id)
+                                                   principal_kind, principal_kind_n, principal_id)
 select 'IAM_PlanningRealm',
        "Principal",
        "PlanningRealmId",
@@ -254,7 +254,7 @@ select 'IAM_PlanningRealm',
 from turnierplan."IAM_PlanningRealm";
 
 insert into turnierplan_temporary.role_assignment (source_table, source_principal, entity_id, created_at, role,
-                                                    principal_kind, principal_kind_n, principal_id)
+                                                   principal_kind, principal_kind_n, principal_id)
 select 'IAM_Tournament',
        "Principal",
        "TournamentId",
@@ -266,7 +266,7 @@ select 'IAM_Tournament',
 from turnierplan."IAM_Tournament";
 
 insert into turnierplan_temporary.role_assignment (source_table, source_principal, entity_id, created_at, role,
-                                                    principal_kind, principal_kind_n, principal_id)
+                                                   principal_kind, principal_kind_n, principal_id)
 select 'IAM_Venue',
        "Principal",
        "VenueId",
@@ -329,3 +329,36 @@ insert into turnierplan_v2.project_role_assignment (created_at, project_id, role
 select created_at, entity_id, role, principal_kind_n, principal_id
 from turnierplan_temporary.role_assignment
 where source_table = 'IAM_Folder';
+
+-- Migrate existing tournaments w/o a folder into the corresponding organization's default project
+
+insert into turnierplan_v2.tournament (public_id, created_at, name, visibility, project_id)
+select "Tournaments"."PublicId",
+       "Tournaments"."CreatedAt",
+       "Tournaments"."Name",
+       "Tournaments"."Visibility",
+       default_project.default_project_id
+from turnierplan."Tournaments"
+         inner join turnierplan."Organizations" on "Tournaments"."OrganizationId" = "Organizations"."Id"
+         inner join turnierplan_temporary.default_project on default_project.organization_id = "Organizations"."Id"
+where "FolderId" is null;
+
+-- Migrate existing tournaments with a folder into the corresponding project 
+
+insert into turnierplan_v2.tournament (public_id, created_at, name, visibility, project_id)
+
+select "Tournaments"."PublicId",
+       "Tournaments"."CreatedAt",
+       "Tournaments"."Name",
+       "Tournaments"."Visibility",
+       project.id
+from turnierplan."Tournaments"
+         inner join turnierplan."Folders" on "Tournaments"."FolderId" = "Folders"."Id"
+         inner join turnierplan_v2.project on project.public_id = "Folders"."PublicId";
+
+-- Migrate role assignments of existing tournaments
+
+insert into turnierplan_v2.tournament_role_assignment (created_at, tournament_id, role, principal_kind, principal_id)
+select created_at, entity_id, role, principal_kind_n, principal_id
+from turnierplan_temporary.role_assignment
+where source_table = 'IAM_Tournament';
