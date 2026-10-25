@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Turnierplan.Core\Turnierplan.Core.csproj" />
+    <ProjectReference Include="..\Turnierplan.Core_LEGACY\Turnierplan.Core_LEGACY.csproj" />
   </ItemGroup>
 
   <ItemGroup>
