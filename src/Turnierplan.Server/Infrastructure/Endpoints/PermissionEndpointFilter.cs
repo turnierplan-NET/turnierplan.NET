@@ -29,12 +29,12 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
 
     private readonly List<IPermissionCheck> _checks = [];
 
-    public void AddPermissionCheck(int parameterIndex, Type targetType, Permission permission)
+    public void AddPermissionCheck(int parameterIndex, string? parameterPropertyName, Type targetType, Permission permission)
     {
         var checkType = typeof(PermissionCheck<>).MakeGenericType(targetType);
-        var ctor = checkType.GetConstructor(BindingFlags.Instance | BindingFlags.Public, [typeof(int), typeof(Permission)]);
+        var ctor = checkType.GetConstructor(BindingFlags.Instance | BindingFlags.Public, [typeof(int), typeof(string), typeof(Permission)]);
 
-        if (ctor?.Invoke([parameterIndex, permission]) is not IPermissionCheck check)
+        if (ctor?.Invoke([parameterIndex, parameterPropertyName, permission]) is not IPermissionCheck check)
         {
             throw new InvalidOperationException($"Failed to instantiate permission check. Is '{targetType.FullName}' a valid permission check target?");
         }
@@ -61,7 +61,33 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
 
         foreach (var permissionCheck in _checks)
         {
-            var publicId = context.GetArgument<PublicId>(permissionCheck.ParameterIndex);
+            PublicId publicId;
+
+            if (permissionCheck.ParameterPropertyName is null)
+            {
+                publicId = context.GetArgument<PublicId>(permissionCheck.ParameterIndex);
+            }
+            else
+            {
+                var @object = context.Arguments[permissionCheck.ParameterIndex];
+                var type = @object?.GetType();
+                var property = type?.GetProperty(permissionCheck.ParameterPropertyName);
+
+                if (type is null || property is null)
+                {
+                    throw new InvalidOperationException($"The parameter '{type?.FullName}' at index {permissionCheck.ParameterIndex} does not contain a property called '{permissionCheck.ParameterPropertyName}'.");
+                }
+
+                var value = property.GetValue(@object);
+
+                if (value is not PublicId publicIdValue)
+                {
+                    throw new InvalidOperationException($"The property '{permissionCheck.ParameterPropertyName}' of type '{type.FullName}' must be a '{nameof(PublicId)}'.");
+                }
+
+                publicId = publicIdValue;
+            }
+
             var hasPermission = await permissionCheck.EvaluateAsync(authorizationService, publicId, context.HttpContext.RequestAborted);
 
             if (!hasPermission)
@@ -77,6 +103,8 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
     {
         int ParameterIndex { get; }
 
+        string? ParameterPropertyName { get; }
+
         Task<bool> EvaluateAsync(AuthorizationService authorizationService, PublicId publicId, CancellationToken cancellationToken);
     }
 
@@ -85,13 +113,16 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
     {
         private readonly Permission _permission;
 
-        public PermissionCheck(int parameterIndex, Permission permission)
+        public PermissionCheck(int parameterIndex, string? parameterPropertyName, Permission permission)
         {
             ParameterIndex = parameterIndex;
+            ParameterPropertyName = parameterPropertyName;
             _permission = permission;
         }
 
         public int ParameterIndex { get; }
+
+        public string? ParameterPropertyName { get; }
 
         public async Task<bool> EvaluateAsync(AuthorizationService authorizationService, PublicId publicId, CancellationToken cancellationToken)
         {

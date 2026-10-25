@@ -116,13 +116,13 @@ internal abstract partial class EndpointBase
                 continue;
             }
 
-            if (!isPublicId)
-            {
-                throw new InvalidOperationException($"The handler method in '{context.MethodInfo.DeclaringType?.FullName}' has a parameter of type '{parameter.ParameterType.FullName}' at index {i} which does have a '{typeof(PermissionAttribute)}'.");
-            }
+            // if (!isPublicId)
+            // {
+            //     throw new InvalidOperationException($"The handler method in '{context.MethodInfo.DeclaringType?.FullName}' has a parameter of type '{parameter.ParameterType.FullName}' at index {i} which does have a '{typeof(PermissionAttribute)}'.");
+            // }
 
             filter ??= new PermissionEndpointFilter();
-            filter.AddPermissionCheck(i, attribute.TargetType, attribute.Permission);
+            filter.AddPermissionCheck(i, attribute.PropertyName, attribute.TargetType, attribute.Permission);
         }
 
         return filter is not null
