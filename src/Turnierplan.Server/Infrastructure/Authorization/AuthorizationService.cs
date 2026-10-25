@@ -25,7 +25,7 @@ internal sealed class AuthorizationService
 
         if (typeof(T).IsAssignableTo(typeof(IInheritsRolesFromOrganization)))
         {
-            var organizationId = await _turnierplanContext.Get<T>()
+            var organizationId = await _turnierplanContext.GetEntitiesForType<T>()
                 .Where(t => t == entity)
                 .Select(t => ((IInheritsRolesFromOrganization)t).Organization.Id)
                 .FirstOrDefaultAsync(cancellationToken);
@@ -55,7 +55,7 @@ internal sealed class AuthorizationService
 
         if (typeof(T).IsAssignableTo(typeof(IInheritsRolesFromOrganization)))
         {
-            var organizationId = await _turnierplanContext.Get<T>()
+            var organizationId = await _turnierplanContext.GetEntitiesForType<T>()
                 .Where(t => t.PublicId == scopeId)
                 .Select(t => ((IInheritsRolesFromOrganization)t).Organization.Id)
                 .FirstOrDefaultAsync(cancellationToken);
@@ -76,4 +76,25 @@ internal sealed class AuthorizationService
     }
 
     public sealed record AssignedRole(bool IsInherited, PublicId ScopeId, Role Role);
+}
+
+file static class TurnierplanContextExtensions
+{
+    private static readonly Type __contextType = typeof(TurnierplanContext);
+
+    public static DbSet<T> GetEntitiesForType<T>(this TurnierplanContext context)
+        where T : EntityBase<long>
+    {
+        var prop = __contextType.GetProperty($"{typeof(T).Name}s");
+
+        return prop?.GetValue(context) as DbSet<T> ?? throw new InvalidOperationException($"Could not find or access db set for type '{typeof(T).FullName}'.");
+    }
+
+    public static DbSet<RoleAssignment<T>> GetRoleAssignmentsForType<T>(this TurnierplanContext context)
+        where T : EntityBase<long>
+    {
+        var prop = __contextType.GetProperty($"{typeof(T).Name}RoleAssignments");
+
+        return prop?.GetValue(context) as DbSet<RoleAssignment<T>> ?? throw new InvalidOperationException($"Could not find or access role assignments set for type '{typeof(T).FullName}'.");
+    }
 }
