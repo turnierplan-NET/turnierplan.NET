@@ -17,7 +17,7 @@ internal sealed class UpdateProjectNameEndpoint : EndpointBase
     }
 
     public static async Task<IResult> HandleAsync(
-        [FromRoute, Permission(typeof(Project), Actions.GenericWrite)] PublicId id,
+        [FromRoute, Permission(typeof(Project), Permission.GenericWrite)] PublicId id,
         [FromBody] UpdateProjectNameRequest request,
         TurnierplanContext context,
         CancellationToken cancellationToken)

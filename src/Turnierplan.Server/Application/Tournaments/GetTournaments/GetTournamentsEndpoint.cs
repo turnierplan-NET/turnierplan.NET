@@ -8,7 +8,7 @@ using Turnierplan.Server.Infrastructure.Endpoints;
 
 namespace Turnierplan.Server.Application.Tournaments.GetTournaments;
 
-internal sealed class GetTournamentsEndpoint : EndpointBase
+internal sealed class GetTournamentsEndpoint : EndpointBase<GetTournamentsResponse>
 {
     public GetTournamentsEndpoint()
         : base(HttpMethod.Get, "/tournaments", PolicyNames.Default)

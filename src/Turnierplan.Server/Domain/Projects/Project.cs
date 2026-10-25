@@ -23,6 +23,7 @@ internal sealed class Project : EntityBase<long>, IEntityWithPublicId
 
     public override long Id { get; protected set; }
 
+    [InheritPermissions]
     public Organization Organization { get; private set; } = null!;
 
     public PublicId PublicId { get; }
