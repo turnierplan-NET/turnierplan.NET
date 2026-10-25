@@ -70,22 +70,7 @@ internal sealed class PermissionEndpointFilter : IEndpointFilter
             else
             {
                 var @object = context.Arguments[permissionCheck.ParameterIndex];
-                var type = @object?.GetType();
-                var property = type?.GetProperty(permissionCheck.ParameterPropertyName);
-
-                if (type is null || property is null)
-                {
-                    throw new InvalidOperationException($"The parameter '{type?.FullName}' at index {permissionCheck.ParameterIndex} does not contain a property called '{permissionCheck.ParameterPropertyName}'.");
-                }
-
-                var value = property.GetValue(@object);
-
-                if (value is not PublicId publicIdValue)
-                {
-                    throw new InvalidOperationException($"The property '{permissionCheck.ParameterPropertyName}' of type '{type.FullName}' must be a '{nameof(PublicId)}'.");
-                }
-
-                publicId = publicIdValue;
+                publicId = (PublicId)@object?.GetType().GetProperty(permissionCheck.ParameterPropertyName)?.GetValue(@object)!;
             }
 
             var hasPermission = await permissionCheck.EvaluateAsync(authorizationService, publicId, context.HttpContext.RequestAborted);

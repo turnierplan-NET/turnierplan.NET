@@ -110,16 +110,33 @@ internal abstract partial class EndpointBase
             {
                 if (isPublicId)
                 {
-                    throw new InvalidOperationException($"The handler method in '{context.MethodInfo.DeclaringType?.FullName}' has a parameter of type '{nameof(PublicId)}' at index {i} which does not have a '{typeof(PermissionAttribute)}'.");
+                    throw new InvalidOperationException($"The handler method in '{context.MethodInfo.DeclaringType?.FullName}' has a parameter of type '{nameof(PublicId)}' at index {i} which does not have a '{nameof(PermissionAttribute)}'.");
                 }
 
                 continue;
             }
 
-            // if (!isPublicId)
-            // {
-            //     throw new InvalidOperationException($"The handler method in '{context.MethodInfo.DeclaringType?.FullName}' has a parameter of type '{parameter.ParameterType.FullName}' at index {i} which does have a '{typeof(PermissionAttribute)}'.");
-            // }
+            if (attribute.PropertyName is null)
+            {
+                // When no property name is specified, the parameter type MUST be a public id.
+
+                if (!isPublicId)
+                {
+                    throw new InvalidOperationException($"The parameter '{parameter.Name}' of handler method in '{context.MethodInfo.DeclaringType?.FullName}' must be of type '{nameof(PublicId)}' when the '{nameof(PermissionAttribute)}' is specified without a parameter name.");
+                }
+            }
+            else
+            {
+                // When a property name is specified, the parameter type MUST be a class and
+                // contain a property with the specified name that must be of type public id.
+
+                var property = parameter.ParameterType.GetProperty(attribute.PropertyName);
+
+                if (!parameter.ParameterType.IsClass || property is null || property.PropertyType != typeof(PublicId))
+                {
+                    throw new InvalidOperationException($"The parameter '{parameter.Name}' of handler method in '{context.MethodInfo.DeclaringType?.FullName}' is not a class or does not contain a property of name '{attribute.PropertyName}' and type '{nameof(PublicId)}'.");
+                }
+            }
 
             filter ??= new PermissionEndpointFilter();
             filter.AddPermissionCheck(i, attribute.PropertyName, attribute.TargetType, attribute.Permission);
