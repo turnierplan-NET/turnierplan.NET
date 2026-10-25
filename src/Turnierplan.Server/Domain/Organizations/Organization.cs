@@ -31,4 +31,12 @@ internal sealed class Organization : EntityBase<long>, IEntityWithPublicId
     public string Name { get; set; }
 
     public IReadOnlyList<Project> Projects => _projects.AsReadOnly();
+
+    public Project AddProject(string name)
+    {
+        var project = new Project(this, name);
+        _projects.Add(project);
+
+        return project;
+    }
 }

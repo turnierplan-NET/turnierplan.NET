@@ -4,9 +4,10 @@ namespace Turnierplan.Server.Domain.Projects;
 
 internal sealed class Project : EntityBase<long>, IEntityWithPublicId
 {
-    public Project(string name)
+    public Project(Organization organization, string name)
     {
         Id = 0;
+        Organization = organization;
         PublicId = new PublicId();
         CreatedAt = DateTime.UtcNow;
         Name = name;
