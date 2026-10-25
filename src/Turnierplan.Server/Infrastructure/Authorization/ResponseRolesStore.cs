@@ -18,12 +18,6 @@ internal sealed class ResponseRolesStore // TODO: Find better name
     public async Task AddRolesToResponseHeaderAsync<T>(T entity, CancellationToken cancellationToken)
         where T : EntityBase<long>, IEntityWithPublicId
     {
-        await AddRolesToResponseHeaderAsync([entity], cancellationToken);
-    }
-
-    public async Task AddRolesToResponseHeaderAsync<T>(IEnumerable<T> entities, CancellationToken cancellationToken)
-        where T : EntityBase<long>, IEntityWithPublicId
-    {
         var httpContext = _httpContextAccessor.HttpContext;
 
         if (httpContext is null)
@@ -31,19 +25,16 @@ internal sealed class ResponseRolesStore // TODO: Find better name
             throw new InvalidOperationException($"The {nameof(HttpContext)} is currently not available.");
         }
 
-        var roleAssignments = await _authorizationService.GetAssignedRolesAsync(entities, cancellationToken);
+        var roleAssignments = await _authorizationService.GetAssignedRolesAsync(entity, cancellationToken);
 
-        if (roleAssignments.Length == 0)
+        if (roleAssignments.Count == 0)
         {
             return;
         }
 
-        foreach (var group in roleAssignments.GroupBy(x => x.ScopeId))
-        {
-            var rolesList = string.Join('+', group.Select(x => x.Role.ToString()));
-            var rolesHeaderValue = $"{group.Key}={rolesList}";
+        var rolesList = string.Join('+', roleAssignments.Select(x => x.Role.ToString()));
+        var rolesHeaderValue = $"{entity.PublicId}={rolesList}";
 
-            httpContext.Response.Headers.Append(RolesHeaderName, rolesHeaderValue);
-        }
+        httpContext.Response.Headers.Append(RolesHeaderName, rolesHeaderValue);
     }
 }

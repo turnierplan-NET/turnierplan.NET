@@ -30,6 +30,16 @@ internal sealed class TurnierplanContext : DbContext
 
     public DbSet<User> Users { get; set; } = null!;
 
+    public DbSet<T> Get<T>()
+        where T : EntityBase<long>
+    {
+        var contextType = typeof(TurnierplanContext);
+        var prop = contextType.GetProperty($"{typeof(T).Name}s");
+
+        return prop?.GetValue(this) as DbSet<T>
+               ?? throw new InvalidOperationException($"Could not find or access db set for type '{typeof(T).FullName}'.");
+    }
+
     public DbSet<RoleAssignment<T>> GetRoleAssignmentsForType<T>()
         where T : EntityBase<long>
     {

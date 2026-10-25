@@ -17,36 +17,63 @@ internal sealed class AuthorizationService
         _principalProvider = principalProvider;
     }
 
-    public async Task<AssignedRole[]> GetAssignedRolesAsync<T>(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyCollection<AssignedRole>> GetAssignedRolesAsync<T>(T entity, CancellationToken cancellationToken = default)
         where T : EntityBase<long>, IEntityWithPublicId
     {
-        var dbSet = _turnierplanContext.GetRoleAssignmentsForType<T>();
+        var result = new List<AssignedRole>();
         var principal = _principalProvider.GetCurrentPrincipal();
 
-        var entityIds = entities.Select(x => x.Id).ToArray().AsEnumerable();
+        if (typeof(T).IsAssignableTo(typeof(IInheritsRolesFromOrganization)))
+        {
+            var organizationId = await _turnierplanContext.Get<T>()
+                .Where(t => t == entity)
+                .Select(t => ((IInheritsRolesFromOrganization)t).Organization.Id)
+                .FirstOrDefaultAsync(cancellationToken);
 
-        // TODO: Consider roles that are 'inherited' from the parent - if applicable in the future
+            var inheritedRoles = await _turnierplanContext.OrganizationRoleAssignments
+                .Where(ra => ra.Scope.Id == organizationId && ra.PrincipalKind == principal.Kind && ra.PrincipalId == principal.Id)
+                .Select(ra => new AssignedRole(IsInherited: true, ra.Scope.PublicId, ra.Role))
+                .ToArrayAsync(cancellationToken);
 
-        return await dbSet
-            .Where(ra => ra.PrincipalKind == principal.Kind && ra.PrincipalId == principal.Id && entityIds.Contains(ra.Scope.Id))
-            .Select(ra => new AssignedRole(ra.Scope.PublicId, ra.Role))
-            .ToArrayAsync(cancellationToken: cancellationToken);
+            result.AddRange(inheritedRoles);
+        }
+
+        var directAssignments = await _turnierplanContext.GetRoleAssignmentsForType<T>()
+            .Where(ra => ra.Scope == entity && ra.PrincipalKind == principal.Kind && ra.PrincipalId == principal.Id)
+            .Select(ra => new AssignedRole(IsInherited: false, ra.Scope.PublicId, ra.Role))
+            .ToArrayAsync(cancellationToken);
+
+        result.AddRange(directAssignments);
+
+        return result.AsReadOnly();
     }
 
     public async Task<bool> HasAnyOfRolesAsync<T>(PublicId scopeId, IEnumerable<Role> anyOfRoles, CancellationToken cancellationToken = default)
         where T : EntityBase<long>, IEntityWithPublicId
     {
-        var dbSet = _turnierplanContext.GetRoleAssignmentsForType<T>();
         var principal = _principalProvider.GetCurrentPrincipal();
 
-        // TODO: Consider roles that are 'inherited' from the parent - if applicable in the future
+        if (typeof(T).IsAssignableTo(typeof(IInheritsRolesFromOrganization)))
+        {
+            var organizationId = await _turnierplanContext.Get<T>()
+                .Where(t => t.PublicId == scopeId)
+                .Select(t => ((IInheritsRolesFromOrganization)t).Organization.Id)
+                .FirstOrDefaultAsync(cancellationToken);
 
-        var roleAssignment = await dbSet
+            var hasInheritedRoleAssignment = await _turnierplanContext.OrganizationRoleAssignments
+                .Where(ra => ra.Scope.Id == organizationId && ra.PrincipalKind == principal.Kind && ra.PrincipalId == principal.Id && anyOfRoles.Contains(ra.Role))
+                .AnyAsync(cancellationToken);
+
+            if (hasInheritedRoleAssignment)
+            {
+                return true;
+            }
+        }
+
+        return await _turnierplanContext.GetRoleAssignmentsForType<T>()
             .Where(ra => ra.Scope.PublicId == scopeId && ra.PrincipalKind == principal.Kind && ra.PrincipalId == principal.Id && anyOfRoles.Contains(ra.Role))
-            .FirstOrDefaultAsync(cancellationToken);
-
-        return roleAssignment is not null;
+            .AnyAsync(cancellationToken);
     }
 
-    public sealed record AssignedRole(PublicId ScopeId, Role Role);
+    public sealed record AssignedRole(bool IsInherited, PublicId ScopeId, Role Role);
 }

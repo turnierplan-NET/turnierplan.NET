@@ -40,8 +40,12 @@ internal sealed class GetOrganizationsEndpoint : EndpointBase
         }
 
         // TODO: Implement pagination (at some point later)
+        // TODO: Check if we need the roles in the response because evaluation can be quite expensive
 
-        await responseRolesStore.AddRolesToResponseHeaderAsync(organizations, cancellationToken);
+        foreach (var organization in organizations)
+        {
+            await responseRolesStore.AddRolesToResponseHeaderAsync(organization, cancellationToken);
+        }
 
         return Results.Ok(new GetOrganizationsResponse
         {
