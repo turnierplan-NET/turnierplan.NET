@@ -1,9 +1,7 @@
-using System.Collections.ObjectModel;
 using System.Linq.Expressions;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Turnierplan.Server.Domain;
-using Turnierplan.Server.Domain.Organizations;
-using Turnierplan.Server.Domain.Projects;
 using Turnierplan.Server.Domain.RoleAssignments;
 using Turnierplan.Server.Infrastructure.Authentication;
 using Turnierplan.Server.Infrastructure.Database;
@@ -12,15 +10,54 @@ namespace Turnierplan.Server.Infrastructure.Authorization;
 
 internal sealed class AuthorizationService
 {
-    private static readonly ReadOnlyDictionary<Type, IInheritanceEvaluator>  __inheritanceEvaluators;
+    private static readonly IReadOnlyDictionary<Type, IInheritanceEvaluator>  __inheritanceEvaluators;
 
     static AuthorizationService()
     {
-        __inheritanceEvaluators = new Dictionary<Type, IInheritanceEvaluator>
+        var entityBase = typeof(EntityBase<long>);
+        var temporary = new Dictionary<Type, IInheritanceEvaluator>();
+
+        foreach (var type in typeof(AuthorizationService).Assembly.GetTypes())
         {
-            // TODO: Detect using reflection via attribute
-            { typeof(Project), new InheritanceEvaluator<Project, Organization>(nameof(Project.Organization)) }
-        }.AsReadOnly();
+            if (!type.IsAssignableTo(entityBase))
+            {
+                continue;
+            }
+
+            var propertiesWithAttribute = type.GetProperties()
+                .Where(prop => prop.GetCustomAttribute<InheritPermissionsAttribute>() is not null)
+                .ToArray();
+
+            if (propertiesWithAttribute.Length == 0)
+            {
+                continue;
+            }
+
+            if (propertiesWithAttribute.Length > 1)
+            {
+                throw new InvalidOperationException($"Each entity may have at most one property with the '{nameof(InheritPermissionsAttribute)}'.");
+            }
+
+            var property = propertiesWithAttribute.Single();
+            var inheritFromType = property.PropertyType;
+
+            if (!inheritFromType.IsAssignableTo(entityBase))
+            {
+                throw new InvalidOperationException($"A property that has the '{nameof(InheritPermissionsAttribute)}' must be of type '{nameof(EntityBase<>)}<long>'.");
+            }
+
+            var concreteType = typeof(InheritanceEvaluator<,>).MakeGenericType(type, inheritFromType);
+            var instance = concreteType.GetConstructor([typeof(string)])?.Invoke([property.Name]);
+
+            if (instance is not IInheritanceEvaluator evaluator)
+            {
+                throw new InvalidOperationException($"Failed to instantiate inheritance evaluator for '{type.FullName}' / '{inheritFromType.FullName}'.");
+            }
+
+            temporary[type] = evaluator;
+        }
+
+        __inheritanceEvaluators = temporary.AsReadOnly();
     }
 
     private readonly TurnierplanContext _turnierplanContext;
