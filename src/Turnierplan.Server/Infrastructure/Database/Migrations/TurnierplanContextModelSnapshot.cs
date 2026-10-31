@@ -555,7 +555,7 @@ namespace Turnierplan.Server.Infrastructure.Database.Migrations
                     b.HasOne("Turnierplan.Server.Domain.Projects.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_tournament_project_project_id");
 

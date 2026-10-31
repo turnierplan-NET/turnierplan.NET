@@ -16,6 +16,11 @@ internal sealed class TournamentEntityTypeConfiguration : IEntityTypeConfigurati
         builder.Property(x => x.Id)
             .IsRequired();
 
+        builder.HasOne(x => x.Project)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired();
+
         builder.Property(x => x.PublicId)
             .HasConversion<PublicIdConverter>();
 
