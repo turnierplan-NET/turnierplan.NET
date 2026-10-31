@@ -13,4 +13,9 @@ internal static class ClaimsPrincipalExtensions
     {
         return claimsPrincipal.HasClaim(ClaimTypes.IsAdministrator, ClaimValues.True);
     }
+
+    public static string? GetClaimValue(this ClaimsPrincipal claimsPrincipal, string claim)
+    {
+        return claimsPrincipal.Claims.FirstOrDefault(x => x.Type.Equals(claim, StringComparison.Ordinal))?.Value;
+    }
 }

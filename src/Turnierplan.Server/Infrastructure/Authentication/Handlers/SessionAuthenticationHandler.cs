@@ -41,7 +41,8 @@ internal sealed class SessionAuthenticationHandler : AuthenticationHandler<Authe
 
         List<Claim> claims = [
             new(ClaimTypes.PrincipalId, user.PrincipalId.ToString()),
-            new(ClaimTypes.PrincipalKind, nameof(PrincipalKind.User))
+            new(ClaimTypes.PrincipalKind, nameof(PrincipalKind.User)),
+            new(ClaimTypes.UserName, user.UserName)
         ];
 
         if (user.AllowCreateOrganization)
@@ -52,6 +53,16 @@ internal sealed class SessionAuthenticationHandler : AuthenticationHandler<Authe
         if (user.IsAdministrator)
         {
             claims.Add(new Claim(ClaimTypes.IsAdministrator, ClaimValues.True));
+        }
+
+        if (user.EMail is not null)
+        {
+            claims.Add(new Claim(ClaimTypes.UserEMail, user.EMail));
+        }
+
+        if (user.FullName is not null)
+        {
+            claims.Add(new Claim(ClaimTypes.UserFullName, user.FullName));
         }
 
         var identity = new ClaimsIdentity(claims, authenticationType: AuthenticationTypes.Session);

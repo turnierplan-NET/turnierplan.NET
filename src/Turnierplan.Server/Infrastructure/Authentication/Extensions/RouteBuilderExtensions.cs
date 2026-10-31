@@ -16,7 +16,8 @@ internal static class EndpointRouteBuilderExtensions
             [FromForm] string password,
             TurnierplanContext turnierplanContext,
             IPasswordHasher<User> passwordHasher,
-            HttpContext httpContext) =>
+            HttpContext httpContext,
+            CancellationToken cancellationToken) =>
         {
 #if !DEBUG
             await Task.Delay(1000 + Random.Shared.Next(500), cancellationToken);
@@ -28,7 +29,7 @@ internal static class EndpointRouteBuilderExtensions
             }
 
             var normalizedUserName = User.Normalize(username);
-            var user = await turnierplanContext.Users.Where(x => x.NormalizedUserName.Equals(normalizedUserName)).FirstOrDefaultAsync();
+            var user = await turnierplanContext.Users.Where(x => x.NormalizedUserName.Equals(normalizedUserName)).FirstOrDefaultAsync(cancellationToken);
 
             if (user is null)
             {
@@ -44,7 +45,7 @@ internal static class EndpointRouteBuilderExtensions
 
             user.UpdateLastLoginTime();
 
-            await turnierplanContext.SaveChangesAsync();
+            await turnierplanContext.SaveChangesAsync(cancellationToken);
 
             httpContext.Session.SetUser(user);
 
@@ -64,5 +65,37 @@ internal static class EndpointRouteBuilderExtensions
         .RequireAuthorization(PolicyNames.User)
         .WithName("Logout")
         .WithTags("Authentication");
+
+        builder.MapGet("/auth/me", (HttpContext httpContext) =>
+        {
+            var user = httpContext.User;
+
+            return Results.Ok(new MeEndpointResponse
+            {
+                UserName = user.GetClaimValue(ClaimTypes.UserName) ?? throw new InvalidOperationException("User name claim is not available."),
+                FullName = user.GetClaimValue(ClaimTypes.UserFullName),
+                EMail = user.GetClaimValue(ClaimTypes.UserEMail),
+                IsAdministrator = user.HasIsAdministratorClaim(),
+                CanCreateOrganization = user.HasAllowCreateOrganizationClaim()
+            });
+        })
+        .DisableAntiforgery()
+        .RequireAuthorization(PolicyNames.User)
+        .Produces<MeEndpointResponse>()
+        .WithName("Me")
+        .WithTags("Authentication");
+    }
+
+    public sealed record MeEndpointResponse
+    {
+        public required string UserName { get; init; }
+
+        public required string? FullName { get; init; }
+
+        public required string? EMail { get; init; }
+
+        public required bool IsAdministrator { get; init; }
+
+        public required bool CanCreateOrganization { get; init; }
     }
 }
