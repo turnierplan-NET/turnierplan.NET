@@ -9,10 +9,10 @@ import { PageFrameComponent } from '../../components/page-frame/page-frame.compo
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
-import { OrganizationDto } from '../../../api/models/organization-dto';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getOrganization } from '../../../api/fn/organizations/get-organization';
-import { createVenue } from '../../../api/fn/venues/create-venue';
+import { OrganizationDto } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { getOrganization } from '../../../api-temporary';
+import { createVenue } from '../../../api-temporary';
 
 @Component({
   templateUrl: './create-venue.component.html',

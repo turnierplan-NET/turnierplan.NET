@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
-import { RankingReason } from '../../../api/models/ranking-reason';
+import { RankingReason } from '../../../api-temporary';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 

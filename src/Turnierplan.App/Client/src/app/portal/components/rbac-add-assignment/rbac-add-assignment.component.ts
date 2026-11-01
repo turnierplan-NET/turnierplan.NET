@@ -7,11 +7,11 @@ import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { FormsModule } from '@angular/forms';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
-import { PrincipalKind } from '../../../api/models/principal-kind';
-import { Role } from '../../../api/models/role';
-import { CreateRoleAssignmentEndpointRequest } from '../../../api/models/create-role-assignment-endpoint-request';
-import { createRoleAssignment } from '../../../api/fn/role-assignments/create-role-assignment';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { PrincipalKind } from '../../../api-temporary';
+import { Role } from '../../../api-temporary';
+import { CreateRoleAssignmentEndpointRequest } from '../../../api-temporary';
+import { createRoleAssignment } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
 
 type Step = 'SelectRole' | 'SelectPrincipal';
 

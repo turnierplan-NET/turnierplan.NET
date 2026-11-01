@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 
 import { NgClass, NgStyle } from '@angular/common';
-import { TournamentHeaderDto } from '../../../api/models/tournament-header-dto';
+import { TournamentHeaderDto } from '../../../api-temporary';
 
 export type FolderTreeEntry = {
   id: string;

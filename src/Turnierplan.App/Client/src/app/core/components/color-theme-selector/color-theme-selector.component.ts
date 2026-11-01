@@ -1,7 +1,7 @@
 import { Component, inject, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ColorTheme, ColorThemeService } from '../../services/color-theme.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Visibility } from '../../../api/models/visibility';
+import { Visibility } from '../../../api-temporary';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 

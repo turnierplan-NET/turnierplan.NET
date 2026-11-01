@@ -3,7 +3,7 @@ import { LoadingState, LoadingStateDirective } from '../../directives/loading-st
 import { PageFrameComponent } from '../../components/page-frame/page-frame.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { OrganizationDto } from '../../../api/models/organization-dto';
+import { OrganizationDto } from '../../../api-temporary';
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { BehaviorSubject, map, Observable, of, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
@@ -12,10 +12,10 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
 import { LoadingIndicatorComponent } from '../../components/loading-indicator/loading-indicator.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { getOrganization } from '../../../api/fn/organizations/get-organization';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getOrganization } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
 import { TitleService } from '../../services/title.service';
-import { uploadImage$FormData } from '../../../api/fn/images/upload-image-form-data';
+import { uploadImage$FormData } from '../../../api-temporary';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { ViewOrganizationComponent } from '../view-organization/view-organization.component';
 

@@ -8,8 +8,8 @@ import { ActionButtonComponent } from '../action-button/action-button.component'
 import { AlertComponent } from '../alert/alert.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { EChartsCoreOption } from 'echarts/core';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getApiKeyUsage } from '../../../api/fn/api-keys/get-api-key-usage';
+import { TurnierplanApi } from '../../../api-temporary';
+import { getApiKeyUsage } from '../../../api-temporary';
 import { ChartWrapperComponent } from '../chart-wrapper/chart-wrapper.component';
 
 @Component({

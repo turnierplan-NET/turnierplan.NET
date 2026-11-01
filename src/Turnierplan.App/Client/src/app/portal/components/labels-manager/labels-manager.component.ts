@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
-import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
+import { TournamentPlannerDto } from '../../../api-temporary';
 import {
   UpdateTournamentPlannerFunc,
   ViewTournamentPlannerComponent

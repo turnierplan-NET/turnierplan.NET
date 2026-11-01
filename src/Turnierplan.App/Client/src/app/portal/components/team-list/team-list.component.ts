@@ -14,8 +14,8 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';
 import { defaultApplicationsFilter } from '../../models/applications-filter';
 import { ViewTournamentPlannerComponent } from '../../pages/view-tournament-planner/view-tournament-planner.component';
-import { PublicId } from '../../../api/models/public-id';
-import { TeamLinkDto } from '../../../api/models/team-link-dto';
+import { PublicId } from '../../../api-temporary';
+import { TeamLinkDto } from '../../../api-temporary';
 
 export interface TeamView {
   id: number;

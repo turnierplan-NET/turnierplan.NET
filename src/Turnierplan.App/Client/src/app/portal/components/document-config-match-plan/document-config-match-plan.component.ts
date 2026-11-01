@@ -7,9 +7,9 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { NgClass } from '@angular/common';
 import { AlertComponent } from '../alert/alert.component';
-import { MatchPlanDocumentConfiguration } from '../../../api/models/match-plan-document-configuration';
-import { MatchPlanDateFormat } from '../../../api/models/match-plan-date-format';
-import { MatchPlanOutcomes } from '../../../api/models/match-plan-outcomes';
+import { MatchPlanDocumentConfiguration } from '../../../api-temporary';
+import { MatchPlanDateFormat } from '../../../api-temporary';
+import { MatchPlanOutcomes } from '../../../api-temporary';
 
 @Component({
   templateUrl: './document-config-match-plan.component.html',

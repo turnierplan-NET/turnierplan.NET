@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateDirective } from '@ngx-translate/core';
-import { LabelDto } from '../../../api/models/label-dto';
+import { LabelDto } from '../../../api-temporary';
 import { FormsModule } from '@angular/forms';
 import { LabelComponent } from '../label/label.component';
 

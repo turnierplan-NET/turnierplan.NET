@@ -11,9 +11,9 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { BadgeComponent } from '../../components/badge/badge.component';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
 import { UpdatesCheckComponent } from '../../components/updates-check/updates-check.component';
-import { OrganizationDto } from '../../../api/models/organization-dto';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getOrganizations } from '../../../api/fn/organizations/get-organizations';
+import { OrganizationDto } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { getOrganizations } from '../../../api-temporary';
 import { AllowCreateOrganizationDirective } from '../../directives/allow-create-organization.directive';
 
 @Component({

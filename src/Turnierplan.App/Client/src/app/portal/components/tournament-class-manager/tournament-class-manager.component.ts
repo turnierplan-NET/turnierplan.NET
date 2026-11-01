@@ -10,7 +10,7 @@ import { RenameButtonComponent } from '../rename-button/rename-button.component'
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { AsyncPipe } from '@angular/common';
-import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
+import { TournamentPlannerDto } from '../../../api-temporary';
 
 @Component({
   selector: 'tp-tournament-classes-manager',

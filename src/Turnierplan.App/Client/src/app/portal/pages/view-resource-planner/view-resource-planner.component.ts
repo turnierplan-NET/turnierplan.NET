@@ -1,13 +1,13 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PageFrameComponent, PageFrameNavigationTab } from '../../components/page-frame/page-frame.component';
 import { Actions } from '../../../generated/actions';
-import { ResourcePlannerDto } from '../../../api/models/resource-planner-dto';
+import { ResourcePlannerDto } from '../../../api-temporary';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { of, Subject, switchMap, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { TurnierplanApi } from '../../../api-temporary';
 import { TitleService } from '../../services/title.service';
-import { getResourcePlanner } from '../../../api/fn/resource-planners/get-resource-planner';
+import { getResourcePlanner } from '../../../api-temporary';
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { IsActionAllowedDirective } from '../../directives/is-action-allowed.directive';

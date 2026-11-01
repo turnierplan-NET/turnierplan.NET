@@ -16,17 +16,17 @@ import { RenameButtonComponent } from '../rename-button/rename-button.component'
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
-import { DocumentDto } from '../../../api/models/document-dto';
-import { DocumentType } from '../../../api/models/document-type';
-import { getDocumentPdf } from '../../../api/fn/documents/get-document-pdf';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { setDocumentName } from '../../../api/fn/documents/set-document-name';
-import { getMatchPlanDocumentConfiguration } from '../../../api/fn/documents/get-match-plan-document-configuration';
-import { getReceiptsDocumentConfiguration } from '../../../api/fn/documents/get-receipts-document-configuration';
-import { setMatchPlanDocumentConfiguration } from '../../../api/fn/documents/set-match-plan-document-configuration';
-import { MatchPlanDocumentConfiguration } from '../../../api/models/match-plan-document-configuration';
-import { setReceiptsDocumentConfiguration } from '../../../api/fn/documents/set-receipts-document-configuration';
-import { ReceiptsDocumentConfiguration } from '../../../api/models/receipts-document-configuration';
+import { DocumentDto } from '../../../api-temporary';
+import { DocumentType } from '../../../api-temporary';
+import { getDocumentPdf } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { setDocumentName } from '../../../api-temporary';
+import { getMatchPlanDocumentConfiguration } from '../../../api-temporary';
+import { getReceiptsDocumentConfiguration } from '../../../api-temporary';
+import { setMatchPlanDocumentConfiguration } from '../../../api-temporary';
+import { MatchPlanDocumentConfiguration } from '../../../api-temporary';
+import { setReceiptsDocumentConfiguration } from '../../../api-temporary';
+import { ReceiptsDocumentConfiguration } from '../../../api-temporary';
 import { makeSafeFileName } from '../../helpers/file-name';
 
 @Component({

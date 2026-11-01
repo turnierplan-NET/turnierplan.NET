@@ -42,7 +42,7 @@ const generatedContent = `/* tslint:disable */
 /* eslint-disable */
 /* This file is auto-generated based on the 'Actions.cs' C# source file */
 
-import { Role } from '../api/models/role';
+import { Role } from '../api-temporary';
 
 export class Action {
   constructor(private readonly requiredRoles: Role[]) {}

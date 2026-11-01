@@ -14,10 +14,10 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { FormsModule } from '@angular/forms';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getFolderTimetable } from '../../../api/fn/folders/get-folder-timetable';
-import { FolderTimetableTournamentEntry } from '../../../api/models/folder-timetable-tournament-entry';
-import { FolderTimetableDto } from '../../../api/models/folder-timetable-dto';
+import { TurnierplanApi } from '../../../api-temporary';
+import { getFolderTimetable } from '../../../api-temporary';
+import { FolderTimetableTournamentEntry } from '../../../api-temporary';
+import { FolderTimetableDto } from '../../../api-temporary';
 
 type TimetableView = {
   hourMarks: number[];

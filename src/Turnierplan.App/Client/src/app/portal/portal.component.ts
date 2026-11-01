@@ -19,7 +19,7 @@ import { ColorThemeSelectorComponent } from '../core/components/color-theme-sele
 
 echarts.use([BarChart, GridComponent, CanvasRenderer, TooltipComponent]);
 import 'echarts/theme/dark-bold.js';
-import { MeEndpointResponse } from '../api/models/me-endpoint-response';
+import { MeEndpointResponse } from '../api-temporary';
 
 type UserInfoAction = 'ChangePassword' | 'Logout';
 

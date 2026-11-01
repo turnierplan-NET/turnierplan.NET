@@ -7,7 +7,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { NgClass } from '@angular/common';
 import { TemporaryTeam } from '../../pages/configure-tournament/configure-tournament.component';
 import { SelectApplicationTeamComponent, SelectApplicationTeamResult } from '../select-application-team/select-application-team.component';
-import { PublicId } from '../../../api/models/public-id';
+import { PublicId } from '../../../api-temporary';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 enum AddTeamMode {

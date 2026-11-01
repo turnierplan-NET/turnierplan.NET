@@ -11,11 +11,11 @@ import { AlertComponent } from '../alert/alert.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { LiveIndicatorComponent } from '../live-indicator/live-indicator.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
-import { SetMatchOutcomeEndpointRequest } from '../../../api/models/set-match-outcome-endpoint-request';
-import { MatchType } from '../../../api/models/match-type';
-import { MatchState } from '../../../api/models/match-state';
+import { SetMatchOutcomeEndpointRequest } from '../../../api-temporary';
+import { MatchType } from '../../../api-temporary';
+import { MatchState } from '../../../api-temporary';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
-import { MatchOutcomeType } from '../../../api/models/match-outcome-type';
+import { MatchOutcomeType } from '../../../api-temporary';
 
 @Component({
   templateUrl: './edit-match.component.html',

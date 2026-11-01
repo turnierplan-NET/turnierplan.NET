@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { ApiKeyDto } from '../../../api/models/api-key-dto';
+import { ApiKeyDto } from '../../../api-temporary';
 import { Observable, Subject } from 'rxjs';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgbActiveOffcanvas } from '@ng-bootstrap/ng-bootstrap';
@@ -8,8 +8,8 @@ import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicato
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { setApiKeyExpiryDate } from '../../../api/fn/api-keys/set-api-key-expiry-date';
+import { TurnierplanApi } from '../../../api-temporary';
+import { setApiKeyExpiryDate } from '../../../api-temporary';
 import { AlertComponent } from '../alert/alert.component';
 
 @Component({

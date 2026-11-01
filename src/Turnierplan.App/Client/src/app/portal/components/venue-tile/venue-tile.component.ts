@@ -2,7 +2,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { TranslateDirective } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
-import { VenueDto } from '../../../api/models/venue-dto';
+import { VenueDto } from '../../../api-temporary';
 
 @Component({
   selector: 'tp-venue-tile',

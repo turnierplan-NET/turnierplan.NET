@@ -9,11 +9,11 @@ import { ActionButtonComponent } from '../action-button/action-button.component'
 import { RbacPrincipalComponent } from '../rbac-principal/rbac-principal.component';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
-import { Role } from '../../../api/models/role';
-import { RoleAssignmentDto } from '../../../api/models/role-assignment-dto';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { deleteRoleAssignment } from '../../../api/fn/role-assignments/delete-role-assignment';
-import { getRoleAssignments } from '../../../api/fn/role-assignments/get-role-assignments';
+import { Role } from '../../../api-temporary';
+import { RoleAssignmentDto } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { deleteRoleAssignment } from '../../../api-temporary';
+import { getRoleAssignments } from '../../../api-temporary';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 interface IRbacOffcanvasTarget {

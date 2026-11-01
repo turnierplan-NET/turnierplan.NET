@@ -16,17 +16,17 @@ import { FormsModule } from '@angular/forms';
 import { NgClass, DatePipe } from '@angular/common';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { ViewTournamentComponent } from '../view-tournament/view-tournament.component';
-import { SetTournamentMatchPlanEndpointRequestEntry } from '../../../api/models/set-tournament-match-plan-endpoint-request-entry';
-import { GroupDto } from '../../../api/models/group-dto';
-import { TeamDto } from '../../../api/models/team-dto';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getTournament } from '../../../api/fn/tournaments/get-tournament';
-import { getTournamentTeamSelectors } from '../../../api/fn/tournaments/get-tournament-team-selectors';
-import { setTournamentMatchPlan } from '../../../api/fn/tournaments/set-tournament-match-plan';
-import { TournamentDto } from '../../../api/models/tournament-dto';
-import { TeamSelectorDto } from '../../../api/models/team-selector-dto';
-import { MatchType } from '../../../api/models/match-type';
-import { MatchState } from '../../../api/models/match-state';
+import { SetTournamentMatchPlanEndpointRequestEntry } from '../../../api-temporary';
+import { GroupDto } from '../../../api-temporary';
+import { TeamDto } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { getTournament } from '../../../api-temporary';
+import { getTournamentTeamSelectors } from '../../../api-temporary';
+import { setTournamentMatchPlan } from '../../../api-temporary';
+import { TournamentDto } from '../../../api-temporary';
+import { TeamSelectorDto } from '../../../api-temporary';
+import { MatchType } from '../../../api-temporary';
+import { MatchState } from '../../../api-temporary';
 
 type ExtendedMatchEntry = SetTournamentMatchPlanEndpointRequestEntry & {
   formattedType: string;

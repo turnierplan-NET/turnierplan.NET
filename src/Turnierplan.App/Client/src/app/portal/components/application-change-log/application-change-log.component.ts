@@ -1,9 +1,9 @@
 import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { ApplicationDto } from '../../../api/models/application-dto';
-import { ApplicationChangeLogDto } from '../../../api/models/application-change-log-dto';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { ApplicationDto } from '../../../api-temporary';
+import { ApplicationChangeLogDto } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
 import { Observable, Subject } from 'rxjs';
-import { getApplicationChangeLog } from '../../../api/fn/applications/get-application-change-log';
+import { getApplicationChangeLog } from '../../../api-temporary';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateDirective } from '@ngx-translate/core';
 import { LoadingStateDirective } from '../../directives/loading-state.directive';

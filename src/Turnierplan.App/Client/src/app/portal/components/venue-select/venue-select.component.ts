@@ -7,10 +7,10 @@ import { SmallSpinnerComponent } from '../../../core/components/small-spinner/sm
 import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgClass } from '@angular/common';
-import { VenueDto } from '../../../api/models/venue-dto';
-import { getVenues } from '../../../api/fn/venues/get-venues';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { PublicId } from '../../../api/models/public-id';
+import { VenueDto } from '../../../api-temporary';
+import { getVenues } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { PublicId } from '../../../api-temporary';
 
 @Component({
   templateUrl: './venue-select.component.html',

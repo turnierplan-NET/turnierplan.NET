@@ -20,11 +20,11 @@ import { ActionButtonComponent } from '../../components/action-button/action-but
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
-import { VenueDto } from '../../../api/models/venue-dto';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getVenue } from '../../../api/fn/venues/get-venue';
-import { updateVenue } from '../../../api/fn/venues/update-venue';
-import { deleteVenue } from '../../../api/fn/venues/delete-venue';
+import { VenueDto } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { getVenue } from '../../../api-temporary';
+import { updateVenue } from '../../../api-temporary';
+import { deleteVenue } from '../../../api-temporary';
 
 @Component({
   templateUrl: './view-venue.component.html',
