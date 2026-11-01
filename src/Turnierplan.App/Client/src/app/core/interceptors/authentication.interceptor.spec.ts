@@ -5,8 +5,8 @@ describe('AuthenticationInterceptor', () => {
     expect(doesPathRequireAuthentication(`/api`)).toBeTrue();
     expect(doesPathRequireAuthentication(`/api/test`)).toBeTrue();
     expect(doesPathRequireAuthentication(`/api/test/identity`)).toBeTrue();
-    expect(doesPathRequireAuthentication(`/api/identity`)).toBeFalse();
-    expect(doesPathRequireAuthentication(`/api/identity/test`)).toBeFalse();
+    expect(doesPathRequireAuthentication(`/auth`)).toBeFalse();
+    expect(doesPathRequireAuthentication(`/auth/login`)).toBeFalse();
     expect(doesPathRequireAuthentication(`/something/api`)).toBeFalse();
     expect(doesPathRequireAuthentication(`/something/api/identity`)).toBeFalse();
   });

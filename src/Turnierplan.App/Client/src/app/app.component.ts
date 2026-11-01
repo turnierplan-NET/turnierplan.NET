@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ColorThemeService } from './core/services/color-theme.service';
 import { NotificationsComponent } from './core/components/notifications/notifications.component';
+import { AuthenticationService } from './core/services/authentication.service';
 
 @Component({
   selector: 'tp-root',
@@ -15,6 +16,7 @@ export class AppComponent {
 
   constructor() {
     inject(ColorThemeService).initialize();
+    inject(AuthenticationService).initialize();
 
     this.translateService.setFallbackLang('de');
     this.translateService.use('de');
