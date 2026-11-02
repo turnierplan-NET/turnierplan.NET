@@ -1,0 +1,90 @@
+ id | organization_id | default_project_id 
+----+-----------------+--------------------
+  1 |               1 |                  1
+  2 |               2 |                  2
+(2 rows)
+
+ new_identifier |            old_identifier            | normalized_user_name 
+----------------+--------------------------------------+----------------------
+              1 | 56a2da81-f57e-4866-9368-df2b942ee4a5 | ADMIN
+              2 | 0d9aaafa-aab5-4386-8ae3-f2b92d42b4a2 | USER2
+              3 | 8af32864-bcb7-4c73-88cc-c3af1b7a8bb7 | USER3
+(3 rows)
+
+ id |   source_table    |              source_principal               | entity_id |          created_at           | role | principal_kind | principal_kind_n |             principal_id             
+----+-------------------+---------------------------------------------+-----------+-------------------------------+------+----------------+------------------+--------------------------------------
+  2 | IAM_Organization  | ApiKey:c43a730c-03d3-4a88-b529-0e85ff293e4f |         1 | 2026-10-11 09:27:09.566808+00 | 1002 | ApiKey         |                1 | c43a730c-03d3-4a88-b529-0e85ff293e4f
+  1 | IAM_Organization  | User:22b78ac2-74d9-4053-84cf-ff8ac261081c   |         1 | 2026-10-11 09:26:13.495544+00 | 1000 | User           |                2 | 22b78ac2-74d9-4053-84cf-ff8ac261081c
+  3 | IAM_Organization  | User:22b78ac2-74d9-4053-84cf-ff8ac261081c   |         2 | 2026-10-11 09:27:48.330101+00 | 1000 | User           |                2 | 22b78ac2-74d9-4053-84cf-ff8ac261081c
+  4 | IAM_Organization  | User:745c3896-a88d-4c52-a6f6-409982f23dec   |         2 | 2026-10-11 09:27:54.083415+00 | 1001 | User           |                2 | 745c3896-a88d-4c52-a6f6-409982f23dec
+  5 | IAM_PlanningRealm | User:85f07364-842d-4f94-b334-55e60837397f   |         1 | 2026-10-11 09:27:39.251501+00 | 3001 | User           |                2 | 85f07364-842d-4f94-b334-55e60837397f
+  6 | IAM_Tournament    | User:85f07364-842d-4f94-b334-55e60837397f   |         1 | 2026-10-11 09:27:03.852886+00 | 1002 | User           |                2 | 85f07364-842d-4f94-b334-55e60837397f
+(6 rows)
+
+      migration_id      | product_version 
+------------------------+-----------------
+ 20261102203826_Initial | 10.0.4
+(1 row)
+
+ version  | major | minor | patch |           timestamp           
+----------+-------+-------+-------+-------------------------------
+ 2026.3.0 |  2026 |     3 |     0 | 2026-10-11 09:26:01.323204+00
+(1 row)
+
+ id | public_id | principal_id | created_at | name | description | secret_hash | expiry_date | is_active 
+----+-----------+--------------+------------+------+-------------+-------------+-------------+-----------
+(0 rows)
+
+ id | timestamp | path | api_key_id 
+----+-----------+------+------------
+(0 rows)
+
+ id | created_at | api_key_id | role | principal_kind | principal_id 
+----+------------+------------+------+----------------+--------------
+(0 rows)
+
+ id |      public_id       |          created_at           | name  
+----+----------------------+-------------------------------+-------
+  1 | -6814935668572117614 | 2026-10-11 09:26:13.495329+00 | Test
+  2 |  2875533160168419650 | 2026-10-11 09:27:48.330099+00 | Org 2
+(2 rows)
+
+ id |          created_at           | organization_id | role | principal_kind |             principal_id             
+----+-------------------------------+-----------------+------+----------------+--------------------------------------
+  1 | 2026-10-11 09:27:09.566808+00 |               1 | 1002 |              1 | c43a730c-03d3-4a88-b529-0e85ff293e4f
+  2 | 2026-10-11 09:26:13.495544+00 |               1 | 1000 |              2 | 22b78ac2-74d9-4053-84cf-ff8ac261081c
+  3 | 2026-10-11 09:27:48.330101+00 |               2 | 1000 |              2 | 22b78ac2-74d9-4053-84cf-ff8ac261081c
+  4 | 2026-10-11 09:27:54.083415+00 |               2 | 1001 |              2 | 745c3896-a88d-4c52-a6f6-409982f23dec
+(4 rows)
+
+ id |          name           | organization_id 
+----+-------------------------+-----------------
+  1 | Default project (Test)  |               1
+  2 | Default project (Org 2) |               2
+(2 rows)
+
+ id | organization_id | public_id | created_at | name 
+----+-----------------+-----------+------------+------
+(0 rows)
+
+ id | created_at | project_id | role | principal_kind | principal_id 
+----+------------+------------+------+----------------+--------------
+(0 rows)
+
+ id | project_id |      public_id      |          created_at           | name | visibility 
+----+------------+---------------------+-------------------------------+------+------------
+  1 |          1 | 8683956464090950655 | 2026-10-11 09:26:16.484212+00 | Test |          2
+(1 row)
+
+ id |          created_at           | tournament_id | role | principal_kind |             principal_id             
+----+-------------------------------+---------------+------+----------------+--------------------------------------
+  1 | 2026-10-11 09:27:03.852886+00 |             1 | 1002 |              2 | 85f07364-842d-4f94-b334-55e60837397f
+(1 row)
+
+ id |             principal_id             |          created_at           | user_name | normalized_user_name |   full_name   | e_mail | normalized_e_mail |                                    password_hash                                     | is_administrator | allow_create_organization |     last_password_change      |          last_login           |            security_stamp            
+----+--------------------------------------+-------------------------------+-----------+----------------------+---------------+--------+-------------------+--------------------------------------------------------------------------------------+------------------+---------------------------+-------------------------------+-------------------------------+--------------------------------------
+  1 | 22b78ac2-74d9-4053-84cf-ff8ac261081c | 2026-10-11 09:26:01.539874+00 | admin     | ADMIN                | Administrator |        |                   | AQAAAAIAAYagAAAAECme9G8qHPoJnz3sDalA5xMdoFP+gPwxpwQ44PsjtEfFyHPBhGMqS1myJ8ype272iw== | t                | t                         | 2026-10-11 09:26:01.595312+00 | 2026-10-11 09:26:10.241568+00 | 00589c62-5341-4a75-8fcc-496fb3f93425
+  2 | 85f07364-842d-4f94-b334-55e60837397f | 2026-10-11 09:26:35.513919+00 | user2     | USER2                |               |        |                   | AQAAAAIAAYagAAAAENfLcYJKFJdf8ck9Ous4ka5nqUg7TweuvGmdz5bkCm+Ab2ZCHbfA18rZn0w6+XmxaQ== | f                | f                         | 2026-10-11 09:26:35.571112+00 |                               | 5c04008b-3907-4366-a5db-d130f089f126
+  3 | 745c3896-a88d-4c52-a6f6-409982f23dec | 2026-10-11 09:26:38.826311+00 | user3     | USER3                |               |        |                   | AQAAAAIAAYagAAAAEGUVzd4FiyurD6WEan8wxpNL8n5K1k5P42qCU27JC5H6VHs206602NWsduZXqaKXRQ== | f                | f                         | 2026-10-11 09:26:38.874564+00 |                               | 08a48371-1790-466a-a7e3-9866ebdc0f13
+(3 rows)
+
