@@ -5,9 +5,9 @@
     <Project Path="Turnierplan.App.Test.Functional/Turnierplan.App.Test.Functional.csproj" />
     <Project Path="Turnierplan.App.Test.Unit/Turnierplan.App.Test.Unit.csproj" />
     <Project Path="Turnierplan.App/Turnierplan.App.csproj" />
-    <Project Path="Turnierplan.Core_LEGACY.Test.Regression\Turnierplan.Core_LEGACY.Test.Regression.csproj" />
-    <Project Path="Turnierplan.Core_LEGACY.Test.Unit\Turnierplan.Core_LEGACY.Test.Unit.csproj" />
-    <Project Path="Turnierplan.Core_LEGACY\Turnierplan.Core_LEGACY.csproj" />
+    <Project Path="Turnierplan.Core.Test.Regression/Turnierplan.Core.Test.Regression.csproj" />
+    <Project Path="Turnierplan.Core.Test.Unit/Turnierplan.Core.Test.Unit.csproj" />
+    <Project Path="Turnierplan.Core/Turnierplan.Core.csproj" />
     <Project Path="Turnierplan.Dal.Test.Unit/Turnierplan.Dal.Test.Unit.csproj" />
     <Project Path="Turnierplan.Dal/Turnierplan.Dal.csproj" />
     <Project Path="Turnierplan.ImageStorage.Test.Integration/Turnierplan.ImageStorage.Test.Integration.csproj" />

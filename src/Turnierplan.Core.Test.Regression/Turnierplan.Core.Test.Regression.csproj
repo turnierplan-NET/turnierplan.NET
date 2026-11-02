@@ -5,12 +5,15 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>Turnierplan.Core.Test.Unit</RootNamespace>
   </PropertyGroup>
 
   <Import Project="../Turnierplan.Test.Common.props" />
 
   <ItemGroup>
-    <ProjectReference Include="..\Turnierplan.Core_LEGACY\Turnierplan.Core_LEGACY.csproj" />
+    <ProjectReference Include="..\Turnierplan.Core\Turnierplan.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Expected/*.out" />
   </ItemGroup>
 </Project>
