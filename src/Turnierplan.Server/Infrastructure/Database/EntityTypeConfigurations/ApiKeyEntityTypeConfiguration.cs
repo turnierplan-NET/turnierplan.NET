@@ -52,8 +52,5 @@ internal sealed class ApiKeyEntityTypeConfiguration : IEntityTypeConfiguration<A
             .WithOne()
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
-
-        // TODO: Necessary?
-        // builder.Metadata.FindNavigation(nameof(ApiKey.Requests))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

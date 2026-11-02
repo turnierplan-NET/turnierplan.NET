@@ -143,6 +143,45 @@ namespace Turnierplan.Server.Infrastructure.Database.Migrations
                     b.ToTable("organization", "turnierplan_v2");
                 });
 
+            modelBuilder.Entity("Turnierplan.Server.Domain.Projects.Project", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<long>("OrganizationId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("organization_id");
+
+                    b.Property<long>("PublicId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("public_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_project");
+
+                    b.HasIndex("OrganizationId")
+                        .HasDatabaseName("ix_project_organization_id");
+
+                    b.HasIndex("PublicId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_project_public_id");
+
+                    b.ToTable("project", "turnierplan_v2");
+                });
+
             modelBuilder.Entity("Turnierplan.Server.Domain.RoleAssignments.RoleAssignment<Turnierplan.Server.Domain.ApiKeys.ApiKey>", b =>
                 {
                     b.Property<long>("Id")
@@ -229,6 +268,137 @@ namespace Turnierplan.Server.Infrastructure.Database.Migrations
                         .HasDatabaseName("ix_organization_role_assignment_organization_id");
 
                     b.ToTable("organization_role_assignment", "turnierplan_v2");
+                });
+
+            modelBuilder.Entity("Turnierplan.Server.Domain.RoleAssignments.RoleAssignment<Turnierplan.Server.Domain.Projects.Project>", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<Guid>("PrincipalId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("principal_id");
+
+                    b.Property<int>("PrincipalKind")
+                        .HasColumnType("integer")
+                        .HasColumnName("principal_kind");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer")
+                        .HasColumnName("role");
+
+                    b.Property<long>("project_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("project_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_project_role_assignment");
+
+                    b.HasIndex("PrincipalId")
+                        .HasDatabaseName("ix_project_role_assignment_principal_id");
+
+                    b.HasIndex("PrincipalKind")
+                        .HasDatabaseName("ix_project_role_assignment_principal_kind");
+
+                    b.HasIndex("project_id")
+                        .HasDatabaseName("ix_project_role_assignment_project_id");
+
+                    b.ToTable("project_role_assignment", "turnierplan_v2");
+                });
+
+            modelBuilder.Entity("Turnierplan.Server.Domain.RoleAssignments.RoleAssignment<Turnierplan.Server.Domain.Tournaments.Tournament>", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<Guid>("PrincipalId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("principal_id");
+
+                    b.Property<int>("PrincipalKind")
+                        .HasColumnType("integer")
+                        .HasColumnName("principal_kind");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer")
+                        .HasColumnName("role");
+
+                    b.Property<long>("tournament_id")
+                        .HasColumnType("bigint")
+                        .HasColumnName("tournament_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_tournament_role_assignment");
+
+                    b.HasIndex("PrincipalId")
+                        .HasDatabaseName("ix_tournament_role_assignment_principal_id");
+
+                    b.HasIndex("PrincipalKind")
+                        .HasDatabaseName("ix_tournament_role_assignment_principal_kind");
+
+                    b.HasIndex("tournament_id")
+                        .HasDatabaseName("ix_tournament_role_assignment_tournament_id");
+
+                    b.ToTable("tournament_role_assignment", "turnierplan_v2");
+                });
+
+            modelBuilder.Entity("Turnierplan.Server.Domain.Tournaments.Tournament", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.Property<long>("ProjectId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("project_id");
+
+                    b.Property<long>("PublicId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("public_id");
+
+                    b.Property<int>("Visibility")
+                        .HasColumnType("integer")
+                        .HasColumnName("visibility");
+
+                    b.HasKey("Id")
+                        .HasName("pk_tournament");
+
+                    b.HasIndex("ProjectId")
+                        .HasDatabaseName("ix_tournament_project_id");
+
+                    b.HasIndex("PublicId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_tournament_public_id");
+
+                    b.ToTable("tournament", "turnierplan_v2");
                 });
 
             modelBuilder.Entity("Turnierplan.Server.Domain.Users.User", b =>
@@ -323,6 +493,18 @@ namespace Turnierplan.Server.Infrastructure.Database.Migrations
                         .HasConstraintName("fk_api_key_request_api_key_api_key_id");
                 });
 
+            modelBuilder.Entity("Turnierplan.Server.Domain.Projects.Project", b =>
+                {
+                    b.HasOne("Turnierplan.Server.Domain.Organizations.Organization", "Organization")
+                        .WithMany("Projects")
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_project_organization_organization_id");
+
+                    b.Navigation("Organization");
+                });
+
             modelBuilder.Entity("Turnierplan.Server.Domain.RoleAssignments.RoleAssignment<Turnierplan.Server.Domain.ApiKeys.ApiKey>", b =>
                 {
                     b.HasOne("Turnierplan.Server.Domain.ApiKeys.ApiKey", "Scope")
@@ -347,9 +529,50 @@ namespace Turnierplan.Server.Infrastructure.Database.Migrations
                     b.Navigation("Scope");
                 });
 
+            modelBuilder.Entity("Turnierplan.Server.Domain.RoleAssignments.RoleAssignment<Turnierplan.Server.Domain.Projects.Project>", b =>
+                {
+                    b.HasOne("Turnierplan.Server.Domain.Projects.Project", "Scope")
+                        .WithMany()
+                        .HasForeignKey("project_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_project_role_assignment_project_project_id");
+
+                    b.Navigation("Scope");
+                });
+
+            modelBuilder.Entity("Turnierplan.Server.Domain.RoleAssignments.RoleAssignment<Turnierplan.Server.Domain.Tournaments.Tournament>", b =>
+                {
+                    b.HasOne("Turnierplan.Server.Domain.Tournaments.Tournament", "Scope")
+                        .WithMany()
+                        .HasForeignKey("tournament_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_tournament_role_assignment_tournament_tournament_id");
+
+                    b.Navigation("Scope");
+                });
+
+            modelBuilder.Entity("Turnierplan.Server.Domain.Tournaments.Tournament", b =>
+                {
+                    b.HasOne("Turnierplan.Server.Domain.Projects.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_tournament_project_project_id");
+
+                    b.Navigation("Project");
+                });
+
             modelBuilder.Entity("Turnierplan.Server.Domain.ApiKeys.ApiKey", b =>
                 {
                     b.Navigation("Requests");
+                });
+
+            modelBuilder.Entity("Turnierplan.Server.Domain.Organizations.Organization", b =>
+                {
+                    b.Navigation("Projects");
                 });
 #pragma warning restore 612, 618
         }

@@ -27,5 +27,10 @@ internal sealed class OrganizationEntityTypeConfiguration : IEntityTypeConfigura
 
         builder.Property(x => x.Name)
             .IsRequired();
+
+        builder.HasMany(x => x.Projects)
+            .WithOne(x => x.Organization)
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired();
     }
 }
