@@ -1,6 +1,6 @@
 import { HttpEvent, HttpEventType, HttpHandlerFn, HttpHeaderResponse, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { Observable, of, switchMap, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 import { AuthenticationService } from '../services/authentication.service';
 
