@@ -5,7 +5,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
-export const appVersion = '2026.3.0';
+export const appVersion = '2027.1.0';
 
 export const appConfig: ApplicationConfig = {
   providers: [

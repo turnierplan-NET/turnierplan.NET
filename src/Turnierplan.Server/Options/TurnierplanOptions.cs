@@ -1,0 +1,22 @@
+namespace Turnierplan.Server.Options;
+
+internal sealed record TurnierplanOptions
+{
+    public string? ApplicationUrl { get; init; }
+
+    public string? InstanceName { get; init; }
+
+    public string? LogoUrl { get; init; }
+
+    public string? ImprintUrl { get; init; }
+
+    public string? PrivacyUrl { get; init; }
+
+    public int? ImageMaxSize { get; init; }
+
+    public int? ImageQuality { get; init; }
+
+    public string? InitialUserName { get; init; }
+
+    public string? InitialUserPassword { get; init; }
+}

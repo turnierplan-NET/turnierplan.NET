@@ -1,7 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit, DOCUMENT, ChangeDetectionStrategy } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
-import { AuthenticatedUser } from '../core/models/identity';
 import { AuthenticationService } from '../core/services/authentication.service';
 import { DiscardChangesDetector, hasUnsavedChangesFunctionName } from '../core/guards/discard-changes.guard';
 import { RouterLink, RouterOutlet } from '@angular/router';
@@ -20,6 +19,7 @@ import { ColorThemeSelectorComponent } from '../core/components/color-theme-sele
 
 echarts.use([BarChart, GridComponent, CanvasRenderer, TooltipComponent]);
 import 'echarts/theme/dark-bold.js';
+import { MeEndpointResponse } from '../api/models/me-endpoint-response';
 
 type UserInfoAction = 'ChangePassword' | 'Logout';
 
@@ -44,7 +44,7 @@ type UserInfoAction = 'ChangePassword' | 'Logout';
 })
 export class PortalComponent implements OnInit, OnDestroy {
   protected currentComponent?: Object;
-  protected currentUser?: AuthenticatedUser;
+  protected currentUser?: MeEndpointResponse;
   protected footerStyle = '';
 
   private readonly destroyed$ = new Subject<void>();
@@ -97,7 +97,7 @@ export class PortalComponent implements OnInit, OnDestroy {
   protected userInfoActionClicked(action: UserInfoAction): void {
     switch (action) {
       case 'ChangePassword':
-        this.authenticationService.openChangePasswordForm();
+        this.authenticationService.navigateToChangePasswordPage();
         break;
       case 'Logout':
         this.authenticationService.logout();

@@ -83,7 +83,9 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       .pipe(
         take(1),
         switchMap((user) => {
-          return this.authenticationService.changePassword(user.userName, this.newPassword, this.oldPassword);
+          if (user) {
+            return this.authenticationService.changePassword(user.userName, this.newPassword, this.oldPassword);
+          }
         })
       )
       .subscribe((result) => {

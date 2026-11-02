@@ -54,39 +54,6 @@ internal sealed class AccessValidator : IAccessValidator
         return IsActionAllowed(target, action, principal);
     }
 
-    public void AddRolesToResponseHeader<T>(IEntityWithRoleAssignments<T> target)
-        where T : Entity<long>, IEntityWithRoleAssignments<T>
-    {
-        if (!_roleHeaderProcessedEntityIds.Add(target.PublicId))
-        {
-            // The AddRolesToResponseHeader() method was previously called on the same entity
-            return;
-        }
-
-        var availableRoles = new HashSet<Role>();
-
-        if (_httpContext.IsCurrentUserAdministrator())
-        {
-            availableRoles.Add(Role.Owner);
-        }
-        else
-        {
-            var principal = _httpContext.GetActivePrincipal();
-            AddAvailableRoles(target, availableRoles, principal);
-        }
-
-        if (availableRoles.Count == 0)
-        {
-            return;
-        }
-
-        var targetPublicId = target.PublicId.ToString();
-        var rolesList = string.Join('+', availableRoles.Select(x => x.ToString()));
-        var rolesHeaderValue = $"{targetPublicId}={rolesList}";
-
-        _httpContext.Response.Headers.Append(RolesHeaderName, rolesHeaderValue);
-    }
-
     internal static bool IsActionAllowed<T>(IEntityWithRoleAssignments<T> target, Actions.Action action, Principal principal)
         where T : Entity<long>, IEntityWithRoleAssignments<T>
     {

@@ -79,7 +79,11 @@ export class AdministrationPageComponent implements OnInit {
     private readonly authenticationService: AuthenticationService,
     private readonly notificationService: NotificationService
   ) {
-    this.authenticationService.authentication$.pipe(takeUntilDestroyed()).subscribe((userInfo) => (this.currentUserId = userInfo.id));
+    this.authenticationService.authentication$.pipe(takeUntilDestroyed()).subscribe((userInfo) => {
+      if (userInfo) {
+        // this.currentUserId = userInfo.id - TODO
+      }
+    });
   }
 
   public ngOnInit(): void {
