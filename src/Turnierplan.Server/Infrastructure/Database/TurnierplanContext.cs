@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Turnierplan.Server.Domain;
 using Turnierplan.Server.Domain.ApiKeys;
 using Turnierplan.Server.Domain.Organizations;
 using Turnierplan.Server.Domain.Projects;

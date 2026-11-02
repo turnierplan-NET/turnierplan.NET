@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Turnierplan.Server.Domain;
 using Turnierplan.Server.Domain.Projects;
-using Turnierplan.Server.Domain.RoleAssignments;
 using Turnierplan.Server.Infrastructure.Authorization;
 using Turnierplan.Server.Infrastructure.Database;
 using Turnierplan.Server.Infrastructure.Database.Extensions;
