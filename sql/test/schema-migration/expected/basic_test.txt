@@ -21,20 +21,10 @@
   6 | IAM_Tournament    | User:85f07364-842d-4f94-b334-55e60837397f   |         1 | 2026-10-11 09:27:03.852886+00 | 1002 | User           |                2 | 85f07364-842d-4f94-b334-55e60837397f
 (6 rows)
 
-           migration_id            | product_version 
------------------------------------+-----------------
- 20260922174635_Initial            | 10.0.4
- 20261004070929_Dev2               | 10.0.4
- 20261004071747_Dev3               | 10.0.4
- 20261004174530_Dev4               | 10.0.4
- 20261008182344_Dev5_ApiKey        | 10.0.4
- 20261008184215_Dev6_ApiKey        | 10.0.4
- 20261018081319_AddProject         | 10.0.4
- 20261018092720_AddProject2        | 10.0.4
- 20261019205327_PrincipalKindIndex | 10.0.4
- 20261025104131_AddTournament1     | 10.0.4
- 20261025104417_AddTournament2     | 10.0.4
-(11 rows)
+      migration_id      | product_version 
+------------------------+-----------------
+ 20261102203826_Initial | 10.0.4
+(1 row)
 
  version  | major | minor | patch |           timestamp           
 ----------+-------+-------+-------+-------------------------------
@@ -73,8 +63,8 @@
   2 | Default project (Org 2) |               2
 (2 rows)
 
- id | public_id | created_at | name | organization_id 
-----+-----------+------------+------+-----------------
+ id | organization_id | public_id | created_at | name 
+----+-----------------+-----------+------------+------
 (0 rows)
 
  id | created_at | project_id | role | principal_kind | principal_id 
