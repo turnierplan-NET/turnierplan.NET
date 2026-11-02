@@ -12,8 +12,8 @@ using Turnierplan.Server.Infrastructure.Database;
 namespace Turnierplan.Server.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(TurnierplanContext))]
-    [Migration("20261031212107_Tournament3")]
-    partial class Tournament3
+    [Migration("20261102203826_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

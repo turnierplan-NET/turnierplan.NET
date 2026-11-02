@@ -305,6 +305,9 @@ namespace Turnierplan.Server.Infrastructure.Database.Migrations
                     b.HasIndex("PrincipalId")
                         .HasDatabaseName("ix_project_role_assignment_principal_id");
 
+                    b.HasIndex("PrincipalKind")
+                        .HasDatabaseName("ix_project_role_assignment_principal_kind");
+
                     b.HasIndex("project_id")
                         .HasDatabaseName("ix_project_role_assignment_project_id");
 
