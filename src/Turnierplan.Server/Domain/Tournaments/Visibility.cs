@@ -1,4 +1,4 @@
-namespace Turnierplan.Core.Tournament;
+namespace Turnierplan.Server.Domain.Tournaments;
 
 public enum Visibility
 {
