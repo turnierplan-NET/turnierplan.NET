@@ -8,8 +8,8 @@ services:
       - './setup:/test-setup:ro'
       - './output:/test-output'
       - './assertions.sql:/assertions.sql:ro'
+      - './schema-v2-ddl.sql:/schema-v2-ddl.sql:ro'
       - '../../schema-migration.sql:/schema-migration.sql:ro'
-      - '../../schema-v2-ddl.sql:/schema-v2-ddl.sql:ro'
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 1s
