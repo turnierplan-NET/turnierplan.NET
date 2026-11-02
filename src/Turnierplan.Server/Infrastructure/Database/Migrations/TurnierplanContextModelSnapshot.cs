@@ -178,6 +178,9 @@ namespace Turnierplan.Server.Infrastructure.Database.Migrations
                     b.HasIndex("PrincipalId")
                         .HasDatabaseName("ix_api_key_role_assignment_principal_id");
 
+                    b.HasIndex("PrincipalKind")
+                        .HasDatabaseName("ix_api_key_role_assignment_principal_kind");
+
                     b.HasIndex("api_key_id")
                         .HasDatabaseName("ix_api_key_role_assignment_api_key_id");
 
@@ -218,6 +221,9 @@ namespace Turnierplan.Server.Infrastructure.Database.Migrations
 
                     b.HasIndex("PrincipalId")
                         .HasDatabaseName("ix_organization_role_assignment_principal_id");
+
+                    b.HasIndex("PrincipalKind")
+                        .HasDatabaseName("ix_organization_role_assignment_principal_kind");
 
                     b.HasIndex("organization_id")
                         .HasDatabaseName("ix_organization_role_assignment_organization_id");

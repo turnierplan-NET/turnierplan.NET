@@ -34,4 +34,8 @@
     <!-- TODO: Uninstall once auth is moved to session -->
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.23.0" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Infrastructure\Database\Migrations\" />
+  </ItemGroup>
 </Project>
