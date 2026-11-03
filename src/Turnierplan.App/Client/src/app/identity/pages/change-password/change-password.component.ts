@@ -99,18 +99,18 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
             void this.router.navigate([this.redirectTarget]);
 
             break;
-          // case ChangePasswordFailedReason.InsecurePassword:
-          //   this.isLoading = false;
-          //   this.failedReason = PasswordChangeFailedReason.InsecurePassword;
-          //   break;
-          // case ChangePasswordFailedReason.InvalidCredentials:
-          //   this.isLoading = false;
-          //   this.failedReason = PasswordChangeFailedReason.InvalidCredentials;
-          //   break;
-          // case ChangePasswordFailedReason.NewPasswordEqualsCurrent:
-          //   this.isLoading = false;
-          //   this.failedReason = PasswordChangeFailedReason.NewPasswordEqualsCurrent;
-          //   break;
+          case ChangePasswordFailedReason.InsecurePassword:
+            this.isLoading = false;
+            this.failedReason = PasswordChangeFailedReason.InsecurePassword;
+            break;
+          case ChangePasswordFailedReason.InvalidCredentials:
+            this.isLoading = false;
+            this.failedReason = PasswordChangeFailedReason.InvalidCredentials;
+            break;
+          case ChangePasswordFailedReason.NewPasswordEqualsCurrent:
+            this.isLoading = false;
+            this.failedReason = PasswordChangeFailedReason.NewPasswordEqualsCurrent;
+            break;
           default:
             this.isLoading = false;
             this.failedReason = PasswordChangeFailedReason.UnexpectedError;

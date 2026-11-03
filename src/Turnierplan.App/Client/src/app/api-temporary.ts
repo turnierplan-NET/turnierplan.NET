@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs';
-import { HttpResponse } from '@angular/common/http';
 
 // The backend endpoints are migrated towards the new server project sequentially. Only endpoints that are
 // migrated so far will appear in the generated client code. To ensure the client app can be built and tested
@@ -8,8 +7,6 @@ import { HttpResponse } from '@angular/common/http';
 //
 // This file can also be viewed as a "to-do" list of the endpoints that still have to migrated yet.
 
-export const me: any = undefined;
-export const logout: any = undefined;
 export enum ChangePasswordFailedReason {
   InsecurePassword,
   InvalidCredentials,
@@ -255,10 +252,6 @@ export type CreateApplicationTeamEndpointRequest = any;
 
 export class TurnierplanApi {
   public invoke(p1: any, p2?: any, p3?: any): Observable<any> {
-    return undefined!;
-  }
-
-  public invoke$Response(p1: any, p2?: any, p3?: any): Observable<HttpResponse<any>> {
     return undefined!;
   }
 }

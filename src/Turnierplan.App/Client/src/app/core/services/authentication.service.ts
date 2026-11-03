@@ -7,8 +7,7 @@ import { me } from '../../api/fn/authentication/me';
 import { MeEndpointResponse } from '../../api/models/me-endpoint-response';
 import { logout } from '../../api/fn/authentication/logout';
 import { login$XWwwFormUrlencoded } from '../../api/fn/authentication/login-x-www-form-urlencoded';
-
-type ChangePasswordFailedReason = never;
+import { ChangePasswordFailedReason } from '../../api-temporary';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
