@@ -2,11 +2,11 @@ import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateDirective } from '@ngx-translate/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActionButtonComponent } from '../action-button/action-button.component';
-import { CreateRankingOverwriteEndpointRequest } from '../../../api/models/create-ranking-overwrite-endpoint-request';
+import { CreateRankingOverwriteEndpointRequest } from '../../../api-temporary';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { NgClass } from '@angular/common';
-import { RankingOverwriteDto } from '../../../api/models/ranking-overwrite-dto';
+import { RankingOverwriteDto } from '../../../api-temporary';
 import { AlertComponent } from '../alert/alert.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 

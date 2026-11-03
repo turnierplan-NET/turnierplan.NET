@@ -3,12 +3,11 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 
 import { TurnierplanApi } from '../../api/turnierplan-api';
-import { login$FormData } from '../../api/fn/authentication/login-form-data';
 import { me } from '../../api/fn/authentication/me';
 import { MeEndpointResponse } from '../../api/models/me-endpoint-response';
 import { logout } from '../../api/fn/authentication/logout';
-
-type ChangePasswordFailedReason = never;
+import { login$XWwwFormUrlencoded } from '../../api/fn/authentication/login-x-www-form-urlencoded';
+import { ChangePasswordFailedReason } from '../../api-temporary';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -20,19 +19,22 @@ export class AuthenticationService {
   ) {}
 
   public initialize(): void {
-    this.turnierplanApi.invoke(me).subscribe({
-      next: (userInfo) => {
-        if (userInfo) {
-          this.authentication$.next(userInfo);
-        } else {
-          this.navigateToLoginPage(true);
+    this.turnierplanApi
+      .invoke(me)
+      .pipe(catchError(() => of(undefined)))
+      .subscribe({
+        next: (userInfo) => {
+          if (userInfo) {
+            this.authentication$.next(userInfo);
+          } else {
+            this.navigateToLoginPage(true);
+          }
         }
-      }
-    });
+      });
   }
 
   public login(userName: string, password: string): Observable<'success' | 'failure'> {
-    return this.turnierplanApi.invoke(login$FormData, { body: { username: userName, password: password } }).pipe(
+    return this.turnierplanApi.invoke(login$XWwwFormUrlencoded, { body: { username: userName, password: password } }).pipe(
       switchMap(() => this.turnierplanApi.invoke(me)),
       catchError(() => of(undefined)),
       tap((userInfo) => {

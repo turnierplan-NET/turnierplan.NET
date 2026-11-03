@@ -9,16 +9,16 @@ import { ApplicationsFilter, applicationsFilterToQueryParameters, defaultApplica
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
-import { ApplicationTeamDto } from '../../../api/models/application-team-dto';
-import { TournamentPlannerHeaderDto } from '../../../api/models/tournament-planner-header-dto';
-import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
-import { PaginationResultDtoOfApplicationDto } from '../../../api/models/pagination-result-dto-of-application-dto';
-import { PublicId } from '../../../api/models/public-id';
-import { getTournamentPlanners } from '../../../api/fn/tournament-planners/get-tournament-planners';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getTournamentPlanner } from '../../../api/fn/tournament-planners/get-tournament-planner';
-import { getApplications } from '../../../api/fn/applications/get-applications';
-import { LabelDto } from '../../../api/models/label-dto';
+import { ApplicationTeamDto } from '../../../api-temporary';
+import { TournamentPlannerHeaderDto } from '../../../api-temporary';
+import { TournamentPlannerDto } from '../../../api-temporary';
+import { PaginationResultDtoOfApplicationDto } from '../../../api-temporary';
+import { PublicId } from '../../../api-temporary';
+import { getTournamentPlanners } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { getTournamentPlanner } from '../../../api-temporary';
+import { getApplications } from '../../../api-temporary';
+import { LabelDto } from '../../../api-temporary';
 import { LabelComponent } from '../label/label.component';
 
 export type SelectApplicationTeamResult = {

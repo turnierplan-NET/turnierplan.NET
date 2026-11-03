@@ -6,9 +6,9 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { LoadingIndicatorComponent } from '../loading-indicator/loading-indicator.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgClass } from '@angular/common';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getImages } from '../../../api/fn/images/get-images';
-import { ImageDto } from '../../../api/models/image-dto';
+import { TurnierplanApi } from '../../../api-temporary';
+import { getImages } from '../../../api-temporary';
+import { ImageDto } from '../../../api-temporary';
 import { FileSizePipe } from '../../pipes/file-size.pipe';
 
 export interface ImageChooserResult {

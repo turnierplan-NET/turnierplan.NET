@@ -4,8 +4,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoadingState, LoadingStateDirective } from '../../directives/loading-state.directive';
 import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree.component';
 import { TranslateDirective } from '@ngx-translate/core';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getTournaments } from '../../../api/fn/tournaments/get-tournaments';
+import { TurnierplanApi } from '../../../api-temporary';
+import { getTournaments } from '../../../api-temporary';
 
 @Component({
   templateUrl: './tournament-select.component.html',

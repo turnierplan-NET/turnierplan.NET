@@ -7,10 +7,10 @@ import { FolderTreeComponent, FolderTreeEntry } from '../folder-tree/folder-tree
 import { TranslateDirective } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
-import { DocumentDto } from '../../../api/models/document-dto';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getTournaments } from '../../../api/fn/tournaments/get-tournaments';
-import { getDocuments } from '../../../api/fn/documents/get-documents';
+import { DocumentDto } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { getTournaments } from '../../../api-temporary';
+import { getDocuments } from '../../../api-temporary';
 
 @Component({
   templateUrl: './document-copy.component.html',

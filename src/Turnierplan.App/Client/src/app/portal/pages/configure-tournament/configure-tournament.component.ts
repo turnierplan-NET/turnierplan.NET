@@ -23,19 +23,19 @@ import { AbstractTeamSelectorPipe } from '../../pipes/abstract-team-selector.pip
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
 import { ConfigureTournamentAddTeamComponent } from '../../components/configure-tournament-add-team/configure-tournament-add-team.component';
 import { ViewTournamentComponent } from '../view-tournament/view-tournament.component';
-import { FinalsMatchDefinitionDto } from '../../../api/models/finals-match-definition-dto';
-import { TournamentDto } from '../../../api/models/tournament-dto';
-import { getTournament } from '../../../api/fn/tournaments/get-tournament';
-import { getAvailableFinalsMatchDefinitions } from '../../../api/fn/metadata/get-available-finals-match-definitions';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { configureTournament } from '../../../api/fn/tournaments/configure-tournament';
-import { MatchState } from '../../../api/models/match-state';
-import { MatchPlanConfigurationDto } from '../../../api/models/match-plan-configuration-dto';
-import { ConfigureTournamentEndpointRequest } from '../../../api/models/configure-tournament-endpoint-request';
-import { FinalsPhaseConfigurationDto } from '../../../api/models/finals-phase-configuration-dto';
-import { AdditionalPlayoffDto } from '../../../api/models/additional-playoff-dto';
-import { ConfigureTournamentEndpointRequestGroupEntry } from '../../../api/models/configure-tournament-endpoint-request-group-entry';
-import { ConfigureTournamentEndpointRequestTeamEntry } from '../../../api/models/configure-tournament-endpoint-request-team-entry';
+import { FinalsMatchDefinitionDto } from '../../../api-temporary';
+import { TournamentDto } from '../../../api-temporary';
+import { getTournament } from '../../../api-temporary';
+import { getAvailableFinalsMatchDefinitions } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { configureTournament } from '../../../api-temporary';
+import { MatchState } from '../../../api-temporary';
+import { MatchPlanConfigurationDto } from '../../../api-temporary';
+import { ConfigureTournamentEndpointRequest } from '../../../api-temporary';
+import { FinalsPhaseConfigurationDto } from '../../../api-temporary';
+import { AdditionalPlayoffDto } from '../../../api-temporary';
+import { ConfigureTournamentEndpointRequestGroupEntry } from '../../../api-temporary';
+import { ConfigureTournamentEndpointRequestTeamEntry } from '../../../api-temporary';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 interface TemporaryGroup {

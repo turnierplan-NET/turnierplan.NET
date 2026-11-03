@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TranslatePipe } from '@ngx-translate/core';
-import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
+import { TournamentPlannerDto } from '../../../api-temporary';
 
 @Component({
   selector: 'tp-manage-applications-filter',

@@ -1,10 +1,10 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { LabelComponent } from '../label/label.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
-import { ApplicationChangeLogType } from '../../../api/models/application-change-log-type';
-import { ApplicationChangeLogProperty } from '../../../api/models/application-change-log-property';
-import { ApplicationChangeLogDto } from '../../../api/models/application-change-log-dto';
-import { LabelDto } from '../../../api/models/label-dto';
+import { ApplicationChangeLogType } from '../../../api-temporary';
+import { ApplicationChangeLogProperty } from '../../../api-temporary';
+import { ApplicationChangeLogDto } from '../../../api-temporary';
+import { LabelDto } from '../../../api-temporary';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 

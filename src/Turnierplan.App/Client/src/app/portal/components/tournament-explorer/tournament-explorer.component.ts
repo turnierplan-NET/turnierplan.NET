@@ -12,10 +12,10 @@ import { RouterLink } from '@angular/router';
 import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { TranslateDirective } from '@ngx-translate/core';
 import { IdWidgetComponent } from '../id-widget/id-widget.component';
-import { OrganizationDto } from '../../../api/models/organization-dto';
-import { TournamentHeaderDto } from '../../../api/models/tournament-header-dto';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { setFolderName } from '../../../api/fn/folders/set-folder-name';
+import { OrganizationDto } from '../../../api-temporary';
+import { TournamentHeaderDto } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { setFolderName } from '../../../api-temporary';
 
 @Component({
   selector: 'tp-tournament-explorer',

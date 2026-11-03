@@ -15,6 +15,10 @@ import { Observable, of } from 'rxjs';
 import { de as languageDE } from './app/i18n/de';
 import { AppComponent } from './app/app.component';
 
+// TODO:
+//  - set "strict": false back to true in tsconfig
+//  - remove "noImplicitAny": false from tsconfig
+
 const routes: Routes = [
   {
     path: 'portal',

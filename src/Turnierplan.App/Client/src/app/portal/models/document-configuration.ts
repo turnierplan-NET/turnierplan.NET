@@ -1,5 +1,5 @@
-import { MatchPlanDocumentConfiguration } from '../../api/models/match-plan-document-configuration';
-import { ReceiptsDocumentConfiguration } from '../../api/models/receipts-document-configuration';
+import { MatchPlanDocumentConfiguration } from '../../api-temporary';
+import { ReceiptsDocumentConfiguration } from '../../api-temporary';
 
 type EmptyDocumentConfiguration = { [key: string]: never };
 

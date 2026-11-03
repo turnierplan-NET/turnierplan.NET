@@ -9,16 +9,16 @@ import { ActionButtonComponent } from '../action-button/action-button.component'
 import { RbacPrincipalComponent } from '../rbac-principal/rbac-principal.component';
 import { DeleteButtonComponent } from '../delete-button/delete-button.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
-import { Role } from '../../../api/models/role';
-import { RoleAssignmentDto } from '../../../api/models/role-assignment-dto';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { deleteRoleAssignment } from '../../../api/fn/role-assignments/delete-role-assignment';
-import { getRoleAssignments } from '../../../api/fn/role-assignments/get-role-assignments';
+import { Role } from '../../../api-temporary';
+import { RoleAssignmentDto } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { deleteRoleAssignment } from '../../../api-temporary';
+import { getRoleAssignments } from '../../../api-temporary';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 interface IRbacOffcanvasTarget {
   name: string;
-  rbacScopeId: string;
+  scope: string;
 }
 
 @Component({
@@ -66,7 +66,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
   public setTarget(target: IRbacOffcanvasTarget) {
     this.target = target;
 
-    const scopeType = target.rbacScopeId.substring(0, target.rbacScopeId.indexOf(':'));
+    const scopeType = target.scope.substring(0, target.scope.indexOf(':'));
     this.targetIsOrganization = scopeType === 'Organization';
     this.scopeTranslationKey = `Portal.RbacManagement.ScopeType.${scopeType}`;
 
@@ -101,7 +101,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
   }
 
   protected removeRoleAssignment(id: string): void {
-    this.turnierplanApi.invoke(deleteRoleAssignment, { scopeId: this.target.rbacScopeId, roleAssignmentId: id }).subscribe({
+    this.turnierplanApi.invoke(deleteRoleAssignment, { scopeId: this.target.scope, roleAssignmentId: id }).subscribe({
       next: () => {
         this.roleAssignmentCount = 0;
 
@@ -143,7 +143,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
 
   protected navigateToScope(scopeId: string, scopeName: string): void {
     this.setTarget({
-      rbacScopeId: scopeId,
+      scope: scopeId,
       name: scopeName
     });
   }
@@ -157,7 +157,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
 
     const component = ref.componentInstance as RbacAddAssignmentComponent;
 
-    component.scopeId = this.target.rbacScopeId;
+    component.scopeId = this.target.scope;
     component.error$.subscribe((error) => this.errorSubject$.next(error));
 
     ref.closed.subscribe(() => this.loadRoleAssignments());
@@ -167,7 +167,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
     this.isLoadingRoleAssignments = true;
 
     this.turnierplanApi
-      .invoke(getRoleAssignments, { scopeId: this.target.rbacScopeId })
+      .invoke(getRoleAssignments, { scopeId: this.target.scope })
       .pipe(finalize(() => (this.isLoadingRoleAssignments = false)))
       .subscribe({
         next: (roleAssignments) => {

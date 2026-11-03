@@ -9,9 +9,9 @@ import { PageFrameComponent } from '../../components/page-frame/page-frame.compo
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { createUser } from '../../../api/fn/users/create-user';
-import { CreateUserEndpointRequest } from '../../../api/models/create-user-endpoint-request';
+import { TurnierplanApi } from '../../../api-temporary';
+import { createUser } from '../../../api-temporary';
+import { CreateUserEndpointRequest } from '../../../api-temporary';
 
 @Component({
   templateUrl: './create-user.component.html',

@@ -8,7 +8,7 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NgClass } from '@angular/common';
-import { ChangePasswordFailedReason } from '../../../api/models/change-password-failed-reason';
+import { ChangePasswordFailedReason } from '../../../api-temporary';
 
 enum PasswordChangeFailedReason {
   EmptyOrExtraWhitespace = 'EmptyOrExtraWhitespace',
@@ -83,9 +83,8 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       .pipe(
         take(1),
         switchMap((user) => {
-          if (user) {
-            return this.authenticationService.changePassword(user.userName, this.newPassword, this.oldPassword);
-          }
+          // TODO: Handle user is null
+          return this.authenticationService.changePassword(user!.userName, this.newPassword, this.oldPassword);
         })
       )
       .subscribe((result) => {

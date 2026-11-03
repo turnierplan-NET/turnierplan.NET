@@ -4,10 +4,10 @@ import { map } from 'rxjs/operators';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { NgClass, AsyncPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
-import { PrincipalDto } from '../../../api/models/principal-dto';
-import { PrincipalKind } from '../../../api/models/principal-kind';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getPrincipalName } from '../../../api/fn/principals/get-principal-name';
+import { PrincipalDto } from '../../../api-temporary';
+import { PrincipalKind } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { getPrincipalName } from '../../../api-temporary';
 
 @Component({
   selector: 'tp-rbac-principal',

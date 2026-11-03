@@ -3,9 +3,9 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
-import { TournamentClassDto } from '../../../api/models/tournament-class-dto';
-import { CreateApplicationTeamEndpointRequest } from '../../../api/models/create-application-team-endpoint-request';
+import { TournamentPlannerDto } from '../../../api-temporary';
+import { TournamentClassDto } from '../../../api-temporary';
+import { CreateApplicationTeamEndpointRequest } from '../../../api-temporary';
 
 @Component({
   imports: [ActionButtonComponent, TranslateDirective, FormsModule],

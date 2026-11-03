@@ -10,12 +10,12 @@ import { NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UnsavedChangesAlertComponent } from '../unsaved-changes-alert/unsaved-changes-alert.component';
 import { AlertComponent } from '../alert/alert.component';
-import { PresentationConfigurationDto } from '../../../api/models/presentation-configuration-dto';
-import { ResultsMode } from '../../../api/models/results-mode';
-import { HeaderLineContent } from '../../../api/models/header-line-content';
-import { setTournamentPresentationConfiguration } from '../../../api/fn/tournaments/set-tournament-presentation-configuration';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getTournamentPresentationConfiguration } from '../../../api/fn/tournaments/get-tournament-presentation-configuration';
+import { PresentationConfigurationDto } from '../../../api-temporary';
+import { ResultsMode } from '../../../api-temporary';
+import { HeaderLineContent } from '../../../api-temporary';
+import { setTournamentPresentationConfiguration } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { getTournamentPresentationConfiguration } from '../../../api-temporary';
 
 @Component({
   selector: 'tp-presentation-config-widget',

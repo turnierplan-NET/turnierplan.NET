@@ -10,7 +10,7 @@ import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 interface IRbacWidgetTarget {
   name: string;
-  rbacScopeId: string;
+  scope: string;
 }
 
 @Component({

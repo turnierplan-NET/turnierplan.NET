@@ -1,4 +1,4 @@
-﻿import { TeamComparisonMode } from '../../../api/models/team-comparison-mode';
+﻿import { TeamComparisonMode } from '../../../api-temporary';
 
 export type ComparisonModeOption = {
   id: number;

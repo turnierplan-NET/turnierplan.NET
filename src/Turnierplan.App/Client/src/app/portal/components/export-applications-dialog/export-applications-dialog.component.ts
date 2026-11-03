@@ -3,9 +3,9 @@ import { TranslateDirective, TranslateService } from '@ngx-translate/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActionButtonComponent } from '../action-button/action-button.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { exportApplications } from '../../../api/fn/applications/export-applications';
-import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
+import { TurnierplanApi } from '../../../api-temporary';
+import { exportApplications } from '../../../api-temporary';
+import { TournamentPlannerDto } from '../../../api-temporary';
 import { makeSafeFileName } from '../../helpers/file-name';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 

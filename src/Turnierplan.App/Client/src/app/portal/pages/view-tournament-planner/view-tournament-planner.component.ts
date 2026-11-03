@@ -27,14 +27,14 @@ import { ManageApplicationsFilterComponent } from '../../components/manage-appli
 import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.component';
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { ManageApplicationsComponent } from '../../components/manage-applications/manage-applications.component';
-import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { CreateApplicationEndpointRequest } from '../../../api/models/create-application-endpoint-request';
-import { UpdateTournamentPlannerEndpointRequest } from '../../../api/models/update-tournament-planner-endpoint-request';
-import { getTournamentPlanner } from '../../../api/fn/tournament-planners/get-tournament-planner';
-import { createApplication } from '../../../api/fn/applications/create-application';
-import { updateTournamentPlanner } from '../../../api/fn/tournament-planners/update-tournament-planner';
-import { deleteTournamentPlanner } from '../../../api/fn/tournament-planners/delete-tournament-planner';
+import { TournamentPlannerDto } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { CreateApplicationEndpointRequest } from '../../../api-temporary';
+import { UpdateTournamentPlannerEndpointRequest } from '../../../api-temporary';
+import { getTournamentPlanner } from '../../../api-temporary';
+import { createApplication } from '../../../api-temporary';
+import { updateTournamentPlanner } from '../../../api-temporary';
+import { deleteTournamentPlanner } from '../../../api-temporary';
 import { LabelsManagerComponent } from '../../components/labels-manager/labels-manager.component';
 import { ExportApplicationsDialogComponent } from '../../components/export-applications-dialog/export-applications-dialog.component';
 

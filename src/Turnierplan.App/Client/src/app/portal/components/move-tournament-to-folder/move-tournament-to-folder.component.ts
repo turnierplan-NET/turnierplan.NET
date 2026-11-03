@@ -8,11 +8,11 @@ import { TooltipIconComponent } from '../tooltip-icon/tooltip-icon.component';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../action-button/action-button.component';
-import { SetTournamentFolderEndpointRequest } from '../../../api/models/set-tournament-folder-endpoint-request';
-import { FolderDto } from '../../../api/models/folder-dto';
-import { getFolders } from '../../../api/fn/folders/get-folders';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { PublicId } from '../../../api/models/public-id';
+import { SetTournamentFolderEndpointRequest } from '../../../api-temporary';
+import { FolderDto } from '../../../api-temporary';
+import { getFolders } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { PublicId } from '../../../api-temporary';
 
 type FolderMode = 'NoFolder' | 'ExistingFolder' | 'NewFolder';
 

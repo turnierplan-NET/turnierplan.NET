@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { LabelDto } from '../../../api/models/label-dto';
+import { LabelDto } from '../../../api-temporary';
 
 @Component({
   selector: 'tp-label',

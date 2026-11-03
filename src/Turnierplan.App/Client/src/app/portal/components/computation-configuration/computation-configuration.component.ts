@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { SmallSpinnerComponent } from '../../../core/components/small-spinner/small-spinner.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
-import { ComputationConfigurationDto } from '../../../api/models/computation-configuration-dto';
+import { ComputationConfigurationDto } from '../../../api-temporary';
 
 @Component({
   templateUrl: './computation-configuration.component.html',

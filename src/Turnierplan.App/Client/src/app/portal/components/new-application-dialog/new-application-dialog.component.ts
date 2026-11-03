@@ -6,8 +6,8 @@ import { NgClass } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 import { AlertComponent } from '../alert/alert.component';
 import { ActionButtonComponent } from '../action-button/action-button.component';
-import { TournamentPlannerDto } from '../../../api/models/tournament-planner-dto';
-import { CreateApplicationEndpointRequest } from '../../../api/models/create-application-endpoint-request';
+import { TournamentPlannerDto } from '../../../api-temporary';
+import { CreateApplicationEndpointRequest } from '../../../api-temporary';
 import { ConfirmationAlertComponent } from '../confirmation-alert/confirmation-alert.component';
 
 const numberOfTeamsValidator = () => {

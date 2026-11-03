@@ -9,9 +9,9 @@ import { PageFrameComponent } from '../../components/page-frame/page-frame.compo
 import { NgTemplateOutlet, NgStyle, DecimalPipe, PercentPipe } from '@angular/common';
 import { TooltipIconComponent } from '../../components/tooltip-icon/tooltip-icon.component';
 import { EChartsCoreOption } from 'echarts/core';
-import { FolderStatisticsDto } from '../../../api/models/folder-statistics-dto';
-import { TurnierplanApi } from '../../../api/turnierplan-api';
-import { getFolderStatistics } from '../../../api/fn/folders/get-folder-statistics';
+import { FolderStatisticsDto } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api-temporary';
+import { getFolderStatistics } from '../../../api-temporary';
 import { ChartWrapperComponent } from '../../components/chart-wrapper/chart-wrapper.component';
 
 @Component({
