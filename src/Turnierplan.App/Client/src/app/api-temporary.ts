@@ -1,6 +1,13 @@
 import { Observable } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 
+// The backend endpoints are migrated towards the new server project sequentially. Only endpoints that are
+// migrated so far will appear in the generated client code. To ensure the client app can be built and tested
+// while the backend migration is ongoing, all existing calls to the generated client are replaced with a
+// corresponding mockup below.
+//
+// This file can also be viewed as a "to-do" list of the endpoints that still have to migrated yet.
+
 export const me: any = undefined;
 export const logout: any = undefined;
 export enum ChangePasswordFailedReason {
