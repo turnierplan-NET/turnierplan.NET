@@ -1,9 +1,8 @@
 ﻿using FluentAssertions;
-using Turnierplan.Core.Exceptions;
-using Turnierplan.Core.Tournament.Definitions;
+using Turnierplan.Core.Definitions;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit.Tournament.Definitions;
+namespace Turnierplan.Core.Test.Unit.Definitions;
 
 public sealed class AbstractTeamSelectorParserTest
 {
@@ -40,6 +39,6 @@ public sealed class AbstractTeamSelectorParserTest
     public void AbstractTeamSelectorParser___Parse_Invalid_Abstract_Team_Selector___Throws_Exception(string input)
     {
         var func = void () => AbstractTeamSelectorParser.ParseAbstractTeamSelector(input);
-        func.Should().ThrowExactly<TurnierplanException>().WithMessage($"The abstract team selector '{input}' is not valid.");
+        func.Should().ThrowExactly<TournamentException>().WithMessage($"The abstract team selector '{input}' is not valid.");
     }
 }

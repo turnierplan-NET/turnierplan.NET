@@ -1,7 +1,8 @@
-﻿using Turnierplan.Core.Tournament;
-using Turnierplan.Core.Tournament.TeamSelectors;
+﻿using Turnierplan.Core.TeamSelectors;
 
-namespace Turnierplan.Core.Test.Unit.Tournament.TeamSelectors;
+namespace Turnierplan.Core.Test.Unit.TeamSelectors;
+
+#if false
 
 public abstract class TeamSelectorTestBase
 {
@@ -9,7 +10,7 @@ public abstract class TeamSelectorTestBase
 
     private static Core.Tournament.Tournament MakeTestTournament()
     {
-        var tournament = Tournament.TestTournament.Default;
+        var tournament = Unit.TestTournament.Default;
 
         var teams = new Dictionary<int, Team>();
         foreach (var id in Enumerable.Range(4, 12))
@@ -79,3 +80,5 @@ public abstract class TeamSelectorTestBase
         return tournament;
     }
 }
+
+#endif

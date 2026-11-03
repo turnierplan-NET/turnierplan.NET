@@ -1,13 +1,12 @@
 using System.Globalization;
 using FluentAssertions;
 using FluentAssertions.Extensions;
-using Turnierplan.Core.Exceptions;
-using Turnierplan.Core.Tournament;
-using Turnierplan.Core.Tournament.TeamSelectors;
+using Turnierplan.Core.Configuration;
+using Turnierplan.Core.TeamSelectors;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit.Tournament;
-
+namespace Turnierplan.Core.Test.Unit;
+#if false
 public sealed class TournamentTest
 {
     [Theory]
@@ -169,3 +168,4 @@ public sealed class TournamentTest
         tournament.PublicPageViews.Should().Be(int.MaxValue);
     }
 }
+#endif

@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using Turnierplan.Core.Tournament.Definitions;
+using Turnierplan.Core.Definitions;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit.Tournament.Definitions;
+namespace Turnierplan.Core.Test.Unit.Definitions;
 
 public sealed class MatchPlanDefinitionsTest
 {

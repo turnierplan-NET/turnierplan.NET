@@ -1,9 +1,8 @@
 ﻿using FluentAssertions;
-using Turnierplan.Core.Tournament;
-using Turnierplan.Core.Tournament.TeamSelectors;
+using Turnierplan.Core.TeamSelectors;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit.Tournament;
+namespace Turnierplan.Core.Test.Unit;
 
 public sealed class MatchTest
 {
@@ -12,19 +11,19 @@ public sealed class MatchTest
 
     static MatchTest()
     {
-        var group = new Group(1, 'A');
+        var group = new Group('A');
 
         __testMatches = new Match[5];
-        __testTeams = Enumerable.Range(1, 10).Select(x => new Team(x, null!, "Test")).ToArray();
+        __testTeams = [..Enumerable.Range(0, 10).Select(x => new Team($"Test {x}", outOfCompetition: false))];
 
-        __testMatches[0] = new Match(1, 1, new NullSelector(), new NullSelector(), group)
+        __testMatches[0] = new Match(1, new NullSelector(), new NullSelector(), group)
         {
             Court = 0,
             TeamA = __testTeams[0],
             TeamB = __testTeams[1]
         };
 
-        __testMatches[1] = new Match(2, 2, new NullSelector(), new NullSelector(), group)
+        __testMatches[1] = new Match(2, new NullSelector(), new NullSelector(), group)
         {
             Court = 0,
             IsCurrentlyPlaying = false,
@@ -35,7 +34,7 @@ public sealed class MatchTest
             TeamB = __testTeams[3]
         };
 
-        __testMatches[2] = new Match(3, 3, new NullSelector(), new NullSelector(), group)
+        __testMatches[2] = new Match(3, new NullSelector(), new NullSelector(), group)
         {
             Court = 0,
             IsCurrentlyPlaying = false,
@@ -46,7 +45,7 @@ public sealed class MatchTest
             TeamB = __testTeams[5]
         };
 
-        __testMatches[3] = new Match(4, 4, new NullSelector(), new NullSelector(), group)
+        __testMatches[3] = new Match(4, new NullSelector(), new NullSelector(), group)
         {
             Court = 0,
             IsCurrentlyPlaying = false,
@@ -57,7 +56,7 @@ public sealed class MatchTest
             TeamB = __testTeams[7]
         };
 
-        __testMatches[4] = new Match(5, 5, new NullSelector(), new NullSelector(), group)
+        __testMatches[4] = new Match(5, new NullSelector(), new NullSelector(), group)
         {
             Court = 0,
             IsCurrentlyPlaying = true,
@@ -80,25 +79,25 @@ public sealed class MatchTest
     }
 
     [Theory]
+    [InlineData(0, true)]
     [InlineData(1, true)]
-    [InlineData(2, true)]
-    [InlineData(3, false)]
+    [InlineData(2, false)]
     public void Match___Is_Team_Participant___Returns_Correct_Result(int teamId, bool expectedResult)
     {
         // Assert
-        __testMatches[0].IsTeamParticipant(__testTeams.Single(x => x.Id == teamId)).Should().Be(expectedResult);
+        __testMatches[0].IsTeamParticipant(__testTeams[teamId]).Should().Be(expectedResult);
     }
 
     [Theory]
-    [InlineData(1, 2, true)]
-    [InlineData(2, 1, true)]
-    [InlineData(3, 2, false)]
-    [InlineData(1, 3, false)]
-    [InlineData(3, 4, false)]
+    [InlineData(0, 1, true)]
+    [InlineData(1, 0, true)]
+    [InlineData(2, 1, false)]
+    [InlineData(0, 2, false)]
+    [InlineData(2, 3, false)]
     public void Match___Are_Both_Teams_Participant___Returns_Correct_Result(int teamA, int teamB, bool expectedResult)
     {
-        var teamIdA = __testTeams.Single(x => x.Id == teamA);
-        var teamIdB = __testTeams.Single(x => x.Id == teamB);
+        var teamIdA = __testTeams[teamA];
+        var teamIdB = __testTeams[teamB];
 
         // Assert
         __testMatches[0].AreBothTeamsParticipant(teamIdA, teamIdB).Should().Be(expectedResult);
@@ -108,8 +107,8 @@ public sealed class MatchTest
     public void Match___Get_Winning_Team___Returns_Correct_Result()
     {
         __testMatches[0].GetWinningTeam().Should().BeNull();
-        __testMatches[1].GetWinningTeam()?.Id.Should().Be(3);
-        __testMatches[2].GetWinningTeam()?.Id.Should().Be(6);
+        __testMatches[1].GetWinningTeam().Should().Be(__testTeams[2]);
+        __testMatches[2].GetWinningTeam().Should().Be(__testTeams[5]);
         __testMatches[3].GetWinningTeam().Should().BeNull();
         __testMatches[4].GetWinningTeam().Should().BeNull();
     }
@@ -118,8 +117,8 @@ public sealed class MatchTest
     public void Match___Get_Losing_Team___Returns_Correct_Result()
     {
         __testMatches[0].GetLosingTeam().Should().BeNull();
-        __testMatches[1].GetLosingTeam()?.Id.Should().Be(4);
-        __testMatches[2].GetLosingTeam()?.Id.Should().Be(5);
+        __testMatches[1].GetLosingTeam().Should().Be(__testTeams[3]);
+        __testMatches[2].GetLosingTeam().Should().Be(__testTeams[4]);
         __testMatches[3].GetLosingTeam().Should().BeNull();
         __testMatches[4].GetLosingTeam().Should().BeNull();
     }

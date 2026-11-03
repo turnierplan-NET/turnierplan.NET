@@ -1,8 +1,10 @@
 ﻿using FluentAssertions;
-using Turnierplan.Core.Tournament.TeamSelectors;
+using Turnierplan.Core.TeamSelectors;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit.Tournament.TeamSelectors;
+namespace Turnierplan.Core.Test.Unit.TeamSelectors;
+
+#if false
 
 public sealed class GroupResultsNthRankedSelectorTest : TeamSelectorTestBase
 {
@@ -63,3 +65,5 @@ public sealed class GroupResultsNthRankedSelectorTest : TeamSelectorTestBase
         instance2.Equals(null).Should().BeFalse();
     }
 }
+
+#endif

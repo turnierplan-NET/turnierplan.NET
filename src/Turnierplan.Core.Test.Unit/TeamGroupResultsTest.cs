@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using Turnierplan.Core.Tournament;
+using Turnierplan.Core.Configuration;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit.Tournament;
+namespace Turnierplan.Core.Test.Unit;
 
 public sealed class TeamGroupStatisticsTest
 {

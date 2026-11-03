@@ -6,7 +6,6 @@
     <Project Path="Turnierplan.App.Test.Unit/Turnierplan.App.Test.Unit.csproj" />
     <Project Path="Turnierplan.App/Turnierplan.App.csproj" />
     <Project Path="Turnierplan.Core.Test.Regression/Turnierplan.Core.Test.Regression.csproj" />
-    <Project Path="Turnierplan.Core.Test.Unit/Turnierplan.Core.Test.Unit.csproj" />
     <Project Path="Turnierplan.CoreLegacy/Turnierplan.CoreLegacy.csproj" />
     <Project Path="Turnierplan.Dal.Test.Unit/Turnierplan.Dal.Test.Unit.csproj" />
     <Project Path="Turnierplan.Dal/Turnierplan.Dal.csproj" />
@@ -23,6 +22,7 @@
     <File Path="Turnierplan.Version.props" />
   </Folder>
   <Project Path="Turnierplan.AppHost/Turnierplan.AppHost.csproj" />
+  <Project Path="Turnierplan.Core.Test.Unit/Turnierplan.Core.Test.Unit.csproj" />
   <Project Path="Turnierplan.Core/Turnierplan.Core.csproj" />
   <Project Path="Turnierplan.Server.Test.Unit/Turnierplan.Server.Test.Unit.csproj" />
   <Project Path="Turnierplan.Server/Turnierplan.Server.csproj" />

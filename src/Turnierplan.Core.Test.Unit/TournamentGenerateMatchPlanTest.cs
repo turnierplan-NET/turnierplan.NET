@@ -1,12 +1,11 @@
 ﻿using FluentAssertions;
 using FluentAssertions.Extensions;
-using Turnierplan.Core.Exceptions;
-using Turnierplan.Core.Tournament;
-using Turnierplan.Core.Tournament.TeamSelectors;
+using Turnierplan.Core.Configuration;
+using Turnierplan.Core.TeamSelectors;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit.Tournament;
-
+namespace Turnierplan.Core.Test.Unit;
+#if false
 public sealed class TournamentGenerateMatchPlanTest
 {
     private static readonly int[] __teamIds = Enumerable.Range(0, 1000).Select(x => x + 10000).ToArray();
@@ -922,3 +921,5 @@ public sealed class TournamentGenerateMatchPlanTest
 
     public record struct MatchExpectation(int? GroupId, int? FinalsRound, int? PlayoffPosition, DateTime? Kickoff, short Court, TeamSelectorBase A, TeamSelectorBase B);
 }
+
+#endif

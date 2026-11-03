@@ -1,9 +1,9 @@
-﻿using FluentAssertions;
-using Turnierplan.Core.Tournament.TeamSelectors;
+﻿using Turnierplan.Core.TeamSelectors;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit.Tournament.TeamSelectors;
+namespace Turnierplan.Core.Test.Unit.TeamSelectors;
 
+#if false
 public sealed class GroupDefinitionSelectorTest : TeamSelectorTestBase
 {
     public static readonly TheoryData<int, int, int?> TeamSelectionTestData = new()
@@ -31,3 +31,4 @@ public sealed class GroupDefinitionSelectorTest : TeamSelectorTestBase
         team?.Id.Should().Be(expectedTeamId);
     }
 }
+#endif

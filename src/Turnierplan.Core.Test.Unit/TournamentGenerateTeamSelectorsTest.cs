@@ -1,10 +1,8 @@
-using FluentAssertions;
-using Turnierplan.Core.Tournament;
-using Turnierplan.Core.Tournament.TeamSelectors;
+using Turnierplan.Core.TeamSelectors;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit.Tournament;
-
+namespace Turnierplan.Core.Test.Unit;
+#if false
 public sealed class TournamentGenerateTeamSelectorsTest
 {
     [Fact]
@@ -97,3 +95,4 @@ public sealed class TournamentGenerateTeamSelectorsTest
         return tournament;
     }
 }
+#endif

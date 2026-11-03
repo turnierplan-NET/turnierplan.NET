@@ -1,16 +1,14 @@
 ﻿using FluentAssertions;
-using Turnierplan.Core.Tournament;
-using Turnierplan.Core.Tournament.Comparers;
-using Turnierplan.Core.Tournament.TeamSelectors;
+using Turnierplan.Core.TeamSelectors;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit.Tournament.Comparers;
+namespace Turnierplan.Core.Test.Unit;
 
 public sealed class TeamComparerTest
 {
-    private static Team DummyTeam(int teamId, bool outOfCompetition = false)
+    private static Team DummyTeam(int id, bool outOfCompetition = false)
     {
-        return new Team(teamId, null!, "Team")
+        return new Team($"{id}", outOfCompetition)
         {
             OutOfCompetition = outOfCompetition
         };
@@ -165,12 +163,12 @@ public sealed class TeamComparerTest
     {
         // Arrange
         var teams = new Dictionary<int, Team> { { 1, DummyTeam(1) }, { 2, DummyTeam(2) } };
-        var group = new Group(1, 'A');
+        var group = new Group('A');
         var matches = new List<Match>();
 
         if (!returnNoMatches)
         {
-            var match = new Match(0, 0, new NullSelector(), new NullSelector(), group)
+            var match = new Match(0, new NullSelector(), new NullSelector(), group)
             {
                 TeamA = matchTeamIdA.HasValue ? teams[matchTeamIdA.Value] : null,
                 TeamB = matchTeamIdB.HasValue ? teams[matchTeamIdB.Value] : null
@@ -215,12 +213,12 @@ public sealed class TeamComparerTest
     {
         // Arrange
         var teams = new Dictionary<int, Team> { { 1, DummyTeam(1) }, { 2, DummyTeam(2) } };
-        var group = new Group(1, 'A');
+        var group = new Group('A');
         var matches = new List<Match>();
 
         foreach (var i in Enumerable.Range(0, matchScore.Length / 2))
         {
-            var match = new Match(i, i, new NullSelector(), new NullSelector(), group)
+            var match = new Match(i, new NullSelector(), new NullSelector(), group)
             {
                 TeamA = teams[matchTeamIdA],
                 TeamB = teams[matchTeamIdB]
@@ -363,14 +361,14 @@ public sealed class TeamComparerTest
         if (team3OutOfCompetition)
         {
             // Team with id 3 should be last (or first when reversing)
-            sorted.Select(x => x.Team.Id).Should().BeEquivalentTo([8, 6, 1, 7, 3], options => options.WithStrictOrdering());
-            sortedReverse.Select(x => x.Team.Id).Should().BeEquivalentTo([3, 7, 1, 6, 8], options => options.WithStrictOrdering());
+            sorted.Select(x => x.Team.Name).Should().BeEquivalentTo(["8", "6", "1", "7", "3"], options => options.WithStrictOrdering());
+            sortedReverse.Select(x => x.Team.Name).Should().BeEquivalentTo(["3", "7", "1", "6", "8"], options => options.WithStrictOrdering());
         }
         else
         {
             // Team with id 3 is sorted "normally"
-            sorted.Select(x => x.Team.Id).Should().BeEquivalentTo([8, 6, 3, 1, 7], options => options.WithStrictOrdering());
-            sortedReverse.Select(x => x.Team.Id).Should().BeEquivalentTo([7, 1, 3, 6, 8], options => options.WithStrictOrdering());
+            sorted.Select(x => x.Team.Name).Should().BeEquivalentTo(["8", "6", "3", "1", "7"], options => options.WithStrictOrdering());
+            sortedReverse.Select(x => x.Team.Name).Should().BeEquivalentTo(["7", "1", "3", "6", "8"], options => options.WithStrictOrdering());
         }
     }
 
@@ -378,7 +376,7 @@ public sealed class TeamComparerTest
 
     private static TeamComparer CreateTestComparer(IEnumerable<Match> matches, params TeamComparisonMode[] comparisonModes)
     {
-        var tournament = TestTournament.Default;
+        var tournament = new Tournament(string.Empty);
 
         tournament._matches.AddRange(matches);
 
