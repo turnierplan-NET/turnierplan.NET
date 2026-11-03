@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router, RouterLink } from '@angular/router';
-import { mergeMap, Observable, of, Subject, switchMap, takeUntil, tap, zip } from 'rxjs';
+import { Observable, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 
 import { NotificationService } from '../../../core/services/notification.service';
 import { PageFrameNavigationTab, PageFrameComponent } from '../../components/page-frame/page-frame.component';
@@ -14,7 +14,6 @@ import { SmallSpinnerComponent } from '../../../core/components/small-spinner/sm
 import { RenameButtonComponent } from '../../components/rename-button/rename-button.component';
 import { BadgeComponent } from '../../components/badge/badge.component';
 import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
-import { TournamentExplorerComponent } from '../../components/tournament-explorer/tournament-explorer.component';
 import { LoadingIndicatorComponent } from '../../components/loading-indicator/loading-indicator.component';
 import { VenueTileComponent } from '../../components/venue-tile/venue-tile.component';
 import { NgClass, AsyncPipe } from '@angular/common';
@@ -25,14 +24,12 @@ import { RbacWidgetComponent } from '../../components/rbac-widget/rbac-widget.co
 import { DeleteWidgetComponent } from '../../components/delete-widget/delete-widget.component';
 import { TranslateDatePipe } from '../../pipes/translate-date.pipe';
 import { IdWidgetComponent } from '../../components/id-widget/id-widget.component';
-import { OrganizationDto } from '../../../api-temporary';
-import { TournamentHeaderDto } from '../../../api-temporary';
+import { GetOrganizationResponse } from '../../../api/models/get-organization-response';
 import { VenueDto } from '../../../api-temporary';
 import { TournamentPlannerHeaderDto } from '../../../api-temporary';
 import { ApiKeyDto } from '../../../api-temporary';
-import { TurnierplanApi } from '../../../api-temporary';
-import { getOrganization } from '../../../api-temporary';
-import { getTournaments } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { getOrganization } from '../../../api/fn/organizations/get-organization';
 import { getVenues } from '../../../api-temporary';
 import { getTournamentPlanners } from '../../../api-temporary';
 import { setOrganizationName } from '../../../api-temporary';
@@ -67,7 +64,6 @@ import { environment } from '../../../../environments/environment';
     RenameButtonComponent,
     BadgeComponent,
     TranslateDirective,
-    TournamentExplorerComponent,
     LoadingIndicatorComponent,
     VenueTileComponent,
     NgClass,
@@ -98,8 +94,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
   protected readonly Actions = Actions;
 
   protected loadingState: LoadingState = { isLoading: true };
-  protected organization?: OrganizationDto;
-  protected tournaments?: TournamentHeaderDto[];
+  protected organization?: GetOrganizationResponse;
   protected venues?: VenueDto[];
   protected tournamentPlanners?: TournamentPlannerHeaderDto[];
   protected resourcePlanners?: ResourcePlannerHeaderDto[];
@@ -196,19 +191,11 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
           }
           this.loadingState = { isLoading: true };
           return this.turnierplanApi.invoke(getOrganization, { id: organizationId });
-        }),
-        mergeMap((organization) => {
-          if (!organization) {
-            return of([undefined, undefined]);
-          }
-
-          return zip(of(organization), this.turnierplanApi.invoke(getTournaments, { organizationId: organization.id }));
         })
       )
       .subscribe({
-        next: (result) => {
-          this.organization = result[0];
-          this.tournaments = result[1];
+        next: (organization) => {
+          this.organization = organization;
 
           this.titleService.setTitleFrom(this.organization);
 
@@ -236,7 +223,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       // Load venues only when the page is opened
       this.isLoadingVenues = true;
       this.turnierplanApi.invoke(getVenues, { organizationId: this.organization.id }).subscribe({
-        next: (venues) => {
+        next: (venues: any /* TODO */) => {
           this.venues = venues;
           this.isLoadingVenues = false;
         },
@@ -250,7 +237,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       // Load tournament planners only when the page is opened
       this.isLoadingTournamentPlanners = true;
       this.turnierplanApi.invoke(getTournamentPlanners, { organizationId: this.organization.id }).subscribe({
-        next: (tournamentPlanner) => {
+        next: (tournamentPlanner: any /* TODO */) => {
           this.tournamentPlanners = tournamentPlanner;
           this.isLoadingTournamentPlanners = false;
         },
@@ -264,7 +251,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       // Load resource planners only when the page is opened
       this.isLoadingResourcePlanners = true;
       this.turnierplanApi.invoke(getResourcePlanners, { organizationId: this.organization.id }).subscribe({
-        next: (resourcePlanner) => {
+        next: (resourcePlanner: any /* TODO */) => {
           this.resourcePlanners = resourcePlanner;
           this.isLoadingResourcePlanners = false;
         },
@@ -278,7 +265,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
       // Load images only when the page is opened
       this.isLoadingImages = true;
       this.turnierplanApi.invoke(getImages, { organizationId: this.organization.id, includeReferences: true }).subscribe({
-        next: (images) => {
+        next: (images: any /* TODO */) => {
           this.images = images;
           this.imagesTotalSize = images.images.reduce((sum, img) => sum + img.fileSize, 0);
           this.isLoadingImages = false;
@@ -403,7 +390,7 @@ export class ViewOrganizationComponent implements OnInit, OnDestroy {
     this.isLoadingApiKeys = true;
 
     return this.turnierplanApi.invoke(getApiKeys, { organizationId: this.organization.id }).pipe(
-      tap((apiKeys) => {
+      tap((apiKeys: any /* TODO */) => {
         this.apiKeys = apiKeys;
         this.isLoadingApiKeys = false;
       })

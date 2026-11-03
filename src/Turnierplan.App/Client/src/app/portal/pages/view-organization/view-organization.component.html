@@ -1,5 +1,5 @@
 <ng-container *tpLoadingState="loadingState">
-  @if (organization && tournaments) {
+  @if (organization) {
     <tp-page-frame
       [title]="organization.name"
       [backLink]="'../..'"
@@ -76,9 +76,11 @@
           @switch (currentPage) {
             @case (0) {
               <div class="card-header d-flex flex-row align-items-center">
-                <tp-badge context="ViewOrganization" label="TournamentCount" [value]="tournaments.length" />
+                <!-- TODO: Implement projects view with dynamic tournament loading -->
+                <tp-badge context="ViewOrganization" label="TournamentCount" [value]="0" />
               </div>
-              @if (tournaments.length === 0) {
+              <!-- TODO: Implement projects view with dynamic tournament loading -->
+              @if (true) {
                 <div class="card-body">
                   <div class="d-flex flex-row justify-content-center py-4 text-center">
                     <span class="tp-text-pre-wrap" translate="Portal.ViewOrganization.NoTournaments"></span>
@@ -86,10 +88,11 @@
                 </div>
               } @else {
                 <div class="card-body p-0">
-                  <tp-tournament-explorer
-                    [organization]="organization"
-                    [tournaments]="tournaments"
-                    (requestError)="loadingState = { isLoading: false, error: $event }" />
+                  <!-- TODO: Implement projects view with dynamic tournament loading -->
+<!--                  <tp-tournament-explorer-->
+<!--                    [organization]="organization"-->
+<!--                    [tournaments]="tournaments"-->
+<!--                    (requestError)="loadingState = { isLoading: false, error: $event }" />-->
                 </div>
               }
             }
