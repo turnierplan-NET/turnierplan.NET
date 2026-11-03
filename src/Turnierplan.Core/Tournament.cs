@@ -14,7 +14,7 @@ public sealed class Tournament
     internal readonly List<RankingOverwrite> _rankingOverwrites = [];
     internal readonly List<RankingPosition> _ranking = [];
 
-    internal Tournament(string name)
+    public Tournament(string name)
     {
         _teamComparer = new TeamComparer(this);
 
