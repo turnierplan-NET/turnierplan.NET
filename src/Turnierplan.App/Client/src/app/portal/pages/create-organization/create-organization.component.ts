@@ -10,8 +10,8 @@ import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 import { NgClass } from '@angular/common';
 import { ActionButtonComponent } from '../../components/action-button/action-button.component';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
-import { TurnierplanApi } from '../../../api-temporary';
-import { createOrganization } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
+import { createOrganization } from '../../../api/fn/organizations/create-organization';
 
 @Component({
   templateUrl: './create-organization.component.html',

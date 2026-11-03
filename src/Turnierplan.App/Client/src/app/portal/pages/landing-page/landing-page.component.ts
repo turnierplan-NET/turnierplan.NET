@@ -11,10 +11,10 @@ import { TranslateDirective } from '@ngx-translate/core';
 import { BadgeComponent } from '../../components/badge/badge.component';
 import { E2eDirective } from '../../../core/directives/e2e.directive';
 import { UpdatesCheckComponent } from '../../components/updates-check/updates-check.component';
-import { OrganizationDto } from '../../../api-temporary';
-import { TurnierplanApi } from '../../../api-temporary';
-import { getOrganizations } from '../../../api-temporary';
+import { TurnierplanApi } from '../../../api/turnierplan-api';
 import { AllowCreateOrganizationDirective } from '../../directives/allow-create-organization.directive';
+import { GetOrganizationsResponseItem } from '../../../api/models/get-organizations-response-item';
+import { getOrganizations } from '../../../api/fn/organizations/get-organizations';
 
 @Component({
   templateUrl: './landing-page.component.html',
@@ -34,7 +34,7 @@ import { AllowCreateOrganizationDirective } from '../../directives/allow-create-
 })
 export class LandingPageComponent implements OnInit {
   protected loadingState: LoadingState = { isLoading: true };
-  protected organizations: OrganizationDto[] = [];
+  protected organizations: GetOrganizationsResponseItem[] = [];
 
   constructor(
     private readonly turnierplanApi: TurnierplanApi,
@@ -49,7 +49,7 @@ export class LandingPageComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (result) => {
-          this.organizations = result;
+          this.organizations = result.organizations;
           this.organizations.sort((a, b) => a.name.localeCompare(b.name));
           this.loadingState = { isLoading: false };
         },
