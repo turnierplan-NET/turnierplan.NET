@@ -18,7 +18,7 @@ import { E2eDirective } from '../../../core/directives/e2e.directive';
 
 interface IRbacOffcanvasTarget {
   name: string;
-  rbacScopeId: string;
+  scope: string;
 }
 
 @Component({
@@ -66,7 +66,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
   public setTarget(target: IRbacOffcanvasTarget) {
     this.target = target;
 
-    const scopeType = target.rbacScopeId.substring(0, target.rbacScopeId.indexOf(':'));
+    const scopeType = target.scope.substring(0, target.scope.indexOf(':'));
     this.targetIsOrganization = scopeType === 'Organization';
     this.scopeTranslationKey = `Portal.RbacManagement.ScopeType.${scopeType}`;
 
@@ -101,7 +101,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
   }
 
   protected removeRoleAssignment(id: string): void {
-    this.turnierplanApi.invoke(deleteRoleAssignment, { scopeId: this.target.rbacScopeId, roleAssignmentId: id }).subscribe({
+    this.turnierplanApi.invoke(deleteRoleAssignment, { scopeId: this.target.scope, roleAssignmentId: id }).subscribe({
       next: () => {
         this.roleAssignmentCount = 0;
 
@@ -143,7 +143,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
 
   protected navigateToScope(scopeId: string, scopeName: string): void {
     this.setTarget({
-      rbacScopeId: scopeId,
+      scope: scopeId,
       name: scopeName
     });
   }
@@ -157,7 +157,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
 
     const component = ref.componentInstance as RbacAddAssignmentComponent;
 
-    component.scopeId = this.target.rbacScopeId;
+    component.scopeId = this.target.scope;
     component.error$.subscribe((error) => this.errorSubject$.next(error));
 
     ref.closed.subscribe(() => this.loadRoleAssignments());
@@ -167,7 +167,7 @@ export class RbacOffcanvasComponent implements OnDestroy {
     this.isLoadingRoleAssignments = true;
 
     this.turnierplanApi
-      .invoke(getRoleAssignments, { scopeId: this.target.rbacScopeId })
+      .invoke(getRoleAssignments, { scopeId: this.target.scope })
       .pipe(finalize(() => (this.isLoadingRoleAssignments = false)))
       .subscribe({
         next: (roleAssignments) => {

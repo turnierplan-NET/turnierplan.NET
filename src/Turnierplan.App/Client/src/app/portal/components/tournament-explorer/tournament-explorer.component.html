@@ -11,7 +11,7 @@
           <div class="d-flex flex-row align-items-center gap-2">
             <tp-rbac-widget
               *tpIsActionAllowed="[currentEntry.folderId, Actions.ReadOrWriteRoleAssignments]"
-              [target]="{ rbacScopeId: 'Folder:' + currentEntry.folderId, name: currentEntry.folderName }"
+              [target]="{ scope: 'Folder:' + currentEntry.folderId, name: currentEntry.folderName }"
               [buttonOnly]="true"
               (errorOccured)="requestError.emit($event)" />
             <tp-action-button
