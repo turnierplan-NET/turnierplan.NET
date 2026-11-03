@@ -1,5 +1,5 @@
 using System.Text;
-using Turnierplan.Core.Tournament.TeamSelectors;
+using Turnierplan.Core.TeamSelectors;
 
 namespace Turnierplan.Core.Test.Regression;
 
@@ -9,7 +9,7 @@ internal static class SubjectSerializer
     {
         switch (subject)
         {
-            case Tournament.Tournament tournament:
+            case Tournament tournament:
                 AppendTournament(builder, tournament);
                 break;
             default:
@@ -17,15 +17,9 @@ internal static class SubjectSerializer
         }
     }
 
-    private static void AppendTournament(StringBuilder builder, Tournament.Tournament tournament)
+    private static void AppendTournament(StringBuilder builder, Tournament tournament)
     {
         builder.Append(tournament.Name);
-        builder.Append(';');
-        builder.Append(tournament.Visibility);
-        builder.Append(';');
-        builder.Append(tournament.IsPublic);
-        builder.Append(';');
-        builder.Append(tournament.PublicPageViews);
         builder.Append(';');
         builder.Append(tournament.Teams.Count);
         builder.Append(';');
@@ -41,11 +35,7 @@ internal static class SubjectSerializer
         foreach (var team in tournament.Teams)
         {
             builder.Append('T');
-            builder.Append(team.Id);
-            builder.Append(';');
             builder.Append(team.Name);
-            builder.Append(';');
-            builder.Append(team.EntryFeePaidAt?.Ticks);
             builder.Append(';');
             builder.Append(team.OutOfCompetition);
             builder.Append(';');
@@ -66,8 +56,6 @@ internal static class SubjectSerializer
         foreach (var group in tournament.Groups)
         {
             builder.Append('G');
-            builder.Append(group.Id);
-            builder.Append(';');
             builder.Append(group.AlphabeticalId);
             builder.Append(';');
             builder.Append(group.DisplayName);
@@ -78,9 +66,9 @@ internal static class SubjectSerializer
             foreach (var participant in group.Participants)
             {
                 builder.Append('>');
-                builder.Append(participant.Team.Id);
+                builder.Append(participant.Team.Name);
                 builder.Append(';');
-                builder.Append(participant.Group.Id);
+                builder.Append(participant.Group.AlphabeticalId);
                 builder.Append(';');
                 builder.Append(participant.Order);
                 builder.Append(';');
@@ -110,8 +98,6 @@ internal static class SubjectSerializer
         foreach (var match in tournament.Matches)
         {
             builder.Append('M');
-            builder.Append(match.Id);
-            builder.Append(';');
             builder.Append(match.Index);
             builder.Append(';');
             builder.Append(match.Court);
@@ -122,11 +108,11 @@ internal static class SubjectSerializer
             builder.Append(';');
             builder.Append(ConvertTeamSelectorToString(match.TeamSelectorB));
             builder.Append(';');
-            builder.Append(match.TeamA?.Id);
+            builder.Append(match.TeamA?.Name);
             builder.Append(';');
-            builder.Append(match.TeamB?.Id);
+            builder.Append(match.TeamB?.Name);
             builder.Append(';');
-            builder.Append(match.Group?.Id);
+            builder.Append(match.Group?.AlphabeticalId);
             builder.Append(';');
             builder.Append(match.IsGroupMatch);
             builder.Append(';');
@@ -149,13 +135,11 @@ internal static class SubjectSerializer
         foreach (var overwrite in tournament.RankingOverwrites)
         {
             builder.Append("RO");
-            builder.Append(overwrite.Id);
-            builder.Append(';');
             builder.Append(overwrite.PlacementRank);
             builder.Append(';');
             builder.Append(overwrite.HideRanking);
             builder.Append(';');
-            builder.Append(overwrite.AssignTeam?.Id);
+            builder.Append(overwrite.AssignTeam?.Name);
             builder.AppendLine();
         }
 
@@ -168,27 +152,26 @@ internal static class SubjectSerializer
             builder.Append(';');
             builder.Append(ranking.IsDefined);
             builder.Append(';');
-            builder.Append(ranking.Team?.Id);
+            builder.Append(ranking.Team?.Name);
             builder.AppendLine();
         }
     }
 
-    /// <remarks>Copied from the DAL project.</remarks>
     private static string ConvertTeamSelectorToString(TeamSelectorBase input)
     {
         switch (input)
         {
             case GroupDefinitionSelector groupDefinitionSelector:
-                return $"G{groupDefinitionSelector.TargetGroupId}/{groupDefinitionSelector.TargetTeamIndex}";
+                return $"G{groupDefinitionSelector.TargetGroup.AlphabeticalId}/{groupDefinitionSelector.TargetTeamIndex}";
             case GroupResultsNthRankedSelector groupResultsNthRankedSelector:
-                var groupIds = string.Join(",", groupResultsNthRankedSelector.TargetGroupIds);
+                var groupIds = string.Join(",", groupResultsNthRankedSelector.TargetGroups.Select(g => g.AlphabeticalId));
                 return $"N{groupIds}/{groupResultsNthRankedSelector.OrdinalNumber}/{groupResultsNthRankedSelector.PlacementRank}";
             case GroupResultsSelector groupResultsSelector:
-                return $"R{groupResultsSelector.TargetGroupId}/{groupResultsSelector.TargetGroupPosition}";
+                return $"R{groupResultsSelector.TargetGroup.AlphabeticalId}/{groupResultsSelector.TargetGroupPosition}";
             case MatchSelector matchSelector:
-                return $"{(matchSelector.SelectionMode is MatchSelector.Mode.Winner ? "W" : "L")}{matchSelector.TargetMatchIndex}";
+                return $"{(matchSelector.SelectionMode is MatchSelector.Mode.Winner ? "W" : "L")}{matchSelector.TargetMatch.Index}";
             case StaticTeamSelector staticTeamSelector:
-                return $"T{staticTeamSelector.TargetTeamId}";
+                return $"T{staticTeamSelector.TargetTeam.Name}";
             default:
                 return string.Empty;
         }

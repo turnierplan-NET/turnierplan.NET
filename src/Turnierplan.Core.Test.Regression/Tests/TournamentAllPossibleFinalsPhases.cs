@@ -1,4 +1,4 @@
-using Turnierplan.Core.Tournament;
+using Turnierplan.Core.Configuration;
 
 namespace Turnierplan.Core.Test.Regression.Tests;
 
@@ -60,14 +60,14 @@ internal sealed class TournamentAllPossibleFinalsPhases : TournamentRegressionTe
 
         return;
 
-        void AddAnotherGroup(Tournament.Tournament t)
+        void AddAnotherGroup(Tournament t)
         {
             var teams = Enumerable.Range(0, teamsCountPerGroup).Select(_ => t.AddTeam($"Team {teamCounter++}")).ToList();
             var group = t.AddGroup(groupCounter, $"Test {groupCounter++}");
             teams.ForEach(team => t.AddGroupParticipant(group, team));
         }
 
-        void GenerateMatchPlan(Tournament.Tournament t, FinalsRoundOrder firstRound)
+        void GenerateMatchPlan(Tournament t, FinalsRoundOrder firstRound)
         {
             t.GenerateMatchPlan(new MatchPlanConfiguration
             {

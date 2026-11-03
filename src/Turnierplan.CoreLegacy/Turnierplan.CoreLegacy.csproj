@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../Turnierplan.Version.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    
+    <!-- Prevent IDE warnings due to mismatched namespace -->
+    <RootNamespace>Turnierplan.Core</RootNamespace>
+  </PropertyGroup>
+</Project>
