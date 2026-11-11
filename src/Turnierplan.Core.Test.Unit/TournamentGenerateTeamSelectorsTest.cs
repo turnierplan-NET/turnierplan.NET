@@ -20,13 +20,14 @@ public sealed class TournamentGenerateTeamSelectorsTest
         // Assert
         teamSelectors.Should().HaveCount(34);
 
-        // teamSelectors[0].Should().BeEquivalentTo(new StaticTeamSelector(0));
-        // teamSelectors[1].Should().BeEquivalentTo(new StaticTeamSelector(1));
-        // teamSelectors[2].Should().BeEquivalentTo(new StaticTeamSelector(2));
-        // teamSelectors[3].Should().BeEquivalentTo(new StaticTeamSelector(3));
-        // teamSelectors[4].Should().BeEquivalentTo(new StaticTeamSelector(4));
-        // teamSelectors[5].Should().BeEquivalentTo(new StaticTeamSelector(5));
-        // teamSelectors[6].Should().BeEquivalentTo(new StaticTeamSelector(6));
+        var staticTeamSelectors = teamSelectors.Take(7).OfType<StaticTeamSelector>().ToArray();
+        staticTeamSelectors[0].TargetTeam.Should().BeSameAs(tournament._teams[0]);
+        staticTeamSelectors[1].TargetTeam.Should().BeSameAs(tournament._teams[1]);
+        staticTeamSelectors[2].TargetTeam.Should().BeSameAs(tournament._teams[2]);
+        staticTeamSelectors[3].TargetTeam.Should().BeSameAs(tournament._teams[3]);
+        staticTeamSelectors[4].TargetTeam.Should().BeSameAs(tournament._teams[4]);
+        staticTeamSelectors[5].TargetTeam.Should().BeSameAs(tournament._teams[5]);
+        staticTeamSelectors[6].TargetTeam.Should().BeSameAs(tournament._teams[6]);
 
         // teamSelectors[7].Should().BeEquivalentTo(new GroupDefinitionSelector(7, 0));
         // teamSelectors[8].Should().BeEquivalentTo(new GroupResultsSelector(7, 1));
@@ -44,20 +45,44 @@ public sealed class TournamentGenerateTeamSelectorsTest
         // teamSelectors[19].Should().BeEquivalentTo(new GroupDefinitionSelector(8, 2));
         // teamSelectors[20].Should().BeEquivalentTo(new GroupResultsSelector(8, 3));
 
-        // teamSelectors[21].Should().BeEquivalentTo(new GroupResultsNthRankedSelector([7, 8], 0, 1));
-        // teamSelectors[22].Should().BeEquivalentTo(new GroupResultsNthRankedSelector([7, 8], 1, 1));
-        // teamSelectors[23].Should().BeEquivalentTo(new GroupResultsNthRankedSelector([7, 8], 0, 2));
-        // teamSelectors[24].Should().BeEquivalentTo(new GroupResultsNthRankedSelector([7, 8], 1, 2));
-        // teamSelectors[25].Should().BeEquivalentTo(new GroupResultsNthRankedSelector([7, 8], 0, 3));
-        // teamSelectors[26].Should().BeEquivalentTo(new GroupResultsNthRankedSelector([7, 8], 1, 3));
-        // teamSelectors[27].Should().BeEquivalentTo(new GroupResultsNthRankedSelector([7, 8], 0, 4));
-        //
-        // teamSelectors[28].Should().BeEquivalentTo(new MatchSelector(3, MatchSelector.Mode.Winner));
-        // teamSelectors[29].Should().BeEquivalentTo(new MatchSelector(3, MatchSelector.Mode.Loser));
-        // teamSelectors[30].Should().BeEquivalentTo(new MatchSelector(4, MatchSelector.Mode.Winner));
-        // teamSelectors[31].Should().BeEquivalentTo(new MatchSelector(4, MatchSelector.Mode.Loser));
-        // teamSelectors[32].Should().BeEquivalentTo(new MatchSelector(5, MatchSelector.Mode.Winner));
-        // teamSelectors[33].Should().BeEquivalentTo(new MatchSelector(5, MatchSelector.Mode.Loser));
+        var nthRankedSelectors = teamSelectors.Skip(21).Take(7).OfType<GroupResultsNthRankedSelector>().ToArray();
+        nthRankedSelectors.Should().HaveCount(7);
+        // placement rank = 1
+        nthRankedSelectors[0].OrdinalNumber.Should().Be(0);
+        nthRankedSelectors[0].PlacementRank.Should().Be(1);
+        nthRankedSelectors[1].OrdinalNumber.Should().Be(1);
+        nthRankedSelectors[1].PlacementRank.Should().Be(1);
+        // placement rank = 2
+        nthRankedSelectors[2].OrdinalNumber.Should().Be(0);
+        nthRankedSelectors[2].PlacementRank.Should().Be(2);
+        nthRankedSelectors[3].OrdinalNumber.Should().Be(1);
+        nthRankedSelectors[3].PlacementRank.Should().Be(2);
+        // placement rank = 3
+        nthRankedSelectors[4].OrdinalNumber.Should().Be(0);
+        nthRankedSelectors[4].PlacementRank.Should().Be(3);
+        nthRankedSelectors[5].OrdinalNumber.Should().Be(1);
+        nthRankedSelectors[5].PlacementRank.Should().Be(3);
+        // placement rank = 4
+        nthRankedSelectors[6].OrdinalNumber.Should().Be(0);
+        nthRankedSelectors[6].PlacementRank.Should().Be(4);
+
+        var matchSelectors = teamSelectors.Skip(28).Take(6).OfType<MatchSelector>().ToArray();
+        matchSelectors.Should().HaveCount(6);
+        // winner/loser from match index 3
+        matchSelectors[0].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 3));
+        matchSelectors[0].SelectionMode.Should().Be(MatchSelector.Mode.Winner);
+        matchSelectors[1].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 3));
+        matchSelectors[1].SelectionMode.Should().Be(MatchSelector.Mode.Loser);
+        // winner/loser from match index 4
+        matchSelectors[2].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 4));
+        matchSelectors[2].SelectionMode.Should().Be(MatchSelector.Mode.Winner);
+        matchSelectors[3].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 4));
+        matchSelectors[3].SelectionMode.Should().Be(MatchSelector.Mode.Loser);
+        // winner/loser from match index 5
+        matchSelectors[4].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 5));
+        matchSelectors[4].SelectionMode.Should().Be(MatchSelector.Mode.Winner);
+        matchSelectors[5].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 5));
+        matchSelectors[5].SelectionMode.Should().Be(MatchSelector.Mode.Loser);
     }
 
     private static Tournament CreateTestTournament()
