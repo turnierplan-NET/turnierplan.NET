@@ -4,54 +4,124 @@ using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.TeamSelectors;
 
-#if false
-
-public sealed class GroupResultsNthRankedSelectorTest : TeamSelectorTestBase
+public sealed class GroupResultsNthRankedSelectorTest
 {
-    public static readonly TheoryData<int[], int, int, int?> TeamSelectionTestData = new()
-    {
-        { [100, 101, 102], 1, 3, null },
-        { [100, 101, 102], 2, 3, null },
-        { [100, 101, 102], 3, 3, null },
-        { [100, 102], -1, 1, null },
-        { [100, 102], 0, 0, null },
-        { [100, 102], 0, 1, 7 },
-        { [100, 102], 0, 2, 5 },
-        { [100, 102], 0, 3, 6 },
-        { [100, 102], 0, 4, 15 },
-        { [100, 102], 1, 1, 12 },
-        { [100, 102], 1, 2, 13 },
-        { [100, 102], 1, 3, 14 },
-        { [100, 102], 1, 4, 4 },
-        { [90, 100, 102], 1, 4, 4 },
-        { [100, 102], 2, 4, null },
-        { [100, 102], 1, 5, null }
-    };
-
     [Theory]
-    [MemberData(nameof(TeamSelectionTestData))]
-    public void GroupResultsNthRankedSelector___Get_Target_Team_Id___Returns_Expected_Result(int[] targetGroupIds, int ordinalNumber, int placementRank, int? expectedTeamId)
+    [InlineData(0, 1, "Team 3")]
+    [InlineData(0, 2, "Team 1")]
+    [InlineData(0, 3, "Team 2")]
+    [InlineData(0, 4, "Team 7")]
+    [InlineData(1, 1, "Team 4")]
+    [InlineData(1, 2, "Team 5")]
+    [InlineData(1, 3, "Team 6")]
+    [InlineData(1, 4, "Team 0")]
+    public void GroupResultsNthRankedSelector___GetTargetTeam_When_Target_Is_Valid___Returns_Expected_Result(int ordinalNumber, int placementRank, string expectedTeamName)
     {
         // Arrange
-        var selector = new GroupResultsNthRankedSelector(targetGroupIds, ordinalNumber, placementRank);
+        var tournament = new Tournament(string.Empty);
+        var teams = Enumerable.Range(0, 8).Select(x => tournament.AddTeam($"Team {x}")).ToArray();
+        var groupA = tournament.AddGroup('A');
+        var groupB = tournament.AddGroup('B');
+        tournament.AddGroupParticipant(groupA, teams[0]).Statistics = new TeamGroupStatistics { Position = 4, Points = 0 };
+        tournament.AddGroupParticipant(groupA, teams[1]).Statistics = new TeamGroupStatistics { Position = 2, Points = 6 };
+        tournament.AddGroupParticipant(groupA, teams[2]).Statistics = new TeamGroupStatistics { Position = 3, Points = 3 };
+        tournament.AddGroupParticipant(groupA, teams[3]).Statistics = new TeamGroupStatistics { Position = 1, Points = 9 };
+        tournament.AddGroupParticipant(groupB, teams[4]).Statistics = new TeamGroupStatistics { Position = 1, Points = 5 };
+        tournament.AddGroupParticipant(groupB, teams[5]).Statistics = new TeamGroupStatistics { Position = 2, Points = 4 };
+        tournament.AddGroupParticipant(groupB, teams[6]).Statistics = new TeamGroupStatistics { Position = 3, Points = 3 };
+        tournament.AddGroupParticipant(groupB, teams[7]).Statistics = new TeamGroupStatistics { Position = 4, Points = 2 };
+        var selector = new GroupResultsNthRankedSelector([groupA, groupB], ordinalNumber, placementRank);
 
         // Act
-        var team = selector.GetTargetTeam(TestTournament);
+        var team = selector.GetTargetTeam();
 
         // Assert
-        team?.Id.Should().Be(expectedTeamId);
+        team.Should().NotBeNull();
+        team.Name.Should().Be(expectedTeamName);
     }
 
     [Theory]
-    [MemberData(nameof(TeamSelectionTestData))]
-    public void GroupResultsNthRankedSelector___Equals___Returns_Correct_Result(int[] targetGroupIds, int ordinalNumber, int placementRank,
-#pragma warning disable xUnit1026 // Theory methods should use all of their parameters
-        int? _
-#pragma warning restore xUnit1026
-        )
+    [InlineData(-1, 1)]
+    [InlineData(0, 0)]
+    [InlineData(2, 4)]
+    [InlineData(1, 5)]
+    public void GroupResultsNthRankedSelector___GetTargetTeam_When_Target_Is_Valid___Returns_Null(int ordinalNumber, int placementRank)
     {
-        var instance1 = new GroupResultsNthRankedSelector(targetGroupIds, ordinalNumber, placementRank);
-        var instance2 = new GroupResultsNthRankedSelector(targetGroupIds.Reverse().ToArray(), ordinalNumber, placementRank);
+        // Arrange
+        var tournament = new Tournament(string.Empty);
+        var teams = Enumerable.Range(0, 8).Select(x => tournament.AddTeam(string.Empty)).ToArray();
+        var groupA = tournament.AddGroup('A');
+        var groupB = tournament.AddGroup('B');
+        tournament.AddGroupParticipant(groupA, teams[0]);
+        tournament.AddGroupParticipant(groupA, teams[1]);
+        tournament.AddGroupParticipant(groupA, teams[2]);
+        tournament.AddGroupParticipant(groupA, teams[3]);
+        tournament.AddGroupParticipant(groupB, teams[4]);
+        tournament.AddGroupParticipant(groupB, teams[5]);
+        tournament.AddGroupParticipant(groupB, teams[6]);
+        tournament.AddGroupParticipant(groupB, teams[7]);
+        var selector = new GroupResultsNthRankedSelector([groupA, groupB], ordinalNumber, placementRank);
+
+        // Act
+        var team = selector.GetTargetTeam();
+
+        // Assert
+        team.Should().BeNull();
+    }
+
+    [Theory]
+    [InlineData(true, true)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    public void GroupResultsNthRankedSelector___GetTargetTeam_When_Match_Is_Currently_Playing___Returns_Null(bool playingGroupA, bool playingGroupB)
+    {
+        // Arrange
+        var tournament = new Tournament(string.Empty);
+        var teams = Enumerable.Range(0, 8).Select(x => tournament.AddTeam($"Team {x}")).ToArray();
+        var groupA = tournament.AddGroup('A');
+        var groupB = tournament.AddGroup('B');
+        tournament.AddGroupParticipant(groupA, teams[0]);
+        tournament.AddGroupParticipant(groupA, teams[1]);
+        tournament.AddGroupParticipant(groupA, teams[2]);
+        tournament.AddGroupParticipant(groupA, teams[3]);
+        tournament.AddGroupParticipant(groupB, teams[4]);
+        tournament.AddGroupParticipant(groupB, teams[5]);
+        tournament.AddGroupParticipant(groupB, teams[6]);
+        tournament.AddGroupParticipant(groupB, teams[7]);
+        tournament._matches.Add(new Match(1, new NullSelector(), new NullSelector(), groupA)
+        {
+            IsCurrentlyPlaying = playingGroupA ? true : null,
+            ScoreA = playingGroupA ? null : 0,
+            ScoreB = playingGroupA ? null : 0,
+            OutcomeType = playingGroupA ? null : MatchOutcomeType.Standard
+        });
+        tournament._matches.Add(new Match(2, new NullSelector(), new NullSelector(), groupB)
+        {
+            IsCurrentlyPlaying = playingGroupB ? true : null,
+            ScoreA = playingGroupB ? null : 0,
+            ScoreB = playingGroupB ? null : 0,
+            OutcomeType = playingGroupB ? null : MatchOutcomeType.Standard
+        });
+        var selector = new GroupResultsNthRankedSelector([groupA, groupB], 1, 1);
+
+        // Act
+        var team = selector.GetTargetTeam();
+
+        // Assert
+        team.Should().BeNull();
+    }
+
+    [Theory]
+    [InlineData(0, 1)]
+    [InlineData(1, 4)]
+    public void GroupResultsNthRankedSelector___Equals___Works_As_Expected(int ordinalNumber, int placementRank)
+    {
+        var tournament = new Tournament(string.Empty);
+        var groupA = tournament.AddGroup('A');
+        var groupB = tournament.AddGroup('B');
+        var groupC = tournament.AddGroup('C');
+        var instance1 = new GroupResultsNthRankedSelector([groupA, groupB, groupC], ordinalNumber, placementRank);
+        var instance2 = new GroupResultsNthRankedSelector([groupC, groupA, groupB], ordinalNumber, placementRank);
 
         instance1.GetHashCode().Should().Be(instance2.GetHashCode());
 
@@ -65,5 +135,3 @@ public sealed class GroupResultsNthRankedSelectorTest : TeamSelectorTestBase
         instance2.Equals(null).Should().BeFalse();
     }
 }
-
-#endif

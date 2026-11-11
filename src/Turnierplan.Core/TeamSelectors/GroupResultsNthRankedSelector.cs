@@ -63,8 +63,10 @@ public sealed record GroupResultsNthRankedSelector(IReadOnlyList<Group> TargetGr
 
     public override int GetHashCode()
     {
-        var groupIdsHashCode = TargetGroups.Order()
-            .Aggregate(TargetGroups.Count, (current, group) => unchecked(current * 31 + group.GetHashCode()));
+        var groupIdsHashCode = TargetGroups
+            .Select(group => group.GetHashCode())
+            .Order()
+            .Aggregate(TargetGroups.Count, (current, group) => unchecked(current * 31 + group));
 
         return HashCode.Combine(groupIdsHashCode, OrdinalNumber, PlacementRank);
     }
