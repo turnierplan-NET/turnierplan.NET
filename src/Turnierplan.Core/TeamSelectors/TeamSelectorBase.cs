@@ -6,5 +6,5 @@ public abstract record TeamSelectorBase
     {
     }
 
-    public abstract Team? GetTargetTeam(Tournament tournament);
+    public abstract Team? GetTargetTeam();
 }

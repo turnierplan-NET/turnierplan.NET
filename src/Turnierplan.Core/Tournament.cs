@@ -111,6 +111,7 @@ public sealed class Tournament
         }
 
         var group = new Group(alphabeticalId, displayName);
+        group._tournament = this;
         _groups.Add(group);
 
         return group;
@@ -418,8 +419,8 @@ public sealed class Tournament
     {
         foreach (var match in _matches.Where(filter).OrderBy(x => x.Index))
         {
-            match.TeamA = match.TeamSelectorA.GetTargetTeam(this);
-            match.TeamB = match.TeamSelectorB.GetTargetTeam(this);
+            match.TeamA = match.TeamSelectorA.GetTargetTeam();
+            match.TeamB = match.TeamSelectorB.GetTargetTeam();
         }
     }
 

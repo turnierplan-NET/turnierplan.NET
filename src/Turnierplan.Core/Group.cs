@@ -3,6 +3,7 @@ namespace Turnierplan.Core;
 public sealed class Group
 {
     internal readonly List<GroupParticipant> _participants = [];
+    internal Tournament? _tournament;
 
     internal Group(char alphabeticalId, string? displayName = null)
     {

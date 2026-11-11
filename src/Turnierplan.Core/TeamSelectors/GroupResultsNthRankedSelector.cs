@@ -1,10 +1,10 @@
 ﻿namespace Turnierplan.Core.TeamSelectors;
 
-public sealed record GroupResultsNthRankedSelector(IReadOnlyCollection<Group> TargetGroups, int OrdinalNumber, int PlacementRank) : TeamSelectorBase
+public sealed record GroupResultsNthRankedSelector(IReadOnlyList<Group> TargetGroups, int OrdinalNumber, int PlacementRank) : TeamSelectorBase
 {
-    public override Team? GetTargetTeam(Tournament tournament)
+    public override Team? GetTargetTeam()
     {
-        if (OrdinalNumber < 0 || PlacementRank < 1)
+        if (OrdinalNumber < 0 || PlacementRank < 1 || TargetGroups.Count == 0)
         {
             return null;
         }
@@ -13,12 +13,12 @@ public sealed record GroupResultsNthRankedSelector(IReadOnlyCollection<Group> Ta
 
         foreach (var group in TargetGroups)
         {
-            if (!tournament._groups.Contains(group))
+            if (group._tournament is null || group._tournament != TargetGroups[0]._tournament)
             {
-                throw new TournamentException("The team selector refers a group that is not part of the tournament.");
+                throw new TournamentException("Cannot access the tournament of one of the target group - or not all groups are from the same tournament.");
             }
 
-            if (tournament._matches.Where(x => x.Group == group).Any(x => !x.IsFinished))
+            if (group._tournament._matches.Where(x => x.Group == group).Any(x => !x.IsFinished))
             {
                 return null;
             }
@@ -38,7 +38,8 @@ public sealed record GroupResultsNthRankedSelector(IReadOnlyCollection<Group> Ta
             return null;
         }
 
-        eligibleTeams.Sort(tournament._teamComparer);
+        // It is checked inside the loop that the _tournament is not null and identical for all groups.
+        eligibleTeams.Sort(TargetGroups[0]._tournament!._teamComparer);
 
         return eligibleTeams[OrdinalNumber].Team;
     }

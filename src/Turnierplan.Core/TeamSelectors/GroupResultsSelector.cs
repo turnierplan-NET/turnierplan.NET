@@ -2,14 +2,14 @@
 
 public sealed record GroupResultsSelector(Group TargetGroup, int TargetGroupPosition) : TeamSelectorBase
 {
-    public override Team? GetTargetTeam(Tournament tournament)
+    public override Team? GetTargetTeam()
     {
-        if (!tournament._groups.Contains(TargetGroup))
+        if (TargetGroup._tournament is null)
         {
-            throw new TournamentException("The team selector refers a group that is not part of the tournament.");
+            throw new TournamentException("Cannot access the tournament of the target group.");
         }
 
-        if (tournament._matches.Where(x => x.Group == TargetGroup).Any(x => !x.IsFinished))
+        if (TargetGroup._tournament._matches.Where(x => x.Group == TargetGroup).Any(x => !x.IsFinished))
         {
             return null;
         }
