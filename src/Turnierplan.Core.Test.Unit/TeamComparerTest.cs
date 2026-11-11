@@ -168,7 +168,7 @@ public sealed class TeamComparerTest
 
         if (!returnNoMatches)
         {
-            var match = new Match(0, new NullSelector(), new NullSelector(), group)
+            var match = new Match(0, new NullTeamSelector(), new NullTeamSelector(), group)
             {
                 TeamA = matchTeamIdA.HasValue ? teams[matchTeamIdA.Value] : null,
                 TeamB = matchTeamIdB.HasValue ? teams[matchTeamIdB.Value] : null
@@ -218,7 +218,7 @@ public sealed class TeamComparerTest
 
         foreach (var i in Enumerable.Range(0, matchScore.Length / 2))
         {
-            var match = new Match(i, new NullSelector(), new NullSelector(), group)
+            var match = new Match(i, new NullTeamSelector(), new NullTeamSelector(), group)
             {
                 TeamA = teams[matchTeamIdA],
                 TeamB = teams[matchTeamIdB]

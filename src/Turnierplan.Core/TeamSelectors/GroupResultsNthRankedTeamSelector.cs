@@ -1,6 +1,6 @@
 ﻿namespace Turnierplan.Core.TeamSelectors;
 
-public sealed record GroupResultsNthRankedSelector(IReadOnlyList<Group> TargetGroups, int OrdinalNumber, int PlacementRank) : TeamSelectorBase
+public sealed record GroupResultsNthRankedTeamSelector(IReadOnlyList<Group> TargetGroups, int OrdinalNumber, int PlacementRank) : TeamSelectorBase
 {
     public override Team? GetTargetTeam()
     {
@@ -44,7 +44,7 @@ public sealed record GroupResultsNthRankedSelector(IReadOnlyList<Group> TargetGr
         return eligibleTeams[OrdinalNumber].Team;
     }
 
-    public bool Equals(GroupResultsNthRankedSelector? other)
+    public bool Equals(GroupResultsNthRankedTeamSelector? other)
     {
         if (ReferenceEquals(null, other))
         {

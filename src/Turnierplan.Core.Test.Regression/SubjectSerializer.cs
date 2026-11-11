@@ -161,15 +161,15 @@ internal static class SubjectSerializer
     {
         switch (input)
         {
-            case GroupDefinitionSelector groupDefinitionSelector:
+            case GroupDefinitionTeamSelector groupDefinitionSelector:
                 return $"G{groupDefinitionSelector.TargetGroup.AlphabeticalId}/{groupDefinitionSelector.TargetTeamIndex}";
-            case GroupResultsNthRankedSelector groupResultsNthRankedSelector:
+            case GroupResultsNthRankedTeamSelector groupResultsNthRankedSelector:
                 var groupIds = string.Join(",", groupResultsNthRankedSelector.TargetGroups.Select(g => g.AlphabeticalId));
                 return $"N{groupIds}/{groupResultsNthRankedSelector.OrdinalNumber}/{groupResultsNthRankedSelector.PlacementRank}";
-            case GroupResultsSelector groupResultsSelector:
+            case GroupResultsTeamSelector groupResultsSelector:
                 return $"R{groupResultsSelector.TargetGroup.AlphabeticalId}/{groupResultsSelector.TargetGroupPosition}";
-            case MatchSelector matchSelector:
-                return $"{(matchSelector.SelectionMode is MatchSelector.Mode.Winner ? "W" : "L")}{matchSelector.TargetMatch.Index}";
+            case MatchTeamSelector matchSelector:
+                return $"{(matchSelector.SelectionMode is MatchTeamSelector.Mode.Winner ? "W" : "L")}{matchSelector.TargetMatch.Index}";
             case StaticTeamSelector staticTeamSelector:
                 return $"T{staticTeamSelector.TargetTeam.Name}";
             default:

@@ -70,11 +70,11 @@ internal sealed class RankingSection
             // Check whether any other match in the tournament references the current match's winner/loser
             var otherMatches = tournament._matches.Where(x => x.IsDecidingMatch && x.FinalsRound != finalsRound).ToList();
             var includeWinnerInSection = otherMatches
-                .None(x => (x.TeamSelectorA is MatchSelector { SelectionMode: MatchSelector.Mode.Winner } msA && msA.TargetMatch == match)
-                    || (x.TeamSelectorB is MatchSelector { SelectionMode: MatchSelector.Mode.Winner } msB && msB.TargetMatch == match));
+                .None(x => (x.TeamSelectorA is MatchTeamSelector { SelectionMode: MatchTeamSelector.Mode.Winner } msA && msA.TargetMatch == match)
+                    || (x.TeamSelectorB is MatchTeamSelector { SelectionMode: MatchTeamSelector.Mode.Winner } msB && msB.TargetMatch == match));
             var includeLoserInSection = otherMatches
-                .None(x => (x.TeamSelectorA is MatchSelector { SelectionMode: MatchSelector.Mode.Loser } msA && msA.TargetMatch == match)
-                    || (x.TeamSelectorB is MatchSelector { SelectionMode: MatchSelector.Mode.Loser } msB && msB.TargetMatch == match));
+                .None(x => (x.TeamSelectorA is MatchTeamSelector { SelectionMode: MatchTeamSelector.Mode.Loser } msA && msA.TargetMatch == match)
+                    || (x.TeamSelectorB is MatchTeamSelector { SelectionMode: MatchTeamSelector.Mode.Loser } msB && msB.TargetMatch == match));
 
             if (includeWinnerInSection)
             {

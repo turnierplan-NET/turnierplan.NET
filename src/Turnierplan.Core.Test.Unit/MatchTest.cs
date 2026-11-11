@@ -16,14 +16,14 @@ public sealed class MatchTest
         __testMatches = new Match[5];
         __testTeams = [..Enumerable.Range(0, 10).Select(x => new Team($"Test {x}", outOfCompetition: false))];
 
-        __testMatches[0] = new Match(1, new NullSelector(), new NullSelector(), group)
+        __testMatches[0] = new Match(1, new NullTeamSelector(), new NullTeamSelector(), group)
         {
             Court = 0,
             TeamA = __testTeams[0],
             TeamB = __testTeams[1]
         };
 
-        __testMatches[1] = new Match(2, new NullSelector(), new NullSelector(), group)
+        __testMatches[1] = new Match(2, new NullTeamSelector(), new NullTeamSelector(), group)
         {
             Court = 0,
             IsCurrentlyPlaying = false,
@@ -34,7 +34,7 @@ public sealed class MatchTest
             TeamB = __testTeams[3]
         };
 
-        __testMatches[2] = new Match(3, new NullSelector(), new NullSelector(), group)
+        __testMatches[2] = new Match(3, new NullTeamSelector(), new NullTeamSelector(), group)
         {
             Court = 0,
             IsCurrentlyPlaying = false,
@@ -45,7 +45,7 @@ public sealed class MatchTest
             TeamB = __testTeams[5]
         };
 
-        __testMatches[3] = new Match(4, new NullSelector(), new NullSelector(), group)
+        __testMatches[3] = new Match(4, new NullTeamSelector(), new NullTeamSelector(), group)
         {
             Court = 0,
             IsCurrentlyPlaying = false,
@@ -56,7 +56,7 @@ public sealed class MatchTest
             TeamB = __testTeams[7]
         };
 
-        __testMatches[4] = new Match(5, new NullSelector(), new NullSelector(), group)
+        __testMatches[4] = new Match(5, new NullTeamSelector(), new NullTeamSelector(), group)
         {
             Court = 0,
             IsCurrentlyPlaying = true,

@@ -13,7 +13,7 @@ public sealed record AbstractTeamSelector
 {
     /// <remarks>
     /// If <paramref name="isNthRanked"/> is <c>true</c>, <paramref name="placementRank"/> and <paramref name="ordinalNumber"/>
-    /// must be specified and denote the team selector parameters as used in <see cref="GroupResultsNthRankedSelector"/>.
+    /// must be specified and denote the team selector parameters as used in <see cref="GroupResultsNthRankedTeamSelector"/>.
     /// If <paramref name="isNthRanked"/> is <c>false</c>, <paramref name="groupIndex"/> and <paramref name="placementRank"/>
     /// must be specified and will be used to generate a team selector to select the team with that position in a specific
     /// group in the tournament.

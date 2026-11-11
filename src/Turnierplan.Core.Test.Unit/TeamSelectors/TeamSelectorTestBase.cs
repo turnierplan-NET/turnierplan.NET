@@ -28,7 +28,7 @@ public abstract class TeamSelectorTestBase
         Tournament.AddGroupParticipant(GroupC, Teams[10]).Statistics = new TeamGroupStatistics { Position = 3, Points = 3 };
         Tournament.AddGroupParticipant(GroupC, Teams[11]).Statistics = new TeamGroupStatistics { Position = 4, Points = 2 };
 
-        Tournament._matches.Add(new Match(1, new NullSelector(), new NullSelector(), GroupA)
+        Tournament._matches.Add(new Match(1, new NullTeamSelector(), new NullTeamSelector(), GroupA)
         {
             Court = 0,
             TeamA = Teams[4],
@@ -39,7 +39,7 @@ public abstract class TeamSelectorTestBase
             OutcomeType = MatchOutcomeType.Standard
         });
 
-        Tournament._matches.Add(new Match(2, new NullSelector(), new NullSelector(), GroupA)
+        Tournament._matches.Add(new Match(2, new NullTeamSelector(), new NullTeamSelector(), GroupA)
         {
             Court = 0,
             TeamA = Teams[6],
@@ -50,7 +50,7 @@ public abstract class TeamSelectorTestBase
             OutcomeType = MatchOutcomeType.Standard
         });
 
-        Tournament._matches.Add(new Match(3, new NullSelector(), new NullSelector(), GroupB)
+        Tournament._matches.Add(new Match(3, new NullTeamSelector(), new NullTeamSelector(), GroupB)
         {
             Court = 0,
             TeamA = Teams[8],
@@ -60,7 +60,7 @@ public abstract class TeamSelectorTestBase
             OutcomeType = MatchOutcomeType.Standard
         });
 
-        Tournament._matches.Add(new Match(4, new NullSelector(), new NullSelector(), GroupB)
+        Tournament._matches.Add(new Match(4, new NullTeamSelector(), new NullTeamSelector(), GroupB)
         {
             Court = 0,
             TeamA = Teams[10],

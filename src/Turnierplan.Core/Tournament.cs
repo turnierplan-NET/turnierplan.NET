@@ -214,9 +214,9 @@ public sealed class Tournament
     {
         var match = _matches.SingleOrDefault(x => x.Index == matchIndex) ?? throw new TournamentException($"There exists no match with index {matchIndex}.");
 
-        if (teamSelectorA is GroupDefinitionSelector groupDefinitionSelectorA)
+        if (teamSelectorA is GroupDefinitionTeamSelector groupDefinitionSelectorA)
         {
-            if (teamSelectorB is GroupDefinitionSelector groupDefinitionSelectorB)
+            if (teamSelectorB is GroupDefinitionTeamSelector groupDefinitionSelectorB)
             {
                 if (groupDefinitionSelectorA.TargetGroup != groupDefinitionSelectorB.TargetGroup)
                 {
@@ -232,7 +232,7 @@ public sealed class Tournament
         }
         else
         {
-            if (teamSelectorB is not GroupDefinitionSelector)
+            if (teamSelectorB is not GroupDefinitionTeamSelector)
             {
                 match.Group = null;
             }
@@ -299,8 +299,8 @@ public sealed class Tournament
         {
             for (var i = 0; i < group._participants.Count; i++)
             {
-                yield return new GroupDefinitionSelector(group, i);
-                yield return new GroupResultsSelector(group, i + 1);
+                yield return new GroupDefinitionTeamSelector(group, i);
+                yield return new GroupResultsTeamSelector(group, i + 1);
             }
         }
 
@@ -315,15 +315,15 @@ public sealed class Tournament
 
                 for (var i = 0; i < numberOfSuitableGroups; i++)
                 {
-                    yield return new GroupResultsNthRankedSelector([.._groups], i, position);
+                    yield return new GroupResultsNthRankedTeamSelector([.._groups], i, position);
                 }
             }
         }
 
         foreach (var match in _matches.Where(match => !match.IsGroupMatch))
         {
-            yield return new MatchSelector(match, MatchSelector.Mode.Winner);
-            yield return new MatchSelector(match, MatchSelector.Mode.Loser);
+            yield return new MatchTeamSelector(match, MatchTeamSelector.Mode.Winner);
+            yield return new MatchTeamSelector(match, MatchTeamSelector.Mode.Loser);
         }
     }
 
@@ -768,8 +768,8 @@ public sealed class Tournament
 
             for (var j = 0; j < currentFinalsRoundMatchCount; j++)
             {
-                var teamSelectorA = CreateMatchSelector(selectWinningTeamFromMatch++, MatchSelector.Mode.Winner);
-                var teamSelectorB = CreateMatchSelector(selectWinningTeamFromMatch++, MatchSelector.Mode.Winner);
+                var teamSelectorA = CreateMatchSelector(selectWinningTeamFromMatch++, MatchTeamSelector.Mode.Winner);
+                var teamSelectorB = CreateMatchSelector(selectWinningTeamFromMatch++, MatchTeamSelector.Mode.Winner);
 
                 _matches.Add(new Match(globalMatchIndex++, teamSelectorA, teamSelectorB, currentFinalsRound, null));
             }
@@ -787,24 +787,24 @@ public sealed class Tournament
                 throw new TournamentException("Can not auto-generate a third place playoff when it is already specified in additional playoffs.");
             }
 
-            var teamSelectorA = CreateMatchSelector(selectWinningTeamFromMatch, MatchSelector.Mode.Loser);
-            var teamSelectorB = CreateMatchSelector(selectWinningTeamFromMatch + 1, MatchSelector.Mode.Loser);
+            var teamSelectorA = CreateMatchSelector(selectWinningTeamFromMatch, MatchTeamSelector.Mode.Loser);
+            var teamSelectorB = CreateMatchSelector(selectWinningTeamFromMatch + 1, MatchTeamSelector.Mode.Loser);
 
             _matches.Add(new Match(globalMatchIndex++, teamSelectorA, teamSelectorB, null, 3));
         }
 
         // Generate final match.
-        var finalTeamA = CreateMatchSelector(selectWinningTeamFromMatch, MatchSelector.Mode.Winner);
-        var finalTeamB = CreateMatchSelector(selectWinningTeamFromMatch + 1, MatchSelector.Mode.Winner);
+        var finalTeamA = CreateMatchSelector(selectWinningTeamFromMatch, MatchTeamSelector.Mode.Winner);
+        var finalTeamB = CreateMatchSelector(selectWinningTeamFromMatch + 1, MatchTeamSelector.Mode.Winner);
 
         _matches.Add(new Match(globalMatchIndex, finalTeamA, finalTeamB, 0, 1));
 
         return;
 
-        MatchSelector CreateMatchSelector(int index, MatchSelector.Mode mode)
+        MatchTeamSelector CreateMatchSelector(int index, MatchTeamSelector.Mode mode)
         {
             var match = _matches.Single(x => x.Index == index);
-            return new MatchSelector(match, mode);
+            return new MatchTeamSelector(match, mode);
         }
     }
 
@@ -930,8 +930,8 @@ public sealed class Tournament
     private static TeamSelectorBase ConvertToSpecificInstance(AbstractTeamSelector abstractSelector, Group[] groups)
     {
         return abstractSelector.IsNthRanked
-            ? new GroupResultsNthRankedSelector(groups, abstractSelector.OrdinalNumber.Value, abstractSelector.PlacementRank)
-            : new GroupResultsSelector(groups[abstractSelector.GroupIndex.Value], abstractSelector.PlacementRank);
+            ? new GroupResultsNthRankedTeamSelector(groups, abstractSelector.OrdinalNumber.Value, abstractSelector.PlacementRank)
+            : new GroupResultsTeamSelector(groups[abstractSelector.GroupIndex.Value], abstractSelector.PlacementRank);
     }
 
     private sealed class GroupMatchData
@@ -965,8 +965,8 @@ public sealed class Tournament
             {
                 foreach (var matchDefinition in definition.MatchBlocks[blockIndex].Matches)
                 {
-                    var teamSelectorA = new GroupDefinitionSelector(group, matchDefinition.TeamIndexA);
-                    var teamSelectorB = new GroupDefinitionSelector(group, matchDefinition.TeamIndexB);
+                    var teamSelectorA = new GroupDefinitionTeamSelector(group, matchDefinition.TeamIndexA);
+                    var teamSelectorB = new GroupDefinitionTeamSelector(group, matchDefinition.TeamIndexB);
                     _matchDefinitions.Add(new MatchDefinition(group, blockIndex, teamSelectorA, teamSelectorB));
                 }
             }

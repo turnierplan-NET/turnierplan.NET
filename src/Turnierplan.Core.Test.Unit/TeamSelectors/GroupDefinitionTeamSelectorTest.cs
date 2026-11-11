@@ -4,11 +4,11 @@ using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.TeamSelectors;
 
-public sealed class GroupDefinitionSelectorTest
+public sealed class GroupDefinitionTeamSelectorTest
 {
     private readonly Group _group;
 
-    public GroupDefinitionSelectorTest()
+    public GroupDefinitionTeamSelectorTest()
     {
         var tournament = new Tournament(string.Empty);
         _group = tournament.AddGroup('A');
@@ -25,10 +25,10 @@ public sealed class GroupDefinitionSelectorTest
     [InlineData(1, "Team 1")]
     [InlineData(2, "Team 2")]
     [InlineData(3, "Team 3")]
-    public void GroupDefinitionSelector___GetTargetTeam_When_Target_Is_Valid___Returns_Expected_Result(int targetTeamIndex, string expectedTeamName)
+    public void GroupDefinitionTeamSelector___GetTargetTeam_When_Target_Is_Valid___Returns_Expected_Result(int targetTeamIndex, string expectedTeamName)
     {
         // Arrange
-        var selector = new GroupDefinitionSelector(_group, targetTeamIndex);
+        var selector = new GroupDefinitionTeamSelector(_group, targetTeamIndex);
 
         // Act
         var team = selector.GetTargetTeam();
@@ -41,10 +41,10 @@ public sealed class GroupDefinitionSelectorTest
     [Theory]
     [InlineData(-1)]
     [InlineData(4)]
-    public void GroupDefinitionSelector___GetTargetTeam_When_Target_Is_Out_Of_Bounds___Returns_Null(int targetTeamIndex)
+    public void GroupDefinitionTeamSelector___GetTargetTeam_When_Target_Is_Out_Of_Bounds___Returns_Null(int targetTeamIndex)
     {
         // Arrange
-        var selector = new GroupDefinitionSelector(_group, targetTeamIndex);
+        var selector = new GroupDefinitionTeamSelector(_group, targetTeamIndex);
 
         // Act
         var team = selector.GetTargetTeam();

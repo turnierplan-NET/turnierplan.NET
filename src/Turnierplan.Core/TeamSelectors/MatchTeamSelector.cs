@@ -1,6 +1,6 @@
 ﻿namespace Turnierplan.Core.TeamSelectors;
 
-public sealed record MatchSelector(Match TargetMatch, MatchSelector.Mode SelectionMode) : TeamSelectorBase
+public sealed record MatchTeamSelector(Match TargetMatch, MatchTeamSelector.Mode SelectionMode) : TeamSelectorBase
 {
     public override Team? GetTargetTeam()
     {

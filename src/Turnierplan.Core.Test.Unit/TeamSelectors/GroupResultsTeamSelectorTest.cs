@@ -4,12 +4,12 @@ using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.TeamSelectors;
 
-public sealed class GroupResultsSelectorTest
+public sealed class GroupResultsTeamSelectorTest
 {
     private readonly Match _match;
     private readonly Group _group;
 
-    public GroupResultsSelectorTest()
+    public GroupResultsTeamSelectorTest()
     {
         var tournament = new Tournament(string.Empty);
         _group = tournament.AddGroup('A');
@@ -20,7 +20,7 @@ public sealed class GroupResultsSelectorTest
             tournament.AddGroupParticipant(_group, team);
         }
 
-        _match = new Match(1, new NullSelector(), new NullSelector(), _group)
+        _match = new Match(1, new NullTeamSelector(), new NullTeamSelector(), _group)
         {
             Court = 0,
             TeamA = tournament._teams[0],
@@ -46,7 +46,7 @@ public sealed class GroupResultsSelectorTest
     public void GroupResultsSelector___GetTargetTeam_When_Target_Is_Valid___Returns_Expected_Result(int targetGroupPosition, string expectedTeamName)
     {
         // Arrange
-        var selector = new GroupResultsSelector(_group, targetGroupPosition);
+        var selector = new GroupResultsTeamSelector(_group, targetGroupPosition);
 
         // Act
         var team = selector.GetTargetTeam();
@@ -61,7 +61,7 @@ public sealed class GroupResultsSelectorTest
     {
         // Arrange
         _match.ResetOutcome();
-        var selector = new GroupResultsSelector(_group, 1);
+        var selector = new GroupResultsTeamSelector(_group, 1);
 
         // Act
         var team = selector.GetTargetTeam();
@@ -77,7 +77,7 @@ public sealed class GroupResultsSelectorTest
     public void GroupResultsSelector___GetTargetTeam_When_Target_Is_Out_Of_Bounds___Returns_Null(int targetGroupPosition)
     {
         // Arrange
-        var selector = new GroupResultsSelector(_group, targetGroupPosition);
+        var selector = new GroupResultsTeamSelector(_group, targetGroupPosition);
 
         // Act
         var team = selector.GetTargetTeam();

@@ -26,24 +26,24 @@ public sealed class TournamentGenerateTeamSelectorsTest
         staticTeamSelectors[6].TargetTeam.Should().BeSameAs(tournament._teams[6]);
 
         // Group definition/result selectors are interleaved - thus, they have the same skip/take parameters
-        var groupDefinitionSelectors = teamSelectors.Skip(7).Take(14).OfType<GroupDefinitionSelector>().ToArray();
-        var groupResultSelectors = teamSelectors.Skip(7).Take(14).OfType<GroupResultsSelector>().ToArray();
+        var groupDefinitionTeamSelectors = teamSelectors.Skip(7).Take(14).OfType<GroupDefinitionTeamSelector>().ToArray();
+        var groupResultSelectors = teamSelectors.Skip(7).Take(14).OfType<GroupResultsTeamSelector>().ToArray();
 
-        groupDefinitionSelectors.Should().HaveCount(7);
-        groupDefinitionSelectors[0].TargetGroup.Should().Be(groupA);
-        groupDefinitionSelectors[0].TargetTeamIndex.Should().Be(0);
-        groupDefinitionSelectors[1].TargetGroup.Should().Be(groupA);
-        groupDefinitionSelectors[1].TargetTeamIndex.Should().Be(1);
-        groupDefinitionSelectors[2].TargetGroup.Should().Be(groupA);
-        groupDefinitionSelectors[2].TargetTeamIndex.Should().Be(2);
-        groupDefinitionSelectors[3].TargetGroup.Should().Be(groupA);
-        groupDefinitionSelectors[3].TargetTeamIndex.Should().Be(3);
-        groupDefinitionSelectors[4].TargetGroup.Should().Be(groupB);
-        groupDefinitionSelectors[4].TargetTeamIndex.Should().Be(0);
-        groupDefinitionSelectors[5].TargetGroup.Should().Be(groupB);
-        groupDefinitionSelectors[5].TargetTeamIndex.Should().Be(1);
-        groupDefinitionSelectors[6].TargetGroup.Should().Be(groupB);
-        groupDefinitionSelectors[6].TargetTeamIndex.Should().Be(2);
+        groupDefinitionTeamSelectors.Should().HaveCount(7);
+        groupDefinitionTeamSelectors[0].TargetGroup.Should().Be(groupA);
+        groupDefinitionTeamSelectors[0].TargetTeamIndex.Should().Be(0);
+        groupDefinitionTeamSelectors[1].TargetGroup.Should().Be(groupA);
+        groupDefinitionTeamSelectors[1].TargetTeamIndex.Should().Be(1);
+        groupDefinitionTeamSelectors[2].TargetGroup.Should().Be(groupA);
+        groupDefinitionTeamSelectors[2].TargetTeamIndex.Should().Be(2);
+        groupDefinitionTeamSelectors[3].TargetGroup.Should().Be(groupA);
+        groupDefinitionTeamSelectors[3].TargetTeamIndex.Should().Be(3);
+        groupDefinitionTeamSelectors[4].TargetGroup.Should().Be(groupB);
+        groupDefinitionTeamSelectors[4].TargetTeamIndex.Should().Be(0);
+        groupDefinitionTeamSelectors[5].TargetGroup.Should().Be(groupB);
+        groupDefinitionTeamSelectors[5].TargetTeamIndex.Should().Be(1);
+        groupDefinitionTeamSelectors[6].TargetGroup.Should().Be(groupB);
+        groupDefinitionTeamSelectors[6].TargetTeamIndex.Should().Be(2);
 
         groupResultSelectors.Should().HaveCount(7);
         groupResultSelectors[0].TargetGroup.Should().Be(groupA);
@@ -61,7 +61,7 @@ public sealed class TournamentGenerateTeamSelectorsTest
         groupResultSelectors[6].TargetGroup.Should().Be(groupB);
         groupResultSelectors[6].TargetGroupPosition.Should().Be(3);
 
-        var nthRankedSelectors = teamSelectors.Skip(21).Take(7).OfType<GroupResultsNthRankedSelector>().ToArray();
+        var nthRankedSelectors = teamSelectors.Skip(21).Take(7).OfType<GroupResultsNthRankedTeamSelector>().ToArray();
         nthRankedSelectors.Should().HaveCount(7);
         // placement rank = 1
         nthRankedSelectors[0].OrdinalNumber.Should().Be(0);
@@ -82,23 +82,23 @@ public sealed class TournamentGenerateTeamSelectorsTest
         nthRankedSelectors[6].OrdinalNumber.Should().Be(0);
         nthRankedSelectors[6].PlacementRank.Should().Be(4);
 
-        var matchSelectors = teamSelectors.Skip(28).Take(6).OfType<MatchSelector>().ToArray();
-        matchSelectors.Should().HaveCount(6);
+        var matchTeamSelectors = teamSelectors.Skip(28).Take(6).OfType<MatchTeamSelector>().ToArray();
+        matchTeamSelectors.Should().HaveCount(6);
         // winner/loser from match index 3
-        matchSelectors[0].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 3));
-        matchSelectors[0].SelectionMode.Should().Be(MatchSelector.Mode.Winner);
-        matchSelectors[1].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 3));
-        matchSelectors[1].SelectionMode.Should().Be(MatchSelector.Mode.Loser);
+        matchTeamSelectors[0].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 3));
+        matchTeamSelectors[0].SelectionMode.Should().Be(MatchTeamSelector.Mode.Winner);
+        matchTeamSelectors[1].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 3));
+        matchTeamSelectors[1].SelectionMode.Should().Be(MatchTeamSelector.Mode.Loser);
         // winner/loser from match index 4
-        matchSelectors[2].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 4));
-        matchSelectors[2].SelectionMode.Should().Be(MatchSelector.Mode.Winner);
-        matchSelectors[3].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 4));
-        matchSelectors[3].SelectionMode.Should().Be(MatchSelector.Mode.Loser);
+        matchTeamSelectors[2].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 4));
+        matchTeamSelectors[2].SelectionMode.Should().Be(MatchTeamSelector.Mode.Winner);
+        matchTeamSelectors[3].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 4));
+        matchTeamSelectors[3].SelectionMode.Should().Be(MatchTeamSelector.Mode.Loser);
         // winner/loser from match index 5
-        matchSelectors[4].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 5));
-        matchSelectors[4].SelectionMode.Should().Be(MatchSelector.Mode.Winner);
-        matchSelectors[5].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 5));
-        matchSelectors[5].SelectionMode.Should().Be(MatchSelector.Mode.Loser);
+        matchTeamSelectors[4].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 5));
+        matchTeamSelectors[4].SelectionMode.Should().Be(MatchTeamSelector.Mode.Winner);
+        matchTeamSelectors[5].TargetMatch.Should().BeSameAs(tournament._matches.Single(x => x.Index == 5));
+        matchTeamSelectors[5].SelectionMode.Should().Be(MatchTeamSelector.Mode.Loser);
     }
 
     private static Tournament CreateTestTournament()
@@ -126,14 +126,14 @@ public sealed class TournamentGenerateTeamSelectorsTest
         groupB._participants.Add(new GroupParticipant(groupB, tournament._teams[6], 2, 0));
 
         // For test purposes, we don't need all matches which would be generated for such a tournament.
-        // Also, NullSelector() can be used because the team selector is not accessed by the tested method.
+        // Also, NullTeamSelector() can be used because the team selector is not accessed by the tested method.
 
-        tournament._matches.Add(new Match(1, new NullSelector(), new NullSelector(), groupA));
-        tournament._matches.Add(new Match(2, new NullSelector(), new NullSelector(), groupB));
+        tournament._matches.Add(new Match(1, new NullTeamSelector(), new NullTeamSelector(), groupA));
+        tournament._matches.Add(new Match(2, new NullTeamSelector(), new NullTeamSelector(), groupB));
 
-        tournament._matches.Add(new Match(3, new NullSelector(), new NullSelector(), null));
-        tournament._matches.Add(new Match(4, new NullSelector(), new NullSelector(), null));
-        tournament._matches.Add(new Match(5, new NullSelector(), new NullSelector(), null));
+        tournament._matches.Add(new Match(3, new NullTeamSelector(), new NullTeamSelector(), null));
+        tournament._matches.Add(new Match(4, new NullTeamSelector(), new NullTeamSelector(), null));
+        tournament._matches.Add(new Match(5, new NullTeamSelector(), new NullTeamSelector(), null));
 
         return tournament;
     }

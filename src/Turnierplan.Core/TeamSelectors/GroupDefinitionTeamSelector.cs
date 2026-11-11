@@ -1,6 +1,6 @@
 ﻿namespace Turnierplan.Core.TeamSelectors;
 
-public sealed record GroupDefinitionSelector(Group TargetGroup, int TargetTeamIndex) : TeamSelectorBase
+public sealed record GroupDefinitionTeamSelector(Group TargetGroup, int TargetTeamIndex) : TeamSelectorBase
 {
     public override Team? GetTargetTeam()
     {
