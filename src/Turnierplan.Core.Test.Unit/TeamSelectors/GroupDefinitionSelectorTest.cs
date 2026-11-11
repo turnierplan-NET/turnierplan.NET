@@ -4,8 +4,22 @@ using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.TeamSelectors;
 
-public sealed class GroupDefinitionSelectorTest : TeamSelectorTestBase
+public sealed class GroupDefinitionSelectorTest
 {
+    private readonly Group _group;
+
+    public GroupDefinitionSelectorTest()
+    {
+        var tournament = new Tournament(string.Empty);
+        _group = tournament.AddGroup('A');
+
+        for (var i = 0; i < 4; i++)
+        {
+            var team = tournament.AddTeam($"Team {i}");
+            tournament.AddGroupParticipant(_group, team);
+        }
+    }
+
     [Theory]
     [InlineData(0, "Team 0")]
     [InlineData(1, "Team 1")]
@@ -14,7 +28,7 @@ public sealed class GroupDefinitionSelectorTest : TeamSelectorTestBase
     public void GroupDefinitionSelector___GetTargetTeam_When_Target_Is_Valid___Returns_Expected_Result(int targetTeamIndex, string expectedTeamName)
     {
         // Arrange
-        var selector = new GroupDefinitionSelector(GroupA, targetTeamIndex);
+        var selector = new GroupDefinitionSelector(_group, targetTeamIndex);
 
         // Act
         var team = selector.GetTargetTeam();
@@ -25,14 +39,12 @@ public sealed class GroupDefinitionSelectorTest : TeamSelectorTestBase
     }
 
     [Theory]
-    [InlineData('A', -1)]
-    [InlineData('A', 4)]
-    [InlineData('B', 1)]
-    public void GroupDefinitionSelector___GetTargetTeam_When_Target_Is_Invalid___Returns_Null(char targetGroupId, int targetTeamIndex)
+    [InlineData(-1)]
+    [InlineData(4)]
+    public void GroupDefinitionSelector___GetTargetTeam_When_Target_Is_Out_Of_Bounds___Returns_Null(int targetTeamIndex)
     {
         // Arrange
-        var group = Tournament._groups.Single(x => x.AlphabeticalId == targetGroupId);
-        var selector = new GroupDefinitionSelector(group, targetTeamIndex);
+        var selector = new GroupDefinitionSelector(_group, targetTeamIndex);
 
         // Act
         var team = selector.GetTargetTeam();

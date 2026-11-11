@@ -4,18 +4,19 @@ using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.TeamSelectors;
 
-public sealed class StaticTeamSelectorTest : TeamSelectorTestBase
+public sealed class StaticTeamSelectorTest
 {
     [Fact]
     public void StaticTeamSelector___GetTargetTeam___Returns_Expected_Result()
     {
         // Arrange
-        var selector = new StaticTeamSelector(Teams[1]);
+        var setupTeam = new Team("Test", false);
+        var selector = new StaticTeamSelector(setupTeam);
 
         // Act
         var team = selector.GetTargetTeam();
 
         // Assert
-        team.Should().BeSameAs(Teams[1]);
+        team.Should().BeSameAs(setupTeam);
     }
 }

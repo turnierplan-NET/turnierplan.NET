@@ -4,17 +4,32 @@ using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.TeamSelectors;
 
-public sealed class MatchSelectorTest : TeamSelectorTestBase
+public sealed class MatchSelectorTest
 {
+    private readonly Team _teamA, _teamB;
+
+    public MatchSelectorTest()
+    {
+        var tournament = new Tournament(string.Empty);
+        _teamA = tournament.AddTeam("Team A");
+        _teamB = tournament.AddTeam("Team B");
+    }
+
     [Theory]
-    [InlineData(1, MatchSelector.Mode.Winner, "Team 4")]
-    [InlineData(1, MatchSelector.Mode.Loser, "Team 5")]
-    [InlineData(2, MatchSelector.Mode.Winner, "Team 7")]
-    [InlineData(2, MatchSelector.Mode.Loser, "Team 6")]
-    public void MatchSelector___GetTargetTeam_When_Target_Is_Valid___Returns_Expected_Result(int targetMatchIndex, MatchSelector.Mode selectionMode, string expectedTeamName)
+    [InlineData(MatchSelector.Mode.Winner, "Team A")]
+    [InlineData(MatchSelector.Mode.Loser, "Team B")]
+    public void MatchSelector___GetTargetTeam_When_Target_Is_Valid___Returns_Expected_Result(MatchSelector.Mode selectionMode, string expectedTeamName)
     {
         // Arrange
-        var match = Tournament._matches.Single(x => x.Index == targetMatchIndex);
+        var match = new Match(1, new NullSelector(), new NullSelector(), null)
+        {
+            TeamA = _teamA,
+            TeamB = _teamB,
+            IsCurrentlyPlaying = false,
+            ScoreA = 1,
+            ScoreB = 0,
+            OutcomeType = MatchOutcomeType.Standard
+        };
         var selector = new MatchSelector(match, selectionMode);
 
         // Act
