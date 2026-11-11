@@ -9,15 +9,11 @@ public sealed class TournamentGenerateTeamSelectorsTest
     [Fact]
     public void Tournament___GenerateAllTeamSelectors___Works_As_Expected()
     {
-        // Arrange
         var tournament = CreateTestTournament();
-
-        // Act
-        var teamSelectors = tournament.GenerateAllTeamSelectors().ToList();
         var groupA = tournament._groups.Single(x => x.AlphabeticalId == 'A');
         var groupB = tournament._groups.Single(x => x.AlphabeticalId == 'B');
 
-        // Assert
+        var teamSelectors = tournament.GenerateAllTeamSelectors().ToArray();
         teamSelectors.Should().HaveCount(34);
 
         var staticTeamSelectors = teamSelectors.Take(7).OfType<StaticTeamSelector>().ToArray();
@@ -29,21 +25,41 @@ public sealed class TournamentGenerateTeamSelectorsTest
         staticTeamSelectors[5].TargetTeam.Should().BeSameAs(tournament._teams[5]);
         staticTeamSelectors[6].TargetTeam.Should().BeSameAs(tournament._teams[6]);
 
-        // teamSelectors[7].Should().BeEquivalentTo(new GroupDefinitionSelector(7, 0));
-        // teamSelectors[8].Should().BeEquivalentTo(new GroupResultsSelector(7, 1));
-        // teamSelectors[9].Should().BeEquivalentTo(new GroupDefinitionSelector(7, 1));
-        // teamSelectors[10].Should().BeEquivalentTo(new GroupResultsSelector(7, 2));
-        // teamSelectors[11].Should().BeEquivalentTo(new GroupDefinitionSelector(7, 2));
-        // teamSelectors[12].Should().BeEquivalentTo(new GroupResultsSelector(7, 3));
-        // teamSelectors[13].Should().BeEquivalentTo(new GroupDefinitionSelector(7, 3));
-        // teamSelectors[14].Should().BeEquivalentTo(new GroupResultsSelector(7, 4));
+        // Group definition/result selectors are interleaved - thus, they have the same skip/take parameters
+        var groupDefinitionSelectors = teamSelectors.Skip(7).Take(14).OfType<GroupDefinitionSelector>().ToArray();
+        var groupResultSelectors = teamSelectors.Skip(7).Take(14).OfType<GroupResultsSelector>().ToArray();
 
-        // teamSelectors[15].Should().BeEquivalentTo(new GroupDefinitionSelector(8, 0));
-        // teamSelectors[16].Should().BeEquivalentTo(new GroupResultsSelector(8, 1));
-        // teamSelectors[17].Should().BeEquivalentTo(new GroupDefinitionSelector(8, 1));
-        // teamSelectors[18].Should().BeEquivalentTo(new GroupResultsSelector(8, 2));
-        // teamSelectors[19].Should().BeEquivalentTo(new GroupDefinitionSelector(8, 2));
-        // teamSelectors[20].Should().BeEquivalentTo(new GroupResultsSelector(8, 3));
+        groupDefinitionSelectors.Should().HaveCount(7);
+        groupDefinitionSelectors[0].TargetGroup.Should().Be(groupA);
+        groupDefinitionSelectors[0].TargetTeamIndex.Should().Be(0);
+        groupDefinitionSelectors[1].TargetGroup.Should().Be(groupA);
+        groupDefinitionSelectors[1].TargetTeamIndex.Should().Be(1);
+        groupDefinitionSelectors[2].TargetGroup.Should().Be(groupA);
+        groupDefinitionSelectors[2].TargetTeamIndex.Should().Be(2);
+        groupDefinitionSelectors[3].TargetGroup.Should().Be(groupA);
+        groupDefinitionSelectors[3].TargetTeamIndex.Should().Be(3);
+        groupDefinitionSelectors[4].TargetGroup.Should().Be(groupB);
+        groupDefinitionSelectors[4].TargetTeamIndex.Should().Be(0);
+        groupDefinitionSelectors[5].TargetGroup.Should().Be(groupB);
+        groupDefinitionSelectors[5].TargetTeamIndex.Should().Be(1);
+        groupDefinitionSelectors[6].TargetGroup.Should().Be(groupB);
+        groupDefinitionSelectors[6].TargetTeamIndex.Should().Be(2);
+
+        groupResultSelectors.Should().HaveCount(7);
+        groupResultSelectors[0].TargetGroup.Should().Be(groupA);
+        groupResultSelectors[0].TargetGroupPosition.Should().Be(1);
+        groupResultSelectors[1].TargetGroup.Should().Be(groupA);
+        groupResultSelectors[1].TargetGroupPosition.Should().Be(2);
+        groupResultSelectors[2].TargetGroup.Should().Be(groupA);
+        groupResultSelectors[2].TargetGroupPosition.Should().Be(3);
+        groupResultSelectors[3].TargetGroup.Should().Be(groupA);
+        groupResultSelectors[3].TargetGroupPosition.Should().Be(4);
+        groupResultSelectors[4].TargetGroup.Should().Be(groupB);
+        groupResultSelectors[4].TargetGroupPosition.Should().Be(1);
+        groupResultSelectors[5].TargetGroup.Should().Be(groupB);
+        groupResultSelectors[5].TargetGroupPosition.Should().Be(2);
+        groupResultSelectors[6].TargetGroup.Should().Be(groupB);
+        groupResultSelectors[6].TargetGroupPosition.Should().Be(3);
 
         var nthRankedSelectors = teamSelectors.Skip(21).Take(7).OfType<GroupResultsNthRankedSelector>().ToArray();
         nthRankedSelectors.Should().HaveCount(7);
