@@ -5,7 +5,7 @@ using Turnierplan.Core.Configuration;
 using Turnierplan.Core.TeamSelectors;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit;
+namespace Turnierplan.Core.Test.Unit.Tournament;
 
 public sealed class TournamentTest
 {
@@ -16,7 +16,7 @@ public sealed class TournamentTest
     public void Tournament___ShiftToTimezone___Works_As_Expected(string originalUtcKickoffTime, string timeZoneName, string expectedLocalKickoffTime)
     {
         // Arrange
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
         tournament._matches.Add(new Match(1, new NullTeamSelector(), new NullTeamSelector(), null!)
         {
             Kickoff = DateTime.Parse(originalUtcKickoffTime, CultureInfo.InvariantCulture).ToUniversalTime()
@@ -32,7 +32,7 @@ public sealed class TournamentTest
     [Fact]
     public void Tournament___StartTimestamp_And_EndTimestamp_When_Matches_Have_No_Kickoff_Time___Returns_Correct_Value()
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
         tournament._matches.Add(new Match(1, new NullTeamSelector(), new NullTeamSelector(), null!));
         tournament._matches.Add(new Match(2, new NullTeamSelector(), new NullTeamSelector(), null!));
         tournament._matches.Add(new Match(3, new NullTeamSelector(), new NullTeamSelector(), null!));
@@ -44,7 +44,7 @@ public sealed class TournamentTest
     [Fact]
     public void Tournament___StartTimestamp_And_EndTimestamp_When_Matches_Have_Kickoff_Time___Returns_Correct_Value()
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
         tournament._matches.Add(new Match(1, new NullTeamSelector(), new NullTeamSelector(), null!) { Kickoff = new DateTime(2024, 07, 01, 12, 00, 00) });
         tournament._matches.Add(new Match(2, new NullTeamSelector(), new NullTeamSelector(), null!) { Kickoff = new DateTime(2024, 07, 01, 12, 10, 00) });
         tournament._matches.Add(new Match(3, new NullTeamSelector(), new NullTeamSelector(), null!) { Kickoff = new DateTime(2024, 07, 01, 12, 20, 00) });
@@ -58,7 +58,7 @@ public sealed class TournamentTest
     [InlineData(false)]
     public void Tournament___StartTimestamp_And_EndTimestamp_When_Matches_Have_Kickoff_Time_And_Duration___Returns_Correct_Value(bool isFinalsMatch)
     {
-        var tournament = new Tournament(string.Empty)
+        var tournament = new Core.Tournament(string.Empty)
         {
             MatchPlanConfiguration = new MatchPlanConfiguration
             {

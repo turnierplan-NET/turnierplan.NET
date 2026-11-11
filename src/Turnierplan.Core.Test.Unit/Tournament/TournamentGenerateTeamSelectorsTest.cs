@@ -2,7 +2,7 @@ using FluentAssertions;
 using Turnierplan.Core.TeamSelectors;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit;
+namespace Turnierplan.Core.Test.Unit.Tournament;
 
 public sealed class TournamentGenerateTeamSelectorsTest
 {
@@ -101,9 +101,9 @@ public sealed class TournamentGenerateTeamSelectorsTest
         matchTeamSelectors[5].SelectionMode.Should().Be(MatchTeamSelector.Mode.Loser);
     }
 
-    private static Tournament CreateTestTournament()
+    private static Core.Tournament CreateTestTournament()
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
 
         for (var i = 0; i < 7; i++)
         {

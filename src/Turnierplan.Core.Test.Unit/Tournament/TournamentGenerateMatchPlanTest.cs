@@ -4,7 +4,7 @@ using Turnierplan.Core.Configuration;
 using Turnierplan.Core.TeamSelectors;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit;
+namespace Turnierplan.Core.Test.Unit.Tournament;
 
 public sealed class TournamentGenerateMatchPlanTest
 {
@@ -844,7 +844,7 @@ public sealed class TournamentGenerateMatchPlanTest
             }
         };
 
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
         tournament._matches.Add(new Match(1, new NullTeamSelector(), new NullTeamSelector(), null!));
 
         var action = () => tournament.GenerateMatchPlan(config);
@@ -876,9 +876,9 @@ public sealed class TournamentGenerateMatchPlanTest
     /// <remarks>Helper method to simplify the creation of <see cref="DateTime"/> objects.</remarks>
     private static DateTime KickoffAt(int hours, int minutes) => new(2024, 1, 1, hours, minutes, 0);
 
-    private static Tournament CreateTestTournament(int[] teamsPerGroup)
+    private static Core.Tournament CreateTestTournament(int[] teamsPerGroup)
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
 
         if (teamsPerGroup.Length == 1 && teamsPerGroup[0] < 0)
         {

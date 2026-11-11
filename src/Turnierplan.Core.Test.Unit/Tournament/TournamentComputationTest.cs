@@ -3,7 +3,7 @@ using Turnierplan.Core.Configuration;
 using Turnierplan.Core.TeamSelectors;
 using Xunit;
 
-namespace Turnierplan.Core.Test.Unit;
+namespace Turnierplan.Core.Test.Unit.Tournament;
 
 public sealed class TournamentComputationTest
 {
@@ -14,7 +14,7 @@ public sealed class TournamentComputationTest
     [InlineData(false, true, false, true, /* 1st & 2nd are "empty" */ 4, 1, 3, 2, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and no ranking matches → Only 3rd/4th place are determined via ranking match (not a typical scenario :D)
     public void Tournament___Compute_With_Ranking_Matches___Works_As_Expected(bool playoffFirst, bool playoffThird, bool playoffFifth, bool firstAndSecondPlaceSkipped, params int[] expectedRankingsOrder)
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
 
         // Add group(s)
         var groupA = tournament.AddGroup('A');
@@ -236,7 +236,7 @@ public sealed class TournamentComputationTest
     [Fact]
     public void Tournament___Compute_With_Multiple_Group_Phase_Rounds___Works_As_Expected()
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
 
         // Add group(s)
         var groupA = tournament.AddGroup('A');
@@ -320,7 +320,7 @@ public sealed class TournamentComputationTest
     [Fact]
     public void Tournament___Compute_When_Direct_Comparison_Between_Teams_Is_Required___Works_As_Expected()
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
 
         // Add group(s)
         var groupA = tournament.AddGroup('A');
@@ -441,7 +441,7 @@ public sealed class TournamentComputationTest
     [Fact]
     public void Tournament___Compute_When_Comparison_Between_Teams_Using_Priority_Is_Required___Works_As_Expected()
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
 
         // Add group(s)
         var groupA = tournament.AddGroup('A');
@@ -539,7 +539,7 @@ public sealed class TournamentComputationTest
     [Fact]
     public void Tournament___Compute_Qualified_Teams_Are_Always_Ranked_Better_Than_Non_Qualified_Teams_Case_1___Works_As_Expected()
     {
-         var tournament = new Tournament(string.Empty);
+         var tournament = new Core.Tournament(string.Empty);
 
         // Add group(s)
         var groupA = tournament.AddGroup('A');
@@ -621,7 +621,7 @@ public sealed class TournamentComputationTest
     [Fact]
     public void Tournament___Compute_Qualified_Teams_Are_Always_Ranked_Better_Than_Non_Qualified_Teams_Case_2___Works_As_Expected()
     {
-         var tournament = new Tournament(string.Empty);
+         var tournament = new Core.Tournament(string.Empty);
 
         // Add group(s)
         var groupA = tournament.AddGroup('A');
@@ -729,7 +729,7 @@ public sealed class TournamentComputationTest
     [Fact]
     public void Tournament___Compute___Matches_With_Special_Scoring_Do_Not_Count_Towards_Team_Statistics_Score()
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
 
         // Add group
         var groupA = tournament.AddGroup('A');
@@ -775,7 +775,7 @@ public sealed class TournamentComputationTest
     [InlineData(false)]
     public void Tournament___Compute_Rankings_Are_Always_Evaluated_As_Soon_As_Possible___Works_As_Expected(bool withThirdPlacePlayoff)
     {
-         var tournament = new Tournament(string.Empty);
+         var tournament = new Core.Tournament(string.Empty);
 
         // Add group(s)
         var groupA = tournament.AddGroup('A');
@@ -961,7 +961,7 @@ public sealed class TournamentComputationTest
     [Fact]
     public void Tournament___Compute_Ranking_Overwrites_Are_Applied_Correctly___Works_As___Expected()
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
 
         // Add group
         var groupA = tournament.AddGroup('A');
