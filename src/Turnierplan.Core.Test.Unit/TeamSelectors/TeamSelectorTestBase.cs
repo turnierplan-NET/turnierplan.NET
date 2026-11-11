@@ -33,6 +33,7 @@ public abstract class TeamSelectorTestBase
             Court = 0,
             TeamA = Teams[4],
             TeamB = Teams[5],
+            IsCurrentlyPlaying = false,
             ScoreA = 1,
             ScoreB = 0,
             OutcomeType = MatchOutcomeType.Standard
@@ -43,6 +44,7 @@ public abstract class TeamSelectorTestBase
             Court = 0,
             TeamA = Teams[6],
             TeamB = Teams[7],
+            IsCurrentlyPlaying = false,
             ScoreA = 1,
             ScoreB = 3,
             OutcomeType = MatchOutcomeType.Standard

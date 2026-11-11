@@ -1,34 +1,43 @@
-﻿using Turnierplan.Core.TeamSelectors;
+﻿using FluentAssertions;
+using Turnierplan.Core.TeamSelectors;
 using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.TeamSelectors;
 
-#if false
 public sealed class GroupDefinitionSelectorTest : TeamSelectorTestBase
 {
-    public static readonly TheoryData<int, int, int?> TeamSelectionTestData = new()
-    {
-        { 90, 1, null },
-        { 100, -1, null },
-        { 100, 0, 4 },
-        { 100, 1, 5 },
-        { 100, 2, 6 },
-        { 100, 3, 7 },
-        { 100, 4, null }
-    };
-
     [Theory]
-    [MemberData(nameof(TeamSelectionTestData))]
-    public void GroupDefinitionSelector___Get_Target_Team_Id___Returns_Expected_Result(int targetGroupId, int targetTeamIndex, int? expectedTeamId)
+    [InlineData(0, "Team 0")]
+    [InlineData(1, "Team 1")]
+    [InlineData(2, "Team 2")]
+    [InlineData(3, "Team 3")]
+    public void GroupDefinitionSelector___GetTargetTeam_When_Target_Is_Valid___Returns_Expected_Result(int targetTeamIndex, string expectedTeamName)
     {
         // Arrange
-        var selector = new GroupDefinitionSelector(targetGroupId, targetTeamIndex);
+        var selector = new GroupDefinitionSelector(GroupA, targetTeamIndex);
 
         // Act
-        var team = selector.GetTargetTeam(TestTournament);
+        var team = selector.GetTargetTeam();
 
         // Assert
-        team?.Id.Should().Be(expectedTeamId);
+        team.Should().NotBeNull();
+        team.Name.Should().Be(expectedTeamName);
+    }
+
+    [Theory]
+    [InlineData('A', -1)]
+    [InlineData('A', 4)]
+    [InlineData('B', 1)]
+    public void GroupDefinitionSelector___GetTargetTeam_When_Target_Is_Invalid___Returns_Null(char targetGroupId, int targetTeamIndex)
+    {
+        // Arrange
+        var group = Tournament._groups.Single(x => x.AlphabeticalId == targetGroupId);
+        var selector = new GroupDefinitionSelector(group, targetTeamIndex);
+
+        // Act
+        var team = selector.GetTargetTeam();
+
+        // Assert
+        team.Should().BeNull();
     }
 }
-#endif

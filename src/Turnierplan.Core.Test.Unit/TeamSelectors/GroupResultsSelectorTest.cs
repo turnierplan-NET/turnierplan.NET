@@ -1,38 +1,58 @@
-﻿using Turnierplan.Core.TeamSelectors;
+﻿using FluentAssertions;
+using Turnierplan.Core.TeamSelectors;
 using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.TeamSelectors;
 
-#if false
-
 public sealed class GroupResultsSelectorTest : TeamSelectorTestBase
 {
-    public static readonly TheoryData<int, int, int?> TeamSelectionTestData = new()
-    {
-        { 90, 1, null },
-        { 100, -1, null },
-        { 100, 0, null },
-        { 100, 1, 7 },
-        { 100, 2, 5 },
-        { 100, 3, 6 },
-        { 100, 4, 4 },
-        { 100, 5, null },
-        { 101, 1, null }
-    };
-
     [Theory]
-    [MemberData(nameof(TeamSelectionTestData))]
-    public void GroupResultsSelector___Get_Target_Team_Id___Returns_Expected_Result(int targetGroupId, int targetGroupPosition, int? expectedTeamId)
+    [InlineData(1, "Team 3")]
+    [InlineData(2, "Team 1")]
+    [InlineData(3, "Team 2")]
+    [InlineData(4, "Team 0")]
+    public void GroupResultsSelector___GetTargetTeam_When_Target_Is_Valid___Returns_Expected_Result(int targetGroupPosition, string expectedTeamName)
     {
         // Arrange
-        var selector = new GroupResultsSelector(targetGroupId, targetGroupPosition);
+        var selector = new GroupResultsSelector(GroupA, targetGroupPosition);
 
         // Act
-        var team = selector.GetTargetTeam(TestTournament);
+        var team = selector.GetTargetTeam();
 
         // Assert
-        team?.Id.Should().Be(expectedTeamId);
+        team.Should().NotBeNull();
+        team.Name.Should().Be(expectedTeamName);
+    }
+
+    [Fact]
+    public void GroupResultsSelector___GetTargetTeam_When_Match_Is_Currently_Playing___Returns_Null()
+    {
+        // Arrange
+        Tournament._matches.First(x => x.Group == GroupA).ResetOutcome();
+        var selector = new GroupResultsSelector(GroupA, 1);
+
+        // Act
+        var team = selector.GetTargetTeam();
+
+        // Assert
+        team.Should().BeNull();
+    }
+
+    [Theory]
+    [InlineData('A', -1)]
+    [InlineData('A', 0)]
+    [InlineData('A', 5)]
+    [InlineData('B', 1)]
+    public void GroupResultsSelector___GetTargetTeam_When_Target_Is_Invalid___Returns_Null(char targetGroupId, int targetGroupPosition)
+    {
+        // Arrange
+        var group = Tournament._groups.Single(x => x.AlphabeticalId == targetGroupId);
+        var selector = new GroupResultsSelector(group, targetGroupPosition);
+
+        // Act
+        var team = selector.GetTargetTeam();
+
+        // Assert
+        team.Should().BeNull();
     }
 }
-
-#endif
