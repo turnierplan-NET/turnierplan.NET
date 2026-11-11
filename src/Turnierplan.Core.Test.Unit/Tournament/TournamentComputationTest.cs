@@ -1,6 +1,6 @@
 using FluentAssertions;
-using Turnierplan.Core.Tournament;
-using Turnierplan.Core.Tournament.TeamSelectors;
+using Turnierplan.Core.Configuration;
+using Turnierplan.Core.TeamSelectors;
 using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.Tournament;
@@ -12,9 +12,9 @@ public sealed class TournamentComputationTest
     [InlineData(false, false, false, false, 3, 2, 1, 4, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and no ranking matches → First four ranking are defined by the outcomes of semi-finals, remaining rankings are determined based on the team's group match statistics
     [InlineData(true, false, false, false, 3, 2, 1, 4, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and no ranking matches → Only first two rankings are determined via final match
     [InlineData(false, true, false, true, /* 1st & 2nd are "empty" */ 4, 1, 3, 2, 5, 6)] // Tournament with 2 groups, 6 teams, semi-finals and no ranking matches → Only 3rd/4th place are determined via ranking match (not a typical scenario :D)
-    public void Tournament___Compute_With_Ranking_Matches___Works_As_Expected(bool playoff1st, bool playoff3rd, bool playoff5th, bool firstAndSecondPlaceSkipped, params int[] expectedRankingsOrder)
+    public void Tournament___Compute_With_Ranking_Matches___Works_As_Expected(bool playoffFirst, bool playoffThird, bool playoffFifth, bool firstAndSecondPlaceSkipped, params int[] expectedRankingsOrder)
     {
-        var tournament = TestTournament.Default;
+        var tournament = new Core.Tournament(string.Empty);
 
         // Add group(s)
         var groupA = tournament.AddGroup('A');
@@ -38,29 +38,29 @@ public sealed class TournamentComputationTest
         tournament.AddGroupParticipant(groupB, team5);
 
         // Add matches
-        tournament._matches.Add(new Match(1, 1, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(2, 2, new GroupDefinitionSelector(2, 0), new GroupDefinitionSelector(2, 1), groupB) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(3, 3, new GroupDefinitionSelector(1, 1), new GroupDefinitionSelector(1, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(4, 4, new GroupDefinitionSelector(2, 1), new GroupDefinitionSelector(2, 2), groupB) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(5, 5, new GroupDefinitionSelector(1, 2), new GroupDefinitionSelector(1, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(6, 6, new GroupDefinitionSelector(2, 2), new GroupDefinitionSelector(2, 0), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 4, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(1, new GroupDefinitionTeamSelector(groupA, 0), new GroupDefinitionTeamSelector(groupA, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(2, new GroupDefinitionTeamSelector(groupB, 0), new GroupDefinitionTeamSelector(groupB, 1), groupB) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(3, new GroupDefinitionTeamSelector(groupA, 1), new GroupDefinitionTeamSelector(groupA, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(4, new GroupDefinitionTeamSelector(groupB, 1), new GroupDefinitionTeamSelector(groupB, 2), groupB) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(5, new GroupDefinitionTeamSelector(groupA, 2), new GroupDefinitionTeamSelector(groupA, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(6, new GroupDefinitionTeamSelector(groupB, 2), new GroupDefinitionTeamSelector(groupB, 0), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 4, OutcomeType = MatchOutcomeType.Standard });
 
-        tournament._matches.Add(new Match(7, 7, new GroupResultsSelector(1, 1), new GroupResultsSelector(2, 2), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard }); // Team 1 vs Team 2
-        tournament._matches.Add(new Match(8, 8, new GroupResultsSelector(2, 1), new GroupResultsSelector(1, 2), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard }); // Team 3 vs Team 4
+        tournament._matches.Add(new Match(7, new GroupResultsTeamSelector(groupA, 1), new GroupResultsTeamSelector(groupB, 2), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard }); // Team 1 vs Team 2
+        tournament._matches.Add(new Match(8, new GroupResultsTeamSelector(groupB, 1), new GroupResultsTeamSelector(groupA, 2), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard }); // Team 3 vs Team 4
 
-        if (playoff5th)
+        if (playoffFifth)
         {
-            tournament._matches.Add(new Match(9, 9, new GroupResultsSelector(1, 3), new GroupResultsSelector(2, 3), null, 5) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+            tournament._matches.Add(new Match(9, new GroupResultsTeamSelector(groupA, 3), new GroupResultsTeamSelector(groupB, 3), null, 5) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
         }
 
-        if (playoff3rd)
+        if (playoffThird)
         {
-            tournament._matches.Add(new Match(10, 10, new MatchSelector(7, MatchSelector.Mode.Loser), new MatchSelector(8, MatchSelector.Mode.Loser), null, 3) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 4, OutcomeType = MatchOutcomeType.Standard });
+            tournament._matches.Add(new Match(10, new MatchTeamSelector(tournament._matches.Single(x => x.Index == 7), MatchTeamSelector.Mode.Loser), new MatchTeamSelector(tournament._matches.Single(x => x.Index == 8), MatchTeamSelector.Mode.Loser), null, 3) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 4, OutcomeType = MatchOutcomeType.Standard });
         }
 
-        if (playoff1st)
+        if (playoffFirst)
         {
-            tournament._matches.Add(new Match(11, 11, new MatchSelector(7, MatchSelector.Mode.Winner), new MatchSelector(8, MatchSelector.Mode.Winner), (int)FinalsRoundOrder.FinalOnly, 1) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+            tournament._matches.Add(new Match(11, new MatchTeamSelector(tournament._matches.Single(x => x.Index == 7), MatchTeamSelector.Mode.Winner), new MatchTeamSelector(tournament._matches.Single(x => x.Index == 8), MatchTeamSelector.Mode.Winner), (int)FinalsRoundOrder.FinalOnly, 1) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
         }
 
         // Compute tournament
@@ -134,46 +134,46 @@ public sealed class TournamentComputationTest
         });
 
         // Assert match teams
-        tournament._matches.Single(x => x.Id == 1).TeamA.Should().Be(team6);
-        tournament._matches.Single(x => x.Id == 1).TeamB.Should().Be(team4);
+        tournament._matches.Single(x => x.Index == 1).TeamA.Should().Be(team6);
+        tournament._matches.Single(x => x.Index == 1).TeamB.Should().Be(team4);
 
-        tournament._matches.Single(x => x.Id == 2).TeamA.Should().Be(team3);
-        tournament._matches.Single(x => x.Id == 2).TeamB.Should().Be(team2);
+        tournament._matches.Single(x => x.Index == 2).TeamA.Should().Be(team3);
+        tournament._matches.Single(x => x.Index == 2).TeamB.Should().Be(team2);
 
-        tournament._matches.Single(x => x.Id == 3).TeamA.Should().Be(team4);
-        tournament._matches.Single(x => x.Id == 3).TeamB.Should().Be(team1);
+        tournament._matches.Single(x => x.Index == 3).TeamA.Should().Be(team4);
+        tournament._matches.Single(x => x.Index == 3).TeamB.Should().Be(team1);
 
-        tournament._matches.Single(x => x.Id == 4).TeamA.Should().Be(team2);
-        tournament._matches.Single(x => x.Id == 4).TeamB.Should().Be(team5);
+        tournament._matches.Single(x => x.Index == 4).TeamA.Should().Be(team2);
+        tournament._matches.Single(x => x.Index == 4).TeamB.Should().Be(team5);
 
-        tournament._matches.Single(x => x.Id == 5).TeamA.Should().Be(team1);
-        tournament._matches.Single(x => x.Id == 5).TeamB.Should().Be(team6);
+        tournament._matches.Single(x => x.Index == 5).TeamA.Should().Be(team1);
+        tournament._matches.Single(x => x.Index == 5).TeamB.Should().Be(team6);
 
-        tournament._matches.Single(x => x.Id == 6).TeamA.Should().Be(team5);
-        tournament._matches.Single(x => x.Id == 6).TeamB.Should().Be(team3);
+        tournament._matches.Single(x => x.Index == 6).TeamA.Should().Be(team5);
+        tournament._matches.Single(x => x.Index == 6).TeamB.Should().Be(team3);
 
-        tournament._matches.Single(x => x.Id == 7).TeamA.Should().Be(team1);
-        tournament._matches.Single(x => x.Id == 7).TeamB.Should().Be(team2);
+        tournament._matches.Single(x => x.Index == 7).TeamA.Should().Be(team1);
+        tournament._matches.Single(x => x.Index == 7).TeamB.Should().Be(team2);
 
-        tournament._matches.Single(x => x.Id == 8).TeamA.Should().Be(team3);
-        tournament._matches.Single(x => x.Id == 8).TeamB.Should().Be(team4);
+        tournament._matches.Single(x => x.Index == 8).TeamA.Should().Be(team3);
+        tournament._matches.Single(x => x.Index == 8).TeamB.Should().Be(team4);
 
-        if (playoff5th)
+        if (playoffFifth)
         {
-            tournament._matches.Single(x => x.Id == 9).TeamA.Should().Be(team6);
-            tournament._matches.Single(x => x.Id == 9).TeamB.Should().Be(team5);
+            tournament._matches.Single(x => x.Index == 9).TeamA.Should().Be(team6);
+            tournament._matches.Single(x => x.Index == 9).TeamB.Should().Be(team5);
         }
 
-        if (playoff3rd)
+        if (playoffThird)
         {
-            tournament._matches.Single(x => x.Id == 10).TeamA.Should().Be(team1);
-            tournament._matches.Single(x => x.Id == 10).TeamB.Should().Be(team4);
+            tournament._matches.Single(x => x.Index == 10).TeamA.Should().Be(team1);
+            tournament._matches.Single(x => x.Index == 10).TeamB.Should().Be(team4);
         }
 
-        if (playoff1st)
+        if (playoffFirst)
         {
-            tournament._matches.Single(x => x.Id == 11).TeamA.Should().Be(team2);
-            tournament._matches.Single(x => x.Id == 11).TeamB.Should().Be(team3);
+            tournament._matches.Single(x => x.Index == 11).TeamA.Should().Be(team2);
+            tournament._matches.Single(x => x.Index == 11).TeamB.Should().Be(team3);
         }
 
         // Assert ranking
@@ -190,53 +190,53 @@ public sealed class TournamentComputationTest
         }
 
         // Assert team statistics (the numbers represent: <group phase> + <semi-finals if applicable> + <playoff if applicable>)
-        team1.Statistics.ScoreFor.Should().Be(5 + 1 + (playoff3rd ? 3 : 0));
-        team1.Statistics.ScoreAgainst.Should().Be(1 + 2 + (playoff3rd ? 4 : 0));
+        team1.Statistics.ScoreFor.Should().Be(5 + 1 + (playoffThird ? 3 : 0));
+        team1.Statistics.ScoreAgainst.Should().Be(1 + 2 + (playoffThird ? 4 : 0));
         team1.Statistics.MatchesWon.Should().Be(2 + 0);
         team1.Statistics.MatchesDrawn.Should().Be(0 + 0);
-        team1.Statistics.MatchesLost.Should().Be(0 + 1 + (playoff3rd ? 1 : 0));
-        team1.Statistics.MatchesPlayed.Should().Be(2 + 1 + (playoff3rd ? 1 : 0));
+        team1.Statistics.MatchesLost.Should().Be(0 + 1 + (playoffThird ? 1 : 0));
+        team1.Statistics.MatchesPlayed.Should().Be(2 + 1 + (playoffThird ? 1 : 0));
 
         team2.Statistics.ScoreFor.Should().Be(0 + 2);
-        team2.Statistics.ScoreAgainst.Should().Be(2 + 1 + (playoff1st ? 1 : 0));
+        team2.Statistics.ScoreAgainst.Should().Be(2 + 1 + (playoffFirst ? 1 : 0));
         team2.Statistics.MatchesWon.Should().Be(0 + 1);
         team2.Statistics.MatchesDrawn.Should().Be(1 + 0);
-        team2.Statistics.MatchesLost.Should().Be(1 + 0 + (playoff1st ? 1 : 0));
-        team2.Statistics.MatchesPlayed.Should().Be(2 + 1 + (playoff1st ? 1 : 0));
+        team2.Statistics.MatchesLost.Should().Be(1 + 0 + (playoffFirst ? 1 : 0));
+        team2.Statistics.MatchesPlayed.Should().Be(2 + 1 + (playoffFirst ? 1 : 0));
 
-        team3.Statistics.ScoreFor.Should().Be(6 + 3 + (playoff1st ? 1 : 0));
+        team3.Statistics.ScoreFor.Should().Be(6 + 3 + (playoffFirst ? 1 : 0));
         team3.Statistics.ScoreAgainst.Should().Be(1 + 1);
-        team3.Statistics.MatchesWon.Should().Be(2 + 1 + (playoff1st ? 1 : 0));
+        team3.Statistics.MatchesWon.Should().Be(2 + 1 + (playoffFirst ? 1 : 0));
         team3.Statistics.MatchesDrawn.Should().Be(0 + 0);
         team3.Statistics.MatchesLost.Should().Be(0 + 0);
-        team3.Statistics.MatchesPlayed.Should().Be(2 + 1 + (playoff1st ? 1 : 0));
+        team3.Statistics.MatchesPlayed.Should().Be(2 + 1 + (playoffFirst ? 1 : 0));
 
-        team4.Statistics.ScoreFor.Should().Be(2 + 1 + (playoff3rd ? 4 : 0));
-        team4.Statistics.ScoreAgainst.Should().Be(3 + 3 + (playoff3rd ? 3 : 0));
-        team4.Statistics.MatchesWon.Should().Be(0 + 0 + (playoff3rd ? 1 : 0));
+        team4.Statistics.ScoreFor.Should().Be(2 + 1 + (playoffThird ? 4 : 0));
+        team4.Statistics.ScoreAgainst.Should().Be(3 + 3 + (playoffThird ? 3 : 0));
+        team4.Statistics.MatchesWon.Should().Be(0 + 0 + (playoffThird ? 1 : 0));
         team4.Statistics.MatchesDrawn.Should().Be(1 + 0);
         team4.Statistics.MatchesLost.Should().Be(1 + 1);
-        team4.Statistics.MatchesPlayed.Should().Be(2 + 1 + (playoff3rd ? 1 : 0));
+        team4.Statistics.MatchesPlayed.Should().Be(2 + 1 + (playoffThird ? 1 : 0));
 
-        team5.Statistics.ScoreFor.Should().Be(1 + (playoff5th ? 2 : 0));
-        team5.Statistics.ScoreAgainst.Should().Be(4 + (playoff5th ? 1 : 0));
-        team5.Statistics.MatchesWon.Should().Be(0 + (playoff5th ? 1 : 0));
+        team5.Statistics.ScoreFor.Should().Be(1 + (playoffFifth ? 2 : 0));
+        team5.Statistics.ScoreAgainst.Should().Be(4 + (playoffFifth ? 1 : 0));
+        team5.Statistics.MatchesWon.Should().Be(0 + (playoffFifth ? 1 : 0));
         team5.Statistics.MatchesDrawn.Should().Be(1);
         team5.Statistics.MatchesLost.Should().Be(1);
-        team5.Statistics.MatchesPlayed.Should().Be(2 + (playoff5th ? 1 : 0));
+        team5.Statistics.MatchesPlayed.Should().Be(2 + (playoffFifth ? 1 : 0));
 
-        team6.Statistics.ScoreFor.Should().Be(1 + (playoff5th ? 1 : 0));
-        team6.Statistics.ScoreAgainst.Should().Be(4 + (playoff5th ? 2 : 0));
+        team6.Statistics.ScoreFor.Should().Be(1 + (playoffFifth ? 1 : 0));
+        team6.Statistics.ScoreAgainst.Should().Be(4 + (playoffFifth ? 2 : 0));
         team6.Statistics.MatchesWon.Should().Be(0);
         team6.Statistics.MatchesDrawn.Should().Be(1);
-        team6.Statistics.MatchesLost.Should().Be(1 + (playoff5th ? 1 : 0));
-        team6.Statistics.MatchesPlayed.Should().Be(2 + (playoff5th ? 1 : 0));
+        team6.Statistics.MatchesLost.Should().Be(1 + (playoffFifth ? 1 : 0));
+        team6.Statistics.MatchesPlayed.Should().Be(2 + (playoffFifth ? 1 : 0));
     }
 
     [Fact]
     public void Tournament___Compute_With_Multiple_Group_Phase_Rounds___Works_As_Expected()
     {
-        var tournament = TestTournament.Default;
+        var tournament = new Core.Tournament(string.Empty);
 
         // Add group(s)
         var groupA = tournament.AddGroup('A');
@@ -252,13 +252,13 @@ public sealed class TournamentComputationTest
         tournament.AddGroupParticipant(groupA, team3);
 
         // Add matches
-        tournament._matches.Add(new Match(1, 1, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(2, 2, new GroupDefinitionSelector(1, 1), new GroupDefinitionSelector(1, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 4, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(3, 3, new GroupDefinitionSelector(1, 2), new GroupDefinitionSelector(1, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(1, new GroupDefinitionTeamSelector(groupA, 0), new GroupDefinitionTeamSelector(groupA, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(2, new GroupDefinitionTeamSelector(groupA, 1), new GroupDefinitionTeamSelector(groupA, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 4, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(3, new GroupDefinitionTeamSelector(groupA, 2), new GroupDefinitionTeamSelector(groupA, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
 
-        tournament._matches.Add(new Match(4, 4, new GroupDefinitionSelector(1, 1), new GroupDefinitionSelector(1, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(5, 5, new GroupDefinitionSelector(1, 2), new GroupDefinitionSelector(1, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(6, 6, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(4, new GroupDefinitionTeamSelector(groupA, 1), new GroupDefinitionTeamSelector(groupA, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(5, new GroupDefinitionTeamSelector(groupA, 2), new GroupDefinitionTeamSelector(groupA, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(6, new GroupDefinitionTeamSelector(groupA, 0), new GroupDefinitionTeamSelector(groupA, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
 
         // Compute tournament
         tournament.Compute();
@@ -298,29 +298,29 @@ public sealed class TournamentComputationTest
         });
 
         // Assert match teams
-        tournament._matches.Single(x => x.Id == 1).TeamA.Should().Be(team1);
-        tournament._matches.Single(x => x.Id == 1).TeamB.Should().Be(team2);
+        tournament._matches.Single(x => x.Index == 1).TeamA.Should().Be(team1);
+        tournament._matches.Single(x => x.Index == 1).TeamB.Should().Be(team2);
 
-        tournament._matches.Single(x => x.Id == 2).TeamA.Should().Be(team2);
-        tournament._matches.Single(x => x.Id == 2).TeamB.Should().Be(team3);
+        tournament._matches.Single(x => x.Index == 2).TeamA.Should().Be(team2);
+        tournament._matches.Single(x => x.Index == 2).TeamB.Should().Be(team3);
 
-        tournament._matches.Single(x => x.Id == 3).TeamA.Should().Be(team3);
-        tournament._matches.Single(x => x.Id == 3).TeamB.Should().Be(team1);
+        tournament._matches.Single(x => x.Index == 3).TeamA.Should().Be(team3);
+        tournament._matches.Single(x => x.Index == 3).TeamB.Should().Be(team1);
 
-        tournament._matches.Single(x => x.Id == 4).TeamA.Should().Be(team2);
-        tournament._matches.Single(x => x.Id == 4).TeamB.Should().Be(team1);
+        tournament._matches.Single(x => x.Index == 4).TeamA.Should().Be(team2);
+        tournament._matches.Single(x => x.Index == 4).TeamB.Should().Be(team1);
 
-        tournament._matches.Single(x => x.Id == 5).TeamA.Should().Be(team3);
-        tournament._matches.Single(x => x.Id == 5).TeamB.Should().Be(team2);
+        tournament._matches.Single(x => x.Index == 5).TeamA.Should().Be(team3);
+        tournament._matches.Single(x => x.Index == 5).TeamB.Should().Be(team2);
 
-        tournament._matches.Single(x => x.Id == 6).TeamA.Should().Be(team1);
-        tournament._matches.Single(x => x.Id == 6).TeamB.Should().Be(team3);
+        tournament._matches.Single(x => x.Index == 6).TeamA.Should().Be(team1);
+        tournament._matches.Single(x => x.Index == 6).TeamB.Should().Be(team3);
     }
 
     [Fact]
     public void Tournament___Compute_When_Direct_Comparison_Between_Teams_Is_Required___Works_As_Expected()
     {
-        var tournament = TestTournament.Default;
+        var tournament = new Core.Tournament(string.Empty);
 
         // Add group(s)
         var groupA = tournament.AddGroup('A');
@@ -338,12 +338,12 @@ public sealed class TournamentComputationTest
         tournament.AddGroupParticipant(groupA, team4);
 
         // Add matches
-        tournament._matches.Add(new Match(1, 1, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(2, 2, new GroupDefinitionSelector(1, 2), new GroupDefinitionSelector(1, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(3, 3, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(4, 4, new GroupDefinitionSelector(1, 1), new GroupDefinitionSelector(1, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(5, 5, new GroupDefinitionSelector(1, 3), new GroupDefinitionSelector(1, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 3, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(6, 6, new GroupDefinitionSelector(1, 1), new GroupDefinitionSelector(1, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(1, new GroupDefinitionTeamSelector(groupA, 0), new GroupDefinitionTeamSelector(groupA, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(2, new GroupDefinitionTeamSelector(groupA, 2), new GroupDefinitionTeamSelector(groupA, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(3, new GroupDefinitionTeamSelector(groupA, 0), new GroupDefinitionTeamSelector(groupA, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(4, new GroupDefinitionTeamSelector(groupA, 1), new GroupDefinitionTeamSelector(groupA, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(5, new GroupDefinitionTeamSelector(groupA, 3), new GroupDefinitionTeamSelector(groupA, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 3, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(6, new GroupDefinitionTeamSelector(groupA, 1), new GroupDefinitionTeamSelector(groupA, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
 
         // Compute tournament
         tournament.Compute();
@@ -394,23 +394,23 @@ public sealed class TournamentComputationTest
         });
 
         // Assert match teams
-        tournament._matches.Single(x => x.Id == 1).TeamA.Should().Be(team1);
-        tournament._matches.Single(x => x.Id == 1).TeamB.Should().Be(team2);
+        tournament._matches.Single(x => x.Index == 1).TeamA.Should().Be(team1);
+        tournament._matches.Single(x => x.Index == 1).TeamB.Should().Be(team2);
 
-        tournament._matches.Single(x => x.Id == 2).TeamA.Should().Be(team3);
-        tournament._matches.Single(x => x.Id == 2).TeamB.Should().Be(team4);
+        tournament._matches.Single(x => x.Index == 2).TeamA.Should().Be(team3);
+        tournament._matches.Single(x => x.Index == 2).TeamB.Should().Be(team4);
 
-        tournament._matches.Single(x => x.Id == 3).TeamA.Should().Be(team1);
-        tournament._matches.Single(x => x.Id == 3).TeamB.Should().Be(team3);
+        tournament._matches.Single(x => x.Index == 3).TeamA.Should().Be(team1);
+        tournament._matches.Single(x => x.Index == 3).TeamB.Should().Be(team3);
 
-        tournament._matches.Single(x => x.Id == 4).TeamA.Should().Be(team2);
-        tournament._matches.Single(x => x.Id == 4).TeamB.Should().Be(team4);
+        tournament._matches.Single(x => x.Index == 4).TeamA.Should().Be(team2);
+        tournament._matches.Single(x => x.Index == 4).TeamB.Should().Be(team4);
 
-        tournament._matches.Single(x => x.Id == 5).TeamA.Should().Be(team4);
-        tournament._matches.Single(x => x.Id == 5).TeamB.Should().Be(team1);
+        tournament._matches.Single(x => x.Index == 5).TeamA.Should().Be(team4);
+        tournament._matches.Single(x => x.Index == 5).TeamB.Should().Be(team1);
 
-        tournament._matches.Single(x => x.Id == 6).TeamA.Should().Be(team2);
-        tournament._matches.Single(x => x.Id == 6).TeamB.Should().Be(team3);
+        tournament._matches.Single(x => x.Index == 6).TeamA.Should().Be(team2);
+        tournament._matches.Single(x => x.Index == 6).TeamB.Should().Be(team3);
 
         // Assert team statistics
         team1.Statistics.ScoreFor.Should().Be(6);
@@ -441,7 +441,7 @@ public sealed class TournamentComputationTest
     [Fact]
     public void Tournament___Compute_When_Comparison_Between_Teams_Using_Priority_Is_Required___Works_As_Expected()
     {
-        var tournament = TestTournament.Default;
+        var tournament = new Core.Tournament(string.Empty);
 
         // Add group(s)
         var groupA = tournament.AddGroup('A');
@@ -457,9 +457,9 @@ public sealed class TournamentComputationTest
         tournament.AddGroupParticipant(groupA, team3, 2);
 
         // Add matches
-        tournament._matches.Add(new Match(1, 1, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(2, 2, new GroupDefinitionSelector(1, 1), new GroupDefinitionSelector(1, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(3, 3, new GroupDefinitionSelector(1, 2), new GroupDefinitionSelector(1, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(1, new GroupDefinitionTeamSelector(groupA, 0), new GroupDefinitionTeamSelector(groupA, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(2, new GroupDefinitionTeamSelector(groupA, 1), new GroupDefinitionTeamSelector(groupA, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(3, new GroupDefinitionTeamSelector(groupA, 2), new GroupDefinitionTeamSelector(groupA, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
 
         // Compute tournament
         tournament.Compute();
@@ -499,14 +499,14 @@ public sealed class TournamentComputationTest
         });
 
         // Assert match teams
-        tournament._matches.Single(x => x.Id == 1).TeamA.Should().Be(team1);
-        tournament._matches.Single(x => x.Id == 1).TeamB.Should().Be(team2);
+        tournament._matches.Single(x => x.Index == 1).TeamA.Should().Be(team1);
+        tournament._matches.Single(x => x.Index == 1).TeamB.Should().Be(team2);
 
-        tournament._matches.Single(x => x.Id == 2).TeamA.Should().Be(team2);
-        tournament._matches.Single(x => x.Id == 2).TeamB.Should().Be(team3);
+        tournament._matches.Single(x => x.Index == 2).TeamA.Should().Be(team2);
+        tournament._matches.Single(x => x.Index == 2).TeamB.Should().Be(team3);
 
-        tournament._matches.Single(x => x.Id == 3).TeamA.Should().Be(team3);
-        tournament._matches.Single(x => x.Id == 3).TeamB.Should().Be(team1);
+        tournament._matches.Single(x => x.Index == 3).TeamA.Should().Be(team3);
+        tournament._matches.Single(x => x.Index == 3).TeamB.Should().Be(team1);
 
         // Assert team statistics
         team1.Statistics.ScoreFor.Should().Be(2);
@@ -539,7 +539,7 @@ public sealed class TournamentComputationTest
     [Fact]
     public void Tournament___Compute_Qualified_Teams_Are_Always_Ranked_Better_Than_Non_Qualified_Teams_Case_1___Works_As_Expected()
     {
-         var tournament = TestTournament.Default;
+         var tournament = new Core.Tournament(string.Empty);
 
         // Add group(s)
         var groupA = tournament.AddGroup('A');
@@ -567,24 +567,24 @@ public sealed class TournamentComputationTest
         tournament.AddGroupParticipant(groupB, team8);
 
         // Add matches
-        tournament._matches.Add(new Match(1, 1, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(2, 2, new GroupDefinitionSelector(1, 2), new GroupDefinitionSelector(1, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(3, 3, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(4, 4, new GroupDefinitionSelector(1, 1), new GroupDefinitionSelector(1, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(5, 5, new GroupDefinitionSelector(1, 3), new GroupDefinitionSelector(1, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(6, 6, new GroupDefinitionSelector(1, 1), new GroupDefinitionSelector(1, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(1, new GroupDefinitionTeamSelector(groupA, 0), new GroupDefinitionTeamSelector(groupA, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(2, new GroupDefinitionTeamSelector(groupA, 2), new GroupDefinitionTeamSelector(groupA, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(3, new GroupDefinitionTeamSelector(groupA, 0), new GroupDefinitionTeamSelector(groupA, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(4, new GroupDefinitionTeamSelector(groupA, 1), new GroupDefinitionTeamSelector(groupA, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(5, new GroupDefinitionTeamSelector(groupA, 3), new GroupDefinitionTeamSelector(groupA, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(6, new GroupDefinitionTeamSelector(groupA, 1), new GroupDefinitionTeamSelector(groupA, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
 
-        tournament._matches.Add(new Match(7, 7, new GroupDefinitionSelector(2, 0), new GroupDefinitionSelector(2, 1), groupB) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(8, 8, new GroupDefinitionSelector(2, 2), new GroupDefinitionSelector(2, 3), groupB) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(9, 9, new GroupDefinitionSelector(2, 0), new GroupDefinitionSelector(2, 2), groupB) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(10, 10, new GroupDefinitionSelector(2, 1), new GroupDefinitionSelector(2, 3), groupB) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(11, 11, new GroupDefinitionSelector(2, 3), new GroupDefinitionSelector(2, 0), groupB) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(12, 12, new GroupDefinitionSelector(2, 1), new GroupDefinitionSelector(2, 2), groupB) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(7, new GroupDefinitionTeamSelector(groupB, 0), new GroupDefinitionTeamSelector(groupB, 1), groupB) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(8, new GroupDefinitionTeamSelector(groupB, 2), new GroupDefinitionTeamSelector(groupB, 3), groupB) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(9, new GroupDefinitionTeamSelector(groupB, 0), new GroupDefinitionTeamSelector(groupB, 2), groupB) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(10, new GroupDefinitionTeamSelector(groupB, 1), new GroupDefinitionTeamSelector(groupB, 3), groupB) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(11, new GroupDefinitionTeamSelector(groupB, 3), new GroupDefinitionTeamSelector(groupB, 0), groupB) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(12, new GroupDefinitionTeamSelector(groupB, 1), new GroupDefinitionTeamSelector(groupB, 2), groupB) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
 
-        tournament._matches.Add(new Match(13, 13, new GroupResultsSelector(1, 1), new GroupResultsSelector(2, 2), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(14, 14, new GroupResultsSelector(2, 1), new GroupResultsSelector(1, 2), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(13, new GroupResultsTeamSelector(groupA, 1), new GroupResultsTeamSelector(groupB, 2), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(14, new GroupResultsTeamSelector(groupB, 1), new GroupResultsTeamSelector(groupA, 2), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
 
-        tournament._matches.Add(new Match(15, 15, new MatchSelector(13, MatchSelector.Mode.Winner), new MatchSelector(14, MatchSelector.Mode.Winner), (int)FinalsRoundOrder.FinalOnly, 1) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(15, new MatchTeamSelector(tournament._matches.Single(x => x.Index == 13), MatchTeamSelector.Mode.Winner), new MatchTeamSelector(tournament._matches.Single(x => x.Index == 14), MatchTeamSelector.Mode.Winner), (int)FinalsRoundOrder.FinalOnly, 1) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
 
         // Compute tournament
         tournament.Compute();
@@ -621,7 +621,7 @@ public sealed class TournamentComputationTest
     [Fact]
     public void Tournament___Compute_Qualified_Teams_Are_Always_Ranked_Better_Than_Non_Qualified_Teams_Case_2___Works_As_Expected()
     {
-         var tournament = TestTournament.Default;
+         var tournament = new Core.Tournament(string.Empty);
 
         // Add group(s)
         var groupA = tournament.AddGroup('A');
@@ -659,36 +659,36 @@ public sealed class TournamentComputationTest
         tournament.AddGroupParticipant(groupC, team12);
 
         // Add matches
-        tournament._matches.Add(new Match(1, 1, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(2, 2, new GroupDefinitionSelector(1, 2), new GroupDefinitionSelector(1, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(3, 3, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(4, 4, new GroupDefinitionSelector(1, 1), new GroupDefinitionSelector(1, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(5, 5, new GroupDefinitionSelector(1, 3), new GroupDefinitionSelector(1, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(6, 6, new GroupDefinitionSelector(1, 1), new GroupDefinitionSelector(1, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(1, new GroupDefinitionTeamSelector(groupA, 0), new GroupDefinitionTeamSelector(groupA, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(2, new GroupDefinitionTeamSelector(groupA, 2), new GroupDefinitionTeamSelector(groupA, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(3, new GroupDefinitionTeamSelector(groupA, 0), new GroupDefinitionTeamSelector(groupA, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(4, new GroupDefinitionTeamSelector(groupA, 1), new GroupDefinitionTeamSelector(groupA, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(5, new GroupDefinitionTeamSelector(groupA, 3), new GroupDefinitionTeamSelector(groupA, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(6, new GroupDefinitionTeamSelector(groupA, 1), new GroupDefinitionTeamSelector(groupA, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
 
-        tournament._matches.Add(new Match(7, 7, new GroupDefinitionSelector(2, 0), new GroupDefinitionSelector(2, 1), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(8, 8, new GroupDefinitionSelector(2, 2), new GroupDefinitionSelector(2, 3), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(9, 9, new GroupDefinitionSelector(2, 0), new GroupDefinitionSelector(2, 2), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(10, 10, new GroupDefinitionSelector(2, 1), new GroupDefinitionSelector(2, 3), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(11, 11, new GroupDefinitionSelector(2, 3), new GroupDefinitionSelector(2, 0), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(12, 12, new GroupDefinitionSelector(2, 1), new GroupDefinitionSelector(2, 2), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(7, new GroupDefinitionTeamSelector(groupB, 0), new GroupDefinitionTeamSelector(groupB, 1), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(8, new GroupDefinitionTeamSelector(groupB, 2), new GroupDefinitionTeamSelector(groupB, 3), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(9, new GroupDefinitionTeamSelector(groupB, 0), new GroupDefinitionTeamSelector(groupB, 2), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(10, new GroupDefinitionTeamSelector(groupB, 1), new GroupDefinitionTeamSelector(groupB, 3), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(11, new GroupDefinitionTeamSelector(groupB, 3), new GroupDefinitionTeamSelector(groupB, 0), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(12, new GroupDefinitionTeamSelector(groupB, 1), new GroupDefinitionTeamSelector(groupB, 2), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
 
-        tournament._matches.Add(new Match(13, 13, new GroupDefinitionSelector(3, 0), new GroupDefinitionSelector(3, 1), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(14, 14, new GroupDefinitionSelector(3, 2), new GroupDefinitionSelector(3, 3), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(15, 15, new GroupDefinitionSelector(3, 0), new GroupDefinitionSelector(3, 2), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(16, 16, new GroupDefinitionSelector(3, 1), new GroupDefinitionSelector(3, 3), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(17, 17, new GroupDefinitionSelector(3, 3), new GroupDefinitionSelector(3, 0), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(18, 18, new GroupDefinitionSelector(3, 1), new GroupDefinitionSelector(3, 2), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(13, new GroupDefinitionTeamSelector(groupC, 0), new GroupDefinitionTeamSelector(groupC, 1), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(14, new GroupDefinitionTeamSelector(groupC, 2), new GroupDefinitionTeamSelector(groupC, 3), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(15, new GroupDefinitionTeamSelector(groupC, 0), new GroupDefinitionTeamSelector(groupC, 2), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(16, new GroupDefinitionTeamSelector(groupC, 1), new GroupDefinitionTeamSelector(groupC, 3), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(17, new GroupDefinitionTeamSelector(groupC, 3), new GroupDefinitionTeamSelector(groupC, 0), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(18, new GroupDefinitionTeamSelector(groupC, 1), new GroupDefinitionTeamSelector(groupC, 2), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
 
-        tournament._matches.Add(new Match(19, 19, new GroupResultsSelector(1, 1), new GroupResultsNthRankedSelector([groupA.Id, groupB.Id, groupC.Id], 0, 3), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard }); // Team 1 vs Team 11
-        tournament._matches.Add(new Match(20, 20, new GroupResultsSelector(2, 1), new GroupResultsNthRankedSelector([groupA.Id, groupB.Id, groupC.Id], 1, 3), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 3, OutcomeType = MatchOutcomeType.Standard }); // Team 5 vs Team 7
-        tournament._matches.Add(new Match(21, 21, new GroupResultsSelector(1, 2), new GroupResultsSelector(3, 2), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard }); // Team 2 vs Team 10
-        tournament._matches.Add(new Match(22, 22, new GroupResultsSelector(2, 2), new GroupResultsSelector(3, 1), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard }); // Team 6 vs Team 9
+        tournament._matches.Add(new Match(19, new GroupResultsTeamSelector(groupA, 1), new GroupResultsNthRankedTeamSelector([groupA, groupB, groupC], 0, 3), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard }); // Team 1 vs Team 11
+        tournament._matches.Add(new Match(20, new GroupResultsTeamSelector(groupB, 1), new GroupResultsNthRankedTeamSelector([groupA, groupB, groupC], 1, 3), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 3, OutcomeType = MatchOutcomeType.Standard }); // Team 5 vs Team 7
+        tournament._matches.Add(new Match(21, new GroupResultsTeamSelector(groupA, 2), new GroupResultsTeamSelector(groupC, 2), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard }); // Team 2 vs Team 10
+        tournament._matches.Add(new Match(22, new GroupResultsTeamSelector(groupB, 2), new GroupResultsTeamSelector(groupC, 1), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard }); // Team 6 vs Team 9
 
-        tournament._matches.Add(new Match(23, 23, new MatchSelector(19, MatchSelector.Mode.Winner), new MatchSelector(20, MatchSelector.Mode.Winner), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard }); // Team 11 vs Team 7
-        tournament._matches.Add(new Match(24, 24, new MatchSelector(21, MatchSelector.Mode.Winner), new MatchSelector(22, MatchSelector.Mode.Winner), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard }); // Team 2 vs Team 6
+        tournament._matches.Add(new Match(23, new MatchTeamSelector(tournament._matches.Single(x => x.Index == 19), MatchTeamSelector.Mode.Winner), new MatchTeamSelector(tournament._matches.Single(x => x.Index == 20), MatchTeamSelector.Mode.Winner), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard }); // Team 11 vs Team 7
+        tournament._matches.Add(new Match(24, new MatchTeamSelector(tournament._matches.Single(x => x.Index == 21), MatchTeamSelector.Mode.Winner), new MatchTeamSelector(tournament._matches.Single(x => x.Index == 22), MatchTeamSelector.Mode.Winner), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard }); // Team 2 vs Team 6
 
-        tournament._matches.Add(new Match(25, 25, new MatchSelector(23, MatchSelector.Mode.Winner), new MatchSelector(24, MatchSelector.Mode.Winner), (int)FinalsRoundOrder.FinalOnly, 1) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(25, new MatchTeamSelector(tournament._matches.Single(x => x.Index == 23), MatchTeamSelector.Mode.Winner), new MatchTeamSelector(tournament._matches.Single(x => x.Index == 24), MatchTeamSelector.Mode.Winner), (int)FinalsRoundOrder.FinalOnly, 1) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
 
         // Compute tournament
         tournament.Compute();
@@ -729,7 +729,7 @@ public sealed class TournamentComputationTest
     [Fact]
     public void Tournament___Compute___Matches_With_Special_Scoring_Do_Not_Count_Towards_Team_Statistics_Score()
     {
-        var tournament = TestTournament.Default;
+        var tournament = new Core.Tournament(string.Empty);
 
         // Add group
         var groupA = tournament.AddGroup('A');
@@ -743,8 +743,8 @@ public sealed class TournamentComputationTest
         tournament.AddGroupParticipant(groupA, team2);
 
         // Add matches
-        tournament._matches.Add(new Match(1, 1, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 4, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(2, 2, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 0, OutcomeType = MatchOutcomeType.SpecialScoring });
+        tournament._matches.Add(new Match(1, new GroupDefinitionTeamSelector(groupA, 0), new GroupDefinitionTeamSelector(groupA, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 4, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(2, new GroupDefinitionTeamSelector(groupA, 0), new GroupDefinitionTeamSelector(groupA, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 3, ScoreB = 0, OutcomeType = MatchOutcomeType.SpecialScoring });
 
         // Compute tournament
         tournament.Compute();
@@ -773,9 +773,9 @@ public sealed class TournamentComputationTest
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
-    public void Tournament___Compute_Rankings_Are_Always_Evaluated_As_Soon_As_Possible___Works_As_Expected(bool with3rdPlacePlayoff)
+    public void Tournament___Compute_Rankings_Are_Always_Evaluated_As_Soon_As_Possible___Works_As_Expected(bool withThirdPlacePlayoff)
     {
-         var tournament = TestTournament.Default;
+         var tournament = new Core.Tournament(string.Empty);
 
         // Add group(s)
         var groupA = tournament.AddGroup('A');
@@ -813,43 +813,43 @@ public sealed class TournamentComputationTest
         tournament.AddGroupParticipant(groupC, team12);
 
         // Add matches WITHOUT setting the outcomes after match 17
-        tournament._matches.Add(new Match(1, 1, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(2, 2, new GroupDefinitionSelector(1, 2), new GroupDefinitionSelector(1, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(3, 3, new GroupDefinitionSelector(1, 0), new GroupDefinitionSelector(1, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(4, 4, new GroupDefinitionSelector(1, 1), new GroupDefinitionSelector(1, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(5, 5, new GroupDefinitionSelector(1, 3), new GroupDefinitionSelector(1, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(6, 6, new GroupDefinitionSelector(1, 1), new GroupDefinitionSelector(1, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(1, new GroupDefinitionTeamSelector(groupA, 0), new GroupDefinitionTeamSelector(groupA, 1), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(2, new GroupDefinitionTeamSelector(groupA, 2), new GroupDefinitionTeamSelector(groupA, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(3, new GroupDefinitionTeamSelector(groupA, 0), new GroupDefinitionTeamSelector(groupA, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(4, new GroupDefinitionTeamSelector(groupA, 1), new GroupDefinitionTeamSelector(groupA, 3), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(5, new GroupDefinitionTeamSelector(groupA, 3), new GroupDefinitionTeamSelector(groupA, 0), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(6, new GroupDefinitionTeamSelector(groupA, 1), new GroupDefinitionTeamSelector(groupA, 2), groupA) { IsCurrentlyPlaying = false, ScoreA = 0, ScoreB = 0, OutcomeType = MatchOutcomeType.Standard });
 
-        tournament._matches.Add(new Match(7, 7, new GroupDefinitionSelector(2, 0), new GroupDefinitionSelector(2, 1), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(8, 8, new GroupDefinitionSelector(2, 2), new GroupDefinitionSelector(2, 3), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(9, 9, new GroupDefinitionSelector(2, 0), new GroupDefinitionSelector(2, 2), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(10, 10, new GroupDefinitionSelector(2, 1), new GroupDefinitionSelector(2, 3), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(11, 11, new GroupDefinitionSelector(2, 3), new GroupDefinitionSelector(2, 0), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(12, 12, new GroupDefinitionSelector(2, 1), new GroupDefinitionSelector(2, 2), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(7, new GroupDefinitionTeamSelector(groupB, 0), new GroupDefinitionTeamSelector(groupB, 1), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(8, new GroupDefinitionTeamSelector(groupB, 2), new GroupDefinitionTeamSelector(groupB, 3), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(9, new GroupDefinitionTeamSelector(groupB, 0), new GroupDefinitionTeamSelector(groupB, 2), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(10, new GroupDefinitionTeamSelector(groupB, 1), new GroupDefinitionTeamSelector(groupB, 3), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(11, new GroupDefinitionTeamSelector(groupB, 3), new GroupDefinitionTeamSelector(groupB, 0), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(12, new GroupDefinitionTeamSelector(groupB, 1), new GroupDefinitionTeamSelector(groupB, 2), groupB) { IsCurrentlyPlaying = false, ScoreA = 1, ScoreB = 1, OutcomeType = MatchOutcomeType.Standard });
 
-        tournament._matches.Add(new Match(13, 13, new GroupDefinitionSelector(3, 0), new GroupDefinitionSelector(3, 1), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(14, 14, new GroupDefinitionSelector(3, 2), new GroupDefinitionSelector(3, 3), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(15, 15, new GroupDefinitionSelector(3, 0), new GroupDefinitionSelector(3, 2), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(16, 16, new GroupDefinitionSelector(3, 1), new GroupDefinitionSelector(3, 3), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(17, 17, new GroupDefinitionSelector(3, 3), new GroupDefinitionSelector(3, 0), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
-        tournament._matches.Add(new Match(18, 18, new GroupDefinitionSelector(3, 1), new GroupDefinitionSelector(3, 2), groupC) { IsCurrentlyPlaying = false });
+        tournament._matches.Add(new Match(13, new GroupDefinitionTeamSelector(groupC, 0), new GroupDefinitionTeamSelector(groupC, 1), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(14, new GroupDefinitionTeamSelector(groupC, 2), new GroupDefinitionTeamSelector(groupC, 3), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(15, new GroupDefinitionTeamSelector(groupC, 0), new GroupDefinitionTeamSelector(groupC, 2), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(16, new GroupDefinitionTeamSelector(groupC, 1), new GroupDefinitionTeamSelector(groupC, 3), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(17, new GroupDefinitionTeamSelector(groupC, 3), new GroupDefinitionTeamSelector(groupC, 0), groupC) { IsCurrentlyPlaying = false, ScoreA = 2, ScoreB = 2, OutcomeType = MatchOutcomeType.Standard });
+        tournament._matches.Add(new Match(18, new GroupDefinitionTeamSelector(groupC, 1), new GroupDefinitionTeamSelector(groupC, 2), groupC) { IsCurrentlyPlaying = false });
 
-        tournament._matches.Add(new Match(19, 19, new GroupResultsSelector(1, 1), new GroupResultsNthRankedSelector([groupA.Id, groupB.Id, groupC.Id], 0, 3), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false }); // Team 1 vs Team 11
-        tournament._matches.Add(new Match(20, 20, new GroupResultsSelector(2, 1), new GroupResultsNthRankedSelector([groupA.Id, groupB.Id, groupC.Id], 1, 3), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false }); // Team 5 vs Team 7
-        tournament._matches.Add(new Match(21, 21, new GroupResultsSelector(1, 2), new GroupResultsSelector(3, 2), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false }); // Team 2 vs Team 10
-        tournament._matches.Add(new Match(22, 22, new GroupResultsSelector(2, 2), new GroupResultsSelector(3, 1), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false }); // Team 6 vs Team 9
+        tournament._matches.Add(new Match(19, new GroupResultsTeamSelector(groupA, 1), new GroupResultsNthRankedTeamSelector([groupA, groupB, groupC], 0, 3), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false }); // Team 1 vs Team 11
+        tournament._matches.Add(new Match(20, new GroupResultsTeamSelector(groupB, 1), new GroupResultsNthRankedTeamSelector([groupA, groupB, groupC], 1, 3), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false }); // Team 5 vs Team 7
+        tournament._matches.Add(new Match(21, new GroupResultsTeamSelector(groupA, 2), new GroupResultsTeamSelector(groupC, 2), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false }); // Team 2 vs Team 10
+        tournament._matches.Add(new Match(22, new GroupResultsTeamSelector(groupB, 2), new GroupResultsTeamSelector(groupC, 1), (int)FinalsRoundOrder.QuarterFinals, null) { IsCurrentlyPlaying = false }); // Team 6 vs Team 9
 
-        tournament._matches.Add(new Match(23, 23, new MatchSelector(19, MatchSelector.Mode.Winner), new MatchSelector(20, MatchSelector.Mode.Winner), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false }); // Team 11 vs Team 7
-        tournament._matches.Add(new Match(24, 24, new MatchSelector(21, MatchSelector.Mode.Winner), new MatchSelector(22, MatchSelector.Mode.Winner), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false }); // Team 2 vs Team 6
+        tournament._matches.Add(new Match(23, new MatchTeamSelector(tournament._matches.Single(x => x.Index == 19), MatchTeamSelector.Mode.Winner), new MatchTeamSelector(tournament._matches.Single(x => x.Index == 20), MatchTeamSelector.Mode.Winner), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false }); // Team 11 vs Team 7
+        tournament._matches.Add(new Match(24, new MatchTeamSelector(tournament._matches.Single(x => x.Index == 21), MatchTeamSelector.Mode.Winner), new MatchTeamSelector(tournament._matches.Single(x => x.Index == 22), MatchTeamSelector.Mode.Winner), (int)FinalsRoundOrder.SemiFinals, null) { IsCurrentlyPlaying = false }); // Team 2 vs Team 6
 
-        if (with3rdPlacePlayoff)
+        if (withThirdPlacePlayoff)
         {
-            tournament._matches.Add(new Match(25, 25, new MatchSelector(23, MatchSelector.Mode.Loser), new MatchSelector(24, MatchSelector.Mode.Loser), null, 3) { IsCurrentlyPlaying = false }); // Team 7 vs Team 2
-            tournament._matches.Add(new Match(26, 26, new MatchSelector(23, MatchSelector.Mode.Winner), new MatchSelector(24, MatchSelector.Mode.Winner), (int)FinalsRoundOrder.FinalOnly, 1) { IsCurrentlyPlaying = false }); // Team 11 vs Team 6
+            tournament._matches.Add(new Match(25, new MatchTeamSelector(tournament._matches.Single(x => x.Index == 23), MatchTeamSelector.Mode.Loser), new MatchTeamSelector(tournament._matches.Single(x => x.Index == 24), MatchTeamSelector.Mode.Loser), null, 3) { IsCurrentlyPlaying = false }); // Team 7 vs Team 2
+            tournament._matches.Add(new Match(26, new MatchTeamSelector(tournament._matches.Single(x => x.Index == 23), MatchTeamSelector.Mode.Winner), new MatchTeamSelector(tournament._matches.Single(x => x.Index == 24), MatchTeamSelector.Mode.Winner), (int)FinalsRoundOrder.FinalOnly, 1) { IsCurrentlyPlaying = false }); // Team 11 vs Team 6
         }
         else
         {
-            tournament._matches.Add(new Match(25, 25, new MatchSelector(23, MatchSelector.Mode.Winner), new MatchSelector(24, MatchSelector.Mode.Winner), (int)FinalsRoundOrder.FinalOnly, 1) { IsCurrentlyPlaying = false }); // Team 11 vs Team 6
+            tournament._matches.Add(new Match(25, new MatchTeamSelector(tournament._matches.Single(x => x.Index == 23), MatchTeamSelector.Mode.Winner), new MatchTeamSelector(tournament._matches.Single(x => x.Index == 24), MatchTeamSelector.Mode.Winner), (int)FinalsRoundOrder.FinalOnly, 1) { IsCurrentlyPlaying = false }); // Team 11 vs Team 6
         }
 
         // For now, only all group matches except one have an outcome => no rankings yet
@@ -883,7 +883,7 @@ public sealed class TournamentComputationTest
         AssertRankingTeams([null, null, null, null, team9, team1, team10, team5, team12, team8, team3, team4]);
         AssertRankingReasons();
 
-        if (with3rdPlacePlayoff)
+        if (withThirdPlacePlayoff)
         {
             // Set the second semi-final => Nothing changes because the final four rankings each are set by the last two matches
             tournament._matches.Single(x => x.Index == 24).SetOutcome(false, 0, 1, MatchOutcomeType.Standard);
@@ -945,8 +945,8 @@ public sealed class TournamentComputationTest
         {
             tournament._ranking.Single(x => x.Position == 1).Reason.Should().Be(RankingReason.WinnerOfFinal);
             tournament._ranking.Single(x => x.Position == 2).Reason.Should().Be(RankingReason.LoserOfFinal);
-            tournament._ranking.Single(x => x.Position == 3).Reason.Should().Be(with3rdPlacePlayoff ? RankingReason.WinnerOfThirdPlacePlayoff : RankingReason.QualifiedForSemiFinals);
-            tournament._ranking.Single(x => x.Position == 4).Reason.Should().Be(with3rdPlacePlayoff ? RankingReason.LoserOfThirdPlacePlayoff : RankingReason.QualifiedForSemiFinals);
+            tournament._ranking.Single(x => x.Position == 3).Reason.Should().Be(withThirdPlacePlayoff ? RankingReason.WinnerOfThirdPlacePlayoff : RankingReason.QualifiedForSemiFinals);
+            tournament._ranking.Single(x => x.Position == 4).Reason.Should().Be(withThirdPlacePlayoff ? RankingReason.LoserOfThirdPlacePlayoff : RankingReason.QualifiedForSemiFinals);
             tournament._ranking.Single(x => x.Position == 5).Reason.Should().Be(RankingReason.QualifiedForQuarterFinals);
             tournament._ranking.Single(x => x.Position == 6).Reason.Should().Be(RankingReason.QualifiedForQuarterFinals);
             tournament._ranking.Single(x => x.Position == 7).Reason.Should().Be(RankingReason.QualifiedForQuarterFinals);
@@ -961,7 +961,7 @@ public sealed class TournamentComputationTest
     [Fact]
     public void Tournament___Compute_Ranking_Overwrites_Are_Applied_Correctly___Works_As___Expected()
     {
-        var tournament = TestTournament.Default;
+        var tournament = new Core.Tournament(string.Empty);
 
         // Add group
         var groupA = tournament.AddGroup('A');

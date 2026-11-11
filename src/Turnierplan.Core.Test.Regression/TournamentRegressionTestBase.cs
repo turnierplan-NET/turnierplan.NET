@@ -1,11 +1,9 @@
-using Turnierplan.Core.Tournament;
-
 namespace Turnierplan.Core.Test.Regression;
 
-internal abstract class TournamentRegressionTestBase : RegressionTestBase<Tournament.Tournament>
+internal abstract class TournamentRegressionTestBase : RegressionTestBase<Tournament>
 {
     protected TournamentRegressionTestBase()
     {
-        Subject(new Tournament.Tournament(new Organization.Organization(string.Empty), "reg_name", Visibility.Private));
+        Subject(new Tournament("reg_name"));
     }
 }

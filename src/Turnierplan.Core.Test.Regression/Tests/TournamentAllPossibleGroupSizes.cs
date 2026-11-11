@@ -1,5 +1,4 @@
-using Turnierplan.Core.Exceptions;
-using Turnierplan.Core.Tournament;
+using Turnierplan.Core.Configuration;
 
 namespace Turnierplan.Core.Test.Regression.Tests;
 
@@ -43,11 +42,11 @@ internal sealed class TournamentAllPossibleGroupSizes : TournamentRegressionTest
         Step(AddAnotherTeam); // group with 9 teams
 
         // Adding another team throws an exception because there exists no config for 10 teams
-        StepWithException<TurnierplanException>(AddAnotherTeam);
+        StepWithException<TournamentException>(AddAnotherTeam);
 
         return;
 
-        void AddAnotherTeam(Tournament.Tournament t)
+        void AddAnotherTeam(Tournament t)
         {
             var tNext = t.AddTeam($"Test {counter++}");
             t.AddGroupParticipant(group, tNext);
