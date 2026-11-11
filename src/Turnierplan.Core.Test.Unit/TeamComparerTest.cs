@@ -376,7 +376,7 @@ public sealed class TeamComparerTest
 
     private static TeamComparer CreateTestComparer(IEnumerable<Match> matches, params TeamComparisonMode[] comparisonModes)
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
 
         tournament._matches.AddRange(matches);
 

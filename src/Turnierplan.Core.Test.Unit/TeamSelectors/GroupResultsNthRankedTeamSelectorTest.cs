@@ -18,7 +18,7 @@ public sealed class GroupResultsNthRankedTeamSelectorTest
     public void GroupResultsNthRankedTeamSelector___GetTargetTeam_When_Target_Is_Valid___Returns_Expected_Result(int ordinalNumber, int placementRank, string expectedTeamName)
     {
         // Arrange
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
         var teams = Enumerable.Range(0, 8).Select(x => tournament.AddTeam($"Team {x}")).ToArray();
         var groupA = tournament.AddGroup('A');
         var groupB = tournament.AddGroup('B');
@@ -48,7 +48,7 @@ public sealed class GroupResultsNthRankedTeamSelectorTest
     public void GroupResultsNthRankedTeamSelector___GetTargetTeam_When_Target_Is_Valid___Returns_Null(int ordinalNumber, int placementRank)
     {
         // Arrange
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
         var teams = Enumerable.Range(0, 8).Select(x => tournament.AddTeam(string.Empty)).ToArray();
         var groupA = tournament.AddGroup('A');
         var groupB = tournament.AddGroup('B');
@@ -76,7 +76,7 @@ public sealed class GroupResultsNthRankedTeamSelectorTest
     public void GroupResultsNthRankedTeamSelector___GetTargetTeam_When_Match_Is_Currently_Playing___Returns_Null(bool playingGroupA, bool playingGroupB)
     {
         // Arrange
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
         var teams = Enumerable.Range(0, 8).Select(x => tournament.AddTeam($"Team {x}")).ToArray();
         var groupA = tournament.AddGroup('A');
         var groupB = tournament.AddGroup('B');
@@ -116,7 +116,7 @@ public sealed class GroupResultsNthRankedTeamSelectorTest
     [InlineData(1, 4)]
     public void GroupResultsNthRankedTeamSelector___Equals___Works_As_Expected(int ordinalNumber, int placementRank)
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
         var groupA = tournament.AddGroup('A');
         var groupB = tournament.AddGroup('B');
         var groupC = tournament.AddGroup('C');

@@ -10,7 +10,7 @@ public sealed class MatchTeamSelectorTest
 
     public MatchTeamSelectorTest()
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
         _teamA = tournament.AddTeam("Team A");
         _teamB = tournament.AddTeam("Team B");
     }

@@ -10,7 +10,7 @@ public sealed class GroupDefinitionTeamSelectorTest
 
     public GroupDefinitionTeamSelectorTest()
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
         _group = tournament.AddGroup('A');
 
         for (var i = 0; i < 4; i++)

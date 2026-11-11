@@ -11,7 +11,7 @@ public sealed class GroupResultsTeamSelectorTest
 
     public GroupResultsTeamSelectorTest()
     {
-        var tournament = new Tournament(string.Empty);
+        var tournament = new Core.Tournament(string.Empty);
         _group = tournament.AddGroup('A');
 
         for (var i = 0; i < 4; i++)
