@@ -17,7 +17,7 @@ public sealed class TournamentTest
     {
         // Arrange
         var tournament = TestTournament.Default;
-        tournament._matches.Add(new Match(1, 1, new NullSelector(), new NullSelector(), null!)
+        tournament._matches.Add(new Match(1, 1, new NullTeamSelector(), new NullTeamSelector(), null!)
         {
             Kickoff = DateTime.Parse(originalUtcKickoffTime, CultureInfo.InvariantCulture).ToUniversalTime()
         });
@@ -34,10 +34,10 @@ public sealed class TournamentTest
     {
         // Arrange
         var tournament = TestTournament.Default;
-        tournament._matches.Add(new Match(1, 1, new NullSelector(), new NullSelector(), null!));
-        tournament._matches.Add(new Match(2, 2, new NullSelector(), new NullSelector(), null!));
-        tournament._matches.Add(new Match(3, 3, new NullSelector(), new NullSelector(), null!));
-        tournament._matches.Add(new Match(4, 4, new NullSelector(), new NullSelector(), null!));
+        tournament._matches.Add(new Match(1, 1, new NullTeamSelector(), new NullTeamSelector(), null!));
+        tournament._matches.Add(new Match(2, 2, new NullTeamSelector(), new NullTeamSelector(), null!));
+        tournament._matches.Add(new Match(3, 3, new NullTeamSelector(), new NullTeamSelector(), null!));
+        tournament._matches.Add(new Match(4, 4, new NullTeamSelector(), new NullTeamSelector(), null!));
 
         // Act
         tournament.SetMatchOrder(new Dictionary<int, int>
@@ -67,10 +67,10 @@ public sealed class TournamentTest
 
         // Arrange
         var tournament = TestTournament.Default;
-        tournament._matches.Add(new Match(1, 1, new NullSelector(), new NullSelector(), null!));
-        tournament._matches.Add(new Match(2, 2, new NullSelector(), new NullSelector(), null!));
-        tournament._matches.Add(new Match(3, 3, new NullSelector(), new NullSelector(), null!));
-        tournament._matches.Add(new Match(4, 4, new NullSelector(), new NullSelector(), null!));
+        tournament._matches.Add(new Match(1, 1, new NullTeamSelector(), new NullTeamSelector(), null!));
+        tournament._matches.Add(new Match(2, 2, new NullTeamSelector(), new NullTeamSelector(), null!));
+        tournament._matches.Add(new Match(3, 3, new NullTeamSelector(), new NullTeamSelector(), null!));
+        tournament._matches.Add(new Match(4, 4, new NullTeamSelector(), new NullTeamSelector(), null!));
 
         // Act
         var order = Enumerable.Range(0, matchIds.Length).ToDictionary(i => matchIds[i], i => matchIndices[i]);
@@ -84,9 +84,9 @@ public sealed class TournamentTest
     public void Tournament___StartTimestamp_And_EndTimestamp_When_Matches_Have_No_Kickoff_Time___Returns_Correct_Value()
     {
         var tournament = TestTournament.Default;
-        tournament._matches.Add(new Match(1, 1, new NullSelector(), new NullSelector(), null!));
-        tournament._matches.Add(new Match(2, 2, new NullSelector(), new NullSelector(), null!));
-        tournament._matches.Add(new Match(3, 3, new NullSelector(), new NullSelector(), null!));
+        tournament._matches.Add(new Match(1, 1, new NullTeamSelector(), new NullTeamSelector(), null!));
+        tournament._matches.Add(new Match(2, 2, new NullTeamSelector(), new NullTeamSelector(), null!));
+        tournament._matches.Add(new Match(3, 3, new NullTeamSelector(), new NullTeamSelector(), null!));
 
         tournament.StartTimestamp.Should().BeNull();
         tournament.EndTimestamp.Should().BeNull();
@@ -96,9 +96,9 @@ public sealed class TournamentTest
     public void Tournament___StartTimestamp_And_EndTimestamp_When_Matches_Have_Kickoff_Time___Returns_Correct_Value()
     {
         var tournament = TestTournament.Default;
-        tournament._matches.Add(new Match(1, 1, new NullSelector(), new NullSelector(), null!) { Kickoff = new DateTime(2024, 07, 01, 12, 00, 00) });
-        tournament._matches.Add(new Match(2, 2, new NullSelector(), new NullSelector(), null!) { Kickoff = new DateTime(2024, 07, 01, 12, 10, 00) });
-        tournament._matches.Add(new Match(3, 3, new NullSelector(), new NullSelector(), null!) { Kickoff = new DateTime(2024, 07, 01, 12, 20, 00) });
+        tournament._matches.Add(new Match(1, 1, new NullTeamSelector(), new NullTeamSelector(), null!) { Kickoff = new DateTime(2024, 07, 01, 12, 00, 00) });
+        tournament._matches.Add(new Match(2, 2, new NullTeamSelector(), new NullTeamSelector(), null!) { Kickoff = new DateTime(2024, 07, 01, 12, 10, 00) });
+        tournament._matches.Add(new Match(3, 3, new NullTeamSelector(), new NullTeamSelector(), null!) { Kickoff = new DateTime(2024, 07, 01, 12, 20, 00) });
 
         tournament.StartTimestamp.Should().Be(new DateTime(2024, 07, 01, 12, 00, 00));
         tournament.EndTimestamp.Should().Be(new DateTime(2024, 07, 01, 12, 20, 00));
@@ -125,11 +125,11 @@ public sealed class TournamentTest
             }
         };
 
-        tournament._matches.Add(new Match(1, 1, new NullSelector(), new NullSelector(), null!) { Kickoff = new DateTime(2024, 07, 01, 12, 00, 00) });
-        tournament._matches.Add(new Match(2, 2, new NullSelector(), new NullSelector(), null!) { Kickoff = new DateTime(2024, 07, 01, 12, 10, 00) });
+        tournament._matches.Add(new Match(1, 1, new NullTeamSelector(), new NullTeamSelector(), null!) { Kickoff = new DateTime(2024, 07, 01, 12, 00, 00) });
+        tournament._matches.Add(new Match(2, 2, new NullTeamSelector(), new NullTeamSelector(), null!) { Kickoff = new DateTime(2024, 07, 01, 12, 10, 00) });
 
         var group = isFinalsMatch ? null : new Group(1, 'A');
-        tournament._matches.Add(new Match(3, 3, new NullSelector(), new NullSelector(), group) { Kickoff = new DateTime(2024, 07, 01, 12, 20, 00) });
+        tournament._matches.Add(new Match(3, 3, new NullTeamSelector(), new NullTeamSelector(), group) { Kickoff = new DateTime(2024, 07, 01, 12, 20, 00) });
 
         tournament.StartTimestamp.Should().Be(new DateTime(2024, 07, 01, 12, 00, 00));
         tournament.EndTimestamp.Should().Be(new DateTime(2024, 07, 01, 12, isFinalsMatch ? 29 : 27, 00));
