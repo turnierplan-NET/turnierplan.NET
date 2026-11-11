@@ -16,9 +16,11 @@ public sealed class MatchSelectorTest
     }
 
     [Theory]
-    [InlineData(MatchSelector.Mode.Winner, "Team A")]
-    [InlineData(MatchSelector.Mode.Loser, "Team B")]
-    public void MatchSelector___GetTargetTeam_When_Target_Is_Valid___Returns_Expected_Result(MatchSelector.Mode selectionMode, string expectedTeamName)
+    [InlineData(MatchSelector.Mode.Winner, 0, "Team A")]
+    [InlineData(MatchSelector.Mode.Loser, 0, "Team B")]
+    [InlineData(MatchSelector.Mode.Winner, 2, "Team B")]
+    [InlineData(MatchSelector.Mode.Loser, 2, "Team A")]
+    public void MatchSelector___GetTargetTeam_When_Target_Is_Valid___Returns_Expected_Result(MatchSelector.Mode selectionMode, int scoreB, string expectedTeamName)
     {
         // Arrange
         var match = new Match(1, new NullSelector(), new NullSelector(), null)
@@ -27,7 +29,7 @@ public sealed class MatchSelectorTest
             TeamB = _teamB,
             IsCurrentlyPlaying = false,
             ScoreA = 1,
-            ScoreB = 0,
+            ScoreB = scoreB,
             OutcomeType = MatchOutcomeType.Standard
         };
         var selector = new MatchSelector(match, selectionMode);
@@ -41,14 +43,40 @@ public sealed class MatchSelectorTest
     }
 
     [Theory]
-    [InlineData(3, MatchSelector.Mode.Winner)]
-    [InlineData(3, MatchSelector.Mode.Loser)]
-    [InlineData(4, MatchSelector.Mode.Winner)]
-    [InlineData(4, MatchSelector.Mode.Loser)]
-    public void MatchSelector___GetTargetTeam_When_Target_Is_Invalid___Returns_Null(int targetMatchIndex, MatchSelector.Mode selectionMode)
+    [InlineData(MatchSelector.Mode.Winner)]
+    [InlineData(MatchSelector.Mode.Loser)]
+    public void MatchSelector___GetTargetTeam_When_Target_Match_Is_Drawn___Returns_Null(MatchSelector.Mode selectionMode)
     {
         // Arrange
-        var match = Tournament._matches.Single(x => x.Index == targetMatchIndex);
+        var match = new Match(1, new NullSelector(), new NullSelector(), null)
+        {
+            TeamA = _teamA,
+            TeamB = _teamB,
+            IsCurrentlyPlaying = false,
+            ScoreA = 1,
+            ScoreB = 1,
+            OutcomeType = MatchOutcomeType.Standard
+        };
+        var selector = new MatchSelector(match, selectionMode);
+
+        // Act
+        var team = selector.GetTargetTeam();
+
+        // Assert
+        team.Should().BeNull();
+    }
+
+    [Theory]
+    [InlineData(MatchSelector.Mode.Winner)]
+    [InlineData(MatchSelector.Mode.Loser)]
+    public void MatchSelector___GetTargetTeam_When_Target_Match_Is_Not_Finished___Returns_Null(MatchSelector.Mode selectionMode)
+    {
+        // Arrange
+        var match = new Match(1, new NullSelector(), new NullSelector(), null)
+        {
+            TeamA = _teamA,
+            TeamB = _teamB
+        };
         var selector = new MatchSelector(match, selectionMode);
 
         // Act
