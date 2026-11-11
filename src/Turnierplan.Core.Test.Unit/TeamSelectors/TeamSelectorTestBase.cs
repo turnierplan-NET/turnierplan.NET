@@ -2,83 +2,70 @@
 
 namespace Turnierplan.Core.Test.Unit.TeamSelectors;
 
-#if false
-
 public abstract class TeamSelectorTestBase
 {
-    protected Core.Tournament.Tournament TestTournament => field ??= MakeTestTournament();
+    protected readonly Tournament Tournament;
+    protected readonly Team[] Teams;
+    protected readonly Group GroupA, GroupB, GroupC;
 
-    private static Core.Tournament.Tournament MakeTestTournament()
+    protected TeamSelectorTestBase()
     {
-        var tournament = Unit.TestTournament.Default;
+        Tournament = new Tournament(string.Empty);
 
-        var teams = new Dictionary<int, Team>();
-        foreach (var id in Enumerable.Range(4, 12))
-        {
-            teams[id] = new Team(id, null!, string.Empty);
-        }
+        Teams = [.. Enumerable.Range(0, 12).Select(i => Tournament.AddTeam($"Team {i}"))];
 
-        var groupA = new Group(100, 'A');
-        tournament._groups.Add(groupA);
+        GroupA = Tournament.AddGroup('A');
+        GroupB = Tournament.AddGroup('B');
+        GroupC = Tournament.AddGroup('C');
 
-        var groupB = new Group(101, 'B');
-        tournament._groups.Add(groupB);
+        Tournament.AddGroupParticipant(GroupA, Teams[0]).Statistics = new TeamGroupStatistics { Position = 4, Points = 0 };
+        Tournament.AddGroupParticipant(GroupA, Teams[1]).Statistics = new TeamGroupStatistics { Position = 2, Points = 6 };
+        Tournament.AddGroupParticipant(GroupA, Teams[2]).Statistics = new TeamGroupStatistics { Position = 3, Points = 3 };
+        Tournament.AddGroupParticipant(GroupA, Teams[3]).Statistics = new TeamGroupStatistics { Position = 1, Points = 9 };
 
-        var groupC = new Group(102, 'C');
-        tournament._groups.Add(groupC);
+        Tournament.AddGroupParticipant(GroupC, Teams[8]).Statistics = new TeamGroupStatistics { Position = 1, Points = 5 };
+        Tournament.AddGroupParticipant(GroupC, Teams[9]).Statistics = new TeamGroupStatistics { Position = 2, Points = 4 };
+        Tournament.AddGroupParticipant(GroupC, Teams[10]).Statistics = new TeamGroupStatistics { Position = 3, Points = 3 };
+        Tournament.AddGroupParticipant(GroupC, Teams[11]).Statistics = new TeamGroupStatistics { Position = 4, Points = 2 };
 
-        groupA._participants.Add(new GroupParticipant(groupA, teams[4], 0, 0) { Statistics = { Position = 4, Points = 0 }});
-        groupA._participants.Add(new GroupParticipant(groupA, teams[5], 0, 0) { Statistics = { Position = 2, Points = 6 }});
-        groupA._participants.Add(new GroupParticipant(groupA, teams[6], 0, 0) { Statistics = { Position = 3, Points = 3 }});
-        groupA._participants.Add(new GroupParticipant(groupA, teams[7], 0, 0) { Statistics = { Position = 1, Points = 9 }});
-
-        groupC._participants.Add(new GroupParticipant(groupC, teams[12], 0, 0) { Statistics = { Position = 1, Points = 5 }});
-        groupC._participants.Add(new GroupParticipant(groupC, teams[13], 0, 0) { Statistics = { Position = 2, Points = 4 }});
-        groupC._participants.Add(new GroupParticipant(groupC, teams[14], 0, 0) { Statistics = { Position = 3, Points = 3 }});
-        groupC._participants.Add(new GroupParticipant(groupC, teams[15], 0, 0) { Statistics = { Position = 4, Points = 2 }});
-
-        tournament._matches.Add(new Match(1, 1, new NullSelector(), new NullSelector(), groupA)
+        Tournament._matches.Add(new Match(1, new NullSelector(), new NullSelector(), GroupA)
         {
             Court = 0,
-            TeamA = teams[4],
-            TeamB = teams[5],
+            TeamA = Teams[4],
+            TeamB = Teams[5],
             ScoreA = 1,
             ScoreB = 0,
             OutcomeType = MatchOutcomeType.Standard
         });
 
-        tournament._matches.Add(new Match(2, 2, new NullSelector(), new NullSelector(), groupA)
+        Tournament._matches.Add(new Match(2, new NullSelector(), new NullSelector(), GroupA)
         {
             Court = 0,
-            TeamA = teams[6],
-            TeamB = teams[7],
+            TeamA = Teams[6],
+            TeamB = Teams[7],
             ScoreA = 1,
             ScoreB = 3,
             OutcomeType = MatchOutcomeType.Standard
         });
 
-        tournament._matches.Add(new Match(3, 3, new NullSelector(), new NullSelector(), groupB)
+        Tournament._matches.Add(new Match(3, new NullSelector(), new NullSelector(), GroupB)
         {
             Court = 0,
-            TeamA = teams[8],
-            TeamB = teams[9],
+            TeamA = Teams[8],
+            TeamB = Teams[9],
             ScoreA = 2,
             ScoreB = 2,
             OutcomeType = MatchOutcomeType.Standard
         });
 
-        tournament._matches.Add(new Match(4, 4, new NullSelector(), new NullSelector(), groupB)
+        Tournament._matches.Add(new Match(4, new NullSelector(), new NullSelector(), GroupB)
         {
             Court = 0,
-            TeamA = teams[10],
-            TeamB = teams[11],
+            TeamA = Teams[10],
+            TeamB = Teams[11],
             ScoreA = null,
             ScoreB = null,
             OutcomeType = null
         });
-
-        return tournament;
     }
 }
-
-#endif
