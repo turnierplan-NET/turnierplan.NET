@@ -980,7 +980,7 @@ export class ViewTournamentComponent implements OnInit, OnDestroy {
         isLive: match.state === MatchState.CurrentlyPlaying,
         scoreA: match.teamA?.score ?? undefined,
         scoreB: match.teamB?.score ?? undefined,
-        outcomeType: match.outcomeType ? (match.outcomeType === MatchOutcomeType.Null ? undefined : match.outcomeType) : undefined,
+        outcomeType: match.outcomeType,
         scoreAccumulated: includeInAccumulatedScore ? this.totalScoreCount : undefined,
         showLoadingIndicator: false
       };
