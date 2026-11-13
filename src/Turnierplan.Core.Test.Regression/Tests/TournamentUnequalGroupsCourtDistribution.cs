@@ -47,7 +47,7 @@ internal sealed class TournamentUnequalGroupsCourtDistribution : TournamentRegre
             FinalsRoundConfig = null,
             ScheduleConfig = new ScheduleConfig
             {
-                GroupPhaseNumberOfCourts = 3,
+                GroupPhaseNumberOfCourts = 1,
                 FirstMatchKickoff = DateTime.UnixEpoch,
                 GroupPhasePlayTime = TimeSpan.FromMinutes(10),
                 GroupPhasePauseTime = TimeSpan.FromMinutes(1),
@@ -60,8 +60,20 @@ internal sealed class TournamentUnequalGroupsCourtDistribution : TournamentRegre
 
         Step(t => t.GenerateMatchPlan(cfg));
 
-        cfg.ScheduleConfig.AllowMultipleGroupsParallel = false;
+        cfg.ScheduleConfig.AllowMultipleGroupsParallel = true;
+        cfg.ScheduleConfig.GroupPhaseNumberOfCourts = 2;
+        Step(t => t.GenerateMatchPlan(cfg, clearMatches: true));
 
+        cfg.ScheduleConfig.AllowMultipleGroupsParallel = false;
+        cfg.ScheduleConfig.GroupPhaseNumberOfCourts = 2;
+        Step(t => t.GenerateMatchPlan(cfg, clearMatches: true));
+
+        cfg.ScheduleConfig.AllowMultipleGroupsParallel = true;
+        cfg.ScheduleConfig.GroupPhaseNumberOfCourts = 3;
+        Step(t => t.GenerateMatchPlan(cfg, clearMatches: true));
+
+        cfg.ScheduleConfig.AllowMultipleGroupsParallel = false;
+        cfg.ScheduleConfig.GroupPhaseNumberOfCourts = 3;
         Step(t => t.GenerateMatchPlan(cfg, clearMatches: true));
     }
 }
