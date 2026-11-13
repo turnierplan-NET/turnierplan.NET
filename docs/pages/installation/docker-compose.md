@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
 
   turnierplan.application:
-    image: ghcr.io/turnierplan-net/turnierplan:2026.3.0
+    image: ghcr.io/turnierplan-net/turnierplan:2026.3.1
     depends_on:
       - turnierplan.database
     environment:
