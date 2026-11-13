@@ -8,5 +8,7 @@ public sealed record GroupPhaseConfigurationDto
 
     public required bool UseAlternatingOrder { get; init; }
 
+    public required bool AllowDifferentGroupsSimultaneously { get; init; }
+
     public required int NumberOfGroupRounds { get; init; }
 }

@@ -78,7 +78,7 @@ public sealed class ConfigureTournamentEndpointTest
     ];
 
     private static readonly ScheduleConfigurationDto __validSchedule = new() { PlayTime = 10.Minutes(), PauseTime = 2.Minutes() };
-    private static readonly GroupPhaseConfigurationDto __groupPhase = new() { Schedule = null, NumberOfCourts = 1, UseAlternatingOrder = false, NumberOfGroupRounds = 1 };
+    private static readonly GroupPhaseConfigurationDto __groupPhase = new() { Schedule = null, NumberOfCourts = 1, UseAlternatingOrder = false, AllowDifferentGroupsSimultaneously = true, NumberOfGroupRounds = 1 };
     private static readonly FinalsPhaseConfigurationDto __finalsPhase = new() { Schedule = null, NumberOfCourts = 1, FirstFinalsRound = (int)FinalsRoundOrder.SemiFinals, ThirdPlacePlayoff = true, AdditionalPlayoffs = [] };
 
     public ConfigureTournamentEndpointTest()
@@ -501,7 +501,7 @@ public sealed class ConfigureTournamentEndpointTest
     [InlineData(true, 3)]
     public void ConfigureTournamentEndpointRequest___With_Invalid_Number_Of_Group_Phase_Courts___Is_Invalid(bool isValid, short numberOfGroupPhaseCourts)
     {
-        var groupPhaseConfig = new GroupPhaseConfigurationDto { Schedule = null, NumberOfCourts = numberOfGroupPhaseCourts, UseAlternatingOrder = true, NumberOfGroupRounds = 1 };
+        var groupPhaseConfig = new GroupPhaseConfigurationDto { Schedule = null, NumberOfCourts = numberOfGroupPhaseCourts, UseAlternatingOrder = true, AllowDifferentGroupsSimultaneously = true, NumberOfGroupRounds = 1 };
         var command = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest
         {
             Groups = __validGroups,
@@ -533,7 +533,7 @@ public sealed class ConfigureTournamentEndpointTest
     [InlineData(false, 9)]
     public void ConfigureTournamentEndpointRequest___With_Invalid_Number_Of_Group_Phase_Rounds___Is_Invalid(bool isValid, int numberOfGroupPhaseRounds)
     {
-        var groupPhaseConfig = new GroupPhaseConfigurationDto { Schedule = null, NumberOfCourts = 1, UseAlternatingOrder = true, NumberOfGroupRounds = numberOfGroupPhaseRounds };
+        var groupPhaseConfig = new GroupPhaseConfigurationDto { Schedule = null, NumberOfCourts = 1, UseAlternatingOrder = true, AllowDifferentGroupsSimultaneously = true, NumberOfGroupRounds = numberOfGroupPhaseRounds };
         var command = new ConfigureTournamentEndpoint.ConfigureTournamentEndpointRequest
         {
             Groups = __validGroups,
