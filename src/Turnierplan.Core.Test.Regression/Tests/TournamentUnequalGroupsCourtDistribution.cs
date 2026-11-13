@@ -20,17 +20,21 @@ internal sealed class TournamentUnequalGroupsCourtDistribution : TournamentRegre
             var team7 = t.AddTeam("Test 7");
             var team8 = t.AddTeam("Test 8");
             var team9 = t.AddTeam("Test 9");
+            var team10 = t.AddTeam("Test 10");
+            var team11 = t.AddTeam("Test 11");
 
             t.AddGroupParticipant(groupA, team1);
             t.AddGroupParticipant(groupA, team2);
             t.AddGroupParticipant(groupA, team3);
             t.AddGroupParticipant(groupA, team4);
             t.AddGroupParticipant(groupA, team5);
+            t.AddGroupParticipant(groupA, team6);
 
-            t.AddGroupParticipant(groupB, team6);
             t.AddGroupParticipant(groupB, team7);
             t.AddGroupParticipant(groupB, team8);
             t.AddGroupParticipant(groupB, team9);
+            t.AddGroupParticipant(groupB, team10);
+            t.AddGroupParticipant(groupB, team11);
         });
 
         var cfg = new MatchPlanConfiguration
@@ -56,14 +60,7 @@ internal sealed class TournamentUnequalGroupsCourtDistribution : TournamentRegre
 
         Step(t => t.GenerateMatchPlan(cfg));
 
-        Step(t =>
-        {
-            var team10 = t.AddTeam("Test 10");
-            var team11 = t.AddTeam("Test 11");
-
-            t.AddGroupParticipant(groupA, team10);
-            t.AddGroupParticipant(groupB, team11);
-        });
+        cfg.ScheduleConfig.AllowMultipleGroupsParallel = false;
 
         Step(t => t.GenerateMatchPlan(cfg, clearMatches: true));
     }

@@ -27,4 +27,7 @@ public sealed record ScheduleConfig
 
     [JsonPropertyName("fp")]
     public required TimeSpan FinalsPhasePauseTime { get; set; }
+
+    [JsonPropertyName("ap")]
+    public bool AllowMultipleGroupsParallel { get; set; } = true;
 }
