@@ -60,19 +60,19 @@ internal sealed class TournamentUnequalGroupsCourtDistribution : TournamentRegre
 
         Step(t => t.GenerateMatchPlan(cfg));
 
-        cfg.ScheduleConfig.AllowMultipleGroupsParallel = true;
+        cfg.ScheduleConfig.GroupPhaseAllowDifferentGroupsSimultaneously = true;
         cfg.ScheduleConfig.GroupPhaseNumberOfCourts = 2;
         Step(t => t.GenerateMatchPlan(cfg, clearMatches: true));
 
-        cfg.ScheduleConfig.AllowMultipleGroupsParallel = false;
+        cfg.ScheduleConfig.GroupPhaseAllowDifferentGroupsSimultaneously = false;
         cfg.ScheduleConfig.GroupPhaseNumberOfCourts = 2;
         Step(t => t.GenerateMatchPlan(cfg, clearMatches: true));
 
-        cfg.ScheduleConfig.AllowMultipleGroupsParallel = true;
+        cfg.ScheduleConfig.GroupPhaseAllowDifferentGroupsSimultaneously = true;
         cfg.ScheduleConfig.GroupPhaseNumberOfCourts = 3;
         Step(t => t.GenerateMatchPlan(cfg, clearMatches: true));
 
-        cfg.ScheduleConfig.AllowMultipleGroupsParallel = false;
+        cfg.ScheduleConfig.GroupPhaseAllowDifferentGroupsSimultaneously = false;
         cfg.ScheduleConfig.GroupPhaseNumberOfCourts = 3;
         Step(t => t.GenerateMatchPlan(cfg, clearMatches: true));
     }

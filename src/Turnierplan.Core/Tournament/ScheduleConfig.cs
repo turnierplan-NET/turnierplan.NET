@@ -10,6 +10,9 @@ public sealed record ScheduleConfig
     [JsonPropertyName("gc")]
     public required short GroupPhaseNumberOfCourts { get; set; }
 
+    [JsonPropertyName("gsim")]
+    public bool GroupPhaseAllowDifferentGroupsSimultaneously { get; set; } = true;
+
     [JsonPropertyName("gd")]
     public required TimeSpan GroupPhasePlayTime { get; set; }
 
@@ -27,7 +30,4 @@ public sealed record ScheduleConfig
 
     [JsonPropertyName("fp")]
     public required TimeSpan FinalsPhasePauseTime { get; set; }
-
-    [JsonPropertyName("ap")]
-    public bool AllowMultipleGroupsParallel { get; set; } = true;
 }

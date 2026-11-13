@@ -1012,7 +1012,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             //    - the maximum number of courts is reached
             //    - the config disallows matches from different groups played in parallel
             var resetToFirstCourt = nextCourt >= config.GroupPhaseNumberOfCourts ||
-                (!config.AllowMultipleGroupsParallel && currentlyPlayingGroupIds.Count > 0 && !currentlyPlayingGroupIds.Contains(groupMatch.Group!.Id));
+                (!config.GroupPhaseAllowDifferentGroupsSimultaneously && currentlyPlayingGroupIds.Count > 0 && !currentlyPlayingGroupIds.Contains(groupMatch.Group!.Id));
 
             if (resetToFirstCourt)
             {
