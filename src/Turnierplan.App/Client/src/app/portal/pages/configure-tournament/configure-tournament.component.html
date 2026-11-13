@@ -297,6 +297,21 @@
           <div class="invalid-feedback" translate="Portal.ConfigureTournament.Sections.GroupPhase.InvalidNumberOfCourts"></div>
         }
       </div>
+      @if(!isGroupPhaseCourtsInvalid && !groupPhaseAlternating && groupPhaseCourts > 1) {
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            id="groupPhaseAllowDifferentGroupsSimultaneously"
+            type="checkbox"
+            [(ngModel)]="groupPhaseAllowDifferentGroupsSimultaneously"
+            (ngModelChange)="markDirty()" />
+          <label
+            class="form-check-label"
+            for="groupPhaseAllowDifferentGroupsSimultaneously"
+            translate="Portal.ConfigureTournament.Sections.GroupPhase.AllowDifferentGroupsSimultaneously"></label>
+          <tp-tooltip-icon [tooltipText]="'Portal.ConfigureTournament.Sections.GroupPhase.AllowDifferentGroupsSimultaneouslyTooltip'" />
+        </div>
+      }
       <div class="mt-2" translate="Portal.ConfigureTournament.Sections.GroupPhase.PlayTimeLabel"></div>
       <tp-duration-picker [(duration)]="groupPhasePlayTime" />
       <div class="mt-2" translate="Portal.ConfigureTournament.Sections.GroupPhase.PauseTimeLabel"></div>
