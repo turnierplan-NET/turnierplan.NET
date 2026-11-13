@@ -1005,6 +1005,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
         var currentlyPlayingGroupIds = new HashSet<int>();
         var currentlyPlayingTeams = new HashSet<TeamSelectorBase>();
         var nextKickoffTime = config.FirstMatchKickoff;
+        var groupPhaseAllowDifferentGroupsSimultaneously = config.GroupPhaseAllowDifferentGroupsSimultaneously ?? true;
 
         foreach (var groupMatch in groupMatches)
         {
@@ -1012,7 +1013,7 @@ public sealed class Tournament : Entity<long>, IEntityWithRoleAssignments<Tourna
             //    - the maximum number of courts is reached
             //    - the config disallows matches from different groups played in parallel
             var resetToFirstCourt = nextCourt >= config.GroupPhaseNumberOfCourts ||
-                (!config.GroupPhaseAllowDifferentGroupsSimultaneously && currentlyPlayingGroupIds.Count > 0 && !currentlyPlayingGroupIds.Contains(groupMatch.Group!.Id));
+                (!groupPhaseAllowDifferentGroupsSimultaneously && currentlyPlayingGroupIds.Count > 0 && !currentlyPlayingGroupIds.Contains(groupMatch.Group!.Id));
 
             if (resetToFirstCourt)
             {

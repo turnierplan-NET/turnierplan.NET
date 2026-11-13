@@ -11,7 +11,7 @@ public sealed record ScheduleConfig
     public required short GroupPhaseNumberOfCourts { get; set; }
 
     [JsonPropertyName("gsim")]
-    public bool GroupPhaseAllowDifferentGroupsSimultaneously { get; set; } = true;
+    public bool? GroupPhaseAllowDifferentGroupsSimultaneously { get; set; }
 
     [JsonPropertyName("gd")]
     public required TimeSpan GroupPhasePlayTime { get; set; }
