@@ -558,6 +558,64 @@ public sealed class TournamentGenerateMatchPlanTest
 
                 new MatchExpectation(null, 0, 1, KickoffAt(13, 40), 0, new MatchSelector(7, MatchSelector.Mode.Winner), new MatchSelector(8, MatchSelector.Mode.Winner))
             ]
+        },
+        {
+            // Two groups with 3&4 teams each + multiple courts + DO allow parallel play
+            [4, 3],
+            new MatchPlanConfiguration
+            {
+                ScheduleConfig = __scheduleConfig with { GroupPhaseNumberOfCourts = 2, GroupPhaseAllowDifferentGroupsSimultaneously = true },
+                GroupRoundConfig = new GroupRoundConfig
+                {
+                    GroupMatchOrder = GroupMatchOrder.Sequential,
+                    GroupPhaseRounds = 1
+                }
+            },
+            [
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 1, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
+
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 11), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
+
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 11), 1, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
+
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 22), 1, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2)),
+
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 33), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 33), 1, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
+
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 44), 0, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 0))
+            ]
+        },
+        {
+            // Two groups with 3&4 teams each + multiple courts + DO NOT allow parallel play
+            [4, 3],
+            new MatchPlanConfiguration
+            {
+                ScheduleConfig = __scheduleConfig with { GroupPhaseNumberOfCourts = 2, GroupPhaseAllowDifferentGroupsSimultaneously = false },
+                GroupRoundConfig = new GroupRoundConfig
+                {
+                    GroupMatchOrder = GroupMatchOrder.Sequential,
+                    GroupPhaseRounds = 1
+                }
+            },
+            [
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 1)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 0), 1, new GroupDefinitionSelector(__groupIds[0], 2), new GroupDefinitionSelector(__groupIds[0], 3)),
+
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 11), 0, new GroupDefinitionSelector(__groupIds[1], 0), new GroupDefinitionSelector(__groupIds[1], 1)),
+
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 22), 0, new GroupDefinitionSelector(__groupIds[0], 0), new GroupDefinitionSelector(__groupIds[0], 2)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 22), 1, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 3)),
+
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 33), 0, new GroupDefinitionSelector(__groupIds[1], 1), new GroupDefinitionSelector(__groupIds[1], 2)),
+
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 44), 0, new GroupDefinitionSelector(__groupIds[0], 3), new GroupDefinitionSelector(__groupIds[0], 0)),
+                new MatchExpectation(__groupIds[0], null, null, KickoffAt(12, 44), 1, new GroupDefinitionSelector(__groupIds[0], 1), new GroupDefinitionSelector(__groupIds[0], 2)),
+
+                new MatchExpectation(__groupIds[1], null, null, KickoffAt(12, 55), 0, new GroupDefinitionSelector(__groupIds[1], 2), new GroupDefinitionSelector(__groupIds[1], 0))
+            ]
         }
 
         // The following test cases were removed when switching from standard team selectors to abstract team selectors in the FinalsRoundConfig:
