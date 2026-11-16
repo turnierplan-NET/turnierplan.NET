@@ -802,7 +802,9 @@ export const de = {
           InvalidNumberOfRounds: 'Die Anzahl muss zwischen 1 und 4 liegen.',
           NumberOfCourtsLabel: 'Wie viele Spielfelder gibt es?',
           InvalidNumberOfCourts: 'Die Anzahl Spielfelder muss zwischen 1 und 10 liegen.',
-          AllowDifferentGroupsSimultaneously: 'Zeitgleiche Spiele von verschiedenen Gruppen erlauben',
+          AllowDifferentGroupsSimultaneously: 'Mehrere Gruppen dürfen zeitgleich spielen',
+          AllowDifferentGroupsSimultaneouslyTooltip:
+            'Ist der Haken nicht gesetzt, werden die Spiele nur insoweit auf die Spielfelder verteilt, dass niemals Mannschaften aus zwei oder mehr verschiedenen Gruppen gleichzeitig spielen.',
           PlayTimeLabel: 'Dauer der Spiele:',
           PauseTimeLabel: 'Pausen zwischen den Spielen:'
         },
