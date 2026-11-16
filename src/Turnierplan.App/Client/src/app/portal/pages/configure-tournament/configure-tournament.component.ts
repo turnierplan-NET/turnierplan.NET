@@ -117,6 +117,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
   protected firstMatchKickoff: Date = new Date();
   protected groups: TemporaryGroup[] = [];
   protected groupPhaseAlternating = false;
+  protected groupPhaseAllowDifferentGroupsSimultaneously = true;
   protected groupPhaseCourts: number = 1;
   protected groupPhaseRounds: number = 1;
   protected groupPhasePlayTime: string = '00:10:00';
@@ -548,6 +549,7 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
     }
 
     this.groupPhaseAlternating = config.groupPhaseConfig?.useAlternatingOrder === true;
+    this.groupPhaseAllowDifferentGroupsSimultaneously = config.groupPhaseConfig?.allowDifferentGroupsSimultaneously ?? true;
     this.groupPhaseCourts = config.groupPhaseConfig?.numberOfCourts ?? 1;
     this.groupPhaseRounds = config.groupPhaseConfig?.numberOfGroupRounds ?? 1;
     this.groupPhasePlayTime = config.groupPhaseConfig?.schedule?.playTime ?? '00:10:00';
@@ -737,7 +739,8 @@ export class ConfigureTournamentComponent implements OnInit, OnDestroy, DiscardC
         },
         numberOfCourts: this.groupPhaseCourts,
         numberOfGroupRounds: this.groupPhaseRounds,
-        useAlternatingOrder: this.groupPhaseAlternating
+        useAlternatingOrder: this.groupPhaseAlternating,
+        allowDifferentGroupsSimultaneously: this.groupPhaseAllowDifferentGroupsSimultaneously
       },
       pauseBetweenGroupAndFinalsPhase: finalsPhaseConfig === undefined ? undefined : this.pauseBetweenGroupAndFinalsPhase,
       finalsPhase: finalsPhaseConfig

@@ -15,6 +15,7 @@ public sealed class TournamentGenerateMatchPlanTest
     {
         FirstMatchKickoff = KickoffAt(12, 0),
         GroupPhaseNumberOfCourts = 1,
+        GroupPhaseAllowDifferentGroupsSimultaneously = true,
         GroupPhasePlayTime = 10.Minutes(),
         GroupPhasePauseTime = 1.Minutes(),
         PauseBetweenGroupAndFinalsPhase = 0.Minutes(),
@@ -556,6 +557,64 @@ public sealed class TournamentGenerateMatchPlanTest
                 new MatchExpectation(null, 1, null, KickoffAt(13, 23), 0, new GroupResultsNthRankedTeamSelector([__groups[0], __groups[1]], 1, 1), new GroupResultsNthRankedTeamSelector([__groups[0], __groups[1]], 0, 2)),
 
                 new MatchExpectation(0, 1, KickoffAt(13, 40), 0, 7, MatchTeamSelector.Mode.Winner, 8, MatchTeamSelector.Mode.Winner)
+            ]
+        },
+        {
+            // Two groups with 3&4 teams each + multiple courts + DO allow parallel play
+            [4, 3],
+            new MatchPlanConfiguration
+            {
+                ScheduleConfig = __scheduleConfig with { GroupPhaseNumberOfCourts = 2, GroupPhaseAllowDifferentGroupsSimultaneously = true },
+                GroupRoundConfig = new GroupRoundConfig
+                {
+                    GroupMatchOrder = GroupMatchOrder.Sequential,
+                    GroupPhaseRounds = 1
+                }
+            },
+            [
+                new MatchExpectation(__groups[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionTeamSelector(__groups[0], 0), new GroupDefinitionTeamSelector(__groups[0], 1)),
+                new MatchExpectation(__groups[0], null, null, KickoffAt(12, 0), 1, new GroupDefinitionTeamSelector(__groups[0], 2), new GroupDefinitionTeamSelector(__groups[0], 3)),
+
+                new MatchExpectation(__groups[1], null, null, KickoffAt(12, 11), 0, new GroupDefinitionTeamSelector(__groups[1], 0), new GroupDefinitionTeamSelector(__groups[1], 1)),
+
+                new MatchExpectation(__groups[0], null, null, KickoffAt(12, 11), 1, new GroupDefinitionTeamSelector(__groups[0], 0), new GroupDefinitionTeamSelector(__groups[0], 2)),
+                new MatchExpectation(__groups[0], null, null, KickoffAt(12, 22), 0, new GroupDefinitionTeamSelector(__groups[0], 1), new GroupDefinitionTeamSelector(__groups[0], 3)),
+
+                new MatchExpectation(__groups[1], null, null, KickoffAt(12, 22), 1, new GroupDefinitionTeamSelector(__groups[1], 1), new GroupDefinitionTeamSelector(__groups[1], 2)),
+
+                new MatchExpectation(__groups[0], null, null, KickoffAt(12, 33), 0, new GroupDefinitionTeamSelector(__groups[0], 3), new GroupDefinitionTeamSelector(__groups[0], 0)),
+                new MatchExpectation(__groups[0], null, null, KickoffAt(12, 33), 1, new GroupDefinitionTeamSelector(__groups[0], 1), new GroupDefinitionTeamSelector(__groups[0], 2)),
+
+                new MatchExpectation(__groups[1], null, null, KickoffAt(12, 44), 0, new GroupDefinitionTeamSelector(__groups[1], 2), new GroupDefinitionTeamSelector(__groups[1], 0))
+            ]
+        },
+        {
+            // Two groups with 3&4 teams each + multiple courts + DO NOT allow parallel play
+            [4, 3],
+            new MatchPlanConfiguration
+            {
+                ScheduleConfig = __scheduleConfig with { GroupPhaseNumberOfCourts = 2, GroupPhaseAllowDifferentGroupsSimultaneously = false },
+                GroupRoundConfig = new GroupRoundConfig
+                {
+                    GroupMatchOrder = GroupMatchOrder.Sequential,
+                    GroupPhaseRounds = 1
+                }
+            },
+            [
+                new MatchExpectation(__groups[0], null, null, KickoffAt(12, 0), 0, new GroupDefinitionTeamSelector(__groups[0], 0), new GroupDefinitionTeamSelector(__groups[0], 1)),
+                new MatchExpectation(__groups[0], null, null, KickoffAt(12, 0), 1, new GroupDefinitionTeamSelector(__groups[0], 2), new GroupDefinitionTeamSelector(__groups[0], 3)),
+
+                new MatchExpectation(__groups[1], null, null, KickoffAt(12, 11), 0, new GroupDefinitionTeamSelector(__groups[1], 0), new GroupDefinitionTeamSelector(__groups[1], 1)),
+
+                new MatchExpectation(__groups[0], null, null, KickoffAt(12, 22), 0, new GroupDefinitionTeamSelector(__groups[0], 0), new GroupDefinitionTeamSelector(__groups[0], 2)),
+                new MatchExpectation(__groups[0], null, null, KickoffAt(12, 22), 1, new GroupDefinitionTeamSelector(__groups[0], 1), new GroupDefinitionTeamSelector(__groups[0], 3)),
+
+                new MatchExpectation(__groups[1], null, null, KickoffAt(12, 33), 0, new GroupDefinitionTeamSelector(__groups[1], 1), new GroupDefinitionTeamSelector(__groups[1], 2)),
+
+                new MatchExpectation(__groups[0], null, null, KickoffAt(12, 44), 0, new GroupDefinitionTeamSelector(__groups[0], 3), new GroupDefinitionTeamSelector(__groups[0], 0)),
+                new MatchExpectation(__groups[0], null, null, KickoffAt(12, 44), 1, new GroupDefinitionTeamSelector(__groups[0], 1), new GroupDefinitionTeamSelector(__groups[0], 2)),
+
+                new MatchExpectation(__groups[1], null, null, KickoffAt(12, 55), 0, new GroupDefinitionTeamSelector(__groups[1], 2), new GroupDefinitionTeamSelector(__groups[1], 0))
             ]
         }
 

@@ -853,16 +853,24 @@ public sealed class Tournament
         var finalsMatches = _matches.Where(x => x.IsDecidingMatch).OrderBy(x => x.Index).ToList();
 
         var nextCourt = (short)0;
+        var currentlyPlayingGroups = new HashSet<Group>();
         var currentlyPlayingTeams = new HashSet<TeamSelectorBase>();
         var nextKickoffTime = config.FirstMatchKickoff;
 
         foreach (var groupMatch in groupMatches)
         {
-            if (nextCourt >= config.GroupPhaseNumberOfCourts)
+            // We must reset to the first court & increment the kickoff time if either of the following are true:
+            //    - the maximum number of courts is reached
+            //    - the config disallows matches from different groups played in parallel
+            var resetToFirstCourt = nextCourt >= config.GroupPhaseNumberOfCourts ||
+                (!config.GroupPhaseAllowDifferentGroupsSimultaneously && currentlyPlayingGroups.Count > 0 && !currentlyPlayingGroups.Contains(groupMatch.Group!));
+
+            if (resetToFirstCourt)
             {
                 nextCourt = 0;
                 nextKickoffTime += config.GroupPhasePlayTime;
                 nextKickoffTime += config.GroupPhasePauseTime;
+                currentlyPlayingGroups.Clear();
                 currentlyPlayingTeams.Clear();
             }
             else if (currentlyPlayingTeams.Contains(groupMatch.TeamSelectorA) || currentlyPlayingTeams.Contains(groupMatch.TeamSelectorB))
@@ -870,12 +878,14 @@ public sealed class Tournament
                 // If either of the group match's teams is "currently" playing another match, increase the kickoff time.
                 nextKickoffTime += config.GroupPhasePlayTime;
                 nextKickoffTime += config.GroupPhasePauseTime;
+                currentlyPlayingGroups.Clear();
                 currentlyPlayingTeams.Clear();
             }
 
             groupMatch.Court = nextCourt++;
             groupMatch.Kickoff = nextKickoffTime;
 
+            currentlyPlayingGroups.Add(groupMatch.Group!);
             currentlyPlayingTeams.Add(groupMatch.TeamSelectorA);
             currentlyPlayingTeams.Add(groupMatch.TeamSelectorB);
         }
