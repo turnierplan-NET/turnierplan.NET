@@ -176,7 +176,8 @@ internal sealed class TournamentMappingRule : MappingRuleBase<Tournament, Tourna
             },
             NumberOfCourts = scheduleConfig?.GroupPhaseNumberOfCourts ?? 1,
             UseAlternatingOrder = groupRoundConfig.GroupMatchOrder == GroupMatchOrder.Alternating,
-            NumberOfGroupRounds = groupRoundConfig.GroupPhaseRounds
+            NumberOfGroupRounds = groupRoundConfig.GroupPhaseRounds,
+            AllowDifferentGroupsSimultaneously = scheduleConfig?.GroupPhaseAllowDifferentGroupsSimultaneously ?? true
         };
     }
 
