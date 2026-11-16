@@ -2,9 +2,9 @@ using Turnierplan.Core.Tournament;
 
 namespace Turnierplan.Core.Test.Regression.Tests;
 
-internal sealed class TournamentUnequalGroupsCourtDistribution : TournamentRegressionTestBase
+internal sealed class TournamentCourtAssignmentWithUnequalGroups : TournamentRegressionTestBase
 {
-    public TournamentUnequalGroupsCourtDistribution()
+    public TournamentCourtAssignmentWithUnequalGroups()
     {
         var groupA = Step(t => t.AddGroup('A'));
         var groupB = Step(t => t.AddGroup('B'));
