@@ -6,7 +6,12 @@
   } @else {
     <div class="mb-3">
       <label for="uploadImage_file" class="form-label" [translate]="'Portal.UploadImage.Form.File'"></label>
-      <input class="form-control" type="file" accept="image/png,image/jpeg" id="uploadImage_file" (change)="onFileSelected($event)" />
+      <input
+        class="form-control"
+        type="file"
+        accept="image/png,image/jpeg,image/webp"
+        id="uploadImage_file"
+        (change)="onFileSelected($event)" />
     </div>
 
     <div>
