@@ -56,3 +56,17 @@ tr.ranking-3 > td {
     max-width: min(900px, 90vw);
   }
 }
+
+div.logo-container {
+  width: 9em;
+  height: 9em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+div.logo-container > img {
+  max-width: 9em;
+  max-height: 9em;
+}

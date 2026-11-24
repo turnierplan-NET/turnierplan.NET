@@ -63,11 +63,15 @@
                 @{ /* This displays the primary and/or secondary logo on the top side when viewing on a small screen */ }
                 @if (tournament.PresentationConfiguration.ShowPrimaryLogo && tournament.PrimaryLogo is not null)
                 {
-                    <img style="width: 9em;" src="@ImageStorage.GetFullImageUrl(tournament.PrimaryLogo)" alt="@tournament.PrimaryLogo.Name"/>
+                    <div class="logo-container">
+                        <img src="@ImageStorage.GetFullImageUrl(tournament.PrimaryLogo)" alt="@tournament.PrimaryLogo.Name"/>
+                    </div>
                 }
                 @if (tournament.PresentationConfiguration.ShowSecondaryLogo && tournament.SecondaryLogo is not null)
                 {
-                    <img style="width: 9em;" src="@ImageStorage.GetFullImageUrl(tournament.SecondaryLogo)" alt="@tournament.SecondaryLogo.Name"/>
+                    <div class="logo-container">
+                        <img src="@ImageStorage.GetFullImageUrl(tournament.SecondaryLogo)" alt="@tournament.SecondaryLogo.Name"/>
+                    </div>
                 }
             </div>
 
@@ -78,13 +82,17 @@
             @if (tournament.PresentationConfiguration.ShowPrimaryLogo && tournament.PrimaryLogo is not null)
             {
                 // This displays the primary logo on the right side when viewing on a large screen
-                <img style="width: 9em;" class="d-none d-lg-block" src="@ImageStorage.GetFullImageUrl(tournament.PrimaryLogo)" alt="@tournament.PrimaryLogo.Name"/>
+                <div class="d-none d-lg-flex logo-container">
+                    <img src="@ImageStorage.GetFullImageUrl(tournament.PrimaryLogo)" alt="@tournament.PrimaryLogo.Name"/>
+                </div>
             }
 
             @if (tournament.PresentationConfiguration.ShowSecondaryLogo && tournament.SecondaryLogo is not null)
             {
                 // This displays the secondary logo on the right side when viewing on a large screen
-                <img style="width: 9em;" class="d-none d-lg-block" src="@ImageStorage.GetFullImageUrl(tournament.SecondaryLogo)" alt="@tournament.SecondaryLogo.Name"/>
+                <div class="d-none d-lg-flex logo-container">
+                    <img src="@ImageStorage.GetFullImageUrl(tournament.SecondaryLogo)" alt="@tournament.SecondaryLogo.Name"/>
+                </div>
             }
         </div>
 

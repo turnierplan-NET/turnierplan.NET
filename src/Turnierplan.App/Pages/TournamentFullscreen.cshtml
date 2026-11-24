@@ -35,15 +35,19 @@
 @if (tournament is not null)
 {
     <div class="position-fixed px-4 overlay-background d-flex flex-row align-items-center gap-3"
-         style="width: 100vw; height: 9em; z-index: 10;" id="header-information">
+         style="width: 100vw; height: 11em; z-index: 10;" id="header-information">
         <!-- Fixed height is necessary because of the way the layout is done -->
         @if (tournament.PresentationConfiguration.ShowPrimaryLogo && tournament.PrimaryLogo is not null)
         {
-            <img style="width: 7em;" src="@ImageStorage.GetFullImageUrl(tournament.PrimaryLogo)" alt="@tournament.PrimaryLogo.Name"/>
+            <div class="logo-container">
+                <img src="@ImageStorage.GetFullImageUrl(tournament.PrimaryLogo)" alt="@tournament.PrimaryLogo.Name"/>
+            </div>
         }
         @if (tournament.PresentationConfiguration.ShowSecondaryLogo && tournament.SecondaryLogo is not null)
         {
-            <img style="width: 7em;" src="@ImageStorage.GetFullImageUrl(tournament.SecondaryLogo)" alt="@tournament.SecondaryLogo.Name"/>
+            <div class="logo-container">
+                <img src="@ImageStorage.GetFullImageUrl(tournament.SecondaryLogo)" alt="@tournament.SecondaryLogo.Name"/>
+            </div>
         }
         <div class="mx-4 d-flex flex-column gap-1">
             @await Component.InvokeAsync(typeof(Header), new { tournament, showKickoffAndVenue = false, allowVenueExpand = false })
@@ -52,7 +56,7 @@
         <div class="me-3 fs-3 fw-bold" id="clock"></div>
     </div>
 
-    <div class="d-flex" style="margin-top: 10em;">
+    <div class="d-flex" style="margin-top: 12em;">
         <div style="margin-left: 1%; width: 48%;">
             @await Component.InvokeAsync(typeof(MatchPlan), new { tournament, localization })
         </div>
