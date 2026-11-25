@@ -19,7 +19,7 @@
     <link rel="manifest" href="/site.webmanifest" />
 
     <link rel="stylesheet" type="text/css" href="/assets/bootstrap.5.3.8.min.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/turnierplan.css?v=@TurnierplanVersion.Version" />
+    <link rel="stylesheet" type="text/css" href="/assets/turnierplan.css?v=@(TurnierplanVersion.Version)" />
 
     <script>
         document.title = `@Html.Raw(HttpUtility.JavaScriptStringEncode(ViewData["Title"] as string)) \u00b7 turnierplan.NET`;
