@@ -4,6 +4,7 @@ using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.Tournament;
 
+// TODO: Move to parent namespace
 public sealed class TournamentGenerateTeamSelectorsTest
 {
     [Fact]

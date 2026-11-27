@@ -6,6 +6,7 @@ using Xunit;
 
 namespace Turnierplan.Core.Test.Unit.Tournament;
 
+// TODO: Move to parent namespace
 public sealed class TournamentGenerateMatchPlanTest
 {
     private static readonly Group[] __groups = [..Enumerable.Range(0, 5).Select(x => new Group((char)('A' + x)))];
