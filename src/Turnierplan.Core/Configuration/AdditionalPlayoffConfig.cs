@@ -11,12 +11,9 @@ public sealed record AdditionalPlayoffConfig
         TeamSelectorB = teamSelectorB;
     }
 
-    [JsonPropertyName("p")]
     public int PlayoffPosition { get; set; }
 
-    [JsonPropertyName("a")]
     public string TeamSelectorA { get; set; }
 
-    [JsonPropertyName("b")]
     public string TeamSelectorB { get; set; }
 }
