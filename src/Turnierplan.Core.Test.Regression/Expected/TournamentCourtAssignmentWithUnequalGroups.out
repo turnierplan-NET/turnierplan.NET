@@ -1,0 +1,290 @@
+[1]
+reg_name;0;0;0;0;0
+[2]
+reg_name;0;1;0;0;0
+GA;;0
+[3]
+reg_name;0;2;0;0;0
+GA;;0
+GB;;0
+[4]
+reg_name;11;2;0;0;0
+TTest 1;False;0;0;0;0;0;0
+TTest 2;False;0;0;0;0;0;0
+TTest 3;False;0;0;0;0;0;0
+TTest 4;False;0;0;0;0;0;0
+TTest 5;False;0;0;0;0;0;0
+TTest 6;False;0;0;0;0;0;0
+TTest 7;False;0;0;0;0;0;0
+TTest 8;False;0;0;0;0;0;0
+TTest 9;False;0;0;0;0;0;0
+TTest 10;False;0;0;0;0;0;0
+TTest 11;False;0;0;0;0;0;0
+GA;;6
+>Test 1;A;1;0;0;0;0;0;0;0;0;0;0
+>Test 2;A;2;0;0;0;0;0;0;0;0;0;0
+>Test 3;A;3;0;0;0;0;0;0;0;0;0;0
+>Test 4;A;4;0;0;0;0;0;0;0;0;0;0
+>Test 5;A;5;0;0;0;0;0;0;0;0;0;0
+>Test 6;A;6;0;0;0;0;0;0;0;0;0;0
+GB;;5
+>Test 7;B;1;0;0;0;0;0;0;0;0;0;0
+>Test 8;B;2;0;0;0;0;0;0;0;0;0;0
+>Test 9;B;3;0;0;0;0;0;0;0;0;0;0
+>Test 10;B;4;0;0;0;0;0;0;0;0;0;0
+>Test 11;B;5;0;0;0;0;0;0;0;0;0;0
+[5]
+reg_name;11;2;25;0;0
+TTest 1;False;0;0;0;0;0;0
+TTest 2;False;0;0;0;0;0;0
+TTest 3;False;0;0;0;0;0;0
+TTest 4;False;0;0;0;0;0;0
+TTest 5;False;0;0;0;0;0;0
+TTest 6;False;0;0;0;0;0;0
+TTest 7;False;0;0;0;0;0;0
+TTest 8;False;0;0;0;0;0;0
+TTest 9;False;0;0;0;0;0;0
+TTest 10;False;0;0;0;0;0;0
+TTest 11;False;0;0;0;0;0;0
+GA;;6
+>Test 1;A;1;0;0;0;0;0;0;0;0;0;0
+>Test 2;A;2;0;0;0;0;0;0;0;0;0;0
+>Test 3;A;3;0;0;0;0;0;0;0;0;0;0
+>Test 4;A;4;0;0;0;0;0;0;0;0;0;0
+>Test 5;A;5;0;0;0;0;0;0;0;0;0;0
+>Test 6;A;6;0;0;0;0;0;0;0;0;0;0
+GB;;5
+>Test 7;B;1;0;0;0;0;0;0;0;0;0;0
+>Test 8;B;2;0;0;0;0;0;0;0;0;0;0
+>Test 9;B;3;0;0;0;0;0;0;0;0;0;0
+>Test 10;B;4;0;0;0;0;0;0;0;0;0;0
+>Test 11;B;5;0;0;0;0;0;0;0;0;0;0
+M1;0;621355968000000000;GA/0;GA/1;;;A;True;False;;;;;;False
+M2;0;621355974600000000;GA/2;GA/3;;;A;True;False;;;;;;False
+M3;0;621355981200000000;GA/4;GA/5;;;A;True;False;;;;;;False
+M4;0;621355987800000000;GB/0;GB/1;;;B;True;False;;;;;;False
+M5;0;621355994400000000;GB/2;GB/3;;;B;True;False;;;;;;False
+M6;0;621356001000000000;GA/2;GA/0;;;A;True;False;;;;;;False
+M7;0;621356007600000000;GA/5;GA/1;;;A;True;False;;;;;;False
+M8;0;621356014200000000;GA/3;GA/4;;;A;True;False;;;;;;False
+M9;0;621356020800000000;GB/4;GB/0;;;B;True;False;;;;;;False
+M10;0;621356027400000000;GB/1;GB/2;;;B;True;False;;;;;;False
+M11;0;621356034000000000;GA/0;GA/5;;;A;True;False;;;;;;False
+M12;0;621356040600000000;GA/4;GA/2;;;A;True;False;;;;;;False
+M13;0;621356047200000000;GA/3;GA/1;;;A;True;False;;;;;;False
+M14;0;621356053800000000;GB/3;GB/4;;;B;True;False;;;;;;False
+M15;0;621356060400000000;GB/2;GB/0;;;B;True;False;;;;;;False
+M16;0;621356067000000000;GA/4;GA/0;;;A;True;False;;;;;;False
+M17;0;621356073600000000;GA/5;GA/3;;;A;True;False;;;;;;False
+M18;0;621356080200000000;GA/1;GA/2;;;A;True;False;;;;;;False
+M19;0;621356086800000000;GB/1;GB/4;;;B;True;False;;;;;;False
+M20;0;621356093400000000;GB/0;GB/3;;;B;True;False;;;;;;False
+M21;0;621356100000000000;GA/0;GA/3;;;A;True;False;;;;;;False
+M22;0;621356106600000000;GA/1;GA/4;;;A;True;False;;;;;;False
+M23;0;621356113200000000;GA/2;GA/5;;;A;True;False;;;;;;False
+M24;0;621356119800000000;GB/4;GB/2;;;B;True;False;;;;;;False
+M25;0;621356126400000000;GB/3;GB/1;;;B;True;False;;;;;;False
+[6]
+reg_name;11;2;25;0;0
+TTest 1;False;0;0;0;0;0;0
+TTest 2;False;0;0;0;0;0;0
+TTest 3;False;0;0;0;0;0;0
+TTest 4;False;0;0;0;0;0;0
+TTest 5;False;0;0;0;0;0;0
+TTest 6;False;0;0;0;0;0;0
+TTest 7;False;0;0;0;0;0;0
+TTest 8;False;0;0;0;0;0;0
+TTest 9;False;0;0;0;0;0;0
+TTest 10;False;0;0;0;0;0;0
+TTest 11;False;0;0;0;0;0;0
+GA;;6
+>Test 1;A;1;0;0;0;0;0;0;0;0;0;0
+>Test 2;A;2;0;0;0;0;0;0;0;0;0;0
+>Test 3;A;3;0;0;0;0;0;0;0;0;0;0
+>Test 4;A;4;0;0;0;0;0;0;0;0;0;0
+>Test 5;A;5;0;0;0;0;0;0;0;0;0;0
+>Test 6;A;6;0;0;0;0;0;0;0;0;0;0
+GB;;5
+>Test 7;B;1;0;0;0;0;0;0;0;0;0;0
+>Test 8;B;2;0;0;0;0;0;0;0;0;0;0
+>Test 9;B;3;0;0;0;0;0;0;0;0;0;0
+>Test 10;B;4;0;0;0;0;0;0;0;0;0;0
+>Test 11;B;5;0;0;0;0;0;0;0;0;0;0
+M1;0;621355968000000000;GA/0;GA/1;;;A;True;False;;;;;;False
+M2;1;621355968000000000;GA/2;GA/3;;;A;True;False;;;;;;False
+M3;0;621355974600000000;GA/4;GA/5;;;A;True;False;;;;;;False
+M4;1;621355974600000000;GB/0;GB/1;;;B;True;False;;;;;;False
+M5;0;621355981200000000;GB/2;GB/3;;;B;True;False;;;;;;False
+M6;1;621355981200000000;GA/2;GA/0;;;A;True;False;;;;;;False
+M7;0;621355987800000000;GA/5;GA/1;;;A;True;False;;;;;;False
+M8;1;621355987800000000;GA/3;GA/4;;;A;True;False;;;;;;False
+M9;0;621355994400000000;GB/4;GB/0;;;B;True;False;;;;;;False
+M10;1;621355994400000000;GB/1;GB/2;;;B;True;False;;;;;;False
+M11;0;621356001000000000;GA/0;GA/5;;;A;True;False;;;;;;False
+M12;1;621356001000000000;GA/4;GA/2;;;A;True;False;;;;;;False
+M13;0;621356007600000000;GA/3;GA/1;;;A;True;False;;;;;;False
+M14;1;621356007600000000;GB/3;GB/4;;;B;True;False;;;;;;False
+M15;0;621356014200000000;GB/2;GB/0;;;B;True;False;;;;;;False
+M16;1;621356014200000000;GA/4;GA/0;;;A;True;False;;;;;;False
+M17;0;621356020800000000;GA/5;GA/3;;;A;True;False;;;;;;False
+M18;1;621356020800000000;GA/1;GA/2;;;A;True;False;;;;;;False
+M19;0;621356027400000000;GB/1;GB/4;;;B;True;False;;;;;;False
+M20;1;621356027400000000;GB/0;GB/3;;;B;True;False;;;;;;False
+M21;0;621356034000000000;GA/0;GA/3;;;A;True;False;;;;;;False
+M22;1;621356034000000000;GA/1;GA/4;;;A;True;False;;;;;;False
+M23;0;621356040600000000;GA/2;GA/5;;;A;True;False;;;;;;False
+M24;1;621356040600000000;GB/4;GB/2;;;B;True;False;;;;;;False
+M25;0;621356047200000000;GB/3;GB/1;;;B;True;False;;;;;;False
+[7]
+reg_name;11;2;25;0;0
+TTest 1;False;0;0;0;0;0;0
+TTest 2;False;0;0;0;0;0;0
+TTest 3;False;0;0;0;0;0;0
+TTest 4;False;0;0;0;0;0;0
+TTest 5;False;0;0;0;0;0;0
+TTest 6;False;0;0;0;0;0;0
+TTest 7;False;0;0;0;0;0;0
+TTest 8;False;0;0;0;0;0;0
+TTest 9;False;0;0;0;0;0;0
+TTest 10;False;0;0;0;0;0;0
+TTest 11;False;0;0;0;0;0;0
+GA;;6
+>Test 1;A;1;0;0;0;0;0;0;0;0;0;0
+>Test 2;A;2;0;0;0;0;0;0;0;0;0;0
+>Test 3;A;3;0;0;0;0;0;0;0;0;0;0
+>Test 4;A;4;0;0;0;0;0;0;0;0;0;0
+>Test 5;A;5;0;0;0;0;0;0;0;0;0;0
+>Test 6;A;6;0;0;0;0;0;0;0;0;0;0
+GB;;5
+>Test 7;B;1;0;0;0;0;0;0;0;0;0;0
+>Test 8;B;2;0;0;0;0;0;0;0;0;0;0
+>Test 9;B;3;0;0;0;0;0;0;0;0;0;0
+>Test 10;B;4;0;0;0;0;0;0;0;0;0;0
+>Test 11;B;5;0;0;0;0;0;0;0;0;0;0
+M1;0;621355968000000000;GA/0;GA/1;;;A;True;False;;;;;;False
+M2;1;621355968000000000;GA/2;GA/3;;;A;True;False;;;;;;False
+M3;0;621355974600000000;GA/4;GA/5;;;A;True;False;;;;;;False
+M4;0;621355981200000000;GB/0;GB/1;;;B;True;False;;;;;;False
+M5;1;621355981200000000;GB/2;GB/3;;;B;True;False;;;;;;False
+M6;0;621355987800000000;GA/2;GA/0;;;A;True;False;;;;;;False
+M7;1;621355987800000000;GA/5;GA/1;;;A;True;False;;;;;;False
+M8;0;621355994400000000;GA/3;GA/4;;;A;True;False;;;;;;False
+M9;0;621356001000000000;GB/4;GB/0;;;B;True;False;;;;;;False
+M10;1;621356001000000000;GB/1;GB/2;;;B;True;False;;;;;;False
+M11;0;621356007600000000;GA/0;GA/5;;;A;True;False;;;;;;False
+M12;1;621356007600000000;GA/4;GA/2;;;A;True;False;;;;;;False
+M13;0;621356014200000000;GA/3;GA/1;;;A;True;False;;;;;;False
+M14;0;621356020800000000;GB/3;GB/4;;;B;True;False;;;;;;False
+M15;1;621356020800000000;GB/2;GB/0;;;B;True;False;;;;;;False
+M16;0;621356027400000000;GA/4;GA/0;;;A;True;False;;;;;;False
+M17;1;621356027400000000;GA/5;GA/3;;;A;True;False;;;;;;False
+M18;0;621356034000000000;GA/1;GA/2;;;A;True;False;;;;;;False
+M19;0;621356040600000000;GB/1;GB/4;;;B;True;False;;;;;;False
+M20;1;621356040600000000;GB/0;GB/3;;;B;True;False;;;;;;False
+M21;0;621356047200000000;GA/0;GA/3;;;A;True;False;;;;;;False
+M22;1;621356047200000000;GA/1;GA/4;;;A;True;False;;;;;;False
+M23;0;621356053800000000;GA/2;GA/5;;;A;True;False;;;;;;False
+M24;0;621356060400000000;GB/4;GB/2;;;B;True;False;;;;;;False
+M25;1;621356060400000000;GB/3;GB/1;;;B;True;False;;;;;;False
+[8]
+reg_name;11;2;25;0;0
+TTest 1;False;0;0;0;0;0;0
+TTest 2;False;0;0;0;0;0;0
+TTest 3;False;0;0;0;0;0;0
+TTest 4;False;0;0;0;0;0;0
+TTest 5;False;0;0;0;0;0;0
+TTest 6;False;0;0;0;0;0;0
+TTest 7;False;0;0;0;0;0;0
+TTest 8;False;0;0;0;0;0;0
+TTest 9;False;0;0;0;0;0;0
+TTest 10;False;0;0;0;0;0;0
+TTest 11;False;0;0;0;0;0;0
+GA;;6
+>Test 1;A;1;0;0;0;0;0;0;0;0;0;0
+>Test 2;A;2;0;0;0;0;0;0;0;0;0;0
+>Test 3;A;3;0;0;0;0;0;0;0;0;0;0
+>Test 4;A;4;0;0;0;0;0;0;0;0;0;0
+>Test 5;A;5;0;0;0;0;0;0;0;0;0;0
+>Test 6;A;6;0;0;0;0;0;0;0;0;0;0
+GB;;5
+>Test 7;B;1;0;0;0;0;0;0;0;0;0;0
+>Test 8;B;2;0;0;0;0;0;0;0;0;0;0
+>Test 9;B;3;0;0;0;0;0;0;0;0;0;0
+>Test 10;B;4;0;0;0;0;0;0;0;0;0;0
+>Test 11;B;5;0;0;0;0;0;0;0;0;0;0
+M1;0;621355968000000000;GA/0;GA/1;;;A;True;False;;;;;;False
+M2;1;621355968000000000;GA/2;GA/3;;;A;True;False;;;;;;False
+M3;2;621355968000000000;GA/4;GA/5;;;A;True;False;;;;;;False
+M4;0;621355974600000000;GB/0;GB/1;;;B;True;False;;;;;;False
+M5;1;621355974600000000;GB/2;GB/3;;;B;True;False;;;;;;False
+M6;2;621355974600000000;GA/2;GA/0;;;A;True;False;;;;;;False
+M7;0;621355981200000000;GA/5;GA/1;;;A;True;False;;;;;;False
+M8;1;621355981200000000;GA/3;GA/4;;;A;True;False;;;;;;False
+M9;2;621355981200000000;GB/4;GB/0;;;B;True;False;;;;;;False
+M10;0;621355987800000000;GB/1;GB/2;;;B;True;False;;;;;;False
+M11;1;621355987800000000;GA/0;GA/5;;;A;True;False;;;;;;False
+M12;2;621355987800000000;GA/4;GA/2;;;A;True;False;;;;;;False
+M13;0;621355994400000000;GA/3;GA/1;;;A;True;False;;;;;;False
+M14;1;621355994400000000;GB/3;GB/4;;;B;True;False;;;;;;False
+M15;2;621355994400000000;GB/2;GB/0;;;B;True;False;;;;;;False
+M16;0;621356001000000000;GA/4;GA/0;;;A;True;False;;;;;;False
+M17;1;621356001000000000;GA/5;GA/3;;;A;True;False;;;;;;False
+M18;2;621356001000000000;GA/1;GA/2;;;A;True;False;;;;;;False
+M19;0;621356007600000000;GB/1;GB/4;;;B;True;False;;;;;;False
+M20;1;621356007600000000;GB/0;GB/3;;;B;True;False;;;;;;False
+M21;2;621356007600000000;GA/0;GA/3;;;A;True;False;;;;;;False
+M22;0;621356014200000000;GA/1;GA/4;;;A;True;False;;;;;;False
+M23;1;621356014200000000;GA/2;GA/5;;;A;True;False;;;;;;False
+M24;2;621356014200000000;GB/4;GB/2;;;B;True;False;;;;;;False
+M25;0;621356020800000000;GB/3;GB/1;;;B;True;False;;;;;;False
+[9]
+reg_name;11;2;25;0;0
+TTest 1;False;0;0;0;0;0;0
+TTest 2;False;0;0;0;0;0;0
+TTest 3;False;0;0;0;0;0;0
+TTest 4;False;0;0;0;0;0;0
+TTest 5;False;0;0;0;0;0;0
+TTest 6;False;0;0;0;0;0;0
+TTest 7;False;0;0;0;0;0;0
+TTest 8;False;0;0;0;0;0;0
+TTest 9;False;0;0;0;0;0;0
+TTest 10;False;0;0;0;0;0;0
+TTest 11;False;0;0;0;0;0;0
+GA;;6
+>Test 1;A;1;0;0;0;0;0;0;0;0;0;0
+>Test 2;A;2;0;0;0;0;0;0;0;0;0;0
+>Test 3;A;3;0;0;0;0;0;0;0;0;0;0
+>Test 4;A;4;0;0;0;0;0;0;0;0;0;0
+>Test 5;A;5;0;0;0;0;0;0;0;0;0;0
+>Test 6;A;6;0;0;0;0;0;0;0;0;0;0
+GB;;5
+>Test 7;B;1;0;0;0;0;0;0;0;0;0;0
+>Test 8;B;2;0;0;0;0;0;0;0;0;0;0
+>Test 9;B;3;0;0;0;0;0;0;0;0;0;0
+>Test 10;B;4;0;0;0;0;0;0;0;0;0;0
+>Test 11;B;5;0;0;0;0;0;0;0;0;0;0
+M1;0;621355968000000000;GA/0;GA/1;;;A;True;False;;;;;;False
+M2;1;621355968000000000;GA/2;GA/3;;;A;True;False;;;;;;False
+M3;2;621355968000000000;GA/4;GA/5;;;A;True;False;;;;;;False
+M4;0;621355974600000000;GB/0;GB/1;;;B;True;False;;;;;;False
+M5;1;621355974600000000;GB/2;GB/3;;;B;True;False;;;;;;False
+M6;0;621355981200000000;GA/2;GA/0;;;A;True;False;;;;;;False
+M7;1;621355981200000000;GA/5;GA/1;;;A;True;False;;;;;;False
+M8;2;621355981200000000;GA/3;GA/4;;;A;True;False;;;;;;False
+M9;0;621355987800000000;GB/4;GB/0;;;B;True;False;;;;;;False
+M10;1;621355987800000000;GB/1;GB/2;;;B;True;False;;;;;;False
+M11;0;621355994400000000;GA/0;GA/5;;;A;True;False;;;;;;False
+M12;1;621355994400000000;GA/4;GA/2;;;A;True;False;;;;;;False
+M13;2;621355994400000000;GA/3;GA/1;;;A;True;False;;;;;;False
+M14;0;621356001000000000;GB/3;GB/4;;;B;True;False;;;;;;False
+M15;1;621356001000000000;GB/2;GB/0;;;B;True;False;;;;;;False
+M16;0;621356007600000000;GA/4;GA/0;;;A;True;False;;;;;;False
+M17;1;621356007600000000;GA/5;GA/3;;;A;True;False;;;;;;False
+M18;2;621356007600000000;GA/1;GA/2;;;A;True;False;;;;;;False
+M19;0;621356014200000000;GB/1;GB/4;;;B;True;False;;;;;;False
+M20;1;621356014200000000;GB/0;GB/3;;;B;True;False;;;;;;False
+M21;0;621356020800000000;GA/0;GA/3;;;A;True;False;;;;;;False
+M22;1;621356020800000000;GA/1;GA/4;;;A;True;False;;;;;;False
+M23;2;621356020800000000;GA/2;GA/5;;;A;True;False;;;;;;False
+M24;0;621356027400000000;GB/4;GB/2;;;B;True;False;;;;;;False
+M25;1;621356027400000000;GB/3;GB/1;;;B;True;False;;;;;;False

@@ -6,6 +6,8 @@ public sealed record ScheduleConfig
 
     public required short GroupPhaseNumberOfCourts { get; set; }
 
+    public required bool GroupPhaseAllowDifferentGroupsSimultaneously { get; set; }
+
     public required TimeSpan GroupPhasePlayTime { get; set; }
 
     public required TimeSpan GroupPhasePauseTime { get; set; }

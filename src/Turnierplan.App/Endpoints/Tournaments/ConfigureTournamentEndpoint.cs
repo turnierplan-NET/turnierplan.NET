@@ -277,6 +277,7 @@ internal sealed class ConfigureTournamentEndpoint : EndpointBase
         {
             FirstMatchKickoff = request.FirstMatchKickoff.Value,
             GroupPhaseNumberOfCourts = request.GroupPhase?.NumberOfCourts ?? 1,
+            GroupPhaseAllowDifferentGroupsSimultaneously = request.GroupPhase?.AllowDifferentGroupsSimultaneously ?? true,
             GroupPhasePlayTime = request.GroupPhase?.Schedule?.PlayTime ?? TimeSpan.FromMinutes(10),
             GroupPhasePauseTime = request.GroupPhase?.Schedule?.PauseTime ?? TimeSpan.FromMinutes(1),
             PauseBetweenGroupAndFinalsPhase = request.PauseBetweenGroupAndFinalsPhase ?? TimeSpan.Zero,

@@ -67,6 +67,7 @@ public sealed class TournamentTest
                 {
                     FirstMatchKickoff = default,
                     GroupPhaseNumberOfCourts = 0,
+                    GroupPhaseAllowDifferentGroupsSimultaneously = true,
                     GroupPhasePlayTime = 7.Minutes(),
                     GroupPhasePauseTime = TimeSpan.Zero,
                     PauseBetweenGroupAndFinalsPhase = TimeSpan.Zero,

@@ -49,6 +49,7 @@ internal sealed class Tournament8Teams2Groups1RoundSemiFinals : TournamentRegres
             ScheduleConfig = new ScheduleConfig
             {
                 FirstMatchKickoff = new DateTime(2026, 1, 1, 16, 0, 0),
+                GroupPhaseAllowDifferentGroupsSimultaneously = true,
                 GroupPhaseNumberOfCourts = 1,
                 GroupPhasePlayTime = 10.Minutes(),
                 GroupPhasePauseTime = 2.Minutes(),
