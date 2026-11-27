@@ -1,0 +1,10 @@
+﻿namespace Turnierplan.Core.TeamSelectors;
+
+public abstract record TeamSelectorBase
+{
+    private protected TeamSelectorBase()
+    {
+    }
+
+    public abstract Team? GetTargetTeam();
+}

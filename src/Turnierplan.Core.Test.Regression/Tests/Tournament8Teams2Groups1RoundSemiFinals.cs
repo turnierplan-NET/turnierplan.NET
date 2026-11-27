@@ -1,5 +1,5 @@
 using FluentAssertions.Extensions;
-using Turnierplan.Core.Tournament;
+using Turnierplan.Core.Configuration;
 
 namespace Turnierplan.Core.Test.Regression.Tests;
 
