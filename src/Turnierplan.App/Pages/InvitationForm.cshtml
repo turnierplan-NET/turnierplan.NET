@@ -94,11 +94,15 @@ else
                     <div class="d-flex flex-row justify-content-evenly">
                         @if (invitationLink.PrimaryLogo is not null)
                         {
-                            <img style="width: 9em;" src="@ImageStorage.GetFullImageUrl(invitationLink.PrimaryLogo)" alt="@invitationLink.PrimaryLogo.Name"/>
+                            <div class="logo-container">
+                                <img src="@ImageStorage.GetFullImageUrl(invitationLink.PrimaryLogo)" alt="@invitationLink.PrimaryLogo.Name"/>
+                            </div>
                         }
                         @if (invitationLink.SecondaryLogo is not null)
                         {
-                            <img style="width: 9em;" src="@ImageStorage.GetFullImageUrl(invitationLink.SecondaryLogo)" alt="@invitationLink.SecondaryLogo.Name"/>
+                            <div class="logo-container">
+                                <img src="@ImageStorage.GetFullImageUrl(invitationLink.SecondaryLogo)" alt="@invitationLink.SecondaryLogo.Name"/>
+                            </div>
                         }
                     </div>
                 }
